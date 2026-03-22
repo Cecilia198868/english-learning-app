@@ -32,7 +32,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: "http://localhost:3000",
+        emailRedirectTo: "https://english-learning-app-mb66.vercel.app/",
       },
     });
 
