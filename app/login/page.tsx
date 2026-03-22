@@ -37,10 +37,32 @@ export default function LoginPage() {
     });
 
     if (error) {
-      setMessage("发送登录邮件失败：" + error.message);
-    } else {
-      setMessage("登录邮件已发送，请去邮箱点击登录链接。");
-    }
+  let msg = error.message;
+
+  // ✅ 限流错误
+  if (msg.includes("rate limit")) {
+    msg = "发送过于频繁，请稍后再试（大约1小时后）";
+  }
+
+  // ✅ 邮箱格式错误
+  else if (msg.includes("invalid email")) {
+    msg = "邮箱格式不正确，请重新输入";
+  }
+
+  // ✅ 网络问题
+  else if (msg.includes("network")) {
+    msg = "网络连接异常，请检查网络";
+  }
+
+  // ✅ 默认情况
+  else {
+    msg = "发送失败，请稍后再试";
+  }
+
+  setMessage(msg);
+} else {
+  setMessage("登录邮件已发送，请去邮箱点击登录链接。");
+}
 
     setLoading(false);
   }
