@@ -52,9 +52,12 @@ export default function Home() {
   }
 
   async function loadLessons() {
+    if (!userId) return;
+
     const { data, error } = await supabase
       .from("lessons")
       .select("*")
+      .eq("user_id", userId)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -70,9 +73,12 @@ export default function Home() {
   }
 
   async function loadAudios() {
+    if (!userId) return;
+
     const { data, error } = await supabase
       .from("audios")
       .select("*")
+      .eq("user_id", userId)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -124,10 +130,19 @@ export default function Home() {
   }
 
   async function handleDeleteLesson(id: string) {
+    if (!userId) {
+      setMessage("请先登录。");
+      return;
+    }
+
     const ok = window.confirm("确定要删除这条 TXT 课程吗？");
     if (!ok) return;
 
-    const { error } = await supabase.from("lessons").delete().eq("id", id);
+    const { error } = await supabase
+      .from("lessons")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", userId);
 
     if (error) {
       setMessage("删除 TXT 失败：" + error.message);
@@ -198,13 +213,19 @@ export default function Home() {
   }
 
   async function handleDeleteAudio(audio: AudioItem) {
+    if (!userId) {
+      setAudioMessage("请先登录。");
+      return;
+    }
+
     const ok = window.confirm("确定要删除这条音频吗？");
     if (!ok) return;
 
     const { error: dbError } = await supabase
       .from("audios")
       .delete()
-      .eq("id", audio.id);
+      .eq("id", audio.id)
+      .eq("user_id", userId);
 
     if (dbError) {
       setAudioMessage("删除音频记录失败：" + dbError.message);
