@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { supabase } from "../lib/supabase";
 
 type Lesson = {
   id: string;
@@ -15,17 +13,182 @@ type Lesson = {
 type AudioItem = {
   id: string;
   title: string;
-  file_path: string;
   created_at: string;
 };
 
+type AudioDBRecord = {
+  id: string;
+  title: string;
+  created_at: string;
+  file: Blob;
+};
+
+type LocalLessonData = {
+  lessons: Lesson[];
+};
+
+const LESSONS_STORAGE_KEY = "english-app-lessons";
+const DB_NAME = "english-learning-app-db";
+const DB_VERSION = 1;
+const AUDIO_STORE_NAME = "audios";
+const MAX_AUDIO_SIZE_MB = 100;
+const MAX_AUDIO_SIZE = MAX_AUDIO_SIZE_MB * 1024 * 1024;
+
+function createId() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function getDefaultLessonsData(): LocalLessonData {
+  return {
+    lessons: [],
+  };
+}
+
+function loadLessonsData(): LocalLessonData {
+  if (typeof window === "undefined") {
+    return getDefaultLessonsData();
+  }
+
+  try {
+    const raw = localStorage.getItem(LESSONS_STORAGE_KEY);
+    if (!raw) return getDefaultLessonsData();
+
+    const parsed = JSON.parse(raw);
+
+    return {
+      lessons: Array.isArray(parsed.lessons) ? parsed.lessons : [],
+    };
+  } catch (error) {
+    console.error("读取 TXT 数据失败：", error);
+    return getDefaultLessonsData();
+  }
+}
+
+function saveLessonsData(data: LocalLessonData) {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.setItem(LESSONS_STORAGE_KEY, JSON.stringify(data));
+  } catch (error) {
+    console.error("保存 TXT 数据失败：", error);
+    throw new Error("保存 TXT 失败，浏览器本地存储可能已满。");
+  }
+}
+
+function openAudioDB(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    if (typeof window === "undefined" || !window.indexedDB) {
+      reject(new Error("当前浏览器不支持 IndexedDB"));
+      return;
+    }
+
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(AUDIO_STORE_NAME)) {
+        db.createObjectStore(AUDIO_STORE_NAME, { keyPath: "id" });
+      }
+    };
+
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+
+    request.onerror = () => {
+      console.error("打开 IndexedDB 失败：", request.error);
+      reject(new Error("打开 IndexedDB 失败"));
+    };
+  });
+}
+
+async function getAllAudiosFromDB(): Promise<AudioItem[]> {
+  const db = await openAudioDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(AUDIO_STORE_NAME, "readonly");
+    const store = tx.objectStore(AUDIO_STORE_NAME);
+    const request = store.getAll();
+
+    request.onsuccess = () => {
+      const result = (request.result || []) as AudioDBRecord[];
+
+      const items: AudioItem[] = result
+        .map((item) => ({
+          id: item.id,
+          title: item.title,
+          created_at: item.created_at,
+        }))
+        .sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+
+      resolve(items);
+    };
+
+    request.onerror = () => {
+      console.error("读取音频列表失败：", request.error);
+      reject(new Error("读取音频列表失败"));
+    };
+  });
+}
+
+async function saveAudioToDB(record: AudioDBRecord): Promise<void> {
+  const db = await openAudioDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(AUDIO_STORE_NAME, "readwrite");
+    const store = tx.objectStore(AUDIO_STORE_NAME);
+    const request = store.put(record);
+
+    request.onsuccess = () => resolve();
+
+    request.onerror = () => {
+      console.error("保存音频失败：", request.error);
+      reject(new Error("保存音频失败，浏览器空间可能不足。"));
+    };
+  });
+}
+
+async function getAudioBlobById(id: string): Promise<Blob | null> {
+  const db = await openAudioDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(AUDIO_STORE_NAME, "readonly");
+    const store = tx.objectStore(AUDIO_STORE_NAME);
+    const request = store.get(id);
+
+    request.onsuccess = () => {
+      const result = request.result as AudioDBRecord | undefined;
+      resolve(result?.file || null);
+    };
+
+    request.onerror = () => {
+      console.error("读取音频文件失败：", request.error);
+      reject(new Error("读取音频文件失败"));
+    };
+  });
+}
+
+async function deleteAudioFromDB(id: string): Promise<void> {
+  const db = await openAudioDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(AUDIO_STORE_NAME, "readwrite");
+    const store = tx.objectStore(AUDIO_STORE_NAME);
+    const request = store.delete(id);
+
+    request.onsuccess = () => resolve();
+
+    request.onerror = () => {
+      console.error("删除音频失败：", request.error);
+      reject(new Error("删除音频失败"));
+    };
+  });
+}
+
 export default function Home() {
-  const router = useRouter();
-
-  const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
-
   const [title, setTitle] = useState("");
   const [txtContent, setTxtContent] = useState("");
   const [message, setMessage] = useState("");
@@ -38,234 +201,171 @@ export default function Home() {
   const [audioMessage, setAudioMessage] = useState("");
   const [audios, setAudios] = useState<AudioItem[]>([]);
   const [selectedAudioId, setSelectedAudioId] = useState<string | null>(null);
+  const [selectedAudioUrl, setSelectedAudioUrl] = useState("");
+  const [loadingAudio, setLoadingAudio] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const currentObjectUrlRef = useRef<string | null>(null);
 
-  async function loadUser() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+  function loadLessons() {
+    const data = loadLessonsData();
+    setLessons(data.lessons || []);
 
-    setUserEmail(user?.email ?? null);
-    setUserId(user?.id ?? null);
-    setCheckingAuth(false);
-  }
-
-  async function loadLessons() {
-    if (!userId) return;
-
-    const { data, error } = await supabase
-      .from("lessons")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      setMessage("读取课程失败：" + error.message);
-      return;
-    }
-
-    setLessons(data || []);
-
-    if (data && data.length > 0 && !expandedLessonId) {
-      setExpandedLessonId(data[0].id);
+    if (data.lessons.length > 0) {
+      setExpandedLessonId((prev) => prev ?? data.lessons[0].id);
+    } else {
+      setExpandedLessonId(null);
     }
   }
 
   async function loadAudios() {
-    if (!userId) return;
+    try {
+      const data = await getAllAudiosFromDB();
+      setAudios(data);
 
-    const { data, error } = await supabase
-      .from("audios")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      setAudioMessage("读取音频失败：" + error.message);
-      return;
-    }
-
-    setAudios(data || []);
-
-    if (data && data.length > 0 && !selectedAudioId) {
-      setSelectedAudioId(data[0].id);
+      if (data.length > 0) {
+        setSelectedAudioId((prev) => prev ?? data[0].id);
+      } else {
+        setSelectedAudioId(null);
+      }
+    } catch (error) {
+      const msg =
+        error instanceof Error ? error.message : "读取音频列表失败";
+      setAudioMessage(msg);
     }
   }
 
-  async function handleSaveLesson() {
-    if (!userId) {
-      setMessage("请先登录。");
-      return;
-    }
+  function handleSaveLesson() {
+    try {
+      setMessage("");
 
-    if (!title.trim() || !txtContent.trim()) {
-      setMessage("标题和TXT内容都不能为空。");
-      return;
-    }
+      if (!title.trim() || !txtContent.trim()) {
+        setMessage("标题和TXT内容都不能为空。");
+        return;
+      }
 
-    const { data, error } = await supabase
-      .from("lessons")
-      .insert({
-        user_id: userId,
-        title,
-        txt_content: txtContent,
-      })
-      .select();
+      const newLesson: Lesson = {
+        id: createId(),
+        title: title.trim(),
+        txt_content: txtContent.trim(),
+        created_at: new Date().toISOString(),
+      };
 
-    if (error) {
-      setMessage("保存失败：" + error.message);
-      return;
-    }
+      const current = loadLessonsData();
+      const nextLessons = [newLesson, ...(current.lessons || [])];
 
-    setMessage("TXT 保存成功！");
-    setTitle("");
-    setTxtContent("");
+      saveLessonsData({ lessons: nextLessons });
+      setLessons(nextLessons);
+      setExpandedLessonId(newLesson.id);
 
-    await loadLessons();
-
-    if (data && data.length > 0) {
-      setExpandedLessonId(data[0].id);
+      setTitle("");
+      setTxtContent("");
+      setMessage("TXT 保存成功！");
+    } catch (error) {
+      const msg =
+        error instanceof Error ? error.message : "TXT 保存失败。";
+      setMessage(msg);
     }
   }
 
-  async function handleDeleteLesson(id: string) {
-    if (!userId) {
-      setMessage("请先登录。");
-      return;
+  function handleDeleteLesson(id: string) {
+    try {
+      const ok = window.confirm("确定要删除这条 TXT 课程吗？");
+      if (!ok) return;
+
+      const current = loadLessonsData();
+      const nextLessons = current.lessons.filter((item) => item.id !== id);
+
+      saveLessonsData({ lessons: nextLessons });
+      setLessons(nextLessons);
+
+      if (expandedLessonId === id) {
+        setExpandedLessonId(nextLessons.length > 0 ? nextLessons[0].id : null);
+      }
+
+      setMessage("TXT 删除成功！");
+    } catch (error) {
+      const msg =
+        error instanceof Error ? error.message : "TXT 删除失败。";
+      setMessage(msg);
     }
-
-    const ok = window.confirm("确定要删除这条 TXT 课程吗？");
-    if (!ok) return;
-
-    const { error } = await supabase
-      .from("lessons")
-      .delete()
-      .eq("id", id)
-      .eq("user_id", userId);
-
-    if (error) {
-      setMessage("删除 TXT 失败：" + error.message);
-      return;
-    }
-
-    if (expandedLessonId === id) {
-      setExpandedLessonId(null);
-    }
-
-    setMessage("TXT 删除成功！");
-    await loadLessons();
   }
 
   async function handleUploadAudio() {
-    if (!userId) {
-      setAudioMessage("请先登录。");
-      return;
+    try {
+      setAudioMessage("");
+
+      if (!audioTitle.trim()) {
+        setAudioMessage("请输入音频标题。");
+        return;
+      }
+
+      if (!audioFile) {
+        setAudioMessage("请先选择一个 MP3 文件。");
+        return;
+      }
+
+      if (audioFile.size > MAX_AUDIO_SIZE) {
+        setAudioMessage(
+          `文件太大，请选择小于 ${MAX_AUDIO_SIZE_MB}MB 的音频文件。`
+        );
+        return;
+      }
+
+      const newAudio: AudioDBRecord = {
+        id: createId(),
+        title: audioTitle.trim(),
+        created_at: new Date().toISOString(),
+        file: audioFile,
+      };
+
+      await saveAudioToDB(newAudio);
+      const nextAudios = await getAllAudiosFromDB();
+
+      setAudios(nextAudios);
+      setSelectedAudioId(newAudio.id);
+      setAudioTitle("");
+      setAudioFile(null);
+      setAudioMessage("MP3 上传成功！");
+
+      const fileInput = document.getElementById(
+        "audio-file-input"
+      ) as HTMLInputElement | null;
+      if (fileInput) fileInput.value = "";
+    } catch (error) {
+      const msg =
+        error instanceof Error
+          ? error.message
+          : "上传失败，浏览器存储空间可能不足。";
+      setAudioMessage(msg);
     }
-
-    if (!audioTitle.trim()) {
-      setAudioMessage("请输入音频标题。");
-      return;
-    }
-
-    if (!audioFile) {
-      setAudioMessage("请先选择一个 MP3 文件。");
-      return;
-    }
-
-    const fileExt = audioFile.name.split(".").pop() || "mp3";
-    const fileName = `${userId}/${Date.now()}-${Math.random()
-      .toString(36)
-      .slice(2)}.${fileExt}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from("audio")
-      .upload(fileName, audioFile, {
-        upsert: false,
-      });
-
-    if (uploadError) {
-      setAudioMessage("上传文件失败：" + uploadError.message);
-      return;
-    }
-
-    const { error: insertError } = await supabase.from("audios").insert({
-      user_id: userId,
-      title: audioTitle,
-      file_path: fileName,
-    });
-
-    if (insertError) {
-      setAudioMessage("保存音频记录失败：" + insertError.message);
-      return;
-    }
-
-    setAudioMessage("MP3 上传成功！");
-    setAudioTitle("");
-    setAudioFile(null);
-
-    const fileInput = document.getElementById(
-      "audio-file-input"
-    ) as HTMLInputElement | null;
-    if (fileInput) fileInput.value = "";
-
-    await loadAudios();
   }
 
   async function handleDeleteAudio(audio: AudioItem) {
-    if (!userId) {
-      setAudioMessage("请先登录。");
-      return;
-    }
+    try {
+      const ok = window.confirm("确定要删除这条音频吗？");
+      if (!ok) return;
 
-    const ok = window.confirm("确定要删除这条音频吗？");
-    if (!ok) return;
+      await deleteAudioFromDB(audio.id);
+      const nextAudios = await getAllAudiosFromDB();
 
-    const { error: dbError } = await supabase
-      .from("audios")
-      .delete()
-      .eq("id", audio.id)
-      .eq("user_id", userId);
+      setAudios(nextAudios);
 
-    if (dbError) {
-      setAudioMessage("删除音频记录失败：" + dbError.message);
-      return;
-    }
+      if (selectedAudioId === audio.id) {
+        setSelectedAudioId(nextAudios.length > 0 ? nextAudios[0].id : null);
 
-    const { error: storageError } = await supabase.storage
-      .from("audio")
-      .remove([audio.file_path]);
-
-    if (storageError) {
-      setAudioMessage(
-        "数据库记录已删除，但云端音频文件删除失败：" + storageError.message
-      );
-    } else {
-      setAudioMessage("音频删除成功！");
-    }
-
-    if (selectedAudioId === audio.id) {
-      setSelectedAudioId(null);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+        }
       }
+
+      setAudioMessage("音频删除成功！");
+    } catch (error) {
+      const msg =
+        error instanceof Error ? error.message : "删除音频失败";
+      setAudioMessage(msg);
     }
-
-    await loadAudios();
-  }
-
-  async function handleLogout() {
-    await supabase.auth.signOut();
-    setUserEmail(null);
-    setUserId(null);
-    setLessons([]);
-    setExpandedLessonId(null);
-    setAudios([]);
-    setSelectedAudioId(null);
-    setMessage("");
-    setAudioMessage("");
-    router.push("/login");
   }
 
   function toggleLesson(id: string) {
@@ -275,14 +375,6 @@ export default function Home() {
   const selectedAudio = useMemo(() => {
     return audios.find((item) => item.id === selectedAudioId) || null;
   }, [audios, selectedAudioId]);
-
-  const selectedAudioUrl = useMemo(() => {
-    if (!selectedAudio) return "";
-    const { data } = supabase.storage
-      .from("audio")
-      .getPublicUrl(selectedAudio.file_path);
-    return data.publicUrl;
-  }, [selectedAudio]);
 
   function handleStopAudio() {
     if (audioRef.current) {
@@ -298,61 +390,69 @@ export default function Home() {
   }
 
   useEffect(() => {
-    loadUser();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      loadUser();
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    loadLessons();
+    loadAudios();
   }, []);
 
   useEffect(() => {
-    if (userId) {
-      loadLessons();
-      loadAudios();
+    let cancelled = false;
+
+    async function loadSelectedAudioUrl() {
+      if (!selectedAudioId) {
+        if (currentObjectUrlRef.current) {
+          URL.revokeObjectURL(currentObjectUrlRef.current);
+          currentObjectUrlRef.current = null;
+        }
+        setSelectedAudioUrl("");
+        return;
+      }
+
+      try {
+        setLoadingAudio(true);
+        const blob = await getAudioBlobById(selectedAudioId);
+
+        if (cancelled) return;
+
+        if (currentObjectUrlRef.current) {
+          URL.revokeObjectURL(currentObjectUrlRef.current);
+          currentObjectUrlRef.current = null;
+        }
+
+        if (!blob) {
+          setSelectedAudioUrl("");
+          return;
+        }
+
+        const objectUrl = URL.createObjectURL(blob);
+        currentObjectUrlRef.current = objectUrl;
+        setSelectedAudioUrl(objectUrl);
+      } catch (error) {
+        if (!cancelled) {
+          console.error(error);
+          setSelectedAudioUrl("");
+          setAudioMessage("读取选中的音频失败。");
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingAudio(false);
+        }
+      }
     }
-  }, [userId]);
 
-  if (checkingAuth) {
-    return (
-      <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center">
-        <div className="rounded-3xl border border-white/10 bg-white/5 px-8 py-6 text-lg">
-          正在加载中...
-        </div>
-      </main>
-    );
-  }
+    loadSelectedAudioUrl();
 
-  if (!userEmail) {
-    return (
-      <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6">
-        <div className="w-full max-w-3xl rounded-3xl border border-white/10 bg-white/5 p-10 shadow-2xl text-center">
-          <div className="mb-4 inline-flex rounded-full bg-emerald-500/20 px-4 py-1 text-sm text-emerald-300">
-            Welcome
-          </div>
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedAudioId]);
 
-          <h1 className="mb-4 text-4xl font-bold">英语学习网站</h1>
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-white/70">
-            这里可以保存你的 TXT 课程、上传真实 MP3、逐句学习、自动播放、朗读英文，还能记住学习进度。
-          </p>
-
-          <div className="flex justify-center">
-            <Link
-              href="/login"
-              className="rounded-2xl bg-emerald-600 px-8 py-4 text-lg font-semibold hover:bg-emerald-500"
-            >
-              进入登录页
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
-  }
+  useEffect(() => {
+    return () => {
+      if (currentObjectUrlRef.current) {
+        URL.revokeObjectURL(currentObjectUrlRef.current);
+      }
+    };
+  }, []);
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -360,15 +460,14 @@ export default function Home() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 p-6">
           <div>
             <h1 className="text-3xl font-bold">英语学习网站</h1>
-            <p className="mt-2 text-white/65">已登录邮箱：{userEmail}</p>
+            <p className="mt-2 text-white/65">
+              离线版：TXT 保存在浏览器，音频使用 IndexedDB 保存
+            </p>
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="rounded-2xl bg-red-600 px-5 py-3 font-semibold hover:bg-red-500"
-          >
-            退出登录
-          </button>
+          <div className="rounded-2xl bg-emerald-600/20 px-5 py-3 font-semibold text-emerald-300">
+            无需登录
+          </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[340px_minmax(0,1fr)]">
@@ -420,7 +519,7 @@ export default function Home() {
               <input
                 id="audio-file-input"
                 type="file"
-                accept=".mp3,audio/mpeg"
+                accept=".mp3,audio/mpeg,audio/*"
                 onChange={(e) => {
                   const file = e.target.files?.[0] || null;
                   setAudioFile(file);
@@ -440,6 +539,11 @@ export default function Home() {
                   {audioMessage}
                 </div>
               )}
+
+              <div className="mt-3 text-xs text-white/45">
+                单个音频限制：{MAX_AUDIO_SIZE_MB}MB。使用 IndexedDB，
+                可存比 localStorage 大得多的音频。
+              </div>
             </div>
           </aside>
 
@@ -451,7 +555,7 @@ export default function Home() {
                 {lessons.length === 0 ? (
                   <p className="text-white/60">还没有保存任何课程。</p>
                 ) : (
-                  <div className="space-y-3 max-h-[520px] overflow-y-auto pr-1">
+                  <div className="max-h-[520px] space-y-3 overflow-y-auto pr-1">
                     {lessons.map((lesson, index) => {
                       const isExpanded = expandedLessonId === lesson.id;
 
@@ -508,7 +612,7 @@ export default function Home() {
                 {audios.length === 0 ? (
                   <p className="text-white/60">还没有上传任何音频。</p>
                 ) : (
-                  <div className="space-y-3 max-h-[520px] overflow-y-auto pr-1">
+                  <div className="max-h-[520px] space-y-3 overflow-y-auto pr-1">
                     {audios.map((audio, index) => (
                       <div
                         key={audio.id}
@@ -549,12 +653,18 @@ export default function Home() {
                     {selectedAudio.title}
                   </h3>
 
-                  <audio
-                    ref={audioRef}
-                    src={selectedAudioUrl}
-                    controls
-                    className="w-full"
-                  />
+                  {loadingAudio ? (
+                    <div className="rounded-2xl bg-black/20 p-5 text-white/60">
+                      正在加载音频...
+                    </div>
+                  ) : (
+                    <audio
+                      ref={audioRef}
+                      src={selectedAudioUrl}
+                      controls
+                      className="w-full"
+                    />
+                  )}
 
                   <div className="mt-4 flex flex-wrap gap-2">
                     <button

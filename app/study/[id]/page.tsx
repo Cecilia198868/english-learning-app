@@ -2,12 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { supabase } from "../../../lib/supabase";
 
 type Lesson = {
   id: string;
   title: string;
   txt_content: string;
+  created_at?: string;
 };
 
 type SentencePair = {
@@ -15,10 +15,42 @@ type SentencePair = {
   english: string;
 };
 
+type LocalLessonData = {
+  lessons: Lesson[];
+};
+
+const LESSONS_STORAGE_KEY = "english-app-lessons";
+
+function getDefaultLessonsData(): LocalLessonData {
+  return {
+    lessons: [],
+  };
+}
+
+function loadLessonsData(): LocalLessonData {
+  if (typeof window === "undefined") {
+    return getDefaultLessonsData();
+  }
+
+  try {
+    const raw = localStorage.getItem(LESSONS_STORAGE_KEY);
+    if (!raw) return getDefaultLessonsData();
+
+    const parsed = JSON.parse(raw);
+
+    return {
+      lessons: Array.isArray(parsed.lessons) ? parsed.lessons : [],
+    };
+  } catch (error) {
+    console.error("读取课程失败：", error);
+    return getDefaultLessonsData();
+  }
+}
+
 export default function StudyPage() {
   const params = useParams();
   const router = useRouter();
-  const lessonId = params.id as string;
+  const lessonId = typeof params.id === "string" ? params.id : "";
 
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [pairs, setPairs] = useState<SentencePair[]>([]);
@@ -68,21 +100,20 @@ export default function StudyPage() {
     return result;
   }
 
-  async function loadLesson() {
-    const { data, error } = await supabase
-      .from("lessons")
-      .select("id, title, txt_content")
-      .eq("id", lessonId)
-      .single();
+  function loadLesson() {
+    const data = loadLessonsData();
+    const found = data.lessons.find((item) => item.id === lessonId) || null;
 
-    if (error) {
-      setMessage("读取课程失败：" + error.message);
+    if (!found) {
+      setMessage("读取课程失败：当前浏览器里没有这条课程。");
+      setLesson(null);
+      setPairs([]);
       return;
     }
 
-    setLesson(data);
+    setLesson(found);
 
-    const parsedPairs = parseTxtToPairs(data.txt_content);
+    const parsedPairs = parseTxtToPairs(found.txt_content || "");
     setPairs(parsedPairs);
 
     const savedIndex = localStorage.getItem(progressKey);
@@ -95,8 +126,16 @@ export default function StudyPage() {
       ) {
         setCurrentIndex(indexNumber);
         currentIndexRef.current = indexNumber;
+      } else {
+        setCurrentIndex(0);
+        currentIndexRef.current = 0;
       }
+    } else {
+      setCurrentIndex(0);
+      currentIndexRef.current = 0;
     }
+
+    setShowEnglish(false);
   }
 
   function saveProgress(index: number) {
@@ -421,7 +460,9 @@ export default function StudyPage() {
                     {currentPair.english || "这一句还没有对应英文。"}
                   </p>
                 ) : (
-                  <p className="text-lg text-white/35 md:text-xl">点击这里显示英文</p>
+                  <p className="text-lg text-white/35 md:text-xl">
+                    点击这里显示英文
+                  </p>
                 )}
               </div>
             </div>
