@@ -92,8 +92,8 @@ export default function StudyPage() {
 
     for (let i = 0; i < lines.length; i += 2) {
       result.push({
-        chinese: lines[i] || "",
-        english: lines[i + 1] || "",
+        english: lines[i] || "",
+        chinese: lines[i + 1] || "",
       });
     }
 
