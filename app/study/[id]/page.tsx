@@ -168,7 +168,7 @@ export default function StudyPage() {
     return voices.find((voice) => voice.name === selectedVoiceName);
   }
 
-  function speakEnglish(text: string, onEnd?: () => void) {
+  function speakEnglish(text: string, onEnd?: () => void, rate = 1) {
     if (!text) {
       if (onEnd) onEnd();
       return;
@@ -178,6 +178,7 @@ export default function StudyPage() {
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
+    utterance.rate = rate;
 
     const selectedVoice = getSelectedVoice();
     if (selectedVoice) {
@@ -522,6 +523,16 @@ export default function StudyPage() {
                   className="rounded-2xl bg-purple-600 px-4 py-3 text-sm disabled:opacity-40"
                 >
                   朗读英文
+                </button>
+
+                <button
+                  onClick={() =>
+                    speakEnglish(currentPair.english, undefined, 0.75)
+                  }
+                  disabled={isAutoPlaying}
+                  className="rounded-2xl bg-indigo-600 px-4 py-3 text-sm disabled:opacity-40"
+                >
+                  放慢速度
                 </button>
 
                 {!isAutoPlaying ? (
