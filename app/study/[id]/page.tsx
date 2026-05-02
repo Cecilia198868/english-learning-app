@@ -22,27 +22,22 @@ type LocalLessonData = {
 const LESSONS_STORAGE_KEY = "english-app-lessons";
 
 function getDefaultLessonsData(): LocalLessonData {
-  return {
-    lessons: [],
-  };
+  return { lessons: [] };
 }
 
 function loadLessonsData(): LocalLessonData {
-  if (typeof window === "undefined") {
-    return getDefaultLessonsData();
-  }
+  if (typeof window === "undefined") return getDefaultLessonsData();
 
   try {
     const raw = localStorage.getItem(LESSONS_STORAGE_KEY);
     if (!raw) return getDefaultLessonsData();
 
     const parsed = JSON.parse(raw);
-
     return {
       lessons: Array.isArray(parsed.lessons) ? parsed.lessons : [],
     };
   } catch (error) {
-    console.error("璇诲彇璇剧▼澶辫触锛?, error);
+    console.error("Failed to load lesson:", error);
     return getDefaultLessonsData();
   }
 }
@@ -60,8 +55,6 @@ export default function StudyPage() {
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceName, setSelectedVoiceName] = useState("");
-  const [speechRate, setSpeechRate] = useState(1);
-
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
 
   const [prepSeconds, setPrepSeconds] = useState(2);
@@ -106,7 +99,7 @@ export default function StudyPage() {
     const found = data.lessons.find((item) => item.id === lessonId) || null;
 
     if (!found) {
-      setMessage("璇诲彇璇剧▼澶辫触锛氬綋鍓嶆祻瑙堝櫒閲屾病鏈夎繖鏉¤绋嬨€?);
+      setMessage("没有找到这节课");
       setLesson(null);
       setPairs([]);
       return;
@@ -120,11 +113,7 @@ export default function StudyPage() {
     const savedIndex = localStorage.getItem(progressKey);
     if (savedIndex !== null) {
       const indexNumber = Number(savedIndex);
-      if (
-        !Number.isNaN(indexNumber) &&
-        indexNumber >= 0 &&
-        indexNumber < parsedPairs.length
-      ) {
+      if (!Number.isNaN(indexNumber) && indexNumber >= 0 && indexNumber < parsedPairs.length) {
         setCurrentIndex(indexNumber);
         currentIndexRef.current = indexNumber;
       } else {
@@ -169,7 +158,7 @@ export default function StudyPage() {
     return voices.find((voice) => voice.name === selectedVoiceName);
   }
 
-  function speakEnglish(text: string, onEnd?: () => void) {
+  function speakEnglish(text: string, rate = 1, onEnd?: () => void) {
     if (!text) {
       if (onEnd) onEnd();
       return;
@@ -179,7 +168,7 @@ export default function StudyPage() {
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
-    utterance.rate = speechRate;
+    utterance.rate = rate;
 
     const selectedVoice = getSelectedVoice();
     if (selectedVoice) {
@@ -202,10 +191,7 @@ export default function StudyPage() {
     setVoices(englishVoices);
 
     const savedVoiceName = localStorage.getItem(voiceKey);
-    if (
-      savedVoiceName &&
-      englishVoices.some((voice) => voice.name === savedVoiceName)
-    ) {
+    if (savedVoiceName && englishVoices.some((voice) => voice.name === savedVoiceName)) {
       setSelectedVoiceName(savedVoiceName);
     } else if (englishVoices.length > 0) {
       setSelectedVoiceName(englishVoices[0].name);
@@ -217,7 +203,7 @@ export default function StudyPage() {
     setIsAutoPlaying(false);
     clearAutoTimer();
     window.speechSynthesis.cancel();
-    setMessage("宸插仠姝㈣嚜鍔ㄦ挱鏀俱€?);
+    setMessage("自动播放已停止");
   }
 
   function scheduleNextStep(callback: () => void, delayMs: number) {
@@ -233,7 +219,7 @@ export default function StudyPage() {
     if (index < 0 || index >= pairs.length) {
       autoPlayRef.current = false;
       setIsAutoPlaying(false);
-      setMessage("鑷姩鎾斁宸插畬鎴愩€?);
+      setMessage("自动播放已完成");
       return;
     }
 
@@ -243,15 +229,15 @@ export default function StudyPage() {
     currentIndexRef.current = index;
     setShowEnglish(false);
     saveProgress(index);
-    setMessage("鑷姩鎾斁涓細鍏堢湅涓枃...");
+    setMessage("自动播放：先显示中文");
 
     scheduleNextStep(() => {
       if (!autoPlayRef.current) return;
 
       setShowEnglish(true);
-      setMessage("鑷姩鎾斁涓細鏄剧ず鑻辨枃骞舵湕璇?..");
+      setMessage("自动播放：显示英文并朗读");
 
-      speakEnglish(pair.english, () => {
+      speakEnglish(pair.english, 1, () => {
         if (!autoPlayRef.current) return;
 
         if (index < pairs.length - 1) {
@@ -262,7 +248,7 @@ export default function StudyPage() {
         } else {
           autoPlayRef.current = false;
           setIsAutoPlaying(false);
-          setMessage("鑷姩鎾斁宸插畬鎴愩€?);
+          setMessage("自动播放已完成");
         }
       });
     }, prepSeconds * 1000);
@@ -270,20 +256,18 @@ export default function StudyPage() {
 
   function startAutoPlay() {
     if (pairs.length === 0) {
-      setMessage("褰撳墠璇剧▼娌℃湁鍙挱鏀惧唴瀹广€?);
+      setMessage("这节课没有内容");
       return;
     }
 
     autoPlayRef.current = true;
     setIsAutoPlaying(true);
-    setMessage("鑷姩鎾斁鍑嗗寮€濮?..");
+    setMessage("自动播放开始");
     playCurrentSentenceAndContinue(currentIndexRef.current);
   }
 
   useEffect(() => {
-    if (lessonId) {
-      loadLesson();
-    }
+    if (lessonId) loadLesson();
   }, [lessonId]);
 
   useEffect(() => {
@@ -309,16 +293,12 @@ export default function StudyPage() {
 
     if (savedPrep) {
       const n = Number(savedPrep);
-      if (!Number.isNaN(n) && n >= 0 && n <= 10) {
-        setPrepSeconds(n);
-      }
+      if (!Number.isNaN(n) && n >= 0 && n <= 10) setPrepSeconds(n);
     }
 
     if (savedGap) {
       const n = Number(savedGap);
-      if (!Number.isNaN(n) && n >= 0 && n <= 10) {
-        setGapSeconds(n);
-      }
+      if (!Number.isNaN(n) && n >= 0 && n <= 10) setGapSeconds(n);
     }
   }, []);
 
@@ -346,13 +326,14 @@ export default function StudyPage() {
             <div className="mb-2 inline-flex rounded-full bg-emerald-500/20 px-3 py-1 text-xs text-emerald-300">
               Study Mode
             </div>
-            <h1 className="text-2xl font-bold md:text-3xl">閫愬彞瀛︿範</h1>
+            <h1 className="text-2xl font-bold md:text-3xl">逐句学习</h1>
             <p className="mt-1 text-sm text-white/65">
-              {lesson?.title || "姝ｅ湪鍔犺浇璇剧▼..."}
+              {lesson?.title || "正在加载课程..."}
             </p>
             {pairs.length > 0 && (
               <p className="mt-1 text-xs text-white/50">
-                绗?{currentIndex + 1} 鍙?/ 鍏?{pairs.length} 鍙?              </p>
+                第 {currentIndex + 1} 句 / 共 {pairs.length} 句
+              </p>
             )}
           </div>
 
@@ -364,17 +345,17 @@ export default function StudyPage() {
               }}
               className="rounded-2xl bg-slate-700 px-4 py-2.5 text-sm font-medium hover:bg-slate-600"
             >
-              杩斿洖棣栭〉
+              返回首页
             </button>
 
             <button
               onClick={() => {
                 saveProgress(currentIndex);
-                setMessage("瀛︿範浣嶇疆宸蹭繚瀛橈紒");
+                setMessage("当前位置已保存");
               }}
               className="rounded-2xl bg-emerald-600 px-4 py-2.5 text-sm font-medium hover:bg-emerald-500"
             >
-              淇濆瓨褰撳墠浣嶇疆
+              保存当前位置
             </button>
           </div>
         </div>
@@ -388,10 +369,12 @@ export default function StudyPage() {
         <div className="grid gap-4 xl:grid-cols-[280px_minmax(0,1fr)]">
           <aside className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-              <h2 className="mb-3 text-lg font-bold">澹伴煶璁剧疆</h2>
+              <h2 className="mb-3 text-lg font-bold">声音设置</h2>
 
               <label className="mb-2 block text-sm text-white/70">
-                閫夋嫨鏈哄櫒浜哄０闊?              </label>
+                选择机器人声音
+              </label>
+
               <select
                 value={selectedVoiceName}
                 onChange={(e) => setSelectedVoiceName(e.target.value)}
@@ -406,11 +389,12 @@ export default function StudyPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-              <h2 className="mb-3 text-lg font-bold">鑷姩鎾斁鑺傚</h2>
+              <h2 className="mb-3 text-lg font-bold">自动播放节奏</h2>
 
               <div className="mb-4">
                 <label className="mb-2 block text-sm text-white/70">
-                  涓枃鍋滅暀绉掓暟锛歿prepSeconds} 绉?                </label>
+                  中文停留秒数：{prepSeconds} 秒
+                </label>
                 <input
                   type="range"
                   min="0"
@@ -425,7 +409,8 @@ export default function StudyPage() {
 
               <div>
                 <label className="mb-2 block text-sm text-white/70">
-                  姣忓彞缁撴潫闂撮殧锛歿gapSeconds} 绉?                </label>
+                  每句结束间隔：{gapSeconds} 秒
+                </label>
                 <input
                   type="range"
                   min="0"
@@ -443,9 +428,9 @@ export default function StudyPage() {
           <section className="space-y-4">
             <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
               <div className="mb-3 flex items-center justify-between gap-3">
-                <h2 className="text-xl font-bold md:text-2xl">鑻辨枃鍖?/h2>
+                <h2 className="text-xl font-bold md:text-2xl">英文区</h2>
                 <div className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/60">
-                  鐐瑰嚮绌虹櫧鍖哄煙鏄剧ず鑻辨枃
+                  点击空白区域显示英文
                 </div>
               </div>
 
@@ -455,11 +440,11 @@ export default function StudyPage() {
               >
                 {showEnglish ? (
                   <p className="text-2xl font-semibold leading-relaxed text-emerald-300 md:text-3xl">
-                    {currentPair.english || "杩欎竴鍙ヨ繕娌℃湁瀵瑰簲鑻辨枃銆?}
+                    {currentPair.english || "这一句还没有对应英文。"}
                   </p>
                 ) : (
                   <p className="text-lg text-white/35 md:text-xl">
-                    鐐瑰嚮杩欓噷鏄剧ず鑻辨枃
+                    点击这里显示英文
                   </p>
                 )}
               </div>
@@ -467,21 +452,21 @@ export default function StudyPage() {
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
               <div className="mb-3 flex items-center justify-between gap-3">
-                <h2 className="text-xl font-bold md:text-2xl">涓枃鍖?/h2>
+                <h2 className="text-xl font-bold md:text-2xl">中文区</h2>
                 <div className="rounded-full bg-blue-500/15 px-3 py-1 text-xs text-blue-300">
-                  褰撳墠瀛︿範鍙ュ瓙
+                  当前学习句子
                 </div>
               </div>
 
               <div className="rounded-3xl bg-black/25 p-5 md:p-6">
                 <p className="text-2xl font-bold leading-relaxed md:text-3xl">
-                  {currentPair.chinese || "娌℃湁鍐呭"}
+                  {currentPair.chinese || "没有内容"}
                 </p>
               </div>
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
-              <h2 className="mb-3 text-xl font-bold md:text-2xl">鎺у埗鍖?/h2>
+              <h2 className="mb-3 text-xl font-bold md:text-2xl">控制区</h2>
 
               <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
                 <button
@@ -489,85 +474,60 @@ export default function StudyPage() {
                   disabled={currentIndex === 0 || isAutoPlaying}
                   className="rounded-2xl bg-slate-700 px-4 py-3 text-sm disabled:opacity-40"
                 >
-                  涓婁竴鍙?                </button>
+                  上一句
+                </button>
 
                 <button
                   onClick={handleNext}
                   disabled={currentIndex >= pairs.length - 1 || isAutoPlaying}
                   className="rounded-2xl bg-blue-600 px-4 py-3 text-sm disabled:opacity-40"
                 >
-                  涓嬩竴鍙?                </button>
+                  下一句
+                </button>
 
                 <button
                   onClick={() => setShowEnglish(true)}
                   className="rounded-2xl bg-emerald-600 px-4 py-3 text-sm"
                 >
-                  鏄剧ず鑻辨枃
+                  显示英文
                 </button>
 
                 <button
                   onClick={() => setShowEnglish(false)}
                   className="rounded-2xl bg-slate-700 px-4 py-3 text-sm"
                 >
-                  闅愯棌鑻辨枃
+                  隐藏英文
                 </button>
 
-                <div className="flex flex-wrap gap-2 sm:col-span-2 xl:col-span-2">
-                  <button
-                    onClick={() => speakEnglish(currentPair.english)}
-                    disabled={isAutoPlaying}
-                    className="rounded-2xl bg-purple-600 px-4 py-3 text-sm disabled:opacity-40"
-                  >
-                    鏈楄鑻辨枃
-                  </button>
+                <button
+                  onClick={() => speakEnglish(currentPair.english, 1)}
+                  disabled={isAutoPlaying}
+                  className="rounded-2xl bg-purple-600 px-4 py-3 text-sm disabled:opacity-40"
+                >
+                  朗读英文
+                </button>
 
-                  <button
-                    onClick={() => setSpeechRate(1)}
-                    className={`rounded-2xl px-4 py-3 text-sm ${
-                      speechRate === 1
-                        ? "bg-blue-600 text-white"
-                        : "bg-slate-700 text-white"
-                    }`}
-                  >
-                    正常
-                  </button>
-
-                  <button
-                    onClick={() => setSpeechRate(0.75)}
-                    className={`rounded-2xl px-4 py-3 text-sm ${
-                      speechRate === 0.75
-                        ? "bg-blue-600 text-white"
-                        : "bg-slate-700 text-white"
-                    }`}
-                  >
-                    慢速
-                  </button>
-
-                  <button
-                    onClick={() => setSpeechRate(0.6)}
-                    className={`rounded-2xl px-4 py-3 text-sm ${
-                      speechRate === 0.6
-                        ? "bg-blue-600 text-white"
-                        : "bg-slate-700 text-white"
-                    }`}
-                  >
-                    超慢
-                  </button>
-                </div>
-
+                <button
+                  onClick={() => speakEnglish(currentPair.english, 0.5)}
+                  disabled={isAutoPlaying}
+                  className="rounded-2xl bg-indigo-600 px-4 py-3 text-sm disabled:opacity-40"
+                >
+                  放慢速度
+                </button>
 
                 {!isAutoPlaying ? (
                   <button
                     onClick={startAutoPlay}
                     className="rounded-2xl bg-orange-600 px-4 py-3 text-sm font-semibold"
                   >
-                    寮€濮嬭嚜鍔ㄦ挱鏀?                  </button>
+                    开始自动播放
+                  </button>
                 ) : (
                   <button
                     onClick={stopAutoPlay}
                     className="rounded-2xl bg-red-600 px-4 py-3 text-sm font-semibold"
                   >
-                    鍋滄鑷姩鎾斁
+                    停止自动播放
                   </button>
                 )}
               </div>
@@ -578,9 +538,3 @@ export default function StudyPage() {
     </main>
   );
 }
-
-
-
-
-
-
