@@ -2,17 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { parseTrainingContent, type SentencePair } from "@/lib/training";
 
 type Lesson = {
   id: string;
   title: string;
   txt_content: string;
   created_at?: string;
-};
-
-type SentencePair = {
-  chinese: string;
-  english: string;
 };
 
 type LocalLessonData = {
@@ -76,24 +72,6 @@ export default function StudyPage() {
     }
   }
 
-  function parseTxtToPairs(content: string): SentencePair[] {
-    const lines = content
-      .split(/\r?\n/)
-      .map((line) => line.trim())
-      .filter((line) => line !== "");
-
-    const result: SentencePair[] = [];
-
-    for (let i = 0; i < lines.length; i += 2) {
-      result.push({
-        english: lines[i] || "",
-        chinese: lines[i + 1] || "",
-      });
-    }
-
-    return result;
-  }
-
   function loadLesson() {
     const data = loadLessonsData();
     const found = data.lessons.find((item) => item.id === lessonId) || null;
@@ -107,7 +85,7 @@ export default function StudyPage() {
 
     setLesson(found);
 
-    const parsedPairs = parseTxtToPairs(found.txt_content || "");
+    const parsedPairs = parseTrainingContent(found.txt_content || "");
     setPairs(parsedPairs);
 
     const savedIndex = localStorage.getItem(progressKey);

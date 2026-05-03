@@ -2,6 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import {
+  deserializeTrainingItems,
+  generateTrainingFromEnglishSubtitles,
+  type TrainingItem,
+  serializeTrainingItems,
+} from "@/lib/training";
 
 type Lesson = {
   id: string;
@@ -190,8 +196,15 @@ async function deleteAudioFromDB(id: string): Promise<void> {
 
 export default function Home() {
   const [title, setTitle] = useState("");
+  const [rawText, setRawText] = useState("");
   const [txtContent, setTxtContent] = useState("");
   const [message, setMessage] = useState("");
+  const [subtitleFileName, setSubtitleFileName] = useState("");
+  const [fileContent, setFileContent] = useState("");
+  const [isGeneratingTraining, setIsGeneratingTraining] = useState(false);
+  const [generatedItems, setGeneratedItems] = useState<TrainingItem[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showEnglish, setShowEnglish] = useState(false);
 
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [expandedLessonId, setExpandedLessonId] = useState<string | null>(null);
@@ -259,12 +272,120 @@ export default function Home() {
       setExpandedLessonId(newLesson.id);
 
       setTitle("");
+      setRawText("");
       setTxtContent("");
+      setSubtitleFileName("");
+      setFileContent("");
       setMessage("TXT 保存成功！");
     } catch (error) {
       const msg =
         error instanceof Error ? error.message : "TXT 保存失败。";
       setMessage(msg);
+    }
+  }
+
+  async function handleSubtitleFileChange(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    const file = event.target.files?.[0] || null;
+    setMessage("");
+
+    if (!file) {
+      setSubtitleFileName("");
+      setFileContent("");
+      return;
+    }
+
+    const lowerName = file.name.toLowerCase();
+    if (!lowerName.endsWith(".srt") && !lowerName.endsWith(".txt")) {
+      setSubtitleFileName("");
+      setFileContent("");
+      setMessage("请上传 .srt 或 .txt 的英文字幕文件。");
+      event.target.value = "";
+      return;
+    }
+
+    try {
+      const rawText = await file.text();
+      setSubtitleFileName(file.name);
+      setFileContent(rawText);
+      setRawText(rawText);
+      setMessage(`已载入字幕文件：${file.name}`);
+    } catch (error) {
+      const msg =
+        error instanceof Error ? error.message : "读取字幕文件失败。";
+      setSubtitleFileName("");
+      setFileContent("");
+      setMessage(msg);
+    }
+  }
+
+  async function handleGenerateTraining() {
+    setMessage("");
+
+    const inputText = rawText.trim() ? rawText : fileContent;
+    if (!inputText.trim()) {
+      setMessage("???????????");
+      return;
+    }
+
+    setIsGeneratingTraining(true);
+
+    try {
+      const res = await fetch("/api/generate-training", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: inputText }),
+      });
+
+      const text = await res.text();
+
+      let data: {
+        error?: string;
+        message?: string;
+        raw?: string;
+        items?: TrainingItem[];
+      };
+
+      try {
+        data = JSON.parse(text) as {
+          error?: string;
+          message?: string;
+          raw?: string;
+          items?: TrainingItem[];
+        };
+      } catch {
+        alert("?????JSON?" + text);
+        setMessage("API ??????");
+        return;
+      }
+
+      if (!res.ok) {
+        alert(data.message || data.raw || data.error || "生成失败");
+        setMessage(data.message || data.raw || data.error || "????????");
+        return;
+      }
+
+      const items = Array.isArray(data.items) ? data.items : [];
+      if (items.length === 0) {
+        setMessage("???????????????????");
+        return;
+      }
+
+      setGeneratedItems(items);
+      setCurrentIndex(0);
+      setShowEnglish(false);
+      setTxtContent(serializeTrainingItems(items));
+      setMessage(`??? ${items.length} ?????`);
+    } catch (error) {
+      const msg =
+        error instanceof Error ? error.message : "????????";
+      alert(msg);
+      setMessage(msg);
+    } finally {
+      setIsGeneratingTraining(false);
     }
   }
 
@@ -483,13 +604,95 @@ export default function Home() {
                 className="mb-3 w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 outline-none placeholder:text-white/35"
               />
 
+              <div className="mb-3 flex flex-wrap gap-3">
+                <input
+                  id="subtitle-file-input"
+                  type="file"
+                  accept=".srt,.txt,text/plain,.srt"
+                  onChange={handleSubtitleFileChange}
+                  className="min-w-0 flex-1 rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm"
+                />
+
+                <button
+                  onClick={handleGenerateTraining}
+                  disabled={isGeneratingTraining}
+                  className="rounded-2xl bg-emerald-600 px-4 py-3 font-semibold hover:bg-emerald-500 disabled:opacity-50"
+                >
+                  一键生成训练内容
+                </button>
+              </div>
+
+              {subtitleFileName && (
+                <div className="mb-3 text-xs text-white/55">
+                  当前字幕：{subtitleFileName}
+                </div>
+              )}
+
               <textarea
-                placeholder="把 TXT 内容粘贴到这里"
-                value={txtContent}
-                onChange={(e) => setTxtContent(e.target.value)}
+                placeholder="把 TXT 内容粘贴到这里，或上传英文字幕后一键生成训练内容"
+                value={rawText}
+                onChange={(e) => setRawText(e.target.value)}
                 rows={8}
                 className="mb-3 w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 outline-none placeholder:text-white/35"
               />
+
+              {generatedItems.length > 0 && (
+                <div className="mb-3 rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <div className="text-sm font-semibold text-white/85">
+                      当前训练预览
+                    </div>
+                    <div className="text-xs text-white/50">
+                      {currentIndex + 1} / {generatedItems.length}
+                    </div>
+                  </div>
+
+                  <p className="rounded-2xl bg-white/5 px-3 py-3 text-sm leading-6">
+                    {generatedItems[currentIndex]?.zh || "暂无中文翻译"}
+                  </p>
+
+                  <div className="mt-3 rounded-2xl bg-white/5 px-3 py-3 text-sm leading-6 text-white/75">
+                    {showEnglish
+                      ? generatedItems[currentIndex]?.en || ""
+                      : "点击显示英文后可查看原句"}
+                  </div>
+
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() =>
+                        setCurrentIndex((prev) => Math.max(prev - 1, 0))
+                      }
+                      disabled={currentIndex === 0}
+                      className="rounded-2xl bg-slate-700 px-3 py-2 text-sm disabled:opacity-40"
+                    >
+                      上一句
+                    </button>
+                    <button
+                      onClick={() =>
+                        setCurrentIndex((prev) =>
+                          Math.min(prev + 1, generatedItems.length - 1)
+                        )
+                      }
+                      disabled={currentIndex >= generatedItems.length - 1}
+                      className="rounded-2xl bg-blue-600 px-3 py-2 text-sm disabled:opacity-40"
+                    >
+                      下一句
+                    </button>
+                    <button
+                      onClick={() => setShowEnglish(true)}
+                      className="rounded-2xl bg-emerald-600 px-3 py-2 text-sm"
+                    >
+                      显示英文
+                    </button>
+                    <button
+                      onClick={() => setShowEnglish(false)}
+                      className="rounded-2xl bg-slate-700 px-3 py-2 text-sm"
+                    >
+                      隐藏英文
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <button
                 onClick={handleSaveLesson}
@@ -594,9 +797,28 @@ export default function Home() {
 
                           {isExpanded && (
                             <div className="border-t border-white/10 px-4 py-4">
-                              <p className="whitespace-pre-wrap text-sm text-white/80">
-                                {lesson.txt_content}
-                              </p>
+                              <div className="space-y-2 text-sm text-white/80">
+                                {deserializeTrainingItems(lesson.txt_content).map(
+                                  (item, itemIndex) => (
+                                    <div
+                                      key={`${lesson.id}-${itemIndex}`}
+                                      className="rounded-2xl bg-white/5 px-3 py-2"
+                                    >
+                                      {item.zh && (
+                                        <p>{item.zh}</p>
+                                      )}
+                                      <p className={item.zh ? "mt-1 text-white/55" : ""}>
+                                        {item.en}
+                                      </p>
+                                      {!item.zh && (
+                                        <p className="mt-1 text-white/45">
+                                          暂无中文翻译
+                                        </p>
+                                      )}
+                                    </div>
+                                  )
+                                )}
+                              </div>
                             </div>
                           )}
                         </div>
@@ -657,14 +879,18 @@ export default function Home() {
                     <div className="rounded-2xl bg-black/20 p-5 text-white/60">
                       正在加载音频...
                     </div>
-                  ) : (
+                  ) : null}
+
+                  {!loadingAudio &&
+                  selectedAudioUrl &&
+                  selectedAudioUrl.trim() !== "" ? (
                     <audio
                       ref={audioRef}
                       src={selectedAudioUrl}
                       controls
                       className="w-full"
                     />
-                  )}
+                  ) : null}
 
                   <div className="mt-4 flex flex-wrap gap-2">
                     <button
