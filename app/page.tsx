@@ -4,10 +4,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   deserializeTrainingItems,
-  generateTrainingFromEnglishSubtitles,
   type TrainingItem,
   serializeTrainingItems,
 } from "@/lib/training";
+import { splitAudioToWavChunks } from "@/lib/audioSplit";
 
 type Lesson = {
   id: string;
@@ -59,6 +59,28 @@ type AudioTrainingApiResponse = {
   message?: string;
 };
 
+type TranscribedSegment = {
+  text: string;
+  startTime: number;
+  endTime: number;
+};
+
+type TranscribeChunkApiResponse = {
+  chunkIndex?: number;
+  startOffset?: number;
+  transcript?: string;
+  segments?: TranscribedSegment[];
+  error?: string;
+  message?: string;
+};
+
+type SegmentsToTrainingApiResponse = {
+  title?: string;
+  pairs?: GeneratedPair[];
+  error?: string;
+  message?: string;
+};
+
 type LocalLessonData = {
   lessons: Lesson[];
 };
@@ -71,9 +93,21 @@ const DB_VERSION = 1;
 const AUDIO_STORE_NAME = "audios";
 const MAX_AUDIO_SIZE_MB = 100;
 const MAX_AUDIO_SIZE = MAX_AUDIO_SIZE_MB * 1024 * 1024;
+const DIRECT_AUDIO_TO_TRAINING_MAX_BYTES = 4 * 1024 * 1024;
+const AUDIO_CHUNK_SECONDS = 60;
 
 function createId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+async function parseJsonResponse<T>(response: Response): Promise<T> {
+  const responseText = await response.text();
+
+  try {
+    return JSON.parse(responseText) as T;
+  } catch {
+    throw new Error(responseText || "服务器返回了非 JSON 错误");
+  }
 }
 
 function getDefaultLessonsData(): LocalLessonData {
@@ -575,170 +609,257 @@ export default function Home() {
     }
   }
 
-  function handleGenerateAudioTraining(audio: AudioItem) {
-    console.log("生成训练内容:", audio);
+  function applyGeneratedAudioTraining(
+    audio: AudioItem,
+    pairs: GeneratedPair[],
+    transcript: string,
+    generatedTitle?: string
+  ) {
+    const normalizedPairs: GeneratedPair[] = pairs.map((pair) => ({
+      chinese: typeof pair.chinese === "string" ? pair.chinese.trim() : "",
+      english: typeof pair.english === "string" ? pair.english.trim() : "",
+      startTime:
+        typeof pair.startTime === "number" ? pair.startTime : undefined,
+      endTime: typeof pair.endTime === "number" ? pair.endTime : undefined,
+    }));
+
+    if (normalizedPairs.length === 0) {
+      throw new Error("操作失败");
+    }
+
+    const items: TrainingItem[] = normalizedPairs.map((pair) => ({
+      zh: pair.chinese,
+      en: pair.english,
+      startTime: pair.startTime,
+      endTime: pair.endTime,
+    }));
+    const generatedText = normalizedPairs
+      .map((pair) => `${pair.chinese}\n${pair.english}`)
+      .join("\n\n");
+    const nextTitle =
+      (typeof generatedTitle === "string" && generatedTitle.trim()) ||
+      audio.title ||
+      audio.name ||
+      audio.fileName ||
+      "音频生成课程";
+
+    setTitle(nextTitle);
+    setRawText(generatedText);
+    setTxtContent(serializeTrainingItems(items));
+    setGeneratedPairs(normalizedPairs);
+    setGeneratedItems(items);
+    setCurrentIndex(0);
+    setShowEnglish(false);
+    setSourceMode("text-audio");
+    setFileContent(transcript);
+    setSubtitleFileName("");
+    setMessage("训练内容生成成功，请检查后点击保存 TXT。");
   }
 
-  async function handleGenerateAudioTrainingWithTimestamps(audio: AudioItem) {
-    try {
-      setGeneratingAudioId(audio.id);
-      setAudioMessage("");
-      setMessage("正在识别音频并生成训练内容，请稍候...");
+  async function getStoredAudioBlob(audio: AudioItem) {
+    const audioRecord = await getAudioRecordById(audio.id);
+    console.log("已保存音频对象:", audioRecord ?? audio);
 
-      const audioRecord = await getAudioRecordById(audio.id);
-      console.log("已保存音频对象:", audioRecord ?? audio);
+    const blobSource =
+      audioRecord?.file ||
+      (
+        audioRecord as (AudioDBRecord & {
+          blob?: Blob;
+          audioBlob?: Blob;
+          audioData?: Blob;
+          data?: Blob;
+        }) | null
+      )?.blob ||
+      (
+        audioRecord as (AudioDBRecord & {
+          blob?: Blob;
+          audioBlob?: Blob;
+          audioData?: Blob;
+          data?: Blob;
+        }) | null
+      )?.audioBlob ||
+      (
+        audioRecord as (AudioDBRecord & {
+          blob?: Blob;
+          audioBlob?: Blob;
+          audioData?: Blob;
+          data?: Blob;
+        }) | null
+      )?.audioData ||
+      (
+        audioRecord as (AudioDBRecord & {
+          blob?: Blob;
+          audioBlob?: Blob;
+          audioData?: Blob;
+          data?: Blob;
+        }) | null
+      )?.data ||
+      (await getAudioBlobById(audio.id));
 
-      const blobSource =
-        audioRecord?.file ||
-        (
-          audioRecord as (AudioDBRecord & {
-            blob?: Blob;
-            audioBlob?: Blob;
-            audioData?: Blob;
-            data?: Blob;
-          }) | null
-        )?.blob ||
-        (
-          audioRecord as (AudioDBRecord & {
-            blob?: Blob;
-            audioBlob?: Blob;
-            audioData?: Blob;
-            data?: Blob;
-          }) | null
-        )?.audioBlob ||
-        (
-          audioRecord as (AudioDBRecord & {
-            blob?: Blob;
-            audioBlob?: Blob;
-            audioData?: Blob;
-            data?: Blob;
-          }) | null
-        )?.audioData ||
-        (
-          audioRecord as (AudioDBRecord & {
-            blob?: Blob;
-            audioBlob?: Blob;
-            audioData?: Blob;
-            data?: Blob;
-          }) | null
-        )?.data ||
-        (await getAudioBlobById(audio.id));
+    if (!blobSource) {
+      console.log("读取不到音频 blob:", audioRecord ?? audio);
+      throw new Error("操作失败");
+    }
 
-      if (!blobSource) {
-        console.log("读取不到音频 blob:", audioRecord ?? audio);
-        throw new Error("操作失败");
-      }
+    const audioTitleForApi =
+      audio.title ||
+      audio.name ||
+      audio.fileName ||
+      audio.filename ||
+      audio.originalName ||
+      audio.label ||
+      "音频生成课程";
+    const fileName =
+      audioRecord?.fileName ||
+      audioRecord?.filename ||
+      audioRecord?.name ||
+      audioRecord?.originalName ||
+      `${audioTitleForApi}.mp3`;
 
-      const audioTitleForApi =
-        audio.title ||
-        audio.name ||
-        audio.fileName ||
-        audio.filename ||
-        audio.originalName ||
-        audio.label ||
-        "音频生成课程";
-      const fileName =
-        audioRecord?.fileName ||
-        audioRecord?.filename ||
-        audioRecord?.name ||
-        audioRecord?.originalName ||
-        `${audioTitleForApi}.mp3`;
-      const uploadFile =
+    return {
+      audioTitleForApi,
+      fileName,
+      uploadFile:
         blobSource instanceof File
           ? blobSource
           : new File([blobSource], fileName, {
               type: blobSource.type || "audio/mpeg",
-            });
+            }),
+    };
+  }
 
-      const formData = new FormData();
-      formData.append("audio", uploadFile);
-      formData.append("title", audioTitleForApi);
+  async function handleGenerateAudioTraining(audio: AudioItem) {
+    try {
+      setGeneratingAudioId(audio.id);
+      setAudioMessage("");
 
-      const res = await fetch("/api/audio-to-training", {
-        method: "POST",
-        body: formData,
-      });
-      const responseText = await res.text();
+      const { audioTitleForApi, fileName, uploadFile } =
+        await getStoredAudioBlob(audio);
 
-      let result: AudioTrainingApiResponse | null = null;
-      try {
-        result = JSON.parse(responseText) as AudioTrainingApiResponse;
-      } catch {
-        if (
-          res.status === 413 ||
-          responseText.includes("Request Entity Too Large")
-        ) {
-          throw new Error(
-            "音频文件太大，请先用 1–3 分钟短音频测试。长音频需要以后做分段转写。"
-          );
+      if (uploadFile.size <= DIRECT_AUDIO_TO_TRAINING_MAX_BYTES) {
+        setMessage("正在识别音频并生成训练内容，请稍候...");
+
+        const formData = new FormData();
+        formData.append("audio", uploadFile);
+        formData.append("title", audioTitleForApi);
+
+        const response = await fetch("/api/audio-to-training", {
+          method: "POST",
+          body: formData,
+        });
+        const result = await parseJsonResponse<AudioTrainingApiResponse>(response);
+
+        if (!response.ok) {
+          const errorMessage =
+            result.error || result.message || "生成失败";
+          if (
+            response.status === 413 ||
+            errorMessage.includes("Request Entity Too Large")
+          ) {
+            throw new Error(
+              "音频文件太大，请先用 1–3 分钟短音频测试。长音频需要以后做分段转写。"
+            );
+          }
+
+          throw new Error(errorMessage);
         }
 
-        throw new Error(responseText || "服务器返回了非 JSON 错误");
+        const pairs = Array.isArray(result.pairs) ? result.pairs : [];
+        applyGeneratedAudioTraining(
+          audio,
+          pairs,
+          typeof result.transcript === "string" ? result.transcript : "",
+          result.title
+        );
+        return;
       }
 
-      if (!res.ok) {
-        const errorMessage =
-          result?.error || result?.message || responseText || "生成失败";
-        if (
-          res.status === 413 ||
-          errorMessage.includes("Request Entity Too Large")
-        ) {
-          throw new Error(
-            "音频文件太大，请先用 1–3 分钟短音频测试。长音频需要以后做分段转写。"
-          );
-        }
+      setMessage("正在切分音频...");
+      const chunks = await splitAudioToWavChunks(uploadFile, AUDIO_CHUNK_SECONDS);
 
-        throw new Error(errorMessage);
-      }
-
-      console.log("audio-to-training result:", result);
-
-      const pairs = Array.isArray(result.pairs) ? result.pairs : [];
-      if (pairs.length === 0) {
+      if (chunks.length === 0) {
         throw new Error("操作失败");
       }
 
-      const normalizedPairs: GeneratedPair[] = pairs.map((pair) => ({
-        chinese: typeof pair.chinese === "string" ? pair.chinese.trim() : "",
-        english: typeof pair.english === "string" ? pair.english.trim() : "",
-        startTime:
-          typeof pair.startTime === "number" ? pair.startTime : undefined,
-        endTime: typeof pair.endTime === "number" ? pair.endTime : undefined,
-      }));
-      const items: TrainingItem[] = normalizedPairs.map((pair) => ({
-        zh: pair.chinese,
-        en: pair.english,
-        startTime: pair.startTime,
-        endTime: pair.endTime,
-      }));
-      const generatedText = normalizedPairs
-        .map((pair) => `${pair.chinese}\n${pair.english}`)
-        .join("\n\n");
-      const nextTitle =
-        (typeof result.title === "string" && result.title.trim()) ||
-        audio.title ||
-        audio.name ||
-        audio.fileName ||
-        "音频生成课程";
+      const allSegments: TranscribedSegment[] = [];
+      const transcriptParts: string[] = [];
 
-      console.log("generated training text:", generatedText);
+      for (let i = 0; i < chunks.length; i += 1) {
+        const chunk = chunks[i];
+        setMessage(`正在转写第 ${i + 1} / ${chunks.length} 段...`);
 
-      setTitle(nextTitle);
-      setRawText(generatedText);
-      setTxtContent(serializeTrainingItems(items));
-      setGeneratedPairs(normalizedPairs);
-      setGeneratedItems(items);
-      setCurrentIndex(0);
-      setShowEnglish(false);
-      setSourceMode("text-audio");
-      setFileContent(
-        typeof result.transcript === "string" ? result.transcript : ""
+        const chunkFormData = new FormData();
+        chunkFormData.append(
+          "audio",
+          new File([chunk.blob], `${fileName}-chunk-${chunk.index + 1}.wav`, {
+            type: "audio/wav",
+          })
+        );
+        chunkFormData.append("chunkIndex", String(chunk.index));
+        chunkFormData.append("startOffset", String(chunk.startOffset));
+
+        const response = await fetch("/api/transcribe-chunk", {
+          method: "POST",
+          body: chunkFormData,
+        });
+        const result =
+          await parseJsonResponse<TranscribeChunkApiResponse>(response);
+
+        if (!response.ok) {
+          throw new Error(
+            result.error ||
+              result.message ||
+              `第 ${i + 1} 段转写失败`
+          );
+        }
+
+        const chunkSegments = Array.isArray(result.segments)
+          ? result.segments.filter(
+              (segment) =>
+                segment &&
+                typeof segment.text === "string" &&
+                typeof segment.startTime === "number" &&
+                typeof segment.endTime === "number"
+            )
+          : [];
+
+        if (chunkSegments.length === 0 && !(result.transcript || "").trim()) {
+          throw new Error(`第 ${i + 1} 段转写失败`);
+        }
+
+        allSegments.push(...chunkSegments);
+        if (typeof result.transcript === "string" && result.transcript.trim()) {
+          transcriptParts.push(result.transcript.trim());
+        }
+      }
+
+      setMessage("正在整理训练内容...");
+      const response = await fetch("/api/segments-to-training", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: audioTitleForApi,
+          segments: allSegments,
+        }),
+      });
+      const result =
+        await parseJsonResponse<SegmentsToTrainingApiResponse>(response);
+
+      if (!response.ok) {
+        throw new Error(result.error || result.message || "生成失败");
+      }
+
+      const pairs = Array.isArray(result.pairs) ? result.pairs : [];
+      applyGeneratedAudioTraining(
+        audio,
+        pairs,
+        transcriptParts.join(" ").trim(),
+        result.title
       );
-      setSubtitleFileName("");
-      setMessage("训练内容生成成功，请检查后点击保存 TXT。");
     } catch (error) {
-      const msg =
-        error instanceof Error ? error.message : "操作失败";
+      const msg = error instanceof Error ? error.message : "操作失败";
       setMessage(msg);
       setAudioMessage(msg);
     } finally {
@@ -1173,7 +1294,7 @@ export default function Home() {
                               <div className="flex flex-wrap items-center gap-2">
                                 <button
                                   onClick={() =>
-                                    handleGenerateAudioTrainingWithTimestamps(audio)
+                                    handleGenerateAudioTraining(audio)
                                   }
                                   disabled={generatingAudioId === audio.id}
                                   className="whitespace-nowrap rounded-xl bg-blue-600 px-3 py-2 text-sm font-medium disabled:opacity-50"
