@@ -658,12 +658,37 @@ export default function Home() {
         method: "POST",
         body: formData,
       });
-      const result = (await res.json()) as AudioTrainingApiResponse;
+      const responseText = await res.text();
+
+      let result: AudioTrainingApiResponse | null = null;
+      try {
+        result = JSON.parse(responseText) as AudioTrainingApiResponse;
+      } catch {
+        if (
+          res.status === 413 ||
+          responseText.includes("Request Entity Too Large")
+        ) {
+          throw new Error(
+            "音频文件太大，请先用 1–3 分钟短音频测试。长音频需要以后做分段转写。"
+          );
+        }
+
+        throw new Error(responseText || "服务器返回了非 JSON 错误");
+      }
 
       if (!res.ok) {
-        throw new Error(
-          result.message || result.error || "操作失败"
-        );
+        const errorMessage =
+          result?.error || result?.message || responseText || "生成失败";
+        if (
+          res.status === 413 ||
+          errorMessage.includes("Request Entity Too Large")
+        ) {
+          throw new Error(
+            "音频文件太大，请先用 1–3 分钟短音频测试。长音频需要以后做分段转写。"
+          );
+        }
+
+        throw new Error(errorMessage);
       }
 
       console.log("audio-to-training result:", result);
