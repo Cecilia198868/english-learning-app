@@ -1,11 +1,15 @@
 export type TrainingItem = {
   zh: string;
   en: string;
+  startTime?: number;
+  endTime?: number;
 };
 
 export type SentencePair = {
   chinese: string;
   english: string;
+  startTime?: number;
+  endTime?: number;
 };
 
 const TRAINING_JSON_VERSION = 1;
@@ -127,6 +131,9 @@ export function deserializeTrainingItems(content: string): TrainingItem[] {
       .map((item) => ({
         zh: typeof item?.zh === "string" ? item.zh : "",
         en: typeof item?.en === "string" ? item.en : "",
+        startTime:
+          typeof item?.startTime === "number" ? item.startTime : undefined,
+        endTime: typeof item?.endTime === "number" ? item.endTime : undefined,
       }))
       .filter((item) => item.zh || item.en);
   } catch {
@@ -146,6 +153,8 @@ export function deserializeTrainingItems(content: string): TrainingItem[] {
       result.push({
         zh: firstHasChinese || !secondHasChinese ? first : second,
         en: firstHasChinese || !secondHasChinese ? second : first,
+        startTime: undefined,
+        endTime: undefined,
       });
     }
 
@@ -157,5 +166,7 @@ export function parseTrainingContent(content: string): SentencePair[] {
   return deserializeTrainingItems(content).map((item) => ({
     chinese: item.zh,
     english: item.en,
+    startTime: item.startTime,
+    endTime: item.endTime,
   }));
 }

@@ -44,6 +44,7 @@ export default function StudyPage() {
   const lessonId = typeof params.id === "string" ? params.id : "";
 
   const [lesson, setLesson] = useState<Lesson | null>(null);
+  const [lessonTitle, setLessonTitle] = useState("");
   const [pairs, setPairs] = useState<SentencePair[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showEnglish, setShowEnglish] = useState(false);
@@ -245,6 +246,15 @@ export default function StudyPage() {
   }
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const title = localStorage.getItem("currentLessonTitle");
+      if (title) {
+        setLessonTitle(title);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     if (lessonId) loadLesson();
   }, [lessonId]);
 
@@ -305,6 +315,9 @@ export default function StudyPage() {
               Study Mode
             </div>
             <h1 className="text-2xl font-bold md:text-3xl">逐句学习</h1>
+            <div className="text-lg text-gray-300">
+              {lessonTitle || "未命名课程"}
+            </div>
             <p className="mt-1 text-sm text-white/65">
               {lesson?.title || "正在加载课程..."}
             </p>
