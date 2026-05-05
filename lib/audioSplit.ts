@@ -4,6 +4,7 @@ export type AudioChunk = {
   blob: Blob;
   index: number;
   startOffset: number;
+  duration: number;
 };
 
 const TARGET_SAMPLE_RATE = 16000;
@@ -17,6 +18,7 @@ const MAX_CHUNK_SECONDS_BY_SIZE = Math.max(
   1,
   Math.floor((MAX_WAV_CHUNK_BYTES - WAV_HEADER_BYTES) / BYTES_PER_SECOND)
 );
+const MIN_CHUNK_DURATION_SECONDS = 0.5;
 
 function getAudioContextConstructor() {
   return window.AudioContext || (window as typeof window & {
@@ -132,6 +134,12 @@ export async function splitAudioToWavChunks(
         monoBuffer.duration,
         startOffset + effectiveChunkSeconds
       );
+      const duration = endOffset - startOffset;
+
+      if (duration < MIN_CHUNK_DURATION_SECONDS) {
+        continue;
+      }
+
       const blob = await encodeWavFromAudioBuffer(
         monoBuffer,
         startOffset,
@@ -142,14 +150,16 @@ export async function splitAudioToWavChunks(
         blob,
         index,
         startOffset,
+        duration,
       });
     }
 
-    return chunks;
+    return chunks.filter(
+      (chunk) => chunk.duration >= MIN_CHUNK_DURATION_SECONDS
+    );
   } catch {
     throw new Error("无法处理该音频格式，请换成 MP3 或 WAV。");
   } finally {
     void audioContext.close();
   }
 }
-

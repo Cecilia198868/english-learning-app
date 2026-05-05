@@ -776,6 +776,8 @@ export default function Home() {
 
       setMessage("正在切分音频...");
       const chunks = await splitAudioToWavChunks(uploadFile, AUDIO_CHUNK_SECONDS);
+      console.log("分段数量:", chunks.length);
+      console.log("chunk durations:", chunks.map((chunk) => chunk.duration));
 
       if (chunks.length === 0) {
         throw new Error("操作失败");
