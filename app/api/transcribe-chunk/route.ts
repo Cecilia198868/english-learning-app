@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+export const maxDuration = 300;
 import OpenAI from "openai";
 
 const openai = new OpenAI({
