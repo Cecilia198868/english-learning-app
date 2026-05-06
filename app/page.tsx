@@ -329,6 +329,14 @@ export default function Home() {
   const showSavedAudios = showAudioSection;
   const showAudioPlayer = showAudioSection;
 
+  function isFunctionInvocationTimeoutMessage(message: string) {
+    return (
+      message.includes("FUNCTION_INVOCATION_TIMEOUT") ||
+      message.includes("The function invocation timed out") ||
+      message.includes("timed out")
+    );
+  }
+
   function loadLessons() {
     const data = loadLessonsData();
     setLessons(data.lessons || []);
@@ -470,9 +478,7 @@ export default function Home() {
         body: JSON.stringify({ text: inputText }),
       });
 
-      const text = await res.text();
-
-      let data:
+      const json = (await res.json().catch(() => null)) as
         | TrainingItem[]
         | {
             error?: string;
@@ -481,52 +487,27 @@ export default function Home() {
             result?: TrainingItem[];
             items?: TrainingItem[];
             data?: TrainingItem[];
-          };
+          }
+        | null;
+
+      if (!res.ok) {
+        throw new Error(
+          !json || Array.isArray(json)
+            ? "操作失败"
+            : json.error || json.message || json.raw || "操作失败"
+        );
+      }
 
       let items: TrainingItem[] = [];
 
-      try {
-        data = JSON.parse(text) as
-          | TrainingItem[]
-          | {
-              error?: string;
-              message?: string;
-              raw?: string;
-              result?: TrainingItem[];
-              items?: TrainingItem[];
-              data?: TrainingItem[];
-            };
-      } catch {
-        alert("API 返回无效 JSON: " + text);
-        setMessage("操作失败");
-        return;
-      }
-
-      if (Array.isArray(data)) {
-        items = data;
-      } else if (Array.isArray(data.result)) {
-        items = data.result;
-      } else if (Array.isArray(data.items)) {
-        items = data.items;
-      } else if (Array.isArray(data.data)) {
-        items = data.data;
-      }
-
-      if (!res.ok) {
-        const errorData = Array.isArray(data)
-          ? {}
-          : (data as {
-              error?: string;
-              message?: string;
-              raw?: string;
-            });
-        alert(
-          errorData.message || errorData.raw || errorData.error || "操作失败"
-        );
-        setMessage(
-          errorData.message || errorData.raw || errorData.error || "操作失败"
-        );
-        return;
+      if (Array.isArray(json)) {
+        items = json;
+      } else if (json && Array.isArray(json.result)) {
+        items = json.result;
+      } else if (json && Array.isArray(json.items)) {
+        items = json.items;
+      } else if (json && Array.isArray(json.data)) {
+        items = json.data;
       }
 
       if (items.length === 0) {
@@ -541,9 +522,7 @@ export default function Home() {
       setTxtContent(serializeTrainingItems(items));
       setMessage(`已生成 ${items.length} 条内容`);
     } catch (error) {
-      const msg =
-        error instanceof Error ? error.message : "操作失败";
-      alert(msg);
+      const msg = error instanceof Error ? error.message : "操作失败";
       setMessage(msg);
     } finally {
       setIsGeneratingTraining(false);
@@ -781,7 +760,12 @@ export default function Home() {
       const { audioTitleForApi, fileName, uploadFile } =
         await getStoredAudioBlob(audio);
 
-      if (uploadFile.size <= DIRECT_AUDIO_TO_TRAINING_MAX_BYTES) {
+      const shouldUseDirectAudioRoute =
+        uploadFile.size <= DIRECT_AUDIO_TO_TRAINING_MAX_BYTES &&
+        typeof window !== "undefined" &&
+        window.location.hostname === "localhost";
+
+      if (shouldUseDirectAudioRoute) {
         setMessage("正在识别音频并生成训练内容，请稍候...");
 
         const formData = new FormData();
@@ -817,6 +801,13 @@ export default function Home() {
           result.title
         );
         return;
+      }
+
+      if (
+        typeof window !== "undefined" &&
+        window.location.hostname !== "localhost"
+      ) {
+        setMessage("线上环境将自动分段处理音频，请稍候...");
       }
 
       setMessage("正在切分音频...");
@@ -906,7 +897,10 @@ export default function Home() {
         result.title
       );
     } catch (error) {
-      const msg = error instanceof Error ? error.message : "操作失败";
+      const rawMessage = error instanceof Error ? error.message : "操作失败";
+      const msg = isFunctionInvocationTimeoutMessage(rawMessage)
+        ? "音频太长，线上处理超时。请缩短音频，或使用分段上传。建议每段不超过 3 分钟。"
+        : rawMessage;
       setMessage(msg);
       setAudioMessage(msg);
     } finally {

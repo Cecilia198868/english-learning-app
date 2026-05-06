@@ -83,7 +83,10 @@ export async function POST(req: Request) {
     }
 
     if (!process.env.OPENAI_API_KEY) {
-      return NextResponse.json({ error: "NO_API_KEY" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Missing OPENAI_API_KEY" },
+        { status: 500 }
+      );
     }
 
     const trimmedText = text.trim();
@@ -280,8 +283,8 @@ ${trimmedText}`,
 
     return NextResponse.json(
       {
-        error: "SERVER_ERROR",
-        message: error instanceof Error ? error.message : String(error),
+        error:
+          error instanceof Error ? error.message : "Generate training failed",
       },
       { status: 500 }
     );
