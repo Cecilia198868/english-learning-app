@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
 
@@ -9,6 +9,7 @@ type Lesson = {
   title: string;
   txt_content: string;
   created_at?: string;
+  sourceAudioId?: string;
 };
 
 type LocalLessonData = {
@@ -16,6 +17,14 @@ type LocalLessonData = {
 };
 
 const LESSONS_STORAGE_KEY = "english-app-lessons";
+const DB_NAME = "english-learning-app-db";
+const DB_VERSION = 1;
+const AUDIO_STORE_NAME = "audios";
+
+type AudioDBRecord = {
+  id: string;
+  file?: Blob;
+};
 
 function getDefaultLessonsData(): LocalLessonData {
   return { lessons: [] };
@@ -38,6 +47,52 @@ function loadLessonsData(): LocalLessonData {
   }
 }
 
+function openAudioDB(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    if (typeof window === "undefined" || !window.indexedDB) {
+      reject(new Error("浏览器不支持音频播放"));
+      return;
+    }
+
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(AUDIO_STORE_NAME)) {
+        db.createObjectStore(AUDIO_STORE_NAME, { keyPath: "id" });
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(new Error("打开音频数据库失败"));
+  });
+}
+
+async function getAudioBlobById(id: string): Promise<Blob | null> {
+  console.log("[study] getAudioBlobById:start", {
+    audioId: id,
+    objectStore: AUDIO_STORE_NAME,
+  });
+  const db = await openAudioDB();
+
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(AUDIO_STORE_NAME, "readonly");
+    const store = tx.objectStore(AUDIO_STORE_NAME);
+    const request = store.get(id);
+
+    request.onsuccess = () => {
+      const result = request.result as AudioDBRecord | undefined;
+      console.log("[study] getAudioBlobById:success", {
+        audioId: id,
+        hasBlob: Boolean(result?.file),
+      });
+      resolve(result?.file || null);
+    };
+
+    request.onerror = () => reject(new Error("读取原音频失败"));
+  });
+}
+
 export default function StudyPage() {
   const params = useParams();
   const router = useRouter();
@@ -53,6 +108,11 @@ export default function StudyPage() {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceName, setSelectedVoiceName] = useState("");
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [sourceAudioUrl, setSourceAudioUrl] = useState<string | null>(null);
+  const [isSourceAudioLoading, setIsSourceAudioLoading] = useState(false);
+  const [isClipPlaying, setIsClipPlaying] = useState(false);
+  const [isSequencePlaying, setIsSequencePlaying] = useState(false);
+  const [sourcePlaybackRate, setSourcePlaybackRate] = useState(1);
 
   const [prepSeconds, setPrepSeconds] = useState(2);
   const [gapSeconds, setGapSeconds] = useState(1);
@@ -65,6 +125,11 @@ export default function StudyPage() {
   const autoPlayRef = useRef(false);
   const currentIndexRef = useRef(0);
   const timerRef = useRef<number | null>(null);
+  const sequenceTimerRef = useRef<number | null>(null);
+  const sourceAudioRef = useRef<HTMLAudioElement | null>(null);
+  const sourceAudioObjectUrlRef = useRef<string | null>(null);
+  const clipEndTimeRef = useRef<number | null>(null);
+  const isSequencePlayingRef = useRef(false);
 
   function clearAutoTimer() {
     if (timerRef.current !== null) {
@@ -73,9 +138,43 @@ export default function StudyPage() {
     }
   }
 
-  function loadLesson() {
+  function clearSequenceTimer() {
+    if (sequenceTimerRef.current !== null) {
+      window.clearTimeout(sequenceTimerRef.current);
+      sequenceTimerRef.current = null;
+    }
+  }
+
+  function stopClipPlayback(resetTime = false) {
+    const audio = sourceAudioRef.current;
+    if (!audio) return;
+
+    audio.pause();
+    if (resetTime) {
+      audio.currentTime = 0;
+    }
+    clipEndTimeRef.current = null;
+    setIsClipPlaying(false);
+  }
+
+  function stopSequencePlayback(resetClip = false) {
+    autoPlayRef.current = false;
+    setIsAutoPlaying(false);
+    isSequencePlayingRef.current = false;
+    setIsSequencePlaying(false);
+    clearSequenceTimer();
+    stopClipPlayback(resetClip);
+  }
+
+  const loadLesson = useCallback(() => {
     const data = loadLessonsData();
     const found = data.lessons.find((item) => item.id === lessonId) || null;
+
+    console.log("[study] loadLesson", {
+      lessonId,
+      found: Boolean(found),
+      sourceAudioId: found?.sourceAudioId ?? null,
+    });
 
     if (!found) {
       setMessage("没有找到这节课");
@@ -105,13 +204,14 @@ export default function StudyPage() {
     }
 
     setShowEnglish(false);
-  }
+  }, [lessonId, progressKey]);
 
   function saveProgress(index: number) {
     localStorage.setItem(progressKey, String(index));
   }
 
   function handlePrev() {
+    stopSequencePlayback();
     if (currentIndex > 0) {
       const newIndex = currentIndex - 1;
       setCurrentIndex(newIndex);
@@ -123,6 +223,7 @@ export default function StudyPage() {
   }
 
   function handleNext() {
+    stopSequencePlayback();
     if (currentIndex < pairs.length - 1) {
       const newIndex = currentIndex + 1;
       setCurrentIndex(newIndex);
@@ -178,71 +279,142 @@ export default function StudyPage() {
   }
 
   function stopAutoPlay() {
-    autoPlayRef.current = false;
-    setIsAutoPlaying(false);
     clearAutoTimer();
-    window.speechSynthesis.cancel();
+    stopSequencePlayback();
     setMessage("自动播放已停止");
   }
 
-  function scheduleNextStep(callback: () => void, delayMs: number) {
-    clearAutoTimer();
-    timerRef.current = window.setTimeout(() => {
-      callback();
-    }, delayMs);
-  }
+  async function playSourceClipAtIndex(index: number) {
+    const audio = sourceAudioRef.current;
+    const pair = pairs[index];
 
-  function playCurrentSentenceAndContinue(index: number) {
-    if (!autoPlayRef.current) return;
-
-    if (index < 0 || index >= pairs.length) {
-      autoPlayRef.current = false;
-      setIsAutoPlaying(false);
-      setMessage("自动播放已完成");
+    if (!audio || !pair) {
+      stopSequencePlayback();
       return;
     }
 
-    const pair = pairs[index];
+    if (
+      typeof pair.startTime !== "number" ||
+      typeof pair.endTime !== "number" ||
+      pair.endTime <= pair.startTime
+    ) {
+      stopSequencePlayback();
+      setMessage("当前句子没有时间戳，无法播放原音频。");
+      return;
+    }
 
-    setCurrentIndex(index);
-    currentIndexRef.current = index;
-    setShowEnglish(false);
-    saveProgress(index);
-    setMessage("自动播放：先显示中文");
+    stopClipPlayback();
+    clipEndTimeRef.current = pair.endTime;
+    audio.currentTime = pair.startTime;
+    audio.playbackRate = sourcePlaybackRate;
 
-    scheduleNextStep(() => {
-      if (!autoPlayRef.current) return;
-
-      setShowEnglish(true);
-      setMessage("自动播放：显示英文并朗读");
-
-      speakEnglish(pair.english, 1, () => {
-        if (!autoPlayRef.current) return;
-
-        if (index < pairs.length - 1) {
-          scheduleNextStep(() => {
-            if (!autoPlayRef.current) return;
-            playCurrentSentenceAndContinue(index + 1);
-          }, gapSeconds * 1000);
-        } else {
-          autoPlayRef.current = false;
-          setIsAutoPlaying(false);
-          setMessage("自动播放已完成");
-        }
-      });
-    }, prepSeconds * 1000);
+    try {
+      await audio.play();
+      setIsClipPlaying(true);
+      setMessage(isSequencePlayingRef.current ? "正在连续播放原音频" : "正在播放原音频");
+    } catch (error) {
+      clipEndTimeRef.current = null;
+      setIsClipPlaying(false);
+      stopSequencePlayback();
+      setMessage(error instanceof Error ? error.message : "原音频播放失败");
+    }
   }
 
-  function startAutoPlay() {
+  async function handlePlaySourceAudio() {
+    console.log("[study] handlePlaySourceAudio", {
+      lessonId,
+      sourceAudioId: lesson?.sourceAudioId ?? null,
+      sourceAudioReady: Boolean(sourceAudioUrl),
+      startTime:
+        typeof currentPair.startTime === "number" ? currentPair.startTime : null,
+      endTime: typeof currentPair.endTime === "number" ? currentPair.endTime : null,
+    });
+
+    if (!lesson?.sourceAudioId) {
+      setMessage("这节课程没有关联原音频，请重新从音频生成并保存课程。");
+      return;
+    }
+
+    if (!sourceAudioUrl) {
+      setMessage(
+        isSourceAudioLoading
+          ? "原音频加载中..."
+          : "找不到原音频，请确认音频没有被删除。"
+      );
+      return;
+    }
+
+    if (!hasValidTimeRange) {
+      setMessage("当前句子没有时间戳，无法播放原音频。");
+      return;
+    }
+
+    const audio = sourceAudioRef.current;
+    if (!audio) {
+      setMessage("原音频播放器不可用");
+      return;
+    }
+
+    stopSequencePlayback();
+    await playSourceClipAtIndex(currentIndex);
+  }
+
+  function handleSourceClipComplete() {
+    clipEndTimeRef.current = null;
+    setIsClipPlaying(false);
+
+    if (!autoPlayRef.current || !isSequencePlayingRef.current) return;
+
+    const nextIndex = currentIndexRef.current + 1;
+    if (nextIndex >= pairs.length) {
+      stopSequencePlayback();
+      setMessage("原音频连播已完成");
+      return;
+    }
+
+    setCurrentIndex(nextIndex);
+    currentIndexRef.current = nextIndex;
+    setShowEnglish(true);
+    saveProgress(nextIndex);
+    clearSequenceTimer();
+    sequenceTimerRef.current = window.setTimeout(() => {
+      void playSourceClipAtIndex(nextIndex);
+    }, Math.max(gapSeconds * 1000, 200));
+  }
+
+  async function startAutoPlay() {
     if (pairs.length === 0) {
-      setMessage("这节课没有内容");
+      setMessage("这节课程没有内容");
+      return;
+    }
+
+    if (!lesson?.sourceAudioId) {
+      setMessage("这节课程没有关联原音频，请重新从音频生成并保存课程。");
+      return;
+    }
+
+    if (!sourceAudioUrl) {
+      setMessage(
+        isSourceAudioLoading
+          ? "原音频加载中..."
+          : "找不到原音频，请确认音频没有被删除。"
+      );
+      return;
+    }
+
+    if (!hasValidTimeRange) {
+      setMessage("当前句子没有时间戳，无法播放原音频。");
       return;
     }
 
     autoPlayRef.current = true;
     setIsAutoPlaying(true);
+    isSequencePlayingRef.current = true;
+    setIsSequencePlaying(true);
+    clearSequenceTimer();
+    setShowEnglish(true);
     setMessage("自动播放开始");
-    playCurrentSentenceAndContinue(currentIndexRef.current);
+    await playSourceClipAtIndex(currentIndexRef.current);
   }
 
   useEffect(() => {
@@ -256,7 +428,78 @@ export default function StudyPage() {
 
   useEffect(() => {
     if (lessonId) loadLesson();
-  }, [lessonId]);
+  }, [lessonId, loadLesson]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadSourceAudio() {
+      stopClipPlayback(true);
+
+      if (sourceAudioObjectUrlRef.current) {
+        URL.revokeObjectURL(sourceAudioObjectUrlRef.current);
+        sourceAudioObjectUrlRef.current = null;
+      }
+
+      if (!lesson?.sourceAudioId) {
+        console.log("[study] loadSourceAudio:missing-sourceAudioId", {
+          lessonId,
+        });
+        setSourceAudioUrl(null);
+        setIsSourceAudioLoading(false);
+        setMessage("这节课程没有关联原音频，请重新从音频生成并保存课程。");
+        return;
+      }
+
+      try {
+        setIsSourceAudioLoading(true);
+        console.log("[study] loadSourceAudio:start", {
+          lessonId,
+          sourceAudioId: lesson.sourceAudioId,
+        });
+        const blob = await getAudioBlobById(lesson.sourceAudioId);
+        if (cancelled) return;
+
+        if (!blob) {
+          console.log("[study] loadSourceAudio:blob-missing", {
+            lessonId,
+            sourceAudioId: lesson.sourceAudioId,
+          });
+          setSourceAudioUrl(null);
+          setMessage("找不到原音频，请确认音频没有被删除。");
+          return;
+        }
+
+        const objectUrl = URL.createObjectURL(blob);
+        console.log("[study] loadSourceAudio:blob-ready", {
+          lessonId,
+          sourceAudioId: lesson.sourceAudioId,
+          objectUrlCreated: true,
+        });
+        sourceAudioObjectUrlRef.current = objectUrl;
+        setSourceAudioUrl(objectUrl);
+      } catch (error) {
+        if (cancelled) return;
+        console.log("[study] loadSourceAudio:error", {
+          lessonId,
+          sourceAudioId: lesson.sourceAudioId,
+          error: error instanceof Error ? error.message : String(error),
+        });
+        setSourceAudioUrl(null);
+        setMessage(error instanceof Error ? error.message : "读取原音频失败");
+      } finally {
+        if (!cancelled) {
+          setIsSourceAudioLoading(false);
+        }
+      }
+    }
+
+    void loadSourceAudio();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [lesson?.sourceAudioId, lessonId]);
 
   useEffect(() => {
     loadVoices();
@@ -266,6 +509,13 @@ export default function StudyPage() {
       window.speechSynthesis.onvoiceschanged = null;
       window.speechSynthesis.cancel();
       clearAutoTimer();
+      isSequencePlayingRef.current = false;
+      clearSequenceTimer();
+      stopClipPlayback();
+      if (sourceAudioObjectUrlRef.current) {
+        URL.revokeObjectURL(sourceAudioObjectUrlRef.current);
+        sourceAudioObjectUrlRef.current = null;
+      }
     };
   }, []);
 
@@ -302,9 +552,44 @@ export default function StudyPage() {
     currentIndexRef.current = currentIndex;
   }, [currentIndex]);
 
+  useEffect(() => {
+    isSequencePlayingRef.current = isSequencePlaying;
+  }, [isSequencePlaying]);
+
+  useEffect(() => {
+    const audio = sourceAudioRef.current;
+    if (!audio) return;
+    audio.playbackRate = sourcePlaybackRate;
+  }, [sourcePlaybackRate, sourceAudioUrl]);
+
   const currentPair = useMemo(() => {
     return pairs[currentIndex] || { chinese: "", english: "" };
   }, [pairs, currentIndex]);
+  const isSourcePlaybackActive = isClipPlaying || isAutoPlaying;
+  const hasSourceAudioId = Boolean(lesson?.sourceAudioId);
+  const hasValidTimeRange =
+    typeof currentPair.startTime === "number" &&
+    typeof currentPair.endTime === "number" &&
+    currentPair.endTime > currentPair.startTime;
+  const canPlaySourceAudio =
+    hasSourceAudioId &&
+    Boolean(sourceAudioUrl) &&
+    hasValidTimeRange;
+
+  useEffect(() => {
+    console.log("[study] currentSentence", {
+      lessonId,
+      sourceAudioId: lesson?.sourceAudioId ?? null,
+      startTime:
+        typeof currentPair.startTime === "number" ? currentPair.startTime : null,
+      endTime: typeof currentPair.endTime === "number" ? currentPair.endTime : null,
+    });
+  }, [
+    currentPair.endTime,
+    currentPair.startTime,
+    lesson?.sourceAudioId,
+    lessonId,
+  ]);
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -363,7 +648,7 @@ export default function StudyPage() {
               <h2 className="mb-3 text-lg font-bold">声音设置</h2>
 
               <label className="mb-2 block text-sm text-white/70">
-                选择机器人声音
+                选择机器英文声音
               </label>
 
               <select
@@ -417,7 +702,11 @@ export default function StudyPage() {
           </aside>
 
           <section className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
+            <div
+              className={`rounded-3xl border bg-white/5 p-4 md:p-5 ${
+                isSequencePlaying ? "border-cyan-400" : "border-white/10"
+              }`}
+            >
               <div className="mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-xl font-bold md:text-2xl">英文区</h2>
                 <div className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/60">
@@ -427,7 +716,11 @@ export default function StudyPage() {
 
               <div
                 onClick={() => setShowEnglish(true)}
-                className="flex min-h-[110px] cursor-pointer items-center justify-center rounded-3xl border border-dashed border-white/15 bg-black/25 p-5 text-center transition hover:border-emerald-400/40 hover:bg-black/35 md:min-h-[130px]"
+                className={`flex min-h-[110px] cursor-pointer items-center justify-center rounded-3xl border border-dashed p-5 text-center transition md:min-h-[130px] ${
+                  isSequencePlaying
+                    ? "border-cyan-400 bg-slate-800"
+                    : "border-white/15 bg-black/25 hover:border-emerald-400/40 hover:bg-black/35"
+                }`}
               >
                 {showEnglish ? (
                   <p className="text-2xl font-semibold leading-relaxed text-emerald-300 md:text-3xl">
@@ -441,7 +734,11 @@ export default function StudyPage() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
+            <div
+              className={`rounded-3xl border bg-white/5 p-4 md:p-5 ${
+                isSequencePlaying ? "border-cyan-400" : "border-white/10"
+              }`}
+            >
               <div className="mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-xl font-bold md:text-2xl">中文区</h2>
                 <div className="rounded-full bg-blue-500/15 px-3 py-1 text-xs text-blue-300">
@@ -449,7 +746,11 @@ export default function StudyPage() {
                 </div>
               </div>
 
-              <div className="rounded-3xl bg-black/25 p-5 md:p-6">
+              <div
+                className={`rounded-3xl p-5 md:p-6 ${
+                  isSequencePlaying ? "bg-slate-800" : "bg-black/25"
+                }`}
+              >
                 <p className="text-2xl font-bold leading-relaxed md:text-3xl">
                   {currentPair.chinese || "没有内容"}
                 </p>
@@ -457,12 +758,46 @@ export default function StudyPage() {
             </div>
 
             <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
-              <h2 className="mb-3 text-xl font-bold md:text-2xl">控制区</h2>
+              {!hasSourceAudioId ? (
+                <div className="mb-3 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-200">
+                  这节课程没有关联原音频，请重新从音频生成并保存课程。                </div>
+              ) : null}
+
+              {hasSourceAudioId && !isSourceAudioLoading && !sourceAudioUrl ? (
+                <div className="mb-3 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-200">
+                  找不到原音频，请确认音频没有被删除。                </div>
+              ) : null}
+
+              {!hasValidTimeRange ? (
+                <div className="mb-3 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-200">
+                  当前句子没有时间戳，无法播放原音频。                </div>
+              ) : null}
+              {sourceAudioUrl ? (
+                <audio
+                  ref={sourceAudioRef}
+                  src={sourceAudioUrl}
+                  preload="auto"
+                  className="hidden"
+                  onPause={() => setIsClipPlaying(false)}
+                  onEnded={handleSourceClipComplete}
+                  onTimeUpdate={() => {
+                    const audio = sourceAudioRef.current;
+                    const clipEndTime = clipEndTimeRef.current;
+                    if (!audio || clipEndTime === null) return;
+
+                    if (audio.currentTime >= clipEndTime) {
+                      audio.pause();
+                      audio.currentTime = clipEndTime;
+                      handleSourceClipComplete();
+                    }
+                  }}
+                />
+              ) : null}
 
               <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
                 <button
                   onClick={handlePrev}
-                  disabled={currentIndex === 0 || isAutoPlaying}
+                  disabled={currentIndex === 0}
                   className="rounded-2xl bg-slate-700 px-4 py-3 text-sm disabled:opacity-40"
                 >
                   上一句
@@ -470,7 +805,7 @@ export default function StudyPage() {
 
                 <button
                   onClick={handleNext}
-                  disabled={currentIndex >= pairs.length - 1 || isAutoPlaying}
+                  disabled={currentIndex >= pairs.length - 1}
                   className="rounded-2xl bg-blue-600 px-4 py-3 text-sm disabled:opacity-40"
                 >
                   下一句
@@ -488,6 +823,20 @@ export default function StudyPage() {
                   className="rounded-2xl bg-slate-700 px-4 py-3 text-sm"
                 >
                   隐藏英文
+                </button>
+
+                <button
+                  onClick={handlePlaySourceAudio}
+                  disabled={!canPlaySourceAudio}
+                  className={`w-full rounded-2xl px-6 py-4 text-lg font-bold transition ${
+                    !canPlaySourceAudio
+                      ? "bg-slate-700 text-slate-400 opacity-60 cursor-not-allowed"
+                      : isSourcePlaybackActive
+                        ? "bg-cyan-500 text-white"
+                        : "bg-cyan-600 text-white hover:bg-cyan-500"
+                  }`}
+                >
+                  播放原音频
                 </button>
 
                 <button
@@ -521,6 +870,22 @@ export default function StudyPage() {
                     停止自动播放
                   </button>
                 )}
+
+                <div className="flex items-center justify-end gap-3">
+                  {[0.5, 0.75, 1, 1.25].map((rate) => (
+                    <button
+                      key={rate}
+                      onClick={() => setSourcePlaybackRate(rate)}
+                      className={`rounded-xl px-4 py-2 text-sm font-bold ${
+                        sourcePlaybackRate === rate
+                          ? "bg-cyan-500 text-white"
+                          : "bg-slate-700 text-white"
+                      }`}
+                    >
+                      {rate}x
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
@@ -529,3 +894,4 @@ export default function StudyPage() {
     </main>
   );
 }
+

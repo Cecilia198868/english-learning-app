@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   deserializeTrainingItems,
   type TrainingItem,
@@ -14,6 +15,7 @@ type Lesson = {
   title: string;
   txt_content: string;
   created_at: string;
+  sourceAudioId?: string;
 };
 
 type GeneratedPair = {
@@ -285,6 +287,7 @@ async function deleteAudioFromDB(id: string): Promise<void> {
 }
 
 export default function Home() {
+  const router = useRouter();
   const [sourceMode, setSourceMode] = useState<SourceMode>("text-only");
   const [title, setTitle] = useState("");
   const [rawText, setRawText] = useState("");
@@ -295,6 +298,9 @@ export default function Home() {
   const [isGeneratingTraining, setIsGeneratingTraining] = useState(false);
   const [generatedItems, setGeneratedItems] = useState<TrainingItem[]>([]);
   const [generatedPairs, setGeneratedPairs] = useState<GeneratedPair[]>([]);
+  const [generatedSourceAudioId, setGeneratedSourceAudioId] = useState<
+    string | null
+  >(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showEnglish, setShowEnglish] = useState(false);
 
@@ -377,7 +383,14 @@ export default function Home() {
         title: title.trim(),
         txt_content: contentToSave,
         created_at: new Date().toISOString(),
+        sourceAudioId: generatedSourceAudioId || undefined,
       };
+
+      console.log("[lesson-save]", {
+        lessonId: newLesson.id,
+        title: newLesson.title,
+        sourceAudioId: newLesson.sourceAudioId ?? null,
+      });
 
       const current = loadLessonsData();
       const nextLessons = [newLesson, ...(current.lessons || [])];
@@ -390,6 +403,7 @@ export default function Home() {
       setRawText("");
       setTxtContent("");
       setGeneratedPairs([]);
+      setGeneratedSourceAudioId(null);
       setSubtitleFileName("");
       setFileContent("");
       setMessage("保存成功");
@@ -458,39 +472,69 @@ export default function Home() {
 
       const text = await res.text();
 
-      let data: {
-        error?: string;
-        message?: string;
-        raw?: string;
-        items?: TrainingItem[];
-      };
+      let data:
+        | TrainingItem[]
+        | {
+            error?: string;
+            message?: string;
+            raw?: string;
+            result?: TrainingItem[];
+            items?: TrainingItem[];
+            data?: TrainingItem[];
+          };
+
+      let items: TrainingItem[] = [];
 
       try {
-        data = JSON.parse(text) as {
-          error?: string;
-          message?: string;
-          raw?: string;
-          items?: TrainingItem[];
-        };
+        data = JSON.parse(text) as
+          | TrainingItem[]
+          | {
+              error?: string;
+              message?: string;
+              raw?: string;
+              result?: TrainingItem[];
+              items?: TrainingItem[];
+              data?: TrainingItem[];
+            };
       } catch {
         alert("API 返回无效 JSON: " + text);
         setMessage("操作失败");
         return;
       }
 
+      if (Array.isArray(data)) {
+        items = data;
+      } else if (Array.isArray(data.result)) {
+        items = data.result;
+      } else if (Array.isArray(data.items)) {
+        items = data.items;
+      } else if (Array.isArray(data.data)) {
+        items = data.data;
+      }
+
       if (!res.ok) {
-        alert(data.message || data.raw || data.error || "操作失败");
-        setMessage(data.message || data.raw || data.error || "操作失败");
+        const errorData = Array.isArray(data)
+          ? {}
+          : (data as {
+              error?: string;
+              message?: string;
+              raw?: string;
+            });
+        alert(
+          errorData.message || errorData.raw || errorData.error || "操作失败"
+        );
+        setMessage(
+          errorData.message || errorData.raw || errorData.error || "操作失败"
+        );
         return;
       }
 
-      const items = Array.isArray(data.items) ? data.items : [];
       if (items.length === 0) {
-        setMessage("操作失败");
-        return;
+        throw new Error("Invalid frontend response format");
       }
 
       setGeneratedPairs([]);
+      setGeneratedSourceAudioId(null);
       setGeneratedItems(items);
       setCurrentIndex(0);
       setShowEnglish(false);
@@ -647,6 +691,7 @@ export default function Home() {
     setRawText(generatedText);
     setTxtContent(serializeTrainingItems(items));
     setGeneratedPairs(normalizedPairs);
+    setGeneratedSourceAudioId(audio.id);
     setGeneratedItems(items);
     setCurrentIndex(0);
     setShowEnglish(false);
@@ -870,7 +915,19 @@ export default function Home() {
   }
 
   function handleSaveAudioAsLesson(audio: AudioItem) {
-    console.log("保存为课程:", audio);
+    try {
+      setMessage("");
+
+      if (generatedSourceAudioId !== audio.id || !title.trim() || !txtContent.trim()) {
+        setMessage("请先为这条音频生成训练内容，再点击保存。");
+        return;
+      }
+
+      handleSaveLesson();
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : "操作失败";
+      setMessage(msg);
+    }
   }
 
   function toggleLesson(id: string) {
@@ -1041,7 +1098,7 @@ export default function Home() {
                 )}
 
                 <textarea
-                  placeholder="把 TXT 内容粘贴到这里，或上传英文字幕后一键生成训练内容"
+                  placeholder="把中文或英文文本粘贴到这里，或上传 TXT/SRT 后一键生成训练内容"
                   value={rawText}
                   onChange={(e) => setRawText(e.target.value)}
                   rows={8}
@@ -1204,12 +1261,19 @@ export default function Home() {
                                   </div>
                                 </button>
 
-                                <Link
-                                  href={`/study/${lesson.id}`}
+                                <button
+                                  onClick={() => {
+                                    console.log(
+                                      "[saved-lesson-study-click]",
+                                      lesson.id,
+                                      lesson.title
+                                    );
+                                    router.push(`/study/${lesson.id}`);
+                                  }}
                                   className="rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium"
                                 >
                                   学习
-                                </Link>
+                                </button>
 
                                 <button
                                   onClick={() => handleDeleteLesson(lesson.id)}
@@ -1272,6 +1336,9 @@ export default function Home() {
                             audio.originalName ||
                             audio.label ||
                             "未命名音频";
+                          const linkedLesson =
+                            lessons.find((lesson) => lesson.sourceAudioId === audio.id) ||
+                            null;
 
                           return (
                             <div
@@ -1313,15 +1380,27 @@ export default function Home() {
                                   保存
                                 </button>
 
-                                <Link
-                                  href="/study/1"
-                                  onClick={() => {
-                                    localStorage.setItem("currentLessonTitle", savedAudioTitle);
-                                  }}
-                                  className="whitespace-nowrap rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium"
-                                >
-                                  学习
-                                </Link>
+                                {linkedLesson ? (
+                                  <Link
+                                    href={`/study/${linkedLesson.id}`}
+                                    onClick={() => {
+                                      localStorage.setItem(
+                                        "currentLessonTitle",
+                                        linkedLesson.title || savedAudioTitle
+                                      );
+                                    }}
+                                    className="whitespace-nowrap rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium"
+                                  >
+                                    学习
+                                  </Link>
+                                ) : (
+                                  <button
+                                    disabled
+                                    className="whitespace-nowrap rounded-xl bg-slate-700 px-3 py-2 text-sm font-medium text-white/60"
+                                  >
+                                    先保存课程
+                                  </button>
+                                )}
 
                                 <button
                                   onClick={() => handleDeleteAudio(audio)}
