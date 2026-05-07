@@ -95,10 +95,6 @@ function canUseStorage() {
   return typeof window !== "undefined";
 }
 
-function isVocabularyWord(item: VocabularyWord | null): item is VocabularyWord {
-  return item !== null && typeof item.word === "string" && item.word.trim().length > 0;
-}
-
 function safeJsonParse<T>(raw: string | null, fallback: T): T {
   if (!raw) return fallback;
 

@@ -459,11 +459,29 @@ export default function Home() {
     }
 
     const lowerName = file.name.toLowerCase();
-    if (!lowerName.endsWith(".srt") && !lowerName.endsWith(".txt")) {
+    if (
+      !lowerName.endsWith(".srt") &&
+      !lowerName.endsWith(".txt") &&
+      !lowerName.endsWith(".text") &&
+      !lowerName.endsWith(".doc") &&
+      !lowerName.endsWith(".docx") &&
+      !lowerName.endsWith(".pdf")
+    ) {
       setSubtitleFileName("");
       setFileContent("");
-      setMessage("操作失败");
+      setMessage("当前文件无法读取，请尝试 txt、docx 或可复制文本的 PDF。");
       event.target.value = "";
+      return;
+    }
+
+    if (
+      lowerName.endsWith(".doc") ||
+      lowerName.endsWith(".docx") ||
+      lowerName.endsWith(".pdf")
+    ) {
+      setSubtitleFileName(file.name);
+      setFileContent("");
+      setMessage("Word/PDF 解析功能下一步添加，请先使用 TXT 或 SRT。");
       return;
     }
 
@@ -1364,7 +1382,7 @@ export default function Home() {
                           <input
                             id="subtitle-file-input"
                             type="file"
-                            accept=".srt,.txt,text/plain,.srt"
+                            accept=".txt,.text,.srt,.doc,.docx,.pdf,text/plain,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                             onChange={handleSubtitleFileChange}
                             className="w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm"
                           />
