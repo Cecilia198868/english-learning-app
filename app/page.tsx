@@ -1382,7 +1382,7 @@ export default function Home() {
                           <input
                             id="subtitle-file-input"
                             type="file"
-                            accept=".txt,.text,.srt,.doc,.docx,.pdf,text/plain,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            accept=".txt,.text,.srt,.doc,.docx,.pdf"
                             onChange={handleSubtitleFileChange}
                             className="w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm"
                           />
