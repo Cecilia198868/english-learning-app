@@ -228,9 +228,18 @@ export function loadVocabularyWords(): VocabularyWord[] {
     []
   );
 
-  return parsed
-    .map((item) => normalizeStoredVocabularyWord(item))
-    .filter(isVocabularyWord)
+  const normalizedWords: Array<VocabularyWord | null> = parsed.map((item) =>
+    normalizeStoredVocabularyWord(item)
+  );
+
+  return normalizedWords
+    .filter(
+      (item): item is VocabularyWord =>
+        item !== null &&
+        typeof item === "object" &&
+        typeof item.word === "string" &&
+        item.word.trim().length > 0
+    )
     .sort(
       (a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()

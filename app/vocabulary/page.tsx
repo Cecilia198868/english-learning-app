@@ -132,9 +132,17 @@ async function fillMissingDefinitions(words: VocabularyWord[]) {
 }
 
 export default function VocabularyPage() {
-  const [words, setWords] = useState<VocabularyWord[]>(() =>
-    loadVocabularyWords()
-  );
+  const [words, setWords] = useState<VocabularyWord[]>(() => {
+    const loadedWords = loadVocabularyWords();
+
+    return loadedWords.filter(
+      (item): item is VocabularyWord =>
+        item !== null &&
+        typeof item === "object" &&
+        typeof item.word === "string" &&
+        item.word.trim().length > 0
+    );
+  });
   const [mastery, setMastery] = useState<VocabularyGroupMastery>(() =>
     loadVocabularyGroupMastery()
   );
