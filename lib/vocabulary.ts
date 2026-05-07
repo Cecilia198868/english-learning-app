@@ -95,6 +95,10 @@ function canUseStorage() {
   return typeof window !== "undefined";
 }
 
+function isVocabularyWord(item: VocabularyWord | null): item is VocabularyWord {
+  return item !== null && typeof item.word === "string" && item.word.trim().length > 0;
+}
+
 function safeJsonParse<T>(raw: string | null, fallback: T): T {
   if (!raw) return fallback;
 
@@ -182,7 +186,9 @@ export function normalizeVocabularyDefinition(
   } satisfies VocabularyDefinition;
 }
 
-function normalizeStoredVocabularyWord(item: StoredVocabularyWord | null) {
+function normalizeStoredVocabularyWord(
+  item: StoredVocabularyWord | null
+): VocabularyWord | null {
   const normalizedWord =
     typeof item?.word === "string" ? normalizeVocabularyWord(item.word) : "";
 
@@ -214,7 +220,7 @@ function normalizeStoredVocabularyWord(item: StoredVocabularyWord | null) {
   } satisfies VocabularyWord;
 }
 
-export function loadVocabularyWords() {
+export function loadVocabularyWords(): VocabularyWord[] {
   if (!canUseStorage()) return [] as VocabularyWord[];
 
   const parsed = safeJsonParse<StoredVocabularyWord[]>(
@@ -224,7 +230,7 @@ export function loadVocabularyWords() {
 
   return parsed
     .map((item) => normalizeStoredVocabularyWord(item))
-    .filter((item): item is VocabularyWord => Boolean(item))
+    .filter(isVocabularyWord)
     .sort(
       (a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()

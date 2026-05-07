@@ -243,7 +243,10 @@ function splitEnglishByTriggerWords(text: string) {
   return parts.map(normalizeWhitespace).filter(Boolean);
 }
 
-function forceSplitLongEnglishPart(text: string, targetLength?: number) {
+function forceSplitLongEnglishPart(
+  text: string,
+  targetLength?: number
+): string[] {
   const words = splitEnglishIntoWords(text);
   if (words.length <= HARD_MAX_ENGLISH_WORDS && !targetLength) {
     return [normalizeWhitespace(text)];
