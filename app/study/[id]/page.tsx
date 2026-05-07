@@ -3,6 +3,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
+import {
+  addVocabularyWord,
+  generateVocabularyDefinition,
+  tokenizeEnglishSentence,
+  updateVocabularyWord,
+} from "@/lib/vocabulary";
 
 type Lesson = {
   id: string;
@@ -20,6 +26,7 @@ const LESSONS_STORAGE_KEY = "english-app-lessons";
 const DB_NAME = "english-learning-app-db";
 const DB_VERSION = 1;
 const AUDIO_STORE_NAME = "audios";
+const LAST_STUDY_PROGRESS_KEY = "lastStudyProgress";
 
 type AudioDBRecord = {
   id: string;
@@ -102,8 +109,15 @@ export default function StudyPage() {
   const [lessonTitle, setLessonTitle] = useState("");
   const [pairs, setPairs] = useState<SentencePair[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showEnglish, setShowEnglish] = useState(false);
+  const [showEnglish, setShowEnglish] = useState(true);
   const [message, setMessage] = useState("");
+  const [pendingVocabularyWord, setPendingVocabularyWord] = useState<{
+    word: string;
+    sourceSentence: string;
+  } | null>(null);
+  const [editableVocabularyWord, setEditableVocabularyWord] = useState("");
+  const [isSavingVocabularyWord, setIsSavingVocabularyWord] = useState(false);
+  const [showMoreActions, setShowMoreActions] = useState(false);
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceName, setSelectedVoiceName] = useState("");
@@ -203,11 +217,76 @@ export default function StudyPage() {
       currentIndexRef.current = 0;
     }
 
-    setShowEnglish(false);
+    setShowEnglish(true);
   }, [lessonId, progressKey]);
 
   function saveProgress(index: number) {
     localStorage.setItem(progressKey, String(index));
+    localStorage.setItem(
+      LAST_STUDY_PROGRESS_KEY,
+      JSON.stringify({
+        courseId: lessonId,
+        sentenceIndex: index,
+        updatedAt: new Date().toISOString(),
+      })
+    );
+  }
+
+  function handleWordClick(word: string, sourceSentence: string) {
+    const trimmedWord = word.trim();
+    if (!trimmedWord) return;
+
+    stopSequencePlayback();
+    setPendingVocabularyWord({
+      word: trimmedWord,
+      sourceSentence,
+    });
+    setEditableVocabularyWord(trimmedWord);
+  }
+
+  function closeVocabularyModal() {
+    setPendingVocabularyWord(null);
+    setEditableVocabularyWord("");
+    setIsSavingVocabularyWord(false);
+  }
+
+  function handleConfirmAddWord() {
+    if (!pendingVocabularyWord || isSavingVocabularyWord) return;
+
+    const nextWord = editableVocabularyWord.trim();
+    if (!nextWord) {
+      setMessage("请输入单词");
+      return;
+    }
+
+    setIsSavingVocabularyWord(true);
+
+    const sourceSentence = pendingVocabularyWord.sourceSentence;
+    const result = addVocabularyWord(
+      nextWord,
+      sourceSentence
+    );
+
+    if (!result.ok) {
+      closeVocabularyModal();
+      setMessage(result.message);
+      return;
+    }
+
+    const savedWord = result.word.word;
+    closeVocabularyModal();
+    setMessage("已存入单词本");
+
+    void generateVocabularyDefinition(savedWord)
+      .then((definition) => {
+        updateVocabularyWord(savedWord, {
+          ...definition,
+          sourceSentence,
+        });
+      })
+      .catch((error) => {
+        console.error("生成单词释义失败", error);
+      });
   }
 
   function handlePrev() {
@@ -216,7 +295,7 @@ export default function StudyPage() {
       const newIndex = currentIndex - 1;
       setCurrentIndex(newIndex);
       currentIndexRef.current = newIndex;
-      setShowEnglish(false);
+      setShowEnglish(true);
       saveProgress(newIndex);
       setMessage("");
     }
@@ -228,7 +307,7 @@ export default function StudyPage() {
       const newIndex = currentIndex + 1;
       setCurrentIndex(newIndex);
       currentIndexRef.current = newIndex;
-      setShowEnglish(false);
+      setShowEnglish(true);
       saveProgress(newIndex);
       setMessage("");
     }
@@ -447,7 +526,6 @@ export default function StudyPage() {
         });
         setSourceAudioUrl(null);
         setIsSourceAudioLoading(false);
-        setMessage("这节课程没有关联原音频，请重新从音频生成并保存课程。");
         return;
       }
 
@@ -565,6 +643,10 @@ export default function StudyPage() {
   const currentPair = useMemo(() => {
     return pairs[currentIndex] || { chinese: "", english: "" };
   }, [pairs, currentIndex]);
+  const englishTokens = useMemo(
+    () => tokenizeEnglishSentence(currentPair.english || ""),
+    [currentPair.english]
+  );
   const isSourcePlaybackActive = isClipPlaying || isAutoPlaying;
   const hasSourceAudioId = Boolean(lesson?.sourceAudioId);
   const hasValidTimeRange =
@@ -591,307 +673,278 @@ export default function StudyPage() {
     lessonId,
   ]);
 
+  function handleBackHome() {
+    stopAutoPlay();
+    router.push("/");
+  }
+
+  function handleSaveCurrentPosition() {
+    saveProgress(currentIndex);
+    setMessage("当前位置已保存");
+  }
+
   return (
     <main className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-7xl p-4 md:p-6">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
-          <div>
-            <div className="mb-2 inline-flex rounded-full bg-emerald-500/20 px-3 py-1 text-xs text-emerald-300">
-              Study Mode
-            </div>
-            <h1 className="text-2xl font-bold md:text-3xl">逐句学习</h1>
-            <div className="text-lg text-gray-300">
-              {lessonTitle || "未命名课程"}
-            </div>
-            <p className="mt-1 text-sm text-white/65">
-              {lesson?.title || "正在加载课程..."}
-            </p>
-            {pairs.length > 0 && (
-              <p className="mt-1 text-xs text-white/50">
-                第 {currentIndex + 1} 句 / 共 {pairs.length} 句
-              </p>
-            )}
-          </div>
-
-          <div className="flex flex-wrap gap-2">
+      <div className="mx-auto max-w-[430px] px-4 py-3 pb-8">
+        <div className="mb-3 rounded-[1.35rem] border border-white/10 bg-white/5 p-3">
+          <div className="flex items-start gap-3">
             <button
               onClick={() => {
                 stopAutoPlay();
                 router.push("/");
               }}
-              className="rounded-2xl bg-slate-700 px-4 py-2.5 text-sm font-medium hover:bg-slate-600"
+              className="shrink-0 rounded-xl bg-slate-700 px-3 py-2 text-sm font-medium hover:bg-slate-600"
             >
               返回首页
             </button>
 
-            <button
-              onClick={() => {
-                saveProgress(currentIndex);
-                setMessage("当前位置已保存");
-              }}
-              className="rounded-2xl bg-emerald-600 px-4 py-2.5 text-sm font-medium hover:bg-emerald-500"
-            >
-              保存当前位置
-            </button>
+            <div className="min-w-0 flex-1 pt-0.5">
+              <div className="truncate text-base font-semibold">
+                {lessonTitle || lesson?.title || "未命名课程"}
+              </div>
+              {pairs.length > 0 ? (
+                <p className="mt-1 text-xs text-white/55">
+                  第 {currentIndex + 1} / {pairs.length} 句
+                </p>
+              ) : (
+                <p className="mt-1 text-xs text-white/55">正在加载课程...</p>
+              )}
+            </div>
           </div>
         </div>
 
         {message && (
-          <div className="mb-4 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-3 text-sm text-emerald-300">
+          <div className="mb-3 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-3 text-sm text-emerald-300">
             {message}
           </div>
         )}
 
-        <div className="grid gap-4 xl:grid-cols-[280px_minmax(0,1fr)]">
-          <aside className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-              <h2 className="mb-3 text-lg font-bold">声音设置</h2>
-
-              <label className="mb-2 block text-sm text-white/70">
-                选择机器英文声音
-              </label>
-
-              <select
-                value={selectedVoiceName}
-                onChange={(e) => setSelectedVoiceName(e.target.value)}
-                className="w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm outline-none"
-              >
-                {voices.map((voice) => (
-                  <option key={voice.name} value={voice.name}>
-                    {voice.name} ({voice.lang})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-              <h2 className="mb-3 text-lg font-bold">自动播放节奏</h2>
-
-              <div className="mb-4">
-                <label className="mb-2 block text-sm text-white/70">
-                  中文停留秒数：{prepSeconds} 秒
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="10"
-                  step="1"
-                  value={prepSeconds}
-                  onChange={(e) => setPrepSeconds(Number(e.target.value))}
-                  className="w-full"
-                  disabled={isAutoPlaying}
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm text-white/70">
-                  每句结束间隔：{gapSeconds} 秒
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="10"
-                  step="1"
-                  value={gapSeconds}
-                  onChange={(e) => setGapSeconds(Number(e.target.value))}
-                  className="w-full"
-                  disabled={isAutoPlaying}
-                />
-              </div>
-            </div>
-          </aside>
-
-          <section className="space-y-4">
-            <div
-              className={`rounded-3xl border bg-white/5 p-4 md:p-5 ${
-                isSequencePlaying ? "border-cyan-400" : "border-white/10"
-              }`}
-            >
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <h2 className="text-xl font-bold md:text-2xl">英文区</h2>
-                <div className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/60">
-                  点击空白区域显示英文
-                </div>
-              </div>
-
-              <div
-                onClick={() => setShowEnglish(true)}
-                className={`flex min-h-[110px] cursor-pointer items-center justify-center rounded-3xl border border-dashed p-5 text-center transition md:min-h-[130px] ${
-                  isSequencePlaying
-                    ? "border-cyan-400 bg-slate-800"
-                    : "border-white/15 bg-black/25 hover:border-emerald-400/40 hover:bg-black/35"
-                }`}
-              >
-                {showEnglish ? (
-                  <p className="text-2xl font-semibold leading-relaxed text-emerald-300 md:text-3xl">
-                    {currentPair.english || "这一句还没有对应英文。"}
-                  </p>
-                ) : (
-                  <p className="text-lg text-white/35 md:text-xl">
-                    点击这里显示英文
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div
-              className={`rounded-3xl border bg-white/5 p-4 md:p-5 ${
-                isSequencePlaying ? "border-cyan-400" : "border-white/10"
-              }`}
-            >
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <h2 className="text-xl font-bold md:text-2xl">中文区</h2>
-                <div className="rounded-full bg-blue-500/15 px-3 py-1 text-xs text-blue-300">
-                  当前学习句子
-                </div>
-              </div>
-
-              <div
-                className={`rounded-3xl p-5 md:p-6 ${
-                  isSequencePlaying ? "bg-slate-800" : "bg-black/25"
-                }`}
-              >
-                <p className="text-2xl font-bold leading-relaxed md:text-3xl">
-                  {currentPair.chinese || "没有内容"}
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-4 md:p-5">
-              {!hasSourceAudioId ? (
-                <div className="mb-3 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-200">
-                  这节课程没有关联原音频，请重新从音频生成并保存课程。                </div>
-              ) : null}
-
-              {hasSourceAudioId && !isSourceAudioLoading && !sourceAudioUrl ? (
-                <div className="mb-3 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-200">
-                  找不到原音频，请确认音频没有被删除。                </div>
-              ) : null}
-
-              {!hasValidTimeRange ? (
-                <div className="mb-3 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-200">
-                  当前句子没有时间戳，无法播放原音频。                </div>
-              ) : null}
-              {sourceAudioUrl ? (
-                <audio
-                  ref={sourceAudioRef}
-                  src={sourceAudioUrl}
-                  preload="auto"
-                  className="hidden"
-                  onPause={() => setIsClipPlaying(false)}
-                  onEnded={handleSourceClipComplete}
-                  onTimeUpdate={() => {
-                    const audio = sourceAudioRef.current;
-                    const clipEndTime = clipEndTimeRef.current;
-                    if (!audio || clipEndTime === null) return;
-
-                    if (audio.currentTime >= clipEndTime) {
-                      audio.pause();
-                      audio.currentTime = clipEndTime;
-                      handleSourceClipComplete();
-                    }
+        {pendingVocabularyWord ? (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4">
+            <div className="w-full max-w-[380px] rounded-3xl border border-white/10 bg-slate-900 p-5 shadow-2xl">
+              <h2 className="text-xl font-bold text-white">加入单词本</h2>
+              <p className="mt-3 text-sm leading-6 text-white/75">
+                确定要将这个单词放进单词本吗？
+              </p>
+              <input
+                type="text"
+                value={editableVocabularyWord}
+                onChange={(event) => setEditableVocabularyWord(event.target.value)}
+                className="mt-4 w-full rounded-2xl border border-emerald-400/30 bg-black/30 px-4 py-4 text-2xl font-semibold text-emerald-300 outline-none ring-0 placeholder:text-emerald-300/35 focus:border-emerald-300 focus:bg-black/40"
+                placeholder="请输入单词"
+                autoFocus
+              />
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={handleConfirmAddWord}
+                  disabled={isSavingVocabularyWord}
+                  className="rounded-2xl bg-emerald-600 px-4 py-3.5 text-base font-semibold hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    closeVocabularyModal();
                   }}
-                />
-              ) : null}
-
-              <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-                <button
-                  onClick={handlePrev}
-                  disabled={currentIndex === 0}
-                  className="rounded-2xl bg-slate-700 px-4 py-3 text-sm disabled:opacity-40"
+                  className="rounded-2xl bg-slate-700 px-4 py-3.5 text-base font-semibold hover:bg-slate-600"
                 >
-                  上一句
+                  No
                 </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
 
-                <button
-                  onClick={handleNext}
-                  disabled={currentIndex >= pairs.length - 1}
-                  className="rounded-2xl bg-blue-600 px-4 py-3 text-sm disabled:opacity-40"
-                >
-                  下一句
-                </button>
+        <section className="space-y-3">
+          <div
+            className={`rounded-[1.5rem] border bg-white/5 px-5 py-6 transition ${
+              isSequencePlaying
+                ? "border-cyan-400 bg-slate-900/70"
+                : "border-white/10"
+            }`}
+          >
+            <div className="min-h-[180px]">
+              <p className="text-left text-[26px] font-bold leading-[1.65]">
+                {currentPair.chinese || "没有内容"}
+              </p>
+            </div>
 
-                <button
-                  onClick={() => setShowEnglish(true)}
-                  className="rounded-2xl bg-emerald-600 px-4 py-3 text-sm"
-                >
-                  显示英文
-                </button>
+            <div className="my-5 border-t border-white/20" />
 
-                <button
-                  onClick={() => setShowEnglish(false)}
-                  className="rounded-2xl bg-slate-700 px-4 py-3 text-sm"
-                >
-                  隐藏英文
-                </button>
+            <div className="min-h-[180px]">
+              {showEnglish ? (
+                <p className="text-left text-[18px] font-semibold leading-[1.85] text-emerald-300">
+                  {englishTokens.length > 0
+                    ? englishTokens.map((token, index) =>
+                        token.type === "word" ? (
+                          <button
+                            key={`${token.value}-${index}`}
+                            type="button"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleWordClick(token.value, currentPair.english || "");
+                            }}
+                            className="inline rounded-xl px-1 py-0.5 text-left transition hover:bg-emerald-400/20 hover:text-white"
+                          >
+                            {token.value}
+                          </button>
+                        ) : (
+                          <span key={`${token.value}-${index}`}>{token.value}</span>
+                        )
+                      )
+                    : "这一句还没有对应英文。"}
+                </p>
+              ) : (
+                <p className="text-left text-base text-white/40">点击这里显示英文</p>
+              )}
+            </div>
+          </div>
 
+          <div className="rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => speakEnglish(currentPair.english, 1)}
+                disabled={isAutoPlaying}
+                className="rounded-xl bg-purple-600 px-3 py-2 text-sm font-semibold disabled:opacity-40"
+              >
+                朗读英文
+              </button>
+
+              <button
+                onClick={() => speakEnglish(currentPair.english, 0.5)}
+                disabled={isAutoPlaying}
+                className="rounded-xl bg-indigo-600 px-3 py-2 text-sm font-semibold disabled:opacity-40"
+              >
+                慢速朗读
+              </button>
+
+              {canPlaySourceAudio ? (
                 <button
                   onClick={handlePlaySourceAudio}
-                  disabled={!canPlaySourceAudio}
-                  className={`w-full rounded-2xl px-6 py-4 text-lg font-bold transition ${
-                    !canPlaySourceAudio
-                      ? "bg-slate-700 text-slate-400 opacity-60 cursor-not-allowed"
-                      : isSourcePlaybackActive
-                        ? "bg-cyan-500 text-white"
-                        : "bg-cyan-600 text-white hover:bg-cyan-500"
+                  className={`rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                    isSourcePlaybackActive
+                      ? "bg-cyan-500 text-white"
+                      : "bg-cyan-600 text-white hover:bg-cyan-500"
                   }`}
                 >
-                  播放原音频
+                  播放音频
                 </button>
+              ) : null}
 
-                <button
-                  onClick={() => speakEnglish(currentPair.english, 1)}
-                  disabled={isAutoPlaying}
-                  className="rounded-2xl bg-purple-600 px-4 py-3 text-sm disabled:opacity-40"
-                >
-                  朗读英文
-                </button>
-
-                <button
-                  onClick={() => speakEnglish(currentPair.english, 0.5)}
-                  disabled={isAutoPlaying}
-                  className="rounded-2xl bg-indigo-600 px-4 py-3 text-sm disabled:opacity-40"
-                >
-                  放慢速度
-                </button>
-
-                {!isAutoPlaying ? (
+              {canPlaySourceAudio ? (
+                !isAutoPlaying ? (
                   <button
                     onClick={startAutoPlay}
-                    className="rounded-2xl bg-orange-600 px-4 py-3 text-sm font-semibold"
+                    className="rounded-xl bg-orange-600 px-3 py-2 text-sm font-semibold"
                   >
-                    开始自动播放
+                    开始训练
                   </button>
                 ) : (
                   <button
                     onClick={stopAutoPlay}
-                    className="rounded-2xl bg-red-600 px-4 py-3 text-sm font-semibold"
+                    className="rounded-xl bg-red-600 px-3 py-2 text-sm font-semibold"
                   >
-                    停止自动播放
+                    停止训练
                   </button>
-                )}
-
-                <div className="flex items-center justify-end gap-3">
-                  {[0.5, 0.75, 1, 1.25].map((rate) => (
-                    <button
-                      key={rate}
-                      onClick={() => setSourcePlaybackRate(rate)}
-                      className={`rounded-xl px-4 py-2 text-sm font-bold ${
-                        sourcePlaybackRate === rate
-                          ? "bg-cyan-500 text-white"
-                          : "bg-slate-700 text-white"
-                      }`}
-                    >
-                      {rate}x
-                    </button>
-                  ))}
-                </div>
-              </div>
+                )
+              ) : null}
             </div>
-          </section>
-        </div>
+
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {[0.5, 0.75, 1, 1.25].map((rate) => (
+                <button
+                  key={rate}
+                  onClick={() => setSourcePlaybackRate(rate)}
+                  className={`rounded-xl px-2.5 py-1.5 text-xs font-bold ${
+                    sourcePlaybackRate === rate
+                      ? "bg-cyan-500 text-white"
+                      : "bg-slate-700 text-white"
+                  }`}
+                >
+                  {rate}x
+                </button>
+              ))}
+              <button
+                onClick={() => setShowMoreActions((prev) => !prev)}
+                className="rounded-xl bg-slate-800 px-2.5 py-1.5 text-xs font-bold hover:bg-slate-700"
+              >
+                声音设置
+              </button>
+            </div>
+            {showMoreActions ? (
+              <div className="mt-2">
+                <select
+                  value={selectedVoiceName}
+                  onChange={(e) => setSelectedVoiceName(e.target.value)}
+                  className="w-full rounded-xl border border-white/15 bg-black/30 px-3 py-2 text-sm outline-none"
+                >
+                  {voices.map((voice) => (
+                    <option key={voice.name} value={voice.name}>
+                      {voice.name} ({voice.lang})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+          </div>
+
+          {sourceAudioUrl ? (
+            <audio
+              ref={sourceAudioRef}
+              src={sourceAudioUrl}
+              preload="auto"
+              className="hidden"
+              onPause={() => setIsClipPlaying(false)}
+              onEnded={handleSourceClipComplete}
+              onTimeUpdate={() => {
+                const audio = sourceAudioRef.current;
+                const clipEndTime = clipEndTimeRef.current;
+                if (!audio || clipEndTime === null) return;
+
+                if (audio.currentTime >= clipEndTime) {
+                  audio.pause();
+                  audio.currentTime = clipEndTime;
+                  handleSourceClipComplete();
+                }
+              }}
+            />
+          ) : null}
+          <div className="grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
+            <button
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              className="rounded-xl bg-slate-700 px-4 py-2 text-sm font-semibold disabled:opacity-40"
+            >
+              上一句
+            </button>
+
+            <button
+              onClick={handleNext}
+              disabled={currentIndex >= pairs.length - 1}
+              className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold disabled:opacity-40"
+            >
+              下一句
+            </button>
+          </div>
+
+          <div className="mt-2 grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
+            <button
+              onClick={handleBackHome}
+              className="rounded-xl bg-slate-800 px-3 py-2 text-sm font-medium hover:bg-slate-700"
+            >
+              返回首页
+            </button>
+            <button
+              onClick={handleSaveCurrentPosition}
+              className="rounded-xl bg-emerald-700 px-3 py-2 text-sm font-medium hover:bg-emerald-600"
+            >
+              保存当前位置
+            </button>
+          </div>
+        </section>
       </div>
     </main>
   );
 }
-

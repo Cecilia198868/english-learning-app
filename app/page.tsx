@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   deserializeTrainingItems,
+  normalizeToShortTrainingItems,
   type TrainingItem,
   serializeTrainingItems,
 } from "@/lib/training";
@@ -60,6 +61,23 @@ type AudioTrainingApiResponse = {
   error?: string;
   message?: string;
 };
+
+function normalizeGeneratedPairs(pairs: GeneratedPair[]) {
+  return normalizeToShortTrainingItems(
+    pairs.map((pair) => ({
+      zh: typeof pair.chinese === "string" ? pair.chinese.trim() : "",
+      en: typeof pair.english === "string" ? pair.english.trim() : "",
+      startTime:
+        typeof pair.startTime === "number" ? pair.startTime : undefined,
+      endTime: typeof pair.endTime === "number" ? pair.endTime : undefined,
+    }))
+  ).map((item) => ({
+    chinese: item.zh,
+    english: item.en,
+    startTime: item.startTime,
+    endTime: item.endTime,
+  }));
+}
 
 type TranscribedSegment = {
   text: string;
@@ -288,7 +306,14 @@ async function deleteAudioFromDB(id: string): Promise<void> {
 
 export default function Home() {
   const router = useRouter();
-  const [sourceMode, setSourceMode] = useState<SourceMode>("text-only");
+  const [sourceMode, setSourceMode] = useState<SourceMode>("text-audio");
+  const [showStartOptions, setShowStartOptions] = useState(false);
+  const [expandedLearnSection, setExpandedLearnSection] = useState<
+    "featured" | "my-courses" | null
+  >(null);
+  const [expandedMyCourseSection, setExpandedMyCourseSection] = useState<
+    "saved" | "builder" | null
+  >(null);
   const [title, setTitle] = useState("");
   const [rawText, setRawText] = useState("");
   const [txtContent, setTxtContent] = useState("");
@@ -324,10 +349,9 @@ export default function Home() {
     sourceMode === "text-only" || sourceMode === "text-audio";
   const showAudioSection =
     sourceMode === "media-only" || sourceMode === "text-audio";
-  const showFeaturedSection = sourceMode === "featured";
-  const showSavedLessons = showTextSection;
-  const showSavedAudios = showAudioSection;
-  const showAudioPlayer = showAudioSection;
+  const selectedAudio = useMemo(() => {
+    return audios.find((item) => item.id === selectedAudioId) || null;
+  }, [audios, selectedAudioId]);
 
   function isFunctionInvocationTimeoutMessage(message: string) {
     return (
@@ -377,7 +401,7 @@ export default function Home() {
       const contentToSave =
         generatedPairs.length > 0
           ? serializeTrainingItems(
-              generatedPairs.map((pair) => ({
+              normalizeGeneratedPairs(generatedPairs).map((pair) => ({
                 zh: pair.chinese,
                 en: pair.english,
                 startTime: pair.startTime,
@@ -516,11 +540,12 @@ export default function Home() {
 
       setGeneratedPairs([]);
       setGeneratedSourceAudioId(null);
-      setGeneratedItems(items);
+      const normalizedItems = normalizeToShortTrainingItems(items);
+      setGeneratedItems(normalizedItems);
       setCurrentIndex(0);
       setShowEnglish(false);
-      setTxtContent(serializeTrainingItems(items));
-      setMessage(`已生成 ${items.length} 条内容`);
+      setTxtContent(serializeTrainingItems(normalizedItems));
+      setMessage(`已生成 ${normalizedItems.length} 条内容`);
     } catch (error) {
       const msg = error instanceof Error ? error.message : "操作失败";
       setMessage(msg);
@@ -638,13 +663,7 @@ export default function Home() {
     transcript: string,
     generatedTitle?: string
   ) {
-    const normalizedPairs: GeneratedPair[] = pairs.map((pair) => ({
-      chinese: typeof pair.chinese === "string" ? pair.chinese.trim() : "",
-      english: typeof pair.english === "string" ? pair.english.trim() : "",
-      startTime:
-        typeof pair.startTime === "number" ? pair.startTime : undefined,
-      endTime: typeof pair.endTime === "number" ? pair.endTime : undefined,
-    }));
+    const normalizedPairs = normalizeGeneratedPairs(pairs);
 
     if (normalizedPairs.length === 0) {
       throw new Error("操作失败");
@@ -928,10 +947,6 @@ export default function Home() {
     setExpandedLessonId((prev) => (prev === id ? null : id));
   }
 
-  const selectedAudio = useMemo(() => {
-    return audios.find((item) => item.id === selectedAudioId) || null;
-  }, [audios, selectedAudioId]);
-
   function handleStopAudio() {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -943,6 +958,46 @@ export default function Home() {
     if (audioRef.current) {
       audioRef.current.playbackRate = rate;
     }
+  }
+
+  function handleContinueLearning() {
+    if (lessons.length === 0) {
+      setMessage("还没有课程，请先开始学习或制作课程。");
+      setShowStartOptions(true);
+      setExpandedLearnSection("my-courses");
+      setExpandedMyCourseSection("builder");
+      return;
+    }
+
+    const targetLesson = lessons[0];
+    localStorage.setItem("currentLessonTitle", targetLesson.title || "未命名课程");
+    router.push(`/study/${targetLesson.id}`);
+  }
+
+  function handleOpenStartLearning() {
+    setShowStartOptions((prev) => {
+      const next = !prev;
+
+      if (next) {
+        setExpandedLearnSection((current) => current ?? "my-courses");
+        setExpandedMyCourseSection((current) => current ?? "saved");
+      }
+
+      return next;
+    });
+  }
+
+  function handleSelectLearnSection(section: "featured" | "my-courses") {
+    setShowStartOptions(true);
+    setExpandedLearnSection((prev) => (prev === section ? null : section));
+
+    if (section === "my-courses") {
+      setExpandedMyCourseSection((prev) => prev ?? "saved");
+    }
+  }
+
+  function handleStaticCourseClick() {
+    setMessage("课程建设中");
   }
 
   useEffect(() => {
@@ -1012,229 +1067,185 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-7xl p-6">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 p-6">
-          <div>
-            <h1 className="text-3xl font-bold">英语学习网站</h1>
-<p className="mt-2 text-white/65">
-  离线版：TXT 保存在浏览器，音频使用 IndexedDB 保存
-</p>
+      <div className="mx-auto max-w-[430px] px-4 py-6">
+        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/20">
+          <div className="text-center">
+            <div className="inline-flex rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium tracking-[0.2em] text-emerald-300">
+              SPEAKING APP
+            </div>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight">开口英语</h1>
+            <p className="mt-3 text-sm leading-6 text-white/65">
+              看中文，想英文，真正练开口
+            </p>
           </div>
 
-          <div className="rounded-2xl bg-emerald-600/20 px-5 py-3 font-semibold text-emerald-300">
-            无需登录
+          <div className="mt-6 space-y-3">
+            <button
+              onClick={handleContinueLearning}
+              className="w-full rounded-[1.75rem] border border-white/10 bg-gradient-to-br from-emerald-500 to-emerald-700 px-5 py-5 text-left shadow-lg shadow-emerald-950/40 transition hover:from-emerald-400 hover:to-emerald-600"
+            >
+              <div className="text-lg font-bold">继续上次学习</div>
+              <div className="mt-1 text-sm text-white/75">
+                直接回到最近保存的一节课程
+              </div>
+            </button>
+
+            <button
+              onClick={handleOpenStartLearning}
+              className="w-full rounded-[1.75rem] border border-white/10 bg-white/8 px-5 py-5 text-left transition hover:bg-white/12"
+            >
+              <div className="text-lg font-bold">开始学习</div>
+              <div className="mt-1 text-sm text-white/65">
+                查看精选课程、我的课程和课程制作入口
+              </div>
+            </button>
+
+            <Link
+              href="/vocabulary"
+              className="block w-full rounded-[1.75rem] border border-white/10 bg-blue-600/90 px-5 py-5 text-left transition hover:bg-blue-500"
+            >
+              <div className="text-lg font-bold">单词闯关</div>
+              <div className="mt-1 text-sm text-blue-100/85">
+                进入单词本，开始四选一背诵测试
+              </div>
+            </Link>
           </div>
         </div>
 
-        <div className="mb-6 rounded-3xl border border-white/10 bg-white/5 p-5">
-          <h2 className="mb-4 text-xl font-bold">课程来源选择</h2>
-          <div className="flex flex-wrap gap-3">
-            {[
-              { value: "text-only", label: "只有文本" },
-              { value: "media-only", label: "只有音频/视频" },
-              { value: "text-audio", label: "文本 + 音频" },
-              { value: "featured", label: "平台精选课程" },
-            ].map((option) => {
-              const isActive = sourceMode === option.value;
-
-              return (
-                <button
-                  key={option.value}
-                  onClick={() => setSourceMode(option.value as SourceMode)}
-                  className={`rounded-2xl px-4 py-3 font-semibold transition ${
-                    isActive
-                      ? "bg-emerald-600 text-white"
-                      : "bg-black/30 text-white/75 hover:bg-white/10"
-                  }`}
-                >
-                  {option.label}
-                </button>
-              );
-            })}
+        {message ? (
+          <div className="mt-4 rounded-3xl border border-blue-400/20 bg-blue-500/10 p-4 text-sm text-blue-200">
+            {message}
           </div>
-        </div>
+        ) : null}
 
-        <div className="grid gap-6 lg:grid-cols-[340px_minmax(0,1fr)]">
-          <aside className="space-y-6">
-            {showTextSection && (
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <h2 className="mb-4 text-xl font-bold">TXT 快捷区</h2>
-
-                <input
-                  type="text"
-                  placeholder="输入课程标题"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="mb-3 w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 outline-none placeholder:text-white/35"
-                />
-
-                <div className="mb-3 flex flex-wrap gap-3">
-                  <input
-                    id="subtitle-file-input"
-                    type="file"
-                    accept=".srt,.txt,text/plain,.srt"
-                    onChange={handleSubtitleFileChange}
-                    className="min-w-0 flex-1 rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm"
-                  />
-
-                  <button
-                    onClick={handleGenerateTraining}
-                    disabled={isGeneratingTraining}
-                    className="rounded-2xl bg-emerald-600 px-4 py-3 font-semibold hover:bg-emerald-500 disabled:opacity-50"
-                  >
-                    一键生成训练内容                 </button>
-                </div>
-
-                {subtitleFileName && (
-                  <div className="mb-3 text-xs text-white/55">
-                    当前字幕：{subtitleFileName}
-                  </div>
-                )}
-
-                <textarea
-                  placeholder="把中文或英文文本粘贴到这里，或上传 TXT/SRT 后一键生成训练内容"
-                  value={rawText}
-                  onChange={(e) => setRawText(e.target.value)}
-                  rows={8}
-                  className="mb-3 w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 outline-none placeholder:text-white/35"
-                />
-
-                {generatedItems.length > 0 && (
-                  <div className="mb-3 rounded-2xl border border-white/10 bg-black/20 p-4">
-                    <div className="mb-3 flex items-center justify-between gap-2">
-                      <div className="text-sm font-semibold text-white/85">
-                        当前训练预览
-                      </div>
-                      <div className="text-xs text-white/50">
-                        {currentIndex + 1} / {generatedItems.length}
-                      </div>
-                    </div>
-
-                    <p className="rounded-2xl bg-white/5 px-3 py-3 text-sm leading-6">
-                      {generatedItems[currentIndex]?.zh || "暂无中文翻译"}
-                    </p>
-
-                    <div className="mt-3 rounded-2xl bg-white/5 px-3 py-3 text-sm leading-6 text-white/75">
-                      {showEnglish
-                        ? generatedItems[currentIndex]?.en || ""
-                        : "点击显示英文后可查看原句"}
-                    </div>
-
-                    <div className="mt-3 grid grid-cols-2 gap-2">
-                      <button
-                        onClick={() =>
-                          setCurrentIndex((prev) => Math.max(prev - 1, 0))
-                        }
-                        disabled={currentIndex === 0}
-                        className="rounded-2xl bg-slate-700 px-3 py-2 text-sm disabled:opacity-40"
-                      >
-                        上一句                     </button>
-                      <button
-                        onClick={() =>
-                          setCurrentIndex((prev) =>
-                            Math.min(prev + 1, generatedItems.length - 1)
-                          )
-                        }
-                        disabled={currentIndex >= generatedItems.length - 1}
-                        className="rounded-2xl bg-blue-600 px-3 py-2 text-sm disabled:opacity-40"
-                      >
-                        下一句                      </button>
-                      <button
-                        onClick={() => setShowEnglish(true)}
-                        className="rounded-2xl bg-emerald-600 px-3 py-2 text-sm"
-                      >
-                        显示英文
-                      </button>
-                      <button
-                        onClick={() => setShowEnglish(false)}
-                        className="rounded-2xl bg-slate-700 px-3 py-2 text-sm"
-                      >
-                        隐藏英文
-                      </button>
-                    </div>
-                  </div>
-                )}
-
+        {showStartOptions ? (
+          <section className="mt-5 space-y-4">
+            <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-4">
+              <div className="grid gap-3">
                 <button
-                  onClick={handleSaveLesson}
-                  className="w-full rounded-2xl bg-blue-600 px-4 py-3 font-semibold hover:bg-blue-500"
+                  onClick={() => handleSelectLearnSection("featured")}
+                  className="w-full rounded-3xl border border-white/10 bg-black/20 px-4 py-4 text-left transition hover:border-white/20 hover:bg-white/8"
                 >
-                  保存 TXT
+                  <div className="text-lg font-bold">精选课程</div>
+                  <div className="mt-1 text-sm text-white/60">
+                    实用场景口语与分级口语学习
+                  </div>
                 </button>
 
-                {message && (
-                  <div className="mt-3 rounded-2xl bg-blue-500/10 p-3 text-sm text-blue-300">
-                    {message}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {showAudioSection && (
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <h2 className="mb-4 text-xl font-bold">音频快捷区</h2>
-
-                <input
-                  type="text"
-                  placeholder="输入音频标题"
-                  value={audioTitle}
-                  onChange={(e) => setAudioTitle(e.target.value)}
-                  className="mb-3 w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 outline-none placeholder:text-white/35"
-                />
-
-                <input
-                  id="audio-file-input"
-                  type="file"
-                  accept=".mp3,audio/mpeg,audio/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0] || null;
-                    setAudioFile(file);
-                  }}
-                  className="mb-3 block w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3"
-                />
-
                 <button
-                  onClick={handleUploadAudio}
-                  className="w-full rounded-2xl bg-emerald-600 px-4 py-3 font-semibold hover:bg-emerald-500"
+                  onClick={() => handleSelectLearnSection("my-courses")}
+                  className="w-full rounded-3xl border border-white/10 bg-black/20 px-4 py-4 text-left transition hover:border-white/20 hover:bg-white/8"
                 >
-                  上传 MP3
+                  <div className="text-lg font-bold">我的课程</div>
+                  <div className="mt-1 text-sm text-white/60">
+                    查看已有课程，或制作自己的课程
+                  </div>
                 </button>
 
-                {audioMessage && (
-                  <div className="mt-3 rounded-2xl bg-emerald-500/10 p-3 text-sm text-emerald-300">
-                    {audioMessage}
+                <Link
+                  href="/vocabulary"
+                  className="block w-full rounded-3xl border border-white/10 bg-black/20 px-4 py-4 text-left transition hover:border-white/20 hover:bg-white/8"
+                >
+                  <div className="text-lg font-bold">我的单词本</div>
+                  <div className="mt-1 text-sm text-white/60">
+                    跳转到单词本页面
                   </div>
-                )}
+                </Link>
+              </div>
+            </div>
 
-                <div className="mt-3 text-xs text-white/45">
-                  单个音频限制：{MAX_AUDIO_SIZE_MB}MB。使用 IndexedDB，可存比
-                  localStorage 大得多的音频。
+            {expandedLearnSection === "featured" ? (
+              <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+                <h2 className="text-xl font-bold">精选课程</h2>
+
+                <div className="mt-5">
+                  <h3 className="text-sm font-semibold tracking-[0.12em] text-white/55">
+                    实用场景口语
+                  </h3>
+                  <div className="mt-3 grid gap-3">
+                    {["银行", "面试", "政府", "餐厅", "电话", "旅游"].map((item) => (
+                      <button
+                        key={item}
+                        onClick={handleStaticCourseClick}
+                        className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-left hover:bg-white/8"
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6">
+                  <h3 className="text-sm font-semibold tracking-[0.12em] text-white/55">
+                    分级口语学习
+                  </h3>
+                  <div className="mt-3 grid gap-3">
+                    {[
+                      "成人初级口语学习",
+                      "成人中级口语学习",
+                      "成人高级口语学习",
+                      "小学生口语学习",
+                      "初中生口语学习",
+                      "高中生口语学习",
+                    ].map((item) => (
+                      <button
+                        key={item}
+                        onClick={handleStaticCourseClick}
+                        className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-left hover:bg-white/8"
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            )}
+            ) : null}
 
-            {showFeaturedSection && (
-              <div className="rounded-3xl border border-dashed border-white/15 bg-white/5 p-5">
-                <h2 className="mb-4 text-xl font-bold">平台精选课程</h2>
-                <p className="text-white/65">
-  平台精选课程将在下一步添加。
-</p>
-              </div>
-            )}
-          </aside>
+            {expandedLearnSection === "my-courses" ? (
+              <div className="space-y-4">
+                <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-4">
+                  <div className="grid gap-3">
+                    <button
+                      onClick={() =>
+                        setExpandedMyCourseSection((prev) =>
+                          prev === "saved" ? null : "saved"
+                        )
+                      }
+                      className="w-full rounded-3xl border border-white/10 bg-black/20 px-4 py-4 text-left transition hover:border-white/20 hover:bg-white/8"
+                    >
+                      <div className="text-lg font-bold">已有课程</div>
+                      <div className="mt-1 text-sm text-white/60">
+                        查看已保存课程并进入学习
+                      </div>
+                    </button>
 
-          <section className="space-y-6">
-            {(showSavedLessons || showSavedAudios) && (
-              <div className="grid gap-6 xl:grid-cols-2">
-                {showSavedLessons && (
-                  <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                    <h2 className="mb-4 text-2xl font-bold">已保存课程</h2>
+                    <button
+                      onClick={() =>
+                        setExpandedMyCourseSection((prev) =>
+                          prev === "builder" ? null : "builder"
+                        )
+                      }
+                      className="w-full rounded-3xl border border-white/10 bg-black/20 px-4 py-4 text-left transition hover:border-white/20 hover:bg-white/8"
+                    >
+                      <div className="text-lg font-bold">制作我的课程</div>
+                      <div className="mt-1 text-sm text-white/60">
+                        导入文本资料或音频资料，生成自己的训练内容
+                      </div>
+                    </button>
+                  </div>
+                </div>
 
-                    {lessons.length === 0 ? (
-                      <p className="text-white/60">还没有保存任何课程。</p>
-                    ) : (
-                      <div className="max-h-[520px] space-y-3 overflow-y-auto pr-1">
-                        {lessons.map((lesson, index) => {
+                {expandedMyCourseSection === "saved" ? (
+                  <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+                    <h2 className="text-xl font-bold">已有课程</h2>
+
+                    <div className="mt-4 space-y-3">
+                      {lessons.length === 0 ? (
+                        <div className="rounded-2xl bg-black/20 p-4 text-sm text-white/60">
+                          还没有保存任何课程。
+                        </div>
+                      ) : (
+                        lessons.map((lesson, index) => {
                           const isExpanded = expandedLessonId === lesson.id;
 
                           return (
@@ -1242,25 +1253,24 @@ export default function Home() {
                               key={lesson.id}
                               className="overflow-hidden rounded-2xl border border-white/10 bg-black/20"
                             >
-                              <div className="flex items-center justify-between gap-3 px-4 py-4">
+                              <div className="flex items-center gap-3 px-4 py-4">
                                 <button
                                   onClick={() => toggleLesson(lesson.id)}
-                                  className="flex-1 text-left hover:text-blue-300"
+                                  className="min-w-0 flex-1 text-left hover:text-blue-300"
                                 >
-                                  <div className="text-base font-bold">
+                                  <div className="truncate text-base font-bold">
                                     {index + 1}. {lesson.title}
                                   </div>
                                   <div className="mt-1 text-xs text-white/50">
-                                   {isExpanded ? "点击收起" : "点击展开"}
+                                    {isExpanded ? "点击收起" : "点击展开"}
                                   </div>
                                 </button>
 
                                 <button
                                   onClick={() => {
-                                    console.log(
-                                      "[saved-lesson-study-click]",
-                                      lesson.id,
-                                      lesson.title
+                                    localStorage.setItem(
+                                      "currentLessonTitle",
+                                      lesson.title || "未命名课程"
                                     );
                                     router.push(`/study/${lesson.id}`);
                                   }}
@@ -1277,215 +1287,378 @@ export default function Home() {
                                 </button>
                               </div>
 
-                              {isExpanded && (
+                              {isExpanded ? (
                                 <div className="border-t border-white/10 px-4 py-4">
                                   <div className="space-y-2 text-sm text-white/80">
-                                    {deserializeTrainingItems(
-                                      lesson.txt_content
-                                    ).map((item, itemIndex) => (
-                                      <div
-                                        key={`${lesson.id}-${itemIndex}`}
-                                        className="rounded-2xl bg-white/5 px-3 py-2"
-                                      >
-                                        {item.zh && <p>{item.zh}</p>}
-                                        <p
-                                          className={
-                                            item.zh ? "mt-1 text-white/55" : ""
-                                          }
+                                    {deserializeTrainingItems(lesson.txt_content).map(
+                                      (item, itemIndex) => (
+                                        <div
+                                          key={`${lesson.id}-${itemIndex}`}
+                                          className="rounded-2xl bg-white/5 px-3 py-2"
                                         >
-                                          {item.en}
-                                        </p>
-                                        {!item.zh && (
-                                          <p className="mt-1 text-white/45">
-                                            暂无中文翻译
+                                          {item.zh ? <p>{item.zh}</p> : null}
+                                          <p className={item.zh ? "mt-1 text-white/55" : ""}>
+                                            {item.en}
                                           </p>
-                                        )}
-                                      </div>
-                                    ))}
+                                          {!item.zh ? (
+                                            <p className="mt-1 text-white/45">
+                                              暂无中文翻译
+                                            </p>
+                                          ) : null}
+                                        </div>
+                                      )
+                                    )}
                                   </div>
                                 </div>
-                              )}
+                              ) : null}
                             </div>
                           );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {showSavedAudios && (
-                  <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                    <h2 className="mb-4 text-2xl font-bold">已保存音频</h2>
-
-                    {audios.length === 0 ? (
-                      <p className="text-white/60">还没有上传任何音频。</p>
-                    ) : (
-                      <div className="max-h-[520px] space-y-3 overflow-y-auto pr-1">
-                        {audios.map((audio, index) => {
-                          const savedAudioTitle =
-                            audio.title ||
-                            audio.name ||
-                            audio.fileName ||
-                            audio.filename ||
-                            audio.originalName ||
-                            audio.label ||
-                            "未命名音频";
-                          const linkedLesson =
-                            lessons.find((lesson) => lesson.sourceAudioId === audio.id) ||
-                            null;
-
-                          return (
-                            <div
-                              key={audio.id}
-                              className={`rounded-2xl border px-4 py-3 ${
-                                selectedAudioId === audio.id
-                                  ? "border-blue-400 bg-blue-500/20"
-                                  : "border-white/10 bg-black/20"
-                              }`}
-                            >
-                              <div className="mb-3 flex min-w-0 items-center gap-2 text-left">
-                                <span className="shrink-0 font-bold">{index + 1}.</span>
-                                <button
-                                  onClick={() => setSelectedAudioId(audio.id)}
-                                  className="min-w-0 flex-1 truncate text-left font-semibold hover:text-blue-300"
-                                  title={savedAudioTitle}
-                                >
-                                  {savedAudioTitle}
-                                </button>
-                              </div>
-
-                              <div className="flex flex-wrap items-center gap-2">
-                                <button
-                                  onClick={() =>
-                                    handleGenerateAudioTraining(audio)
-                                  }
-                                  disabled={generatingAudioId === audio.id}
-                                  className="whitespace-nowrap rounded-xl bg-blue-600 px-3 py-2 text-sm font-medium disabled:opacity-50"
-                                >
-                                  {generatingAudioId === audio.id
-                                    ? "生成中..."
-                                    : "一键生成训练内容"}
-                                </button>
-
-                                <button
-                                  onClick={() => handleSaveAudioAsLesson(audio)}
-                                  className="whitespace-nowrap rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium"
-                                >
-                                  保存
-                                </button>
-
-                                {linkedLesson ? (
-                                  <Link
-                                    href={`/study/${linkedLesson.id}`}
-                                    onClick={() => {
-                                      localStorage.setItem(
-                                        "currentLessonTitle",
-                                        linkedLesson.title || savedAudioTitle
-                                      );
-                                    }}
-                                    className="whitespace-nowrap rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium"
-                                  >
-                                    学习
-                                  </Link>
-                                ) : (
-                                  <button
-                                    disabled
-                                    className="whitespace-nowrap rounded-xl bg-slate-700 px-3 py-2 text-sm font-medium text-white/60"
-                                  >
-                                    先保存课程
-                                  </button>
-                                )}
-
-                                <button
-                                  onClick={() => handleDeleteAudio(audio)}
-                                  className="whitespace-nowrap rounded-xl bg-red-600 px-3 py-2 text-sm"
-                                >
-                                  删除
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {showAudioPlayer && (
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <h2 className="mb-4 text-2xl font-bold">音频播放器</h2>
-
-                {selectedAudio ? (
-                  <div className="rounded-2xl bg-black/20 p-5">
-                    <h3 className="mb-4 text-xl font-semibold">
-                      {selectedAudio.title}
-                    </h3>
-
-                    {loadingAudio ? (
-                      <div className="rounded-2xl bg-black/20 p-5 text-white/60">
-                        正在加载音频...
-                      </div>
-                    ) : null}
-
-                    {!loadingAudio &&
-                    selectedAudioUrl &&
-                    selectedAudioUrl.trim() !== "" ? (
-                      <audio
-                        ref={audioRef}
-                        src={selectedAudioUrl}
-                        controls
-                        className="w-full"
-                      />
-                    ) : null}
-
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      <button
-                        onClick={handleStopAudio}
-                        className="rounded-xl bg-orange-600 px-4 py-2"
-                      >
-                        停止
-                      </button>
-
-                      <button
-                        onClick={() => setPlaybackRate(0.75)}
-                        className="rounded-xl bg-slate-700 px-4 py-2"
-                      >
-                        0.75x
-                      </button>
-
-                      <button
-                        onClick={() => setPlaybackRate(1)}
-                        className="rounded-xl bg-slate-700 px-4 py-2"
-                      >
-                        1x
-                      </button>
-
-                      <button
-                        onClick={() => setPlaybackRate(1.25)}
-                        className="rounded-xl bg-slate-700 px-4 py-2"
-                      >
-                        1.25x
-                      </button>
-
-                      <button
-                        onClick={() => setPlaybackRate(1.5)}
-                        className="rounded-xl bg-slate-700 px-4 py-2"
-                      >
-                        1.5x
-                      </button>
+                        })
+                      )}
                     </div>
                   </div>
-                ) : (
-                  <div className="rounded-2xl bg-black/20 p-5 text-white/60">
-                    请先在上方音频列表中点击一条音频。
-                                     </div>
-                )}
+                ) : null}
+
+                {expandedMyCourseSection === "builder" ? (
+                  <div className="space-y-4">
+                    <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-4">
+                      <h2 className="text-xl font-bold">制作我的课程</h2>
+                      <div className="mt-4 grid gap-3">
+                        {[
+                          { value: "text-only", label: "只用文本资料" },
+                          { value: "media-only", label: "只用音频资料" },
+                          { value: "text-audio", label: "文本 + 音频资料" },
+                        ].map((option) => {
+                          const isActive = sourceMode === option.value;
+
+                          return (
+                            <button
+                              key={option.value}
+                              onClick={() => setSourceMode(option.value as SourceMode)}
+                              className={`w-full rounded-2xl px-4 py-3 text-left font-semibold transition ${
+                                isActive
+                                  ? "bg-emerald-600 text-white"
+                                  : "border border-white/10 bg-black/20 text-white/75 hover:bg-white/8"
+                              }`}
+                            >
+                              {option.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {showTextSection ? (
+                      <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+                        <h2 className="text-xl font-bold">导入文本资料</h2>
+
+                        <input
+                          type="text"
+                          placeholder="输入课程标题"
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          className="mt-4 w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 outline-none placeholder:text-white/35"
+                        />
+
+                        <div className="mt-3 grid gap-3">
+                          <input
+                            id="subtitle-file-input"
+                            type="file"
+                            accept=".srt,.txt,text/plain,.srt"
+                            onChange={handleSubtitleFileChange}
+                            className="w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm"
+                          />
+
+                          <button
+                            onClick={handleGenerateTraining}
+                            disabled={isGeneratingTraining}
+                            className="w-full rounded-2xl bg-emerald-600 px-4 py-3 font-semibold hover:bg-emerald-500 disabled:opacity-50"
+                          >
+                            一键生成训练内容
+                          </button>
+                        </div>
+
+                        {subtitleFileName ? (
+                          <div className="mt-3 text-xs text-white/55">
+                            当前字幕：{subtitleFileName}
+                          </div>
+                        ) : null}
+
+                        <textarea
+                          placeholder="把中文或英文文本粘贴到这里，或上传 TXT/SRT 后一键生成训练内容"
+                          value={rawText}
+                          onChange={(e) => setRawText(e.target.value)}
+                          rows={8}
+                          className="mt-3 w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 outline-none placeholder:text-white/35"
+                        />
+
+                        {generatedItems.length > 0 ? (
+                          <div className="mt-3 rounded-2xl border border-white/10 bg-black/20 p-4">
+                            <div className="mb-3 flex items-center justify-between gap-2">
+                              <div className="text-sm font-semibold text-white/85">
+                                当前训练预览
+                              </div>
+                              <div className="text-xs text-white/50">
+                                {currentIndex + 1} / {generatedItems.length}
+                              </div>
+                            </div>
+
+                            <p className="rounded-2xl bg-white/5 px-3 py-3 text-sm leading-6">
+                              {generatedItems[currentIndex]?.zh || "暂无中文翻译"}
+                            </p>
+
+                            <div className="mt-3 rounded-2xl bg-white/5 px-3 py-3 text-sm leading-6 text-white/75">
+                              {showEnglish
+                                ? generatedItems[currentIndex]?.en || ""
+                                : "点击显示英文后可查看原句"}
+                            </div>
+
+                            <div className="mt-3 grid grid-cols-2 gap-2">
+                              <button
+                                onClick={() =>
+                                  setCurrentIndex((prev) => Math.max(prev - 1, 0))
+                                }
+                                disabled={currentIndex === 0}
+                                className="rounded-2xl bg-slate-700 px-3 py-2 text-sm disabled:opacity-40"
+                              >
+                                上一句
+                              </button>
+                              <button
+                                onClick={() =>
+                                  setCurrentIndex((prev) =>
+                                    Math.min(prev + 1, generatedItems.length - 1)
+                                  )
+                                }
+                                disabled={currentIndex >= generatedItems.length - 1}
+                                className="rounded-2xl bg-blue-600 px-3 py-2 text-sm disabled:opacity-40"
+                              >
+                                下一句
+                              </button>
+                              <button
+                                onClick={() => setShowEnglish(true)}
+                                className="rounded-2xl bg-emerald-600 px-3 py-2 text-sm"
+                              >
+                                显示英文
+                              </button>
+                              <button
+                                onClick={() => setShowEnglish(false)}
+                                className="rounded-2xl bg-slate-700 px-3 py-2 text-sm"
+                              >
+                                隐藏英文
+                              </button>
+                            </div>
+                          </div>
+                        ) : null}
+
+                        <button
+                          onClick={handleSaveLesson}
+                          className="mt-3 w-full rounded-2xl bg-blue-600 px-4 py-3 font-semibold hover:bg-blue-500"
+                        >
+                          保存文本课程
+                        </button>
+                      </div>
+                    ) : null}
+
+                    {showAudioSection ? (
+                      <div className="space-y-4">
+                        <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+                          <h2 className="text-xl font-bold">导入音频资料</h2>
+
+                          <input
+                            type="text"
+                            placeholder="输入音频标题"
+                            value={audioTitle}
+                            onChange={(e) => setAudioTitle(e.target.value)}
+                            className="mt-4 w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 outline-none placeholder:text-white/35"
+                          />
+
+                          <input
+                            id="audio-file-input"
+                            type="file"
+                            accept=".mp3,audio/mpeg,audio/*"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0] || null;
+                              setAudioFile(file);
+                            }}
+                            className="mt-3 block w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3"
+                          />
+
+                          <button
+                            onClick={handleUploadAudio}
+                            className="mt-3 w-full rounded-2xl bg-emerald-600 px-4 py-3 font-semibold hover:bg-emerald-500"
+                          >
+                            保存音频资料
+                          </button>
+
+                          {audioMessage ? (
+                            <div className="mt-3 rounded-2xl bg-emerald-500/10 p-3 text-sm text-emerald-300">
+                              {audioMessage}
+                            </div>
+                          ) : null}
+                        </div>
+
+                        <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+                          <h2 className="text-xl font-bold">已保存音频</h2>
+
+                          <div className="mt-4 space-y-3">
+                            {audios.length === 0 ? (
+                              <p className="rounded-2xl bg-black/20 p-4 text-sm text-white/60">
+                                还没有上传任何音频。
+                              </p>
+                            ) : (
+                              audios.map((audio, index) => {
+                                const savedAudioTitle =
+                                  audio.title ||
+                                  audio.name ||
+                                  audio.fileName ||
+                                  audio.filename ||
+                                  audio.originalName ||
+                                  audio.label ||
+                                  "未命名音频";
+                                const linkedLesson =
+                                  lessons.find((lesson) => lesson.sourceAudioId === audio.id) ||
+                                  null;
+
+                                return (
+                                  <div
+                                    key={audio.id}
+                                    className={`rounded-2xl border px-4 py-4 ${
+                                      selectedAudioId === audio.id
+                                        ? "border-blue-400 bg-blue-500/20"
+                                        : "border-white/10 bg-black/20"
+                                    }`}
+                                  >
+                                    <div className="mb-3 flex min-w-0 items-center gap-2">
+                                      <span className="shrink-0 font-bold">
+                                        {index + 1}.
+                                      </span>
+                                      <button
+                                        onClick={() => setSelectedAudioId(audio.id)}
+                                        className="min-w-0 flex-1 truncate text-left font-semibold hover:text-blue-300"
+                                        title={savedAudioTitle}
+                                      >
+                                        {savedAudioTitle}
+                                      </button>
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-2">
+                                      <button
+                                        onClick={() => handleGenerateAudioTraining(audio)}
+                                        disabled={generatingAudioId === audio.id}
+                                        className="rounded-xl bg-blue-600 px-3 py-2 text-sm font-medium disabled:opacity-50"
+                                      >
+                                        {generatingAudioId === audio.id
+                                          ? "生成中..."
+                                          : "一键生成训练内容"}
+                                      </button>
+
+                                      <button
+                                        onClick={() => handleSaveAudioAsLesson(audio)}
+                                        className="rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium"
+                                      >
+                                        保存
+                                      </button>
+
+                                      {linkedLesson ? (
+                                        <Link
+                                          href={`/study/${linkedLesson.id}`}
+                                          onClick={() => {
+                                            localStorage.setItem(
+                                              "currentLessonTitle",
+                                              linkedLesson.title || savedAudioTitle
+                                            );
+                                          }}
+                                          className="rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium"
+                                        >
+                                          学习
+                                        </Link>
+                                      ) : (
+                                        <button
+                                          disabled
+                                          className="rounded-xl bg-slate-700 px-3 py-2 text-sm font-medium text-white/60"
+                                        >
+                                          先保存课程
+                                        </button>
+                                      )}
+
+                                      <button
+                                        onClick={() => handleDeleteAudio(audio)}
+                                        className="rounded-xl bg-red-600 px-3 py-2 text-sm"
+                                      >
+                                        删除
+                                      </button>
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5">
+                          <h2 className="text-xl font-bold">音频播放器</h2>
+
+                          <div className="mt-4">
+                            {selectedAudio ? (
+                              <div className="rounded-2xl bg-black/20 p-5">
+                                <h3 className="mb-4 text-lg font-semibold">
+                                  {selectedAudio.title}
+                                </h3>
+
+                                {loadingAudio ? (
+                                  <div className="rounded-2xl bg-black/20 p-4 text-sm text-white/60">
+                                    正在加载音频...
+                                  </div>
+                                ) : null}
+
+                                {!loadingAudio &&
+                                selectedAudioUrl &&
+                                selectedAudioUrl.trim() !== "" ? (
+                                  <audio
+                                    ref={audioRef}
+                                    src={selectedAudioUrl}
+                                    controls
+                                    className="w-full"
+                                  />
+                                ) : null}
+
+                                <div className="mt-4 flex flex-wrap gap-2">
+                                  <button
+                                    onClick={handleStopAudio}
+                                    className="rounded-xl bg-orange-600 px-4 py-2"
+                                  >
+                                    停止
+                                  </button>
+                                  {[0.75, 1, 1.25, 1.5].map((rate) => (
+                                    <button
+                                      key={rate}
+                                      onClick={() => setPlaybackRate(rate)}
+                                      className="rounded-xl bg-slate-700 px-4 py-2"
+                                    >
+                                      {rate}x
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="rounded-2xl bg-black/20 p-4 text-sm text-white/60">
+                                请先在上方音频列表中点击一条音频。
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
-            )}
+            ) : null}
           </section>
-        </div>
+        ) : null}
+
+        <p className="mt-6 px-2 text-center text-xs leading-6 text-white/35">
+          课程与音频仍保存在本机浏览器中。原来的文本导入、音频上传、课程保存、学习和删除功能都保留在“开始学习 → 我的课程”里。
+        </p>
       </div>
     </main>
   );

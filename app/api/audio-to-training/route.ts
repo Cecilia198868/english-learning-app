@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { normalizeToShortTrainingItems } from "@/lib/training";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -149,7 +150,8 @@ export async function POST(req: Request) {
     }
 
     const pairs = Array.isArray(parsed.pairs)
-      ? parsed.pairs.filter(
+      ? normalizeToShortTrainingItems(
+          parsed.pairs.filter(
           (item) =>
             item &&
             typeof item.chinese === "string" &&
@@ -157,7 +159,18 @@ export async function POST(req: Request) {
             typeof item.startTime === "number" &&
             typeof item.endTime === "number" &&
             (item.chinese.trim() || item.english.trim())
-        )
+          ).map((item) => ({
+            zh: item.chinese.trim(),
+            en: item.english.trim(),
+            startTime: item.startTime,
+            endTime: item.endTime,
+          }))
+        ).map((item) => ({
+          chinese: item.zh,
+          english: item.en,
+          startTime: item.startTime ?? 0,
+          endTime: item.endTime ?? 0,
+        }))
       : [];
 
     if (pairs.length === 0) {
