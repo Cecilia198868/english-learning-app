@@ -302,3 +302,30 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
 }
+
+/* Lift low-opacity text utilities so copy remains readable on neon surfaces. */
+[class*="text-white/"] {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+[class*="text-cyan-50/"],
+[class*="text-cyan-100/"],
+[class*="text-fuchsia-50/"],
+[class*="text-fuchsia-100/"] {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[class*="text-emerald-300/"],
+[class*="text-emerald-400/"] {
+  color: #a7f3d0 !important;
+}
+
+[class*="placeholder:text-white/"]::placeholder {
+  color: rgba(255, 255, 255, 0.74) !important;
+  opacity: 1;
+}
+
+[class*="placeholder:text-emerald-"]::placeholder {
+  color: rgba(167, 243, 208, 0.78) !important;
+  opacity: 1;
+}
