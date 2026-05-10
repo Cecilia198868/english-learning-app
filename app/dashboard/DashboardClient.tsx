@@ -120,6 +120,28 @@ const MAX_AUDIO_SIZE_MB = 100;
 const MAX_AUDIO_SIZE = MAX_AUDIO_SIZE_MB * 1024 * 1024;
 const DIRECT_AUDIO_TO_TRAINING_MAX_BYTES = 4 * 1024 * 1024;
 const AUDIO_CHUNK_SECONDS = 60;
+const BANK_FEATURED_LESSONS = [
+  { title: "新开银行账户", id: "bank_open_new_account_zh" },
+  { title: "网上银行与手机 App 操作", id: "bank_online_banking_app_zh" },
+  { title: "存款和取款", id: "bank_deposit_withdrawal_zh" },
+  { title: "使用 ATM 机和自我服务", id: "bank_atm_self_service_zh" },
+  { title: "银行客服电话口语课", id: "bank_customer_service_calls_zh" },
+  { title: "银行费用查询与争议解决", id: "bank_fee_disputes_zh" },
+  { title: "信用卡挂失口语课", id: "bank_credit_card_lost_report_zh" },
+  { title: "信用卡报告欺诈收费口语课", id: "bank_credit_card_fraud_report_zh" },
+  { title: "信用卡申请与审批流程", id: "bank_credit_card_application_zh" },
+  { title: "国际电汇与海外付款", id: "bank_international_wire_zh" },
+  { title: "货币兑换与国际汇款", id: "bank_currency_exchange_remittance_zh" },
+  { title: "申请个人贷款", id: "bank_personal_loan_zh" },
+  { title: "房屋抵押贷款咨询", id: "bank_mortgage_consultation_zh" },
+  { title: "设立储蓄和定期存款账户", id: "bank_savings_fixed_deposit_zh" },
+  { title: "投资产品与财富管理", id: "bank_wealth_management_zh" },
+  { title: "退休储蓄与养老金计划", id: "bank_retirement_pension_zh" },
+  { title: "关闭银行账户", id: "bank_close_account_zh" },
+  { title: "银行保险箱", id: "bank_safe_deposit_box_zh" },
+  { title: "银行提供的保险产品", id: "bank_insurance_products_zh" },
+  { title: "银行事务口语课", id: "bank_general_banking_zh" },
+] as const;
 
 type DashboardClientProps = {
   userEmail: string;
@@ -1147,6 +1169,18 @@ export default function DashboardClient({
     setMessage("课程建设中");
   }
 
+  function openBankDirectory(scrollIntoView = false) {
+    setShowStartOptions(true);
+    setExpandedLearnSection("featured");
+    setExpandedMyCourseSection(null);
+    setFeaturedCourseView("scenes");
+    setFeaturedSceneSubView("bank");
+
+    if (scrollIntoView) {
+      scrollToSection(startOptionsRef);
+    }
+  }
+
   function openFeaturedLesson(courseId: string, title: string) {
     localStorage.setItem("currentLessonTitle", title);
     router.push(`/study/${courseId}`);
@@ -1155,6 +1189,15 @@ export default function DashboardClient({
   useEffect(() => {
     loadLessons();
     loadAudios();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("featured") === "bank") {
+      openBankDirectory(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -1611,7 +1654,7 @@ export default function DashboardClient({
                             key={item.title}
                             onClick={() => {
                               if (item.title === "银行") {
-                                setFeaturedSceneSubView("bank");
+                                openBankDirectory();
                                 return;
                               }
                               handleStaticCourseClick();
@@ -1639,178 +1682,17 @@ export default function DashboardClient({
                         <div className="px-1 pb-1 text-center text-sm font-medium tracking-[0.08em] text-white/52">
                           银行
                         </div>
-                        {[
-                          "存款和取款",
-                          "房屋抵押贷款咨询",
-                          "关闭银行账户",
-                          "国际电汇与海外付款",
-                          "货币兑换与国际汇款",
-                          "设立储蓄和定期存款账户",
-                          "申请个人贷款",
-                          "使用 ATM 机和自我服务",
-                          "投资产品与财富管理",
-                          "退休储蓄与养老金计划",
-                          "网上银行与手机 App 操作",
-                          "新开银行账户",
-                          "信用卡报告欺诈收费口语课",
-                          "信用卡挂失口语课",
-                          "信用卡申请与审批流程",
-                          "银行保险箱",
-                          "银行费用查询与争议解决",
-                          "银行客服电话口语课",
-                          "银行事务口语课",
-                          "银行提供的保险产品",
-                        ].map((item) => (
+                        {BANK_FEATURED_LESSONS.map((item) => (
                           <button
-                            key={item}
+                            key={item.id}
                             onClick={() => {
-                              if (item === "存款和取款") {
-                                openFeaturedLesson(
-                                  "bank_deposit_withdrawal_zh",
-                                  "存款和取款"
-                                );
-                                return;
-                              }
-                              if (item === "房屋抵押贷款咨询") {
-                                openFeaturedLesson(
-                                  "bank_mortgage_consultation_zh",
-                                  "房屋抵押贷款咨询"
-                                );
-                                return;
-                              }
-                              if (item === "关闭银行账户") {
-                                openFeaturedLesson(
-                                  "bank_close_account_zh",
-                                  "关闭银行账户"
-                                );
-                                return;
-                              }
-                              if (item === "国际电汇与海外付款") {
-                                openFeaturedLesson(
-                                  "bank_international_wire_zh",
-                                  "国际电汇与海外付款"
-                                );
-                                return;
-                              }
-                              if (item === "货币兑换与国际汇款") {
-                                openFeaturedLesson(
-                                  "bank_currency_exchange_remittance_zh",
-                                  "货币兑换与国际汇款"
-                                );
-                                return;
-                              }
-                              if (item === "设立储蓄和定期存款账户") {
-                                openFeaturedLesson(
-                                  "bank_savings_fixed_deposit_zh",
-                                  "设立储蓄和定期存款账户"
-                                );
-                                return;
-                              }
-                              if (item === "申请个人贷款") {
-                                openFeaturedLesson(
-                                  "bank_personal_loan_zh",
-                                  "申请个人贷款"
-                                );
-                                return;
-                              }
-                              if (item === "使用 ATM 机和自我服务") {
-                                openFeaturedLesson(
-                                  "bank_atm_self_service_zh",
-                                  "使用 ATM 机和自我服务"
-                                );
-                                return;
-                              }
-                              if (item === "投资产品与财富管理") {
-                                openFeaturedLesson(
-                                  "bank_wealth_management_zh",
-                                  "投资产品与财富管理"
-                                );
-                                return;
-                              }
-                              if (item === "退休储蓄与养老金计划") {
-                                openFeaturedLesson(
-                                  "bank_retirement_pension_zh",
-                                  "退休储蓄与养老金计划"
-                                );
-                                return;
-                              }
-                              if (item === "网上银行与手机App操作") {
-                                openFeaturedLesson(
-                                  "bank_online_banking_app_zh",
-                                  "网上银行与手机App操作"
-                                );
-                                return;
-                              }
-                              if (item === "新开银行账户") {
-                                openFeaturedLesson(
-                                  "bank_open_new_account_zh",
-                                  "新开银行账户"
-                                );
-                                return;
-                              }
-                              if (item === "信用卡报告欺诈收费口语课") {
-                                openFeaturedLesson(
-                                  "bank_credit_card_fraud_report_zh",
-                                  "信用卡报告欺诈收费口语课"
-                                );
-                                return;
-                              }
-                              if (item === "信用卡挂失口语课") {
-                                openFeaturedLesson(
-                                  "bank_credit_card_lost_report_zh",
-                                  "信用卡挂失口语课"
-                                );
-                                return;
-                              }
-                              if (item === "信用卡申请与审批流程") {
-                                openFeaturedLesson(
-                                  "bank_credit_card_application_zh",
-                                  "信用卡申请与审批流程"
-                                );
-                                return;
-                              }
-                              if (item === "银行保险箱") {
-                                openFeaturedLesson(
-                                  "bank_safe_deposit_box_zh",
-                                  "银行保险箱"
-                                );
-                                return;
-                              }
-                              if (item === "银行费用查询与争议解决") {
-                                openFeaturedLesson(
-                                  "bank_fee_disputes_zh",
-                                  "银行费用查询与争议解决"
-                                );
-                                return;
-                              }
-                              if (item === "银行客服电话口语课") {
-                                openFeaturedLesson(
-                                  "bank_customer_service_calls_zh",
-                                  "银行客服电话口语课"
-                                );
-                                return;
-                              }
-                              if (item === "银行事务口语课") {
-                                openFeaturedLesson(
-                                  "bank_general_banking_zh",
-                                  "银行事务口语课"
-                                );
-                                return;
-                              }
-                              if (item === "银行提供的保险产品") {
-                                openFeaturedLesson(
-                                  "bank_insurance_products_zh",
-                                  "银行提供的保险产品"
-                                );
-                                return;
-                              }
-                              handleStaticCourseClick();
+                              openFeaturedLesson(item.id, item.title);
                             }}
                             className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
                           >
                             <div className="flex items-center gap-3">
                               <div className="min-w-0 flex-1 text-[1.02rem] font-bold leading-7 text-white">
-                                {item}
+                                {item.title}
                               </div>
                               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/8 text-[1.4rem] text-white">
                                 ›

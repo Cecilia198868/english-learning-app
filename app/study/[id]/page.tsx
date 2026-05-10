@@ -718,6 +718,12 @@ export default function StudyPage() {
 
   function handleBackToPreviousPage() {
     stopAutoPlay();
+
+    if (lessonId.startsWith("bank_")) {
+      router.replace("/dashboard?featured=bank");
+      return;
+    }
+
     if (window.history.length > 1) {
       router.back();
       return;
