@@ -1,36 +1,21 @@
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { authOptions } from "@/auth";
-import EnglishDashboardClient from "@/components/EnglishDashboardClient";
-import DashboardClient from "@/app/dashboard/DashboardClient";
+import HomePageClient from "@/components/HomePageClient";
 import { LANGUAGE_COOKIE_NAME, normalizeLanguage } from "@/lib/i18n";
 
 export default async function HomePage() {
   const session = await getServerSession(authOptions);
-
-  if (!session?.user) {
-    redirect("/login");
-  }
 
   const cookieStore = await cookies();
   const language = normalizeLanguage(
     cookieStore.get(LANGUAGE_COOKIE_NAME)?.value
   );
 
-  if (language === "en") {
-    return (
-      <EnglishDashboardClient
-        userEmail={session.user.email || "Signed-in user"}
-        userImage={session.user.image || ""}
-      />
-    );
+  if (session?.user) {
+    redirect("/dashboard");
   }
 
-  return (
-    <DashboardClient
-      userEmail={session.user.email || "Signed-in user"}
-      userImage={session.user.image || ""}
-    />
-  );
+  return <HomePageClient />;
 }

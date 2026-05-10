@@ -7,7 +7,7 @@ export default async function EmailLoginPage() {
   const session = await getServerSession(authOptions);
 
   if (session?.user) {
-    redirect("/dashboard");
+    redirect("/");
   }
 
   return <EmailLoginPageClient />;

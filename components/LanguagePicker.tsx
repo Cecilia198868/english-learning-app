@@ -23,15 +23,15 @@ export default function LanguagePicker() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto w-full max-w-[360px]">
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="group relative inline-flex w-full items-center justify-center overflow-hidden rounded-full px-6 py-4 text-center font-[var(--font-sora)] text-base font-semibold tracking-[0.26em] text-white transition duration-300 hover:scale-[1.02] hover:tracking-[0.3em] sm:text-[1.12rem]"
+        className="group relative inline-flex w-full items-center justify-center overflow-hidden rounded-[24px] px-5 py-4 text-center font-[var(--font-sora)] text-[0.94rem] font-semibold tracking-[0.22em] text-white transition duration-300 hover:scale-[1.01] hover:tracking-[0.24em] sm:text-[1rem]"
       >
         <span className="absolute inset-x-[8%] bottom-0 h-px bg-gradient-to-r from-transparent via-fuchsia-300/90 to-cyan-200/90" />
         <span className="absolute left-1/2 top-1/2 h-16 w-[84%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[linear-gradient(90deg,rgba(255,0,153,0.18),rgba(0,245,255,0.14),rgba(217,255,77,0.12))] opacity-95 blur-xl transition duration-300 group-hover:scale-110 group-hover:opacity-100" />
-        <span className="absolute left-1/2 top-1/2 h-14 w-[82%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-[rgba(255,255,255,0.03)]" />
+        <span className="absolute left-1/2 top-1/2 h-[56px] w-[88%] -translate-x-1/2 -translate-y-1/2 rounded-[22px] border border-white/10 bg-[rgba(255,255,255,0.03)]" />
         <span className="relative uppercase text-white [text-shadow:0_0_18px_rgba(255,255,255,0.28)]">
           Choose Your Base Language
         </span>

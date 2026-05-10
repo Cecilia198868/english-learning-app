@@ -19,25 +19,24 @@ export default function HomePageClient() {
       <div className="float-slow absolute right-[10%] top-[24%] h-px w-44 bg-gradient-to-r from-transparent via-cyan-200/70 to-transparent" />
       <div className="float-slow absolute left-1/2 top-[72%] h-px w-52 -translate-x-1/2 bg-gradient-to-r from-transparent via-lime-200/55 to-transparent" />
 
-      <div className="relative mx-auto flex min-h-screen max-w-6xl items-center justify-center px-6 py-10 sm:px-8">
-        <section className="relative w-full text-center">
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-fuchsia-300/14" />
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/14" />
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/6" />
+      <div className="relative mx-auto flex min-h-screen max-w-[430px] items-center justify-center px-5 py-8">
+        <section className="relative w-full rounded-[36px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-6 py-10 text-center shadow-[0_30px_90px_rgba(2,8,23,0.46)] backdrop-blur-2xl">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-fuchsia-300/12" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/12" />
 
-          <div className="relative mx-auto max-w-5xl">
-            <h1 className="neon-flicker font-[var(--font-sora)] text-[3rem] font-semibold uppercase leading-[0.9] tracking-[-0.075em] text-white sm:text-[5.2rem] lg:text-[7.2rem]">
-              <span className="block text-white [text-shadow:0_0_26px_rgba(255,255,255,0.34)]">
+          <div className="relative">
+            <h1 className="neon-flicker font-[var(--font-sora)] text-[2.75rem] font-semibold uppercase leading-[0.92] tracking-[-0.07em] text-white sm:text-[3.2rem]">
+              <span className="block text-white [text-shadow:0_0_24px_rgba(255,255,255,0.32)]">
                 Speak English
               </span>
-              <span className="title-shimmer mt-4 block bg-[linear-gradient(90deg,#ffffff_0%,#ff8dcb_16%,#67f6ff_40%,#b388ff_64%,#ecff8a_82%,#ffffff_100%)] bg-clip-text pb-4 text-transparent [text-shadow:0_0_42px_rgba(255,0,153,0.34)] sm:mt-5">
+              <span className="title-shimmer mt-4 block bg-[linear-gradient(90deg,#ffffff_0%,#ff8dcb_16%,#67f6ff_40%,#b388ff_64%,#ecff8a_82%,#ffffff_100%)] bg-clip-text pb-2 text-transparent [text-shadow:0_0_36px_rgba(255,0,153,0.28)]">
                 Out Loud
               </span>
             </h1>
 
-            <div className="mx-auto mt-6 h-px w-48 bg-gradient-to-r from-transparent via-fuchsia-200/80 to-transparent sm:mt-8" />
+            <div className="mx-auto mt-6 h-px w-36 bg-gradient-to-r from-transparent via-fuchsia-200/80 to-transparent" />
 
-            <div className="mt-12 sm:mt-14">
+            <div className="mt-10">
               <LanguagePicker />
             </div>
           </div>
