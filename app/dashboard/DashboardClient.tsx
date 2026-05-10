@@ -1118,6 +1118,17 @@ export default function DashboardClient({
     }, 0);
   }
 
+  function handleBackFromStartOptions() {
+    setShowStartOptions(false);
+    setExpandedLearnSection(null);
+    setExpandedMyCourseSection(null);
+    setFeaturedCourseView("hub");
+    setFeaturedSceneSubView("root");
+    window.setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0);
+  }
+
   function handleSelectLearnSection(section: "featured" | "my-courses") {
     setShowStartOptions(true);
     setExpandedLearnSection((prev) => (prev === section ? null : section));
@@ -1310,10 +1321,11 @@ export default function DashboardClient({
             <div className="app-glass-card px-4 py-4">
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => router.push("/")}
+                  type="button"
+                  onClick={handleBackFromStartOptions}
                   className="neon-button shrink-0 rounded-[18px] border border-fuchsia-300/28 bg-[linear-gradient(180deg,rgba(83,58,145,0.44),rgba(56,37,99,0.34))] px-4 py-3 text-sm text-white/92 shadow-[0_0_0_1px_rgba(188,92,255,0.10),0_0_16px_rgba(139,92,246,0.18)]"
                 >
-                  返回首页
+                  返回上一页
                 </button>
                 <div className="min-w-0 flex-1 text-center">
                   <div className="text-[1.2rem] font-bold tracking-[-0.03em] text-white [text-shadow:0_0_14px_rgba(255,255,255,0.14)]">
