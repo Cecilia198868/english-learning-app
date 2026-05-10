@@ -163,27 +163,27 @@ export default function LanguageSelectionPageClient() {
       <div className="aurora-wave absolute left-[-10%] top-[-10%] h-[34rem] w-[42rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,0,153,0.26),transparent_58%)] blur-[96px]" />
       <div className="aurora-wave absolute right-[-10%] top-[8%] h-[34rem] w-[42rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.24),transparent_58%)] blur-[96px]" />
 
-      <div className="relative mx-auto min-h-screen max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
+      <div className="relative mx-auto min-h-screen max-w-[430px] px-5 py-7">
         <div className="flex items-center justify-between gap-4">
           <Link
             href="/"
-            className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 font-[var(--font-sora)] text-xs font-semibold uppercase tracking-[0.2em] text-white/78 transition hover:border-cyan-100/28 hover:text-white"
+            className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 font-[var(--font-sora)] text-xs font-semibold uppercase tracking-normal text-white/78 transition hover:border-cyan-100/28 hover:text-white"
           >
             Back
           </Link>
-          <span className="font-[var(--font-sora)] text-xs font-semibold uppercase tracking-[0.28em] text-cyan-50/72">
+          <span className="font-[var(--font-sora)] text-xs font-semibold uppercase tracking-normal text-cyan-50/72">
             Base Language
           </span>
         </div>
 
-        <section className="pt-12 text-center sm:pt-16">
-          <h1 className="font-[var(--font-sora)] text-4xl font-semibold uppercase leading-tight tracking-normal text-white sm:text-6xl">
+        <section className="pt-10 text-center">
+          <h1 className="font-[var(--font-sora)] text-[2.15rem] font-semibold uppercase leading-tight tracking-normal text-white">
             Choose Your Base Language
           </h1>
-          <div className="mx-auto mt-6 h-px w-48 bg-gradient-to-r from-transparent via-cyan-200/75 to-transparent" />
+          <div className="mx-auto mt-5 h-px w-36 bg-gradient-to-r from-transparent via-cyan-200/75 to-transparent" />
         </section>
 
-        <div className="sticky top-0 z-10 -mx-5 mt-8 border-y border-white/8 bg-[#090110]/82 px-5 py-4 backdrop-blur-2xl sm:mx-0 sm:rounded-[28px] sm:border sm:px-5">
+        <div className="sticky top-0 z-10 -mx-5 mt-7 border-y border-white/8 bg-[#090110]/82 px-5 py-4 backdrop-blur-2xl">
           <input
             type="search"
             value={query}
@@ -193,29 +193,29 @@ export default function LanguageSelectionPageClient() {
           />
         </div>
 
-        <div className="mt-8 space-y-8 pb-16">
+        <div className="mt-7 space-y-7 pb-16">
           {filteredGroups.map((group) => (
             <section key={group.region}>
               <div className="mb-4 flex items-center gap-3">
-                <h2 className="font-[var(--font-sora)] text-sm font-semibold uppercase tracking-[0.24em] text-fuchsia-50/78">
+                <h2 className="font-[var(--font-sora)] text-sm font-semibold uppercase tracking-normal text-fuchsia-50/78">
                   {group.region}
                 </h2>
                 <div className="h-px flex-1 bg-gradient-to-r from-white/16 to-transparent" />
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-3">
                 {group.options.map((option) => (
                   <button
                     key={`${group.region}-${option.code}`}
                     type="button"
                     onClick={() => chooseLanguage(option)}
-                    className="group min-h-[116px] rounded-[24px] border border-white/10 bg-white/[0.045] p-4 text-left shadow-[0_20px_48px_rgba(0,0,0,0.22)] transition duration-200 hover:-translate-y-0.5 hover:border-cyan-100/28 hover:bg-white/[0.075]"
+                    className="group min-h-[92px] rounded-[24px] border border-white/10 bg-white/[0.045] p-4 text-left shadow-[0_20px_48px_rgba(0,0,0,0.22)] transition duration-200 hover:-translate-y-0.5 hover:border-cyan-100/28 hover:bg-white/[0.075]"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <span className="font-[var(--font-sora)] text-lg font-semibold text-white">
                         {option.name}
                       </span>
-                      <span className="rounded-full border border-white/10 bg-black/24 px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-cyan-100/78">
+                      <span className="rounded-full border border-white/10 bg-black/24 px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-normal text-cyan-100/78">
                         {option.code}
                       </span>
                     </div>
