@@ -132,20 +132,9 @@ async function fillMissingDefinitions(words: VocabularyWord[]) {
 }
 
 export default function VocabularyPage() {
-  const [words, setWords] = useState<VocabularyWord[]>(() => {
-    const loadedWords = loadVocabularyWords();
-
-    return loadedWords.filter(
-      (item): item is VocabularyWord =>
-        item !== null &&
-        typeof item === "object" &&
-        typeof item.word === "string" &&
-        item.word.trim().length > 0
-    );
-  });
-  const [mastery, setMastery] = useState<VocabularyGroupMastery>(() =>
-    loadVocabularyGroupMastery()
-  );
+  const [mounted, setMounted] = useState(false);
+  const [words, setWords] = useState<VocabularyWord[]>([]);
+  const [mastery, setMastery] = useState<VocabularyGroupMastery>({});
   const [reviewMode, setReviewMode] = useState<ReviewMode>("normal");
   const [selectedGroupIndex, setSelectedGroupIndex] = useState<number | null>(
     null
@@ -176,6 +165,19 @@ export default function VocabularyPage() {
       ? groups[selectedGroupIndex] || []
       : wrongWords.slice(0, 30);
   const currentQuestion = questions[currentQuestionIndex] || null;
+  const subtitlePrefix =
+    reviewMode === "wrong"
+      ? "错题复习"
+      : selectedGroupIndex !== null
+        ? `第 ${selectedGroupIndex + 1} 组`
+        : "单词列表";
+  const headerSubtitle = mounted
+    ? `${subtitlePrefix} · 已保存单词：${words.length}`
+    : `${subtitlePrefix} · 正在读取单词...`;
+  const topSubtitle =
+    reviewMode === "wrong"
+      ? `错题复习 · 已保存单词：${words.length}`
+      : `${selectedGroupIndex !== null ? `第 ${selectedGroupIndex + 1} 组` : "单词列表"} · 已保存单词：${words.length}`;
 
   function clearFeedbackTimer() {
     if (feedbackTimerRef.current !== null) {
@@ -277,7 +279,7 @@ export default function VocabularyPage() {
     audio.currentTime = 0;
 
     void audio.play().catch((error) => {
-      console.error("播放凯旋音效失败", error);
+      console.error("播放胜利音效失败", error);
     });
   }
 
@@ -312,13 +314,15 @@ export default function VocabularyPage() {
   ) {
     if (sourceWords.length === 0) {
       setMessage(
-        nextReviewMode === "wrong" ? "错题本里还没有单词。" : "这一组还没有单词。"
+        nextReviewMode === "wrong"
+          ? "错题本里还没有单词。"
+          : "这一组还没有单词。"
       );
       return;
     }
 
     setIsPreparingQuiz(true);
-    setMessage("正在补充单词释义，请稍等……");
+    setMessage("正在补充单词释义，请稍等…");
 
     try {
       const { refreshedWords, skippedCount } = await fillMissingDefinitions(
@@ -342,7 +346,7 @@ export default function VocabularyPage() {
         .filter((item): item is QuizQuestion => Boolean(item));
 
       if (nextQuestions.length === 0) {
-        setMessage("这一组单词暂时还没有可用释义，无法开始测试。");
+        setMessage("这一组单词暂时还没有可用释义，无法开始闯关。");
         return;
       }
 
@@ -356,7 +360,7 @@ export default function VocabularyPage() {
       setQuizResult(null);
       setMessage(
         skippedCount > 0
-          ? `有 ${skippedCount} 个单词释义未生成，暂时跳过。`
+          ? `有 ${skippedCount} 个单词释义未生成，已暂时跳过。`
           : ""
       );
     } finally {
@@ -435,10 +439,10 @@ export default function VocabularyPage() {
 
     if (isCorrect) {
       playCorrectSound();
-      setFeedback("答对了！");
+      setFeedback("correct");
     } else {
       playWrongSound();
-      setFeedback(`答错了，正确答案是：${currentQuestion.correctMeaning}`);
+      setFeedback("wrong");
     }
 
     moveToNextQuestion(isCorrect);
@@ -461,6 +465,20 @@ export default function VocabularyPage() {
   }
 
   useEffect(() => {
+    setMounted(true);
+    setWords(
+      loadVocabularyWords().filter(
+        (item): item is VocabularyWord =>
+          item !== null &&
+          typeof item === "object" &&
+          typeof item.word === "string" &&
+          item.word.trim().length > 0
+      )
+    );
+    setMastery(loadVocabularyGroupMastery());
+  }, []);
+
+  useEffect(() => {
     if (!currentQuestion || quizResult) return;
     speakWord(currentQuestion.word.word);
   }, [currentQuestion, quizResult]);
@@ -476,93 +494,91 @@ export default function VocabularyPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-6xl p-4 md:p-6">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 p-6">
-          <div>
-            <div className="mb-2 inline-flex rounded-full bg-blue-500/20 px-3 py-1 text-xs text-blue-300">
-              Vocabulary
-            </div>
-            <h1 className="text-3xl font-bold">我的单词本</h1>
-            <p className="mt-2 text-white/65">已保存单词数量：{words.length}</p>
-          </div>
+    <main className="relative min-h-screen overflow-hidden bg-[#090110] font-[var(--font-sora)] text-white">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#120216_0%,#090110_28%,#10031f_58%,#06010d_100%)]" />
+      <div className="lux-grid absolute inset-0 opacity-[0.14]" />
+      <div className="aurora-wave absolute left-[-10%] top-[-8%] h-[34rem] w-[46rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,0,153,0.20),transparent_58%)] blur-[92px]" />
+      <div className="aurora-wave absolute right-[-8%] top-[4%] h-[36rem] w-[44rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.20),transparent_58%)] blur-[100px]" />
 
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={refreshVocabularyData}
-              className="rounded-2xl bg-emerald-600 px-4 py-3 font-semibold hover:bg-emerald-500"
-            >
-              刷新
-            </button>
+      <div className="relative mx-auto min-h-screen max-w-[430px] px-4 py-3 pb-8">
+        <div className="mb-3 rounded-[1.35rem] border border-white/12 bg-white/[0.05] p-3 backdrop-blur-xl">
+          <div className="flex items-start gap-3">
             <Link
               href="/"
-              className="rounded-2xl bg-slate-700 px-4 py-3 font-semibold hover:bg-slate-600"
+              className="shrink-0 rounded-xl bg-slate-700 px-3 py-2 text-sm font-medium hover:bg-slate-600"
             >
               返回首页
             </Link>
+            <div className="min-w-0 flex-1 pt-0.5">
+              <div className="text-base font-semibold">单词闯关</div>
+              <p className="mt-1 text-xs text-white/55">{headerSubtitle}</p>
+            </div>
+            <button
+              onClick={refreshVocabularyData}
+              className="shrink-0 rounded-xl bg-emerald-600 px-3 py-2 text-sm font-medium hover:bg-emerald-500"
+            >
+              刷新
+            </button>
           </div>
         </div>
 
         {message ? (
-          <div className="mb-4 rounded-2xl border border-blue-400/20 bg-blue-500/10 p-3 text-sm text-blue-200">
+          <div className="mb-3 rounded-2xl border border-blue-400/20 bg-blue-500/10 p-3 text-sm text-blue-200">
             {message}
           </div>
         ) : null}
 
         {isPreparingQuiz ? (
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-center text-lg text-white/80">
-            正在补充单词释义，请稍等……
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-6 text-center text-base text-white/80">
+            正在准备闯关题目，请稍等…
           </div>
         ) : !questions.length && !quizResult ? (
-          <section className="space-y-6">
-            <div className="flex flex-wrap gap-3">
+          <section className="space-y-4">
+            <div className="grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
               <button
                 onClick={() => {
                   setReviewMode("normal");
                   setSelectedGroupIndex(null);
                   setMessage("");
                 }}
-                className={`rounded-2xl px-4 py-3 font-semibold ${
+                className={`rounded-xl px-4 py-3 text-sm font-semibold ${
                   reviewMode === "normal"
                     ? "bg-emerald-600 text-white"
                     : "bg-slate-700 text-white/80 hover:bg-slate-600"
                 }`}
               >
-                普通背诵
+                普通闯关
               </button>
               <button
                 onClick={() => void startWrongReviewQuiz()}
-                className="rounded-2xl bg-orange-600 px-4 py-3 font-semibold hover:bg-orange-500"
+                className="rounded-xl bg-orange-600 px-4 py-3 text-sm font-semibold hover:bg-orange-500"
               >
-                复习错题本
+                错题复习
               </button>
             </div>
 
             {reviewMode === "normal" ? (
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <h2 className="mb-4 text-2xl font-bold">分组列表</h2>
-
+              <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                <h2 className="mb-4 text-xl font-bold">分组列表</h2>
                 {groups.length === 0 ? (
-                  <div className="rounded-2xl bg-black/20 p-5 text-white/60">
+                  <div className="rounded-2xl bg-black/20 p-5 text-sm text-white/60">
                     还没有保存单词
                   </div>
                 ) : (
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-3">
                     {groups.map((group, groupIndex) => {
                       const masteryCount = mastery[`group-${groupIndex}`] || 0;
                       return (
                         <button
                           key={`group-${groupIndex}`}
                           onClick={() => void startNormalQuiz(groupIndex)}
-                          className="rounded-3xl border border-white/10 bg-black/20 p-5 text-left transition hover:border-blue-400 hover:bg-white/8"
+                          className="w-full rounded-3xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-blue-400 hover:bg-white/8"
                         >
-                          <div className="text-xl font-bold">
-                            第 {groupIndex + 1} 组
+                          <div className="text-lg font-bold">第 {groupIndex + 1} 组</div>
+                          <div className="mt-2 text-sm text-white/75">
+                            {group.length} 个单词 / 完成 {masteryCount} 次
                           </div>
-                          <div className="mt-2 text-white/75">
-                            {group.length} 个单词｜凯旋 {masteryCount} 次
-                          </div>
-                          <div className="mt-3 text-sm text-white/50">
+                          <div className="mt-3 text-xs text-white/50">
                             每组最多 30 个单词
                           </div>
                         </button>
@@ -572,20 +588,20 @@ export default function VocabularyPage() {
                 )}
               </div>
             ) : (
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                  <h2 className="text-2xl font-bold">复习错题本</h2>
+              <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <h2 className="text-xl font-bold">错题复习</h2>
                   <button
                     onClick={() => void startWrongReviewQuiz()}
-                    className="rounded-2xl bg-orange-600 px-4 py-3 font-semibold hover:bg-orange-500"
+                    className="rounded-xl bg-orange-600 px-4 py-3 text-sm font-semibold hover:bg-orange-500"
                   >
-                    开始复习错题
+                    开始复习
                   </button>
                 </div>
 
                 {wrongWords.length === 0 ? (
-                  <div className="rounded-2xl bg-black/20 p-5 text-white/60">
-                    还没有错题。
+                  <div className="rounded-2xl bg-black/20 p-5 text-sm text-white/60">
+                    还没有错题
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -616,100 +632,98 @@ export default function VocabularyPage() {
               </div>
             )}
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <h2 className="text-2xl font-bold">单词列表</h2>
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-xl font-bold">单词列表</h2>
                 <button
                   onClick={() => setShowWordList((prev) => !prev)}
-                  className="rounded-2xl bg-slate-700 px-4 py-3 font-semibold hover:bg-slate-600"
+                  className="rounded-xl bg-slate-700 px-4 py-3 text-sm font-semibold hover:bg-slate-600"
                 >
-                  {showWordList ? "收起单词列表" : "查看全部单词"}
+                  {showWordList ? "收起列表" : "查看全部"}
                 </button>
               </div>
 
               {showWordList ? (
                 words.length === 0 ? (
-                  <div className="mt-4 rounded-2xl bg-black/20 p-5 text-white/60">
+                  <div className="mt-4 rounded-2xl bg-black/20 p-5 text-sm text-white/60">
                     还没有保存单词
                   </div>
                 ) : (
                   <div className="mt-4 space-y-3">
-                  {words.map((word) => {
-                    const needsDefinition = !hasUsableMeaning(word.meaning);
+                    {words.map((word) => {
+                      const needsDefinition = !hasUsableMeaning(word.meaning);
 
-                    return (
-                      <div
-                        key={word.word}
-                        className="rounded-3xl border border-white/10 bg-black/20 p-5"
-                      >
-                        <div className="flex flex-wrap items-start justify-between gap-4">
-                          <div>
-                            <div className="text-2xl font-bold text-emerald-300">
-                              {word.word}
+                      return (
+                        <div
+                          key={word.word}
+                          className="rounded-3xl border border-white/10 bg-black/20 p-5"
+                        >
+                          <div className="flex flex-wrap items-start justify-between gap-4">
+                            <div>
+                              <div className="text-2xl font-bold text-emerald-300">
+                                {word.word}
+                              </div>
+                              <div className="mt-1 text-white/75">
+                                {hasUsableMeaning(word.meaning)
+                                  ? word.meaning
+                                  : PLACEHOLDER_MEANING}
+                                {word.partOfSpeech ? ` / ${word.partOfSpeech}` : ""}
+                              </div>
                             </div>
-                            <div className="mt-1 text-white/75">
-                              {hasUsableMeaning(word.meaning)
-                                ? word.meaning
-                                : PLACEHOLDER_MEANING}
-                              {word.partOfSpeech ? ` · ${word.partOfSpeech}` : ""}
-                            </div>
+
+                            {needsDefinition ? (
+                              <button
+                                onClick={() => void handleRegenerateDefinition(word.word)}
+                                disabled={regeneratingWord === word.word}
+                                className="rounded-2xl bg-blue-600 px-4 py-3 text-sm font-semibold hover:bg-blue-500 disabled:opacity-50"
+                              >
+                                {regeneratingWord === word.word ? "生成中..." : "生成释义"}
+                              </button>
+                            ) : null}
                           </div>
 
-                          {needsDefinition ? (
-                            <button
-                              onClick={() => void handleRegenerateDefinition(word.word)}
-                              disabled={regeneratingWord === word.word}
-                              className="rounded-2xl bg-blue-600 px-4 py-3 text-sm font-semibold hover:bg-blue-500 disabled:opacity-50"
-                            >
-                              {regeneratingWord === word.word
-                                ? "生成中..."
-                                : "生成释义"}
-                            </button>
-                          ) : null}
-                        </div>
-
-                        <div className="mt-4 space-y-2 text-sm leading-6 text-white/70">
-                          <div>例句：{word.example || "待补充"}</div>
-                          <div>翻译：{word.exampleZh || "待补充"}</div>
-                          <div>
-                            正确次数：{word.correctCount} | 错题次数：{word.wrongCount} | 凯旋：{word.masteredCount}
+                          <div className="mt-4 space-y-2 text-sm leading-6 text-white/70">
+                            <div>例句：{word.example || "待补充"}</div>
+                            <div>翻译：{word.exampleZh || "待补充"}</div>
+                            <div>
+                              正确：{word.correctCount} | 错误：{word.wrongCount} | 掌握：{word.masteredCount}
+                            </div>
+                            {word.sourceSentence ? (
+                              <div>来源句子：{word.sourceSentence}</div>
+                            ) : null}
                           </div>
-                          {word.sourceSentence ? (
-                            <div>来源句子：{word.sourceSentence}</div>
-                          ) : null}
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                   </div>
                 )
               ) : null}
             </div>
           </section>
         ) : quizResult ? (
-          <section className="rounded-3xl border border-white/10 bg-white/5 p-6 text-center">
-            <h2 className="text-3xl font-bold">本组测试完成！</h2>
+          <section className="rounded-[1.5rem] border border-white/10 bg-white/5 p-6 text-center">
+            <h2 className="text-3xl font-bold">本轮闯关完成</h2>
             <p className="mt-4 text-2xl text-emerald-300">
               得分：{quizResult.score} / {quizResult.total}
             </p>
 
             {quizResult.skippedCount > 0 ? (
               <p className="mt-4 text-sm text-amber-200">
-                有 {quizResult.skippedCount} 个单词释义未生成，暂时跳过。
+                有 {quizResult.skippedCount} 个单词释义未生成，已暂时跳过。
               </p>
             ) : null}
 
             {quizResult.perfect && reviewMode === "normal" ? (
               <div className="mt-6 rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-5 text-emerald-200">
-                太棒了！本组获得一次凯旋！
+                太棒了！
               </div>
             ) : (
               <div className="mt-6 rounded-3xl border border-amber-400/20 bg-amber-500/10 p-5 text-amber-100">
-                再来一次？
+                再来一轮，争取更高分。
               </div>
             )}
 
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <div className="mt-6 grid grid-cols-2 gap-2">
               <button
                 onClick={() => {
                   if (reviewMode === "wrong") {
@@ -720,62 +734,48 @@ export default function VocabularyPage() {
                     void startNormalQuiz(selectedGroupIndex);
                   }
                 }}
-                className="rounded-2xl bg-blue-600 px-5 py-3 font-semibold hover:bg-blue-500"
+                className="rounded-xl bg-blue-600 px-5 py-3 font-semibold hover:bg-blue-500"
               >
-                再来一次
+                重新开始
               </button>
               <button
                 onClick={handleReturnToList}
-                className="rounded-2xl bg-slate-700 px-5 py-3 font-semibold hover:bg-slate-600"
+                className="rounded-xl bg-slate-700 px-5 py-3 font-semibold hover:bg-slate-600"
               >
-                返回单词本
+                返回列表
               </button>
             </div>
           </section>
         ) : currentQuestion ? (
           <section className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <div className="text-sm text-white/50">
-                    {reviewMode === "wrong"
-                      ? "错题复习"
-                      : `第 ${(selectedGroupIndex ?? 0) + 1} 组`}
-                  </div>
-                  <h2 className="text-2xl font-bold">
-                    第 {currentQuestionIndex + 1} 题 / 共 {questions.length} 题
-                  </h2>
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => speakWord(currentQuestion.word.word)}
-                    className="rounded-2xl bg-emerald-600 px-4 py-3 font-semibold hover:bg-emerald-500"
-                  >
-                    重新朗读
-                  </button>
-                  <button
-                    onClick={handleReturnToList}
-                    className="rounded-2xl bg-slate-700 px-4 py-3 font-semibold hover:bg-slate-600"
-                  >
-                    返回单词本
-                  </button>
-                </div>
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5 text-center">
+              <div className="text-sm text-white/50">
+                第 {currentQuestionIndex + 1} / {questions.length} 题
               </div>
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-center">
-              <div className="mb-3 text-sm text-white/50">当前英文单词</div>
-              <div className="text-5xl font-bold tracking-wide text-emerald-300">
+              <div className="mt-5 text-4xl font-bold tracking-wide text-emerald-300">
                 {currentQuestion.word.word}
               </div>
+              <div className="mt-3">
+                <button
+                  onClick={() => speakWord(currentQuestion.word.word)}
+                  className="rounded-full bg-emerald-600/90 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500"
+                >
+                  朗读当前单词
+                </button>
+              </div>
+              {currentQuestion.word.partOfSpeech ? (
+                <div className="mt-3 inline-flex rounded-full bg-white/8 px-3 py-1 text-xs text-white/70">
+                  {currentQuestion.word.partOfSpeech}
+                </div>
+              ) : null}
               {currentQuestion.word.sourceSentence ? (
-                <p className="mx-auto mt-4 max-w-3xl text-sm leading-6 text-white/55">
+                <p className="mt-4 text-left text-sm leading-6 text-white/55">
                   来源句子：{currentQuestion.word.sourceSentence}
                 </p>
               ) : null}
             </div>
 
-            <div className="grid gap-3 md:grid-cols-2">
+            <div className="space-y-3">
               {currentQuestion.options.map((option) => {
                 const isSelected = selectedOption === option;
                 const isCorrect = option === currentQuestion.correctMeaning;
@@ -785,7 +785,7 @@ export default function VocabularyPage() {
                     key={option}
                     onClick={() => handleChooseOption(option)}
                     disabled={Boolean(selectedOption)}
-                    className={`rounded-3xl border px-5 py-6 text-left text-xl font-semibold transition ${
+                    className={`w-full rounded-3xl border px-5 py-4 text-left text-base font-semibold transition ${
                       !selectedOption
                         ? "border-white/10 bg-black/20 hover:border-blue-400 hover:bg-white/8"
                         : isCorrect
@@ -801,17 +801,56 @@ export default function VocabularyPage() {
               })}
             </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-              <div className="text-lg font-bold">当前得分：{score}</div>
+            <div className="rounded-[1.35rem] border border-white/10 bg-white/5 p-4">
+              <div className="text-base font-bold">当前得分：{score}</div>
               {feedback ? (
-                <div className="mt-3 rounded-2xl bg-white/5 px-4 py-3 text-lg text-white/85">
-                  {feedback}
+                <div
+                  className={`mt-3 rounded-2xl px-4 py-3 text-base font-semibold ${
+                    feedback === "correct"
+                      ? "border border-emerald-400/20 bg-emerald-500/10 text-emerald-200"
+                      : "border border-amber-400/20 bg-amber-500/10 text-amber-100"
+                  }`}
+                >
+                  {feedback === "correct" ? "太棒了！" : "再想想"}
                 </div>
               ) : (
-                <div className="mt-3 text-white/50">
-                  请选择正确中文意思。页面会自动朗读英文单词。
+                <div className="mt-3 text-sm text-white/50">
+                  请选择正确的中文意思。页面会自动朗读当前单词。
                 </div>
               )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
+              <button
+                onClick={() => {
+                  clearFeedbackTimer();
+                  setCurrentQuestionIndex((prev) => Math.max(0, prev - 1));
+                  setSelectedOption("");
+                  setFeedback("");
+                }}
+                disabled={currentQuestionIndex === 0 || Boolean(selectedOption)}
+                className="rounded-xl bg-slate-700 px-4 py-3 text-sm font-semibold disabled:opacity-40"
+              >
+                上一题
+              </button>
+              <button
+                onClick={() => {
+                  if (currentQuestionIndex >= questions.length - 1) return;
+                  clearFeedbackTimer();
+                  setCurrentQuestionIndex((prev) =>
+                    Math.min(questions.length - 1, prev + 1)
+                  );
+                  setSelectedOption("");
+                  setFeedback("");
+                }}
+                disabled={
+                  currentQuestionIndex >= questions.length - 1 ||
+                  Boolean(selectedOption)
+                }
+                className="rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold disabled:opacity-40"
+              >
+                下一题
+              </button>
             </div>
           </section>
         ) : null}

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
+import { getFeaturedLessonById } from "@/data/featuredCourses";
 import {
   addVocabularyWord,
   generateVocabularyDefinition,
@@ -109,7 +110,7 @@ export default function StudyPage() {
   const [lessonTitle, setLessonTitle] = useState("");
   const [pairs, setPairs] = useState<SentencePair[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showEnglish, setShowEnglish] = useState(true);
+  const [showEnglish, setShowEnglish] = useState(false);
   const [message, setMessage] = useState("");
   const [pendingVocabularyWord, setPendingVocabularyWord] = useState<{
     word: string;
@@ -176,6 +177,7 @@ export default function StudyPage() {
     setIsAutoPlaying(false);
     isSequencePlayingRef.current = false;
     setIsSequencePlaying(false);
+    window.speechSynthesis.cancel();
     clearSequenceTimer();
     stopClipPlayback(resetClip);
   }
@@ -191,9 +193,22 @@ export default function StudyPage() {
     });
 
     if (!found) {
-      setMessage("没有找到这节课");
-      setLesson(null);
-      setPairs([]);
+      const featuredLesson = getFeaturedLessonById(lessonId);
+      if (!featuredLesson) {
+        setMessage("没有找到这节课");
+        setLesson(null);
+        setPairs([]);
+        return;
+      }
+
+      setLesson(featuredLesson);
+      setLessonTitle(featuredLesson.title);
+
+      const featuredPairs = parseTrainingContent(featuredLesson.txt_content || "");
+      setPairs(featuredPairs);
+      setCurrentIndex(0);
+      currentIndexRef.current = 0;
+      setShowEnglish(false);
       return;
     }
 
@@ -217,7 +232,7 @@ export default function StudyPage() {
       currentIndexRef.current = 0;
     }
 
-    setShowEnglish(true);
+    setShowEnglish(false);
   }, [lessonId, progressKey]);
 
   function saveProgress(index: number) {
@@ -295,7 +310,7 @@ export default function StudyPage() {
       const newIndex = currentIndex - 1;
       setCurrentIndex(newIndex);
       currentIndexRef.current = newIndex;
-      setShowEnglish(true);
+      setShowEnglish(false);
       saveProgress(newIndex);
       setMessage("");
     }
@@ -307,7 +322,7 @@ export default function StudyPage() {
       const newIndex = currentIndex + 1;
       setCurrentIndex(newIndex);
       currentIndexRef.current = newIndex;
-      setShowEnglish(true);
+      setShowEnglish(false);
       saveProgress(newIndex);
       setMessage("");
     }
@@ -341,6 +356,14 @@ export default function StudyPage() {
     window.speechSynthesis.speak(utterance);
   }
 
+  function moveToSentence(index: number) {
+    setCurrentIndex(index);
+    currentIndexRef.current = index;
+    setShowEnglish(false);
+    saveProgress(index);
+    setMessage("");
+  }
+
   function loadVoices() {
     const allVoices = window.speechSynthesis.getVoices();
     const englishVoices = allVoices.filter((voice) =>
@@ -361,6 +384,23 @@ export default function StudyPage() {
     clearAutoTimer();
     stopSequencePlayback();
     setMessage("自动播放已停止");
+  }
+
+  function queueNextAutoSentence(
+    nextIndex: number,
+    playNext: (index: number) => void | Promise<void>
+  ) {
+    if (nextIndex >= pairs.length) {
+      stopSequencePlayback();
+      setMessage("自动播放已完成");
+      return;
+    }
+
+    moveToSentence(nextIndex);
+    clearSequenceTimer();
+    sequenceTimerRef.current = window.setTimeout(() => {
+      void playNext(nextIndex);
+    }, Math.max(gapSeconds * 1000, 200));
   }
 
   async function playSourceClipAtIndex(index: number) {
@@ -445,20 +485,40 @@ export default function StudyPage() {
     if (!autoPlayRef.current || !isSequencePlayingRef.current) return;
 
     const nextIndex = currentIndexRef.current + 1;
-    if (nextIndex >= pairs.length) {
+    queueNextAutoSentence(nextIndex, (index) => {
+      void playSourceClipAtIndex(index);
+    });
+  }
+
+  async function playAutoSentenceAtIndex(index: number) {
+    const pair = pairs[index];
+    if (!pair) {
       stopSequencePlayback();
-      setMessage("原音频连播已完成");
       return;
     }
 
-    setCurrentIndex(nextIndex);
-    currentIndexRef.current = nextIndex;
-    setShowEnglish(true);
-    saveProgress(nextIndex);
-    clearSequenceTimer();
-    sequenceTimerRef.current = window.setTimeout(() => {
-      void playSourceClipAtIndex(nextIndex);
-    }, Math.max(gapSeconds * 1000, 200));
+    const canPlayIndexedSourceAudio =
+      Boolean(lesson?.sourceAudioId) &&
+      Boolean(sourceAudioUrl) &&
+      typeof pair.startTime === "number" &&
+      typeof pair.endTime === "number" &&
+      pair.endTime > pair.startTime;
+
+    if (canPlayIndexedSourceAudio) {
+      setMessage("自动播放中");
+      await playSourceClipAtIndex(index);
+      return;
+    }
+
+    setIsClipPlaying(false);
+    setMessage("自动播放中");
+    speakEnglish(pair.english || "", 1, () => {
+      if (!autoPlayRef.current || !isSequencePlayingRef.current) return;
+      const nextIndex = index + 1;
+      queueNextAutoSentence(nextIndex, (targetIndex) => {
+        void playAutoSentenceAtIndex(targetIndex);
+      });
+    });
   }
 
   async function startAutoPlay() {
@@ -467,33 +527,14 @@ export default function StudyPage() {
       return;
     }
 
-    if (!lesson?.sourceAudioId) {
-      setMessage("这节课程没有关联原音频，请重新从音频生成并保存课程。");
-      return;
-    }
-
-    if (!sourceAudioUrl) {
-      setMessage(
-        isSourceAudioLoading
-          ? "原音频加载中..."
-          : "找不到原音频，请确认音频没有被删除。"
-      );
-      return;
-    }
-
-    if (!hasValidTimeRange) {
-      setMessage("当前句子没有时间戳，无法播放原音频。");
-      return;
-    }
-
     autoPlayRef.current = true;
     setIsAutoPlaying(true);
     isSequencePlayingRef.current = true;
     setIsSequencePlaying(true);
     clearSequenceTimer();
-    setShowEnglish(true);
+    setShowEnglish(false);
     setMessage("自动播放开始");
-    await playSourceClipAtIndex(currentIndexRef.current);
+    await playAutoSentenceAtIndex(currentIndexRef.current);
   }
 
   useEffect(() => {
@@ -657,6 +698,8 @@ export default function StudyPage() {
     hasSourceAudioId &&
     Boolean(sourceAudioUrl) &&
     hasValidTimeRange;
+  const actionButtonClassName =
+    "rounded-xl px-2 py-2 text-xs font-semibold leading-tight text-white transition disabled:cursor-not-allowed disabled:opacity-40 sm:px-3 sm:text-sm";
 
   useEffect(() => {
     console.log("[study] currentSentence", {
@@ -684,9 +727,14 @@ export default function StudyPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-[430px] px-4 py-3 pb-8">
-        <div className="mb-3 rounded-[1.35rem] border border-white/10 bg-white/5 p-3">
+    <main className="relative min-h-screen overflow-hidden bg-[#090110] font-[var(--font-sora)] text-white">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#120216_0%,#090110_28%,#10031f_58%,#06010d_100%)]" />
+      <div className="lux-grid absolute inset-0 opacity-[0.14]" />
+      <div className="aurora-wave absolute left-[-10%] top-[-8%] h-[34rem] w-[46rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,0,153,0.20),transparent_58%)] blur-[92px]" />
+      <div className="aurora-wave absolute right-[-8%] top-[4%] h-[36rem] w-[44rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.20),transparent_58%)] blur-[100px]" />
+
+      <div className="relative mx-auto max-w-[430px] px-4 py-3 pb-8">
+        <div className="mb-3 rounded-[1.35rem] border border-white/12 bg-white/[0.05] p-3 backdrop-blur-xl">
           <div className="flex items-start gap-3">
             <button
               onClick={() => {
@@ -797,17 +845,41 @@ export default function StudyPage() {
                     : "这一句还没有对应英文。"}
                 </p>
               ) : (
-                <p className="text-left text-base text-white/40">点击这里显示英文</p>
+                <button
+                  type="button"
+                  onClick={() => setShowEnglish(true)}
+                  className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-4 text-left text-base font-semibold text-white/70 transition hover:border-emerald-300/35 hover:bg-emerald-400/10 hover:text-white"
+                >
+                  显示英语
+                </button>
               )}
             </div>
           </div>
 
+          <div className="grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
+            <button
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              className="rounded-xl bg-slate-700 px-4 py-2 text-sm font-semibold disabled:opacity-40"
+            >
+              上一句
+            </button>
+
+            <button
+              onClick={handleNext}
+              disabled={currentIndex >= pairs.length - 1}
+              className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold disabled:opacity-40"
+            >
+              下一句
+            </button>
+          </div>
+
           <div className="rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-4 gap-2">
               <button
                 onClick={() => speakEnglish(currentPair.english, 1)}
                 disabled={isAutoPlaying}
-                className="rounded-xl bg-purple-600 px-3 py-2 text-sm font-semibold disabled:opacity-40"
+                className={`${actionButtonClassName} bg-purple-600 hover:bg-purple-500`}
               >
                 朗读英文
               </button>
@@ -815,41 +887,43 @@ export default function StudyPage() {
               <button
                 onClick={() => speakEnglish(currentPair.english, 0.5)}
                 disabled={isAutoPlaying}
-                className="rounded-xl bg-indigo-600 px-3 py-2 text-sm font-semibold disabled:opacity-40"
+                className={`${actionButtonClassName} bg-indigo-600 hover:bg-indigo-500`}
               >
                 慢速朗读
               </button>
 
-              {canPlaySourceAudio ? (
-                <button
-                  onClick={handlePlaySourceAudio}
-                  className={`rounded-xl px-3 py-2 text-sm font-semibold transition ${
-                    isSourcePlaybackActive
-                      ? "bg-cyan-500 text-white"
-                      : "bg-cyan-600 text-white hover:bg-cyan-500"
-                  }`}
-                >
-                  播放音频
-                </button>
-              ) : null}
+              <button
+                onClick={() => {
+                  void handlePlaySourceAudio();
+                }}
+                disabled={isSourceAudioLoading}
+                className={`${actionButtonClassName} ${
+                  isSourcePlaybackActive
+                    ? "bg-cyan-500"
+                    : "bg-cyan-600 hover:bg-cyan-500"
+                }`}
+              >
+                播放原音频
+              </button>
 
-              {canPlaySourceAudio ? (
-                !isAutoPlaying ? (
-                  <button
-                    onClick={startAutoPlay}
-                    className="rounded-xl bg-orange-600 px-3 py-2 text-sm font-semibold"
-                  >
-                    开始训练
-                  </button>
-                ) : (
-                  <button
-                    onClick={stopAutoPlay}
-                    className="rounded-xl bg-red-600 px-3 py-2 text-sm font-semibold"
-                  >
-                    停止训练
-                  </button>
-                )
-              ) : null}
+              <button
+                onClick={() => {
+                  if (isAutoPlaying) {
+                    stopAutoPlay();
+                    return;
+                  }
+
+                  void startAutoPlay();
+                }}
+                disabled={isSourceAudioLoading}
+                className={`${actionButtonClassName} ${
+                  isAutoPlaying
+                    ? "bg-red-600 hover:bg-red-500"
+                    : "bg-orange-600 hover:bg-orange-500"
+                }`}
+              >
+                {isAutoPlaying ? "停止自动播放" : "自动播放"}
+              </button>
             </div>
 
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -911,24 +985,6 @@ export default function StudyPage() {
               }}
             />
           ) : null}
-          <div className="grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
-            <button
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-              className="rounded-xl bg-slate-700 px-4 py-2 text-sm font-semibold disabled:opacity-40"
-            >
-              上一句
-            </button>
-
-            <button
-              onClick={handleNext}
-              disabled={currentIndex >= pairs.length - 1}
-              className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold disabled:opacity-40"
-            >
-              下一句
-            </button>
-          </div>
-
           <div className="mt-2 grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
             <button
               onClick={handleBackHome}
