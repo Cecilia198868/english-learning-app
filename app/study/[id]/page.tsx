@@ -724,6 +724,11 @@ export default function StudyPage() {
       return;
     }
 
+    if (lessonId.startsWith("government_")) {
+      router.replace("/dashboard?featured=government");
+      return;
+    }
+
     if (window.history.length > 1) {
       router.back();
       return;

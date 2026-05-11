@@ -143,6 +143,29 @@ const BANK_FEATURED_LESSONS = [
   { title: "银行事务口语课", id: "bank_general_banking_zh" },
 ] as const;
 
+const GOVERNMENT_FEATURED_LESSONS = [
+  { title: "申请社会安全号码（SSN）", id: "government_apply_ssn_zh" },
+  { title: "办理州身份证或驾驶执照", id: "government_state_id_driver_license_zh" },
+  { title: "申报入境并向 USCIS 注册", id: "government_uscis_registration_zh" },
+  { title: "申请个人纳税识别号码（ITIN）", id: "government_apply_itin_zh" },
+  { title: "使用美国邮政服务（USPS）", id: "government_usps_services_zh" },
+  { title: "申请图书证", id: "government_library_card_zh" },
+  { title: "注册兵役登记", id: "government_selective_service_zh" },
+  { title: "接种疫苗并获取健康记录", id: "government_vaccine_records_zh" },
+  { title: "申请食品券 / SNAP 福利", id: "government_snap_benefits_zh" },
+  { title: "在 DMV 办理车辆注册登记", id: "government_dmv_vehicle_registration_zh" },
+  { title: "申报护照遗失或被盗", id: "government_lost_stolen_passport_zh" },
+  { title: "在移民局办理事务", id: "government_immigration_office_zh" },
+  { title: "申请失业救济金", id: "government_unemployment_benefits_zh" },
+  { title: "申请官方证明文件", id: "government_official_documents_zh" },
+  { title: "应对警方或紧急救援服务", id: "government_police_emergency_services_zh" },
+  { title: "注册选民资格", id: "government_voter_registration_zh" },
+  { title: "申请公共住房", id: "government_public_housing_zh" },
+  { title: "向政府机构提交投诉", id: "government_file_complaint_zh" },
+  { title: "续签或延长签证身份有效期", id: "government_extend_visa_status_zh" },
+  { title: "利用免费政府资源", id: "government_free_resources_zh" },
+] as const;
+
 type DashboardClientProps = {
   userEmail: string;
   userImage: string;
@@ -357,7 +380,7 @@ export default function DashboardClient({
     "hub" | "scenes" | "levels"
   >("hub");
   const [featuredSceneSubView, setFeaturedSceneSubView] = useState<
-    "root" | "finance-admin" | "bank"
+    "root" | "finance-admin" | "bank" | "government"
   >("root");
   const [expandedMyCourseSection, setExpandedMyCourseSection] = useState<
     "saved" | "builder" | null
@@ -1181,6 +1204,18 @@ export default function DashboardClient({
     }
   }
 
+  function openGovernmentDirectory(scrollIntoView = false) {
+    setShowStartOptions(true);
+    setExpandedLearnSection("featured");
+    setExpandedMyCourseSection(null);
+    setFeaturedCourseView("scenes");
+    setFeaturedSceneSubView("government");
+
+    if (scrollIntoView) {
+      scrollToSection(startOptionsRef);
+    }
+  }
+
   function openFeaturedLesson(courseId: string, title: string) {
     localStorage.setItem("currentLessonTitle", title);
     router.push(`/study/${courseId}`);
@@ -1197,6 +1232,11 @@ export default function DashboardClient({
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.get("featured") === "bank") {
       openBankDirectory(true);
+      return;
+    }
+
+    if (searchParams.get("featured") === "government") {
+      openGovernmentDirectory(true);
     }
   }, []);
 
@@ -1656,6 +1696,10 @@ export default function DashboardClient({
                                 openBankDirectory();
                                 return;
                               }
+                              if (item.title === "政府服务") {
+                                openGovernmentDirectory();
+                                return;
+                              }
                               handleStaticCourseClick();
                             }}
                             className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
@@ -1682,6 +1726,32 @@ export default function DashboardClient({
                           银行
                         </div>
                         {BANK_FEATURED_LESSONS.map((item) => (
+                          <button
+                            key={item.id}
+                            onClick={() => {
+                              openFeaturedLesson(item.id, item.title);
+                            }}
+                            className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="min-w-0 flex-1 text-[1.02rem] font-bold leading-7 text-white">
+                                {item.title}
+                              </div>
+                              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/8 text-[1.4rem] text-white">
+                                ›
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
+
+                    {featuredSceneSubView === "government" ? (
+                      <div className="space-y-3">
+                        <div className="px-1 pb-1 text-center text-sm font-medium tracking-[0.08em] text-white/52">
+                          政府服务
+                        </div>
+                        {GOVERNMENT_FEATURED_LESSONS.map((item) => (
                           <button
                             key={item.id}
                             onClick={() => {
