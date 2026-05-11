@@ -37,7 +37,12 @@ const ENGLISH_TRIGGER_PATTERNS = [
 
 type SerializedTrainingContent = {
   version: number;
+  preserveOriginalItems?: boolean;
   items: TrainingItem[];
+};
+
+type SerializeTrainingItemsOptions = {
+  preserveOriginalItems?: boolean;
 };
 
 function stripHtmlTags(text: string) {
@@ -554,10 +559,28 @@ export function generateTrainingFromEnglishSubtitles(rawText: string) {
   );
 }
 
-export function serializeTrainingItems(items: TrainingItem[]) {
+function sanitizeTrainingItems(items: TrainingItem[]) {
+  return items
+    .map((item) => ({
+      zh: typeof item?.zh === "string" ? normalizeWhitespace(item.zh) : "",
+      en: typeof item?.en === "string" ? normalizeWhitespace(item.en) : "",
+      startTime:
+        typeof item?.startTime === "number" ? item.startTime : undefined,
+      endTime: typeof item?.endTime === "number" ? item.endTime : undefined,
+    }))
+    .filter((item) => item.zh || item.en);
+}
+
+export function serializeTrainingItems(
+  items: TrainingItem[],
+  options: SerializeTrainingItemsOptions = {}
+) {
   const payload: SerializedTrainingContent = {
     version: TRAINING_JSON_VERSION,
-    items: normalizeToShortTrainingItems(items),
+    preserveOriginalItems: options.preserveOriginalItems || undefined,
+    items: options.preserveOriginalItems
+      ? sanitizeTrainingItems(items)
+      : normalizeToShortTrainingItems(items),
   };
 
   return JSON.stringify(payload, null, 2);
@@ -573,15 +596,17 @@ export function deserializeTrainingItems(content: string): TrainingItem[] {
       throw new Error("Invalid training items.");
     }
 
-    return normalizeToShortTrainingItems(
-      parsed.items.map((item) => ({
-        zh: typeof item?.zh === "string" ? item.zh : "",
-        en: typeof item?.en === "string" ? item.en : "",
-        startTime:
-          typeof item?.startTime === "number" ? item.startTime : undefined,
-        endTime: typeof item?.endTime === "number" ? item.endTime : undefined,
-      }))
-    );
+    const items = parsed.items.map((item) => ({
+      zh: typeof item?.zh === "string" ? item.zh : "",
+      en: typeof item?.en === "string" ? item.en : "",
+      startTime:
+        typeof item?.startTime === "number" ? item.startTime : undefined,
+      endTime: typeof item?.endTime === "number" ? item.endTime : undefined,
+    }));
+
+    return parsed.preserveOriginalItems
+      ? sanitizeTrainingItems(items)
+      : normalizeToShortTrainingItems(items);
   } catch {
     const lines = content
       .split(/\r?\n/)

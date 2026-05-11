@@ -67,7 +67,7 @@ function createTrainingLesson(
   return {
     id,
     title,
-    txt_content: serializeTrainingItems(items),
+    txt_content: serializeTrainingItems(items, { preserveOriginalItems: true }),
     created_at: "2026-05-09T00:00:00.000Z",
   };
 }
