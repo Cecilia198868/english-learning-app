@@ -729,6 +729,11 @@ export default function StudyPage() {
       return;
     }
 
+    if (lessonId.startsWith("driver_")) {
+      router.replace("/dashboard?featured=driver-license");
+      return;
+    }
+
     if (window.history.length > 1) {
       router.back();
       return;

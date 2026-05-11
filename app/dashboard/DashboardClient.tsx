@@ -166,6 +166,29 @@ const GOVERNMENT_FEATURED_LESSONS = [
   { title: "利用免费政府资源", id: "government_free_resources_zh" },
 ] as const;
 
+const DRIVER_LICENSE_FEATURED_LESSONS = [
+  { title: "了解美国驾驶法规", id: "driver_understand_us_traffic_laws_zh" },
+  { title: "申领首张学习驾驶许可", id: "driver_apply_first_learner_permit_zh" },
+  { title: "备考驾驶笔试", id: "driver_prepare_written_test_zh" },
+  { title: "参加官方驾驶知识笔试", id: "driver_take_official_knowledge_test_zh" },
+  { title: "准备并参加路考", id: "driver_prepare_take_road_test_zh" },
+  { title: "领取驾驶执照", id: "driver_receive_driver_license_zh" },
+  { title: "续期或补办遗失的驾驶执照", id: "driver_renew_replace_lost_license_zh" },
+  { title: "更新执照上的住址或姓名信息", id: "driver_update_address_name_zh" },
+  { title: "将境外驾驶执照转换为美国执照", id: "driver_convert_foreign_license_zh" },
+  { title: "了解不同的执照类别及限制条件", id: "driver_license_classes_restrictions_zh" },
+  { title: "在美国申领国际驾驶许可", id: "driver_apply_international_permit_zh" },
+  { title: "处理执照被吊销或驾驶记录扣分问题", id: "driver_suspension_points_zh" },
+  { title: "新手司机购买汽车保险", id: "driver_new_driver_car_insurance_zh" },
+  { title: "办理车辆注册及申领车牌", id: "driver_vehicle_registration_plates_zh" },
+  { title: "应对警方例行截停检查", id: "driver_police_traffic_stop_zh" },
+  { title: "报告交通事故及提交保险理赔申请", id: "driver_accident_insurance_claim_zh" },
+  { title: "缴纳交通罚单及罚款", id: "driver_pay_traffic_ticket_zh" },
+  { title: "参加防御性驾驶或驾驶技能提升课程", id: "driver_defensive_driving_course_zh" },
+  { title: "商业驾驶执照（CDL）申请基础知识", id: "driver_cdl_basics_zh" },
+  { title: "跨州驾驶及执照转移规则", id: "driver_interstate_transfer_rules_zh" },
+] as const;
+
 type DashboardClientProps = {
   userEmail: string;
   userImage: string;
@@ -380,7 +403,7 @@ export default function DashboardClient({
     "hub" | "scenes" | "levels"
   >("hub");
   const [featuredSceneSubView, setFeaturedSceneSubView] = useState<
-    "root" | "finance-admin" | "bank" | "government"
+    "root" | "finance-admin" | "bank" | "government" | "driver-license"
   >("root");
   const [expandedMyCourseSection, setExpandedMyCourseSection] = useState<
     "saved" | "builder" | null
@@ -1216,6 +1239,18 @@ export default function DashboardClient({
     }
   }
 
+  function openDriverLicenseDirectory(scrollIntoView = false) {
+    setShowStartOptions(true);
+    setExpandedLearnSection("featured");
+    setExpandedMyCourseSection(null);
+    setFeaturedCourseView("scenes");
+    setFeaturedSceneSubView("driver-license");
+
+    if (scrollIntoView) {
+      scrollToSection(startOptionsRef);
+    }
+  }
+
   function openFeaturedLesson(courseId: string, title: string) {
     localStorage.setItem("currentLessonTitle", title);
     router.push(`/study/${courseId}`);
@@ -1237,6 +1272,11 @@ export default function DashboardClient({
 
     if (searchParams.get("featured") === "government") {
       openGovernmentDirectory(true);
+      return;
+    }
+
+    if (searchParams.get("featured") === "driver-license") {
+      openDriverLicenseDirectory(true);
     }
   }, []);
 
@@ -1497,6 +1537,13 @@ export default function DashboardClient({
                           setExpandedLearnSection(null);
                           return;
                         }
+                        if (
+                          featuredCourseView === "scenes" &&
+                          ["bank", "government", "driver-license"].includes(featuredSceneSubView)
+                        ) {
+                          setFeaturedSceneSubView("finance-admin");
+                          return;
+                        }
                         if (featuredCourseView === "scenes" && featuredSceneSubView !== "root") {
                           setFeaturedSceneSubView("root");
                           return;
@@ -1700,6 +1747,10 @@ export default function DashboardClient({
                                 openGovernmentDirectory();
                                 return;
                               }
+                              if (item.title === "驾照") {
+                                openDriverLicenseDirectory();
+                                return;
+                              }
                               handleStaticCourseClick();
                             }}
                             className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
@@ -1752,6 +1803,32 @@ export default function DashboardClient({
                           政府服务
                         </div>
                         {GOVERNMENT_FEATURED_LESSONS.map((item) => (
+                          <button
+                            key={item.id}
+                            onClick={() => {
+                              openFeaturedLesson(item.id, item.title);
+                            }}
+                            className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="min-w-0 flex-1 text-[1.02rem] font-bold leading-7 text-white">
+                                {item.title}
+                              </div>
+                              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/8 text-[1.4rem] text-white">
+                                ›
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
+
+                    {featuredSceneSubView === "driver-license" ? (
+                      <div className="space-y-3">
+                        <div className="px-1 pb-1 text-center text-sm font-medium tracking-[0.08em] text-white/52">
+                          驾照
+                        </div>
+                        {DRIVER_LICENSE_FEATURED_LESSONS.map((item) => (
                           <button
                             key={item.id}
                             onClick={() => {
