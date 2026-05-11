@@ -1643,7 +1643,6 @@ export default function DashboardClient({
                         </div>
                         {[
                           { title: "银行", icon: "🏦" },
-                          { title: "金融交易", icon: "💳" },
                           { title: "政府服务", icon: "🏛️" },
                           { title: "驾照", icon: "🚗" },
                           { title: "身份证", icon: "🪪" },
