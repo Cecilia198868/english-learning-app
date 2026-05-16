@@ -71,6 +71,18 @@ function appleHandoffResponse(url: string) {
         margin: 0;
         font-size: 28px;
       }
+      h1,
+      p,
+      a {
+        -webkit-text-stroke: 0.55px rgba(0, 0, 0, 0.94);
+        paint-order: stroke fill;
+        text-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.9),
+          1px 0 0 rgba(0, 0, 0, 0.78),
+          -1px 0 0 rgba(0, 0, 0, 0.78),
+          0 -1px 0 rgba(0, 0, 0, 0.66);
+        -webkit-font-smoothing: antialiased;
+      }
       p {
         color: rgba(255, 255, 255, 0.7);
         line-height: 1.6;

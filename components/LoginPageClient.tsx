@@ -11,9 +11,10 @@ export default function LoginPageClient({}: LoginPageClientProps) {
   const textOutlineStyle: CSSProperties = {
     filter: "none",
     paintOrder: "stroke fill",
-    textShadow: "none",
+    textShadow:
+      "0 1px 0 rgba(0, 0, 0, 0.92), 1px 0 0 rgba(0, 0, 0, 0.82), -1px 0 0 rgba(0, 0, 0, 0.82), 0 -1px 0 rgba(0, 0, 0, 0.72)",
     WebkitFontSmoothing: "antialiased",
-    WebkitTextStroke: "0.55px #000",
+    WebkitTextStroke: "0.65px rgba(0, 0, 0, 0.95)",
   };
 
   return (
@@ -50,7 +51,6 @@ export default function LoginPageClient({}: LoginPageClientProps) {
             >
               <span
                 className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-extrabold text-[#111111] shadow-[0_0_16px_rgba(255,255,255,0.42)] transition group-hover:scale-105"
-                style={textOutlineStyle}
               >
                 G
               </span>
@@ -63,7 +63,6 @@ export default function LoginPageClient({}: LoginPageClientProps) {
             >
               <span
                 className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-sm font-extrabold text-[#111111] shadow-[0_0_16px_rgba(255,255,255,0.36)] transition group-hover:scale-105"
-                style={textOutlineStyle}
               >
                 A
               </span>
