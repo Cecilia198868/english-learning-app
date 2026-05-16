@@ -2,27 +2,18 @@
 
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageProvider";
 
 type LoginPageClientProps = {
   isGoogleEnabled?: boolean;
 };
 
 export default function LoginPageClient({}: LoginPageClientProps) {
-  const { t } = useLanguage();
   const textOutlineStyle: CSSProperties = {
     filter: "none",
     paintOrder: "stroke fill",
     textShadow: "none",
     WebkitFontSmoothing: "antialiased",
     WebkitTextStroke: "0.55px #000",
-  };
-  const titleOutlineStyle: CSSProperties = {
-    filter: "none",
-    paintOrder: "stroke fill",
-    textShadow: "none",
-    WebkitFontSmoothing: "antialiased",
-    WebkitTextStroke: "0.85px #000",
   };
 
   return (
@@ -45,21 +36,14 @@ export default function LoginPageClient({}: LoginPageClientProps) {
           <div className="pointer-events-none absolute -right-12 top-0 z-0 h-44 w-44 rounded-full bg-fuchsia-300/12 blur-3xl" />
           <div className="pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(120deg,transparent_0%,rgba(255,255,255,0.07)_42%,transparent_56%)] opacity-60" />
 
-          <p
-            className="relative z-10 font-[var(--font-sora)] text-xs font-extrabold uppercase tracking-[0.18em] text-white"
+          <h1
+            className="relative z-10 text-left font-[var(--font-sora)] text-2xl font-extrabold leading-tight text-white sm:text-3xl"
             style={textOutlineStyle}
           >
-            Access
-          </p>
-          <h1
-            className="relative z-10 mt-5 font-[var(--font-sora)] text-[2.35rem] font-extrabold leading-none tracking-normal text-white sm:text-[2.75rem]"
-            style={titleOutlineStyle}
-          >
-            {t("loginTitle")}
+            欢迎回来
           </h1>
-          <div className="relative z-10 mx-auto mt-7 h-px w-44 bg-gradient-to-r from-transparent via-cyan-100 to-transparent shadow-[0_0_18px_rgba(103,232,249,0.75)]" />
 
-          <div className="relative z-10 mt-8 space-y-3.5 sm:mt-10 sm:space-y-4">
+          <div className="relative z-10 mt-7 space-y-3.5 sm:space-y-4">
             <Link
               href="/api/auth/google/start"
               className="group flex min-w-0 w-full items-center justify-center gap-3 rounded-full border border-white/48 bg-[linear-gradient(90deg,rgba(36,36,51,0.96),rgba(19,15,37,0.96))] px-5 py-3.5 font-[var(--font-sora)] text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(0,0,0,0.46),0_0_26px_rgba(0,229,255,0.22),inset_0_1px_0_rgba(255,255,255,0.22)] transition duration-300 hover:scale-[1.018] hover:border-cyan-100/80 hover:shadow-[0_22px_62px_rgba(0,0,0,0.48),0_0_42px_rgba(0,229,255,0.30)] sm:py-4 sm:text-base"
@@ -70,11 +54,11 @@ export default function LoginPageClient({}: LoginPageClientProps) {
               >
                 G
               </span>
-              <span style={textOutlineStyle}>谷歌邮箱登录</span>
+              <span style={textOutlineStyle}>Google 登录</span>
             </Link>
 
-            <button
-              type="button"
+            <Link
+              href="/api/auth/apple/start"
               className="group flex min-w-0 w-full items-center justify-center gap-3 rounded-full border border-white/44 bg-[linear-gradient(90deg,rgba(30,30,40,0.96),rgba(12,10,22,0.98))] px-5 py-3.5 font-[var(--font-sora)] text-sm font-extrabold text-white shadow-[0_18px_44px_rgba(0,0,0,0.44),0_0_24px_rgba(255,255,255,0.16),inset_0_1px_0_rgba(255,255,255,0.20)] transition duration-300 hover:scale-[1.018] hover:border-white/76 hover:shadow-[0_22px_62px_rgba(0,0,0,0.48),0_0_34px_rgba(255,255,255,0.22)] sm:py-4 sm:text-base"
             >
               <span
@@ -83,8 +67,8 @@ export default function LoginPageClient({}: LoginPageClientProps) {
               >
                 A
               </span>
-              <span style={textOutlineStyle}>苹果账户登录</span>
-            </button>
+              <span style={textOutlineStyle}>Apple 登录</span>
+            </Link>
 
             <Link
               href="/login/email"
@@ -99,7 +83,7 @@ export default function LoginPageClient({}: LoginPageClientProps) {
             className="relative z-10 mt-7 inline-flex font-[var(--font-sora)] text-base font-extrabold tracking-normal text-white underline-offset-4 transition hover:text-cyan-50 hover:underline"
             style={textOutlineStyle}
           >
-            {t("createAccount")}
+            创建账号
           </Link>
         </section>
       </div>

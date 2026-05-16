@@ -1,18 +1,32 @@
 import type { NextAuthOptions } from "next-auth";
+import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { validateUserPassword } from "@/lib/userStore";
 
+const appleClientId = process.env.APPLE_CLIENT_ID;
+const appleClientSecret = process.env.APPLE_CLIENT_SECRET;
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const nextAuthSecret =
   process.env.NEXTAUTH_SECRET || "dev-only-nextauth-secret-change-me";
+
+export const isAppleAuthConfigured =
+  Boolean(appleClientId) && Boolean(appleClientSecret);
 
 export const isGoogleAuthConfigured =
   Boolean(googleClientId) && Boolean(googleClientSecret);
 
 export const authOptions: NextAuthOptions = {
   providers: [
+    ...(isAppleAuthConfigured
+      ? [
+          AppleProvider({
+            clientId: appleClientId!,
+            clientSecret: appleClientSecret!,
+          }),
+        ]
+      : []),
     ...(isGoogleAuthConfigured
       ? [
           GoogleProvider({
