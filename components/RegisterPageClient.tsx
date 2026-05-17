@@ -110,24 +110,19 @@ export default function RegisterPageClient() {
   }
 
   return (
-    <main className="relative min-h-[100dvh] overflow-x-hidden bg-[#090110] text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#120216_0%,#090110_28%,#10031f_58%,#06010d_100%)]" />
-      <div className="lux-grid pointer-events-none absolute inset-0 opacity-[0.14]" />
-      <div className="aurora-wave pointer-events-none absolute left-[-8%] top-[-10%] h-[34rem] w-[42rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,0,153,0.30),transparent_58%)] blur-[96px]" />
-      <div className="aurora-wave pointer-events-none absolute right-[-8%] top-[8%] h-[34rem] w-[42rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.28),transparent_58%)] blur-[96px]" />
-
+    <main className="responsive-page-shell sf-brand-page relative min-h-[100dvh] overflow-x-hidden">
       <div className="relative mx-auto flex min-h-[100dvh] max-w-5xl items-start justify-center px-6 py-6 sm:items-center sm:py-10">
-        <section className="w-full max-w-[560px] rounded-[34px] border border-white/12 bg-white/[0.05] px-6 py-8 text-center shadow-[0_30px_90px_rgba(2,8,23,0.46)] backdrop-blur-2xl sm:px-10 sm:py-12">
-          <p className="font-[var(--font-sora)] text-xs uppercase tracking-[0.4em] text-cyan-100/65">
+        <section className="sf-brand-glass w-full max-w-[560px] rounded-[34px] px-6 py-8 text-center sm:px-10 sm:py-12">
+          <p className="font-[var(--font-sora)] text-xs font-semibold uppercase tracking-[0.28em] text-[#6d55ef]">
             New Account
           </p>
-          <h1 className="mt-6 font-[var(--font-sora)] text-4xl font-semibold tracking-[-0.06em] text-white sm:text-5xl">
+          <h1 className="mt-6 font-[var(--font-sora)] text-4xl font-semibold tracking-[-0.04em] text-[#201833] sm:text-5xl">
             {t("registerTitle")}
           </h1>
-          <div className="mx-auto mt-6 h-px w-40 bg-gradient-to-r from-transparent via-fuchsia-200/80 to-transparent" />
+          <div className="sf-brand-hairline mx-auto mt-6 w-40" />
 
           <form onSubmit={handleSubmit} noValidate className="mt-8 text-left">
-            <label className="block font-[var(--font-sora)] text-sm font-medium uppercase tracking-[0.16em] text-white/72">
+            <label className="block font-[var(--font-sora)] text-sm font-semibold uppercase tracking-[0.14em] text-[#655b78]">
               {t("emailAddress")}
             </label>
             <input
@@ -138,10 +133,10 @@ export default function RegisterPageClient() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder={t("emailPlaceholder")}
-              className="mt-3 w-full rounded-[24px] border border-white/12 bg-black/20 px-5 py-4 text-base text-white outline-none placeholder:text-white/30"
+              className="sf-brand-input mt-3 w-full rounded-[24px] px-5 py-4 text-base outline-none focus:border-[#5b8cff]/36"
             />
 
-            <label className="mt-5 block font-[var(--font-sora)] text-sm font-medium uppercase tracking-[0.16em] text-white/72">
+            <label className="mt-5 block font-[var(--font-sora)] text-sm font-semibold uppercase tracking-[0.14em] text-[#655b78]">
               {t("password")}
             </label>
             <input
@@ -151,10 +146,10 @@ export default function RegisterPageClient() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder={t("passwordPlaceholder")}
-              className="mt-3 w-full rounded-[24px] border border-white/12 bg-black/20 px-5 py-4 text-base text-white outline-none placeholder:text-white/30"
+              className="sf-brand-input mt-3 w-full rounded-[24px] px-5 py-4 text-base outline-none focus:border-[#5b8cff]/36"
             />
 
-            <label className="mt-5 block font-[var(--font-sora)] text-sm font-medium uppercase tracking-[0.16em] text-white/72">
+            <label className="mt-5 block font-[var(--font-sora)] text-sm font-semibold uppercase tracking-[0.14em] text-[#655b78]">
               {t("confirmPassword")}
             </label>
             <input
@@ -164,25 +159,25 @@ export default function RegisterPageClient() {
               value={confirmPassword}
               onChange={(event) => setConfirmPassword(event.target.value)}
               placeholder={t("confirmPasswordPlaceholder")}
-              className="mt-3 w-full rounded-[24px] border border-white/12 bg-black/20 px-5 py-4 text-base text-white outline-none placeholder:text-white/30"
+              className="sf-brand-input mt-3 w-full rounded-[24px] px-5 py-4 text-base outline-none focus:border-[#5b8cff]/36"
             />
 
             {message ? (
-              <p className="mt-4 text-sm text-fuchsia-100">{message}</p>
+              <p className="mt-4 text-sm font-medium text-[#6d55ef]">{message}</p>
             ) : null}
 
             <div className="mt-6 grid gap-3">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full rounded-full border border-fuchsia-300/22 bg-[linear-gradient(90deg,rgba(255,0,153,0.18),rgba(0,245,255,0.12),rgba(255,255,255,0.06))] px-6 py-4 font-[var(--font-sora)] text-lg font-semibold text-white shadow-[0_24px_60px_rgba(255,0,153,0.16)] transition hover:scale-[1.01] disabled:opacity-55"
+                className="sf-brand-primary w-full rounded-full px-6 py-4 font-[var(--font-sora)] text-lg font-semibold transition hover:scale-[1.01] disabled:opacity-55"
               >
                 {isSubmitting ? `${t("register")}...` : t("register")}
               </button>
 
               <Link
                 href="/login/email"
-                className="block w-full rounded-full border border-cyan-200/18 bg-white/[0.04] px-6 py-4 text-center font-[var(--font-sora)] text-lg font-semibold text-white transition hover:border-cyan-100/34 hover:bg-white/[0.07]"
+                className="sf-brand-button block w-full rounded-full px-6 py-4 text-center font-[var(--font-sora)] text-lg font-semibold transition hover:scale-[1.01]"
               >
                 {t("back")}
               </Link>

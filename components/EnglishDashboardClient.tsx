@@ -18,7 +18,7 @@ export default function EnglishDashboardClient({
   const quickActionCards = t("quickActionCards") as string[];
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="responsive-page-shell min-h-screen overflow-x-hidden bg-slate-950 text-white">
       <div className="mx-auto min-h-screen max-w-5xl px-6 py-8">
         <section className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/20">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">

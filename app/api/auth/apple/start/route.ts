@@ -54,37 +54,31 @@ function appleHandoffResponse(url: string) {
         min-height: 100vh;
         display: grid;
         place-items: center;
-        background: #090110;
-        color: white;
-        font-family: Arial, sans-serif;
+        background:
+          radial-gradient(circle at 12% 4%, rgba(255, 255, 255, 0.42), transparent 30%),
+          radial-gradient(circle at 88% 7%, rgba(223, 234, 255, 0.74), transparent 34%),
+          linear-gradient(180deg, #c5b7ff 0%, #d4cdff 47%, #e5ecff 100%);
+        color: #201833;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       }
       main {
         width: min(100vw - 40px, 390px);
-        border: 1px solid rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(123, 97, 255, 0.18);
         border-radius: 32px;
         padding: 34px 24px;
         text-align: center;
-        background: linear-gradient(145deg, rgba(28, 50, 72, 0.88), rgba(45, 16, 55, 0.88));
-        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.4);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(241, 238, 255, 0.42));
+        box-shadow: 0 28px 80px rgba(83, 70, 160, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(28px);
       }
       h1 {
         margin: 0;
         font-size: 28px;
-      }
-      h1,
-      p,
-      a {
-        -webkit-text-stroke: 0.55px rgba(0, 0, 0, 0.94);
-        paint-order: stroke fill;
-        text-shadow:
-          0 1px 0 rgba(0, 0, 0, 0.9),
-          1px 0 0 rgba(0, 0, 0, 0.78),
-          -1px 0 0 rgba(0, 0, 0, 0.78),
-          0 -1px 0 rgba(0, 0, 0, 0.66);
-        -webkit-font-smoothing: antialiased;
+        font-weight: 750;
+        letter-spacing: -0.03em;
       }
       p {
-        color: rgba(255, 255, 255, 0.7);
+        color: rgba(32, 24, 51, 0.68);
         line-height: 1.6;
         margin: 16px 0 26px;
       }
@@ -94,12 +88,13 @@ function appleHandoffResponse(url: string) {
         width: 100%;
         box-sizing: border-box;
         color: white;
-        border: 1px solid rgba(255, 255, 255, 0.24);
+        border: 1px solid rgba(123, 97, 255, 0.24);
         border-radius: 999px;
         padding: 16px 20px;
         text-decoration: none;
         font-weight: 700;
-        background: rgba(255, 255, 255, 0.12);
+        background: linear-gradient(135deg, #7b61ff 0%, #5b8cff 62%, #75d7ff 100%);
+        box-shadow: 0 20px 46px rgba(91, 140, 255, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.26);
       }
     </style>
   </head>
@@ -122,7 +117,7 @@ function appleHandoffResponse(url: string) {
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const origin = requestUrl.origin;
-  const callbackUrl = new URL("/dashboard", origin).toString();
+  const callbackUrl = new URL("/speak-english", origin).toString();
   const incomingCookie = request.headers.get("cookie") ?? "";
 
   if (!isAppleAuthConfigured) {

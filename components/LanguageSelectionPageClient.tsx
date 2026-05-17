@@ -157,39 +157,37 @@ export default function LanguageSelectionPageClient() {
   }
 
   return (
-    <main className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#090110] text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#120216_0%,#090110_34%,#07191b_68%,#06010d_100%)]" />
-      <div className="lux-grid pointer-events-none absolute inset-0 opacity-[0.12]" />
-      <div className="aurora-wave pointer-events-none absolute left-[-10%] top-[-10%] h-[34rem] w-[42rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,0,153,0.26),transparent_58%)] blur-[96px]" />
-      <div className="aurora-wave pointer-events-none absolute right-[-10%] top-[8%] h-[34rem] w-[42rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,245,255,0.24),transparent_58%)] blur-[96px]" />
-
+    <main className="responsive-page-shell sf-brand-page relative min-h-[100dvh] w-full overflow-x-hidden">
       <div className="relative mx-auto min-h-[100dvh] w-full max-w-6xl px-4 py-7 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
           <Link
             href="/"
-            className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 font-[var(--font-sora)] text-xs font-semibold uppercase tracking-normal text-white/78 transition hover:border-cyan-100/28 hover:text-white"
+            className="sf-brand-button rounded-full px-4 py-2 font-[var(--font-sora)] text-xs font-semibold uppercase tracking-normal transition"
           >
             Back
           </Link>
-          <span className="font-[var(--font-sora)] text-xs font-semibold uppercase tracking-normal text-cyan-50/72">
+          <span className="font-[var(--font-sora)] text-xs font-semibold uppercase tracking-normal text-[#6d55ef]">
             Base Language
           </span>
         </div>
 
         <section className="pt-10 text-center">
-          <h1 className="font-[var(--font-sora)] text-[clamp(2.15rem,7vw,4rem)] font-semibold uppercase leading-tight tracking-normal text-white">
+          <h1 className="font-[var(--font-sora)] text-[clamp(2.25rem,7vw,4.15rem)] font-semibold uppercase leading-tight tracking-normal text-[#201833]">
             Choose Your Base Language
           </h1>
-          <div className="mx-auto mt-5 h-px w-36 bg-gradient-to-r from-transparent via-cyan-200/75 to-transparent" />
+          <div className="sf-brand-hairline mx-auto mt-5 w-40" />
+          <p className="mx-auto mt-5 max-w-xl text-sm font-medium leading-6 text-[#655b78]">
+            Pick the language you think in first. SpeakFlow will shape practice around it.
+          </p>
         </section>
 
-        <div className="sticky top-0 z-10 -mx-5 mt-7 border-y border-white/8 bg-[#090110]/82 px-5 py-4 backdrop-blur-2xl">
+        <div className="sticky top-0 z-10 -mx-5 mt-7 border-y border-[#7b61ff]/10 bg-[#efe7ff]/72 px-5 py-4 backdrop-blur-2xl">
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search language or country"
-            className="w-full rounded-full border border-white/12 bg-black/24 px-5 py-4 font-[var(--font-sora)] text-sm text-white outline-none placeholder:text-white/38 focus:border-cyan-200/42"
+            className="sf-brand-input w-full rounded-full px-5 py-4 font-[var(--font-sora)] text-sm outline-none focus:border-[#5b8cff]/36"
           />
         </div>
 
@@ -197,10 +195,10 @@ export default function LanguageSelectionPageClient() {
           {filteredGroups.map((group) => (
             <section key={group.region}>
               <div className="mb-4 flex items-center gap-3">
-                <h2 className="font-[var(--font-sora)] text-sm font-semibold uppercase tracking-normal text-fuchsia-50/78">
+                <h2 className="font-[var(--font-sora)] text-sm font-semibold uppercase tracking-normal text-[#6d55ef]">
                   {group.region}
                 </h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-white/16 to-transparent" />
+                <div className="h-px flex-1 bg-gradient-to-r from-[#7b61ff]/22 to-transparent" />
               </div>
 
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -209,17 +207,17 @@ export default function LanguageSelectionPageClient() {
                     key={`${group.region}-${option.code}`}
                     href="/login"
                     onClick={() => chooseLanguage(option)}
-                    className="group block min-h-[92px] rounded-[24px] border border-white/10 bg-white/[0.045] p-4 text-left shadow-[0_20px_48px_rgba(0,0,0,0.22)] transition duration-200 hover:-translate-y-0.5 hover:border-cyan-100/28 hover:bg-white/[0.075]"
+                    className="sf-language-card group block min-h-[92px] rounded-[24px] p-4 text-left transition duration-200"
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <span className="font-[var(--font-sora)] text-lg font-semibold text-white">
+                      <span className="font-[var(--font-sora)] text-lg font-semibold text-[#201833]">
                         {option.name}
                       </span>
-                      <span className="rounded-full border border-white/10 bg-black/24 px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-normal text-cyan-100/78">
+                      <span className="rounded-full border border-[#7b61ff]/16 bg-[#7b61ff]/8 px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-normal text-[#5c48d9]">
                         {option.code}
                       </span>
                     </div>
-                    <p className="mt-3 text-sm leading-6 text-white/58">
+                    <p className="mt-3 text-sm leading-6 text-[#655b78]">
                       {option.countries}
                     </p>
                   </Link>
@@ -229,7 +227,7 @@ export default function LanguageSelectionPageClient() {
           ))}
 
           {filteredGroups.length === 0 ? (
-            <div className="rounded-[24px] border border-white/10 bg-white/[0.045] px-5 py-8 text-center text-white/64">
+            <div className="sf-brand-glass rounded-[24px] px-5 py-8 text-center text-[#655b78]">
               No matching languages found.
             </div>
           ) : null}

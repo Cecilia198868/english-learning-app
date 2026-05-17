@@ -748,7 +748,7 @@ export default function StudyPage() {
   }
 
   return (
-    <main className="relative min-h-[100dvh] overflow-x-hidden bg-[#090110] font-[var(--font-sora)] text-white">
+    <main className="responsive-page-shell relative min-h-[100dvh] overflow-x-hidden bg-[#090110] font-[var(--font-sora)] text-white">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#120216_0%,#090110_28%,#10031f_58%,#06010d_100%)]" />
       <div className="lux-grid absolute inset-0 opacity-[0.14]" />
       <div className="aurora-wave absolute left-[-10%] top-[-8%] h-[34rem] w-[46rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,0,153,0.20),transparent_58%)] blur-[92px]" />
@@ -756,7 +756,7 @@ export default function StudyPage() {
 
       <div className="relative mx-auto w-full max-w-5xl px-4 py-3 pb-8 sm:px-6 lg:px-8">
         <div className="mb-3 rounded-[1.35rem] border border-white/12 bg-white/[0.05] p-3 backdrop-blur-xl">
-          <div className="flex items-start gap-3">
+          <div className="flex flex-wrap items-start gap-3 sm:flex-nowrap">
             <button
               type="button"
               onClick={handleBackToPreviousPage}
@@ -833,7 +833,7 @@ export default function StudyPage() {
             }`}
           >
             <div className="min-h-[180px]">
-              <p className="text-left text-[26px] font-bold leading-[1.65]">
+              <p className="text-left text-[clamp(1.35rem,6vw,1.625rem)] font-bold leading-[1.65]">
                 {currentPair.chinese || "没有内容"}
               </p>
             </div>

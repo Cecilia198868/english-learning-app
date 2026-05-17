@@ -1341,14 +1341,14 @@ export default function DashboardClient({
   }, []);
 
   return (
-    <main className="relative min-h-[100dvh] overflow-x-hidden bg-[#05060d] font-[var(--font-sora)] text-white">
+    <main className="responsive-page-shell relative min-h-[100dvh] overflow-x-hidden bg-[#05060d] font-[var(--font-sora)] text-white">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#070814_0%,#04050b_45%,#060713_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(104,76,255,0.18),transparent_26%),radial-gradient(circle_at_bottom,rgba(31,106,255,0.12),transparent_28%)]" />
       <div className="absolute inset-0 opacity-[0.12] [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:32px_32px]" />
 
       <div className="relative mx-auto w-full max-w-6xl px-4 py-6 sm:px-5 lg:px-8">
         <div className="mb-7 rounded-[24px] border border-fuchsia-400/25 bg-[linear-gradient(180deg,rgba(14,15,31,0.94),rgba(10,11,24,0.84))] px-4 py-4 shadow-[0_0_0_1px_rgba(196,84,255,0.08),0_18px_40px_rgba(0,0,0,0.45),0_0_36px_rgba(162,78,255,0.18)] backdrop-blur-2xl">
-          <div className="flex min-h-[48px] items-center gap-3">
+          <div className="flex min-h-[48px] flex-wrap items-center gap-3 sm:flex-nowrap">
             {userImage && !userImageFailed ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img

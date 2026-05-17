@@ -494,7 +494,7 @@ export default function VocabularyPage() {
   }, []);
 
   return (
-    <main className="relative min-h-[100dvh] overflow-x-hidden bg-[#090110] font-[var(--font-sora)] text-white">
+    <main className="responsive-page-shell relative min-h-[100dvh] overflow-x-hidden bg-[#090110] font-[var(--font-sora)] text-white">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#120216_0%,#090110_28%,#10031f_58%,#06010d_100%)]" />
       <div className="lux-grid absolute inset-0 opacity-[0.14]" />
       <div className="aurora-wave absolute left-[-10%] top-[-8%] h-[34rem] w-[46rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,0,153,0.20),transparent_58%)] blur-[92px]" />
@@ -502,7 +502,7 @@ export default function VocabularyPage() {
 
       <div className="relative mx-auto min-h-[100dvh] w-full max-w-5xl px-4 py-3 pb-8 sm:px-6 lg:px-8">
         <div className="mb-3 rounded-[1.35rem] border border-white/12 bg-white/[0.05] p-3 backdrop-blur-xl">
-          <div className="flex items-start gap-3">
+          <div className="flex flex-wrap items-start gap-3 sm:flex-nowrap">
             <Link
               href="/"
               className="shrink-0 rounded-xl bg-slate-700 px-3 py-2 text-sm font-medium hover:bg-slate-600"
@@ -534,7 +534,7 @@ export default function VocabularyPage() {
           </div>
         ) : !questions.length && !quizResult ? (
           <section className="space-y-4">
-            <div className="grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
+            <div className="grid grid-cols-1 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5 sm:grid-cols-2">
               <button
                 onClick={() => {
                   setReviewMode("normal");
@@ -723,7 +723,7 @@ export default function VocabularyPage() {
               </div>
             )}
 
-            <div className="mt-6 grid grid-cols-2 gap-2">
+            <div className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <button
                 onClick={() => {
                   if (reviewMode === "wrong") {
@@ -820,7 +820,7 @@ export default function VocabularyPage() {
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5">
+            <div className="grid grid-cols-1 gap-2 rounded-[1.35rem] border border-white/10 bg-white/5 p-2.5 sm:grid-cols-2">
               <button
                 onClick={() => {
                   clearFeedbackTimer();
