@@ -180,6 +180,35 @@ async function getAudioBlobById(id: string): Promise<Blob | null> {
   });
 }
 
+const distortedVoiceNamePattern =
+  /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|fred|good news|hysterical|jester|organ|princess|superstar|trinoids|whisper|zarvox/i;
+
+function isEnglishVoice(voice: SpeechSynthesisVoice) {
+  return voice.lang.toLowerCase().startsWith("en");
+}
+
+function isStableSpeechVoice(voice: SpeechSynthesisVoice) {
+  return isEnglishVoice(voice) && !distortedVoiceNamePattern.test(voice.name);
+}
+
+function pickPreferredEnglishVoice(voices: SpeechSynthesisVoice[]) {
+  const candidates = voices.filter(isStableSpeechVoice);
+
+  return (
+    candidates.find((voice) => /samantha/i.test(voice.name)) ||
+    candidates.find((voice) => /google us english/i.test(voice.name)) ||
+    candidates.find((voice) => /microsoft.*(jenny|aria|zira|guy|david)/i.test(voice.name)) ||
+    candidates.find((voice) => /english.*united states|en-US/i.test(`${voice.name} ${voice.lang}`)) ||
+    candidates.find((voice) => voice.localService) ||
+    candidates[0] ||
+    null
+  );
+}
+
+function normalizeSpeechRate(rate: number) {
+  return Math.min(Math.max(rate, 0.75), 1.15);
+}
+
 function SoundWaveMark({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -496,7 +525,9 @@ export default function StudyPage() {
   }
 
   function getSelectedVoice() {
-    return voices.find((voice) => voice.name === selectedVoiceName);
+    return voices.find(
+      (voice) => voice.name === selectedVoiceName && isStableSpeechVoice(voice)
+    );
   }
 
   function speakEnglish(text: string, rate = 1, onEnd?: () => void) {
@@ -509,9 +540,11 @@ export default function StudyPage() {
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
-    utterance.rate = rate;
+    utterance.rate = normalizeSpeechRate(rate);
+    utterance.pitch = 1;
+    utterance.volume = 1;
 
-    const selectedVoice = getSelectedVoice();
+    const selectedVoice = getSelectedVoice() || pickPreferredEnglishVoice(voices);
     if (selectedVoice) {
       utterance.voice = selectedVoice;
     }
@@ -533,17 +566,23 @@ export default function StudyPage() {
 
   function loadVoices() {
     const allVoices = window.speechSynthesis.getVoices();
-    const englishVoices = allVoices.filter((voice) =>
-      voice.lang.toLowerCase().startsWith("en")
-    );
+    const englishVoices = allVoices.filter(isEnglishVoice);
+    const preferredVoice = pickPreferredEnglishVoice(englishVoices);
 
     setVoices(englishVoices);
 
     const savedVoiceName = localStorage.getItem(voiceKey);
-    if (savedVoiceName && englishVoices.some((voice) => voice.name === savedVoiceName)) {
+    if (
+      savedVoiceName &&
+      englishVoices.some(
+        (voice) =>
+          voice.name === savedVoiceName &&
+          !distortedVoiceNamePattern.test(voice.name)
+      )
+    ) {
       setSelectedVoiceName(savedVoiceName);
-    } else if (englishVoices.length > 0) {
-      setSelectedVoiceName(englishVoices[0].name);
+    } else {
+      setSelectedVoiceName(preferredVoice?.name || "");
     }
   }
 
@@ -959,13 +998,64 @@ export default function StudyPage() {
     return window.SpeechRecognition || window.webkitSpeechRecognition || null;
   }
 
+  function isMobileSpeechBlocked() {
+    if (typeof window === "undefined" || typeof navigator === "undefined") {
+      return false;
+    }
+
+    const userAgent = navigator.userAgent.toLowerCase();
+    return (
+      window.matchMedia("(max-width: 768px)").matches ||
+      navigator.maxTouchPoints > 0 ||
+      /iphone|ipad|ipod|android|micromessenger/.test(userAgent)
+    );
+  }
+
+  function enterTypedEnglishAnswer() {
+    if (typeof window === "undefined") return;
+
+    stopSequencePlayback();
+    setShowEnglish(false);
+    setLiveTranscript("");
+    setMessage("");
+
+    const typedAnswer = window.prompt("请输入你的英语回答", spokenEnglish);
+    const finalAnswer = typedAnswer?.trim();
+
+    if (!finalAnswer) {
+      setMessage("请输入你的英语回答");
+      return;
+    }
+
+    setSpokenEnglish(finalAnswer);
+  }
+
   function stopEnglishRecognition() {
     clearSpeechSilenceTimer();
     recognitionRef.current?.stop();
     recognitionRef.current = null;
   }
 
+  function handleEnglishPracticeAction() {
+    if (isListening) {
+      stopEnglishRecognition();
+      return;
+    }
+
+    if (isMobileSpeechBlocked()) {
+      enterTypedEnglishAnswer();
+      return;
+    }
+
+    startEnglishRecognition();
+  }
+
   function startEnglishRecognition() {
+    if (isMobileSpeechBlocked()) {
+      enterTypedEnglishAnswer();
+      return;
+    }
+
     const RecognitionConstructor = getRecognitionConstructor();
     if (!RecognitionConstructor) {
       setMessage("当前浏览器不支持语音识别");
@@ -1338,10 +1428,10 @@ export default function StudyPage() {
                       <button
                         type="button"
                         aria-label="慢速朗读"
-                        onClick={() => speakEnglish(selectedExpression.text, 0.5)}
+                        onClick={() => speakEnglish(selectedExpression.text, 0.75)}
                         className="flex h-12 items-center gap-2 rounded-[16px] bg-white/40 px-5 text-[1.05rem] font-extrabold shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]"
                       >
-                        ▶ <span>0.5x</span>
+                        ▶ <span>0.75x</span>
                       </button>
                     </div>
                   </div>
@@ -1370,7 +1460,7 @@ export default function StudyPage() {
                   <button
                     type="button"
                     onClick={
-                      isListening ? stopEnglishRecognition : startEnglishRecognition
+                      handleEnglishPracticeAction
                     }
                     className="grid place-items-center"
                     aria-label={isListening ? "停止语音输入" : "点击开始说话"}
@@ -1494,7 +1584,7 @@ export default function StudyPage() {
               <button
                 type="button"
                 aria-label={isListening ? "停止语音输入" : "开始语音输入"}
-                onClick={isListening ? stopEnglishRecognition : startEnglishRecognition}
+                onClick={handleEnglishPracticeAction}
                 className={`grid h-14 w-14 shrink-0 place-items-center rounded-[22px] transition ${
                   isListening
                     ? "scale-105 bg-[#28d5e8]"

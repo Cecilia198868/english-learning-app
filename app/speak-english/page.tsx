@@ -369,6 +369,35 @@ function createFallbackExpressionVariants(standardEnglish: string) {
   }));
 }
 
+const distortedVoiceNamePattern =
+  /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|fred|good news|hysterical|jester|organ|princess|superstar|trinoids|whisper|zarvox/i;
+
+function isEnglishVoice(voice: SpeechSynthesisVoice) {
+  return voice.lang.toLowerCase().startsWith("en");
+}
+
+function isStableSpeechVoice(voice: SpeechSynthesisVoice) {
+  return isEnglishVoice(voice) && !distortedVoiceNamePattern.test(voice.name);
+}
+
+function pickPreferredEnglishVoice(voices: SpeechSynthesisVoice[]) {
+  const candidates = voices.filter(isStableSpeechVoice);
+
+  return (
+    candidates.find((voice) => /samantha/i.test(voice.name)) ||
+    candidates.find((voice) => /google us english/i.test(voice.name)) ||
+    candidates.find((voice) => /microsoft.*(jenny|aria|zira|guy|david)/i.test(voice.name)) ||
+    candidates.find((voice) => /english.*united states|en-US/i.test(`${voice.name} ${voice.lang}`)) ||
+    candidates.find((voice) => voice.localService) ||
+    candidates[0] ||
+    null
+  );
+}
+
+function normalizeSpeechRate(rate: number) {
+  return Math.min(Math.max(rate, 0.75), 1.15);
+}
+
 function SoundWaveMark({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -533,6 +562,9 @@ export default function SpeakEnglishPage() {
   const [selectedVoiceURI, setSelectedVoiceURI] = useState("");
   const [showEmojiPanel, setShowEmojiPanel] = useState(false);
   const [showPreviewKeyboard, setShowPreviewKeyboard] = useState(true);
+  const [isTextEntryOpen, setIsTextEntryOpen] = useState(false);
+  const [usesTextInputInsteadOfSpeech, setUsesTextInputInsteadOfSpeech] =
+    useState(false);
 
   const activeRows = keyboardMode === "symbols" ? symbolRows : letterRows;
   const baseInputValue =
@@ -575,11 +607,12 @@ export default function SpeakEnglishPage() {
     hasEnglishAttempt ||
     Boolean(standardEnglish) ||
     isListening ||
+    isTextEntryOpen ||
     Boolean(inputText.trim()) ||
     Boolean(liveTranscript.trim());
   const showLandingPrompt = !hasPracticeActivity;
   const showNativeCompletePrompt =
-    hasNativeSpeech && !hasEnglishAttempt && !standardEnglish;
+    hasNativeSpeech && !hasEnglishAttempt && !standardEnglish && !isTextEntryOpen;
   const showListeningPrompt = isListening;
   const showVoiceOnlyPrompt =
     showLandingPrompt || showNativeCompletePrompt || showListeningPrompt;
@@ -611,15 +644,26 @@ export default function SpeakEnglishPage() {
 
     function loadVoices() {
       const voices = window.speechSynthesis.getVoices();
-      const englishVoices = voices.filter((voice) =>
-        voice.lang.toLowerCase().startsWith("en")
-      );
+      const englishVoices = voices.filter(isEnglishVoice);
       const sortedVoices = (englishVoices.length ? englishVoices : voices).sort(
         (a, b) => a.name.localeCompare(b.name)
       );
+      const preferredVoice = pickPreferredEnglishVoice(sortedVoices);
 
       setAvailableVoices(sortedVoices);
-      setSelectedVoiceURI((current) => current || sortedVoices[0]?.voiceURI || "");
+      setSelectedVoiceURI((current) => {
+        if (
+          current &&
+          sortedVoices.some(
+            (voice) =>
+              voice.voiceURI === current && !distortedVoiceNamePattern.test(voice.name)
+          )
+        ) {
+          return current;
+        }
+
+        return preferredVoice?.voiceURI || "";
+      });
     }
 
     loadVoices();
@@ -657,6 +701,19 @@ export default function SpeakEnglishPage() {
         speechSilenceTimerRef.current = null;
       }
       recognitionRef.current?.abort?.();
+    };
+  }, []);
+
+  useEffect(() => {
+    function syncInputMode() {
+      setUsesTextInputInsteadOfSpeech(isMobileSpeechBlocked());
+    }
+
+    syncInputMode();
+    window.addEventListener("resize", syncInputMode);
+
+    return () => {
+      window.removeEventListener("resize", syncInputMode);
     };
   }, []);
 
@@ -717,6 +774,19 @@ export default function SpeakEnglishPage() {
     return window.SpeechRecognition || window.webkitSpeechRecognition || null;
   }
 
+  function isMobileSpeechBlocked() {
+    if (typeof window === "undefined" || typeof navigator === "undefined") {
+      return false;
+    }
+
+    const userAgent = navigator.userAgent.toLowerCase();
+    return (
+      window.matchMedia("(max-width: 768px)").matches ||
+      navigator.maxTouchPoints > 0 ||
+      /iphone|ipad|ipod|android|micromessenger/.test(userAgent)
+    );
+  }
+
   function clearSpeechSilenceTimer() {
     if (!speechSilenceTimerRef.current) return;
 
@@ -724,8 +794,113 @@ export default function SpeakEnglishPage() {
     speechSilenceTimerRef.current = null;
   }
 
+  function prepareNextNativeRound() {
+    setPracticeStage("native");
+    setNativeSpeech("");
+    setHasNativeSpeech(false);
+    setHasEnglishAttempt(false);
+    setStandardEnglish("");
+    setExpressionVariants([]);
+    setSelectedExpressionIndex(0);
+    setIsLoadingExpressionVariants(false);
+    setHighlightedExpressions([]);
+    setVocabularyNotice("");
+  }
+
+  function openTextEntry() {
+    if (isListening) return;
+
+    const nextPracticeStage: PracticeStage = standardEnglish
+      ? "native"
+      : practiceStage;
+
+    if (standardEnglish) {
+      prepareNextNativeRound();
+    }
+
+    setIsTextEntryOpen(true);
+    setShowPreviewKeyboard(false);
+    setShowQuickPanel(false);
+    setShowClassicCoursePicker(false);
+    resetClassicCoursePicker();
+    setShowVoicePicker(false);
+    setLiveTranscript("");
+    setComposingPinyin("");
+    setKeyboardMode(nextPracticeStage === "english" ? "en" : "zh");
+    setMessage(
+      nextPracticeStage === "english"
+        ? "Type your English answer"
+        : "用文字输入你想表达的内容"
+    );
+    window.setTimeout(focusInput, 0);
+  }
+
+  function commitTextEntry() {
+    const finalText = `${inputText}${composingPinyin}`.trim();
+
+    if (!finalText) {
+      setMessage(
+        practiceStage === "english" ? "Type your English answer" : "请先输入内容"
+      );
+      window.setTimeout(focusInput, 0);
+      return;
+    }
+
+    setMessage(finalText);
+    setInputText("");
+    setComposingPinyin("");
+    setLiveTranscript("");
+    setIsTextEntryOpen(false);
+
+    if (practiceStage === "native") {
+      setNativeSpeech(finalText);
+      setStandardEnglish("");
+      setExpressionVariants([]);
+      setSelectedExpressionIndex(0);
+      setHasEnglishAttempt(false);
+      setHasNativeSpeech(true);
+      setPracticeStage("english");
+      return;
+    }
+
+    setHasEnglishAttempt(true);
+  }
+
+  function handlePrimaryPracticeAction() {
+    if (isListening) {
+      stopRecognition();
+      return;
+    }
+
+    if (isMobileSpeechBlocked()) {
+      openTextEntry();
+      return;
+    }
+
+    startRecognition();
+  }
+
+  function handleComposerPracticeAction() {
+    if (isListening) {
+      stopRecognition();
+      return;
+    }
+
+    if (isMobileSpeechBlocked() || isTextEntryOpen) {
+      commitTextEntry();
+      return;
+    }
+
+    startRecognition();
+  }
+
   function startRecognition() {
     if (isListening) return;
+
+    if (isMobileSpeechBlocked()) {
+      openTextEntry();
+      return;
+    }
 
     const RecognitionConstructor = getRecognitionConstructor();
 
@@ -744,14 +919,7 @@ export default function SpeakEnglishPage() {
       : practiceStage;
 
     if (isStartingNextNativeRound) {
-      setPracticeStage("native");
-      setNativeSpeech("");
-      setHasNativeSpeech(false);
-      setHasEnglishAttempt(false);
-      setStandardEnglish("");
-      setExpressionVariants([]);
-      setSelectedExpressionIndex(0);
-      setIsLoadingExpressionVariants(false);
+      prepareNextNativeRound();
     }
 
     const recognition = new RecognitionConstructor();
@@ -760,6 +928,7 @@ export default function SpeakEnglishPage() {
     recognition.interimResults = true;
     setInputText("");
     setComposingPinyin("");
+    setIsTextEntryOpen(false);
     setLiveTranscript("");
     setIsListening(true);
     setMessage("正在听你说话…");
@@ -935,10 +1104,16 @@ export default function SpeakEnglishPage() {
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
-    utterance.rate = rate;
+    utterance.rate = normalizeSpeechRate(rate);
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    const selectedVoice = availableVoices.find(
+      (voice) =>
+        voice.voiceURI === selectedVoiceURI && isStableSpeechVoice(voice)
+    );
     utterance.voice =
-      availableVoices.find((voice) => voice.voiceURI === selectedVoiceURI) ||
-      null;
+      selectedVoice || pickPreferredEnglishVoice(availableVoices) || null;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
   }
@@ -1164,8 +1339,12 @@ export default function SpeakEnglishPage() {
             <div className="mx-auto h-px w-32 bg-[linear-gradient(90deg,transparent,rgba(145,220,255,0.46),transparent)]" />
 
             <div
-              className={`flex min-h-0 flex-1 flex-col items-center overflow-y-auto text-center ${
-                showVoiceOnlyPrompt ? "justify-start pt-28" : "justify-start pt-14"
+              className={`sf-free-practice-content flex min-h-0 flex-1 flex-col items-center overflow-y-auto text-center ${
+                showVoiceOnlyPrompt
+                  ? "justify-start pt-28"
+                  : hasEnglishAttempt
+                    ? "sf-free-practice-result-content justify-start pt-14"
+                    : "justify-start pt-14"
               }`}
             >
               {showListeningPrompt ? (
@@ -1186,19 +1365,29 @@ export default function SpeakEnglishPage() {
                   </h2>
                   <button
                     type="button"
-                    onClick={startRecognition}
+                    onClick={handlePrimaryPracticeAction}
                     className="mt-52 grid place-items-center"
-                    aria-label="点击开始说话"
+                    aria-label={
+                      usesTextInputInsteadOfSpeech ? "点击输入内容" : "点击开始说话"
+                    }
                   >
-                    <Image
-                      src="/icons/glow-mic.svg"
-                      alt=""
-                      width={96}
-                      height={96}
-                      className="h-24 w-24"
-                    />
+                    {usesTextInputInsteadOfSpeech ? (
+                      <span className="grid h-20 min-w-28 place-items-center rounded-[28px] border border-[#d8d0ff] bg-white/50 px-6 text-[1.25rem] font-extrabold text-[#5b60e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                        输入
+                      </span>
+                    ) : (
+                      <Image
+                        src="/icons/glow-mic.svg"
+                        alt=""
+                        width={96}
+                        height={96}
+                        className="h-24 w-24"
+                      />
+                    )}
                     <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
-                      点击开始说话
+                      {usesTextInputInsteadOfSpeech
+                        ? "点击输入内容"
+                        : "点击开始说话"}
                     </span>
                   </button>
                 </>
@@ -1214,19 +1403,29 @@ export default function SpeakEnglishPage() {
                   </div>
                   <button
                     type="button"
-                    onClick={startRecognition}
+                    onClick={handlePrimaryPracticeAction}
                     className="mt-64 grid place-items-center"
-                    aria-label="点击开始说话"
+                    aria-label={
+                      usesTextInputInsteadOfSpeech ? "点击输入英文" : "点击开始说话"
+                    }
                   >
-                    <Image
-                      src="/icons/glow-mic.svg"
-                      alt=""
-                      width={96}
-                      height={96}
-                      className="h-24 w-24"
-                    />
+                    {usesTextInputInsteadOfSpeech ? (
+                      <span className="grid h-20 min-w-28 place-items-center rounded-[28px] border border-[#d8d0ff] bg-white/50 px-6 text-[1.25rem] font-extrabold text-[#5b60e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                        输入
+                      </span>
+                    ) : (
+                      <Image
+                        src="/icons/glow-mic.svg"
+                        alt=""
+                        width={96}
+                        height={96}
+                        className="h-24 w-24"
+                      />
+                    )}
                     <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
-                      点击开始说话
+                      {usesTextInputInsteadOfSpeech
+                        ? "点击输入英文"
+                        : "点击开始说话"}
                     </span>
                   </button>
                 </>
@@ -1234,16 +1433,16 @@ export default function SpeakEnglishPage() {
                 <>
                   {hasEnglishAttempt ? (
                     <>
-                      <div className="w-full max-w-[360px] text-left">
+                      <div className="sf-free-practice-user-expression w-full max-w-[360px] text-left">
                         <p className="text-[1.05rem] font-extrabold text-[#7f7896]">
                           你的表达:
                         </p>
-                        <p className="mt-5 rounded-[18px] bg-white/10 px-5 py-4 text-[1.15rem] font-bold leading-8 text-[#8f879c]">
+                        <p className="sf-free-practice-user-card mt-5 rounded-[18px] bg-white/10 px-5 py-4 text-[1.15rem] font-bold leading-8 text-[#8f879c]">
                           {message}
                         </p>
                       </div>
 
-                      <div className="mt-9 w-full max-w-[360px]">
+                      <div className="sf-free-practice-standard-block mt-9 w-full max-w-[360px]">
                         <div className="flex items-center gap-2 text-left">
                           <button
                             type="button"
@@ -1279,7 +1478,7 @@ export default function SpeakEnglishPage() {
                           </button>
                         </div>
 
-                        <p className="mt-4 bg-white/18 px-4 py-4 text-[1.55rem] font-extrabold leading-9 text-[#201833]">
+                        <p className="sf-free-practice-expression-text mt-4 bg-white/18 px-4 py-4 text-[1.55rem] font-extrabold leading-9 text-[#201833]">
                           {isLoadingExpressionVariants
                             ? "正在生成表达..."
                             : selectedExpressionSegments.map((segment, index) =>
@@ -1307,12 +1506,12 @@ export default function SpeakEnglishPage() {
                         </p>
 
                         {vocabularyNotice ? (
-                          <p className="mt-3 text-center text-sm font-semibold text-[#7f7896]">
+                          <p className="sf-free-practice-notice mt-3 text-center text-sm font-semibold text-[#7f7896]">
                             {vocabularyNotice}
                           </p>
                         ) : null}
 
-                        <div className="mt-5 flex justify-center gap-5 text-[#201833]">
+                        <div className="sf-free-practice-playback mt-5 flex justify-center gap-5 text-[#201833]">
                           <button
                             type="button"
                             aria-label="播放朗读"
@@ -1324,10 +1523,10 @@ export default function SpeakEnglishPage() {
                           <button
                             type="button"
                             aria-label="慢速朗读"
-                            onClick={() => readStandardEnglish(0.5)}
+                            onClick={() => readStandardEnglish(0.75)}
                             className="flex h-12 items-center gap-2 rounded-[16px] bg-white/40 px-5 text-[1.05rem] font-extrabold shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]"
                           >
-                            ▶ <span>0.5x</span>
+                            ▶ <span>0.75x</span>
                           </button>
                         </div>
                       </div>
@@ -1551,19 +1750,27 @@ export default function SpeakEnglishPage() {
           {hasEnglishAttempt ? (
           <button
             type="button"
-            onClick={isListening ? stopRecognition : startRecognition}
+            onClick={handlePrimaryPracticeAction}
             className="relative z-20 mb-[max(0.75rem,env(safe-area-inset-bottom))] grid place-items-center self-center"
-            aria-label="点击开始说话"
+            aria-label={
+              usesTextInputInsteadOfSpeech ? "点击输入下一句" : "点击开始说话"
+            }
           >
-            <Image
-              src="/icons/glow-mic.svg"
-              alt=""
-              width={96}
-              height={96}
-              className="h-24 w-24"
-            />
+            {usesTextInputInsteadOfSpeech ? (
+              <span className="grid h-20 min-w-32 place-items-center rounded-[28px] border border-[#d8d0ff] bg-white/50 px-6 text-[1.18rem] font-extrabold text-[#5b60e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                输入下一句
+              </span>
+            ) : (
+              <Image
+                src="/icons/glow-mic.svg"
+                alt=""
+                width={96}
+                height={96}
+                className="h-24 w-24"
+              />
+            )}
             <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
-              点击开始说话
+              {usesTextInputInsteadOfSpeech ? "点击输入下一句" : "点击开始说话"}
             </span>
           </button>
           ) : hasPracticeActivity && !showNativeCompletePrompt && !showListeningPrompt ? (
@@ -1607,14 +1814,26 @@ export default function SpeakEnglishPage() {
 
                 <button
                   type="button"
-                  aria-label={isListening ? "停止语音输入" : "开始语音输入"}
-                  onClick={isListening ? stopRecognition : startRecognition}
+                  aria-label={
+                    isListening
+                      ? "停止语音输入"
+                      : usesTextInputInsteadOfSpeech || isTextEntryOpen
+                        ? "提交输入"
+                        : "开始语音输入"
+                  }
+                  onClick={handleComposerPracticeAction}
                   onContextMenu={(event) => event.preventDefault()}
                   className={`sf-voice-button speakflow-breathe grid h-12 w-14 shrink-0 touch-none place-items-center rounded-[22px] transition ${
                     isListening ? "scale-105 ring-4 ring-[#91dcff]/18" : ""
                   }`}
                 >
-                  <VoiceGlyph active={isListening} />
+                  {usesTextInputInsteadOfSpeech || isTextEntryOpen ? (
+                    <span className="text-sm font-extrabold leading-none text-white">
+                      提交
+                    </span>
+                  ) : (
+                    <VoiceGlyph active={isListening} />
+                  )}
                 </button>
               </div>
             </div>

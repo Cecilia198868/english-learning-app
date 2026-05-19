@@ -687,7 +687,64 @@ body {
   }
 
   .sf-speak-phone > .sf-free-practice-result-main {
-    padding-bottom: max(0.75rem, env(safe-area-inset-bottom)) !important;
+    padding-inline: 1rem !important;
+    padding-top: 0.25rem !important;
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-result-content {
+    flex: 0 1 auto !important;
+    overflow-y: visible !important;
+    padding-top: clamp(0.65rem, 1.8dvh, 1rem) !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-user-card {
+    margin-top: 0.7rem !important;
+    padding: 0.85rem 1rem !important;
+    font-size: clamp(1rem, 4.4vw, 1.12rem) !important;
+    line-height: 1.45 !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-standard-block {
+    margin-top: 1.15rem !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-standard-block > div {
+    gap: 0.55rem !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-standard-block > div > span {
+    font-size: clamp(1.35rem, 6.2vw, 1.55rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-expression-text {
+    margin-top: 0.7rem !important;
+    padding: 0.8rem 0.75rem !important;
+    overflow-wrap: anywhere;
+    font-size: clamp(1.2rem, 6.2vw, 1.5rem) !important;
+    line-height: 1.24 !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-expression-text button {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .sf-speak-phone .sf-free-practice-notice {
+    margin-top: 0.55rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-playback {
+    margin-top: 0.75rem !important;
+    gap: 0.85rem !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-playback button {
+    height: 2.75rem !important;
+    border-radius: 14px !important;
+    padding-inline: 1.05rem !important;
   }
 
   .sf-keyboard-panel {
@@ -734,7 +791,26 @@ body {
   }
 
   .sf-speak-phone > .sf-free-practice-result-main {
-    padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
+    padding-top: 0.125rem !important;
+    padding-bottom: max(0.375rem, env(safe-area-inset-bottom)) !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-result-content {
+    padding-top: 0.5rem !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-standard-block {
+    margin-top: 0.9rem !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-expression-text {
+    margin-top: 0.55rem !important;
+    padding-block: 0.7rem !important;
+    font-size: clamp(1.1rem, 5.9vw, 1.38rem) !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-playback {
+    margin-top: 0.55rem !important;
   }
 
   .sf-keyboard-panel {
