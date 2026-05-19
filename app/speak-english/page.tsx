@@ -4,8 +4,12 @@ import type { PointerEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import {
+  addVocabularyWord,
+  generateVocabularyDefinition,
   groupVocabularyWords,
   loadVocabularyWords,
+  tokenizeEnglishSentence,
+  updateVocabularyWord,
   type VocabularyWord,
 } from "@/lib/vocabulary";
 import { featuredLessonRecords } from "@/data/featuredCourses";
@@ -503,6 +507,13 @@ export default function SpeakEnglishPage() {
   const [selectedExpressionIndex, setSelectedExpressionIndex] = useState(0);
   const [isLoadingExpressionVariants, setIsLoadingExpressionVariants] =
     useState(false);
+  const [pendingVocabularyWord, setPendingVocabularyWord] = useState<{
+    word: string;
+    sourceSentence: string;
+  } | null>(null);
+  const [editableVocabularyWord, setEditableVocabularyWord] = useState("");
+  const [isSavingVocabularyWord, setIsSavingVocabularyWord] = useState(false);
+  const [vocabularyNotice, setVocabularyNotice] = useState("");
   const [hasInk, setHasInk] = useState(false);
   const [showQuickPanel, setShowQuickPanel] = useState(false);
   const [showClassicCoursePicker, setShowClassicCoursePicker] = useState(false);
@@ -576,6 +587,14 @@ export default function SpeakEnglishPage() {
   const selectedExpression =
     expressionVariants[selectedExpressionIndex] ||
     createFallbackExpressionVariants(standardEnglish)[0];
+  const userExpressionTokens = useMemo(
+    () => tokenizeEnglishSentence(message || ""),
+    [message]
+  );
+  const selectedExpressionTokens = useMemo(
+    () => tokenizeEnglishSentence(selectedExpression.text || ""),
+    [selectedExpression.text]
+  );
   const hasPreviousExpression = selectedExpressionIndex > 0;
   const hasNextExpression =
     selectedExpressionIndex < expressionVariantLabels.length - 1;
@@ -877,6 +896,62 @@ export default function SpeakEnglishPage() {
     window.speechSynthesis.speak(utterance);
   }
 
+  function handleWordClick(word: string, sourceSentence: string) {
+    const trimmedWord = word.trim();
+    if (!trimmedWord) return;
+
+    window.speechSynthesis?.cancel();
+    setVocabularyNotice("");
+    setPendingVocabularyWord({
+      word: trimmedWord,
+      sourceSentence,
+    });
+    setEditableVocabularyWord(trimmedWord);
+  }
+
+  function closeVocabularyModal() {
+    setPendingVocabularyWord(null);
+    setEditableVocabularyWord("");
+    setIsSavingVocabularyWord(false);
+  }
+
+  function handleConfirmAddWord() {
+    if (!pendingVocabularyWord || isSavingVocabularyWord) return;
+
+    const nextWord = editableVocabularyWord.trim();
+    if (!nextWord) {
+      setVocabularyNotice("请输入单词");
+      return;
+    }
+
+    setIsSavingVocabularyWord(true);
+
+    const sourceSentence = pendingVocabularyWord.sourceSentence;
+    const result = addVocabularyWord(nextWord, sourceSentence);
+
+    if (!result.ok) {
+      closeVocabularyModal();
+      setVocabularyNotice(result.message);
+      return;
+    }
+
+    const savedWord = result.word.word;
+    closeVocabularyModal();
+    setVocabularyNotice("已存入单词本");
+    setVocabularyGroups(groupVocabularyWords(loadVocabularyWords()));
+
+    void generateVocabularyDefinition(savedWord)
+      .then((definition) =>
+        updateVocabularyWord(savedWord, {
+          ...definition,
+          sourceSentence,
+        })
+      )
+      .catch((error) => {
+        console.error("生成单词释义失败", error);
+      });
+  }
+
   function openClassicLesson(id: string, title: string) {
     if (typeof window !== "undefined") {
       window.localStorage.setItem("currentLessonTitle", title);
@@ -1119,7 +1194,25 @@ export default function SpeakEnglishPage() {
                           你的表达:
                         </p>
                         <p className="mt-5 rounded-[18px] bg-white/10 px-5 py-4 text-[1.15rem] font-bold leading-8 text-[#8f879c]">
-                          {message}
+                          {userExpressionTokens.map((token, index) =>
+                            token.type === "word" ? (
+                              <button
+                                key={`${token.value}-${index}`}
+                                type="button"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  handleWordClick(token.value, message);
+                                }}
+                                className="inline rounded-xl px-1 py-0.5 transition hover:bg-white/55"
+                              >
+                                {token.value}
+                              </button>
+                            ) : (
+                              <span key={`${token.value}-${index}`}>
+                                {token.value}
+                              </span>
+                            )
+                          )}
                         </p>
                       </div>
 
@@ -1162,8 +1255,35 @@ export default function SpeakEnglishPage() {
                         <p className="mt-4 bg-white/18 px-4 py-4 text-[1.55rem] font-extrabold leading-9 text-[#201833]">
                           {isLoadingExpressionVariants
                             ? "正在生成表达..."
-                            : selectedExpression.text}
+                            : selectedExpressionTokens.map((token, index) =>
+                                token.type === "word" ? (
+                                  <button
+                                    key={`${token.value}-${index}`}
+                                    type="button"
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      handleWordClick(
+                                        token.value,
+                                        selectedExpression.text
+                                      );
+                                    }}
+                                    className="inline rounded-xl px-1 py-0.5 transition hover:bg-white/55"
+                                  >
+                                    {token.value}
+                                  </button>
+                                ) : (
+                                  <span key={`${token.value}-${index}`}>
+                                    {token.value}
+                                  </span>
+                                )
+                              )}
                         </p>
+
+                        {vocabularyNotice ? (
+                          <p className="mt-3 text-center text-sm font-semibold text-[#7f7896]">
+                            {vocabularyNotice}
+                          </p>
+                        ) : null}
 
                         <div className="mt-5 flex justify-center gap-5 text-[#201833]">
                           <button
@@ -1700,6 +1820,47 @@ export default function SpeakEnglishPage() {
           </div>
           ) : null}
         </section>
+
+        {pendingVocabularyWord ? (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#171129]/72 p-4 backdrop-blur-[10px]">
+            <div className="w-full max-w-[390px] rounded-[30px] border border-white/80 bg-[#f8f5ff] p-6 text-[#201833] shadow-[0_28px_80px_rgba(28,18,62,0.42)]">
+              <h2 className="text-[1.6rem] font-extrabold">
+                保存这个单词？
+              </h2>
+              <p className="mt-3 text-[1.05rem] font-semibold leading-7 text-[#6f668a]">
+                加入后可以在单词本里复习。
+              </p>
+              <input
+                type="text"
+                value={editableVocabularyWord}
+                onChange={(event) => setEditableVocabularyWord(event.target.value)}
+                className="mt-5 w-full rounded-[20px] border border-[#c9bfff] bg-white px-5 py-4 text-[1.65rem] font-extrabold text-[#201833] outline-none ring-0 placeholder:text-[#7f7896]/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] focus:border-[#7d90ff]"
+                autoFocus
+                aria-label="要加入单词本的单词"
+              />
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={handleConfirmAddWord}
+                  disabled={isSavingVocabularyWord}
+                  className="rounded-[18px] bg-[#5f73ff] px-4 py-4 text-[1.08rem] font-extrabold text-white shadow-[0_12px_28px_rgba(95,115,255,0.28)] hover:bg-[#5267f1] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  加入
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    closeVocabularyModal();
+                    setVocabularyNotice("");
+                  }}
+                  className="rounded-[18px] border border-[#d8d0f4] bg-white px-4 py-4 text-[1.08rem] font-extrabold text-[#6f668a] hover:bg-[#efeaff]"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     </main>
   );

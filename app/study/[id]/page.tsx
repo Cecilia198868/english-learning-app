@@ -1413,37 +1413,39 @@ export default function StudyPage() {
         </section>
 
         {pendingVocabularyWord ? (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4">
-            <div className="w-full max-w-[380px] rounded-3xl border border-white/10 bg-slate-900 p-5 shadow-2xl">
-              <h2 className="text-xl font-bold text-white">加入单词本</h2>
-              <p className="mt-3 text-sm leading-6 text-white/75">
-                确定要将这个单词放进单词本吗？
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#171129]/72 p-4 backdrop-blur-[10px]">
+            <div className="w-full max-w-[390px] rounded-[30px] border border-white/80 bg-[#f8f5ff] p-6 text-[#201833] shadow-[0_28px_80px_rgba(28,18,62,0.42)]">
+              <h2 className="text-[1.6rem] font-extrabold">
+                保存这个单词？
+              </h2>
+              <p className="mt-3 text-[1.05rem] font-semibold leading-7 text-[#6f668a]">
+                加入后可以在单词本里复习。
               </p>
               <input
                 type="text"
                 value={editableVocabularyWord}
                 onChange={(event) => setEditableVocabularyWord(event.target.value)}
-                className="mt-4 w-full rounded-2xl border border-emerald-400/30 bg-black/30 px-4 py-4 text-2xl font-semibold text-emerald-300 outline-none ring-0 placeholder:text-emerald-300/35 focus:border-emerald-300 focus:bg-black/40"
+                className="mt-5 w-full rounded-[20px] border border-[#c9bfff] bg-white px-5 py-4 text-[1.65rem] font-extrabold text-[#201833] outline-none ring-0 placeholder:text-[#7f7896]/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] focus:border-[#7d90ff]"
                 placeholder="请输入单词"
                 autoFocus
               />
-              <div className="mt-5 grid grid-cols-2 gap-3">
+              <div className="mt-6 grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={handleConfirmAddWord}
                   disabled={isSavingVocabularyWord}
-                  className="rounded-2xl bg-emerald-600 px-4 py-3.5 text-base font-semibold hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="rounded-[18px] bg-[#5f73ff] px-4 py-4 text-[1.08rem] font-extrabold text-white shadow-[0_12px_28px_rgba(95,115,255,0.28)] hover:bg-[#5267f1] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Yes
+                  加入
                 </button>
                 <button
                   type="button"
                   onClick={() => {
                     closeVocabularyModal();
                   }}
-                  className="rounded-2xl bg-slate-700 px-4 py-3.5 text-base font-semibold hover:bg-slate-600"
+                  className="rounded-[18px] border border-[#d8d0f4] bg-white px-4 py-4 text-[1.08rem] font-extrabold text-[#6f668a] hover:bg-[#efeaff]"
                 >
-                  No
+                  取消
                 </button>
               </div>
             </div>
