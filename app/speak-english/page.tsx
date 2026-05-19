@@ -632,6 +632,16 @@ export default function SpeakEnglishPage() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("menu") !== "1") return;
+
+    setShowQuickPanel(true);
+    window.history.replaceState(null, "", "/speak-english");
+  }, []);
+
+  useEffect(() => {
     if (!showQuickPanel) {
       setShowClassicCoursePicker(false);
       resetClassicCoursePicker();

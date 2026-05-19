@@ -4,7 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
-import { getFeaturedLessonById } from "@/data/featuredCourses";
+import {
+  featuredLessonRecords,
+  getFeaturedLessonById,
+} from "@/data/featuredCourses";
 import {
   addVocabularyWord,
   generateVocabularyDefinition,
@@ -29,6 +32,28 @@ const DB_NAME = "english-learning-app-db";
 const DB_VERSION = 1;
 const AUDIO_STORE_NAME = "audios";
 const LAST_STUDY_PROGRESS_KEY = "lastStudyProgress";
+const bankFinanceLessonTitleOrder = [
+  "新开银行账户",
+  "银行事务口语课",
+  "使用 ATM 机和自我服务",
+  "网上银行与手机App操作",
+  "存款和取款",
+  "货币兑换与国际汇款",
+  "国际电汇与海外付款",
+  "设立储蓄和定期存款账户",
+  "信用卡申请与审批流程",
+  "信用卡挂失口语课",
+  "信用卡报告欺诈收费口语课",
+  "银行费用查询与争议解决",
+  "银行客服电话口语课",
+  "申请个人贷款",
+  "房屋抵押贷款咨询",
+  "银行保险简",
+  "银行提供的保险产品",
+  "投资产品与财富管理",
+  "退休储蓄与养老金计划",
+  "关闭银行账户",
+] as const;
 const expressionVariantLabels: Array<{
   key: ExpressionVariantKey;
   label: string;
@@ -207,6 +232,7 @@ export default function StudyPage() {
 
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const [lessonTitle, setLessonTitle] = useState("");
+  const [localLessonSequence, setLocalLessonSequence] = useState<Lesson[]>([]);
   const [pairs, setPairs] = useState<SentencePair[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showEnglish, setShowEnglish] = useState(false);
@@ -316,6 +342,7 @@ export default function StudyPage() {
 
   const loadLesson = useCallback(() => {
     const data = loadLessonsData();
+    setLocalLessonSequence(data.lessons || []);
     const found = data.lessons.find((item) => item.id === lessonId) || null;
 
     console.log("[study] loadLesson", {
@@ -349,6 +376,7 @@ export default function StudyPage() {
     }
 
     setLesson(found);
+    setLessonTitle(found.title || "未命名课程");
 
     const parsedPairs = parseTrainingContent(found.txt_content || "");
     setPairs(parsedPairs);
@@ -919,28 +947,7 @@ export default function StudyPage() {
 
   function handleBackToPreviousPage() {
     stopAutoPlay();
-
-    if (lessonId.startsWith("bank_")) {
-      router.replace("/dashboard?featured=bank");
-      return;
-    }
-
-    if (lessonId.startsWith("government_")) {
-      router.replace("/dashboard?featured=government");
-      return;
-    }
-
-    if (lessonId.startsWith("driver_")) {
-      router.replace("/dashboard?featured=driver-license");
-      return;
-    }
-
-    if (window.history.length > 1) {
-      router.back();
-      return;
-    }
-
-    router.push("/dashboard");
+    router.replace("/speak-english?menu=1");
   }
 
   function handleSaveCurrentPosition() {
@@ -1018,6 +1025,56 @@ export default function StudyPage() {
 
   const spokenDisplay = (isListening && liveTranscript ? liveTranscript : spokenEnglish).trim();
   const courseTitle = lessonTitle || lesson?.title || "未命名课程";
+  const lessonSequence = useMemo(() => {
+    if (localLessonSequence.some((record) => record.id === lessonId)) {
+      return localLessonSequence;
+    }
+
+    const lessonsByTitle = new Map(
+      featuredLessonRecords.map((record) => [record.title, record])
+    );
+    const bankFinanceLessons = bankFinanceLessonTitleOrder
+      .map((title) => lessonsByTitle.get(title))
+      .filter((record): record is (typeof featuredLessonRecords)[number] =>
+        Boolean(record)
+      );
+
+    if (bankFinanceLessons.some((record) => record.id === lessonId)) {
+      return bankFinanceLessons;
+    }
+
+    if (lessonId.startsWith("government_")) {
+      return featuredLessonRecords.filter((record) =>
+        record.id.startsWith("government_")
+      );
+    }
+
+    if (lessonId.startsWith("driver_")) {
+      return featuredLessonRecords.filter((record) =>
+        record.id.startsWith("driver_")
+      );
+    }
+
+    if (lessonId.startsWith("bank_")) {
+      return featuredLessonRecords.filter((record) =>
+        record.id.startsWith("bank_")
+      );
+    }
+
+    return featuredLessonRecords;
+  }, [lessonId, localLessonSequence]);
+  const lessonSequenceIndex = lessonSequence.findIndex(
+    (record) => record.id === lessonId
+  );
+  const previousLesson =
+    lessonSequenceIndex > 0 ? lessonSequence[lessonSequenceIndex - 1] : null;
+  const nextLesson =
+    lessonSequenceIndex >= 0 && lessonSequenceIndex < lessonSequence.length - 1
+      ? lessonSequence[lessonSequenceIndex + 1]
+      : null;
+  const sentenceProgressText = `第 ${pairs.length ? currentIndex + 1 : 0} / ${
+    pairs.length
+  } 句`;
   const showStudyPrompt = !spokenDisplay && !showEnglish;
   const showStudyListeningPrompt = isListening;
   const showStudyVoiceOnlyPrompt = showStudyPrompt || showStudyListeningPrompt;
@@ -1032,6 +1089,12 @@ export default function StudyPage() {
   const hasPreviousExpression = selectedExpressionIndex > 0;
   const hasNextExpression =
     selectedExpressionIndex < expressionVariantLabels.length - 1;
+
+  function openNeighborLesson(targetLesson: { id: string; title: string }) {
+    stopAutoPlay();
+    window.localStorage.setItem("currentLessonTitle", targetLesson.title);
+    router.replace(`/study/${targetLesson.id}`);
+  }
 
   return (
     <main className="responsive-page-shell sf-speak-page min-h-[100dvh] overflow-x-hidden text-white">
@@ -1086,10 +1149,38 @@ export default function StudyPage() {
             }`}
           >
             <div className="mx-auto h-px w-32 bg-[linear-gradient(90deg,transparent,rgba(145,220,255,0.46),transparent)]" />
+            <div className="mt-5 text-center">
+              <div className="flex items-center justify-center gap-2 text-[1.18rem] font-extrabold text-[#8b849d]">
+                {previousLesson ? (
+                  <button
+                    type="button"
+                    onClick={() => openNeighborLesson(previousLesson)}
+                    className="grid h-8 w-8 place-items-center rounded-full text-[1.35rem] text-[#8b849d] transition hover:bg-white/35"
+                    aria-label="上一课"
+                  >
+                    ←
+                  </button>
+                ) : null}
+                <span className="max-w-[260px] truncate">{courseTitle}</span>
+                {nextLesson ? (
+                  <button
+                    type="button"
+                    onClick={() => openNeighborLesson(nextLesson)}
+                    className="grid h-8 w-8 place-items-center rounded-full text-[1.35rem] text-[#8b849d] transition hover:bg-white/35"
+                    aria-label="下一课"
+                  >
+                    →
+                  </button>
+                ) : null}
+              </div>
+              <p className="mt-1 text-[1rem] font-extrabold text-[#9a93a9]">
+                {sentenceProgressText}
+              </p>
+            </div>
 
             <div
               className={`flex flex-1 flex-col items-center text-center ${
-                showStudyVoiceOnlyPrompt ? "justify-start pt-24" : "justify-start pt-16"
+                showStudyVoiceOnlyPrompt ? "justify-start pt-20" : "justify-start pt-12"
               }`}
             >
               {showStudyListeningPrompt ? (
@@ -1111,23 +1202,6 @@ export default function StudyPage() {
                       试着用英语说出来
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={startEnglishRecognition}
-                    className="mt-64 grid place-items-center"
-                    aria-label="点击开始说话"
-                  >
-                    <Image
-                      src="/icons/glow-mic.svg"
-                      alt=""
-                      width={96}
-                      height={96}
-                      className="h-24 w-24"
-                    />
-                    <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
-                      点击开始说话
-                    </span>
-                  </button>
                 </>
               ) : (
                 <>
@@ -1232,29 +1306,6 @@ export default function StudyPage() {
               ) : null}
             </div>
 
-            {showStudyVoiceOnlyPrompt || showExpressionFeedback ? null : (
-            <div className="mb-3 flex items-center justify-between text-[0.72rem] font-bold text-[#75689c]">
-              <button
-                type="button"
-                onClick={handlePrev}
-                disabled={currentIndex === 0}
-                className="rounded-full bg-white/45 px-3 py-1.5 disabled:opacity-35"
-              >
-                上一句
-              </button>
-              <span className="truncate px-3">
-                {courseTitle} · 第 {pairs.length ? currentIndex + 1 : 0} / {pairs.length} 句
-              </span>
-              <button
-                type="button"
-                onClick={handleNext}
-                disabled={currentIndex >= pairs.length - 1}
-                className="rounded-full bg-white/45 px-3 py-1.5 disabled:opacity-35"
-              >
-                下一句
-              </button>
-            </div>
-            )}
           </section>
 
           {showMoreActions ? (
@@ -1331,24 +1382,48 @@ export default function StudyPage() {
             </div>
           ) : null}
 
-          {showStudyVoiceOnlyPrompt ? null : showExpressionFeedback ? (
-          <button
-            type="button"
-            onClick={isListening ? stopEnglishRecognition : startEnglishRecognition}
-            className="absolute bottom-9 left-1/2 z-20 grid -translate-x-1/2 place-items-center"
-            aria-label="点击开始说话"
-          >
-            <Image
-              src="/icons/glow-mic.svg"
-              alt=""
-              width={96}
-              height={96}
-              className="h-24 w-24"
-            />
-            <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
-              {isListening ? "正在听..." : "点击开始说话"}
-            </span>
-          </button>
+          {showStudyVoiceOnlyPrompt || showExpressionFeedback ? (
+            <div className="absolute bottom-9 left-1/2 z-20 w-full max-w-[360px] -translate-x-1/2 px-6">
+              <div className="flex items-start justify-center gap-10">
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                  className="mt-9 grid h-12 w-12 place-items-center rounded-full text-[2rem] font-semibold text-[#201833] transition hover:bg-white/30 disabled:text-[#aaa3b5]"
+                  aria-label="上一句"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={
+                    isListening ? stopEnglishRecognition : startEnglishRecognition
+                  }
+                  className="grid place-items-center"
+                  aria-label={isListening ? "停止语音输入" : "点击开始说话"}
+                >
+                  <Image
+                    src="/icons/glow-mic.svg"
+                    alt=""
+                    width={96}
+                    height={96}
+                    className="h-24 w-24"
+                  />
+                  <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
+                    {isListening ? "正在听..." : "点击开始说话"}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={currentIndex >= pairs.length - 1}
+                  className="mt-9 grid h-12 w-12 place-items-center rounded-full text-[2rem] font-semibold text-[#201833] transition hover:bg-white/30 disabled:text-[#aaa3b5]"
+                  aria-label="下一句"
+                >
+                  →
+                </button>
+              </div>
+            </div>
           ) : (
           <div className="absolute bottom-0 left-0 right-0 z-20 rounded-t-[30px] border border-[#d8d0ff] bg-white/35 p-3 shadow-[0_-18px_40px_rgba(84,72,146,0.12)] backdrop-blur-xl">
             <div className="flex items-center gap-3 rounded-[24px] border border-[#d8d0ff] bg-white/35 p-2">
