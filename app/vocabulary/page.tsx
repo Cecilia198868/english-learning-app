@@ -2,7 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { loadVocabularyWords, type VocabularyWord } from "@/lib/vocabulary";
+import {
+  loadVocabularyWords,
+  saveVocabularyWords,
+  type VocabularyWord,
+} from "@/lib/vocabulary";
 
 const GENERIC_EXPRESSION_MEANINGS = new Set([
   "",
@@ -130,6 +134,22 @@ export default function VocabularyPage() {
     window.speechSynthesis.speak(utterance);
   }
 
+  function handleDeleteExpression() {
+    if (!displayedExpression) return;
+
+    const nextStoredWords = loadVocabularyWords().filter(
+      (word) => word.word !== displayedExpression.word
+    );
+    const nextVisibleWords = [...nextStoredWords].reverse();
+
+    saveVocabularyWords(nextStoredWords);
+    setWords(nextVisibleWords);
+    setCurrentIndex((index) =>
+      Math.min(index, Math.max(nextVisibleWords.length - 1, 0))
+    );
+    setShowExpressionLibrary(false);
+  }
+
   return (
     <main className="responsive-page-shell sf-speak-page min-h-[100dvh] overflow-x-hidden text-white">
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-[560px] items-center justify-center p-0 sm:p-4">
@@ -251,38 +271,22 @@ export default function VocabularyPage() {
 
             <div className="flex min-h-0 flex-1 flex-col items-center overflow-y-auto pt-7 text-center">
               {displayedExpression ? (
-                <div className="w-full max-w-[390px] bg-white/16 px-7 py-8 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]">
+                <div className="min-h-[280px] w-full max-w-[390px] bg-white/16 px-7 py-8 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]">
                   <h3 className="text-[1.65rem] font-extrabold leading-9 text-[#201833]">
                     {displayedExpressionText}
                   </h3>
+                  <p className="mt-2 text-[1.05rem] font-extrabold leading-7 text-[#201833]">
+                    中文含义： {displayedMeaningText}
+                  </p>
                   {displayedExampleText ? (
-                    <p className="mt-7 text-[1.32rem] font-semibold leading-9 text-[#201833]">
+                    <p className="mt-3 text-[1.22rem] font-semibold leading-9 text-[#201833]">
                       {displayedExampleText}
                     </p>
                   ) : (
-                    <p className="mt-7 text-[1.1rem] font-semibold leading-8 text-[#7f7896]">
+                    <p className="mt-3 text-[1.1rem] font-semibold leading-8 text-[#7f7896]">
                       这个表达还没有例句。
                     </p>
                   )}
-
-                  <div className="mt-7 flex justify-center gap-4 text-[#201833]">
-                    <button
-                      type="button"
-                      aria-label="播放朗读"
-                      onClick={() => speakExpression(1)}
-                      className="flex h-12 items-center gap-2 rounded-[16px] bg-white/45 px-5 text-[1.2rem] font-extrabold shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
-                    >
-                      ▶
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="慢速朗读"
-                      onClick={() => speakExpression(0.5)}
-                      className="flex h-12 items-center gap-2 rounded-[16px] bg-white/45 px-5 text-[1.02rem] font-extrabold shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
-                    >
-                      ▶ <span>0.5x</span>
-                    </button>
-                  </div>
                 </div>
               ) : (
                 <div className="mt-20 max-w-[340px] text-center">
@@ -298,36 +302,54 @@ export default function VocabularyPage() {
           </section>
 
           <div className="relative z-20 mt-2 w-full max-w-[360px] self-center px-6 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-            <div className="flex items-start justify-center gap-10">
+            <div className="flex items-center justify-center gap-4">
               <button
                 type="button"
                 onClick={() => setCurrentIndex((index) => Math.max(index - 1, 0))}
                 disabled={!hasPrevious}
-                className="mt-8 grid h-12 w-12 place-items-center rounded-full text-[2rem] font-semibold text-[#201833] transition hover:bg-white/30 disabled:text-[#aaa3b5]"
+                className="grid h-12 w-12 place-items-center rounded-full text-[2rem] font-semibold text-[#201833] transition hover:bg-white/30 disabled:text-[#aaa3b5]"
                 aria-label="上一个表达"
               >
                 ←
               </button>
-              <div className="min-w-0 flex-1 rounded-[24px] bg-white/30 px-4 py-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
-                <p className="text-[0.72rem] font-extrabold uppercase tracking-[0.12em] text-[#7f7896]">
-                  中文释义
-                </p>
-                <p className="mt-2 break-words text-[1.16rem] font-extrabold leading-7 text-[#201833]">
-                  {displayedExpression ? displayedMeaningText : "还没有表达"}
-                </p>
-              </div>
+              <button
+                type="button"
+                aria-label="播放朗读"
+                onClick={() => speakExpression(1)}
+                disabled={!displayedExpression}
+                className="flex h-12 items-center gap-2 rounded-[16px] bg-white/45 px-5 text-[1.2rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] disabled:opacity-45"
+              >
+                ▶
+              </button>
+              <button
+                type="button"
+                aria-label="慢速朗读"
+                onClick={() => speakExpression(0.5)}
+                disabled={!displayedExpression}
+                className="flex h-12 items-center gap-2 rounded-[16px] bg-white/45 px-5 text-[1.02rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] disabled:opacity-45"
+              >
+                ▶ <span>0.5x</span>
+              </button>
               <button
                 type="button"
                 onClick={() =>
                   setCurrentIndex((index) => Math.min(index + 1, words.length - 1))
                 }
                 disabled={!hasNext}
-                className="mt-8 grid h-12 w-12 place-items-center rounded-full text-[2rem] font-semibold text-[#201833] transition hover:bg-white/30 disabled:text-[#aaa3b5]"
+                className="grid h-12 w-12 place-items-center rounded-full text-[2rem] font-semibold text-[#201833] transition hover:bg-white/30 disabled:text-[#aaa3b5]"
                 aria-label="下一个表达"
               >
                 →
               </button>
             </div>
+            <button
+              type="button"
+              onClick={handleDeleteExpression}
+              disabled={!displayedExpression}
+              className="mx-auto mt-7 flex min-h-12 items-center justify-center bg-white/78 px-5 py-3 text-[0.95rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] disabled:opacity-45"
+            >
+              🗑 从表达库移除
+            </button>
           </div>
 
         </section>
