@@ -1186,9 +1186,15 @@ export default function StudyPage() {
             </div>
           </header>
 
-          <section className="sf-study-main relative z-10 flex min-h-0 flex-1 flex-col px-6 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4">
+          <section
+            className={`sf-study-main relative z-10 flex min-h-0 flex-1 flex-col px-6 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 ${
+              showStudyVoiceOnlyPrompt || showExpressionFeedback
+                ? "sf-study-main-has-actions"
+                : ""
+            }`}
+          >
             <div className="mx-auto h-px w-32 bg-[linear-gradient(90deg,transparent,rgba(145,220,255,0.46),transparent)]" />
-            <div className="mt-4 shrink-0 text-center">
+            <div className="sf-study-heading mt-4 shrink-0 text-center">
               <div className="flex items-center justify-center gap-2 text-[1.18rem] font-extrabold text-[#8b849d]">
                 {previousLesson ? (
                   <button
@@ -1218,10 +1224,12 @@ export default function StudyPage() {
             </div>
 
             <div
-              className={`flex min-h-0 flex-1 flex-col items-center overflow-y-auto text-center ${
+              className={`sf-study-content flex min-h-0 flex-1 flex-col items-center overflow-y-auto text-center ${
                 showStudyVoiceOnlyPrompt
-                  ? "justify-center py-6"
-                  : "justify-start py-5"
+                  ? "sf-study-content-with-actions sf-study-content-voice justify-center py-6"
+                  : showExpressionFeedback
+                    ? "sf-study-content-with-actions sf-study-content-feedback justify-start py-5"
+                    : "justify-start py-5"
               }`}
             >
               {showStudyListeningPrompt ? (
@@ -1291,7 +1299,7 @@ export default function StudyPage() {
                       </button>
                     </div>
 
-                    <p className="mt-4 bg-white/18 px-4 py-4 text-[clamp(1.55rem,7vw,1.85rem)] font-extrabold leading-[1.22] text-[#201833]">
+                    <p className="sf-study-expression-text mt-4 bg-white/18 px-4 py-4 text-[clamp(1.55rem,7vw,1.85rem)] font-extrabold leading-[1.22] text-[#201833]">
                       {isLoadingExpressionVariants
                         ? "正在生成表达..."
                         : selectedExpressionSegments.map((segment, index) =>
@@ -1348,7 +1356,7 @@ export default function StudyPage() {
             </div>
 
             {showStudyVoiceOnlyPrompt || showExpressionFeedback ? (
-              <div className="relative z-20 mt-2 shrink-0">
+              <div className="sf-study-actions relative z-20 mt-2 shrink-0">
                 <div className="flex items-start justify-center gap-10">
                   <button
                     type="button"

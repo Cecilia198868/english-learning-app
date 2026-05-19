@@ -1154,6 +1154,10 @@ export default function SpeakEnglishPage() {
             className={`sf-free-practice-main relative z-10 flex min-h-0 flex-1 flex-col px-6 pt-6 ${
               hasEnglishAttempt ? "sf-free-practice-result-main" : ""
             } ${
+              !showVoiceOnlyPrompt && !hasEnglishAttempt
+                ? "sf-free-practice-keyboard-main"
+                : ""
+            } ${
               showVoiceOnlyPrompt || hasEnglishAttempt ? "pb-10" : "pb-[352px]"
             }`}
           >
