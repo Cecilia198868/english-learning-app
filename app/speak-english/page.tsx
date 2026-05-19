@@ -1439,7 +1439,7 @@ export default function SpeakEnglishPage() {
                         }
 
                         if (phrase === "已经学到的新表达") {
-                          window.location.href = "/vocabulary?hint=manage";
+                          window.location.href = "/vocabulary";
                           return;
                         }
 

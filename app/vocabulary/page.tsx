@@ -1,16 +1,22 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import {
-  loadVocabularyWords,
-  saveVocabularyWords,
-  updateVocabularyWord,
-  type VocabularyWord,
-} from "@/lib/vocabulary";
+import { loadVocabularyWords, type VocabularyWord } from "@/lib/vocabulary";
 
-const TODAY_REVIEW_EXPRESSIONS_KEY = "today_review_vocabulary_expressions";
+const GENERIC_EXPRESSION_MEANINGS = new Set([
+  "",
+  "✨ 值得学习的表达",
+  "值得学习的表达",
+  "释义待补充",
+]);
+
+const EXPRESSION_MEANING_FALLBACKS: Record<string, string> = {
+  "set up": "设立；开设；安排",
+  "open a bank account": "开设银行账户",
+  "bring along": "随身带上",
+  "lush and verdant": "生机盎然",
+};
 
 function SoundWaveMark({ className = "" }: { className?: string }) {
   return (
@@ -56,62 +62,28 @@ function getExpressionExample(word: VocabularyWord) {
   return word.sourceSentence || word.example || "";
 }
 
-function loadStringList(key: string) {
-  if (typeof window === "undefined") return [] as string[];
+function getExpressionNativeMeaning(word: VocabularyWord) {
+  const savedMeaning = word.meaning.trim();
 
-  try {
-    const parsed = JSON.parse(window.localStorage.getItem(key) || "[]");
-    return Array.isArray(parsed)
-      ? parsed.filter((item): item is string => typeof item === "string")
-      : [];
-  } catch {
-    return [];
+  if (!GENERIC_EXPRESSION_MEANINGS.has(savedMeaning)) {
+    return savedMeaning;
   }
-}
 
-function saveStringList(key: string, values: string[]) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(key, JSON.stringify([...new Set(values)]));
+  return EXPRESSION_MEANING_FALLBACKS[word.word.toLowerCase()] || "释义待补充";
 }
 
 export default function VocabularyPage() {
   const router = useRouter();
   const [words, setWords] = useState<VocabularyWord[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [, setTodayReviewWords] = useState<string[]>([]);
-  const [showManageMenu, setShowManageMenu] = useState(false);
-  const [notice, setNotice] = useState("");
-  const [showManageHint, setShowManageHint] = useState(false);
 
   useEffect(() => {
     const loadTimer = window.setTimeout(() => {
       setWords([...loadVocabularyWords()].reverse());
-      setTodayReviewWords(loadStringList(TODAY_REVIEW_EXPRESSIONS_KEY));
     }, 0);
 
     return () => {
       window.clearTimeout(loadTimer);
-    };
-  }, []);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const shouldShowHint = searchParams.get("hint") === "manage";
-
-    if (!shouldShowHint) return;
-
-    window.history.replaceState(null, "", "/vocabulary");
-
-    const showTimer = window.setTimeout(() => {
-      setShowManageHint(true);
-    }, 0);
-    const hideTimer = window.setTimeout(() => {
-      setShowManageHint(false);
-    }, 1800);
-
-    return () => {
-      window.clearTimeout(showTimer);
-      window.clearTimeout(hideTimer);
     };
   }, []);
 
@@ -123,6 +95,9 @@ export default function VocabularyPage() {
   const displayedExpressionText = displayedExpression?.word || "";
   const displayedExampleText = displayedExpression
     ? getExpressionExample(displayedExpression)
+    : "";
+  const displayedMeaningText = displayedExpression
+    ? getExpressionNativeMeaning(displayedExpression)
     : "";
   const speechText = useMemo(() => {
     if (!displayedExpression) return "";
@@ -137,52 +112,6 @@ export default function VocabularyPage() {
     utterance.rate = rate;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
-  }
-
-  function refreshWords() {
-    setWords([...loadVocabularyWords()].reverse());
-  }
-
-  function handleDeleteExpression() {
-    if (!displayedExpression) return;
-
-    const nextWords = loadVocabularyWords().filter(
-      (item) => item.word !== displayedExpression.word
-    );
-    saveVocabularyWords(nextWords);
-    setTodayReviewWords((current) => {
-      const next = current.filter((word) => word !== displayedExpression.word);
-      saveStringList(TODAY_REVIEW_EXPRESSIONS_KEY, next);
-      return next;
-    });
-    setCurrentIndex((index) => Math.max(0, Math.min(index, nextWords.length - 1)));
-    setShowManageMenu(false);
-    setNotice("已删除表达");
-    refreshWords();
-  }
-
-  function handleMarkMastered() {
-    if (!displayedExpression) return;
-
-    updateVocabularyWord(displayedExpression.word, {
-      masteredCount: displayedExpression.masteredCount + 1,
-      correctCount: displayedExpression.correctCount + 1,
-    });
-    setShowManageMenu(false);
-    setNotice("已标记为掌握");
-    refreshWords();
-  }
-
-  function handleAddTodayReview() {
-    if (!displayedExpression) return;
-
-    setTodayReviewWords((current) => {
-      const next = [displayedExpression.word, ...current];
-      saveStringList(TODAY_REVIEW_EXPRESSIONS_KEY, next);
-      return [...new Set(next)];
-    });
-    setShowManageMenu(false);
-    setNotice("已加入今日复习");
   }
 
   return (
@@ -219,56 +148,9 @@ export default function VocabularyPage() {
                 </div>
               </div>
 
-              <button
-                type="button"
-                aria-label="管理这个表达"
-                onClick={() => setShowManageMenu((current) => !current)}
-                className="sf-header-button text-[1.25rem] font-semibold text-[#201833]"
-              >
-                ...
-              </button>
+              <div aria-hidden="true" className="sf-header-button invisible" />
             </div>
           </header>
-
-          {showManageMenu ? (
-            <div className="absolute right-6 top-[92px] z-30 w-[250px] rounded-[24px] border border-[#c9bfff] bg-[#fbf9ff] p-4 text-[#201833] shadow-[0_24px_60px_rgba(84,72,146,0.26)]">
-              <h3 className="px-3 py-2 text-[1rem] font-extrabold">
-                管理这个表达
-              </h3>
-              <div className="mt-1 grid gap-1">
-                <button
-                  type="button"
-                  onClick={handleMarkMastered}
-                  disabled={!displayedExpression}
-                  className="rounded-[16px] px-3 py-3 text-left text-[1rem] font-bold hover:bg-[#efeaff] disabled:opacity-45"
-                >
-                  ✓ 我已经会说了
-                </button>
-                <button
-                  type="button"
-                  onClick={handleAddTodayReview}
-                  disabled={!displayedExpression}
-                  className="rounded-[16px] px-3 py-3 text-left text-[1rem] font-bold hover:bg-[#efeaff] disabled:opacity-45"
-                >
-                  🔁 稍后再复习
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDeleteExpression}
-                  disabled={!displayedExpression}
-                  className="rounded-[16px] px-3 py-3 text-left text-[1rem] font-bold hover:bg-[#ffecef] disabled:opacity-45"
-                >
-                  🗑 从表达库移除
-                </button>
-              </div>
-            </div>
-          ) : null}
-
-          {showManageHint ? (
-            <div className="absolute left-1/2 top-[96px] z-40 w-[min(86%,360px)] -translate-x-1/2 rounded-[20px] border border-white/70 bg-[#fbf9ff] px-5 py-4 text-center text-[1rem] font-extrabold text-[#201833] shadow-[0_20px_50px_rgba(84,72,146,0.22)]">
-              💡 点击右上角可管理表达。
-            </div>
-          ) : null}
 
           <section className="sf-study-main relative z-10 flex min-h-0 flex-1 flex-col px-6 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-4">
             <div className="mx-auto h-px w-32 bg-[linear-gradient(90deg,transparent,rgba(145,220,255,0.46),transparent)]" />
@@ -279,11 +161,6 @@ export default function VocabularyPage() {
               <p className="mt-4 text-[1.08rem] font-extrabold text-[#9a93a9]">
                 {progressText}
               </p>
-              {notice ? (
-                <p className="mt-3 text-[0.9rem] font-bold text-[#7f7896]">
-                  {notice}
-                </p>
-              ) : null}
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col items-center overflow-y-auto pt-7 text-center">
@@ -345,23 +222,14 @@ export default function VocabularyPage() {
               >
                 ←
               </button>
-              <button
-                type="button"
-                onClick={() => router.replace("/speak-english")}
-                className="grid place-items-center"
-                aria-label="开始自由练习"
-              >
-                <Image
-                  src="/icons/glow-mic.svg"
-                  alt=""
-                  width={96}
-                  height={96}
-                  className="h-24 w-24"
-                />
-                <span className="mt-5 text-[1.08rem] font-semibold text-[#7f7896]">
-                  点击开始说话
-                </span>
-              </button>
+              <div className="min-w-0 flex-1 rounded-[24px] bg-white/30 px-4 py-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
+                <p className="text-[0.72rem] font-extrabold uppercase tracking-[0.12em] text-[#7f7896]">
+                  中文释义
+                </p>
+                <p className="mt-2 break-words text-[1.16rem] font-extrabold leading-7 text-[#201833]">
+                  {displayedExpression ? displayedMeaningText : "还没有表达"}
+                </p>
+              </div>
               <button
                 type="button"
                 onClick={() =>
