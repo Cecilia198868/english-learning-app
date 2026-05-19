@@ -10,10 +10,13 @@ import {
 } from "@/data/featuredCourses";
 import {
   addVocabularyWord,
-  generateVocabularyDefinition,
-  tokenizeEnglishSentence,
   updateVocabularyWord,
 } from "@/lib/vocabulary";
+import {
+  createFallbackHighlightedExpressions,
+  splitSentenceByHighlightedExpressions,
+  type HighlightedExpression,
+} from "@/lib/expressionHighlights";
 
 type Lesson = {
   id: string;
@@ -246,12 +249,15 @@ export default function StudyPage() {
   const [selectedExpressionIndex, setSelectedExpressionIndex] = useState(0);
   const [isLoadingExpressionVariants, setIsLoadingExpressionVariants] =
     useState(false);
-  const [pendingVocabularyWord, setPendingVocabularyWord] = useState<{
-    word: string;
+  const [pendingExpression, setPendingExpression] = useState<{
+    phrase: string;
+    meaning: string;
     sourceSentence: string;
   } | null>(null);
-  const [editableVocabularyWord, setEditableVocabularyWord] = useState("");
-  const [isSavingVocabularyWord, setIsSavingVocabularyWord] = useState(false);
+  const [isSavingExpression, setIsSavingExpression] = useState(false);
+  const [highlightedExpressions, setHighlightedExpressions] = useState<
+    HighlightedExpression[]
+  >([]);
   const [showMoreActions, setShowMoreActions] = useState(false);
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -415,61 +421,54 @@ export default function StudyPage() {
     );
   }
 
-  function handleWordClick(word: string, sourceSentence: string) {
-    const trimmedWord = word.trim();
-    if (!trimmedWord) return;
+  function handleExpressionClick(
+    expression: HighlightedExpression,
+    sourceSentence: string
+  ) {
+    const phrase = expression.phrase.trim();
+    if (!phrase) return;
 
     stopSequencePlayback();
-    setPendingVocabularyWord({
-      word: trimmedWord,
+    setPendingExpression({
+      phrase,
+      meaning: expression.meaning || "✨ 值得学习的表达",
       sourceSentence,
     });
-    setEditableVocabularyWord(trimmedWord);
   }
 
-  function closeVocabularyModal() {
-    setPendingVocabularyWord(null);
-    setEditableVocabularyWord("");
-    setIsSavingVocabularyWord(false);
+  function closeExpressionModal() {
+    setPendingExpression(null);
+    setIsSavingExpression(false);
   }
 
-  function handleConfirmAddWord() {
-    if (!pendingVocabularyWord || isSavingVocabularyWord) return;
+  function handleConfirmAddExpression() {
+    if (!pendingExpression || isSavingExpression) return;
 
-    const nextWord = editableVocabularyWord.trim();
-    if (!nextWord) {
-      setMessage("请输入单词");
-      return;
-    }
+    setIsSavingExpression(true);
 
-    setIsSavingVocabularyWord(true);
-
-    const sourceSentence = pendingVocabularyWord.sourceSentence;
+    const sourceSentence = pendingExpression.sourceSentence;
     const result = addVocabularyWord(
-      nextWord,
+      pendingExpression.phrase,
       sourceSentence
     );
 
     if (!result.ok) {
-      closeVocabularyModal();
-      setMessage(result.message);
+      closeExpressionModal();
+      setMessage(
+        result.reason === "DUPLICATE" ? "这个表达已经收藏过了" : result.message
+      );
       return;
     }
 
     const savedWord = result.word.word;
-    closeVocabularyModal();
-    setMessage("已存入单词本");
-
-    void generateVocabularyDefinition(savedWord)
-      .then((definition) => {
-        updateVocabularyWord(savedWord, {
-          ...definition,
-          sourceSentence,
-        });
-      })
-      .catch((error) => {
-        console.error("生成单词释义失败", error);
-      });
+    updateVocabularyWord(savedWord, {
+      meaning: pendingExpression.meaning,
+      partOfSpeech: "phrase",
+      example: sourceSentence,
+      sourceSentence,
+    });
+    closeExpressionModal();
+    setMessage("已存入新表达");
   }
 
   function handlePrev() {
@@ -1082,10 +1081,56 @@ export default function StudyPage() {
   const selectedExpression =
     expressionVariants[selectedExpressionIndex] ||
     createFallbackExpressionVariants(currentPair.english || "")[0];
-  const selectedExpressionTokens = useMemo(
-    () => tokenizeEnglishSentence(selectedExpression.text || ""),
-    [selectedExpression.text]
+  const selectedExpressionSegments = useMemo(
+    () =>
+      splitSentenceByHighlightedExpressions(
+        selectedExpression.text || "",
+        highlightedExpressions
+      ),
+    [highlightedExpressions, selectedExpression.text]
   );
+
+  useEffect(() => {
+    const sentence = selectedExpression.text?.trim();
+    if (!sentence || isLoadingExpressionVariants) {
+      setHighlightedExpressions([]);
+      return;
+    }
+
+    let cancelled = false;
+    setHighlightedExpressions(createFallbackHighlightedExpressions(sentence));
+
+    async function loadHighlightedExpressions() {
+      try {
+        const response = await fetch("/api/expression-highlights", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sentence }),
+        });
+        const data = (await response.json()) as {
+          expressions?: HighlightedExpression[];
+        };
+
+        if (!cancelled && Array.isArray(data.expressions)) {
+          setHighlightedExpressions(
+            data.expressions.length
+              ? data.expressions
+              : createFallbackHighlightedExpressions(sentence)
+          );
+        }
+      } catch {
+        if (!cancelled) {
+          setHighlightedExpressions(createFallbackHighlightedExpressions(sentence));
+        }
+      }
+    }
+
+    void loadHighlightedExpressions();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isLoadingExpressionVariants, selectedExpression.text]);
   const hasPreviousExpression = selectedExpressionIndex > 0;
   const hasNextExpression =
     selectedExpressionIndex < expressionVariantLabels.length - 1;
@@ -1253,25 +1298,25 @@ export default function StudyPage() {
                     <p className="mt-4 bg-white/18 px-4 py-4 text-[1.6rem] font-extrabold leading-9 text-[#201833] sm:text-[1.85rem]">
                       {isLoadingExpressionVariants
                         ? "正在生成表达..."
-                        : selectedExpressionTokens.map((token, index) =>
-                            token.type === "word" ? (
+                        : selectedExpressionSegments.map((segment, index) =>
+                            segment.type === "expression" ? (
                               <button
-                                key={`${token.value}-${index}`}
+                                key={`${segment.value}-${index}`}
                                 type="button"
                                 onClick={(event) => {
                                   event.stopPropagation();
-                                  handleWordClick(
-                                    token.value,
+                                  handleExpressionClick(
+                                    segment.expression,
                                     selectedExpression.text
                                   );
                                 }}
-                                className="inline rounded-xl px-1 py-0.5 transition hover:bg-white/55"
+                                className="inline rounded-xl bg-[#fff7b8]/70 px-1.5 py-0.5 text-[#201833] shadow-[inset_0_-0.28em_0_rgba(255,215,106,0.55)] transition hover:bg-[#fff0a0]"
                               >
-                                {token.value}
+                                {segment.value}
                               </button>
                             ) : (
-                              <span key={`${token.value}-${index}`}>
-                                {token.value}
+                              <span key={`${segment.value}-${index}`}>
+                                {segment.value}
                               </span>
                             )
                           )}
@@ -1487,36 +1532,28 @@ export default function StudyPage() {
           ) : null}
         </section>
 
-        {pendingVocabularyWord ? (
+        {pendingExpression ? (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#171129]/72 p-4 backdrop-blur-[10px]">
             <div className="w-full max-w-[390px] rounded-[30px] border border-white/80 bg-[#f8f5ff] p-6 text-[#201833] shadow-[0_28px_80px_rgba(28,18,62,0.42)]">
               <h2 className="text-[1.6rem] font-extrabold">
-                保存这个单词？
+                {pendingExpression.meaning}
               </h2>
-              <p className="mt-3 text-[1.05rem] font-semibold leading-7 text-[#6f668a]">
-                加入后可以在单词本里复习。
+              <p className="mt-5 rounded-[20px] border border-[#c9bfff] bg-white px-5 py-4 text-[1.65rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+                {pendingExpression.phrase}
               </p>
-              <input
-                type="text"
-                value={editableVocabularyWord}
-                onChange={(event) => setEditableVocabularyWord(event.target.value)}
-                className="mt-5 w-full rounded-[20px] border border-[#c9bfff] bg-white px-5 py-4 text-[1.65rem] font-extrabold text-[#201833] outline-none ring-0 placeholder:text-[#7f7896]/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] focus:border-[#7d90ff]"
-                placeholder="请输入单词"
-                autoFocus
-              />
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <button
                   type="button"
-                  onClick={handleConfirmAddWord}
-                  disabled={isSavingVocabularyWord}
+                  onClick={handleConfirmAddExpression}
+                  disabled={isSavingExpression}
                   className="rounded-[18px] bg-[#5f73ff] px-4 py-4 text-[1.08rem] font-extrabold text-white shadow-[0_12px_28px_rgba(95,115,255,0.28)] hover:bg-[#5267f1] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  加入
+                  ➕ 收藏表达
                 </button>
                 <button
                   type="button"
                   onClick={() => {
-                    closeVocabularyModal();
+                    closeExpressionModal();
                   }}
                   className="rounded-[18px] border border-[#d8d0f4] bg-white px-4 py-4 text-[1.08rem] font-extrabold text-[#6f668a] hover:bg-[#efeaff]"
                 >
