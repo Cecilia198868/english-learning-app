@@ -579,6 +579,24 @@ function VoiceGlyph({ active = false }: { active?: boolean }) {
 }
 
 export default function SpeakEnglishPage() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const mountedTimer = window.setTimeout(() => setIsMounted(true), 0);
+
+    return () => window.clearTimeout(mountedTimer);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <main className="min-h-screen bg-[linear-gradient(180deg,#c6b7ff_0%,#eeeaff_44%,#f8f7ff_100%)]" />
+    );
+  }
+
+  return <SpeakEnglishClient />;
+}
+
+function SpeakEnglishClient() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
