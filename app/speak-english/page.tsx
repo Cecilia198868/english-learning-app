@@ -74,7 +74,7 @@ type SessionResponse = {
   } | null;
 };
 
-type AccountPanelView = "menu" | "account";
+type AccountPanelView = "menu" | "account" | "subscription";
 
 const accountMenuSections = [
   {
@@ -671,6 +671,11 @@ export default function SpeakEnglishPage() {
     .slice(0, 2)
     .toUpperCase();
   const loginMethodLabel = accountEmail ? "邮箱登录" : "当前登录方式";
+  const accountPanelTitle =
+    accountPanelView === "subscription" ? "订阅" : "账户";
+  const subscriptionPlanLabel = "免费版";
+  const subscriptionExpiryLabel = "无到期时间";
+  const subscriptionPaymentLabel = "未绑定";
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -1336,7 +1341,7 @@ export default function SpeakEnglishPage() {
             <div className="absolute inset-0 z-50 flex flex-col bg-[#fbf9ff]/96 px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-6 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] backdrop-blur-2xl">
               <div className="flex shrink-0 items-center justify-between gap-4">
                 <div className="flex min-w-0 items-center gap-3">
-                  {accountPanelView === "account" ? (
+                  {accountPanelView !== "menu" ? (
                     <button
                       type="button"
                       aria-label="返回账户菜单"
@@ -1363,7 +1368,7 @@ export default function SpeakEnglishPage() {
                   </div>
                   <div className="min-w-0">
                     <h2 className="text-[1.25rem] font-extrabold leading-7">
-                      账户
+                      {accountPanelTitle}
                     </h2>
                     <p className="mt-0.5 truncate text-[0.86rem] font-semibold text-[#7f7896]">
                       {accountEmail || accountName || "SpeakFlow 用户"}
@@ -1402,6 +1407,9 @@ export default function SpeakEnglishPage() {
                               if (item.label === "账户") {
                                 setAccountPanelView("account");
                               }
+                              if (item.label === "订阅") {
+                                setAccountPanelView("subscription");
+                              }
                             }}
                             className="flex min-h-12 items-center gap-3 rounded-[18px] px-3 py-2.5 text-left text-[1.05rem] font-bold text-[#201833] transition hover:bg-[#efeaff]"
                           >
@@ -1414,7 +1422,7 @@ export default function SpeakEnglishPage() {
                       </div>
                     </section>
                   ))
-                ) : (
+                ) : accountPanelView === "account" ? (
                   <section className="grid gap-2">
                     <button
                       type="button"
@@ -1451,6 +1459,34 @@ export default function SpeakEnglishPage() {
                       className="mt-3 flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left font-extrabold text-[#d33b46] transition hover:bg-[#ffecef]"
                     >
                       <span>删除账户</span>
+                      <span className="shrink-0 text-[1.2rem]">›</span>
+                    </button>
+                  </section>
+                ) : (
+                  <section className="grid gap-2">
+                    <div className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left">
+                      <span className="font-bold">当前套餐</span>
+                      <span className="shrink-0 text-[0.9rem] font-bold text-[#7f7896]">
+                        {subscriptionPlanLabel}
+                      </span>
+                    </div>
+                    <div className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left">
+                      <span className="font-bold">到期时间</span>
+                      <span className="shrink-0 text-[0.9rem] font-bold text-[#7f7896]">
+                        {subscriptionExpiryLabel}
+                      </span>
+                    </div>
+                    <div className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left">
+                      <span className="font-bold">付款方式</span>
+                      <span className="shrink-0 text-[0.9rem] font-bold text-[#7f7896]">
+                        {subscriptionPaymentLabel}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      className="mt-3 flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left font-extrabold text-[#201833] transition hover:bg-[#efeaff]"
+                    >
+                      <span>管理订阅</span>
                       <span className="shrink-0 text-[1.2rem]">›</span>
                     </button>
                   </section>
