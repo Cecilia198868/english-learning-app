@@ -1422,7 +1422,7 @@ export default function SpeakEnglishPage() {
                       setShowAvatarEditor(false);
                       setAccountPanelView("menu");
                     }}
-                    className="grid h-12 w-12 shrink-0 place-items-center rounded-[20px] bg-[#efeaff] text-[1.6rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.55rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
                   >
                     ‹
                   </button>
@@ -1434,7 +1434,7 @@ export default function SpeakEnglishPage() {
                       setAccountPanelView("menu");
                       setShowAvatarEditor(false);
                     }}
-                    className="grid h-12 w-12 shrink-0 place-items-center rounded-[20px] bg-[#efeaff] text-[1.45rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.35rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
                   >
                     ×
                   </button>
@@ -1494,7 +1494,11 @@ export default function SpeakEnglishPage() {
                 </div>
               )}
 
-              <div className="mt-7 min-h-0 flex-1 overflow-y-auto pr-1">
+              <div
+                className={`min-h-0 flex-1 overflow-y-auto ${
+                  accountPanelView === "account" ? "mt-10 pr-0" : "mt-7 pr-1"
+                }`}
+              >
                 {accountPanelView === "menu" ? (
                   accountMenuSections.map((section) => (
                     <section
@@ -1530,12 +1534,12 @@ export default function SpeakEnglishPage() {
                   ))
                 ) : accountPanelView === "account" ? (
                   <section className="pb-10">
-                    <div className="flex items-center gap-5 px-1 pt-4">
+                    <div className="flex items-center gap-4 px-2 pt-5">
                       <button
                         type="button"
                         aria-label="修改头像"
                         onClick={openAvatarEditor}
-                        className="relative grid h-28 w-28 shrink-0 place-items-center overflow-visible rounded-full bg-[#f0ebff] text-[1.25rem] font-extrabold text-white shadow-[0_18px_36px_rgba(84,72,146,0.22)]"
+                        className="relative grid h-24 w-24 shrink-0 place-items-center overflow-visible rounded-full bg-[#f0ebff] text-[1.15rem] font-extrabold text-white shadow-[0_18px_36px_rgba(84,72,146,0.22)]"
                       >
                         <span className="grid h-full w-full overflow-hidden rounded-full border border-white/90">
                           {accountImage && !accountImageFailed ? (
@@ -1552,30 +1556,30 @@ export default function SpeakEnglishPage() {
                             </span>
                           )}
                         </span>
-                        <span className="absolute bottom-1 right-1 grid h-10 w-10 place-items-center rounded-full border-4 border-[#fbf9ff] bg-[#7460e8] text-[1.05rem] font-extrabold text-white shadow-[0_10px_22px_rgba(84,72,146,0.28)]">
+                        <span className="absolute bottom-0 right-0 grid h-9 w-9 place-items-center rounded-full border-4 border-[#fbf9ff] bg-[#7460e8] text-[0.96rem] font-extrabold text-white shadow-[0_10px_22px_rgba(84,72,146,0.28)]">
                           ✎
                         </span>
                       </button>
                       <div className="min-w-0">
-                        <h2 className="truncate text-[2rem] font-extrabold leading-tight text-[#201833]">
+                        <h2 className="truncate text-[1.85rem] font-extrabold leading-tight text-[#201833]">
                           {accountDisplayName}
                         </h2>
-                        <p className="mt-3 truncate text-[1.05rem] font-semibold text-[#7f7896]">
+                        <p className="mt-2 truncate text-[1rem] font-semibold text-[#7f7896]">
                           {accountEmail || "未绑定邮箱"}
                         </p>
                       </div>
                     </div>
 
-                    <h3 className="mt-10 px-1 text-[1rem] font-extrabold text-[#7f7896]">
+                    <h3 className="mt-10 px-3 text-[1rem] font-extrabold text-[#7f7896]">
                       会员
                     </h3>
-                    <div className="mt-4 overflow-hidden rounded-[24px] bg-white/72 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/80">
+                    <div className="mt-4 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
                       <button
                         type="button"
                         onClick={() => setAccountPanelView("subscription")}
-                        className="flex min-h-16 w-full items-center gap-4 border-b border-[#e8e2ff] px-5 py-4 text-left"
+                        className="flex min-h-[4.25rem] w-full items-center gap-4 border-b border-[#e8e2ff] px-5 py-4 text-left"
                       >
-                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem]">
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem] text-[#7460e8]">
                           ◆
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
@@ -1591,9 +1595,9 @@ export default function SpeakEnglishPage() {
                       <button
                         type="button"
                         onClick={() => setAccountPanelView("subscription")}
-                        className="flex min-h-16 w-full items-center gap-4 border-b border-[#e8e2ff] px-5 py-4 text-left"
+                        className="flex min-h-[4.25rem] w-full items-center gap-4 border-b border-[#e8e2ff] px-5 py-4 text-left"
                       >
-                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem]">
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem] text-[#7460e8]">
                           ▭
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
@@ -1605,9 +1609,9 @@ export default function SpeakEnglishPage() {
                       </button>
                       <button
                         type="button"
-                        className="flex min-h-16 w-full items-center gap-4 px-5 py-4 text-left"
+                        className="flex min-h-[4.25rem] w-full items-center gap-4 px-5 py-4 text-left"
                       >
-                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem]">
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem] text-[#7460e8]">
                           ↻
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
@@ -1619,15 +1623,15 @@ export default function SpeakEnglishPage() {
                       </button>
                     </div>
 
-                    <h3 className="mt-8 px-1 text-[1rem] font-extrabold text-[#7f7896]">
+                    <h3 className="mt-8 px-3 text-[1rem] font-extrabold text-[#7f7896]">
                       账户与安全
                     </h3>
-                    <div className="mt-4 overflow-hidden rounded-[24px] bg-white/72 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/80">
+                    <div className="mt-4 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
                       <button
                         type="button"
-                        className="flex min-h-16 w-full items-center gap-4 px-5 py-4 text-left"
+                        className="flex min-h-[4.25rem] w-full items-center gap-4 px-5 py-4 text-left"
                       >
-                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem]">
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem] text-[#7460e8]">
                           ▣
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
@@ -1639,15 +1643,15 @@ export default function SpeakEnglishPage() {
                       </button>
                     </div>
 
-                    <h3 className="mt-8 px-1 text-[1rem] font-extrabold text-[#7f7896]">
+                    <h3 className="mt-8 px-3 text-[1rem] font-extrabold text-[#7f7896]">
                       数据
                     </h3>
-                    <div className="mt-4 overflow-hidden rounded-[24px] bg-white/72 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/80">
+                    <div className="mt-4 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
                       <button
                         type="button"
-                        className="flex min-h-16 w-full items-center gap-4 px-5 py-4 text-left"
+                        className="flex min-h-[4.25rem] w-full items-center gap-4 px-5 py-4 text-left"
                       >
-                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem]">
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem] text-[#7460e8]">
                           ◔
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
@@ -1659,13 +1663,13 @@ export default function SpeakEnglishPage() {
                       </button>
                     </div>
 
-                    <h3 className="mt-8 px-1 text-[1rem] font-extrabold text-[#7f7896]">
+                    <h3 className="mt-8 px-3 text-[1rem] font-extrabold text-[#7f7896]">
                       其他
                     </h3>
-                    <div className="mt-4 overflow-hidden rounded-[24px] bg-white/72 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/80">
+                    <div className="mt-4 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
                       <button
                         type="button"
-                        className="flex min-h-16 w-full items-center gap-4 px-5 py-4 text-left font-extrabold text-[#d33b46]"
+                        className="flex min-h-[4.25rem] w-full items-center gap-4 px-5 py-4 text-left font-extrabold text-[#d33b46]"
                       >
                         <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#ffecef] text-[1.2rem]">
                           ▥
