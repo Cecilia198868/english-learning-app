@@ -1640,9 +1640,9 @@ export default function SpeakEnglishPage() {
                     <button
                       type="button"
                       onClick={saveAvatarChange}
-                      className="mt-3 min-h-12 w-full rounded-[18px] bg-[#201833] px-4 text-[1rem] font-extrabold text-white shadow-[0_16px_32px_rgba(32,24,51,0.18)]"
+                      className="mt-3 min-h-12 w-full rounded-[18px] bg-[#efeaff] px-4 text-[1rem] font-extrabold text-[#5b63ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]"
                     >
-                      保存
+                      Save
                     </button>
                   </div>
                 </div>
