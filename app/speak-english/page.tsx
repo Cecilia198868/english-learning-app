@@ -76,29 +76,60 @@ type SessionResponse = {
 
 type AccountPanelView = "menu" | "account" | "subscription";
 
+type AccountMenuAction = "subscription" | "voice";
+
+type AccountMenuItem = {
+  action?: AccountMenuAction;
+  children?: string[];
+  label: string;
+  trailing?: string;
+};
+
+type AccountMenuSection = {
+  items: AccountMenuItem[];
+  title: string;
+};
+
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
 
 function getAccountAvatarStorageKey(identifier: string) {
   return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
 }
 
-const accountMenuSections = [
+const accountMenuSections: AccountMenuSection[] = [
   {
     title: "账户",
     items: [
-      { icon: "👤", label: "账户" },
-      { icon: "💎", label: "订阅" },
-      { icon: "⬆", label: "升级 Pro" },
-      { icon: "🔄", label: "恢复购买" },
+      { action: "subscription", label: "SpeakFlow Pro", trailing: "未订阅" },
+      { action: "subscription", label: "管理订阅" },
+      { label: "恢复购买" },
     ],
   },
   {
-    title: "支持",
+    title: "设置",
     items: [
-      { icon: "❓", label: "帮助中心" },
-      { icon: "🐞", label: "报告问题" },
-      { icon: "🔒", label: "隐私政策" },
-      { icon: "ℹ", label: "关于" },
+      { action: "voice", label: "声音" },
+      {
+        children: [
+          "默认显示中文",
+          "自动播放英文",
+          "自动进入下一句",
+          "语速",
+          "字体大小",
+          "长按显示答案",
+        ],
+        label: "学习设置",
+      },
+      { label: "通知" },
+    ],
+  },
+  {
+    title: "帮助",
+    items: [
+      { label: "帮助中心" },
+      { label: "报告应用问题" },
+      { label: "隐私政策" },
+      { label: "关于" },
     ],
   },
 ];
@@ -812,6 +843,18 @@ export default function SpeakEnglishPage() {
     setSelectedClassicCourseSectionId("");
   }
 
+  function handleAccountMenuAction(action?: AccountMenuAction) {
+    if (action === "subscription") {
+      setAccountPanelView("subscription");
+      return;
+    }
+
+    if (action === "voice") {
+      setShowAccountMenu(false);
+      setShowVoicePicker(true);
+    }
+  }
+
   function openAvatarEditor() {
     setAvatarPreview(accountImageFailed ? "" : accountImage);
     setAvatarEditorNotice("");
@@ -1503,31 +1546,56 @@ export default function SpeakEnglishPage() {
                   accountMenuSections.map((section) => (
                     <section
                       key={section.title}
-                      className="border-b border-[#ded7ff] py-4 last:border-b-0"
+                      className="border-b border-[#ded7ff] py-5 last:border-b-0"
                     >
-                      <h3 className="px-1 pb-3 text-[0.86rem] font-extrabold text-[#7f7896]">
+                      <h3 className="px-1 pb-3 text-[0.95rem] font-extrabold text-[#7f7896]">
                         {section.title}
                       </h3>
-                      <div className="grid gap-1.5">
-                        {section.items.map((item) => (
-                          <button
+                      <div className="overflow-hidden rounded-[22px] bg-white/62 shadow-[0_14px_36px_rgba(84,72,146,0.09)] ring-1 ring-white/75">
+                        {section.items.map((item, itemIndex) => (
+                          <div
                             key={`${section.title}-${item.label}`}
-                            type="button"
-                            onClick={() => {
-                              if (item.label === "账户") {
-                                setAccountPanelView("account");
-                              }
-                              if (item.label === "订阅") {
-                                setAccountPanelView("subscription");
-                              }
-                            }}
-                            className="flex min-h-12 items-center gap-3 rounded-[18px] px-3 py-2.5 text-left text-[1.05rem] font-bold text-[#201833] transition hover:bg-[#efeaff]"
+                            className={
+                              itemIndex === section.items.length - 1
+                                ? ""
+                                : "border-b border-[#e8e2ff]"
+                            }
                           >
-                            <span className="grid h-7 w-7 place-items-center text-[1.08rem]">
-                              {item.icon}
-                            </span>
-                            <span>{item.label}</span>
-                          </button>
+                            <button
+                              type="button"
+                              onClick={() => handleAccountMenuAction(item.action)}
+                              className="flex min-h-[3.45rem] w-full items-center gap-3 px-4 py-3 text-left text-[1.04rem] font-extrabold text-[#201833] transition hover:bg-[#efeaff]/70"
+                            >
+                              <span className="min-w-0 flex-1 truncate">
+                                {item.label}
+                              </span>
+                              {item.trailing ? (
+                                <span className="shrink-0 rounded-full bg-[#efeaff] px-3 py-1 text-[0.86rem] font-extrabold text-[#7460e8]">
+                                  {item.trailing}
+                                </span>
+                              ) : null}
+                              {item.action ? (
+                                <span className="shrink-0 text-[1.35rem] font-semibold text-[#7f7896]">
+                                  ›
+                                </span>
+                              ) : null}
+                            </button>
+
+                            {item.children ? (
+                              <div className="px-4 pb-4">
+                                <div className="rounded-[18px] bg-[#f7f4ff]/78 px-4 py-2.5">
+                                  {item.children.map((child) => (
+                                    <div
+                                      key={child}
+                                      className="flex min-h-9 items-center justify-between border-b border-[#e8e2ff] text-[0.92rem] font-bold text-[#7f7896] last:border-b-0"
+                                    >
+                                      <span>{child}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ) : null}
+                          </div>
                         ))}
                       </div>
                     </section>
@@ -1718,9 +1786,8 @@ export default function SpeakEnglishPage() {
                 <button
                   type="button"
                   onClick={() => void signOut({ callbackUrl: "/" })}
-                  className="mt-5 flex min-h-12 shrink-0 items-center gap-3 rounded-[18px] px-3 py-2.5 text-left text-[1.05rem] font-extrabold text-[#d33b46] transition hover:bg-[#ffecef]"
+                  className="mt-5 flex min-h-[3.45rem] shrink-0 items-center rounded-[22px] bg-white/62 px-4 py-3 text-left text-[1.06rem] font-extrabold text-[#d33b46] shadow-[0_14px_36px_rgba(84,72,146,0.09)] ring-1 ring-white/75 transition hover:bg-[#ffecef]"
                 >
-                  <span className="grid h-7 w-7 place-items-center">↩</span>
                   <span>退出登录</span>
                 </button>
               ) : null}
