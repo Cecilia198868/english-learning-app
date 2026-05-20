@@ -74,6 +74,8 @@ type SessionResponse = {
   } | null;
 };
 
+type AccountPanelView = "menu" | "account";
+
 const accountMenuSections = [
   {
     title: "账户",
@@ -579,6 +581,9 @@ export default function SpeakEnglishPage() {
   const [hasInk, setHasInk] = useState(false);
   const [showQuickPanel, setShowQuickPanel] = useState(false);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
+  const [accountPanelView, setAccountPanelView] =
+    useState<AccountPanelView>("menu");
+  const [accountName, setAccountName] = useState("");
   const [accountEmail, setAccountEmail] = useState("");
   const [accountImage, setAccountImage] = useState("");
   const [accountImageFailed, setAccountImageFailed] = useState(false);
@@ -661,10 +666,11 @@ export default function SpeakEnglishPage() {
   const hasNextExpression =
     selectedExpressionIndex < expressionVariantLabels.length - 1;
   const accountAvatarLabel = (
-    accountEmail || "CL"
+    accountName || accountEmail || "CL"
   )
     .slice(0, 2)
     .toUpperCase();
+  const loginMethodLabel = accountEmail ? "邮箱登录" : "当前登录方式";
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -718,11 +724,13 @@ export default function SpeakEnglishPage() {
         const session = (await response.json()) as SessionResponse;
         if (cancelled) return;
 
+        setAccountName(session.user?.name || "");
         setAccountEmail(session.user?.email || session.user?.name || "");
         setAccountImage(session.user?.image || "");
         setAccountImageFailed(false);
       } catch {
         if (!cancelled) {
+          setAccountName("");
           setAccountEmail("");
           setAccountImage("");
         }
@@ -752,6 +760,7 @@ export default function SpeakEnglishPage() {
       resetClassicCoursePicker();
       setShowVoicePicker(false);
       setShowAccountMenu(false);
+      setAccountPanelView("menu");
       return;
     }
   }, [showQuickPanel]);
@@ -1270,9 +1279,15 @@ export default function SpeakEnglishPage() {
                   <button
                     type="button"
                     aria-label="打开账户菜单"
-                    onClick={() =>
-                      setShowAccountMenu((current) => !current)
-                    }
+                    onClick={() => {
+                      setShowAccountMenu((current) => {
+                        const next = !current;
+                        if (next) {
+                          setAccountPanelView("menu");
+                        }
+                        return next;
+                      });
+                    }}
                     className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full border border-white/70 bg-[#f7f4ff] text-[0.82rem] font-extrabold text-white shadow-[0_12px_26px_rgba(84,72,146,0.18)]"
                   >
                     {accountImage && !accountImageFailed ? (
@@ -1321,6 +1336,16 @@ export default function SpeakEnglishPage() {
             <div className="absolute inset-0 z-50 flex flex-col bg-[#fbf9ff]/96 px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-6 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] backdrop-blur-2xl">
               <div className="flex shrink-0 items-center justify-between gap-4">
                 <div className="flex min-w-0 items-center gap-3">
+                  {accountPanelView === "account" ? (
+                    <button
+                      type="button"
+                      aria-label="返回账户菜单"
+                      onClick={() => setAccountPanelView("menu")}
+                      className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.35rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
+                    >
+                      ←
+                    </button>
+                  ) : null}
                   <div className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-full border border-white/80 bg-[#f7f4ff] text-[0.95rem] font-extrabold text-white shadow-[0_14px_28px_rgba(84,72,146,0.18)]">
                     {accountImage && !accountImageFailed ? (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -1341,14 +1366,17 @@ export default function SpeakEnglishPage() {
                       账户
                     </h2>
                     <p className="mt-0.5 truncate text-[0.86rem] font-semibold text-[#7f7896]">
-                      {accountEmail || "SpeakFlow 用户"}
+                      {accountEmail || accountName || "SpeakFlow 用户"}
                     </p>
                   </div>
                 </div>
                 <button
                   type="button"
                   aria-label="关闭账户菜单"
-                  onClick={() => setShowAccountMenu(false)}
+                  onClick={() => {
+                    setShowAccountMenu(false);
+                    setAccountPanelView("menu");
+                  }}
                   className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.45rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
                 >
                   ×
@@ -1356,40 +1384,89 @@ export default function SpeakEnglishPage() {
               </div>
 
               <div className="mt-7 min-h-0 flex-1 overflow-y-auto pr-1">
-                {accountMenuSections.map((section) => (
-                  <section
-                    key={section.title}
-                    className="border-b border-[#ded7ff] py-4 last:border-b-0"
-                  >
-                    <h3 className="px-1 pb-3 text-[0.86rem] font-extrabold text-[#7f7896]">
-                      {section.title}
-                    </h3>
-                    <div className="grid gap-1.5">
-                      {section.items.map((item) => (
-                        <button
-                          key={`${section.title}-${item.label}`}
-                          type="button"
-                          className="flex min-h-12 items-center gap-3 rounded-[18px] px-3 py-2.5 text-left text-[1.05rem] font-bold text-[#201833] transition hover:bg-[#efeaff]"
-                        >
-                          <span className="grid h-7 w-7 place-items-center text-[1.08rem]">
-                            {item.icon}
-                          </span>
-                          <span>{item.label}</span>
-                        </button>
-                      ))}
+                {accountPanelView === "menu" ? (
+                  accountMenuSections.map((section) => (
+                    <section
+                      key={section.title}
+                      className="border-b border-[#ded7ff] py-4 last:border-b-0"
+                    >
+                      <h3 className="px-1 pb-3 text-[0.86rem] font-extrabold text-[#7f7896]">
+                        {section.title}
+                      </h3>
+                      <div className="grid gap-1.5">
+                        {section.items.map((item) => (
+                          <button
+                            key={`${section.title}-${item.label}`}
+                            type="button"
+                            onClick={() => {
+                              if (item.label === "账户") {
+                                setAccountPanelView("account");
+                              }
+                            }}
+                            className="flex min-h-12 items-center gap-3 rounded-[18px] px-3 py-2.5 text-left text-[1.05rem] font-bold text-[#201833] transition hover:bg-[#efeaff]"
+                          >
+                            <span className="grid h-7 w-7 place-items-center text-[1.08rem]">
+                              {item.icon}
+                            </span>
+                            <span>{item.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  ))
+                ) : (
+                  <section className="grid gap-2">
+                    <button
+                      type="button"
+                      className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left transition hover:bg-[#efeaff]"
+                    >
+                      <span className="font-bold">修改头像</span>
+                      <span className="shrink-0 text-[0.9rem] font-bold text-[#7f7896]">
+                        更换
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left transition hover:bg-[#efeaff]"
+                    >
+                      <span className="font-bold">修改昵称</span>
+                      <span className="min-w-0 truncate text-right text-[0.9rem] font-bold text-[#7f7896]">
+                        {accountName || "未设置"}
+                      </span>
+                    </button>
+                    <div className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left">
+                      <span className="font-bold">登录邮箱</span>
+                      <span className="min-w-0 truncate text-right text-[0.9rem] font-bold text-[#7f7896]">
+                        {accountEmail || "未绑定"}
+                      </span>
                     </div>
+                    <div className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left">
+                      <span className="font-bold">登录方式</span>
+                      <span className="shrink-0 text-[0.9rem] font-bold text-[#7f7896]">
+                        {loginMethodLabel}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      className="mt-3 flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left font-extrabold text-[#d33b46] transition hover:bg-[#ffecef]"
+                    >
+                      <span>删除账户</span>
+                      <span className="shrink-0 text-[1.2rem]">›</span>
+                    </button>
                   </section>
-                ))}
+                )}
               </div>
 
-              <button
-                type="button"
-                onClick={() => void signOut({ callbackUrl: "/" })}
-                className="mt-5 flex min-h-12 shrink-0 items-center gap-3 rounded-[18px] px-3 py-2.5 text-left text-[1.05rem] font-extrabold text-[#d33b46] transition hover:bg-[#ffecef]"
-              >
-                <span className="grid h-7 w-7 place-items-center">↩</span>
-                <span>退出登录</span>
-              </button>
+              {accountPanelView === "menu" ? (
+                <button
+                  type="button"
+                  onClick={() => void signOut({ callbackUrl: "/" })}
+                  className="mt-5 flex min-h-12 shrink-0 items-center gap-3 rounded-[18px] px-3 py-2.5 text-left text-[1.05rem] font-extrabold text-[#d33b46] transition hover:bg-[#ffecef]"
+                >
+                  <span className="grid h-7 w-7 place-items-center">↩</span>
+                  <span>退出登录</span>
+                </button>
+              ) : null}
             </div>
           ) : null}
 
