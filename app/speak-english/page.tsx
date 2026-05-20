@@ -4,6 +4,8 @@ import type { ChangeEvent, PointerEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
+import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
+import { useLanguage } from "@/components/LanguageProvider";
 import {
   addVocabularyWord,
   updateVocabularyWord,
@@ -14,6 +16,10 @@ import {
   splitSentenceByHighlightedExpressions,
   type HighlightedExpression,
 } from "@/lib/expressionHighlights";
+import {
+  isFreePracticeLimitReached,
+  recordFreePracticeCompletion,
+} from "@/lib/freePracticeLimit";
 
 type KeyboardMode = "zh" | "en" | "handwriting" | "symbols";
 type PracticeStage = "native" | "english";
@@ -74,21 +80,10 @@ type SessionResponse = {
   } | null;
 };
 
-type AccountPanelView = "menu" | "account" | "subscription";
+type AccountPanelView = "menu" | "account" | "subscription" | "checkout";
+type ProPlan = "monthly" | "yearly";
 
 type AccountMenuAction = "subscription" | "voice";
-
-type AccountMenuItem = {
-  action?: AccountMenuAction;
-  children?: string[];
-  label: string;
-  trailing?: string;
-};
-
-type AccountMenuSection = {
-  items: AccountMenuItem[];
-  title: string;
-};
 
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
 
@@ -96,43 +91,294 @@ function getAccountAvatarStorageKey(identifier: string) {
   return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
 }
 
-const accountMenuSections: AccountMenuSection[] = [
-  {
-    title: "账户",
-    items: [
-      { action: "subscription", label: "SpeakFlow Pro", trailing: "未订阅" },
-      { action: "subscription", label: "管理订阅" },
-      { label: "恢复购买" },
-    ],
-  },
-  {
-    title: "设置",
-    items: [
-      { action: "voice", label: "声音" },
+function createFreePracticeRoundId() {
+  return `free:${Date.now()}:${Math.random().toString(36).slice(2)}`;
+}
+
+function CrownIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M4.2 9.2 8.8 12 12 5.5 15.2 12l4.6-2.8-1.3 8.3h-13L4.2 9.2Z"
+        fill="currentColor"
+      />
+      <path d="M12 9.3 14.2 11.7 12 14.1l-2.2-2.4L12 9.3Z" fill="white" />
+      <path
+        d="M6.4 20h11.2"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="2"
+      />
+      <path
+        d="M12 5.5h.01M4.2 9.2h.01M19.8 9.2h.01"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeWidth="2.4"
+      />
+    </svg>
+  );
+}
+
+const accountPanelCopy = {
+  en: {
+    accountTitle: "Account",
+    accountMenuSections: [
       {
-        children: [
-          "默认显示中文",
-          "自动播放英文",
-          "自动进入下一句",
-          "语速",
-          "字体大小",
-          "长按显示答案",
+        title: "Account",
+        items: [
+          { action: "subscription", label: "SpeakFlow Pro", trailing: "Not subscribed" },
+          { action: "subscription", label: "Manage Subscription" },
+          { label: "Restore Purchases" },
         ],
-        label: "学习设置",
       },
-      { label: "通知" },
+      {
+        title: "Settings",
+        items: [
+          { action: "voice", label: "Voice" },
+          {
+            children: [
+              "Show Chinese by default",
+              "Auto-play English",
+              "Auto-advance to next sentence",
+              "Speech speed",
+              "Font size",
+              "Long press to reveal answer",
+            ],
+            label: "Learning Settings",
+          },
+          { label: "Notifications" },
+        ],
+      },
+      {
+        title: "Help",
+        items: [
+          { label: "Help Center" },
+          { label: "Report an Issue" },
+          { label: "Privacy Policy" },
+          { label: "About" },
+        ],
+      },
     ],
-  },
-  {
-    title: "帮助",
-    items: [
-      { label: "帮助中心" },
-      { label: "报告应用问题" },
-      { label: "隐私政策" },
-      { label: "关于" },
+    accountSecurity: "Account & Security",
+    billingNoteMonthly: "Monthly billing",
+    cancelSafety: "Cancel anytime · Secure payment",
+    checkoutSafety: "Secure payment · Cancel anytime",
+    choosePlan: "Choose your plan",
+    closeAccountMenu: "Close account menu",
+    closeAvatarEditor: "Close avatar editor",
+    confirmAndPay: "Confirm and Pay",
+    confirmSubscription: "Confirm Subscription",
+    data: "Data",
+    deleteAccount: "Delete Account",
+    editAvatar: "Edit avatar",
+    editAvatarTitle: "Edit Avatar",
+    fallbackEmail: "No email connected",
+    fallbackUser: "SpeakFlow User",
+    help: "Help",
+    included: "Plan includes",
+    invalidImage: "Please choose an image file",
+    imageReadFailed: "Could not read the avatar. Please choose again.",
+    learningData: "Learning Data",
+    loginSecurity: "Login & Security",
+    member: "Membership",
+    notSubscribed: "Not subscribed",
+    other: "Other",
+    openAccountMenu: "Open account menu",
+    paymentMethods: ["Apple Pay", "Google Pay", "Credit Card"],
+    paymentMethodTitle: "Payment Method",
+    proBenefits: "Pro Benefits",
+    proCta: "Start SpeakFlow Pro",
+    proDescription:
+      "AI practice, smart courses, and immersive learning help you speak English with confidence.",
+    proFeatures: [
+      {
+        icon: "🎙",
+        title: "Unlimited AI Speaking Practice",
+        description: "Speak anytime with intelligent correction and feedback.",
+      },
+      {
+        icon: "🧠",
+        title: "AI Course Generation",
+        description: "Turn video, subtitles, and audio into personal training courses.",
+      },
+      {
+        icon: "🔊",
+        title: "Premium AI Voice",
+        description: "More natural, realistic pronunciation and intonation.",
+      },
+      {
+        icon: "📚",
+        title: "Unlimited Learning Content",
+        description: "Create unlimited courses and vocabulary lists.",
+      },
+      {
+        icon: "☁",
+        title: "Cloud Sync",
+        description: "Sync progress automatically across phone and computer.",
+      },
     ],
+    proLearners: "10,000+ learners are practicing",
+    proPlans: {
+      monthly: {
+        billingNote: "Monthly billing",
+        label: "Monthly Plan",
+        period: "/ month",
+        price: "$4.99",
+      },
+      yearly: {
+        billingNote: "33% OFF",
+        checkoutSummary: "Equivalent to $3.33 / month",
+        discount: "Save 33%",
+        label: "Yearly Plan",
+        period: "/ year",
+        price: "$39.99",
+        recommended: "Recommended",
+      },
+    },
+    proTagline: "Turn English input into real expression",
+    restorePurchases: "Restore Purchases",
+    returnAccountMenu: "Back to account menu",
+    returnProPage: "Back to Pro page",
+    save: "Save",
+    saveAvatarFailed: "Save failed. Please choose a smaller image.",
+    settings: "Settings",
+    signOut: "Sign Out",
+    subscriptionTitle: "Subscription",
+    chooseAvatarFirst: "Please choose an avatar first",
+    changeAvatar: "Change Avatar",
   },
-];
+  "zh-CN": {
+    accountTitle: "账户",
+    accountMenuSections: [
+      {
+        title: "账户",
+        items: [
+          { action: "subscription", label: "SpeakFlow Pro", trailing: "未订阅" },
+          { action: "subscription", label: "管理订阅" },
+          { label: "恢复购买" },
+        ],
+      },
+      {
+        title: "设置",
+        items: [
+          { action: "voice", label: "声音" },
+          {
+            children: [
+              "默认显示中文",
+              "自动播放英文",
+              "自动进入下一句",
+              "语速",
+              "字体大小",
+              "长按显示答案",
+            ],
+            label: "学习设置",
+          },
+          { label: "通知" },
+        ],
+      },
+      {
+        title: "帮助",
+        items: [
+          { label: "帮助中心" },
+          { label: "报告应用问题" },
+          { label: "隐私政策" },
+          { label: "关于" },
+        ],
+      },
+    ],
+    accountSecurity: "账户与安全",
+    billingNoteMonthly: "按月计费",
+    cancelSafety: "可随时取消 · 安全支付保障",
+    checkoutSafety: "安全支付保障 · 可随时取消订阅",
+    choosePlan: "选择适合你的套餐",
+    closeAccountMenu: "关闭账户菜单",
+    closeAvatarEditor: "关闭头像编辑",
+    confirmAndPay: "确认并付款",
+    confirmSubscription: "确认订阅",
+    data: "数据",
+    deleteAccount: "删除账户",
+    editAvatar: "修改头像",
+    editAvatarTitle: "修改头像",
+    fallbackEmail: "未绑定邮箱",
+    fallbackUser: "SpeakFlow 用户",
+    help: "帮助",
+    included: "套餐包含",
+    invalidImage: "请选择图片文件",
+    imageReadFailed: "头像读取失败，请重新选择",
+    learningData: "学习数据",
+    loginSecurity: "登录与安全",
+    member: "会员",
+    notSubscribed: "未订阅",
+    other: "其他",
+    openAccountMenu: "打开账户菜单",
+    paymentMethods: ["Apple Pay", "Google Pay", "信用卡"],
+    paymentMethodTitle: "付款方式",
+    proBenefits: "Pro 专享功能",
+    proCta: "立即开通 SpeakFlow Pro",
+    proDescription: "通过 AI 练习、智能课程和沉浸式学习，帮你自信开口说英语。",
+    proFeatures: [
+      {
+        icon: "🎙",
+        title: "无限 AI 口语练习",
+        description: "随时开口说英语，AI 智能纠错与反馈。",
+      },
+      {
+        icon: "🧠",
+        title: "AI 智能生成课程",
+        description: "视频、字幕、音频一键变成专属训练课程。",
+      },
+      {
+        icon: "🔊",
+        title: "高级 AI 语音",
+        description: "更自然、更真实的发音与语调。",
+      },
+      {
+        icon: "📚",
+        title: "无限学习内容",
+        description: "无限创建课程与单词本，学习不受限制。",
+      },
+      {
+        icon: "☁",
+        title: "云端同步",
+        description: "手机与电脑自动同步学习进度。",
+      },
+    ],
+    proLearners: "10,000+ 学习者正在使用",
+    proPlans: {
+      monthly: {
+        billingNote: "按月计费",
+        label: "月付套餐",
+        period: "/ 月",
+        price: "$4.99",
+      },
+      yearly: {
+        billingNote: "33% OFF",
+        checkoutSummary: "相当于 $3.33 / 月",
+        discount: "节省 33%",
+        label: "年付套餐",
+        period: "/ 年",
+        price: "$39.99",
+        recommended: "推荐",
+      },
+    },
+    proTagline: "让英语真正从“输入”变成“输出”",
+    restorePurchases: "恢复购买",
+    returnAccountMenu: "返回账户菜单",
+    returnProPage: "返回 Pro 页面",
+    save: "Save",
+    saveAvatarFailed: "保存失败，请换一张更小的图片",
+    settings: "设置",
+    signOut: "退出登录",
+    subscriptionTitle: "订阅",
+    chooseAvatarFirst: "请先选择头像",
+    changeAvatar: "更换头像",
+  },
+} as const;
 
 declare global {
   interface Window {
@@ -597,6 +843,7 @@ export default function SpeakEnglishPage() {
 }
 
 function SpeakEnglishClient() {
+  const { language } = useLanguage();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -605,6 +852,8 @@ function SpeakEnglishClient() {
   const speechBufferRef = useRef("");
   const shouldCommitSpeechRef = useRef(false);
   const speechSilenceTimerRef = useRef<number | null>(null);
+  const freePracticeRoundIdRef = useRef(createFreePracticeRoundId());
+  const shouldOpenProFromUrlRef = useRef(false);
 
   const [message, setMessage] = useState("用中文说出你想表达的内容");
   const [inputText, setInputText] = useState("");
@@ -639,6 +888,7 @@ function SpeakEnglishClient() {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [accountPanelView, setAccountPanelView] =
     useState<AccountPanelView>("menu");
+  const [selectedProPlan, setSelectedProPlan] = useState<ProPlan>("yearly");
   const [accountName, setAccountName] = useState("");
   const [accountEmail, setAccountEmail] = useState("");
   const [accountImage, setAccountImage] = useState("");
@@ -660,6 +910,8 @@ function SpeakEnglishClient() {
   const [selectedVoiceURI, setSelectedVoiceURI] = useState("");
   const [showEmojiPanel, setShowEmojiPanel] = useState(false);
   const [showPreviewKeyboard, setShowPreviewKeyboard] = useState(true);
+  const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
+    useState(false);
 
   const activeRows = keyboardMode === "symbols" ? symbolRows : letterRows;
   const baseInputValue =
@@ -671,6 +923,9 @@ function SpeakEnglishClient() {
       ? `${baseInputValue}${baseInputValue ? " " : ""}${liveTranscript}`
       : baseInputValue;
   const currentMode = modeMeta[keyboardMode];
+  const accountCopy = accountPanelCopy[language];
+  const accountMenuSections = accountCopy.accountMenuSections;
+  const proFeatureItems = accountCopy.proFeatures;
   const selectedClassicCourseCategory = useMemo(
     () =>
       classicCourseCategories.find(
@@ -730,13 +985,13 @@ function SpeakEnglishClient() {
     .slice(0, 2)
     .toUpperCase();
   const accountPanelTitle =
-    accountPanelView === "subscription" ? "订阅" : "账户";
+    accountPanelView === "subscription"
+      ? accountCopy.subscriptionTitle
+      : accountCopy.accountTitle;
   const accountDisplayName =
     accountName ||
-    (accountEmail ? accountEmail.split("@")[0] : "SpeakFlow 用户");
-  const subscriptionPlanLabel = "免费版";
-  const subscriptionExpiryLabel = "无到期时间";
-  const subscriptionPaymentLabel = "未绑定";
+    (accountEmail ? accountEmail.split("@")[0] : accountCopy.fallbackUser);
+  const selectedProPlanDetails = accountCopy.proPlans[selectedProPlan];
   const avatarEditorImage =
     avatarPreview || (accountImageFailed ? "" : accountImage);
 
@@ -822,9 +1077,15 @@ function SpeakEnglishClient() {
     if (typeof window === "undefined") return;
 
     const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.get("menu") !== "1") return;
+    const shouldOpenPro = searchParams.get("pro") === "1";
+    if (searchParams.get("menu") !== "1" && !shouldOpenPro) return;
 
+    shouldOpenProFromUrlRef.current = shouldOpenPro;
     setShowQuickPanel(true);
+    if (shouldOpenPro) {
+      setShowAccountMenu(true);
+      setAccountPanelView("subscription");
+    }
     window.history.replaceState(null, "", "/speak-english");
   }, []);
 
@@ -833,11 +1094,15 @@ function SpeakEnglishClient() {
       setShowClassicCoursePicker(false);
       resetClassicCoursePicker();
       setShowVoicePicker(false);
-      setShowAccountMenu(false);
-      setAccountPanelView("menu");
+      if (!shouldOpenProFromUrlRef.current) {
+        setShowAccountMenu(false);
+        setAccountPanelView("menu");
+      }
       setShowAvatarEditor(false);
       return;
     }
+
+    shouldOpenProFromUrlRef.current = false;
   }, [showQuickPanel]);
 
   useEffect(() => {
@@ -859,6 +1124,32 @@ function SpeakEnglishClient() {
     setClassicCoursePickerView("categories");
     setSelectedClassicCourseCategoryId("");
     setSelectedClassicCourseSectionId("");
+  }
+
+  function showFreePracticeLimit() {
+    setShowFreePracticeLimitModal(true);
+  }
+
+  function openProFromFreePracticeLimit() {
+    setShowFreePracticeLimitModal(false);
+    setShowQuickPanel(true);
+    setShowAccountMenu(true);
+    setAccountPanelView("subscription");
+    setShowAvatarEditor(false);
+    setShowClassicCoursePicker(false);
+    resetClassicCoursePicker();
+    setShowVoicePicker(false);
+  }
+
+  function ensureFreePracticeAvailable() {
+    if (!isFreePracticeLimitReached("free")) return true;
+
+    showFreePracticeLimit();
+    return false;
+  }
+
+  function markFreePracticeRoundCompleted() {
+    recordFreePracticeCompletion("free", freePracticeRoundIdRef.current);
   }
 
   function handleAccountMenuAction(action?: AccountMenuAction) {
@@ -884,7 +1175,7 @@ function SpeakEnglishClient() {
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      setAvatarEditorNotice("请选择图片文件");
+      setAvatarEditorNotice(accountCopy.invalidImage);
       return;
     }
 
@@ -896,14 +1187,14 @@ function SpeakEnglishClient() {
       }
     };
     reader.onerror = () => {
-      setAvatarEditorNotice("头像读取失败，请重新选择");
+      setAvatarEditorNotice(accountCopy.imageReadFailed);
     };
     reader.readAsDataURL(file);
   }
 
   function saveAvatarChange() {
     if (!avatarPreview) {
-      setAvatarEditorNotice("请先选择头像");
+      setAvatarEditorNotice(accountCopy.chooseAvatarFirst);
       return;
     }
 
@@ -913,7 +1204,7 @@ function SpeakEnglishClient() {
         avatarPreview
       );
     } catch {
-      setAvatarEditorNotice("保存失败，请换一张更小的图片");
+      setAvatarEditorNotice(accountCopy.saveAvatarFailed);
       return;
     }
 
@@ -981,6 +1272,7 @@ function SpeakEnglishClient() {
   }
 
   function prepareNextNativeRound() {
+    freePracticeRoundIdRef.current = createFreePracticeRoundId();
     setPracticeStage("native");
     setNativeSpeech("");
     setHasNativeSpeech(false);
@@ -1029,6 +1321,11 @@ function SpeakEnglishClient() {
     const nextPracticeStage: PracticeStage = isStartingNextNativeRound
       ? "native"
       : practiceStage;
+
+    if (nextPracticeStage === "native" && !ensureFreePracticeAvailable()) {
+      shouldCommitSpeechRef.current = false;
+      return;
+    }
 
     if (isStartingNextNativeRound) {
       prepareNextNativeRound();
@@ -1084,6 +1381,7 @@ function SpeakEnglishClient() {
           setPracticeStage("english");
         } else {
           setHasEnglishAttempt(true);
+          markFreePracticeRoundCompleted();
         }
       }
 
@@ -1418,7 +1716,7 @@ function SpeakEnglishClient() {
                 {showQuickPanel ? (
                   <button
                     type="button"
-                    aria-label="打开账户菜单"
+                    aria-label={accountCopy.openAccountMenu}
                     onClick={() => {
                       setShowAccountMenu((current) => {
                         const next = !current;
@@ -1474,11 +1772,37 @@ function SpeakEnglishClient() {
 
           {showQuickPanel && showAccountMenu ? (
             <div className="absolute inset-0 z-50 flex flex-col bg-[#fbf9ff]/96 px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-6 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] backdrop-blur-2xl">
-              {accountPanelView === "account" ? (
+              {accountPanelView === "subscription" ||
+              accountPanelView === "checkout" ? (
+                <div className="grid shrink-0 grid-cols-[2.75rem_1fr_2.75rem] items-center gap-3">
+                  <button
+                    type="button"
+                    aria-label={
+                      accountPanelView === "checkout"
+                        ? accountCopy.returnProPage
+                        : accountCopy.returnAccountMenu
+                    }
+                    onClick={() =>
+                      setAccountPanelView(
+                        accountPanelView === "checkout" ? "subscription" : "menu"
+                      )
+                    }
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.55rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
+                  >
+                    ‹
+                  </button>
+                  <h2 className="truncate text-center text-[1.25rem] font-extrabold text-[#201833]">
+                    {accountPanelView === "checkout"
+                      ? accountCopy.confirmSubscription
+                      : "SpeakFlow Pro"}
+                  </h2>
+                  <span />
+                </div>
+              ) : accountPanelView === "account" ? (
                 <div className="flex shrink-0 items-center justify-between">
                   <button
                     type="button"
-                    aria-label="返回账户菜单"
+                    aria-label={accountCopy.returnAccountMenu}
                     onClick={() => {
                       setShowAvatarEditor(false);
                       setAccountPanelView("menu");
@@ -1489,7 +1813,7 @@ function SpeakEnglishClient() {
                   </button>
                   <button
                     type="button"
-                    aria-label="关闭账户菜单"
+                    aria-label={accountCopy.closeAccountMenu}
                     onClick={() => {
                       setShowAccountMenu(false);
                       setAccountPanelView("menu");
@@ -1506,7 +1830,7 @@ function SpeakEnglishClient() {
                     {accountPanelView !== "menu" ? (
                       <button
                         type="button"
-                        aria-label="返回账户菜单"
+                        aria-label={accountCopy.returnAccountMenu}
                         onClick={() => {
                           setShowAvatarEditor(false);
                           setAccountPanelView("menu");
@@ -1536,13 +1860,13 @@ function SpeakEnglishClient() {
                         {accountPanelTitle}
                       </h2>
                       <p className="mt-0.5 truncate text-[0.86rem] font-semibold text-[#7f7896]">
-                        {accountEmail || accountName || "SpeakFlow 用户"}
+                        {accountEmail || accountName || accountCopy.fallbackUser}
                       </p>
                     </div>
                   </div>
                   <button
                     type="button"
-                    aria-label="关闭账户菜单"
+                    aria-label={accountCopy.closeAccountMenu}
                     onClick={() => {
                       setShowAccountMenu(false);
                       setAccountPanelView("menu");
@@ -1581,25 +1905,29 @@ function SpeakEnglishClient() {
                           >
                             <button
                               type="button"
-                              onClick={() => handleAccountMenuAction(item.action)}
+                              onClick={() =>
+                                handleAccountMenuAction(
+                                  "action" in item ? item.action : undefined
+                                )
+                              }
                               className="flex min-h-[3.45rem] w-full items-center gap-3 px-4 py-3 text-left text-[1.04rem] font-extrabold text-[#201833] transition hover:bg-[#efeaff]/70"
                             >
                               <span className="min-w-0 flex-1 truncate">
                                 {item.label}
                               </span>
-                              {item.trailing ? (
+                              {"trailing" in item && item.trailing ? (
                                 <span className="shrink-0 rounded-full bg-[#efeaff] px-3 py-1 text-[0.86rem] font-extrabold text-[#7460e8]">
                                   {item.trailing}
                                 </span>
                               ) : null}
-                              {item.action ? (
+                              {"action" in item && item.action ? (
                                 <span className="shrink-0 text-[1.35rem] font-semibold text-[#7f7896]">
                                   ›
                                 </span>
                               ) : null}
                             </button>
 
-                            {item.children ? (
+                            {"children" in item && item.children ? (
                               <div className="px-4 pb-4">
                                 <div className="rounded-[18px] bg-[#f7f4ff]/78 px-4 py-2.5">
                                   {item.children.map((child) => (
@@ -1623,7 +1951,7 @@ function SpeakEnglishClient() {
                     <div className="flex items-center gap-4 px-2 pt-5">
                       <button
                         type="button"
-                        aria-label="修改头像"
+                        aria-label={accountCopy.editAvatar}
                         onClick={openAvatarEditor}
                         className="relative grid h-24 w-24 shrink-0 place-items-center overflow-visible rounded-full bg-[#f0ebff] text-[1.15rem] font-extrabold text-white shadow-[0_18px_36px_rgba(84,72,146,0.22)]"
                       >
@@ -1651,13 +1979,13 @@ function SpeakEnglishClient() {
                           {accountDisplayName}
                         </h2>
                         <p className="mt-2 truncate text-[1rem] font-semibold text-[#7f7896]">
-                          {accountEmail || "未绑定邮箱"}
+                          {accountEmail || accountCopy.fallbackEmail}
                         </p>
                       </div>
                     </div>
 
                     <h3 className="mt-10 px-3 text-[1rem] font-extrabold text-[#7f7896]">
-                      会员
+                      {accountCopy.member}
                     </h3>
                     <div className="mt-4 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
                       <button
@@ -1672,7 +2000,7 @@ function SpeakEnglishClient() {
                           SpeakFlow Pro
                         </span>
                         <span className="rounded-full bg-[#efeaff] px-3 py-1 text-[0.9rem] font-extrabold text-[#7460e8]">
-                          未订阅
+                          {accountCopy.notSubscribed}
                         </span>
                         <span className="text-[1.75rem] font-semibold text-[#7f7896]">
                           ›
@@ -1687,7 +2015,7 @@ function SpeakEnglishClient() {
                           ▭
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
-                          管理订阅
+                          {accountCopy.accountMenuSections[0].items[1].label}
                         </span>
                         <span className="text-[1.75rem] font-semibold text-[#7f7896]">
                           ›
@@ -1701,7 +2029,7 @@ function SpeakEnglishClient() {
                           ↻
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
-                          恢复购买
+                          {accountCopy.restorePurchases}
                         </span>
                         <span className="text-[1.75rem] font-semibold text-[#7f7896]">
                           ›
@@ -1710,7 +2038,7 @@ function SpeakEnglishClient() {
                     </div>
 
                     <h3 className="mt-8 px-3 text-[1rem] font-extrabold text-[#7f7896]">
-                      账户与安全
+                      {accountCopy.accountSecurity}
                     </h3>
                     <div className="mt-4 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
                       <button
@@ -1721,7 +2049,7 @@ function SpeakEnglishClient() {
                           ▣
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
-                          登录与安全
+                          {accountCopy.loginSecurity}
                         </span>
                         <span className="text-[1.75rem] font-semibold text-[#7f7896]">
                           ›
@@ -1730,7 +2058,7 @@ function SpeakEnglishClient() {
                     </div>
 
                     <h3 className="mt-8 px-3 text-[1rem] font-extrabold text-[#7f7896]">
-                      数据
+                      {accountCopy.data}
                     </h3>
                     <div className="mt-4 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
                       <button
@@ -1741,7 +2069,7 @@ function SpeakEnglishClient() {
                           ◔
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
-                          学习数据
+                          {accountCopy.learningData}
                         </span>
                         <span className="text-[1.75rem] font-semibold text-[#7f7896]">
                           ›
@@ -1750,7 +2078,7 @@ function SpeakEnglishClient() {
                     </div>
 
                     <h3 className="mt-8 px-3 text-[1rem] font-extrabold text-[#7f7896]">
-                      其他
+                      {accountCopy.other}
                     </h3>
                     <div className="mt-4 overflow-hidden rounded-[24px] bg-white/78 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
                       <button
@@ -1761,7 +2089,7 @@ function SpeakEnglishClient() {
                           ▥
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[1.08rem]">
-                          删除账户
+                          {accountCopy.deleteAccount}
                         </span>
                         <span className="text-[1.75rem] font-semibold">
                           ›
@@ -1769,33 +2097,249 @@ function SpeakEnglishClient() {
                       </button>
                     </div>
                   </section>
-                ) : (
-                  <section className="grid gap-2">
-                    <div className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left">
-                      <span className="font-bold">当前套餐</span>
-                      <span className="shrink-0 text-[0.9rem] font-bold text-[#7f7896]">
-                        {subscriptionPlanLabel}
+                ) : accountPanelView !== "checkout" ? (
+                  <section className="pb-8">
+                    <div className="relative overflow-hidden rounded-[30px] border border-white/80 bg-white/76 px-5 pb-6 pt-4 text-center shadow-[0_24px_70px_rgba(84,72,146,0.14)] ring-1 ring-[#efeaff]">
+                      <span className="absolute left-8 top-12 text-[#8b67ff]/35">
+                        ✦
                       </span>
-                    </div>
-                    <div className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left">
-                      <span className="font-bold">到期时间</span>
-                      <span className="shrink-0 text-[0.9rem] font-bold text-[#7f7896]">
-                        {subscriptionExpiryLabel}
+                      <span className="absolute right-8 top-14 text-[#c45cff]/30">
+                        ✦
                       </span>
-                    </div>
-                    <div className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left">
-                      <span className="font-bold">付款方式</span>
-                      <span className="shrink-0 text-[0.9rem] font-bold text-[#7f7896]">
-                        {subscriptionPaymentLabel}
+                      <span className="absolute right-16 top-7 text-[#91dcff]/40">
+                        ✦
                       </span>
+                      <CrownIcon className="mx-auto h-9 w-9 text-[#8b5cf6] drop-shadow-[0_8px_14px_rgba(126,92,255,0.24)]" />
+                      <h2 className="mt-3 text-[2.08rem] font-black leading-none text-[#201833]">
+                        SpeakFlow Pro
+                      </h2>
+                      <p className="mx-auto mt-3 max-w-[390px] text-[1.02rem] font-extrabold leading-[1.12] text-[#201833]">
+                        {accountCopy.proTagline}
+                      </p>
+                      <p className="mx-auto mt-2 max-w-none whitespace-nowrap text-[0.78rem] font-bold leading-[1.12] text-[#7f7896]">
+                        {accountCopy.proDescription}
+                      </p>
+                      <div className="mx-auto mt-4 inline-flex items-center rounded-full bg-[#f0ecff] px-4 py-1.5 text-[0.82rem] font-extrabold text-[#7460e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
+                        {accountCopy.proLearners}
+                      </div>
                     </div>
+
+                    <h3 className="mt-8 flex items-center gap-2 px-1 text-[1.08rem] font-extrabold text-[#201833]">
+                      <span className="text-[#7460e8]">✦</span>
+                      {accountCopy.proBenefits}
+                    </h3>
+                    <div className="mt-4 grid gap-3">
+                      {proFeatureItems.map((feature) => (
+                        <div
+                          key={feature.title}
+                          className="flex items-center gap-4 rounded-[24px] border border-white/78 bg-white/72 px-4 py-4 shadow-[0_14px_34px_rgba(84,72,146,0.1)]"
+                        >
+                          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-[20px] bg-[#efeaff] text-[1.75rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]">
+                            {feature.icon}
+                          </span>
+                          <span className="min-w-0">
+                            <span className="block text-[1.08rem] font-extrabold leading-6 text-[#201833]">
+                              {feature.title}
+                            </span>
+                            <span className="mt-1 block text-[0.92rem] font-semibold leading-6 text-[#7f7896]">
+                              {feature.description}
+                            </span>
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <h3 className="mt-8 flex items-center gap-2 px-1 text-[1.08rem] font-extrabold text-[#201833]">
+                      <span className="text-[#7460e8]">◆</span>
+                      {accountCopy.choosePlan}
+                    </h3>
+                    <div
+                      className="mt-4 grid gap-3"
+                      role="radiogroup"
+                      aria-label={accountCopy.choosePlan}
+                    >
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={selectedProPlan === "monthly"}
+                        onClick={() => setSelectedProPlan("monthly")}
+                        className={`flex min-h-[4.9rem] items-center gap-4 rounded-[24px] px-4 py-4 text-left transition ${
+                          selectedProPlan === "monthly"
+                            ? "border-2 border-[#9a67ff] bg-white/82 shadow-[0_18px_44px_rgba(126,92,255,0.14)]"
+                            : "border border-[#e8e2ff] bg-white/68 shadow-[0_14px_34px_rgba(84,72,146,0.08)]"
+                        }`}
+                      >
+                        <span
+                          className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-[0.95rem] font-extrabold transition ${
+                            selectedProPlan === "monthly"
+                              ? "bg-[linear-gradient(135deg,#7a5cff_0%,#c85cff_100%)] text-white"
+                              : "border-2 border-[#b8aed8] text-transparent"
+                          }`}
+                        >
+                          ✓
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[1rem] font-extrabold text-[#201833]">
+                            {accountCopy.proPlans.monthly.label}
+                          </span>
+                          <span className="mt-1 block text-[1.45rem] font-extrabold leading-8 text-[#201833]">
+                            {accountCopy.proPlans.monthly.price}
+                            <span className="text-[0.95rem] font-bold text-[#7f7896]">
+                              {accountCopy.proPlans.monthly.period}
+                            </span>
+                          </span>
+                        </span>
+                        <span className="hidden rounded-full bg-[#f2efff] px-3 py-1 text-[0.78rem] font-extrabold text-[#7f7896] min-[390px]:inline">
+                          {accountCopy.billingNoteMonthly}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={selectedProPlan === "yearly"}
+                        onClick={() => setSelectedProPlan("yearly")}
+                        className={`flex min-h-[5.25rem] items-center gap-4 rounded-[24px] px-4 py-4 text-left transition ${
+                          selectedProPlan === "yearly"
+                            ? "border-2 border-[#9a67ff] bg-white/82 shadow-[0_18px_44px_rgba(126,92,255,0.14)]"
+                            : "border border-[#e8e2ff] bg-white/68 shadow-[0_14px_34px_rgba(84,72,146,0.08)]"
+                        }`}
+                      >
+                        <span
+                          className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-[0.95rem] font-extrabold transition ${
+                            selectedProPlan === "yearly"
+                              ? "bg-[linear-gradient(135deg,#7a5cff_0%,#c85cff_100%)] text-white"
+                              : "border-2 border-[#b8aed8] text-transparent"
+                          }`}
+                        >
+                          ✓
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="flex flex-wrap items-center gap-2 text-[1rem] font-extrabold text-[#201833]">
+                            {accountCopy.proPlans.yearly.label}
+                            <span className="rounded-[10px] bg-[linear-gradient(135deg,#7a5cff_0%,#c85cff_100%)] px-2.5 py-1 text-[0.78rem] text-white">
+                              {accountCopy.proPlans.yearly.recommended}
+                            </span>
+                          </span>
+                          <span className="mt-1 block text-[1.45rem] font-extrabold leading-8 text-[#201833]">
+                            {accountCopy.proPlans.yearly.price}
+                            <span className="text-[0.95rem] font-bold text-[#7f7896]">
+                              {accountCopy.proPlans.yearly.period}
+                            </span>
+                          </span>
+                        </span>
+                        <span className="shrink-0 rounded-full bg-[#ffeaf7] px-3 py-1 text-[0.82rem] font-extrabold text-[#cf3e91]">
+                          33% OFF
+                        </span>
+                      </button>
+                    </div>
+
                     <button
                       type="button"
-                      className="mt-3 flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left font-extrabold text-[#201833] transition hover:bg-[#efeaff]"
+                      onClick={() => setAccountPanelView("checkout")}
+                      aria-label={`${accountCopy.proCta}: ${selectedProPlanDetails.label}`}
+                      className="mt-7 flex min-h-[4.1rem] w-full items-center justify-center rounded-[24px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-5 text-[1.12rem] font-extrabold text-white shadow-[0_22px_50px_rgba(126,92,255,0.32)]"
                     >
-                      <span>管理订阅</span>
-                      <span className="shrink-0 text-[1.2rem]">›</span>
+                      <CrownIcon className="mr-2 h-7 w-7" />
+                      {accountCopy.proCta}
                     </button>
+                    <p className="mt-4 text-center text-[0.86rem] font-bold text-[#7f7896]">
+                      {accountCopy.cancelSafety}
+                    </p>
+                  </section>
+                ) : (
+                  <section className="pb-8">
+                    <div className="relative overflow-hidden rounded-[30px] border border-white/80 bg-white/78 px-5 pb-6 pt-6 shadow-[0_24px_70px_rgba(84,72,146,0.14)] ring-1 ring-[#efeaff]">
+                      <span className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#b46cff]/12 blur-3xl" />
+                      <span className="absolute -left-10 top-20 h-32 w-32 rounded-full bg-[#6edcff]/12 blur-3xl" />
+                      <div className="relative">
+                        <div className="flex items-center gap-3">
+                          <span className="grid h-12 w-12 place-items-center rounded-[18px] bg-[#efeaff] text-[#7a5cff] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+                            <CrownIcon className="h-7 w-7" />
+                          </span>
+                          <div>
+                            <p className="text-[0.82rem] font-extrabold uppercase tracking-[0.16em] text-[#7f7896]">
+                              {accountCopy.confirmSubscription}
+                            </p>
+                            <h3 className="mt-1 text-[1.28rem] font-black leading-tight text-[#201833]">
+                              SpeakFlow Pro {selectedProPlanDetails.label}
+                            </h3>
+                          </div>
+                        </div>
+
+                        <div className="mt-6 rounded-[26px] bg-[#fbf9ff]/84 px-5 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] ring-1 ring-white/85">
+                          <div className="flex items-end justify-between gap-4">
+                            <div>
+                              <p className="text-[2.15rem] font-black leading-none text-[#201833]">
+                                {selectedProPlanDetails.price}
+                                <span className="ml-1 text-[1rem] font-extrabold text-[#7f7896]">
+                                  {selectedProPlanDetails.period}
+                                </span>
+                              </p>
+                              {"checkoutSummary" in selectedProPlanDetails &&
+                              selectedProPlanDetails.checkoutSummary ? (
+                                <p className="mt-2 text-[0.96rem] font-bold text-[#7f7896]">
+                                  {selectedProPlanDetails.checkoutSummary}
+                                </p>
+                              ) : null}
+                            </div>
+                            {"discount" in selectedProPlanDetails &&
+                            selectedProPlanDetails.discount ? (
+                              <span className="shrink-0 rounded-full bg-[#ffeaf7] px-3 py-1.5 text-[0.82rem] font-black text-[#cf3e91]">
+                                {selectedProPlanDetails.discount}
+                              </span>
+                            ) : null}
+                          </div>
+                        </div>
+
+                        <div className="mt-6">
+                          <h3 className="text-[1.05rem] font-black text-[#201833]">
+                            {accountCopy.included}
+                          </h3>
+                          <div className="mt-3 grid gap-2.5">
+                            {proFeatureItems.map((feature) => (
+                              <div
+                                key={feature.title}
+                                className="flex items-center gap-3 rounded-[18px] bg-white/66 px-4 py-3 text-[0.96rem] font-extrabold text-[#201833] ring-1 ring-white/80"
+                              >
+                                <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#efeaff] text-[0.82rem] text-[#7a5cff]">
+                                  ✓
+                                </span>
+                                <span>{feature.title}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="mt-6 rounded-[24px] bg-white/68 px-4 py-4 ring-1 ring-white/85">
+                          <p className="text-[1.02rem] font-black text-[#201833]">
+                            {accountCopy.paymentMethodTitle}
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {accountCopy.paymentMethods.map(
+                              (method) => (
+                                <span
+                                  key={method}
+                                  className="rounded-full bg-[#f0ecff] px-3 py-1.5 text-[0.86rem] font-extrabold text-[#6f55df]"
+                                >
+                                  {method}
+                                </span>
+                              )
+                            )}
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          className="mt-6 flex min-h-[4.15rem] w-full items-center justify-center rounded-[24px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-5 text-[1.14rem] font-black text-white shadow-[0_22px_50px_rgba(126,92,255,0.34)]"
+                        >
+                          {accountCopy.confirmAndPay}
+                        </button>
+                        <p className="mt-4 text-center text-[0.84rem] font-bold text-[#7f7896]">
+                          {accountCopy.checkoutSafety}
+                        </p>
+                      </div>
+                    </div>
                   </section>
                 )}
               </div>
@@ -1806,7 +2350,7 @@ function SpeakEnglishClient() {
                   onClick={() => void signOut({ callbackUrl: "/" })}
                   className="mt-5 flex min-h-[3.45rem] shrink-0 items-center rounded-[22px] bg-white/62 px-4 py-3 text-left text-[1.06rem] font-extrabold text-[#d33b46] shadow-[0_14px_36px_rgba(84,72,146,0.09)] ring-1 ring-white/75 transition hover:bg-[#ffecef]"
                 >
-                  <span>退出登录</span>
+                  <span>{accountCopy.signOut}</span>
                 </button>
               ) : null}
 
@@ -1824,11 +2368,11 @@ function SpeakEnglishClient() {
                   <div className="w-full max-w-[320px] rounded-[28px] border border-white/80 bg-[#fbf9ff] px-6 py-6 text-center shadow-[0_24px_60px_rgba(84,72,146,0.28)]">
                     <div className="flex items-center justify-between text-left">
                       <h3 className="text-[1.15rem] font-extrabold text-[#201833]">
-                        修改头像
+                        {accountCopy.editAvatarTitle}
                       </h3>
                       <button
                         type="button"
-                        aria-label="关闭头像编辑"
+                        aria-label={accountCopy.closeAvatarEditor}
                         onClick={() => {
                           setShowAvatarEditor(false);
                           setAvatarEditorNotice("");
@@ -1864,14 +2408,14 @@ function SpeakEnglishClient() {
                       htmlFor="account-avatar-file"
                       className="mt-6 flex min-h-12 w-full cursor-pointer items-center justify-center rounded-[18px] bg-[#efeaff] px-4 text-[1rem] font-extrabold text-[#5b63ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]"
                     >
-                      更换头像
+                      {accountCopy.changeAvatar}
                     </label>
                     <button
                       type="button"
                       onClick={saveAvatarChange}
                       className="mt-3 min-h-12 w-full rounded-[18px] bg-[#efeaff] px-4 text-[1rem] font-extrabold text-[#5b63ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]"
                     >
-                      Save
+                      {accountCopy.save}
                     </button>
                   </div>
                 </div>
@@ -2551,6 +3095,13 @@ function SpeakEnglishClient() {
           </div>
           ) : null}
         </section>
+
+        {showFreePracticeLimitModal ? (
+          <FreePracticeLimitModal
+            onDismiss={() => setShowFreePracticeLimitModal(false)}
+            onUnlockPro={openProFromFreePracticeLimit}
+          />
+        ) : null}
 
         {pendingExpression ? (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#171129]/72 p-4 backdrop-blur-[10px]">

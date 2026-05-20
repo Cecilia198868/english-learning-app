@@ -1,0 +1,68 @@
+type FreePracticeLimitModalProps = {
+  onDismiss: () => void;
+  onUnlockPro: () => void;
+};
+
+const proBenefits = ["完整课程", "无限练习", "新表达收藏"];
+
+export default function FreePracticeLimitModal({
+  onDismiss,
+  onUnlockPro,
+}: FreePracticeLimitModalProps) {
+  return (
+    <div
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-[#171129]/72 p-4 text-[#201833] backdrop-blur-[10px]"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="free-practice-limit-title"
+    >
+      <div className="w-full max-w-[360px] rounded-[30px] border border-white/80 bg-[#fbf9ff] px-6 py-7 text-center shadow-[0_28px_80px_rgba(28,18,62,0.42)]">
+        <h2
+          id="free-practice-limit-title"
+          className="text-[1.6rem] font-black leading-tight"
+        >
+          🎉 今天的免费练习已完成
+        </h2>
+        <p className="mt-3 text-[1rem] font-bold leading-7 text-[#6f6685]">
+          继续你的英语输出之旅。
+        </p>
+
+        <div className="mt-6 px-5 text-left">
+          <p className="text-center text-[1.55rem] font-black leading-none">
+            SpeakFlow Pro
+          </p>
+          <div className="mt-5 grid gap-3">
+            {proBenefits.map((benefit) => (
+              <div
+                key={benefit}
+                className="flex items-center gap-3 text-[1.05rem] font-extrabold"
+              >
+                <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#efeaff] text-[0.86rem] text-[#7460e8]">
+                  ✓
+                </span>
+                <span>{benefit}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            onClick={onUnlockPro}
+            className="min-h-12 rounded-[18px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-4 text-[1.02rem] font-extrabold text-white shadow-[0_16px_34px_rgba(126,92,255,0.3)]"
+          >
+            解锁 Pro
+          </button>
+          <button
+            type="button"
+            onClick={onDismiss}
+            className="min-h-12 rounded-[18px] border border-[#d8d0f4] bg-white px-4 text-[1.02rem] font-extrabold text-[#6f668a] hover:bg-[#efeaff]"
+          >
+            稍后再说
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

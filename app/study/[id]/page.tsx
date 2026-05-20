@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
+import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
 import {
   featuredLessonRecords,
@@ -17,6 +18,11 @@ import {
   splitSentenceByHighlightedExpressions,
   type HighlightedExpression,
 } from "@/lib/expressionHighlights";
+import {
+  hasFreePracticeCompletion,
+  isFreePracticeLimitReached,
+  recordFreePracticeCompletion,
+} from "@/lib/freePracticeLimit";
 
 type Lesson = {
   id: string;
@@ -288,6 +294,8 @@ export default function StudyPage() {
     HighlightedExpression[]
   >([]);
   const [showMoreActions, setShowMoreActions] = useState(false);
+  const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
+    useState(false);
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceName, setSelectedVoiceName] = useState("");
@@ -516,6 +524,8 @@ export default function StudyPage() {
     stopSequencePlayback();
     if (currentIndex < pairs.length - 1) {
       const newIndex = currentIndex + 1;
+      if (!ensureFreePracticeAvailable(newIndex)) return;
+
       setCurrentIndex(newIndex);
       currentIndexRef.current = newIndex;
       resetPracticeAttempt();
@@ -993,6 +1003,38 @@ export default function StudyPage() {
     setMessage("当前位置已保存");
   }
 
+  function showFreePracticeLimit() {
+    stopSequencePlayback();
+    setShowFreePracticeLimitModal(true);
+  }
+
+  function openProFromFreePracticeLimit() {
+    setShowFreePracticeLimitModal(false);
+    stopSequencePlayback();
+    router.push("/speak-english?menu=1&pro=1");
+  }
+
+  function getSentenceCompletionId(index = currentIndex) {
+    return `study:${lessonId}:${index}`;
+  }
+
+  function ensureFreePracticeAvailable(index = currentIndex) {
+    const completionId = getSentenceCompletionId(index);
+
+    if (hasFreePracticeCompletion("classic", completionId)) return true;
+    if (!isFreePracticeLimitReached("classic")) return true;
+
+    showFreePracticeLimit();
+    return false;
+  }
+
+  function markCurrentSentenceCompleted(index = currentIndex) {
+    recordFreePracticeCompletion(
+      "classic",
+      getSentenceCompletionId(index)
+    );
+  }
+
   function getRecognitionConstructor() {
     if (typeof window === "undefined") return null;
     return window.SpeechRecognition || window.webkitSpeechRecognition || null;
@@ -1014,6 +1056,8 @@ export default function StudyPage() {
   }
 
   function startEnglishRecognition() {
+    if (!ensureFreePracticeAvailable()) return;
+
     const RecognitionConstructor = getRecognitionConstructor();
     if (!RecognitionConstructor) {
       setMessage("当前浏览器不支持语音识别");
@@ -1027,6 +1071,7 @@ export default function StudyPage() {
     setLiveTranscript("");
     setShowEnglish(false);
     setMessage("");
+    const practiceIndex = currentIndex;
 
     const recognition = new RecognitionConstructor();
     recognition.lang = "en-US";
@@ -1061,6 +1106,7 @@ export default function StudyPage() {
       const finalTranscript = speechBufferRef.current.trim();
       if (finalTranscript) {
         setSpokenEnglish(finalTranscript);
+        markCurrentSentenceCompleted(practiceIndex);
       }
       setLiveTranscript("");
       setIsListening(false);
@@ -1585,6 +1631,13 @@ export default function StudyPage() {
             />
           ) : null}
         </section>
+
+        {showFreePracticeLimitModal ? (
+          <FreePracticeLimitModal
+            onDismiss={() => setShowFreePracticeLimitModal(false)}
+            onUnlockPro={openProFromFreePracticeLimit}
+          />
+        ) : null}
 
         {pendingExpression ? (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#171129]/72 p-4 backdrop-blur-[10px]">

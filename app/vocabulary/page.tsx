@@ -2,6 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import ExpressionLearningLimitModal from "@/components/ExpressionLearningLimitModal";
+import {
+  canLearnExpression,
+  getExpressionLearningId,
+  recordLearnedExpression,
+} from "@/lib/freeExpressionLearningLimit";
 import {
   loadVocabularyWords,
   saveVocabularyWords,
@@ -103,6 +109,8 @@ export default function VocabularyPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showExpressionLibrary, setShowExpressionLibrary] = useState(false);
   const [showLibraryHint, setShowLibraryHint] = useState(false);
+  const [showExpressionLimitModal, setShowExpressionLimitModal] =
+    useState(false);
 
   useEffect(() => {
     const loadTimer = window.setTimeout(() => {
@@ -144,6 +152,44 @@ export default function VocabularyPage() {
     if (!displayedExpression) return "";
     return displayedExampleText || displayedExpressionText;
   }, [displayedExpression, displayedExampleText, displayedExpressionText]);
+
+  useEffect(() => {
+    if (!displayedExpression) return;
+
+    const expressionId = getExpressionLearningId(displayedExpression);
+    if (!canLearnExpression(expressionId)) {
+      const showTimer = window.setTimeout(() => {
+        setShowExpressionLimitModal(true);
+      }, 0);
+
+      return () => {
+        window.clearTimeout(showTimer);
+      };
+    }
+
+    recordLearnedExpression(expressionId);
+  }, [displayedExpression]);
+
+  function openProFromExpressionLimit() {
+    setShowExpressionLimitModal(false);
+    router.push("/speak-english?menu=1&pro=1");
+  }
+
+  function openExpressionAt(index: number, options: { closeLibrary?: boolean } = {}) {
+    const expression = words[index];
+    if (!expression) return;
+
+    const expressionId = getExpressionLearningId(expression);
+    if (!canLearnExpression(expressionId)) {
+      setShowExpressionLimitModal(true);
+      return;
+    }
+
+    setCurrentIndex(index);
+    if (options.closeLibrary) {
+      setShowExpressionLibrary(false);
+    }
+  }
 
   function speakExpression(rate: number) {
     if (!speechText || typeof window === "undefined") return;
@@ -279,8 +325,7 @@ export default function VocabularyPage() {
                         <button
                           type="button"
                           onClick={() => {
-                            setCurrentIndex(index);
-                            setShowExpressionLibrary(false);
+                            openExpressionAt(index, { closeLibrary: true });
                           }}
                           className="min-w-0 flex-1 text-left"
                         >
@@ -362,7 +407,7 @@ export default function VocabularyPage() {
             <div className="flex items-center justify-center gap-4">
               <button
                 type="button"
-                onClick={() => setCurrentIndex((index) => Math.max(index - 1, 0))}
+                onClick={() => openExpressionAt(Math.max(currentIndex - 1, 0))}
                 disabled={!hasPrevious}
                 className="grid h-12 w-12 place-items-center rounded-full text-[2rem] font-semibold text-[#201833] transition hover:bg-white/30 disabled:text-[#aaa3b5]"
                 aria-label="上一个表达"
@@ -390,7 +435,7 @@ export default function VocabularyPage() {
               <button
                 type="button"
                 onClick={() =>
-                  setCurrentIndex((index) => Math.min(index + 1, words.length - 1))
+                  openExpressionAt(Math.min(currentIndex + 1, words.length - 1))
                 }
                 disabled={!hasNext}
                 className="grid h-12 w-12 place-items-center rounded-full text-[2rem] font-semibold text-[#201833] transition hover:bg-white/30 disabled:text-[#aaa3b5]"
@@ -411,6 +456,12 @@ export default function VocabularyPage() {
           </div>
 
         </section>
+        {showExpressionLimitModal ? (
+          <ExpressionLearningLimitModal
+            onDismiss={() => setShowExpressionLimitModal(false)}
+            onUnlockPro={openProFromExpressionLimit}
+          />
+        ) : null}
       </div>
     </main>
   );
