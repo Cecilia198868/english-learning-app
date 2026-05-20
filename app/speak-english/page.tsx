@@ -1,6 +1,6 @@
 "use client";
 
-import type { PointerEvent } from "react";
+import type { ChangeEvent, PointerEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
@@ -75,6 +75,12 @@ type SessionResponse = {
 };
 
 type AccountPanelView = "menu" | "account" | "subscription";
+
+const accountAvatarStoragePrefix = "speakflow-account-avatar";
+
+function getAccountAvatarStorageKey(identifier: string) {
+  return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
+}
 
 const accountMenuSections = [
   {
@@ -545,6 +551,7 @@ export default function SpeakEnglishPage() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const avatarFileInputRef = useRef<HTMLInputElement | null>(null);
   const isDrawingRef = useRef(false);
   const speechBufferRef = useRef("");
   const shouldCommitSpeechRef = useRef(false);
@@ -587,6 +594,9 @@ export default function SpeakEnglishPage() {
   const [accountEmail, setAccountEmail] = useState("");
   const [accountImage, setAccountImage] = useState("");
   const [accountImageFailed, setAccountImageFailed] = useState(false);
+  const [showAvatarEditor, setShowAvatarEditor] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState("");
+  const [avatarEditorNotice, setAvatarEditorNotice] = useState("");
   const [showClassicCoursePicker, setShowClassicCoursePicker] = useState(false);
   const [classicCoursePickerView, setClassicCoursePickerView] =
     useState<ClassicCoursePickerView>("categories");
@@ -676,6 +686,8 @@ export default function SpeakEnglishPage() {
   const subscriptionPlanLabel = "免费版";
   const subscriptionExpiryLabel = "无到期时间";
   const subscriptionPaymentLabel = "未绑定";
+  const avatarEditorImage =
+    avatarPreview || (accountImageFailed ? "" : accountImage);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -729,9 +741,15 @@ export default function SpeakEnglishPage() {
         const session = (await response.json()) as SessionResponse;
         if (cancelled) return;
 
-        setAccountName(session.user?.name || "");
-        setAccountEmail(session.user?.email || session.user?.name || "");
-        setAccountImage(session.user?.image || "");
+        const nextName = session.user?.name || "";
+        const nextEmail = session.user?.email || session.user?.name || "";
+        const savedAvatar = window.localStorage.getItem(
+          getAccountAvatarStorageKey(nextEmail || nextName)
+        );
+
+        setAccountName(nextName);
+        setAccountEmail(nextEmail);
+        setAccountImage(savedAvatar || session.user?.image || "");
         setAccountImageFailed(false);
       } catch {
         if (!cancelled) {
@@ -766,6 +784,7 @@ export default function SpeakEnglishPage() {
       setShowVoicePicker(false);
       setShowAccountMenu(false);
       setAccountPanelView("menu");
+      setShowAvatarEditor(false);
       return;
     }
   }, [showQuickPanel]);
@@ -789,6 +808,59 @@ export default function SpeakEnglishPage() {
     setClassicCoursePickerView("categories");
     setSelectedClassicCourseCategoryId("");
     setSelectedClassicCourseSectionId("");
+  }
+
+  function openAvatarEditor() {
+    setAvatarPreview(accountImageFailed ? "" : accountImage);
+    setAvatarEditorNotice("");
+    setShowAvatarEditor(true);
+  }
+
+  function handleAvatarFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setAvatarEditorNotice("请选择图片文件");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setAvatarPreview(reader.result);
+        setAvatarEditorNotice("");
+      }
+    };
+    reader.onerror = () => {
+      setAvatarEditorNotice("头像读取失败，请重新选择");
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function saveAvatarChange() {
+    if (!avatarPreview) {
+      setAvatarEditorNotice("请先选择头像");
+      return;
+    }
+
+    try {
+      window.localStorage.setItem(
+        getAccountAvatarStorageKey(accountEmail || accountName),
+        avatarPreview
+      );
+    } catch {
+      setAvatarEditorNotice("保存失败，请换一张更小的图片");
+      return;
+    }
+
+    setAccountImage(avatarPreview);
+    setAccountImageFailed(false);
+    setShowAvatarEditor(false);
+    setAvatarEditorNotice("");
+    if (avatarFileInputRef.current) {
+      avatarFileInputRef.current.value = "";
+    }
   }
 
   function appendText(value: string) {
@@ -1345,7 +1417,10 @@ export default function SpeakEnglishPage() {
                     <button
                       type="button"
                       aria-label="返回账户菜单"
-                      onClick={() => setAccountPanelView("menu")}
+                      onClick={() => {
+                        setShowAvatarEditor(false);
+                        setAccountPanelView("menu");
+                      }}
                       className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.35rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
                     >
                       ←
@@ -1381,6 +1456,7 @@ export default function SpeakEnglishPage() {
                   onClick={() => {
                     setShowAccountMenu(false);
                     setAccountPanelView("menu");
+                    setShowAvatarEditor(false);
                   }}
                   className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.45rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
                 >
@@ -1426,6 +1502,7 @@ export default function SpeakEnglishPage() {
                   <section className="grid gap-2">
                     <button
                       type="button"
+                      onClick={openAvatarEditor}
                       className="flex min-h-14 items-center justify-between gap-4 rounded-[18px] px-3 py-3 text-left transition hover:bg-[#efeaff]"
                     >
                       <span className="font-bold">修改头像</span>
@@ -1502,6 +1579,73 @@ export default function SpeakEnglishPage() {
                   <span className="grid h-7 w-7 place-items-center">↩</span>
                   <span>退出登录</span>
                 </button>
+              ) : null}
+
+              <input
+                id="account-avatar-file"
+                ref={avatarFileInputRef}
+                type="file"
+                accept="image/*"
+                className="sr-only"
+                onChange={handleAvatarFileChange}
+              />
+
+              {showAvatarEditor ? (
+                <div className="absolute inset-0 z-[60] flex items-center justify-center bg-[#201833]/28 px-6 backdrop-blur-sm">
+                  <div className="w-full max-w-[320px] rounded-[28px] border border-white/80 bg-[#fbf9ff] px-6 py-6 text-center shadow-[0_24px_60px_rgba(84,72,146,0.28)]">
+                    <div className="flex items-center justify-between text-left">
+                      <h3 className="text-[1.15rem] font-extrabold text-[#201833]">
+                        修改头像
+                      </h3>
+                      <button
+                        type="button"
+                        aria-label="关闭头像编辑"
+                        onClick={() => {
+                          setShowAvatarEditor(false);
+                          setAvatarEditorNotice("");
+                        }}
+                        className="grid h-9 w-9 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem] font-extrabold text-[#201833]"
+                      >
+                        ×
+                      </button>
+                    </div>
+
+                    <div className="mx-auto mt-6 grid h-24 w-24 place-items-center overflow-hidden rounded-full border border-white bg-[#f0ebff] text-[1.25rem] font-extrabold text-white shadow-[0_16px_34px_rgba(84,72,146,0.2)]">
+                      {avatarEditorImage ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={avatarEditorImage}
+                          alt={accountEmail || "user"}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span className="grid h-full w-full place-items-center rounded-full bg-[linear-gradient(135deg,#ffd84d_0%,#f0b912_52%,#e9a70f_100%)] text-[#fff8dd]">
+                          {accountAvatarLabel}
+                        </span>
+                      )}
+                    </div>
+
+                    {avatarEditorNotice ? (
+                      <p className="mt-4 text-[0.86rem] font-bold text-[#d33b46]">
+                        {avatarEditorNotice}
+                      </p>
+                    ) : null}
+
+                    <label
+                      htmlFor="account-avatar-file"
+                      className="mt-6 flex min-h-12 w-full cursor-pointer items-center justify-center rounded-[18px] bg-[#efeaff] px-4 text-[1rem] font-extrabold text-[#5b63ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]"
+                    >
+                      更换头像
+                    </label>
+                    <button
+                      type="button"
+                      onClick={saveAvatarChange}
+                      className="mt-3 min-h-12 w-full rounded-[18px] bg-[#201833] px-4 text-[1rem] font-extrabold text-white shadow-[0_16px_32px_rgba(32,24,51,0.18)]"
+                    >
+                      保存
+                    </button>
+                  </div>
+                </div>
               ) : null}
             </div>
           ) : null}
