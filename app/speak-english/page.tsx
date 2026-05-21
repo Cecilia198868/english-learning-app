@@ -80,68 +80,16 @@ type SessionResponse = {
   } | null;
 };
 
-type StoredLesson = {
-  id: string;
-  title: string;
-  txt_content?: string;
-  created_at?: string;
-};
-
 type AccountPanelView = "menu" | "account" | "subscription" | "checkout" | "voice";
 type ProPlan = "monthly" | "yearly";
 
 type AccountMenuAction = "subscription" | "voice";
 
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
-const lessonsStorageKey = "english-app-lessons";
 const selectedVoiceStorageKey = "speakflow-selected-voice-uri";
 
 function getAccountAvatarStorageKey(identifier: string) {
   return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
-}
-
-function getDisplayCourseTitle(title: string) {
-  return title.replace(/^我的课程：/, "").trim() || "未命名课程";
-}
-
-function readSavedLessonsData() {
-  if (typeof window === "undefined") {
-    return { lessons: [], payload: {} as Record<string, unknown> };
-  }
-
-  try {
-    const raw = window.localStorage.getItem(lessonsStorageKey);
-    const parsed = raw ? JSON.parse(raw) : {};
-    const payload =
-      typeof parsed === "object" && parsed !== null
-        ? (parsed as Record<string, unknown>)
-        : {};
-    const lessons = Array.isArray(payload.lessons)
-      ? (payload.lessons as StoredLesson[])
-      : [];
-
-    return { lessons, payload };
-  } catch {
-    return { lessons: [], payload: {} as Record<string, unknown> };
-  }
-}
-
-function readSavedMyCourses() {
-  if (typeof window === "undefined") return [];
-
-  try {
-    const { lessons } = readSavedLessonsData();
-
-    return lessons.filter(
-      (lesson) =>
-        typeof lesson?.id === "string" &&
-        lesson.id.startsWith("my-course-") &&
-        typeof lesson.title === "string" &&
-        lesson.title.trim()
-    );
-  } catch {
-    return [];
-  }
 }
 
 function createFreePracticeRoundId() {
@@ -490,9 +438,8 @@ const pinyinDictionary: Record<string, string[]> = {
 const defaultChineseCandidates = ["？", "！", "我", "你", "好", "这", "谢谢"];
 const handwritingCandidates = ["我", "你", "好", "吗", "谢", "爱", "说"];
 const quickPracticeStarters = [
-  "经典场景口语练习",
   "新表达",
-  "我的课程",
+  "经典场景口语练习",
 ] as const;
 const bankLessonOrder = [
   "新开银行账户",
@@ -905,7 +852,6 @@ function SpeakEnglishClient() {
   const shouldCommitSpeechRef = useRef(false);
   const speechSilenceTimerRef = useRef<number | null>(null);
   const freePracticeRoundIdRef = useRef(createFreePracticeRoundId());
-  const shouldOpenProFromUrlRef = useRef(false);
 
   const [message, setMessage] = useState("用中文说出你想表达的内容");
   const [inputText, setInputText] = useState("");
@@ -949,9 +895,6 @@ function SpeakEnglishClient() {
   const [avatarPreview, setAvatarPreview] = useState("");
   const [avatarEditorNotice, setAvatarEditorNotice] = useState("");
   const [showClassicCoursePicker, setShowClassicCoursePicker] = useState(false);
-  const [showMyCoursePicker, setShowMyCoursePicker] = useState(false);
-  const [showCreatedCourseList, setShowCreatedCourseList] = useState(false);
-  const [myCourses, setMyCourses] = useState<StoredLesson[]>([]);
   const [classicCoursePickerView, setClassicCoursePickerView] =
     useState<ClassicCoursePickerView>("categories");
   const [selectedClassicCourseCategoryId, setSelectedClassicCourseCategoryId] =
@@ -1155,7 +1098,6 @@ function SpeakEnglishClient() {
     const shouldOpenPro = searchParams.get("pro") === "1";
     if (searchParams.get("menu") !== "1" && !shouldOpenPro) return;
 
-    shouldOpenProFromUrlRef.current = shouldOpenPro;
     setShowQuickPanel(true);
     if (shouldOpenPro) {
       setShowAccountMenu(true);
@@ -1167,19 +1109,9 @@ function SpeakEnglishClient() {
   useEffect(() => {
     if (!showQuickPanel) {
       setShowClassicCoursePicker(false);
-      setShowMyCoursePicker(false);
-      setShowCreatedCourseList(false);
       resetClassicCoursePicker();
-      if (!shouldOpenProFromUrlRef.current) {
-        setShowAccountMenu(false);
-        setAccountPanelView("menu");
-      }
-      setShowAvatarEditor(false);
       return;
     }
-
-    setMyCourses(readSavedMyCourses());
-    shouldOpenProFromUrlRef.current = false;
   }, [showQuickPanel]);
 
   useEffect(() => {
@@ -1203,10 +1135,6 @@ function SpeakEnglishClient() {
     setSelectedClassicCourseSectionId("");
   }
 
-  function refreshMyCoursePicker() {
-    setMyCourses(readSavedMyCourses());
-  }
-
   function showFreePracticeLimit() {
     setShowFreePracticeLimitModal(true);
   }
@@ -1218,8 +1146,6 @@ function SpeakEnglishClient() {
     setAccountPanelView("subscription");
     setShowAvatarEditor(false);
     setShowClassicCoursePicker(false);
-    setShowMyCoursePicker(false);
-    setShowCreatedCourseList(false);
     resetClassicCoursePicker();
   }
 
@@ -1336,8 +1262,6 @@ function SpeakEnglishClient() {
     setShowEmojiPanel(false);
     setShowQuickPanel(false);
     setShowClassicCoursePicker(false);
-    setShowMyCoursePicker(false);
-    setShowCreatedCourseList(false);
     resetClassicCoursePicker();
     focusInput();
   }
@@ -1422,7 +1346,9 @@ function SpeakEnglishClient() {
     setComposingPinyin("");
     setLiveTranscript("");
     setIsListening(true);
-    setMessage("正在听你说话…");
+    if (nextPracticeStage === "native") {
+      setMessage("正在听你说话…");
+    }
 
     recognition.onresult = (event) => {
       const transcript = Array.from(event.results)
@@ -1681,13 +1607,6 @@ function SpeakEnglishClient() {
     }
   }
 
-  function openMyCourseLesson(lesson: StoredLesson) {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("currentLessonTitle", lesson.title);
-      window.location.href = `/study/${lesson.id}`;
-    }
-  }
-
   function handleKeyPress(key: string) {
     if (key === "shift") {
       setIsShifted((current) => !current);
@@ -1811,6 +1730,8 @@ function SpeakEnglishClient() {
                   onClick={() => {
                     setShowQuickPanel((current) => !current);
                     setShowAccountMenu(false);
+                    setAccountPanelView("menu");
+                    setShowAvatarEditor(false);
                   }}
                   className="sf-header-button"
                 >
@@ -1818,37 +1739,6 @@ function SpeakEnglishClient() {
                     <span className="absolute left-0 top-1/2 h-px w-5 -translate-y-1/2 bg-[#efe9ff]" />
                   </span>
                 </button>
-
-                {showQuickPanel ? (
-                  <button
-                    type="button"
-                    aria-label={accountCopy.openAccountMenu}
-                    onClick={() => {
-                      setShowAccountMenu((current) => {
-                        const next = !current;
-                        if (next) {
-                          setAccountPanelView("menu");
-                        }
-                        return next;
-                      });
-                    }}
-                    className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full border border-white/70 bg-[#f7f4ff] text-[0.82rem] font-extrabold text-white shadow-[0_12px_26px_rgba(84,72,146,0.18)]"
-                  >
-                    {accountImage && !accountImageFailed ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={accountImage}
-                        alt={accountEmail || "user"}
-                        className="h-full w-full object-cover"
-                        onError={() => setAccountImageFailed(true)}
-                      />
-                    ) : (
-                      <span className="grid h-full w-full place-items-center rounded-full bg-[linear-gradient(135deg,#ffd84d_0%,#f0b912_52%,#e9a70f_100%)] text-[#fff8dd]">
-                        {accountAvatarLabel}
-                      </span>
-                    )}
-                  </button>
-                ) : null}
               </div>
 
               <div className="flex items-center gap-1.5">
@@ -1867,16 +1757,41 @@ function SpeakEnglishClient() {
 
               <button
                 type="button"
-                aria-label="Toggle preview keyboard"
-                onClick={() => setShowPreviewKeyboard((current) => !current)}
-                className="sf-header-button text-[1.25rem] font-semibold text-[#efe9ff]"
+                aria-label={accountCopy.openAccountMenu}
+                onClick={() => {
+                  setShowQuickPanel(false);
+                  setShowClassicCoursePicker(false);
+                  resetClassicCoursePicker();
+                  setShowAccountMenu((current) => {
+                    const next = !current;
+                    if (next) {
+                      setAccountPanelView("menu");
+                    } else {
+                      setShowAvatarEditor(false);
+                    }
+                    return next;
+                  });
+                }}
+                className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full border border-white/70 bg-[#f7f4ff] text-[0.82rem] font-extrabold text-white shadow-[0_12px_26px_rgba(84,72,146,0.18)]"
               >
-                {showPreviewKeyboard ? "⌄" : "⌃"}
+                {accountImage && !accountImageFailed ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={accountImage}
+                    alt={accountEmail || "user"}
+                    className="h-full w-full object-cover"
+                    onError={() => setAccountImageFailed(true)}
+                  />
+                ) : (
+                  <span className="grid h-full w-full place-items-center rounded-full bg-[linear-gradient(135deg,#ffd84d_0%,#f0b912_52%,#e9a70f_100%)] text-[#fff8dd]">
+                    {accountAvatarLabel}
+                  </span>
+                )}
               </button>
             </div>
           </header>
 
-          {showQuickPanel && showAccountMenu ? (
+          {showAccountMenu ? (
             <div className="absolute inset-0 z-50 flex flex-col bg-[#fbf9ff]/96 px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-6 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] backdrop-blur-2xl">
               {accountPanelView === "subscription" ||
               accountPanelView === "checkout" ? (
@@ -2592,7 +2507,11 @@ function SpeakEnglishClient() {
                 ? "sf-free-practice-keyboard-main"
                 : ""
             } ${
-              showVoiceOnlyPrompt || hasEnglishAttempt ? "pb-10" : "pb-[352px]"
+              showVoiceOnlyPrompt
+                ? "pb-[calc(10rem+env(safe-area-inset-bottom))]"
+                : hasEnglishAttempt
+                  ? "pb-[calc(10rem+env(safe-area-inset-bottom))]"
+                  : "pb-[352px]"
             }`}
           >
             <div className="mx-auto h-px w-32 bg-[linear-gradient(90deg,transparent,rgba(145,220,255,0.46),transparent)]" />
@@ -2607,38 +2526,33 @@ function SpeakEnglishClient() {
               }`}
             >
               {showListeningPrompt ? (
-                <>
-                  <h2 className="max-w-[360px] text-[1.65rem] font-extrabold leading-10 text-[#201833]">
-                    正在听你说话...
-                  </h2>
-                  <p className="mt-6 max-w-[340px] text-[1rem] font-semibold leading-7 text-[#201833]">
-                    {practiceStage === "native"
-                      ? "自然地说中文，SpeakFlow 会帮你转换成英语练习。"
-                      : "试着用英语说出来"}
-                  </p>
-                </>
+                practiceStage === "english" && nativeSpeech ? (
+                  <div className="max-w-[360px] bg-white/10 px-5 py-5">
+                    <h2 className="text-[1.75rem] font-extrabold leading-10 text-[#201833]">
+                      {nativeSpeech}
+                    </h2>
+                    <p className="mt-5 text-[1.25rem] font-extrabold text-[#201833]">
+                      正在听你说话...
+                    </p>
+                    <p className="mt-3 text-[1rem] font-extrabold text-[#4b4267]">
+                      试着用英语说出来
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <h2 className="max-w-[360px] text-[1.65rem] font-extrabold leading-10 text-[#201833]">
+                      正在听你说话...
+                    </h2>
+                    <p className="mt-6 max-w-[340px] text-[1rem] font-semibold leading-7 text-[#201833]">
+                      自然地说中文，SpeakFlow 会帮你转换成英语练习。
+                    </p>
+                  </>
+                )
               ) : showLandingPrompt ? (
                 <>
                   <h2 className="max-w-[360px] text-[1.65rem] font-extrabold leading-10 text-[#201833]">
                     用中文说出你想表达的内容
                   </h2>
-                  <button
-                    type="button"
-                    onClick={handlePrimaryPracticeAction}
-                    className="mt-52 grid place-items-center"
-                    aria-label="点击开始说话"
-                  >
-                    <Image
-                      src="/icons/glow-mic.svg"
-                      alt=""
-                      width={96}
-                      height={96}
-                      className="h-24 w-24"
-                    />
-                    <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
-                      点击开始说话
-                    </span>
-                  </button>
                 </>
               ) : showNativeCompletePrompt ? (
                 <>
@@ -2650,23 +2564,6 @@ function SpeakEnglishClient() {
                       试着用英语说出来
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={handlePrimaryPracticeAction}
-                    className="mt-64 grid place-items-center"
-                    aria-label="点击开始说话"
-                  >
-                    <Image
-                      src="/icons/glow-mic.svg"
-                      alt=""
-                      width={96}
-                      height={96}
-                      className="h-24 w-24"
-                    />
-                    <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
-                      点击开始说话
-                    </span>
-                  </button>
                 </>
               ) : (
                 <>
@@ -2750,24 +2647,6 @@ function SpeakEnglishClient() {
                           </p>
                         ) : null}
 
-                        <div className="sf-free-practice-playback mt-5 flex justify-center gap-5 text-[#201833]">
-                          <button
-                            type="button"
-                            aria-label="播放朗读"
-                            onClick={() => readStandardEnglish(1)}
-                            className="flex h-12 items-center gap-2 rounded-[16px] bg-white/40 px-5 text-[1.25rem] font-extrabold shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]"
-                          >
-                            ▶
-                          </button>
-                          <button
-                            type="button"
-                            aria-label="慢速朗读"
-                            onClick={() => readStandardEnglish(0.75)}
-                            className="flex h-12 items-center gap-2 rounded-[16px] bg-white/40 px-5 text-[1.05rem] font-extrabold shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]"
-                          >
-                            ▶ <span>0.75x</span>
-                          </button>
-                        </div>
                       </div>
                     </>
                   ) : (
@@ -2787,6 +2666,65 @@ function SpeakEnglishClient() {
             </div>
           </section>
 
+          {showVoiceOnlyPrompt ? (
+            <div className="absolute inset-x-0 bottom-0 z-20 flex min-h-[9.25rem] items-center justify-center border-t border-[#cfc4ff]/72 bg-[linear-gradient(180deg,rgba(228,220,255,0.84),rgba(215,207,252,0.96))] px-6 pb-[max(0.85rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-18px_42px_rgba(100,82,180,0.10),inset_0_1px_0_rgba(255,255,255,0.58)] backdrop-blur-xl">
+              <button
+                type="button"
+                onClick={handlePrimaryPracticeAction}
+                className={`grid place-items-center text-[#7f7896] transition ${
+                  isListening ? "scale-105" : ""
+                }`}
+                aria-label={isListening ? "停止语音输入" : "点击开始说话"}
+              >
+                <Image
+                  src="/icons/glow-mic.svg"
+                  alt=""
+                  width={96}
+                  height={96}
+                  className="h-24 w-24"
+                />
+              </button>
+            </div>
+          ) : null}
+
+          {hasEnglishAttempt ? (
+            <div className="absolute inset-x-0 bottom-0 z-20 grid min-h-[9.25rem] grid-cols-[1fr_auto_1fr] items-center gap-3 border-t border-[#cfc4ff]/72 bg-[linear-gradient(180deg,rgba(228,220,255,0.84),rgba(215,207,252,0.96))] px-5 pb-[max(0.85rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-18px_42px_rgba(100,82,180,0.10),inset_0_1px_0_rgba(255,255,255,0.58)] backdrop-blur-xl min-[390px]:gap-4 min-[390px]:px-8">
+              <button
+                type="button"
+                aria-label="播放朗读"
+                onClick={() => readStandardEnglish(1)}
+                className="ml-auto flex h-11 min-w-[3.25rem] items-center justify-center rounded-[16px] bg-white/46 px-3 text-[1.15rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_12px_28px_rgba(84,72,146,0.12)] min-[390px]:h-12 min-[390px]:min-w-14 min-[390px]:px-4 min-[390px]:text-[1.25rem]"
+              >
+                ▶
+              </button>
+
+              <button
+                type="button"
+                onClick={handlePrimaryPracticeAction}
+                className="grid place-items-center text-[#7f7896] transition"
+                aria-label="点击开始说话"
+              >
+                <Image
+                  src="/icons/glow-mic.svg"
+                  alt=""
+                  width={96}
+                  height={96}
+                  className="h-20 w-20 min-[390px]:h-24 min-[390px]:w-24"
+                />
+              </button>
+
+              <button
+                type="button"
+                aria-label="慢速朗读"
+                onClick={() => readStandardEnglish(0.75)}
+                className="mr-auto flex h-11 min-w-[4.75rem] items-center justify-center gap-1.5 rounded-[16px] bg-white/46 px-3 text-[0.92rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_12px_28px_rgba(84,72,146,0.12)] min-[390px]:h-12 min-[390px]:min-w-[5.75rem] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[1rem]"
+              >
+                <span className="text-[1.1rem]">▶</span>
+                <span>0.75x</span>
+              </button>
+            </div>
+          ) : null}
+
           {showQuickPanel ? (
             <div className="sf-floating-panel sf-menu-panel absolute left-4 right-4 top-[92px] z-30 p-4">
               <div className="grid gap-2">
@@ -2799,26 +2737,12 @@ function SpeakEnglishClient() {
 
                         if (phrase === "经典场景口语练习") {
                           setShowClassicCoursePicker((current) => !current);
-                          setShowMyCoursePicker(false);
-                          setShowCreatedCourseList(false);
                           resetClassicCoursePicker();
                           return;
                         }
 
                         if (phrase === "新表达") {
                           window.location.href = "/vocabulary";
-                          return;
-                        }
-
-                        if (phrase === "我的课程") {
-                          setShowClassicCoursePicker(false);
-                          resetClassicCoursePicker();
-                          refreshMyCoursePicker();
-                          setShowMyCoursePicker((current) => {
-                            const next = !current;
-                            if (!next) setShowCreatedCourseList(false);
-                            return next;
-                          });
                           return;
                         }
 
@@ -2956,107 +2880,13 @@ function SpeakEnglishClient() {
                         ) : null}
                       </div>
                     ) : null}
-
-                    {phrase === "我的课程" && showMyCoursePicker ? (
-                      <div className="grid max-h-[22rem] gap-3 overflow-y-auto rounded-[18px] border border-[#c9bfff] bg-white p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            window.location.href = "/create-course";
-                          }}
-                          className="flex w-full items-center justify-between gap-3 rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-left text-sm font-bold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] hover:bg-[#e9e4ff]"
-                        >
-                          <span className="min-w-0 truncate">
-                            <MenuGlyph level={3} />
-                            创建我的课程
-                          </span>
-                          <span className="shrink-0 text-[1rem] font-bold opacity-60">
-                            ›
-                          </span>
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => {
-                            refreshMyCoursePicker();
-                            setShowCreatedCourseList((current) => !current);
-                          }}
-                          className="flex w-full items-center justify-between gap-3 rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-left text-sm font-bold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] hover:bg-[#e9e4ff]"
-                        >
-                          <span className="min-w-0 truncate">
-                            <MenuGlyph level={3} />
-                            已创建课程
-                          </span>
-                          <span className="shrink-0 text-[0.72rem] font-semibold opacity-70">
-                            {myCourses.length} 门 {showCreatedCourseList ? "⌃" : "›"}
-                          </span>
-                        </button>
-
-                        {showCreatedCourseList && myCourses.length ? (
-                          <div className="grid gap-2">
-                            {myCourses.map((lesson) => (
-                              <button
-                                key={lesson.id}
-                                type="button"
-                                onClick={() => openMyCourseLesson(lesson)}
-                                className="flex w-full items-center justify-between gap-3 rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-left text-sm font-bold leading-5 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] transition hover:bg-[#e9e4ff]"
-                              >
-                                <span className="min-w-0 truncate">
-                                  <MenuGlyph level={4} />
-                                  {getDisplayCourseTitle(lesson.title)}
-                                </span>
-                                <span className="shrink-0 text-[1rem] font-bold opacity-60">
-                                  ›
-                                </span>
-                              </button>
-                            ))}
-                          </div>
-                        ) : null}
-
-                        {showCreatedCourseList && !myCourses.length ? (
-                          <div className="grid gap-2">
-                            <p className="rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-sm font-semibold leading-6 text-[#4b4267]">
-                              还没有创建过课程。
-                            </p>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                window.location.href = "/create-course";
-                              }}
-                              className="rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-left text-sm font-bold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] hover:bg-[#e9e4ff]"
-                            >
-                              <MenuGlyph level={3} />
-                              创建一个新课程
-                            </button>
-                          </div>
-                        ) : null}
-                      </div>
-                    ) : null}
                   </div>
                 ))}
               </div>
             </div>
           ) : null}
 
-          {hasEnglishAttempt ? (
-          <button
-            type="button"
-            onClick={handlePrimaryPracticeAction}
-            className="relative z-20 mb-[max(0.75rem,env(safe-area-inset-bottom))] grid place-items-center self-center"
-            aria-label="点击开始说话"
-          >
-            <Image
-              src="/icons/glow-mic.svg"
-              alt=""
-              width={96}
-              height={96}
-              className="h-24 w-24"
-            />
-            <span className="mt-7 text-[1.08rem] font-semibold text-[#7f7896]">
-              点击开始说话
-            </span>
-          </button>
-          ) : hasPracticeActivity && !showNativeCompletePrompt && !showListeningPrompt ? (
+          {hasPracticeActivity && !hasEnglishAttempt && !showNativeCompletePrompt && !showListeningPrompt ? (
           <div className="sf-keyboard-panel absolute inset-x-0 bottom-0 z-20 rounded-t-[32px] px-3 pb-3 pt-3 text-[#fffaff]">
             <div className="sf-composer mb-3 p-2">
               <div className="flex items-end gap-2">
