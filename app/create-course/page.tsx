@@ -318,13 +318,13 @@ function ImageSourceButton({
     <button
       type="button"
       onClick={onClick}
-      className="flex min-h-[16rem] flex-col items-center justify-center rounded-[28px] bg-white/76 px-3 py-6 text-center shadow-[0_24px_54px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.94)] transition hover:bg-white/88 sm:min-h-[17.5rem] sm:px-5 sm:py-7"
+      className="mx-auto flex min-h-[13.5rem] w-full max-w-[315px] flex-col items-center justify-center rounded-[22px] bg-white/76 px-5 py-6 text-center shadow-[0_22px_48px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.94)] transition hover:bg-white/88"
     >
       {icon}
-      <span className="mt-6 text-[1.22rem] font-black leading-8 text-[#201833] sm:mt-7 sm:text-[1.45rem]">
+      <span className="mt-5 text-[1.08rem] font-black leading-7 text-[#201833]">
         {title}
       </span>
-      <span className="mt-3 text-[0.9rem] font-bold leading-7 text-[#746b91] sm:text-[0.98rem]">
+      <span className="mt-3 text-[0.74rem] font-bold leading-5 text-[#746b91]">
         {description}
       </span>
     </button>
@@ -407,6 +407,7 @@ function GeneratingCourseOverlay() {
 
 export default function CreateCoursePage() {
   const router = useRouter();
+  const pastedTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const textFileInputRef = useRef<HTMLInputElement | null>(null);
   const audioFileInputRef = useRef<HTMLInputElement | null>(null);
   const videoFileInputRef = useRef<HTMLInputElement | null>(null);
@@ -457,22 +458,54 @@ export default function CreateCoursePage() {
     setShowSourceSheet(false);
   }
 
+  function focusPastedTextarea() {
+    pastedTextareaRef.current?.focus({ preventScroll: true });
+  }
+
+  async function pasteClipboardToTextArea() {
+    focusPastedTextarea();
+
+    if (typeof navigator === "undefined" || !navigator.clipboard?.readText) {
+      setGenerationError("请在输入框内长按，然后选择粘贴。");
+      return;
+    }
+
+    try {
+      const clipboardText = await navigator.clipboard.readText();
+
+      if (!clipboardText.trim()) {
+        setGenerationError("剪贴板里还没有可用文字。");
+        return;
+      }
+
+      setPastedText((current) => {
+        const nextText = current.trim()
+          ? `${current}${current.endsWith("\n") ? "" : "\n"}${clipboardText}`
+          : clipboardText;
+        return nextText;
+      });
+      setGenerationError("");
+      window.setTimeout(focusPastedTextarea, 0);
+    } catch {
+      setGenerationError("请在输入框内长按，然后选择粘贴。");
+    }
+  }
+
   function handleFileSelection(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const isImageInput =
-      event.currentTarget === textImageInputRef.current ||
-      event.currentTarget === cameraImageInputRef.current;
+    event.currentTarget.value = "";
+    setSelectedFileName(file.name);
+  }
 
+  function handleImageFileSelection(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
     event.currentTarget.value = "";
 
-    if (isImageInput) {
-      void startGeneratingImageCourse(file);
-      return;
-    }
+    if (!file) return;
 
-    setSelectedFileName(file.name);
+    void startGeneratingImageCourse(file);
   }
 
   function openVideoImportView() {
@@ -652,6 +685,97 @@ export default function CreateCoursePage() {
     }
   }
 
+  async function prepareImageFileForUpload(file: File) {
+    if (typeof window === "undefined") return file;
+
+    const canUseCanvas =
+      typeof Image !== "undefined" && typeof document !== "undefined";
+
+    if (!canUseCanvas) return file;
+
+    try {
+      const imageUrl = URL.createObjectURL(file);
+      const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const nextImage = new Image();
+        nextImage.onload = () => resolve(nextImage);
+        nextImage.onerror = () => reject(new Error("IMAGE_LOAD_FAILED"));
+        nextImage.src = imageUrl;
+      });
+
+      const maxSide = 1800;
+      const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+      const width = Math.max(1, Math.round(image.width * scale));
+      const height = Math.max(1, Math.round(image.height * scale));
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const context = canvas.getContext("2d");
+
+      if (!context) {
+        URL.revokeObjectURL(imageUrl);
+        return file;
+      }
+
+      context.drawImage(image, 0, 0, width, height);
+      URL.revokeObjectURL(imageUrl);
+
+      const blob = await new Promise<Blob | null>((resolve) => {
+        canvas.toBlob(resolve, "image/jpeg", 0.9);
+      });
+
+      if (!blob) return file;
+
+      const baseName = file.name.replace(/\.[^.]+$/, "").trim() || "image";
+      return new File([blob], `${baseName}.jpg`, { type: "image/jpeg" });
+    } catch {
+      return file;
+    }
+  }
+
+  function dataUrlToBlob(dataUrl: string) {
+    const [header, data] = dataUrl.split(",");
+    const mimeMatch = header.match(/data:([^;]+);base64/);
+    const mimeType = mimeMatch?.[1] || "image/jpeg";
+    const binary = window.atob(data || "");
+    const bytes = new Uint8Array(binary.length);
+
+    for (let index = 0; index < binary.length; index += 1) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+
+    return new Blob([bytes], { type: mimeType });
+  }
+
+  async function canvasToJpegFile(canvas: HTMLCanvasElement) {
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      if (typeof canvas.toBlob === "function") {
+        canvas.toBlob(
+          (nextBlob) => {
+            if (nextBlob) {
+              resolve(nextBlob);
+              return;
+            }
+
+            reject(new Error("CANVAS_BLOB_EMPTY"));
+          },
+          "image/jpeg",
+          0.86
+        );
+        return;
+      }
+
+      try {
+        resolve(dataUrlToBlob(canvas.toDataURL("image/jpeg", 0.86)));
+      } catch (error) {
+        reject(error instanceof Error ? error : new Error("CANVAS_DATA_URL_FAILED"));
+      }
+    });
+
+    return new File([blob], `camera-photo-${Date.now()}.jpg`, {
+      type: "image/jpeg",
+    });
+  }
+
   async function startGeneratingImageCourse(file: File) {
     stopCameraStream();
     setSelectedFileName(file.name);
@@ -661,8 +785,9 @@ export default function CreateCoursePage() {
     setIsGeneratingCourse(true);
 
     try {
+      const uploadFile = await prepareImageFileForUpload(file);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", uploadFile);
 
       const extractResponse = await fetch("/api/extract-text", {
         method: "POST",
@@ -683,7 +808,7 @@ export default function CreateCoursePage() {
         fallbackErrorMessage: "暂时无法从这张图片生成课程",
       });
 
-      const courseName = extractImageCourseName(file.name, extractedText);
+      const courseName = extractImageCourseName(uploadFile.name || file.name, extractedText);
       const courseTitle = `我的课程：${courseName}`;
       const courseId = createImageCourseId();
 
@@ -737,7 +862,7 @@ export default function CreateCoursePage() {
     }
   }
 
-  function takeCameraPhoto() {
+  async function takeCameraPhoto() {
     const video = cameraVideoRef.current;
     const canvas = cameraCanvasRef.current;
 
@@ -756,21 +881,20 @@ export default function CreateCoursePage() {
     }
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) {
-          setGenerationError("暂时无法保存照片，请重新拍照。");
-          return;
-        }
+    setGenerationError("");
+    setShowSourceSheet(false);
+    setImportView("home");
+    setIsGeneratingCourse(true);
 
-        const photoFile = new File([blob], `camera-photo-${Date.now()}.jpg`, {
-          type: "image/jpeg",
-        });
-        void startGeneratingImageCourse(photoFile);
-      },
-      "image/jpeg",
-      0.92
-    );
+    try {
+      const photoFile = await canvasToJpegFile(canvas);
+      await startGeneratingImageCourse(photoFile);
+    } catch {
+      stopCameraStream();
+      setIsGeneratingCourse(false);
+      setGenerationError("暂时无法保存照片，请重新拍照或改用相册选择。");
+      setImportView("image");
+    }
   }
 
   function openSubtitlePasteFallback() {
@@ -851,17 +975,45 @@ export default function CreateCoursePage() {
                 </p>
               </div>
 
-              <div className="mt-5 flex min-h-0 flex-1 flex-col rounded-[26px] border-2 border-dashed border-[#c7b8ff] bg-white/24 px-4 pb-4 pt-3 shadow-[0_24px_70px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.82)]">
+              <div
+                className="mt-5 flex min-h-0 flex-1 flex-col rounded-[26px] border-2 border-dashed border-[#c7b8ff] bg-white/24 px-4 pb-4 pt-3 shadow-[0_24px_70px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.82)]"
+                onClick={focusPastedTextarea}
+                onTouchStart={focusPastedTextarea}
+              >
+                <div className="mb-3 flex items-center justify-between gap-3 px-1">
+                  <span className="min-w-0 text-[0.82rem] font-bold leading-5 text-[#8b84a2]">
+                    粘贴或输入你的内容
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      void pasteClipboardToTextArea();
+                    }}
+                    className="shrink-0 rounded-full bg-white/72 px-4 py-2 text-[0.88rem] font-black text-[#6c54df] shadow-[0_10px_22px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.92)]"
+                  >
+                    粘贴内容
+                  </button>
+                </div>
                 <label className="block min-h-0 flex-1">
                   <span className="sr-only">粘贴课程内容</span>
                   <textarea
+                    ref={pastedTextareaRef}
                     value={pastedText}
                     onChange={(event) => {
                       setPastedText(event.target.value);
                       setGenerationError("");
                     }}
                     placeholder="请在这里长按粘贴或直接输入内容"
-                    className="h-full min-h-[360px] w-full resize-none rounded-[22px] border border-white/86 bg-white/58 px-5 py-5 text-[1rem] font-bold leading-7 text-[#201833] outline-none shadow-[0_18px_42px_rgba(84,72,146,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] placeholder:text-[#8f88a5]"
+                    autoCapitalize="sentences"
+                    autoCorrect="on"
+                    spellCheck
+                    className="h-full min-h-[320px] w-full resize-none rounded-[22px] border border-white/86 bg-white/58 px-5 py-5 text-[1rem] font-bold leading-7 text-[#201833] outline-none shadow-[0_18px_42px_rgba(84,72,146,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] placeholder:text-[#8f88a5]"
+                    style={{
+                      WebkitUserSelect: "text",
+                      userSelect: "text",
+                      WebkitTouchCallout: "default",
+                    }}
                   />
                 </label>
 
@@ -873,23 +1025,12 @@ export default function CreateCoursePage() {
               </div>
             </section>
           ) : importView === "image" ? (
-            <section className="relative z-10 min-h-0 flex-1 overflow-y-auto px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-10 sm:px-8">
-              <div className="text-center">
-                <h2 className="text-[2.35rem] font-black leading-tight text-[#201833]">
-                  从图片识别文字
-                </h2>
-                <p className="mx-auto mt-6 max-w-[390px] text-[1.08rem] font-bold leading-8 text-[#746b91]">
-                  拍照、截图或相册图片，识别文字内容
-                  <br />
-                  自动生成你的专属课程
-                </p>
-              </div>
-
-              <h3 className="mt-12 text-center text-[1.55rem] font-black leading-none text-[#201833]">
+            <section className="relative z-10 min-h-0 flex-1 overflow-y-auto px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:px-8">
+              <h2 className="mx-auto w-fit bg-white/18 px-5 py-2 text-center text-[1.45rem] font-black leading-none text-[#201833] shadow-[0_16px_36px_rgba(84,72,146,0.06)]">
                 选择图片来源
-              </h3>
+              </h2>
 
-              <div className="mt-9 grid grid-cols-2 gap-4 sm:gap-6">
+              <div className="mt-7 grid gap-5">
                 <ImageSourceButton
                   icon={<ImageSourceIcon />}
                   title="从相册选择"
@@ -925,27 +1066,27 @@ export default function CreateCoursePage() {
               <button
                 type="button"
                 onClick={() => openFilePicker(textImageInputRef)}
-                className="mt-9 flex w-full items-center gap-5 rounded-[24px] bg-white/46 px-6 py-5 text-left shadow-[0_20px_48px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] transition hover:bg-white/62"
+                className="mt-8 flex w-full items-center gap-4 rounded-[22px] bg-white/56 px-5 py-4 text-left shadow-[0_20px_48px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] transition hover:bg-white/68"
               >
                 <ShieldLockIcon />
-                <span className="min-w-0 flex-1 text-[1rem] font-bold leading-7 text-[#746b91]">
+                <span className="min-w-0 flex-1 text-[0.9rem] font-bold leading-6 text-[#746b91]">
                   你的图片仅用于文字识别和课程生成，
                   <br />
                   不会被存储或分享，隐私安全有保障
                 </span>
-                <span className="shrink-0 text-[2.5rem] font-light leading-none text-[#9f96b4]">
+                <span className="shrink-0 text-[2.1rem] font-light leading-none text-[#9f96b4]">
                   ›
                 </span>
               </button>
 
-              <div className="mt-8 rounded-[24px] bg-white/46 px-6 py-6 shadow-[0_20px_48px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.9)]">
+              <div className="mt-6 rounded-[22px] bg-white/56 px-5 py-5 shadow-[0_20px_48px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.9)]">
                 <div className="flex items-start gap-4">
                   <ImageTipIcon />
                   <div className="min-w-0">
-                    <h3 className="text-[1.25rem] font-black leading-7 text-[#6c54df]">
+                    <h3 className="text-[1.08rem] font-black leading-7 text-[#6c54df]">
                       小贴士
                     </h3>
-                    <ul className="mt-3 space-y-2 text-[0.98rem] font-bold leading-7 text-[#746b91]">
+                    <ul className="mt-2 space-y-2 text-[0.82rem] font-bold leading-6 text-[#746b91]">
                       <li>• 图片内容清晰，识别效果更好</li>
                       <li>• 支持中英文及多种语言识别</li>
                       <li>• 识别结果可编辑，生成课程后可随时调整</li>
@@ -1338,7 +1479,7 @@ export default function CreateCoursePage() {
             type="file"
             className="sr-only"
             accept="image/*,.png,.jpg,.jpeg,.webp,.heic"
-            onChange={handleFileSelection}
+            onChange={handleImageFileSelection}
           />
           <input
             ref={cameraImageInputRef}
@@ -1346,7 +1487,7 @@ export default function CreateCoursePage() {
             className="sr-only"
             accept="image/*"
             capture="environment"
-            onChange={handleFileSelection}
+            onChange={handleImageFileSelection}
           />
           {isGeneratingCourse ? <GeneratingCourseOverlay /> : null}
         </section>
