@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeEvent, PointerEvent } from "react";
+import type { ChangeEvent, MutableRefObject, PointerEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
@@ -87,6 +87,10 @@ type AccountMenuAction = "subscription" | "voice";
 
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
 const selectedVoiceStorageKey = "speakflow-selected-voice-uri";
+const speechSilenceDelayMs = 1000;
+const speechNoInputTimeoutMs = 12000;
+const speechStopFallbackMs = 900;
+const speechMaxDurationMs = 45000;
 
 function getAccountAvatarStorageKey(identifier: string) {
   return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
@@ -851,6 +855,10 @@ function SpeakEnglishClient() {
   const speechBufferRef = useRef("");
   const shouldCommitSpeechRef = useRef(false);
   const speechSilenceTimerRef = useRef<number | null>(null);
+  const speechNoInputTimerRef = useRef<number | null>(null);
+  const speechStopFallbackTimerRef = useRef<number | null>(null);
+  const speechMaxTimerRef = useRef<number | null>(null);
+  const activeRecognitionStageRef = useRef<PracticeStage>("native");
   const freePracticeRoundIdRef = useRef(createFreePracticeRoundId());
 
   const [message, setMessage] = useState("用中文说出你想表达的内容");
@@ -1117,13 +1125,57 @@ function SpeakEnglishClient() {
   }, [showQuickPanel]);
 
   useEffect(() => {
+    function clearLifecycleSpeechTimers() {
+      const timerRefs = [
+        speechSilenceTimerRef,
+        speechNoInputTimerRef,
+        speechStopFallbackTimerRef,
+        speechMaxTimerRef,
+      ];
+
+      timerRefs.forEach((timerRef) => {
+        if (!timerRef.current) return;
+
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      });
+    }
+
+    function resetStaleRecognition() {
+      if (!recognitionRef.current) return;
+
+      shouldCommitSpeechRef.current = false;
+      recognitionRef.current.abort?.();
+      recognitionRef.current = null;
+      clearLifecycleSpeechTimers();
+      speechBufferRef.current = "";
+      setLiveTranscript("");
+      setIsListening(false);
+    }
+
+    function handleVisibilityChange() {
+      if (document.visibilityState === "hidden") {
+        resetStaleRecognition();
+      }
+    }
+
+    function handlePageShow(event: PageTransitionEvent) {
+      if (event.persisted) {
+        resetStaleRecognition();
+      }
+    }
+
+    window.addEventListener("pagehide", resetStaleRecognition);
+    window.addEventListener("pageshow", handlePageShow);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
       shouldCommitSpeechRef.current = false;
-      if (speechSilenceTimerRef.current) {
-        clearTimeout(speechSilenceTimerRef.current);
-        speechSilenceTimerRef.current = null;
-      }
+      clearLifecycleSpeechTimers();
       recognitionRef.current?.abort?.();
+      window.removeEventListener("pagehide", resetStaleRecognition);
+      window.removeEventListener("pageshow", handlePageShow);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
@@ -1275,11 +1327,22 @@ function SpeakEnglishClient() {
     return window.SpeechRecognition || window.webkitSpeechRecognition || null;
   }
 
-  function clearSpeechSilenceTimer() {
-    if (!speechSilenceTimerRef.current) return;
+  function clearTimer(timerRef: MutableRefObject<number | null>) {
+    if (!timerRef.current) return;
 
-    clearTimeout(speechSilenceTimerRef.current);
-    speechSilenceTimerRef.current = null;
+    clearTimeout(timerRef.current);
+    timerRef.current = null;
+  }
+
+  function clearSpeechSilenceTimer() {
+    clearTimer(speechSilenceTimerRef);
+  }
+
+  function clearAllSpeechTimers() {
+    clearTimer(speechSilenceTimerRef);
+    clearTimer(speechNoInputTimerRef);
+    clearTimer(speechStopFallbackTimerRef);
+    clearTimer(speechMaxTimerRef);
   }
 
   function prepareNextNativeRound() {
@@ -1296,9 +1359,49 @@ function SpeakEnglishClient() {
     setVocabularyNotice("");
   }
 
+  function finishRecognition(finalTranscript = speechBufferRef.current.trim()) {
+    const completedStage = activeRecognitionStageRef.current;
+
+    if (shouldCommitSpeechRef.current && finalTranscript) {
+      setMessage(finalTranscript);
+      if (completedStage === "native") {
+        setNativeSpeech(finalTranscript);
+        setStandardEnglish("");
+        setExpressionVariants([]);
+        setSelectedExpressionIndex(0);
+        setHasEnglishAttempt(false);
+        setHasNativeSpeech(true);
+        setPracticeStage("english");
+      } else {
+        setHasEnglishAttempt(true);
+        markFreePracticeRoundCompleted();
+      }
+    }
+
+    clearAllSpeechTimers();
+    speechBufferRef.current = "";
+    shouldCommitSpeechRef.current = false;
+    recognitionRef.current = null;
+    setLiveTranscript("");
+    setIsListening(false);
+  }
+
+  function cancelRecognition(options: { message?: string } = {}) {
+    shouldCommitSpeechRef.current = false;
+    recognitionRef.current?.abort?.();
+    recognitionRef.current = null;
+    clearAllSpeechTimers();
+    speechBufferRef.current = "";
+    setLiveTranscript("");
+    setIsListening(false);
+    if (options.message) {
+      setMessage(options.message);
+    }
+  }
+
   function handlePrimaryPracticeAction() {
     if (isListening) {
-      stopRecognition();
+      stopRecognition({ forceUiReset: true });
       return;
     }
 
@@ -1307,7 +1410,7 @@ function SpeakEnglishClient() {
 
   function handleComposerPracticeAction() {
     if (isListening) {
-      stopRecognition();
+      stopRecognition({ forceUiReset: true });
       return;
     }
 
@@ -1325,7 +1428,7 @@ function SpeakEnglishClient() {
     }
 
     recognitionRef.current?.abort?.();
-    clearSpeechSilenceTimer();
+    clearAllSpeechTimers();
     speechBufferRef.current = "";
     shouldCommitSpeechRef.current = true;
     const isStartingNextNativeRound = Boolean(standardEnglish);
@@ -1343,6 +1446,7 @@ function SpeakEnglishClient() {
     }
 
     const recognition = new RecognitionConstructor();
+    activeRecognitionStageRef.current = nextPracticeStage;
     recognition.lang = nextPracticeStage === "english" ? "en-US" : currentMode.lang;
     recognition.continuous = true;
     recognition.interimResults = true;
@@ -1362,65 +1466,77 @@ function SpeakEnglishClient() {
 
       setLiveTranscript(transcript);
       speechBufferRef.current = transcript;
+      clearTimer(speechNoInputTimerRef);
       clearSpeechSilenceTimer();
 
       if (transcript) {
         speechSilenceTimerRef.current = window.setTimeout(() => {
           stopRecognition();
-        }, 1000);
+        }, speechSilenceDelayMs);
       }
     };
 
     recognition.onerror = () => {
-      shouldCommitSpeechRef.current = false;
-      clearSpeechSilenceTimer();
-      setIsListening(false);
-      setLiveTranscript("");
-      setMessage("I did not catch that. Try again");
+      cancelRecognition(
+        activeRecognitionStageRef.current === "native"
+          ? { message: "没有听到声音，请再试一次" }
+          : undefined
+      );
     };
 
     recognition.onend = () => {
-      const finalTranscript = speechBufferRef.current.trim();
-
-      if (shouldCommitSpeechRef.current && finalTranscript) {
-        setMessage(finalTranscript);
-        if (nextPracticeStage === "native") {
-          setNativeSpeech(finalTranscript);
-          setStandardEnglish("");
-          setExpressionVariants([]);
-          setSelectedExpressionIndex(0);
-          setHasEnglishAttempt(false);
-          setHasNativeSpeech(true);
-          setPracticeStage("english");
-        } else {
-          setHasEnglishAttempt(true);
-          markFreePracticeRoundCompleted();
-        }
-      }
-
-      clearSpeechSilenceTimer();
-      speechBufferRef.current = "";
-      shouldCommitSpeechRef.current = false;
-      setLiveTranscript("");
-      setIsListening(false);
+      finishRecognition();
     };
 
     recognitionRef.current = recognition;
 
     try {
       recognition.start();
+      speechNoInputTimerRef.current = window.setTimeout(() => {
+        if (speechBufferRef.current.trim()) return;
+
+        cancelRecognition(
+          nextPracticeStage === "native"
+            ? { message: "没有听到声音，请再试一次" }
+            : undefined
+        );
+      }, speechNoInputTimeoutMs);
+      speechMaxTimerRef.current = window.setTimeout(() => {
+        stopRecognition();
+      }, speechMaxDurationMs);
     } catch {
       shouldCommitSpeechRef.current = false;
-      clearSpeechSilenceTimer();
+      clearAllSpeechTimers();
       setIsListening(false);
       setMessage("Speech recognition could not start");
     }
   }
 
-  function stopRecognition() {
+  function stopRecognition(options: { forceUiReset?: boolean } = {}) {
     clearSpeechSilenceTimer();
-    recognitionRef.current?.stop();
-    recognitionRef.current = null;
+    clearTimer(speechNoInputTimerRef);
+    clearTimer(speechStopFallbackTimerRef);
+
+    if (options.forceUiReset) {
+      setIsListening(false);
+    }
+
+    const recognition = recognitionRef.current;
+    if (!recognition) {
+      finishRecognition();
+      return;
+    }
+
+    try {
+      recognition.stop();
+    } catch {
+      finishRecognition();
+      return;
+    }
+
+    speechStopFallbackTimerRef.current = window.setTimeout(() => {
+      finishRecognition();
+    }, speechStopFallbackMs);
   }
 
   useEffect(() => {
@@ -1732,6 +1848,9 @@ function SpeakEnglishClient() {
                   type="button"
                   aria-label="打开菜单"
                   onClick={() => {
+                    if (isListening) {
+                      cancelRecognition();
+                    }
                     setShowQuickPanel((current) => !current);
                     setShowAccountMenu(false);
                     setAccountPanelView("menu");
@@ -1763,6 +1882,9 @@ function SpeakEnglishClient() {
                 type="button"
                 aria-label={accountCopy.openAccountMenu}
                 onClick={() => {
+                  if (isListening) {
+                    cancelRecognition();
+                  }
                   setShowQuickPanel(false);
                   setShowClassicCoursePicker(false);
                   resetClassicCoursePicker();

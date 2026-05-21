@@ -1,6 +1,5 @@
-const CACHE_NAME = "speakflow-static-v1";
+const CACHE_NAME = "speakflow-static-v2";
 const STATIC_ASSETS = [
-  "/",
   "/manifest.json",
   "/brand/speakflow-logo.png",
   "/brand/speakflow-mark.png",
@@ -55,7 +54,6 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
 
   if (request.mode === "navigate") {
-    event.respondWith(fetch(request).catch(() => caches.match("/")));
     return;
   }
 
