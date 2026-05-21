@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeEvent, PointerEvent } from "react";
+import type { ChangeEvent, KeyboardEvent, MouseEvent, PointerEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
@@ -80,16 +80,87 @@ type SessionResponse = {
   } | null;
 };
 
+type StoredLesson = {
+  id: string;
+  title: string;
+  txt_content?: string;
+  created_at?: string;
+};
+
 type AccountPanelView = "menu" | "account" | "subscription" | "checkout" | "voice";
 type ProPlan = "monthly" | "yearly";
 
 type AccountMenuAction = "subscription" | "voice";
 
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
+const lessonsStorageKey = "english-app-lessons";
+const lastStudyProgressKey = "lastStudyProgress";
 const selectedVoiceStorageKey = "speakflow-selected-voice-uri";
+const courseLongPressMs = 560;
 
 function getAccountAvatarStorageKey(identifier: string) {
   return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
+}
+
+function getDisplayCourseTitle(title: string) {
+  return title.replace(/^我的课程：/, "").trim() || "未命名课程";
+}
+
+function getStoredCourseTitle(title: string) {
+  const trimmed = title.trim() || "未命名课程";
+  return trimmed.startsWith("我的课程：") ? trimmed : `我的课程：${trimmed}`;
+}
+
+function readSavedLessonsData() {
+  if (typeof window === "undefined") {
+    return { lessons: [], payload: {} as Record<string, unknown> };
+  }
+
+  try {
+    const raw = window.localStorage.getItem(lessonsStorageKey);
+    const parsed = raw ? JSON.parse(raw) : {};
+    const payload =
+      typeof parsed === "object" && parsed !== null
+        ? (parsed as Record<string, unknown>)
+        : {};
+    const lessons = Array.isArray(payload.lessons)
+      ? (payload.lessons as StoredLesson[])
+      : [];
+
+    return { lessons, payload };
+  } catch {
+    return { lessons: [], payload: {} as Record<string, unknown> };
+  }
+}
+
+function writeSavedLessonsData(
+  payload: Record<string, unknown>,
+  lessons: StoredLesson[]
+) {
+  if (typeof window === "undefined") return;
+
+  window.localStorage.setItem(
+    lessonsStorageKey,
+    JSON.stringify({ ...payload, lessons })
+  );
+}
+
+function readSavedMyCourses() {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const { lessons } = readSavedLessonsData();
+
+    return lessons.filter(
+      (lesson) =>
+        typeof lesson?.id === "string" &&
+        lesson.id.startsWith("my-course-") &&
+        typeof lesson.title === "string" &&
+        lesson.title.trim()
+    );
+  } catch {
+    return [];
+  }
 }
 
 function createFreePracticeRoundId() {
@@ -440,7 +511,7 @@ const handwritingCandidates = ["我", "你", "好", "吗", "谢", "爱", "说"];
 const quickPracticeStarters = [
   "经典场景口语练习",
   "新表达",
-  "创建我的课程",
+  "我的课程",
 ] as const;
 const bankLessonOrder = [
   "新开银行账户",
@@ -852,6 +923,8 @@ function SpeakEnglishClient() {
   const speechBufferRef = useRef("");
   const shouldCommitSpeechRef = useRef(false);
   const speechSilenceTimerRef = useRef<number | null>(null);
+  const courseLongPressTimerRef = useRef<number | null>(null);
+  const courseLongPressTriggeredRef = useRef(false);
   const freePracticeRoundIdRef = useRef(createFreePracticeRoundId());
   const shouldOpenProFromUrlRef = useRef(false);
 
@@ -897,6 +970,12 @@ function SpeakEnglishClient() {
   const [avatarPreview, setAvatarPreview] = useState("");
   const [avatarEditorNotice, setAvatarEditorNotice] = useState("");
   const [showClassicCoursePicker, setShowClassicCoursePicker] = useState(false);
+  const [showMyCoursePicker, setShowMyCoursePicker] = useState(false);
+  const [showCreatedCourseList, setShowCreatedCourseList] = useState(false);
+  const [myCourses, setMyCourses] = useState<StoredLesson[]>([]);
+  const [courseActionMenuId, setCourseActionMenuId] = useState("");
+  const [editingCourseId, setEditingCourseId] = useState("");
+  const [editingCourseTitle, setEditingCourseTitle] = useState("");
   const [classicCoursePickerView, setClassicCoursePickerView] =
     useState<ClassicCoursePickerView>("categories");
   const [selectedClassicCourseCategoryId, setSelectedClassicCourseCategoryId] =
@@ -1112,6 +1191,11 @@ function SpeakEnglishClient() {
   useEffect(() => {
     if (!showQuickPanel) {
       setShowClassicCoursePicker(false);
+      setShowMyCoursePicker(false);
+      setShowCreatedCourseList(false);
+      setCourseActionMenuId("");
+      setEditingCourseId("");
+      setEditingCourseTitle("");
       resetClassicCoursePicker();
       if (!shouldOpenProFromUrlRef.current) {
         setShowAccountMenu(false);
@@ -1121,6 +1205,7 @@ function SpeakEnglishClient() {
       return;
     }
 
+    setMyCourses(readSavedMyCourses());
     shouldOpenProFromUrlRef.current = false;
   }, [showQuickPanel]);
 
@@ -1130,6 +1215,10 @@ function SpeakEnglishClient() {
       if (speechSilenceTimerRef.current) {
         clearTimeout(speechSilenceTimerRef.current);
         speechSilenceTimerRef.current = null;
+      }
+      if (courseLongPressTimerRef.current) {
+        clearTimeout(courseLongPressTimerRef.current);
+        courseLongPressTimerRef.current = null;
       }
       recognitionRef.current?.abort?.();
     };
@@ -1145,6 +1234,137 @@ function SpeakEnglishClient() {
     setSelectedClassicCourseSectionId("");
   }
 
+  function refreshMyCoursePicker() {
+    setMyCourses(readSavedMyCourses());
+  }
+
+  function startRenameMyCourse(lesson: StoredLesson) {
+    setCourseActionMenuId("");
+    setEditingCourseId(lesson.id);
+    setEditingCourseTitle(getDisplayCourseTitle(lesson.title));
+  }
+
+  function cancelRenameMyCourse() {
+    setEditingCourseId("");
+    setEditingCourseTitle("");
+  }
+
+  function commitRenameMyCourse(lesson: StoredLesson) {
+    const nextDisplayTitle = editingCourseTitle.trim();
+    if (!nextDisplayTitle) {
+      cancelRenameMyCourse();
+      return;
+    }
+
+    const nextTitle = getStoredCourseTitle(nextDisplayTitle);
+    const { lessons, payload } = readSavedLessonsData();
+    const nextLessons = lessons.map((item) =>
+      item.id === lesson.id ? { ...item, title: nextTitle } : item
+    );
+
+    writeSavedLessonsData(payload, nextLessons);
+
+    if (window.localStorage.getItem("currentLessonTitle") === lesson.title) {
+      window.localStorage.setItem("currentLessonTitle", nextTitle);
+    }
+
+    cancelRenameMyCourse();
+    refreshMyCoursePicker();
+  }
+
+  function handleRenameKeyDown(
+    event: KeyboardEvent<HTMLInputElement>,
+    lesson: StoredLesson
+  ) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      commitRenameMyCourse(lesson);
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      cancelRenameMyCourse();
+    }
+  }
+
+  function deleteMyCourseLesson(lesson: StoredLesson) {
+    const displayTitle = getDisplayCourseTitle(lesson.title);
+    const confirmed = window.confirm(`删除课程“${displayTitle}”？`);
+    if (!confirmed) return;
+
+    const { lessons, payload } = readSavedLessonsData();
+    const nextLessons = lessons.filter((item) => item.id !== lesson.id);
+    writeSavedLessonsData(payload, nextLessons);
+
+    window.localStorage.removeItem(`lesson-progress-${lesson.id}`);
+    window.localStorage.removeItem(
+      `speakflow-free-practice-usage:course:${lesson.id}`
+    );
+
+    if (window.localStorage.getItem("currentLessonTitle") === lesson.title) {
+      window.localStorage.removeItem("currentLessonTitle");
+    }
+
+    try {
+      const rawProgress = window.localStorage.getItem(lastStudyProgressKey);
+      const progress = rawProgress ? JSON.parse(rawProgress) : null;
+      if (progress?.courseId === lesson.id) {
+        window.localStorage.removeItem(lastStudyProgressKey);
+      }
+    } catch {
+      window.localStorage.removeItem(lastStudyProgressKey);
+    }
+
+    if (editingCourseId === lesson.id) {
+      cancelRenameMyCourse();
+    }
+    if (courseActionMenuId === lesson.id) {
+      setCourseActionMenuId("");
+    }
+    refreshMyCoursePicker();
+  }
+
+  function clearCourseLongPressTimer() {
+    if (courseLongPressTimerRef.current) {
+      clearTimeout(courseLongPressTimerRef.current);
+      courseLongPressTimerRef.current = null;
+    }
+  }
+
+  function startCourseLongPress(lesson: StoredLesson) {
+    clearCourseLongPressTimer();
+    courseLongPressTriggeredRef.current = false;
+    courseLongPressTimerRef.current = window.setTimeout(() => {
+      courseLongPressTriggeredRef.current = true;
+      cancelRenameMyCourse();
+      setCourseActionMenuId(lesson.id);
+    }, courseLongPressMs);
+  }
+
+  function finishCoursePress() {
+    clearCourseLongPressTimer();
+  }
+
+  function handleCourseTap(lesson: StoredLesson) {
+    if (courseLongPressTriggeredRef.current) {
+      courseLongPressTriggeredRef.current = false;
+      return;
+    }
+
+    setCourseActionMenuId("");
+    openMyCourseLesson(lesson);
+  }
+
+  function handleCourseContextMenu(
+    event: MouseEvent<HTMLButtonElement>,
+    lesson: StoredLesson
+  ) {
+    event.preventDefault();
+    clearCourseLongPressTimer();
+    cancelRenameMyCourse();
+    setCourseActionMenuId(lesson.id);
+  }
+
   function showFreePracticeLimit() {
     setShowFreePracticeLimitModal(true);
   }
@@ -1156,6 +1376,11 @@ function SpeakEnglishClient() {
     setAccountPanelView("subscription");
     setShowAvatarEditor(false);
     setShowClassicCoursePicker(false);
+    setShowMyCoursePicker(false);
+    setShowCreatedCourseList(false);
+    setCourseActionMenuId("");
+    setEditingCourseId("");
+    setEditingCourseTitle("");
     resetClassicCoursePicker();
   }
 
@@ -1272,6 +1497,11 @@ function SpeakEnglishClient() {
     setShowEmojiPanel(false);
     setShowQuickPanel(false);
     setShowClassicCoursePicker(false);
+    setShowMyCoursePicker(false);
+    setShowCreatedCourseList(false);
+    setCourseActionMenuId("");
+    setEditingCourseId("");
+    setEditingCourseTitle("");
     resetClassicCoursePicker();
     focusInput();
   }
@@ -1612,6 +1842,13 @@ function SpeakEnglishClient() {
     if (typeof window !== "undefined") {
       window.localStorage.setItem("currentLessonTitle", title);
       window.location.href = `/study/${id}`;
+    }
+  }
+
+  function openMyCourseLesson(lesson: StoredLesson) {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("currentLessonTitle", lesson.title);
+      window.location.href = `/study/${lesson.id}`;
     }
   }
 
@@ -2726,6 +2963,8 @@ function SpeakEnglishClient() {
 
                         if (phrase === "经典场景口语练习") {
                           setShowClassicCoursePicker((current) => !current);
+                          setShowMyCoursePicker(false);
+                          setShowCreatedCourseList(false);
                           resetClassicCoursePicker();
                           return;
                         }
@@ -2735,8 +2974,15 @@ function SpeakEnglishClient() {
                           return;
                         }
 
-                        if (phrase === "创建我的课程") {
-                          window.location.href = "/create-course";
+                        if (phrase === "我的课程") {
+                          setShowClassicCoursePicker(false);
+                          resetClassicCoursePicker();
+                          refreshMyCoursePicker();
+                          setShowMyCoursePicker((current) => {
+                            const next = !current;
+                            if (!next) setShowCreatedCourseList(false);
+                            return next;
+                          });
                           return;
                         }
 
@@ -2870,6 +3116,135 @@ function SpeakEnglishClient() {
                                 暂无课程
                               </p>
                             )}
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : null}
+
+                    {phrase === "我的课程" && showMyCoursePicker ? (
+                      <div className="grid max-h-[22rem] gap-3 overflow-y-auto rounded-[18px] border border-[#c9bfff] bg-white p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            window.location.href = "/create-course";
+                          }}
+                          className="flex w-full items-center justify-between gap-3 rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-left text-sm font-bold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] hover:bg-[#e9e4ff]"
+                        >
+                          <span className="min-w-0 truncate">
+                            <MenuGlyph level={3} />
+                            创建我的课程
+                          </span>
+                          <span className="shrink-0 text-[1rem] font-bold opacity-60">
+                            ›
+                          </span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            refreshMyCoursePicker();
+                            setShowCreatedCourseList((current) => !current);
+                          }}
+                          className="flex w-full items-center justify-between gap-3 rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-left text-sm font-bold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] hover:bg-[#e9e4ff]"
+                        >
+                          <span className="min-w-0 truncate">
+                            <MenuGlyph level={3} />
+                            已创建课程
+                          </span>
+                          <span className="shrink-0 text-[0.72rem] font-semibold opacity-70">
+                            {myCourses.length} 门 {showCreatedCourseList ? "⌃" : "›"}
+                          </span>
+                        </button>
+
+                        {showCreatedCourseList && myCourses.length ? (
+                          <div className="grid gap-2">
+                            {myCourses.map((lesson) => (
+                              <div
+                                key={lesson.id}
+                                className="grid gap-2"
+                              >
+                                {editingCourseId === lesson.id ? (
+                                  <div className="flex w-full items-center gap-2 rounded-[16px] bg-[#f7f4ff] px-3 py-2 text-left text-sm font-bold leading-5 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]">
+                                    <span className="shrink-0">
+                                      <MenuGlyph level={4} />
+                                    </span>
+                                    <input
+                                      value={editingCourseTitle}
+                                      onChange={(event) =>
+                                        setEditingCourseTitle(event.target.value)
+                                      }
+                                      onBlur={() => commitRenameMyCourse(lesson)}
+                                      onKeyDown={(event) =>
+                                        handleRenameKeyDown(event, lesson)
+                                      }
+                                      autoFocus
+                                      className="min-w-0 flex-1 rounded-[12px] border border-[#c9bfff] bg-white px-3 py-2 text-sm font-bold text-[#201833] outline-none"
+                                    />
+                                  </div>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    onPointerDown={() => startCourseLongPress(lesson)}
+                                    onPointerUp={finishCoursePress}
+                                    onPointerLeave={finishCoursePress}
+                                    onPointerCancel={finishCoursePress}
+                                    onContextMenu={(event) =>
+                                      handleCourseContextMenu(event, lesson)
+                                    }
+                                    onClick={() => handleCourseTap(lesson)}
+                                    className="flex w-full items-center justify-between gap-3 rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-left text-sm font-bold leading-5 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] transition hover:bg-[#e9e4ff]"
+                                    title="点击学习，长按管理"
+                                  >
+                                    <span className="min-w-0 truncate">
+                                      <MenuGlyph level={4} />
+                                      {getDisplayCourseTitle(lesson.title)}
+                                    </span>
+                                    <span className="shrink-0 text-[1rem] font-bold opacity-60">
+                                      ›
+                                    </span>
+                                  </button>
+                                )}
+
+                                {courseActionMenuId === lesson.id &&
+                                editingCourseId !== lesson.id ? (
+                                  <div className="ml-8 grid grid-cols-2 gap-2">
+                                    <button
+                                      type="button"
+                                      onClick={() => deleteMyCourseLesson(lesson)}
+                                      className="flex h-10 items-center justify-center gap-1.5 rounded-full bg-[#fff2f5] px-3 text-[0.82rem] font-black text-[#d34a62] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
+                                    >
+                                      <span aria-hidden="true">🗑</span>
+                                      删除
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => startRenameMyCourse(lesson)}
+                                      className="h-10 rounded-full bg-white/78 px-3 text-[0.82rem] font-black text-[#6c54df] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]"
+                                    >
+                                      更改文件名
+                                    </button>
+                                  </div>
+                                ) : null}
+                              </div>
+                            ))}
+                          </div>
+                        ) : null}
+
+                        {showCreatedCourseList && !myCourses.length ? (
+                          <div className="grid gap-2">
+                            <p className="rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-sm font-semibold leading-6 text-[#4b4267]">
+                              还没有创建过课程。
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                window.location.href = "/create-course";
+                              }}
+                              className="rounded-[16px] bg-[#f7f4ff] px-4 py-3 text-left text-sm font-bold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] hover:bg-[#e9e4ff]"
+                            >
+                              <MenuGlyph level={3} />
+                              创建一个新课程
+                            </button>
                           </div>
                         ) : null}
                       </div>

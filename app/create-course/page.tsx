@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { serializeTrainingItems, type TrainingItem } from "@/lib/training";
 
-type ImportView = "home" | "video" | "youtube";
+type ImportView = "home" | "paste" | "video" | "youtube";
 type StoredLesson = {
   id: string;
   title: string;
@@ -15,6 +15,7 @@ type StoredLesson = {
 
 const LESSONS_STORAGE_KEY = "english-app-lessons";
 const DEFAULT_YOUTUBE_COURSE_NAME = "YouTube 视频课程";
+const DEFAULT_PASTE_COURSE_NAME = "粘贴文字课程";
 
 type YoutubeTrainingResponse = {
   title?: string;
@@ -39,6 +40,26 @@ function extractCourseName(sourceText: string, fallback = DEFAULT_YOUTUBE_COURSE
 function createCourseId(videoId?: string) {
   if (videoId) return `my-course-youtube-${videoId}`;
   return `my-course-youtube-${Date.now()}`;
+}
+
+function createPasteCourseId() {
+  return `my-course-paste-${Date.now()}`;
+}
+
+function extractPastedCourseName(sourceText: string) {
+  const bracketMatch = sourceText.match(/《([^》]+)》/);
+  if (bracketMatch?.[1]?.trim()) {
+    return `《${bracketMatch[1].trim()}》`;
+  }
+
+  const firstLine =
+    sourceText
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .find(Boolean) || "";
+  const cleaned = firstLine.replace(/\s+/g, " ").replace(/^[-#*>\s]+/, "");
+
+  return cleaned ? cleaned.slice(0, 22) : DEFAULT_PASTE_COURSE_NAME;
 }
 
 function saveGeneratedCourseToStorage({
@@ -282,6 +303,7 @@ export default function CreateCoursePage() {
   const [showSourceSheet, setShowSourceSheet] = useState(false);
   const [importView, setImportView] = useState<ImportView>("home");
   const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [pastedText, setPastedText] = useState("");
   const [isGeneratingCourse, setIsGeneratingCourse] = useState(false);
   const [generationError, setGenerationError] = useState("");
 
@@ -308,6 +330,11 @@ export default function CreateCoursePage() {
   function goBackFromCurrentView() {
     if (importView === "youtube") {
       setImportView("video");
+      return;
+    }
+
+    if (importView === "paste") {
+      returnToSourceSheet();
       return;
     }
 
@@ -386,6 +413,86 @@ export default function CreateCoursePage() {
     }
   }
 
+  async function pasteFromClipboard() {
+    if (typeof navigator === "undefined" || !navigator.clipboard?.readText) {
+      setGenerationError("请长按输入框粘贴内容。");
+      return;
+    }
+
+    try {
+      const clipboardText = await navigator.clipboard.readText();
+      if (!clipboardText.trim()) {
+        setGenerationError("剪贴板里还没有可用文字。");
+        return;
+      }
+
+      setPastedText(clipboardText);
+      setGenerationError("");
+    } catch {
+      setGenerationError("请长按输入框粘贴内容。");
+    }
+  }
+
+  async function startGeneratingPastedCourse() {
+    const trimmedText = pastedText.trim();
+
+    if (!trimmedText) {
+      setGenerationError("请先粘贴要生成课程的文字。");
+      return;
+    }
+
+    setGenerationError("");
+    setShowSourceSheet(false);
+    setImportView("home");
+    setIsGeneratingCourse(true);
+
+    try {
+      const response = await fetch("/api/generate-training", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: trimmedText }),
+      });
+      const data = (await response.json()) as TrainingItem[] | { error?: string };
+
+      if (!response.ok) {
+        throw new Error("暂时无法从这段文字生成课程");
+      }
+
+      const items = Array.isArray(data)
+        ? data.filter(
+            (item): item is TrainingItem =>
+              typeof item?.zh === "string" &&
+              typeof item?.en === "string" &&
+              Boolean(item.zh.trim()) &&
+              Boolean(item.en.trim())
+          )
+        : [];
+
+      if (items.length === 0) {
+        throw new Error("没有从这段文字中生成可学习内容。");
+      }
+
+      const courseName = extractPastedCourseName(trimmedText);
+      const courseTitle = `我的课程：${courseName}`;
+      const courseId = createPasteCourseId();
+
+      saveGeneratedCourseToStorage({
+        courseId,
+        courseTitle,
+        items,
+      });
+      setSelectedFileName(courseName.replace(/[《》]/g, ""));
+      router.push(`/study/${courseId}`);
+    } catch (error) {
+      setGenerationError(
+        error instanceof Error ? error.message : "暂时无法从这段文字生成课程"
+      );
+      setImportView("paste");
+    } finally {
+      setIsGeneratingCourse(false);
+    }
+  }
+
   function openSubtitlePasteFallback() {
     setGenerationError("");
     setSelectedFileName("粘贴视频字幕 / 文案");
@@ -445,7 +552,73 @@ export default function CreateCoursePage() {
             </div>
           </header>
 
-          {importView === "youtube" ? (
+          {importView === "paste" ? (
+            <section className="relative z-10 flex min-h-0 flex-1 flex-col px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-12">
+              <div className="text-center">
+                <h2 className="text-[2.25rem] font-black leading-tight text-[#201833]">
+                  粘贴文字
+                </h2>
+                <p className="mt-4 text-[1.02rem] font-extrabold leading-7 text-[#746b91]">
+                  复制英文、中文或中英对照内容后，自动生成课程
+                </p>
+              </div>
+
+              <div className="mt-8 flex min-h-0 flex-1 flex-col rounded-[28px] border-2 border-dashed border-[#c7b8ff] bg-white/32 px-5 pb-6 pt-8 shadow-[0_24px_70px_rgba(84,72,146,0.1),inset_0_1px_0_rgba(255,255,255,0.82)]">
+                <button
+                  type="button"
+                  onClick={pasteFromClipboard}
+                  className="mx-auto grid h-20 w-20 place-items-center rounded-[20px] bg-[linear-gradient(135deg,#ede3ff_0%,#cdb6ff_100%)] text-[2rem] shadow-[0_16px_34px_rgba(126,92,255,0.18)]"
+                  aria-label="点击粘贴内容"
+                >
+                  📋
+                </button>
+                <button
+                  type="button"
+                  onClick={pasteFromClipboard}
+                  className="mt-6 text-[1.08rem] font-black text-[#6c63ff]"
+                >
+                  点击粘贴内容
+                </button>
+                <p className="mt-3 text-center text-[0.88rem] font-bold leading-6 text-[#8b84a2]">
+                  支持英文、中文、中英对照内容
+                </p>
+
+                <label className="mt-6 block min-h-0 flex-1">
+                  <span className="sr-only">粘贴课程内容</span>
+                  <textarea
+                    value={pastedText}
+                    onChange={(event) => {
+                      setPastedText(event.target.value);
+                      setGenerationError("");
+                    }}
+                    placeholder="也可以在这里长按粘贴或直接输入内容..."
+                    className="h-full min-h-[160px] w-full resize-none rounded-[22px] border border-white/80 bg-white/56 px-4 py-4 text-[0.98rem] font-bold leading-7 text-[#201833] outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] placeholder:text-[#9a91ad]"
+                  />
+                </label>
+
+                {generationError ? (
+                  <p className="mt-4 rounded-[16px] bg-[#fff2f5]/86 px-4 py-3 text-center text-[0.88rem] font-black leading-6 text-[#b14363]">
+                    {generationError}
+                  </p>
+                ) : null}
+
+                <button
+                  type="button"
+                  onClick={startGeneratingPastedCourse}
+                  disabled={isGeneratingCourse}
+                  className="mx-auto mt-6 flex h-14 w-[min(100%,310px)] items-center justify-center rounded-full bg-[linear-gradient(135deg,#7a5cff_0%,#c85cff_52%,#ef6cf8_100%)] px-6 text-[1.05rem] font-black text-white shadow-[0_18px_42px_rgba(200,92,255,0.28)] transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
+                >
+                  <span className="mr-2 text-[1.25rem]">✨</span>
+                  {isGeneratingCourse ? "正在生成..." : "生成我的课程"}
+                </button>
+
+                <p className="mt-5 flex items-center justify-center gap-2 text-center text-[0.82rem] font-bold leading-6 text-[#8b84a2]">
+                  <span className="text-[0.95rem] text-[#8b6dff]">🔒</span>
+                  内容仅保存在本地，隐私安全有保障
+                </p>
+              </div>
+            </section>
+          ) : importView === "youtube" ? (
             <section className="relative z-10 flex min-h-0 flex-1 flex-col px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-12">
               <div className="text-center">
                 <h2 className="text-[2.05rem] font-black leading-tight text-[#201833]">
@@ -636,6 +809,52 @@ export default function CreateCoursePage() {
                 <div className="mt-6 grid gap-3">
                   <button
                     type="button"
+                    onClick={() => {
+                      setGenerationError("");
+                      setShowSourceSheet(false);
+                      setImportView("paste");
+                    }}
+                    className="flex min-h-[4.75rem] items-center gap-4 rounded-[18px] bg-white/70 px-4 py-3 text-left shadow-[0_14px_32px_rgba(84,72,146,0.08),inset_0_1px_0_rgba(255,255,255,0.92)] transition hover:bg-white/82"
+                  >
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[12px] bg-[linear-gradient(135deg,#fff0b9_0%,#ffd67e_100%)] text-[1.45rem] shadow-[0_10px_22px_rgba(255,196,92,0.16)]">
+                      ✨
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[1.03rem] font-black leading-6 text-[#201833]">
+                        粘贴文字
+                      </span>
+                      <span className="mt-1 block text-[0.86rem] font-extrabold leading-5 text-[#807791]">
+                        复制英文、中文或中英对照内容，直接生成课程
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-[2rem] font-light leading-none text-[#9f96b4]">
+                      ›
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => openFilePicker(textImageInputRef)}
+                    className="flex min-h-[4.75rem] items-center gap-4 rounded-[18px] bg-white/70 px-4 py-3 text-left shadow-[0_14px_32px_rgba(84,72,146,0.08),inset_0_1px_0_rgba(255,255,255,0.92)] transition hover:bg-white/82"
+                  >
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[12px] bg-[linear-gradient(135deg,#dff7ff_0%,#b99cff_55%,#ffcfef_100%)] text-[1.45rem] shadow-[0_10px_22px_rgba(126,92,255,0.16)]">
+                      🖼
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[1.03rem] font-black leading-6 text-[#201833]">
+                        从图片识别文字
+                      </span>
+                      <span className="mt-1 block text-[0.86rem] font-extrabold leading-5 text-[#807791]">
+                        拍照、截图或相册图片
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-[2rem] font-light leading-none text-[#9f96b4]">
+                      ›
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={() => openFilePicker(textFileInputRef)}
                     className="flex min-h-[4.75rem] items-center gap-4 rounded-[18px] bg-white/70 px-4 py-3 text-left shadow-[0_14px_32px_rgba(84,72,146,0.08),inset_0_1px_0_rgba(255,255,255,0.92)] transition hover:bg-white/82"
                   >
@@ -644,7 +863,7 @@ export default function CreateCoursePage() {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[1.03rem] font-black leading-6 text-[#201833]">
-                        导入文字
+                        选择文档
                       </span>
                       <span className="mt-1 block text-[0.86rem] font-extrabold leading-5 text-[#807791]">
                         TXT / PDF / DOCX
@@ -686,60 +905,10 @@ export default function CreateCoursePage() {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[1.03rem] font-black leading-6 text-[#201833]">
-                        导入视频
+                        导入视频内容
                       </span>
                       <span className="mt-1 block text-[0.86rem] font-extrabold leading-5 text-[#807791]">
-                        MP4 / MOV
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-[2rem] font-light leading-none text-[#9f96b4]">
-                      ›
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedFileName("粘贴文字");
-                      setShowSourceSheet(false);
-                    }}
-                    className="flex min-h-[4.75rem] items-center gap-4 rounded-[18px] bg-white/70 px-4 py-3 text-left shadow-[0_14px_32px_rgba(84,72,146,0.08),inset_0_1px_0_rgba(255,255,255,0.92)] transition hover:bg-white/82"
-                  >
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[12px] bg-[linear-gradient(135deg,#fff0b9_0%,#ffd67e_100%)] text-[1.45rem] shadow-[0_10px_22px_rgba(255,196,92,0.16)]">
-                      ✨
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-[1.03rem] font-black leading-6 text-[#201833]">
-                        粘贴文字
-                      </span>
-                      <span className="mt-1 block text-[0.86rem] font-extrabold leading-5 text-[#807791]">
-                        直接生成训练课程
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-[2rem] font-light leading-none text-[#9f96b4]">
-                      ›
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => openFilePicker(textImageInputRef)}
-                    className="flex min-h-[4.75rem] items-center gap-4 rounded-[18px] bg-white/70 px-4 py-3 text-left shadow-[0_14px_32px_rgba(84,72,146,0.08),inset_0_1px_0_rgba(255,255,255,0.92)] transition hover:bg-white/82"
-                  >
-                    <span className="relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-[12px] bg-[linear-gradient(135deg,#dff7ff_0%,#b99cff_55%,#ffcfef_100%)] shadow-[0_10px_22px_rgba(126,92,255,0.16)]">
-                      <span className="absolute inset-x-3 top-3 h-6 rounded-[5px] bg-white/66 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]" />
-                      <span className="absolute left-4 top-[17px] h-1 w-5 rounded-full bg-[#8b6dff]" />
-                      <span className="absolute left-4 top-[22px] h-1 w-3.5 rounded-full bg-[#53b8ff]" />
-                      <span className="absolute bottom-2 right-2 grid h-5 w-5 place-items-center rounded-full bg-white/82 text-[0.74rem] font-black text-[#8b5cf6] shadow-[0_5px_12px_rgba(84,72,146,0.16)]">
-                        T
-                      </span>
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-[1.03rem] font-black leading-6 text-[#201833]">
-                        粘贴文字图片
-                      </span>
-                      <span className="mt-1 block text-[0.86rem] font-extrabold leading-5 text-[#807791]">
-                        识别截图或图片文字
+                        YouTube 链接 / 字幕 / 本地视频
                       </span>
                     </span>
                     <span className="shrink-0 text-[2rem] font-light leading-none text-[#9f96b4]">

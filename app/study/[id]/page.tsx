@@ -314,7 +314,7 @@ export default function StudyPage() {
   const prepKey = "study-prep-seconds";
   const gapKey = "study-gap-seconds";
   const freePracticeScope = lessonId.startsWith("my-course-")
-    ? "course"
+    ? (`course:${lessonId}` as const)
     : "classic";
 
   const autoPlayRef = useRef(false);
