@@ -7,6 +7,42 @@ type SignInResponse = {
   url?: string;
 };
 
+function getAuthOrigin(fallbackOrigin: string) {
+  if (!process.env.NEXTAUTH_URL) return fallbackOrigin;
+
+  try {
+    return new URL(process.env.NEXTAUTH_URL).origin;
+  } catch {
+    return fallbackOrigin;
+  }
+}
+
+async function fetchAuthEndpoint(
+  path: string,
+  preferredOrigin: string,
+  fallbackOrigin: string,
+  init?: RequestInit
+) {
+  const preferredUrl = new URL(path, preferredOrigin);
+
+  try {
+    const response = await fetch(preferredUrl, init);
+    if (response.ok || preferredOrigin === fallbackOrigin) {
+      return { authOrigin: preferredOrigin, response };
+    }
+  } catch {
+    if (preferredOrigin === fallbackOrigin) {
+      throw new Error(`Unable to reach auth endpoint: ${preferredUrl}`);
+    }
+  }
+
+  const fallbackUrl = new URL(path, fallbackOrigin);
+  return {
+    authOrigin: fallbackOrigin,
+    response: await fetch(fallbackUrl, init),
+  };
+}
+
 function getSetCookieHeaders(headers: Headers) {
   const headerWithHelpers = headers as Headers & {
     getSetCookie?: () => string[];
@@ -40,6 +76,7 @@ function escapeHtml(value: string) {
 
 function appleHandoffResponse(url: string) {
   const escapedUrl = escapeHtml(url);
+  const backLabel = "返回登录方式";
 
   return new NextResponse(
     `<!doctype html>
@@ -53,6 +90,7 @@ function appleHandoffResponse(url: string) {
         margin: 0;
         min-height: 100dvh;
         box-sizing: border-box;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: flex-start;
@@ -74,6 +112,27 @@ function appleHandoffResponse(url: string) {
         box-shadow: none;
         backdrop-filter: none;
       }
+      .back-link {
+        position: fixed;
+        top: calc(env(safe-area-inset-top, 0px) + clamp(18px, 4dvh, 28px));
+        left: clamp(20px, 8vw, 38px);
+        display: grid;
+        place-items: center;
+        width: clamp(48px, 11vw, 58px);
+        height: clamp(48px, 11vw, 58px);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.48);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.64);
+        text-decoration: none;
+      }
+      .back-link span {
+        width: 14px;
+        height: 14px;
+        margin-left: 4px;
+        border-bottom: 2px solid #35304f;
+        border-left: 2px solid #35304f;
+        transform: rotate(45deg);
+      }
       h1 {
         margin: 0;
         font-size: clamp(30px, 8.4vw, 40px);
@@ -89,7 +148,7 @@ function appleHandoffResponse(url: string) {
         font-weight: 700;
         background: transparent;
       }
-      a {
+      .continue-link {
         display: inline-flex;
         justify-content: center;
         width: 100%;
@@ -106,10 +165,13 @@ function appleHandoffResponse(url: string) {
     </style>
   </head>
   <body>
+    <a class="back-link" href="/login" aria-label="${backLabel}">
+      <span aria-hidden="true"></span>
+    </a>
     <main>
       <h1>SpeakFlow</h1>
       <p>点击下面的按钮继续使用 Apple 登录。</p>
-      <a href="${escapedUrl}">继续使用 Apple</a>
+      <a class="continue-link" href="${escapedUrl}">继续使用 Apple</a>
     </main>
   </body>
 </html>`,
@@ -124,17 +186,23 @@ function appleHandoffResponse(url: string) {
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const origin = requestUrl.origin;
-  const callbackUrl = new URL("/speak-english", origin).toString();
+  const preferredAuthOrigin = getAuthOrigin(origin);
   const incomingCookie = request.headers.get("cookie") ?? "";
 
   if (!isAppleAuthConfigured) {
     return NextResponse.redirect(new URL("/login?apple=not-configured", origin));
   }
 
-  const csrfResponse = await fetch(new URL("/api/auth/csrf", origin), {
-    cache: "no-store",
-    headers: incomingCookie ? { cookie: incomingCookie } : undefined,
-  });
+  const { authOrigin, response: csrfResponse } = await fetchAuthEndpoint(
+    "/api/auth/csrf",
+    preferredAuthOrigin,
+    origin,
+    {
+      cache: "no-store",
+      headers: incomingCookie ? { cookie: incomingCookie } : undefined,
+    }
+  );
+  const callbackUrl = new URL("/speak-english", authOrigin).toString();
 
   if (!csrfResponse.ok) {
     return NextResponse.redirect(new URL("/login?apple=csrf", origin));
@@ -151,7 +219,7 @@ export async function GET(request: Request) {
     .filter(Boolean)
     .join("; ");
 
-  const signInResponse = await fetch(new URL("/api/auth/signin/apple", origin), {
+  const signInResponse = await fetch(new URL("/api/auth/signin/apple", authOrigin), {
     method: "POST",
     cache: "no-store",
     redirect: "manual",

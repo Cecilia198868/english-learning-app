@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useLanguage } from "@/components/LanguageProvider";
 
 type LoginPageClientProps = {
@@ -90,7 +89,6 @@ function ShieldMark() {
 export default function LoginPageClient({
   isGoogleEnabled = true,
 }: LoginPageClientProps) {
-  const router = useRouter();
   const { language, t } = useLanguage();
   const isChinese = language === "zh-CN";
   const welcomeLabel = isChinese ? "欢迎回来" : t("welcomeBack");
@@ -107,8 +105,9 @@ export default function LoginPageClient({
   const termsLabel = isChinese ? "用户协议" : "Terms";
   const andLabel = isChinese ? "和" : "and";
   const privacyLabel = isChinese ? "隐私政策" : "Privacy Policy";
-  const backLabel = isChinese ? "返回" : "Back";
-  const closeLabel = isChinese ? "关闭" : "Close";
+  const languageSelectionLabel = isChinese
+    ? "返回语言选择"
+    : "Back to language selection";
 
   const loginOptions = [
     ...(isGoogleEnabled
@@ -145,16 +144,12 @@ export default function LoginPageClient({
     <main className="responsive-page-shell sf-brand-page sf-login-page relative min-h-[100dvh] w-full overflow-x-hidden">
       <div className="sf-login-wrap relative mx-auto flex min-h-[100dvh] w-full max-w-5xl flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         <div className="sf-login-topbar relative z-20 flex items-center justify-between">
-          <button
-            type="button"
-            aria-label={backLabel}
+          <Link
+            href="/languages"
+            aria-label={languageSelectionLabel}
             className="sf-login-back"
-            onClick={() => router.back()}
           >
             <span aria-hidden="true" />
-          </button>
-          <Link href="/" aria-label={closeLabel} className="sf-login-close">
-            <span aria-hidden="true">×</span>
           </Link>
         </div>
 

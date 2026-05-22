@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import ExpressionLearningLimitModal from "@/components/ExpressionLearningLimitModal";
 import {
   canLearnExpression,
@@ -117,8 +116,21 @@ function getExpressionNativeMeaning(word: VocabularyWord) {
   return EXPRESSION_MEANING_FALLBACKS[word.word.toLowerCase()] || "释义待补充";
 }
 
+function navigateToSpeakEnglish(search: string, options: { replace?: boolean } = {}) {
+  if (typeof window === "undefined") return;
+
+  window.speechSynthesis.cancel();
+
+  const target = `/speak-english${search}`;
+  if (options.replace) {
+    window.location.replace(target);
+    return;
+  }
+
+  window.location.assign(target);
+}
+
 export default function VocabularyPage() {
-  const router = useRouter();
   const [words, setWords] = useState<VocabularyWord[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showExpressionLibrary, setShowExpressionLibrary] = useState(false);
@@ -225,9 +237,21 @@ export default function VocabularyPage() {
     recordLearnedExpression(expressionId);
   }, [displayedExpression]);
 
+  function returnToPracticeMenu() {
+    setShowExpressionLibrary(false);
+    setShowExpressionLimitModal(false);
+    navigateToSpeakEnglish("?menu=1", { replace: true });
+  }
+
+  function openAccountFromVocabulary() {
+    setShowExpressionLibrary(false);
+    setShowExpressionLimitModal(false);
+    navigateToSpeakEnglish("?account=1");
+  }
+
   function openProFromExpressionLimit() {
     setShowExpressionLimitModal(false);
-    router.push("/speak-english?menu=1&pro=1");
+    navigateToSpeakEnglish("?menu=1&pro=1");
   }
 
   function openExpressionAt(index: number, options: { closeLibrary?: boolean } = {}) {
@@ -298,7 +322,7 @@ export default function VocabularyPage() {
               <button
                 type="button"
                 aria-label="返回菜单"
-                onClick={() => router.replace("/speak-english?menu=1")}
+                onClick={returnToPracticeMenu}
                 className="sf-header-button"
               >
                 <span className="relative block h-4 w-5 before:absolute before:left-0 before:top-0 before:h-px before:w-4 before:bg-[#6f6685] after:absolute after:bottom-0 after:left-0 after:h-px after:w-5 after:bg-[#6f6685]">
@@ -323,7 +347,7 @@ export default function VocabularyPage() {
               <button
                 type="button"
                 aria-label="打开账户"
-                onClick={() => router.push("/speak-english?account=1")}
+                onClick={openAccountFromVocabulary}
                 className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-full border border-white/70 bg-[#f7f4ff] text-[0.82rem] font-extrabold text-white shadow-[0_12px_26px_rgba(84,72,146,0.18)]"
               >
                 {accountImage && !accountImageFailed ? (

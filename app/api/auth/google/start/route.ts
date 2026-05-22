@@ -10,6 +10,42 @@ type HandoffLocale = "en" | "zh-CN";
 
 const LANGUAGE_COOKIE_NAME = "english-app-language";
 
+function getAuthOrigin(fallbackOrigin: string) {
+  if (!process.env.NEXTAUTH_URL) return fallbackOrigin;
+
+  try {
+    return new URL(process.env.NEXTAUTH_URL).origin;
+  } catch {
+    return fallbackOrigin;
+  }
+}
+
+async function fetchAuthEndpoint(
+  path: string,
+  preferredOrigin: string,
+  fallbackOrigin: string,
+  init?: RequestInit
+) {
+  const preferredUrl = new URL(path, preferredOrigin);
+
+  try {
+    const response = await fetch(preferredUrl, init);
+    if (response.ok || preferredOrigin === fallbackOrigin) {
+      return { authOrigin: preferredOrigin, response };
+    }
+  } catch {
+    if (preferredOrigin === fallbackOrigin) {
+      throw new Error(`Unable to reach auth endpoint: ${preferredUrl}`);
+    }
+  }
+
+  const fallbackUrl = new URL(path, fallbackOrigin);
+  return {
+    authOrigin: fallbackOrigin,
+    response: await fetch(fallbackUrl, init),
+  };
+}
+
 function selectedLocaleFromRequest(request: Request): HandoffLocale {
   const cookieHeader = request.headers.get("cookie") ?? "";
 
@@ -63,6 +99,16 @@ function escapeHtml(value: string) {
     .replace(/"/g, "&quot;");
 }
 
+function withGoogleAccountChooser(url: string) {
+  try {
+    const nextUrl = new URL(url);
+    nextUrl.searchParams.set("prompt", "select_account");
+    return nextUrl.toString();
+  } catch {
+    return url;
+  }
+}
+
 function googleHandoffResponse(url: string, locale: HandoffLocale) {
   const escapedUrl = escapeHtml(url);
   const isChinese = locale === "zh-CN";
@@ -70,6 +116,7 @@ function googleHandoffResponse(url: string, locale: HandoffLocale) {
     ? "点击下面的按钮，继续使用 Google 登录。"
     : "Tap the button below to continue with your Google account.";
   const buttonLabel = isChinese ? "继续使用 Google 登录" : "Continue to Google";
+  const backLabel = isChinese ? "返回登录方式" : "Back to login options";
 
   return new NextResponse(
     `<!doctype html>
@@ -83,6 +130,7 @@ function googleHandoffResponse(url: string, locale: HandoffLocale) {
         margin: 0;
         min-height: 100dvh;
         box-sizing: border-box;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: flex-start;
@@ -104,6 +152,27 @@ function googleHandoffResponse(url: string, locale: HandoffLocale) {
         box-shadow: none;
         backdrop-filter: none;
       }
+      .back-link {
+        position: fixed;
+        top: calc(env(safe-area-inset-top, 0px) + clamp(18px, 4dvh, 28px));
+        left: clamp(20px, 8vw, 38px);
+        display: grid;
+        place-items: center;
+        width: clamp(48px, 11vw, 58px);
+        height: clamp(48px, 11vw, 58px);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.48);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.64);
+        text-decoration: none;
+      }
+      .back-link span {
+        width: 14px;
+        height: 14px;
+        margin-left: 4px;
+        border-bottom: 2px solid #35304f;
+        border-left: 2px solid #35304f;
+        transform: rotate(45deg);
+      }
       h1 {
         margin: 0;
         font-size: clamp(30px, 8.4vw, 40px);
@@ -119,7 +188,7 @@ function googleHandoffResponse(url: string, locale: HandoffLocale) {
         font-weight: 700;
         background: transparent;
       }
-      a {
+      .continue-link {
         display: inline-flex;
         justify-content: center;
         width: 100%;
@@ -136,10 +205,13 @@ function googleHandoffResponse(url: string, locale: HandoffLocale) {
     </style>
   </head>
   <body>
+    <a class="back-link" href="/login" aria-label="${backLabel}">
+      <span aria-hidden="true"></span>
+    </a>
     <main>
       <h1>SpeakFlow</h1>
       <p>${message}</p>
-      <a href="${escapedUrl}">${buttonLabel}</a>
+      <a class="continue-link" href="${escapedUrl}">${buttonLabel}</a>
     </main>
   </body>
 </html>`,
@@ -154,14 +226,20 @@ function googleHandoffResponse(url: string, locale: HandoffLocale) {
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const origin = requestUrl.origin;
+  const preferredAuthOrigin = getAuthOrigin(origin);
   const selectedLocale = selectedLocaleFromRequest(request);
-  const callbackUrl = new URL("/speak-english", origin).toString();
   const incomingCookie = request.headers.get("cookie") ?? "";
 
-  const csrfResponse = await fetch(new URL("/api/auth/csrf", origin), {
-    cache: "no-store",
-    headers: incomingCookie ? { cookie: incomingCookie } : undefined,
-  });
+  const { authOrigin, response: csrfResponse } = await fetchAuthEndpoint(
+    "/api/auth/csrf",
+    preferredAuthOrigin,
+    origin,
+    {
+      cache: "no-store",
+      headers: incomingCookie ? { cookie: incomingCookie } : undefined,
+    }
+  );
+  const callbackUrl = new URL("/speak-english", authOrigin).toString();
 
   if (!csrfResponse.ok) {
     return NextResponse.redirect(new URL("/login?google=csrf", origin));
@@ -179,7 +257,7 @@ export async function GET(request: Request) {
     .join("; ");
 
   const signInResponse = await fetch(
-    new URL("/api/auth/signin/google", origin),
+    new URL("/api/auth/signin/google", authOrigin),
     {
       method: "POST",
       cache: "no-store",
@@ -206,7 +284,10 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL("/login?google=signin", origin));
   }
 
-  const response = googleHandoffResponse(signInData.url, selectedLocale);
+  const response = googleHandoffResponse(
+    withGoogleAccountChooser(signInData.url),
+    selectedLocale
+  );
   appendSetCookies(response, csrfCookies);
   appendSetCookies(response, getSetCookieHeaders(signInResponse.headers));
 
