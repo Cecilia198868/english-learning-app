@@ -453,6 +453,22 @@ const accountPanelCopy = {
   },
 } as const;
 
+function getDefaultCollapsedAccountMenuItems() {
+  const collapsedItems = new Set<string>();
+
+  Object.values(accountPanelCopy).forEach(({ accountMenuSections }) => {
+    accountMenuSections.forEach((section) => {
+      section.items.forEach((item) => {
+        if ("children" in item && item.children?.length) {
+          collapsedItems.add(`${section.title}-${item.label}`);
+        }
+      });
+    });
+  });
+
+  return collapsedItems;
+}
+
 declare global {
   interface Window {
     webkitSpeechRecognition?: SpeechRecognitionConstructor;
@@ -964,7 +980,7 @@ function SpeakEnglishClient() {
     useState<AccountPanelView>("menu");
   const [collapsedAccountMenuItems, setCollapsedAccountMenuItems] = useState<
     Set<string>
-  >(() => new Set());
+  >(() => getDefaultCollapsedAccountMenuItems());
   const [selectedProPlan, setSelectedProPlan] = useState<ProPlan>("yearly");
   const [accountName, setAccountName] = useState("");
   const [accountEmail, setAccountEmail] = useState("");
@@ -1171,6 +1187,7 @@ function SpeakEnglishClient() {
     } else if (shouldOpenAccount) {
       setShowAccountMenu(true);
       setAccountPanelView("menu");
+      setCollapsedAccountMenuItems(getDefaultCollapsedAccountMenuItems());
     }
     window.history.replaceState(null, "", "/speak-english");
   }, []);
@@ -1965,6 +1982,9 @@ function SpeakEnglishClient() {
                     const next = !current;
                     if (next) {
                       setAccountPanelView("menu");
+                      setCollapsedAccountMenuItems(
+                        getDefaultCollapsedAccountMenuItems()
+                      );
                     } else {
                       setShowAvatarEditor(false);
                     }
