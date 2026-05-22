@@ -10,6 +10,8 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const nextAuthSecret =
   process.env.NEXTAUTH_SECRET || "dev-only-nextauth-secret-change-me";
+const persistentSessionMaxAgeSeconds = 60 * 60 * 24 * 365 * 5;
+const persistentSessionUpdateAgeSeconds = 60 * 60 * 24;
 
 export const isAppleAuthConfigured =
   Boolean(appleClientId) && Boolean(appleClientSecret);
@@ -78,5 +80,10 @@ export const authOptions: NextAuthOptions = {
   secret: nextAuthSecret,
   session: {
     strategy: "jwt",
+    maxAge: persistentSessionMaxAgeSeconds,
+    updateAge: persistentSessionUpdateAgeSeconds,
+  },
+  jwt: {
+    maxAge: persistentSessionMaxAgeSeconds,
   },
 };

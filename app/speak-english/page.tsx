@@ -797,7 +797,7 @@ function pickPreferredEnglishVoice(voices: SpeechSynthesisVoice[]) {
 }
 
 function normalizeSpeechRate(rate: number) {
-  return Math.min(Math.max(rate, 0.75), 1.15);
+  return Math.min(Math.max(rate, 0.5), 1.15);
 }
 
 function SoundWaveMark({ className = "" }: { className?: string }) {
@@ -2011,7 +2011,7 @@ function SpeakEnglishClient() {
           </header>
 
           {showAccountMenu ? (
-            <div className="absolute inset-0 z-50 flex flex-col bg-[linear-gradient(180deg,#f0eaff_0%,#f7f3ff_100%)] px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-6 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] backdrop-blur-2xl">
+            <div className="sf-account-panel absolute inset-0 z-50 flex flex-col bg-[linear-gradient(180deg,#f0eaff_0%,#f7f3ff_100%)] px-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-6 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] backdrop-blur-2xl">
               {accountPanelView === "subscription" ||
               accountPanelView === "checkout" ? (
                 <div className="grid shrink-0 grid-cols-[2.75rem_1fr_2.75rem] items-center gap-3">
@@ -2120,105 +2120,110 @@ function SpeakEnglishClient() {
               )}
 
               <div
-                className={`min-h-0 flex-1 overflow-y-auto ${
+                className={`sf-account-panel-scroll min-h-0 flex-1 overflow-y-auto ${
                   accountPanelView === "account" ? "mt-10 pr-0" : "mt-7 pr-1"
                 }`}
               >
                 {accountPanelView === "menu" ? (
-                  accountMenuSections.map((section, sectionIndex) => (
-                    <section
-                      key={section.title}
-                      className="py-4"
-                    >
-                      <h3 className="px-1 pb-3 text-[1.08rem] font-extrabold leading-[1.5] text-[#7f7896]">
-                        {section.title}
-                      </h3>
-                      <div className="grid gap-1">
-                        {section.items.map((item, itemIndex) => {
-                          const menuItemKey = `${section.title}-${item.label}`;
-                          const childItems =
-                            "children" in item ? item.children : undefined;
-                          const hasChildren = Boolean(childItems?.length);
-                          const isCollapsed =
-                            hasChildren &&
-                            collapsedAccountMenuItems.has(menuItemKey);
-                          const itemMark =
-                            "icon" in item && item.icon
-                              ? item.icon
-                              : getAccountMenuItemMark(sectionIndex, itemIndex);
-                          const trailingText =
-                            "trailing" in item &&
-                            typeof item.trailing === "string"
-                              ? item.trailing
-                              : "";
+                  <>
+                    {accountMenuSections.map((section, sectionIndex) => (
+                      <section key={section.title} className="py-4">
+                        <h3 className="px-1 pb-3 text-[1.08rem] font-extrabold leading-[1.5] text-[#7f7896]">
+                          {section.title}
+                        </h3>
+                        <div className="grid gap-1">
+                          {section.items.map((item, itemIndex) => {
+                            const menuItemKey = `${section.title}-${item.label}`;
+                            const childItems =
+                              "children" in item ? item.children : undefined;
+                            const hasChildren = Boolean(childItems?.length);
+                            const isCollapsed =
+                              hasChildren &&
+                              collapsedAccountMenuItems.has(menuItemKey);
+                            const itemMark =
+                              "icon" in item && item.icon
+                                ? item.icon
+                                : getAccountMenuItemMark(sectionIndex, itemIndex);
+                            const trailingText =
+                              "trailing" in item &&
+                              typeof item.trailing === "string"
+                                ? item.trailing
+                                : "";
 
-                          return (
-                          <div
-                            key={menuItemKey}
-                            className=""
-                          >
-                            <button
-                              type="button"
-                              aria-expanded={hasChildren ? !isCollapsed : undefined}
-                              onClick={() => {
-                                if (hasChildren) {
-                                  toggleAccountMenuItem(menuItemKey);
-                                  return;
-                                }
+                            return (
+                              <div key={menuItemKey} className="">
+                                <button
+                                  type="button"
+                                  aria-expanded={hasChildren ? !isCollapsed : undefined}
+                                  onClick={() => {
+                                    if (hasChildren) {
+                                      toggleAccountMenuItem(menuItemKey);
+                                      return;
+                                    }
 
-                                handleAccountMenuAction(
-                                  "action" in item ? item.action : undefined
-                                );
-                              }}
-                              className="flex min-h-[3.85rem] w-full items-center gap-3 px-1 py-3.5 text-left text-[1.18rem] font-extrabold leading-[1.5] text-[#201833] transition hover:text-[#5b63ff]"
-                            >
-                              <AccountMenuMark value={itemMark} />
-                              <span className="min-w-0 flex-1 truncate">
-                                {item.label}
-                              </span>
-                              {trailingText ? (
-                                <span className="shrink-0 px-2 text-[0.96rem] font-extrabold leading-[1.5] text-[#7460e8]">
-                                  {trailingText}
-                                </span>
-                              ) : null}
-                              {hasChildren ? (
-                                <span
-                                  className={`shrink-0 text-[1.3rem] font-extrabold leading-none text-[#7f7896] transition-transform ${
-                                    isCollapsed ? "-rotate-90" : ""
-                                  }`}
+                                    handleAccountMenuAction(
+                                      "action" in item ? item.action : undefined
+                                    );
+                                  }}
+                                  className="flex min-h-[3.85rem] w-full items-center gap-3 px-1 py-3.5 text-left text-[1.18rem] font-extrabold leading-[1.5] text-[#201833] transition hover:text-[#5b63ff]"
                                 >
-                                  ⌄
-                                </span>
-                              ) : "action" in item && item.action ? (
-                                <span className="shrink-0 text-[1.45rem] font-semibold leading-none text-[#7f7896]">
-                                  ›
-                                </span>
-                              ) : null}
-                            </button>
-
-                            {hasChildren && !isCollapsed ? (
-                              <div className="pb-2 pl-11 pr-1">
-                                <div className="grid gap-1">
-                                  {childItems?.map((child, childIndex) => (
-                                    <div
-                                      key={child}
-                                      className="flex min-h-11 items-center gap-3 text-[1.05rem] font-bold leading-[1.5] text-[#7f7896]"
+                                  <AccountMenuMark value={itemMark} />
+                                  <span className="min-w-0 flex-1 truncate">
+                                    {item.label}
+                                  </span>
+                                  {trailingText ? (
+                                    <span className="shrink-0 px-2 text-[0.96rem] font-extrabold leading-[1.5] text-[#7460e8]">
+                                      {trailingText}
+                                    </span>
+                                  ) : null}
+                                  {hasChildren ? (
+                                    <span
+                                      className={`shrink-0 text-[1.3rem] font-extrabold leading-none text-[#7f7896] transition-transform ${
+                                        isCollapsed ? "-rotate-90" : ""
+                                      }`}
                                     >
-                                      <AccountMenuMark
-                                        value={getAccountMenuChildMark(childIndex)}
-                                      />
-                                      <span>{child}</span>
+                                      ⌄
+                                    </span>
+                                  ) : "action" in item && item.action ? (
+                                    <span className="shrink-0 text-[1.45rem] font-semibold leading-none text-[#7f7896]">
+                                      ›
+                                    </span>
+                                  ) : null}
+                                </button>
+
+                                {hasChildren && !isCollapsed ? (
+                                  <div className="pb-2 pl-11 pr-1">
+                                    <div className="grid gap-1">
+                                      {childItems?.map((child, childIndex) => (
+                                        <div
+                                          key={child}
+                                          className="flex min-h-11 items-center gap-3 text-[1.05rem] font-bold leading-[1.5] text-[#7f7896]"
+                                        >
+                                          <AccountMenuMark
+                                            value={getAccountMenuChildMark(childIndex)}
+                                          />
+                                          <span>{child}</span>
+                                        </div>
+                                      ))}
                                     </div>
-                                  ))}
-                                </div>
+                                  </div>
+                                ) : null}
                               </div>
-                            ) : null}
-                          </div>
-                          );
-                        })}
-                      </div>
-                    </section>
-                  ))
+                            );
+                          })}
+                        </div>
+                      </section>
+                    ))}
+
+                    <button
+                      type="button"
+                      onClick={() => void signOut({ callbackUrl: "/" })}
+                      className="mb-2 mt-3 flex min-h-[3.85rem] w-full items-center gap-3 px-1 py-3 text-left text-[1.16rem] font-extrabold leading-[1.5] text-[#d33b46] transition hover:text-[#ad2430]"
+                    >
+                      <AccountMenuMark danger value="🚪" />
+                      <span>{accountCopy.signOut}</span>
+                    </button>
+                  </>
                 ) : accountPanelView === "voice" ? (
                   <section className="pb-8">
                     <div className="rounded-[24px] bg-white/72 px-5 py-5 shadow-[0_18px_44px_rgba(84,72,146,0.12)] ring-1 ring-white/85">
@@ -2672,17 +2677,6 @@ function SpeakEnglishClient() {
                 )}
               </div>
 
-              {accountPanelView === "menu" ? (
-                <button
-                  type="button"
-                  onClick={() => void signOut({ callbackUrl: "/" })}
-                  className="mt-5 flex min-h-[3.85rem] shrink-0 items-center gap-3 px-1 py-3 text-left text-[1.16rem] font-extrabold leading-[1.5] text-[#d33b46] transition hover:text-[#ad2430]"
-                >
-                  <AccountMenuMark danger value="🚪" />
-                  <span>{accountCopy.signOut}</span>
-                </button>
-              ) : null}
-
               <input
                 id="account-avatar-file"
                 ref={avatarFileInputRef}
@@ -2761,9 +2755,9 @@ function SpeakEnglishClient() {
                 : ""
             } ${
               showVoiceOnlyPrompt
-                ? "pb-[calc(7.25rem+env(safe-area-inset-bottom))]"
+                ? "pb-[calc(5.8rem+env(safe-area-inset-bottom))]"
                 : hasEnglishAttempt
-                  ? "pb-[calc(7.25rem+env(safe-area-inset-bottom))]"
+                  ? "pb-[calc(5.95rem+env(safe-area-inset-bottom))]"
                   : "pb-[352px]"
             }`}
           >
@@ -2920,7 +2914,7 @@ function SpeakEnglishClient() {
           </section>
 
           {showVoiceOnlyPrompt ? (
-            <div className="absolute inset-x-0 bottom-0 z-20 flex min-h-[7rem] items-center justify-center border-t border-[#cfc4ff]/72 bg-[linear-gradient(180deg,rgba(228,220,255,0.84),rgba(215,207,252,0.96))] px-6 pb-[max(0.55rem,env(safe-area-inset-bottom))] pt-2 shadow-[0_-12px_30px_rgba(100,82,180,0.09),inset_0_1px_0_rgba(255,255,255,0.58)] backdrop-blur-xl">
+            <div className="sf-free-practice-voice-actions absolute inset-x-0 bottom-0 z-20 flex min-h-[5.25rem] items-center justify-center border-t border-[#cfc4ff]/72 bg-[linear-gradient(180deg,rgba(228,220,255,0.78),rgba(215,207,252,0.94))] px-6 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-1 shadow-[0_-10px_24px_rgba(100,82,180,0.08),inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-xl">
               <button
                 type="button"
                 onClick={handlePrimaryPracticeAction}
@@ -2934,57 +2928,46 @@ function SpeakEnglishClient() {
                   alt=""
                   width={96}
                   height={96}
-                  className="h-[4.75rem] w-[4.75rem]"
+                  className="h-[4.3rem] w-[4.3rem]"
                 />
               </button>
             </div>
           ) : null}
 
           {hasEnglishAttempt ? (
-            <div className="sf-free-practice-result-actions sf-expression-actions absolute inset-x-0 bottom-0 z-20 flex min-h-[5.75rem] items-center justify-center border-t border-[#cfc4ff]/72 bg-[linear-gradient(180deg,rgba(228,220,255,0.78),rgba(215,207,252,0.94))] px-5 pb-[max(0.45rem,env(safe-area-inset-bottom))] pt-1.5 shadow-[0_-10px_24px_rgba(100,82,180,0.08),inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-xl">
-              <button
-                type="button"
-                aria-label="上一种表达"
-                onClick={() =>
-                  setSelectedExpressionIndex((index) => Math.max(index - 1, 0))
-                }
-                disabled={!hasPreviousExpression}
-                className="sf-expression-nav-button grid h-11 w-11 place-items-center rounded-full text-[1.85rem] font-semibold text-[#201833] transition hover:bg-white/28 disabled:text-[#aaa3b5]"
-              >
-                ←
-              </button>
-
+            <div className="sf-free-practice-result-actions absolute inset-x-0 bottom-0 z-20 grid min-h-[5.45rem] grid-cols-[1fr_auto_1fr] items-center gap-3 border-t border-[#cfc4ff]/72 bg-[linear-gradient(180deg,rgba(228,220,255,0.78),rgba(215,207,252,0.94))] px-5 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-1 shadow-[0_-10px_24px_rgba(100,82,180,0.08),inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-xl min-[390px]:gap-4 min-[390px]:px-8">
               <button
                 type="button"
                 aria-label="播放朗读"
                 onClick={() => readStandardEnglish(1)}
-                className="sf-expression-play-button flex h-11 min-w-[3.55rem] items-center justify-center rounded-[15px] bg-white/46 px-4 text-[1.06rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)]"
+                className="ml-auto flex h-10 min-w-[3.15rem] items-center justify-center rounded-[15px] bg-white/46 px-3 text-[1.05rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] min-[390px]:h-11 min-[390px]:min-w-[3.35rem] min-[390px]:px-4 min-[390px]:text-[1.15rem]"
               >
                 ▶
               </button>
 
               <button
                 type="button"
-                aria-label="慢速朗读"
-                onClick={() => readStandardEnglish(0.5)}
-                className="sf-expression-slow-button flex h-11 min-w-[5.15rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-4 text-[0.92rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)]"
+                onClick={handlePrimaryPracticeAction}
+                className="grid place-items-center text-[#7f7896] transition"
+                aria-label="点击开始说话"
               >
-                <span className="text-[1.1rem]">▶</span>
-                <span>0.5x</span>
+                <Image
+                  src="/icons/glow-mic.svg"
+                  alt=""
+                  width={96}
+                  height={96}
+                  className="h-[4.3rem] w-[4.3rem] min-[390px]:h-[4.45rem] min-[390px]:w-[4.45rem]"
+                />
               </button>
 
               <button
                 type="button"
-                aria-label="下一种表达"
-                onClick={() =>
-                  setSelectedExpressionIndex((index) =>
-                    Math.min(index + 1, lastExpressionIndex)
-                  )
-                }
-                disabled={!hasNextExpression}
-                className="sf-expression-nav-button grid h-11 w-11 place-items-center rounded-full text-[1.85rem] font-semibold text-[#201833] transition hover:bg-white/28 disabled:text-[#aaa3b5]"
+                aria-label="慢速朗读"
+                onClick={() => readStandardEnglish(0.5)}
+                className="mr-auto flex h-10 min-w-[4.65rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-3 text-[0.88rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] min-[390px]:h-11 min-[390px]:min-w-[5.35rem] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[0.95rem]"
               >
-                →
+                <span className="text-[1.1rem]">▶</span>
+                <span>0.5x</span>
               </button>
             </div>
           ) : null}

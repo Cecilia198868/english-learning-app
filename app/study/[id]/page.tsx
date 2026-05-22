@@ -264,7 +264,7 @@ function pickPreferredEnglishVoice(voices: SpeechSynthesisVoice[]) {
 }
 
 function normalizeSpeechRate(rate: number) {
-  return Math.min(Math.max(rate, 0.75), 1.15);
+  return Math.min(Math.max(rate, 0.5), 1.15);
 }
 
 function SoundWaveMark({ className = "" }: { className?: string }) {
@@ -1623,7 +1623,7 @@ export default function StudyPage() {
                 <button
                   type="button"
                   aria-label="慢速朗读"
-                  onClick={() => speakEnglish(selectedExpression.text, 0.75)}
+                  onClick={() => speakEnglish(selectedExpression.text, 0.5)}
                   className="sf-study-action-text sf-study-slow-button mr-auto flex h-10 min-w-[4rem] items-center justify-center rounded-[15px] px-1 text-[0.76rem] font-extrabold text-[#201833] transition hover:bg-white/30"
                 >
                   慢速朗读

@@ -39,13 +39,17 @@
 }
 
 .sf-expression-library-panel,
-.sf-expression-library-scroll {
+.sf-expression-library-scroll,
+.sf-account-panel,
+.sf-account-panel-scroll {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
 .sf-expression-library-panel::-webkit-scrollbar,
-.sf-expression-library-scroll::-webkit-scrollbar {
+.sf-expression-library-scroll::-webkit-scrollbar,
+.sf-account-panel::-webkit-scrollbar,
+.sf-account-panel-scroll::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
@@ -633,7 +637,7 @@ body {
   }
 
   .sf-study-phone > .sf-vocabulary-main {
-    padding-bottom: calc(6.25rem + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(5.75rem + env(safe-area-inset-bottom)) !important;
   }
 
   .sf-study-phone > .sf-study-main-has-actions {
@@ -742,9 +746,9 @@ body {
   }
 
   .sf-study-phone .sf-expression-actions {
-    min-height: 5.75rem !important;
-    padding-top: 0.45rem !important;
-    padding-bottom: max(0.45rem, env(safe-area-inset-bottom)) !important;
+    min-height: 5.25rem !important;
+    padding-top: 0.3rem !important;
+    padding-bottom: max(0.35rem, env(safe-area-inset-bottom)) !important;
   }
 
   .sf-study-phone .sf-expression-actions-inner,
@@ -796,7 +800,7 @@ body {
   .sf-speak-phone > .sf-free-practice-result-main {
     padding-inline: 1rem !important;
     padding-top: 0.25rem !important;
-    padding-bottom: calc(6.65rem + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(5.95rem + env(safe-area-inset-bottom)) !important;
   }
 
   .sf-speak-phone .sf-free-practice-result-content {
@@ -878,7 +882,7 @@ body {
   }
 
   .sf-study-phone > .sf-vocabulary-main {
-    padding-bottom: calc(6.1rem + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(5.6rem + env(safe-area-inset-bottom)) !important;
   }
 
   .sf-study-phone > header {
@@ -909,7 +913,7 @@ body {
 
   .sf-speak-phone > .sf-free-practice-result-main {
     padding-top: 0.125rem !important;
-    padding-bottom: calc(6.45rem + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(5.75rem + env(safe-area-inset-bottom)) !important;
   }
 
   .sf-speak-phone .sf-free-practice-result-content {
