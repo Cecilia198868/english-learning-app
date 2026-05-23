@@ -583,7 +583,6 @@ export default function StudyPage() {
     stopSequencePlayback();
     if (currentIndex < pairs.length - 1) {
       const newIndex = currentIndex + 1;
-      if (!ensureFreePracticeAvailable(newIndex)) return;
 
       setCurrentIndex(newIndex);
       currentIndexRef.current = newIndex;

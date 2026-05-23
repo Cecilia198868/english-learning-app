@@ -189,6 +189,180 @@ const DRIVER_LICENSE_FEATURED_LESSONS = [
   { title: "跨州驾驶及执照转移规则", id: "driver_interstate_transfer_rules_zh" },
 ] as const;
 
+type ExistingFeaturedLessonMenuItem = { title: string; id: string };
+type FeaturedLessonMenuItem = { title: string; id?: string };
+type FinanceLessonSubView =
+  | "bank"
+  | "identity-immigration"
+  | "public-services"
+  | "driver-vehicle"
+  | "insurance-traffic-safety"
+  | "insurance-consulting"
+  | "tax-government-forms";
+type FeaturedSceneSubView = "root" | "finance-admin" | FinanceLessonSubView;
+
+const createFeaturedLessons = (
+  source: readonly ExistingFeaturedLessonMenuItem[],
+  lessons: readonly ExistingFeaturedLessonMenuItem[]
+): FeaturedLessonMenuItem[] => {
+  const existingLessonIds = new Set(source.map((lesson) => lesson.id));
+
+  return lessons.filter((lesson) => existingLessonIds.has(lesson.id));
+};
+
+const IDENTITY_IMMIGRATION_FEATURED_LESSONS = createFeaturedLessons(
+  GOVERNMENT_FEATURED_LESSONS,
+  [
+    { id: "government_apply_ssn_zh", title: "申请社会安全号码（SSN）" },
+    { id: "government_uscis_registration_zh", title: "申报入境并向USCIS注册" },
+    { id: "government_apply_itin_zh", title: "申请个人纳税识别号码（ITIN）" },
+    { id: "government_lost_stolen_passport_zh", title: "申报护照遗失或被盗" },
+    { id: "government_immigration_office_zh", title: "在移民局办理事务" },
+    { id: "government_extend_visa_status_zh", title: "续签或延长签证身份有效期" },
+    { id: "government_voter_registration_zh", title: "注册选民资格" },
+    { id: "government_official_documents_zh", title: "申请官方证明文件" },
+  ]
+);
+
+const PUBLIC_SERVICE_FEATURED_LESSONS = createFeaturedLessons(
+  GOVERNMENT_FEATURED_LESSONS,
+  [
+    { id: "government_snap_benefits_zh", title: "申请食品券 / SNAP福利" },
+    { id: "government_public_housing_zh", title: "申请公共住房" },
+    { id: "government_unemployment_benefits_zh", title: "申请失业救济金" },
+    { id: "government_free_resources_zh", title: "利用免费政府资源" },
+    { id: "government_file_complaint_zh", title: "向政府机构提交投诉" },
+    { id: "government_police_emergency_services_zh", title: "应对警方或紧急救援服务" },
+    { id: "government_vaccine_records_zh", title: "接种疫苗并获取健康记录" },
+    { id: "government_usps_services_zh", title: "使用美国邮政服务（USPS）" },
+    { id: "government_library_card_zh", title: "申请图书证" },
+    { id: "government_selective_service_zh", title: "注册兵役登记" },
+  ]
+);
+
+const DRIVER_VEHICLE_FEATURED_LESSONS = [
+  ...createFeaturedLessons(GOVERNMENT_FEATURED_LESSONS, [
+    { id: "government_state_id_driver_license_zh", title: "办理州身份证或驾驶执照" },
+    { id: "government_dmv_vehicle_registration_zh", title: "在DMV办理车辆注册登记" },
+  ]),
+  ...createFeaturedLessons(DRIVER_LICENSE_FEATURED_LESSONS, [
+    { id: "driver_vehicle_registration_plates_zh", title: "办理车辆注册及申领车牌" },
+    { id: "driver_apply_first_learner_permit_zh", title: "申领首张学习驾驶许可" },
+    { id: "driver_prepare_written_test_zh", title: "备考驾驶笔试" },
+    { id: "driver_take_official_knowledge_test_zh", title: "参加官方驾驶知识笔试" },
+    { id: "driver_prepare_take_road_test_zh", title: "准备并参加路考" },
+    { id: "driver_receive_driver_license_zh", title: "领取驾驶执照" },
+    { id: "driver_renew_replace_lost_license_zh", title: "续期或补办遗失的驾驶执照" },
+    { id: "driver_update_address_name_zh", title: "更新执照上的住址或姓名信息" },
+    { id: "driver_convert_foreign_license_zh", title: "将境外驾驶执照转换为美国执照" },
+    { id: "driver_license_classes_restrictions_zh", title: "了解不同的执照类别及限制条件" },
+    { id: "driver_apply_international_permit_zh", title: "在美国申领国际驾驶许可" },
+    { id: "driver_interstate_transfer_rules_zh", title: "跨州驾驶及执照转移规则" },
+    { id: "driver_understand_us_traffic_laws_zh", title: "了解美国驾驶法规" },
+    { id: "driver_suspension_points_zh", title: "处理执照被吊销或驾照记录扣分问题" },
+  ]),
+] as const;
+
+const INSURANCE_TRAFFIC_SAFETY_FEATURED_LESSONS = createFeaturedLessons(
+  DRIVER_LICENSE_FEATURED_LESSONS,
+  [
+    { id: "driver_accident_insurance_claim_zh", title: "报告交通事故及提交保险理赔申请" },
+    { id: "driver_pay_traffic_ticket_zh", title: "缴纳交通罚单及罚款" },
+    { id: "driver_defensive_driving_course_zh", title: "参加防御性驾驶或驾驶技能提升课程" },
+    { id: "driver_cdl_basics_zh", title: "商业驾驶执照（CDL）申请基础知识" },
+    { id: "driver_police_traffic_stop_zh", title: "应对警方例行截停检查" },
+  ]
+);
+
+const INSURANCE_CONSULTING_FEATURED_LESSONS = [
+  ...createFeaturedLessons(DRIVER_LICENSE_FEATURED_LESSONS, [
+    { id: "driver_new_driver_car_insurance_zh", title: "新手司机购买汽车保险" },
+  ]),
+  ...createFeaturedLessons(BANK_FEATURED_LESSONS, [
+    { id: "bank_insurance_products_zh", title: "银行提供的保险产品" },
+  ]),
+  { title: "了解美国医疗保险基本类型" },
+  { title: "新移民如何申请 Obamacare（ACA）医疗保险" },
+  { title: "选择合适的健康保险计划" },
+  { title: "保险覆盖范围咨询" },
+  { title: "寻找初级保健医生" },
+  { title: "处理保险拒赔或预授权问题" },
+  { title: "租房者保险咨询" },
+  { title: "购买房屋保险" },
+  { title: "财产损失或盗窃后的理赔流程" },
+  { title: "了解洪水保险和地震保险" },
+  { title: "申请雇主提供的团体保险福利" },
+  { title: "了解牙科保险和视力保险" },
+  { title: "人寿保险基础咨询" },
+  { title: "旅行保险或短期保险咨询" },
+];
+
+const TAX_GOVERNMENT_FORM_FEATURED_LESSONS: FeaturedLessonMenuItem[] = [
+  { title: "了解美国联邦所得税与州所得税基本规则" },
+  { id: "government_apply_itin_zh", title: "新移民如何申请ITIN（个人纳税识别号码）" },
+  { title: "第一次报税需要准备哪些文件" },
+  { title: "区分W-2工薪收入与1099独立承包人收入" },
+  { title: "申报联邦所得税表格（Form 1040）" },
+  { title: "申请退税及追踪退税状态" },
+  { title: "了解常见税务抵扣项目（标准扣除 vs 分项扣除）" },
+  { title: "申请儿童税收抵免（Child Tax Credit）" },
+  { title: "自雇人士预估税款（Estimated Tax）申报" },
+  { title: "申报教育费用抵免或学生贷款利息扣除" },
+  { title: "房屋租金或房贷利息扣除相关表格" },
+  { title: "医疗费用高额扣除申请" },
+  { title: "更新个人地址变更表格（Form 8822）" },
+  { title: "申请或更新社会安全号码（SSN）相关税务处理" },
+  { title: "处理税务局信件与审计通知（IRS Notice）" },
+  { title: "申请延期报税（Form 4868）" },
+  { title: "了解州政府特定税务表格与截止日期" },
+  { title: "报税软件使用与免费报税资源（VITA项目）" },
+];
+
+const FINANCE_ADMIN_MENU_ITEMS: ReadonlyArray<{
+  title: string;
+  icon: string;
+  view: FinanceLessonSubView;
+}> = [
+  { title: "银行与金融交易", icon: "🏦", view: "bank" },
+  { title: "身份与移民相关", icon: "🪪", view: "identity-immigration" },
+  { title: "政府福利与公共服务", icon: "🏛️", view: "public-services" },
+  { title: "驾照与车辆管理", icon: "🚗", view: "driver-vehicle" },
+  { title: "保险咨询", icon: "💬", view: "insurance-consulting" },
+  { title: "交通安全", icon: "🛡️", view: "insurance-traffic-safety" },
+  { title: "税务与政府表格", icon: "🧾", view: "tax-government-forms" },
+];
+
+const FINANCE_ADMIN_LESSON_GROUPS: Record<
+  FinanceLessonSubView,
+  { label: string; lessons: readonly FeaturedLessonMenuItem[] }
+> = {
+  bank: { label: "银行与金融交易", lessons: BANK_FEATURED_LESSONS },
+  "identity-immigration": {
+    label: "身份与移民相关",
+    lessons: IDENTITY_IMMIGRATION_FEATURED_LESSONS,
+  },
+  "public-services": {
+    label: "政府福利与公共服务",
+    lessons: PUBLIC_SERVICE_FEATURED_LESSONS,
+  },
+  "driver-vehicle": {
+    label: "驾照与车辆管理",
+    lessons: DRIVER_VEHICLE_FEATURED_LESSONS,
+  },
+  "insurance-traffic-safety": {
+    label: "交通安全",
+    lessons: INSURANCE_TRAFFIC_SAFETY_FEATURED_LESSONS,
+  },
+  "insurance-consulting": {
+    label: "保险咨询",
+    lessons: INSURANCE_CONSULTING_FEATURED_LESSONS,
+  },
+  "tax-government-forms": {
+    label: "税务与政府表格",
+    lessons: TAX_GOVERNMENT_FORM_FEATURED_LESSONS,
+  },
+};
+
 type DashboardClientProps = {
   userEmail: string;
   userImage: string;
@@ -402,9 +576,8 @@ export default function DashboardClient({
   const [featuredCourseView, setFeaturedCourseView] = useState<
     "hub" | "scenes" | "levels"
   >("hub");
-  const [featuredSceneSubView, setFeaturedSceneSubView] = useState<
-    "root" | "finance-admin" | "bank" | "government" | "driver-license"
-  >("root");
+  const [featuredSceneSubView, setFeaturedSceneSubView] =
+    useState<FeaturedSceneSubView>("root");
   const [expandedMyCourseSection, setExpandedMyCourseSection] = useState<
     "saved" | "builder" | null
   >(null);
@@ -1215,40 +1388,31 @@ export default function DashboardClient({
     setMessage("课程建设中");
   }
 
-  function openBankDirectory(scrollIntoView = false) {
+  function openFinanceDirectory(
+    subView: FinanceLessonSubView,
+    scrollIntoView = false
+  ) {
     setShowStartOptions(true);
     setExpandedLearnSection("featured");
     setExpandedMyCourseSection(null);
     setFeaturedCourseView("scenes");
-    setFeaturedSceneSubView("bank");
+    setFeaturedSceneSubView(subView);
 
     if (scrollIntoView) {
       scrollToSection(startOptionsRef);
     }
+  }
+
+  function openBankDirectory(scrollIntoView = false) {
+    openFinanceDirectory("bank", scrollIntoView);
   }
 
   function openGovernmentDirectory(scrollIntoView = false) {
-    setShowStartOptions(true);
-    setExpandedLearnSection("featured");
-    setExpandedMyCourseSection(null);
-    setFeaturedCourseView("scenes");
-    setFeaturedSceneSubView("government");
-
-    if (scrollIntoView) {
-      scrollToSection(startOptionsRef);
-    }
+    openFinanceDirectory("public-services", scrollIntoView);
   }
 
   function openDriverLicenseDirectory(scrollIntoView = false) {
-    setShowStartOptions(true);
-    setExpandedLearnSection("featured");
-    setExpandedMyCourseSection(null);
-    setFeaturedCourseView("scenes");
-    setFeaturedSceneSubView("driver-license");
-
-    if (scrollIntoView) {
-      scrollToSection(startOptionsRef);
-    }
+    openFinanceDirectory("driver-vehicle", scrollIntoView);
   }
 
   function openFeaturedLesson(courseId: string, title: string) {
@@ -1339,6 +1503,11 @@ export default function DashboardClient({
       }
     };
   }, []);
+
+  const currentFinanceLessonGroup =
+    featuredSceneSubView === "root" || featuredSceneSubView === "finance-admin"
+      ? null
+      : FINANCE_ADMIN_LESSON_GROUPS[featuredSceneSubView];
 
   return (
     <main className="responsive-page-shell relative min-h-[100dvh] overflow-x-hidden bg-[#05060d] font-[var(--font-sora)] text-white">
@@ -1539,7 +1708,8 @@ export default function DashboardClient({
                         }
                         if (
                           featuredCourseView === "scenes" &&
-                          ["bank", "government", "driver-license"].includes(featuredSceneSubView)
+                          featuredSceneSubView !== "root" &&
+                          featuredSceneSubView !== "finance-admin"
                         ) {
                           setFeaturedSceneSubView("finance-admin");
                           return;
@@ -1728,30 +1898,11 @@ export default function DashboardClient({
                         <div className="px-1 pb-1 text-center text-sm font-medium tracking-[0.08em] text-white/52">
                           金融与行政事务
                         </div>
-                        {[
-                          { title: "银行", icon: "🏦" },
-                          { title: "政府服务", icon: "🏛️" },
-                          { title: "驾照", icon: "🚗" },
-                          { title: "身份证", icon: "🪪" },
-                          { title: "保险咨询", icon: "🛡️" },
-                          { title: "税务", icon: "🧾" },
-                        ].map((item) => (
+                        {FINANCE_ADMIN_MENU_ITEMS.map((item) => (
                           <button
                             key={item.title}
                             onClick={() => {
-                              if (item.title === "银行") {
-                                openBankDirectory();
-                                return;
-                              }
-                              if (item.title === "政府服务") {
-                                openGovernmentDirectory();
-                                return;
-                              }
-                              if (item.title === "驾照") {
-                                openDriverLicenseDirectory();
-                                return;
-                              }
-                              handleStaticCourseClick();
+                              openFinanceDirectory(item.view);
                             }}
                             className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
                           >
@@ -1771,78 +1922,34 @@ export default function DashboardClient({
                       </div>
                     ) : null}
 
-                    {featuredSceneSubView === "bank" ? (
+                    {currentFinanceLessonGroup ? (
                       <div className="space-y-3">
                         <div className="px-1 pb-1 text-center text-sm font-medium tracking-[0.08em] text-white/52">
-                          银行
+                          {currentFinanceLessonGroup.label}
                         </div>
-                        {BANK_FEATURED_LESSONS.map((item) => (
+                        {currentFinanceLessonGroup.lessons.map((item) => (
                           <button
-                            key={item.id}
+                            key={item.id ?? item.title}
                             onClick={() => {
+                              if (!item.id) return;
                               openFeaturedLesson(item.id, item.title);
                             }}
-                            className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
+                            disabled={!item.id}
+                            className={`group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 ${
+                              item.id
+                                ? "hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
+                                : "cursor-default opacity-70"
+                            }`}
                           >
                             <div className="flex items-center gap-3">
                               <div className="min-w-0 flex-1 text-[1.02rem] font-bold leading-7 text-white">
                                 {item.title}
                               </div>
-                              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/8 text-[1.4rem] text-white">
-                                ›
-                              </div>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    ) : null}
-
-                    {featuredSceneSubView === "government" ? (
-                      <div className="space-y-3">
-                        <div className="px-1 pb-1 text-center text-sm font-medium tracking-[0.08em] text-white/52">
-                          政府服务
-                        </div>
-                        {GOVERNMENT_FEATURED_LESSONS.map((item) => (
-                          <button
-                            key={item.id}
-                            onClick={() => {
-                              openFeaturedLesson(item.id, item.title);
-                            }}
-                            className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="min-w-0 flex-1 text-[1.02rem] font-bold leading-7 text-white">
-                                {item.title}
-                              </div>
-                              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/8 text-[1.4rem] text-white">
-                                ›
-                              </div>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    ) : null}
-
-                    {featuredSceneSubView === "driver-license" ? (
-                      <div className="space-y-3">
-                        <div className="px-1 pb-1 text-center text-sm font-medium tracking-[0.08em] text-white/52">
-                          驾照
-                        </div>
-                        {DRIVER_LICENSE_FEATURED_LESSONS.map((item) => (
-                          <button
-                            key={item.id}
-                            onClick={() => {
-                              openFeaturedLesson(item.id, item.title);
-                            }}
-                            className="group w-full rounded-[24px] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(11,16,32,0.96),rgba(17,24,39,0.88))] px-4 py-4 text-left shadow-[0_12px_26px_rgba(0,0,0,0.28)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:bg-cyan-400/6"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="min-w-0 flex-1 text-[1.02rem] font-bold leading-7 text-white">
-                                {item.title}
-                              </div>
-                              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/8 text-[1.4rem] text-white">
-                                ›
-                              </div>
+                              {item.id ? (
+                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-400/8 text-[1.4rem] text-white">
+                                  ›
+                                </div>
+                              ) : null}
                             </div>
                           </button>
                         ))}

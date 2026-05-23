@@ -24,10 +24,12 @@ import {
 type KeyboardMode = "zh" | "en" | "handwriting" | "symbols";
 type PracticeStage = "native" | "english";
 
+type ClassicCourseLesson = { id?: string; title: string };
+
 type ClassicCourseSection = {
   id: string;
   label: string;
-  lessons: Array<{ id: string; title: string }>;
+  lessons: ClassicCourseLesson[];
 };
 
 type ClassicCourseCategory = {
@@ -557,6 +559,112 @@ const bankLessons = bankLessonOrder
     return lesson ? { id: lesson.id, title: lesson.title } : null;
   })
   .filter((lesson): lesson is { id: string; title: string } => Boolean(lesson));
+
+const createClassicLessons = (
+  lessons: readonly { id: string; title: string }[]
+): ClassicCourseLesson[] => {
+  const existingLessonIds = new Set(
+    featuredLessonRecords.map((lesson) => lesson.id)
+  );
+
+  return lessons.filter((lesson) => existingLessonIds.has(lesson.id));
+};
+
+const identityImmigrationLessons = createClassicLessons([
+  { id: "government_apply_ssn_zh", title: "申请社会安全号码（SSN）" },
+  { id: "government_uscis_registration_zh", title: "申报入境并向USCIS注册" },
+  { id: "government_apply_itin_zh", title: "申请个人纳税识别号码（ITIN）" },
+  { id: "government_lost_stolen_passport_zh", title: "申报护照遗失或被盗" },
+  { id: "government_immigration_office_zh", title: "在移民局办理事务" },
+  { id: "government_extend_visa_status_zh", title: "续签或延长签证身份有效期" },
+  { id: "government_voter_registration_zh", title: "注册选民资格" },
+  { id: "government_official_documents_zh", title: "申请官方证明文件" },
+]);
+
+const driverVehicleLessons = createClassicLessons([
+  { id: "government_state_id_driver_license_zh", title: "办理州身份证或驾驶执照" },
+  { id: "government_dmv_vehicle_registration_zh", title: "在DMV办理车辆注册登记" },
+  { id: "driver_vehicle_registration_plates_zh", title: "办理车辆注册及申领车牌" },
+  { id: "driver_apply_first_learner_permit_zh", title: "申领首张学习驾驶许可" },
+  { id: "driver_prepare_written_test_zh", title: "备考驾驶笔试" },
+  { id: "driver_take_official_knowledge_test_zh", title: "参加官方驾驶知识笔试" },
+  { id: "driver_prepare_take_road_test_zh", title: "准备并参加路考" },
+  { id: "driver_receive_driver_license_zh", title: "领取驾驶执照" },
+  { id: "driver_renew_replace_lost_license_zh", title: "续期或补办遗失的驾驶执照" },
+  { id: "driver_update_address_name_zh", title: "更新执照上的住址或姓名信息" },
+  { id: "driver_convert_foreign_license_zh", title: "将境外驾驶执照转换为美国执照" },
+  { id: "driver_license_classes_restrictions_zh", title: "了解不同的执照类别及限制条件" },
+  { id: "driver_apply_international_permit_zh", title: "在美国申领国际驾驶许可" },
+  { id: "driver_interstate_transfer_rules_zh", title: "跨州驾驶及执照转移规则" },
+  { id: "driver_understand_us_traffic_laws_zh", title: "了解美国驾驶法规" },
+  { id: "driver_suspension_points_zh", title: "处理执照被吊销或驾照记录扣分问题" },
+]);
+
+const insuranceTrafficSafetyLessons = createClassicLessons([
+  { id: "driver_accident_insurance_claim_zh", title: "报告交通事故及提交保险理赔申请" },
+  { id: "driver_pay_traffic_ticket_zh", title: "缴纳交通罚单及罚款" },
+  { id: "driver_defensive_driving_course_zh", title: "参加防御性驾驶或驾驶技能提升课程" },
+  { id: "driver_cdl_basics_zh", title: "商业驾驶执照（CDL）申请基础知识" },
+  { id: "driver_police_traffic_stop_zh", title: "应对警方例行截停检查" },
+]);
+
+const publicServiceLessons = createClassicLessons([
+  { id: "government_snap_benefits_zh", title: "申请食品券 / SNAP福利" },
+  { id: "government_public_housing_zh", title: "申请公共住房" },
+  { id: "government_unemployment_benefits_zh", title: "申请失业救济金" },
+  { id: "government_free_resources_zh", title: "利用免费政府资源" },
+  { id: "government_file_complaint_zh", title: "向政府机构提交投诉" },
+  { id: "government_police_emergency_services_zh", title: "应对警方或紧急救援服务" },
+  { id: "government_vaccine_records_zh", title: "接种疫苗并获取健康记录" },
+  { id: "government_usps_services_zh", title: "使用美国邮政服务（USPS）" },
+  { id: "government_library_card_zh", title: "申请图书证" },
+  { id: "government_selective_service_zh", title: "注册兵役登记" },
+]);
+
+const insuranceConsultingLessons: ClassicCourseLesson[] = [
+  ...createClassicLessons([
+    { id: "driver_new_driver_car_insurance_zh", title: "新手司机购买汽车保险" },
+  ]),
+  ...createClassicLessons([
+    { id: "bank_insurance_products_zh", title: "银行提供的保险产品" },
+  ]),
+  { title: "了解美国医疗保险基本类型" },
+  { title: "新移民如何申请 Obamacare（ACA）医疗保险" },
+  { title: "选择合适的健康保险计划" },
+  { title: "保险覆盖范围咨询" },
+  { title: "寻找初级保健医生" },
+  { title: "处理保险拒赔或预授权问题" },
+  { title: "租房者保险咨询" },
+  { title: "购买房屋保险" },
+  { title: "财产损失或盗窃后的理赔流程" },
+  { title: "了解洪水保险和地震保险" },
+  { title: "申请雇主提供的团体保险福利" },
+  { title: "了解牙科保险和视力保险" },
+  { title: "人寿保险基础咨询" },
+  { title: "旅行保险或短期保险咨询" },
+];
+
+const taxGovernmentFormLessons: ClassicCourseLesson[] = [
+  { title: "了解美国联邦所得税与州所得税基本规则" },
+  { id: "government_apply_itin_zh", title: "新移民如何申请ITIN（个人纳税识别号码）" },
+  { title: "第一次报税需要准备哪些文件" },
+  { title: "区分W-2工薪收入与1099独立承包人收入" },
+  { title: "申报联邦所得税表格（Form 1040）" },
+  { title: "申请退税及追踪退税状态" },
+  { title: "了解常见税务抵扣项目（标准扣除 vs 分项扣除）" },
+  { title: "申请儿童税收抵免（Child Tax Credit）" },
+  { title: "自雇人士预估税款（Estimated Tax）申报" },
+  { title: "申报教育费用抵免或学生贷款利息扣除" },
+  { title: "房屋租金或房贷利息扣除相关表格" },
+  { title: "医疗费用高额扣除申请" },
+  { title: "更新个人地址变更表格（Form 8822）" },
+  { title: "申请或更新社会安全号码（SSN）相关税务处理" },
+  { title: "处理税务局信件与审计通知（IRS Notice）" },
+  { title: "申请延期报税（Form 4868）" },
+  { title: "了解州政府特定税务表格与截止日期" },
+  { title: "报税软件使用与免费报税资源（VITA项目）" },
+];
+
 const classicCourseCategories: ClassicCourseCategory[] = [
   {
     id: "finance-government",
@@ -568,18 +676,35 @@ const classicCourseCategories: ClassicCourseCategory[] = [
         lessons: bankLessons,
       },
       {
-        id: "government-license-id-permit",
-        label: "政府服务：驾照、身份证、许可",
-        lessons: featuredLessonRecords
-          .filter(
-            (lesson) =>
-              lesson.id.startsWith("government_") ||
-              lesson.id.startsWith("driver_")
-          )
-          .map(({ id, title }) => ({ id, title })),
+        id: "identity-immigration",
+        label: "身份与移民相关",
+        lessons: identityImmigrationLessons,
       },
-      { id: "insurance-consulting", label: "保险咨询", lessons: [] },
-      { id: "tax-government-forms", label: "税务与政府表格", lessons: [] },
+      {
+        id: "public-services",
+        label: "政府福利与公共服务",
+        lessons: publicServiceLessons,
+      },
+      {
+        id: "driver-vehicle",
+        label: "驾照与车辆管理",
+        lessons: driverVehicleLessons,
+      },
+      {
+        id: "insurance-consulting",
+        label: "保险咨询",
+        lessons: insuranceConsultingLessons,
+      },
+      {
+        id: "insurance-traffic-safety",
+        label: "交通安全",
+        lessons: insuranceTrafficSafetyLessons,
+      },
+      {
+        id: "tax-government-forms",
+        label: "税务与政府表格",
+        lessons: taxGovernmentFormLessons,
+      },
     ],
   },
   {
@@ -3051,21 +3176,30 @@ function SpeakEnglishClient() {
                                     {isSectionOpen ? (
                                       <div className="ml-8 grid gap-0.5">
                                         {section.lessons.length ? (
-                                          section.lessons.map((lesson) => (
-                                            <button
-                                              key={lesson.id}
-                                              type="button"
-                                              onClick={() =>
-                                                openClassicLesson(
-                                                  lesson.id,
-                                                  lesson.title
-                                                )
-                                              }
-                                              className="w-full px-1 py-1.5 text-left text-[1.02rem] font-semibold leading-6 text-[#201833] transition hover:text-[#5b63ff]"
-                                            >
-                                              {lesson.title}
-                                            </button>
-                                          ))
+                                          section.lessons.map((lesson) =>
+                                            lesson.id ? (
+                                              <button
+                                                key={lesson.id}
+                                                type="button"
+                                                onClick={() =>
+                                                  openClassicLesson(
+                                                    lesson.id!,
+                                                    lesson.title
+                                                  )
+                                                }
+                                                className="w-full px-1 py-1.5 text-left text-[1.02rem] font-semibold leading-6 text-[#201833] transition hover:text-[#5b63ff]"
+                                              >
+                                                {lesson.title}
+                                              </button>
+                                            ) : (
+                                              <div
+                                                key={lesson.title}
+                                                className="w-full px-1 py-1.5 text-left text-[1.02rem] font-semibold leading-6 text-[#4b4267]"
+                                              >
+                                                {lesson.title}
+                                              </div>
+                                            )
+                                          )
                                         ) : (
                                           <p className="px-1 py-1.5 text-[1rem] font-semibold text-[#4b4267]">
                                             暂无课程
