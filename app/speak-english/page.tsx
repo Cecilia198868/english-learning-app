@@ -8,6 +8,7 @@ import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
 import { useLanguage } from "@/components/LanguageProvider";
 import {
   addVocabularyWord,
+  tokenizeEnglishSentence,
   updateVocabularyWord,
 } from "@/lib/vocabulary";
 import { featuredLessonRecords } from "@/data/featuredCourses";
@@ -1092,6 +1093,7 @@ function SpeakEnglishClient() {
     phrase: string;
     meaning: string;
     sourceSentence: string;
+    kind: "phrase" | "word";
   } | null>(null);
   const [isSavingExpression, setIsSavingExpression] = useState(false);
   const [vocabularyNotice, setVocabularyNotice] = useState("");
@@ -1900,6 +1902,21 @@ function SpeakEnglishClient() {
       phrase,
       meaning: expression.meaning || "✨ 值得学习的表达",
       sourceSentence,
+      kind: "phrase",
+    });
+  }
+
+  function handleWordClick(word: string, sourceSentence: string) {
+    const phrase = word.trim();
+    if (!phrase) return;
+
+    window.speechSynthesis?.cancel();
+    setVocabularyNotice("");
+    setPendingExpression({
+      phrase,
+      meaning: "📘 收藏这个单词",
+      sourceSentence,
+      kind: "word",
     });
   }
 
@@ -1914,25 +1931,30 @@ function SpeakEnglishClient() {
     setIsSavingExpression(true);
 
     const sourceSentence = pendingExpression.sourceSentence;
+    const isWord = pendingExpression.kind === "word";
     const result = addVocabularyWord(pendingExpression.phrase, sourceSentence);
 
     if (!result.ok) {
       closeExpressionModal();
       setVocabularyNotice(
-        result.reason === "DUPLICATE" ? "这个表达已经收藏过了" : result.message
+        result.reason === "DUPLICATE"
+          ? isWord
+            ? "这个单词已经收藏过了"
+            : "这个表达已经收藏过了"
+          : result.message
       );
       return;
     }
 
     const savedWord = result.word.word;
     updateVocabularyWord(savedWord, {
-      meaning: pendingExpression.meaning,
-      partOfSpeech: "phrase",
+      ...(isWord ? {} : { meaning: pendingExpression.meaning }),
+      partOfSpeech: isWord ? "word" : "phrase",
       example: sourceSentence,
       sourceSentence,
     });
     closeExpressionModal();
-    setVocabularyNotice("已存入新表达");
+    setVocabularyNotice(isWord ? "已存入表达库" : "已存入新表达");
   }
 
   function openClassicLesson(id: string, title: string) {
@@ -3007,7 +3029,32 @@ function SpeakEnglishClient() {
                                   </button>
                                 ) : (
                                   <span key={`${segment.value}-${index}`}>
-                                    {segment.value}
+                                    {tokenizeEnglishSentence(segment.value).map(
+                                      (token, tokenIndex) =>
+                                        token.type === "word" &&
+                                        token.normalized ? (
+                                          <button
+                                            key={`${token.value}-${tokenIndex}`}
+                                            type="button"
+                                            onClick={(event) => {
+                                              event.stopPropagation();
+                                              handleWordClick(
+                                                token.value,
+                                                selectedExpression.text
+                                              );
+                                            }}
+                                            className="inline rounded-md px-0.5 text-[#201833] transition hover:bg-white/45 active:bg-[#fff7b8]/70"
+                                          >
+                                            {token.value}
+                                          </button>
+                                        ) : (
+                                          <span
+                                            key={`${token.value}-${tokenIndex}`}
+                                          >
+                                            {token.value}
+                                          </span>
+                                        )
+                                    )}
                                   </span>
                                 )
                               )}
@@ -3563,7 +3610,9 @@ function SpeakEnglishClient() {
                   disabled={isSavingExpression}
                   className="rounded-[18px] bg-[#5f73ff] px-4 py-4 text-[1.08rem] font-extrabold text-white shadow-[0_12px_28px_rgba(95,115,255,0.28)] hover:bg-[#5267f1] disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  ➕ 收藏表达
+                  {pendingExpression.kind === "word"
+                    ? "➕ 收藏单词"
+                    : "➕ 收藏表达"}
                 </button>
                 <button
                   type="button"
