@@ -1,4 +1,5 @@
 import { authOptions } from "@/auth";
+import { restoreSubscriptionForEmail } from "@/lib/subscriptionService";
 import { findUserByEmail } from "@/lib/userStore";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
@@ -28,7 +29,12 @@ export async function POST() {
     }
 
     const user = await findUserByEmail(email);
-    const stripeCustomerId = user?.stripeCustomerId?.trim();
+    let stripeCustomerId = user?.stripeCustomerId?.trim() || "";
+
+    if (!stripeCustomerId) {
+      const restoredSubscription = await restoreSubscriptionForEmail(email);
+      stripeCustomerId = restoredSubscription.stripeCustomerId.trim();
+    }
 
     if (!stripeCustomerId) {
       return NextResponse.json(
