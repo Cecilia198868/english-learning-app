@@ -24,6 +24,24 @@ import {
 
 type KeyboardMode = "zh" | "en" | "handwriting" | "symbols";
 type PracticeStage = "native" | "english";
+type TrainingGroundMode = "default" | "guided";
+type GuidedConversationTurn = {
+  chinese: string;
+  userEnglish: string;
+  recommendedEnglish: string;
+};
+type FreeConversationResponse = {
+  simple: string;
+  standard: string;
+  natural: string;
+  questionEnglish: string;
+  questionChinese: string;
+  hintChinese: string;
+};
+type FreeConversationPrefetch = {
+  requestKey: string;
+  response: FreeConversationResponse;
+};
 
 type ClassicCourseLesson = { id?: string; title: string };
 
@@ -75,10 +93,20 @@ type SpeechRecognitionConstructor = new () => BrowserSpeechRecognition;
 
 type SessionResponse = {
   user?: {
+    currentPeriodEnd?: string | null;
     email?: string | null;
     image?: string | null;
     name?: string | null;
+    subscriptionStatus?: "free" | "pro";
   } | null;
+};
+
+type AccountSubscriptionResponse = {
+  currentPeriodEnd?: string | null;
+  email?: string;
+  stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
+  subscriptionStatus?: "free" | "pro";
 };
 
 type AccountPanelView = "menu" | "account" | "subscription" | "checkout" | "voice";
@@ -89,6 +117,7 @@ type AccountMenuAction = "subscription" | "voice" | "terms" | "privacy";
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
 const selectedVoiceStorageKey = "speakflow-selected-voice-uri";
 const speechSilenceDelayMs = 1000;
+const englishSpeechSilenceDelayMs = 2000;
 const speechNoInputTimeoutMs = 12000;
 const speechStopFallbackMs = 900;
 const speechMaxDurationMs = 45000;
@@ -99,6 +128,12 @@ function getAccountAvatarStorageKey(identifier: string) {
 
 function createFreePracticeRoundId() {
   return `free:${Date.now()}:${Math.random().toString(36).slice(2)}`;
+}
+
+function getSpeechSilenceDelay(stage: PracticeStage) {
+  if (stage === "native") return speechSilenceDelayMs;
+
+  return englishSpeechSilenceDelayMs;
 }
 
 const accountMenuItemMarks = [
@@ -532,10 +567,27 @@ const pinyinDictionary: Record<string, string[]> = {
 
 const defaultChineseCandidates = ["？", "！", "我", "你", "好", "这", "谢谢"];
 const handwritingCandidates = ["我", "你", "好", "吗", "谢", "爱", "说"];
-const quickPracticeStarters = [
-  "新表达",
-  "经典场景口语练习",
-] as const;
+const quickPracticeStarters: Array<{
+  id: "guided" | "expression" | "classic";
+  title: string;
+  description: string;
+}> = [
+  {
+    id: "guided",
+    title: "AI引导表达（推荐）",
+    description: "AI一步一步引导你开口",
+  },
+  {
+    id: "expression",
+    title: "新表达",
+    description: "收藏、学习和复习你的常用表达",
+  },
+  {
+    id: "classic",
+    title: "经典场景口语练习",
+    description: "按真实生活场景练高频口语",
+  },
+];
 const bankLessonOrder = [
   "新开银行账户",
   "银行事务口语课",
@@ -1074,10 +1126,20 @@ function SpeakEnglishClient() {
   const speechMaxTimerRef = useRef<number | null>(null);
   const activeRecognitionStageRef = useRef<PracticeStage>("native");
   const freePracticeRoundIdRef = useRef(createFreePracticeRoundId());
+  const guidedConversationTurnsRef = useRef<GuidedConversationTurn[]>([]);
+  const guidedFollowupRequestKeyRef = useRef("");
+  const freeConversationRequestKeyRef = useRef("");
+  const freeConversationFetchRequestKeyRef = useRef("");
+  const freeConversationPrefetchRef =
+    useRef<FreeConversationPrefetch | null>(null);
+  const hasEnglishAttemptRef = useRef(false);
+  const messageRef = useRef("");
 
   const [message, setMessage] = useState("用中文说出你想表达的内容");
   const [inputText, setInputText] = useState("");
   const [keyboardMode, setKeyboardMode] = useState<KeyboardMode>("zh");
+  const [trainingGroundMode, setTrainingGroundMode] =
+    useState<TrainingGroundMode>("default");
   const [composingPinyin, setComposingPinyin] = useState("");
   const [isShifted, setIsShifted] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -1113,13 +1175,32 @@ function SpeakEnglishClient() {
     Set<string>
   >(() => getDefaultCollapsedAccountMenuItems());
   const [selectedProPlan, setSelectedProPlan] = useState<ProPlan>("yearly");
+  const [isStartingCheckout, setIsStartingCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
   const [accountName, setAccountName] = useState("");
   const [accountEmail, setAccountEmail] = useState("");
   const [accountImage, setAccountImage] = useState("");
   const [accountImageFailed, setAccountImageFailed] = useState(false);
+  const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
+    useState<"free" | "pro">("free");
+  const [accountCurrentPeriodEnd, setAccountCurrentPeriodEnd] = useState("");
+  const [isLoadingAccountSubscription, setIsLoadingAccountSubscription] =
+    useState(false);
+  const [accountSubscriptionRefreshKey, setAccountSubscriptionRefreshKey] =
+    useState(0);
   const [showAvatarEditor, setShowAvatarEditor] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("");
   const [avatarEditorNotice, setAvatarEditorNotice] = useState("");
+  const [guidedFollowupSuggestion, setGuidedFollowupSuggestion] = useState("");
+  const [isLoadingGuidedFollowup, setIsLoadingGuidedFollowup] = useState(false);
+  const [freeConversationResponse, setFreeConversationResponse] =
+    useState<FreeConversationResponse | null>(null);
+  const [freeConversationQuestionPrompt, setFreeConversationQuestionPrompt] =
+    useState<{ english: string; hintChinese: string } | null>(null);
+  const [isFreeConversationHintVisible, setIsFreeConversationHintVisible] =
+    useState(false);
+  const [isLoadingFreeConversation, setIsLoadingFreeConversation] =
+    useState(false);
   const [showExpressionMenu, setShowExpressionMenu] = useState(false);
   const [showClassicCoursePicker, setShowClassicCoursePicker] = useState(false);
   const [selectedClassicCourseCategoryId, setSelectedClassicCourseCategoryId] =
@@ -1149,6 +1230,9 @@ function SpeakEnglishClient() {
   const accountMenuSections = accountCopy.accountMenuSections;
   const proFeatureItems = accountCopy.proFeatures;
   const voiceMenuItemLabel = language === "en" ? "Voice" : "声音";
+  const isAiGuidedMode = trainingGroundMode === "guided";
+  const isFreeConversationMode = false;
+  const trainingGroundTitle = isAiGuidedMode ? "AI引导表达" : "";
   const chineseCandidates = useMemo(() => {
     const pinyin = composingPinyin.toLowerCase();
     if (!pinyin) return defaultChineseCandidates;
@@ -1165,14 +1249,24 @@ function SpeakEnglishClient() {
     hasEnglishAttempt ||
     Boolean(standardEnglish) ||
     isListening ||
+    (isFreeConversationMode && Boolean(freeConversationQuestionPrompt)) ||
     Boolean(inputText.trim()) ||
     Boolean(liveTranscript.trim());
   const showLandingPrompt = !hasPracticeActivity;
   const showNativeCompletePrompt =
     hasNativeSpeech && !hasEnglishAttempt && !standardEnglish;
   const showListeningPrompt = isListening;
+  const showFreeConversationAnswerPrompt =
+    isFreeConversationMode &&
+    Boolean(freeConversationQuestionPrompt) &&
+    !hasEnglishAttempt &&
+    !nativeSpeech;
   const showVoiceOnlyPrompt =
-    showLandingPrompt || showNativeCompletePrompt || showListeningPrompt;
+    showLandingPrompt ||
+    showNativeCompletePrompt ||
+    showListeningPrompt ||
+    showFreeConversationAnswerPrompt;
+  const showAiGuidedNudge = hasEnglishAttempt && !isAiGuidedMode;
   const selectedExpression =
     expressionVariants[selectedExpressionIndex] ||
     createFallbackExpressionVariants(standardEnglish)[0];
@@ -1183,6 +1277,32 @@ function SpeakEnglishClient() {
         highlightedExpressions
       ),
     [highlightedExpressions, selectedExpression.text]
+  );
+  const freeConversationExpressionVariants = useMemo(() => {
+    const standard =
+      freeConversationResponse?.standard ||
+      standardEnglish ||
+      "It's very hot today.";
+    const natural = freeConversationResponse?.natural || standard;
+    const simple = freeConversationResponse?.simple || standard;
+
+    return [
+      { label: "推荐表达", text: natural },
+      { label: "标准表达", text: standard },
+      { label: "简单表达", text: simple },
+    ];
+  }, [freeConversationResponse, standardEnglish]);
+  const selectedFreeConversationExpression =
+    freeConversationExpressionVariants[
+      Math.min(selectedExpressionIndex, freeConversationExpressionVariants.length - 1)
+    ] || freeConversationExpressionVariants[0];
+  const selectedFreeConversationExpressionSegments = useMemo(
+    () =>
+      splitSentenceByHighlightedExpressions(
+        selectedFreeConversationExpression.text || "",
+        highlightedExpressions
+      ),
+    [highlightedExpressions, selectedFreeConversationExpression.text]
   );
   const lastExpressionIndex = expressionVariantLabels.length - 1;
   const hasPreviousExpression = selectedExpressionIndex > 0;
@@ -1202,8 +1322,49 @@ function SpeakEnglishClient() {
     accountName ||
     (accountEmail ? accountEmail.split("@")[0] : accountCopy.fallbackUser);
   const selectedProPlanDetails = accountCopy.proPlans[selectedProPlan];
+  const isAccountPro = accountSubscriptionStatus === "pro";
+  const accountSubscriptionLabel = isLoadingAccountSubscription
+    ? language === "en"
+      ? "Checking..."
+      : "查询中"
+    : isAccountPro
+      ? language === "en"
+        ? "Subscribed"
+        : "已订阅"
+      : accountCopy.notSubscribed;
+  const accountSubscriptionBadgeClass = isAccountPro
+    ? "bg-[#e8fff5] text-[#14845f]"
+    : "bg-[#efeaff] text-[#7460e8]";
+  const accountCurrentPeriodEndLabel =
+    isAccountPro && accountCurrentPeriodEnd
+      ? (() => {
+          const periodEndDate = new Date(accountCurrentPeriodEnd);
+          if (Number.isNaN(periodEndDate.getTime())) return "";
+
+          const formattedDate = periodEndDate.toLocaleDateString(
+            language === "en" ? "en-US" : "zh-CN",
+            {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            }
+          );
+
+          return language === "en"
+            ? `Renews ${formattedDate}`
+            : `到期时间 ${formattedDate}`;
+        })()
+      : "";
   const avatarEditorImage =
     avatarPreview || (accountImageFailed ? "" : accountImage);
+
+  useEffect(() => {
+    hasEnglishAttemptRef.current = hasEnglishAttempt;
+  }, [hasEnglishAttempt]);
+
+  useEffect(() => {
+    messageRef.current = message;
+  }, [message]);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -1286,6 +1447,10 @@ function SpeakEnglishClient() {
         setAccountEmail(nextEmail);
         setAccountImage(savedAvatar || session.user?.image || "");
         setAccountImageFailed(false);
+        setAccountSubscriptionStatus(
+          session.user?.subscriptionStatus === "pro" ? "pro" : "free"
+        );
+        setAccountCurrentPeriodEnd(session.user?.currentPeriodEnd || "");
       } catch {
         if (!cancelled) {
           setAccountName("");
@@ -1303,24 +1468,85 @@ function SpeakEnglishClient() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+
+    async function loadAccountSubscription() {
+      setIsLoadingAccountSubscription(true);
+
+      try {
+        const response = await fetch("/api/me/subscription", {
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("Load subscription failed");
+        }
+
+        const data = (await response.json()) as AccountSubscriptionResponse;
+
+        if (cancelled) return;
+
+        setAccountSubscriptionStatus(
+          data.subscriptionStatus === "pro" ? "pro" : "free"
+        );
+        setAccountCurrentPeriodEnd(data.currentPeriodEnd || "");
+        if (data.subscriptionStatus === "pro") {
+          setShowFreePracticeLimitModal(false);
+        }
+      } catch {
+        if (!cancelled) {
+          setAccountSubscriptionStatus("free");
+          setAccountCurrentPeriodEnd("");
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingAccountSubscription(false);
+        }
+      }
+    }
+
+    void loadAccountSubscription();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [accountPanelView, accountSubscriptionRefreshKey, showAccountMenu]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
 
     const searchParams = new URLSearchParams(window.location.search);
     const shouldOpenPro = searchParams.get("pro") === "1";
     const shouldOpenAccount = searchParams.get("account") === "1";
+    const checkoutStatus = searchParams.get("checkout");
     if (searchParams.get("menu") !== "1" && !shouldOpenPro && !shouldOpenAccount)
       return;
 
+    const refreshTimers: number[] = [];
     setShowQuickPanel(!shouldOpenAccount);
     if (shouldOpenPro) {
       setShowAccountMenu(true);
       setAccountPanelView("subscription");
+
+      if (checkoutStatus === "success") {
+        [1200, 3200, 7000].forEach((delay) => {
+          refreshTimers.push(
+            window.setTimeout(() => {
+              setAccountSubscriptionRefreshKey(Date.now());
+            }, delay)
+          );
+        });
+      }
     } else if (shouldOpenAccount) {
       setShowAccountMenu(true);
       setAccountPanelView("menu");
       setCollapsedAccountMenuItems(getDefaultCollapsedAccountMenuItems());
     }
     window.history.replaceState(null, "", "/speak-english");
+
+    return () => {
+      refreshTimers.forEach((timer) => window.clearTimeout(timer));
+    };
   }, []);
 
   useEffect(() => {
@@ -1411,14 +1637,42 @@ function SpeakEnglishClient() {
     resetClassicCoursePicker();
   }
 
-  function ensureFreePracticeAvailable() {
+  async function ensureFreePracticeAvailable() {
+    if (accountSubscriptionStatus === "pro") return true;
     if (!isFreePracticeLimitReached("free")) return true;
+
+    try {
+      setIsLoadingAccountSubscription(true);
+      const response = await fetch("/api/me/subscription", {
+        cache: "no-store",
+      });
+
+      if (response.ok) {
+        const data = (await response.json()) as AccountSubscriptionResponse;
+        const nextSubscriptionStatus =
+          data.subscriptionStatus === "pro" ? "pro" : "free";
+
+        setAccountSubscriptionStatus(nextSubscriptionStatus);
+        setAccountCurrentPeriodEnd(data.currentPeriodEnd || "");
+
+        if (nextSubscriptionStatus === "pro") {
+          setShowFreePracticeLimitModal(false);
+          return true;
+        }
+      }
+    } catch {
+      // Keep the existing free-user behavior if the subscription check fails.
+    } finally {
+      setIsLoadingAccountSubscription(false);
+    }
 
     showFreePracticeLimit();
     return false;
   }
 
   function markFreePracticeRoundCompleted() {
+    if (accountSubscriptionStatus === "pro") return;
+
     recordFreePracticeCompletion("free", freePracticeRoundIdRef.current);
   }
 
@@ -1441,6 +1695,46 @@ function SpeakEnglishClient() {
 
     if (action === "privacy") {
       window.location.href = "/privacy";
+    }
+  }
+
+  async function startStripeCheckout(selectedPlan: ProPlan = selectedProPlan) {
+    if (isStartingCheckout) return;
+
+    console.log("checkout plan:", selectedPlan);
+    setIsStartingCheckout(true);
+    setCheckoutError("");
+
+    try {
+      const response = await fetch("/api/stripe/checkout", {
+        body: JSON.stringify({ plan: selectedPlan }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+      const data = (await response.json().catch(() => ({}))) as {
+        error?: unknown;
+        url?: unknown;
+      };
+      console.log("checkout response:", data);
+      const url = typeof data.url === "string" ? data.url : "";
+
+      if (!response.ok || !url) {
+        const errorMessage =
+          typeof data.error === "string" && data.error.trim()
+            ? data.error
+            : "Unable to start checkout. Please try again.";
+        throw new Error(errorMessage);
+      }
+
+      window.location.href = url;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error && error.message
+          ? error.message
+          : "Unable to start checkout. Please try again.";
+      setCheckoutError("Unable to start checkout. Please try again.");
+      window.alert(errorMessage);
+      setIsStartingCheckout(false);
     }
   }
 
@@ -1588,6 +1882,88 @@ function SpeakEnglishClient() {
     setIsLoadingExpressionVariants(false);
     setHighlightedExpressions([]);
     setVocabularyNotice("");
+    resetGuidedFollowupState();
+    resetFreeConversationState();
+  }
+
+  function prepareGuidedSuggestedEnglishRound(suggestion: string) {
+    freePracticeRoundIdRef.current = createFreePracticeRoundId();
+    setPracticeStage("english");
+    setNativeSpeech(suggestion);
+    setHasNativeSpeech(true);
+    setHasEnglishAttempt(false);
+    setStandardEnglish("");
+    setExpressionVariants([]);
+    setSelectedExpressionIndex(0);
+    setIsLoadingExpressionVariants(false);
+    setHighlightedExpressions([]);
+    setVocabularyNotice("");
+    resetGuidedFollowupState();
+    resetFreeConversationState();
+  }
+
+  function prepareFreeConversationAnswerRound() {
+    const activeQuestion = freeConversationResponse
+      ? {
+          english: freeConversationResponse.questionEnglish,
+          hintChinese:
+            freeConversationResponse.hintChinese ||
+            freeConversationResponse.questionChinese,
+        }
+      : freeConversationQuestionPrompt;
+
+    freePracticeRoundIdRef.current = createFreePracticeRoundId();
+    setPracticeStage("english");
+    setNativeSpeech("");
+    setHasNativeSpeech(false);
+    setHasEnglishAttempt(false);
+    setStandardEnglish("");
+    setExpressionVariants([]);
+    setSelectedExpressionIndex(0);
+    setIsLoadingExpressionVariants(false);
+    setHighlightedExpressions([]);
+    setVocabularyNotice("");
+    resetGuidedFollowupState();
+    resetFreeConversationState({ keepHint: true, keepQuestionPrompt: true });
+    setFreeConversationQuestionPrompt(activeQuestion);
+  }
+
+  function resetGuidedFollowupState() {
+    guidedFollowupRequestKeyRef.current = "";
+    setGuidedFollowupSuggestion("");
+    setIsLoadingGuidedFollowup(false);
+  }
+
+  function resetFreeConversationState(
+    options: { keepHint?: boolean; keepQuestionPrompt?: boolean } = {}
+  ) {
+    freeConversationRequestKeyRef.current = "";
+    freeConversationFetchRequestKeyRef.current = "";
+    freeConversationPrefetchRef.current = null;
+    setFreeConversationResponse(null);
+    setIsLoadingFreeConversation(false);
+    if (!options.keepQuestionPrompt) {
+      setFreeConversationQuestionPrompt(null);
+    }
+    if (!options.keepHint) {
+      setIsFreeConversationHintVisible(false);
+    }
+  }
+
+  function openTrainingGroundMode() {
+    setTrainingGroundMode("guided");
+    guidedConversationTurnsRef.current = [];
+    resetGuidedFollowupState();
+    prepareNextNativeRound();
+    setInputText("");
+    setComposingPinyin("");
+    setLiveTranscript("");
+    setKeyboardMode("zh");
+    setMessage("用中文说出你想表达的内容");
+    setShowQuickPanel(false);
+    setShowExpressionMenu(false);
+    setShowClassicCoursePicker(false);
+    resetClassicCoursePicker();
   }
 
   function finishRecognition(finalTranscript = speechBufferRef.current.trim()) {
@@ -1596,6 +1972,10 @@ function SpeakEnglishClient() {
     if (shouldCommitSpeechRef.current && finalTranscript) {
       setMessage(finalTranscript);
       if (completedStage === "native") {
+        resetGuidedFollowupState();
+        if (isFreeConversationMode) {
+          resetFreeConversationState();
+        }
         setNativeSpeech(finalTranscript);
         setStandardEnglish("");
         setExpressionVariants([]);
@@ -1636,7 +2016,11 @@ function SpeakEnglishClient() {
       return;
     }
 
-    startRecognition();
+    if (isFreeConversationMode && hasEnglishAttempt && isLoadingFreeConversation) {
+      return;
+    }
+
+    void startRecognition();
   }
 
   function handleComposerPracticeAction() {
@@ -1645,10 +2029,10 @@ function SpeakEnglishClient() {
       return;
     }
 
-    startRecognition();
+    void startRecognition();
   }
 
-  function startRecognition() {
+  async function startRecognition() {
     if (isListening) return;
 
     const RecognitionConstructor = getRecognitionConstructor();
@@ -1662,17 +2046,41 @@ function SpeakEnglishClient() {
     clearAllSpeechTimers();
     speechBufferRef.current = "";
     shouldCommitSpeechRef.current = true;
-    const isStartingNextNativeRound = Boolean(standardEnglish);
-    const nextPracticeStage: PracticeStage = isStartingNextNativeRound
-      ? "native"
-      : practiceStage;
+    const isStartingFreeConversationAnswerRound =
+      isFreeConversationMode && hasEnglishAttempt;
+    const isStartingGuidedSuggestedEnglishRound =
+      isAiGuidedMode && Boolean(standardEnglish);
+    const guidedSuggestedChinese = isStartingGuidedSuggestedEnglishRound
+      ? guidedFollowupSuggestion.trim() || "我还想多说一点我的感受。"
+      : "";
+    const isStartingNextNativeRound =
+      Boolean(standardEnglish) &&
+      !isStartingGuidedSuggestedEnglishRound &&
+      !isStartingFreeConversationAnswerRound;
+    const nextPracticeStage: PracticeStage =
+      isStartingFreeConversationAnswerRound
+        ? "english"
+        : isStartingGuidedSuggestedEnglishRound
+        ? "english"
+        : isStartingNextNativeRound
+          ? "native"
+          : practiceStage;
 
-    if (nextPracticeStage === "native" && !ensureFreePracticeAvailable()) {
+    if (
+      (nextPracticeStage === "native" ||
+        isStartingGuidedSuggestedEnglishRound ||
+        isStartingFreeConversationAnswerRound) &&
+      !(await ensureFreePracticeAvailable())
+    ) {
       shouldCommitSpeechRef.current = false;
       return;
     }
 
-    if (isStartingNextNativeRound) {
+    if (isStartingGuidedSuggestedEnglishRound) {
+      prepareGuidedSuggestedEnglishRound(guidedSuggestedChinese);
+    } else if (isStartingFreeConversationAnswerRound) {
+      prepareFreeConversationAnswerRound();
+    } else if (isStartingNextNativeRound) {
       prepareNextNativeRound();
     }
 
@@ -1681,6 +2089,7 @@ function SpeakEnglishClient() {
     recognition.lang = nextPracticeStage === "english" ? "en-US" : currentMode.lang;
     recognition.continuous = true;
     recognition.interimResults = true;
+    const activeSpeechSilenceDelayMs = getSpeechSilenceDelay(nextPracticeStage);
     setInputText("");
     setComposingPinyin("");
     setLiveTranscript("");
@@ -1703,7 +2112,7 @@ function SpeakEnglishClient() {
       if (transcript) {
         speechSilenceTimerRef.current = window.setTimeout(() => {
           stopRecognition();
-        }, speechSilenceDelayMs);
+        }, activeSpeechSilenceDelayMs);
       }
     };
 
@@ -1771,7 +2180,7 @@ function SpeakEnglishClient() {
   }
 
   useEffect(() => {
-    if (!hasEnglishAttempt || !nativeSpeech) return;
+    if (isFreeConversationMode || !hasEnglishAttempt || !nativeSpeech) return;
 
     let cancelled = false;
     setExpressionVariants([]);
@@ -1823,11 +2232,103 @@ function SpeakEnglishClient() {
     return () => {
       cancelled = true;
     };
-  }, [hasEnglishAttempt, message, nativeSpeech]);
+  }, [hasEnglishAttempt, isFreeConversationMode, message, nativeSpeech]);
 
   useEffect(() => {
-    const sentence = selectedExpression.text?.trim();
-    if (!hasEnglishAttempt || !sentence || isLoadingExpressionVariants) {
+    const currentChinese = nativeSpeech.trim();
+    const userEnglish = message.trim();
+    const recommendedEnglish = standardEnglish.trim();
+    const requestKey = JSON.stringify({
+      currentChinese,
+      recommendedEnglish,
+      userEnglish,
+    });
+
+    if (
+      !isAiGuidedMode ||
+      !hasEnglishAttempt ||
+      isLoadingExpressionVariants ||
+      !currentChinese ||
+      !recommendedEnglish ||
+      guidedFollowupRequestKeyRef.current === requestKey
+    ) {
+      return;
+    }
+
+    let cancelled = false;
+    guidedFollowupRequestKeyRef.current = requestKey;
+    setGuidedFollowupSuggestion("");
+    setIsLoadingGuidedFollowup(true);
+
+    async function loadGuidedFollowup() {
+      try {
+        const response = await fetch("/api/expression-followup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            currentChinese,
+            recommendedEnglish,
+            turns: guidedConversationTurnsRef.current,
+            userEnglish,
+          }),
+        });
+        const data = (await response.json()) as { suggestion?: unknown };
+        const suggestion =
+          typeof data.suggestion === "string" ? data.suggestion.trim() : "";
+
+        if (!cancelled) {
+          setGuidedFollowupSuggestion(
+            suggestion || "躺在后院晒太阳真舒服！"
+          );
+        }
+      } catch {
+        if (!cancelled) {
+          setGuidedFollowupSuggestion("躺在后院晒太阳真舒服！");
+        }
+      } finally {
+        if (!cancelled) {
+          guidedConversationTurnsRef.current = [
+            ...guidedConversationTurnsRef.current,
+            {
+              chinese: currentChinese,
+              recommendedEnglish,
+              userEnglish,
+            },
+          ].slice(-6);
+          setIsLoadingGuidedFollowup(false);
+        }
+      }
+    }
+
+    void loadGuidedFollowup();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    hasEnglishAttempt,
+    isAiGuidedMode,
+    isLoadingExpressionVariants,
+    message,
+    nativeSpeech,
+    standardEnglish,
+  ]);
+
+  useEffect(() => {
+    const sentence = (
+      isFreeConversationMode
+        ? selectedFreeConversationExpression.text
+        : selectedExpression.text
+    )?.trim();
+    const isExpressionHighlightLoading = isFreeConversationMode
+      ? isLoadingFreeConversation
+      : isLoadingExpressionVariants;
+
+    if (
+      !hasEnglishAttempt ||
+      !sentence ||
+      isExpressionHighlightLoading
+    ) {
       setHighlightedExpressions([]);
       return;
     }
@@ -1865,10 +2366,19 @@ function SpeakEnglishClient() {
     return () => {
       cancelled = true;
     };
-  }, [hasEnglishAttempt, isLoadingExpressionVariants, selectedExpression.text]);
+  }, [
+    hasEnglishAttempt,
+    isFreeConversationMode,
+    isLoadingFreeConversation,
+    isLoadingExpressionVariants,
+    selectedFreeConversationExpression.text,
+    selectedExpression.text,
+  ]);
 
   function readStandardEnglish(rate: number) {
-    const text = selectedExpression.text || standardEnglish;
+    const text = isFreeConversationMode
+      ? selectedFreeConversationExpression.text
+      : selectedExpression.text || standardEnglish;
     if (!text || typeof window === "undefined") return;
 
     const utterance = new SpeechSynthesisUtterance(text);
@@ -2169,6 +2679,11 @@ function SpeakEnglishClient() {
                 )}
               </button>
             </div>
+            {trainingGroundTitle && !showQuickPanel ? (
+              <div className="mt-3 text-center font-[var(--font-sora)] text-[0.92rem] font-extrabold text-[#5b63ff]">
+                {trainingGroundTitle}
+              </div>
+            ) : null}
           </header>
 
           {showAccountMenu ? (
@@ -2305,11 +2820,15 @@ function SpeakEnglishClient() {
                               "icon" in item && item.icon
                                 ? item.icon
                                 : getAccountMenuItemMark(sectionIndex, itemIndex);
-                            const trailingText =
+                            const configuredTrailingText =
                               "trailing" in item &&
                               typeof item.trailing === "string"
                                 ? item.trailing
                                 : "";
+                            const trailingText =
+                              item.label === "SpeakFlow Pro"
+                                ? accountSubscriptionLabel
+                                : configuredTrailingText;
 
                             return (
                               <div key={menuItemKey} className="">
@@ -2490,11 +3009,20 @@ function SpeakEnglishClient() {
                         <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[14px] bg-[#efeaff] text-[1.2rem] text-[#7460e8]">
                           ◆
                         </span>
-                        <span className="min-w-0 flex-1 truncate text-[1.08rem] font-extrabold">
-                          SpeakFlow Pro
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-[1.08rem] font-extrabold">
+                            SpeakFlow Pro
+                          </span>
+                          {accountCurrentPeriodEndLabel ? (
+                            <span className="mt-1 block truncate text-[0.82rem] font-bold text-[#7f7896]">
+                              {accountCurrentPeriodEndLabel}
+                            </span>
+                          ) : null}
                         </span>
-                        <span className="rounded-full bg-[#efeaff] px-3 py-1 text-[0.9rem] font-extrabold text-[#7460e8]">
-                          {accountCopy.notSubscribed}
+                        <span
+                          className={`rounded-full px-3 py-1 text-[0.9rem] font-extrabold ${accountSubscriptionBadgeClass}`}
+                        >
+                          {accountSubscriptionLabel}
                         </span>
                         <span className="text-[1.75rem] font-semibold text-[#7f7896]">
                           ›
@@ -2614,8 +3142,13 @@ function SpeakEnglishClient() {
                         {accountCopy.proDescription}
                       </p>
                       <div className="mx-auto mt-4 inline-flex items-center rounded-full bg-[#f0ecff] px-4 py-1.5 text-[0.82rem] font-extrabold text-[#7460e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
-                        {accountCopy.proLearners}
+                        {isAccountPro ? accountSubscriptionLabel : accountCopy.proLearners}
                       </div>
+                      {accountCurrentPeriodEndLabel ? (
+                        <p className="mx-auto mt-2 max-w-[280px] text-[0.86rem] font-bold leading-5 text-[#7f7896]">
+                          {accountCurrentPeriodEndLabel}
+                        </p>
+                      ) : null}
                     </div>
 
                     <h3 className="mt-8 flex items-center gap-2 px-1 text-[1.08rem] font-extrabold text-[#201833]">
@@ -2656,7 +3189,10 @@ function SpeakEnglishClient() {
                         type="button"
                         role="radio"
                         aria-checked={selectedProPlan === "monthly"}
-                        onClick={() => setSelectedProPlan("monthly")}
+                        onClick={() => {
+                          setCheckoutError("");
+                          setSelectedProPlan("monthly");
+                        }}
                         className={`flex min-h-[4.9rem] items-center gap-4 rounded-[24px] px-4 py-4 text-left transition ${
                           selectedProPlan === "monthly"
                             ? "border-2 border-[#9a67ff] bg-white/82 shadow-[0_18px_44px_rgba(126,92,255,0.14)]"
@@ -2692,7 +3228,10 @@ function SpeakEnglishClient() {
                         type="button"
                         role="radio"
                         aria-checked={selectedProPlan === "yearly"}
-                        onClick={() => setSelectedProPlan("yearly")}
+                        onClick={() => {
+                          setCheckoutError("");
+                          setSelectedProPlan("yearly");
+                        }}
                         className={`flex min-h-[5.25rem] items-center gap-4 rounded-[24px] px-4 py-4 text-left transition ${
                           selectedProPlan === "yearly"
                             ? "border-2 border-[#9a67ff] bg-white/82 shadow-[0_18px_44px_rgba(126,92,255,0.14)]"
@@ -2730,13 +3269,24 @@ function SpeakEnglishClient() {
 
                     <button
                       type="button"
-                      onClick={() => setAccountPanelView("checkout")}
+                      onClick={() => startStripeCheckout(selectedProPlan)}
+                      disabled={isStartingCheckout}
+                      aria-busy={isStartingCheckout}
                       aria-label={`${accountCopy.proCta}: ${selectedProPlanDetails.label}`}
-                      className="mt-7 flex min-h-[4.1rem] w-full items-center justify-center rounded-[24px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-5 text-[1.12rem] font-extrabold text-white shadow-[0_22px_50px_rgba(126,92,255,0.32)]"
+                      className="mt-7 flex min-h-[4.1rem] w-full items-center justify-center rounded-[24px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-5 text-[1.12rem] font-extrabold text-white shadow-[0_22px_50px_rgba(126,92,255,0.32)] transition disabled:opacity-70"
                     >
-                      <CrownIcon className="mr-2 h-7 w-7" />
+                      <CrownIcon
+                        className={`mr-2 h-7 w-7 ${
+                          isStartingCheckout ? "animate-pulse" : ""
+                        }`}
+                      />
                       {accountCopy.proCta}
                     </button>
+                    {checkoutError ? (
+                      <p className="mt-3 text-center text-[0.86rem] font-bold text-[#d33b46]">
+                        {checkoutError}
+                      </p>
+                    ) : null}
                     <p className="mt-4 text-center text-[0.86rem] font-bold text-[#7f7896]">
                       {accountCopy.cancelSafety}
                     </p>
@@ -2918,7 +3468,9 @@ function SpeakEnglishClient() {
               showVoiceOnlyPrompt
                 ? "pb-[calc(5.8rem+env(safe-area-inset-bottom))]"
                 : hasEnglishAttempt
-                  ? "pb-[calc(5.95rem+env(safe-area-inset-bottom))]"
+                  ? showAiGuidedNudge
+                    ? "pb-[calc(12rem+env(safe-area-inset-bottom))]"
+                    : "pb-[calc(5.95rem+env(safe-area-inset-bottom))]"
                   : "pb-[352px]"
             }`}
           >
@@ -2929,7 +3481,9 @@ function SpeakEnglishClient() {
                 showVoiceOnlyPrompt
                   ? "justify-start pt-28"
                   : hasEnglishAttempt
-                    ? "sf-free-practice-result-content justify-start pt-14"
+                    ? `sf-free-practice-result-content justify-start ${
+                        isFreeConversationMode ? "pt-8" : "pt-14"
+                      }`
                     : "justify-start pt-14"
               }`}
             >
@@ -2940,10 +3494,28 @@ function SpeakEnglishClient() {
                       {nativeSpeech}
                     </h2>
                     <p className="mt-5 text-[1.25rem] font-extrabold text-[#201833]">
-                      正在听你说话...
+                      正在听你说英文...
                     </p>
                     <p className="mt-3 text-[1rem] font-extrabold text-[#4b4267]">
-                      试着用英语说出来
+                      看着这句中文，用英语说出来
+                    </p>
+                  </div>
+                ) : isFreeConversationMode && freeConversationQuestionPrompt ? (
+                  <div className="max-w-[360px] bg-white/10 px-5 py-5 text-left">
+                    <p className="text-[1rem] font-extrabold leading-6 text-[#5b63ff]">
+                      AI回复：
+                    </p>
+                    <h2 className="mt-4 text-[1.45rem] font-extrabold leading-8 text-[#201833]">
+                      {freeConversationQuestionPrompt.english}
+                    </h2>
+                    {isFreeConversationHintVisible &&
+                    freeConversationQuestionPrompt.hintChinese ? (
+                      <p className="mt-3 rounded-[14px] bg-white/18 px-3 py-2 text-[1rem] font-bold leading-7 text-[#4b4267]">
+                        提示：{freeConversationQuestionPrompt.hintChinese}
+                      </p>
+                    ) : null}
+                    <p className="mt-5 text-[0.95rem] font-extrabold leading-6 text-[#201833]">
+                      用英文回答 AI。
                     </p>
                   </div>
                 ) : (
@@ -2956,6 +3528,25 @@ function SpeakEnglishClient() {
                     </p>
                   </>
                 )
+              ) : showFreeConversationAnswerPrompt &&
+                freeConversationQuestionPrompt ? (
+                <div className="max-w-[360px] bg-white/10 px-5 py-5 text-left">
+                  <p className="text-[1rem] font-extrabold leading-6 text-[#5b63ff]">
+                    AI回复：
+                  </p>
+                  <h2 className="mt-4 text-[1.45rem] font-extrabold leading-8 text-[#201833]">
+                    {freeConversationQuestionPrompt.english}
+                  </h2>
+                  {isFreeConversationHintVisible &&
+                  freeConversationQuestionPrompt.hintChinese ? (
+                    <p className="mt-3 rounded-[14px] bg-white/18 px-3 py-2 text-[1rem] font-bold leading-7 text-[#4b4267]">
+                      提示：{freeConversationQuestionPrompt.hintChinese}
+                    </p>
+                  ) : null}
+                  <p className="mt-5 text-[0.95rem] font-extrabold leading-6 text-[#201833]">
+                    点击麦克风，用英文回答 AI。
+                  </p>
+                </div>
               ) : showLandingPrompt ? (
                 <>
                   <h2 className="max-w-[360px] text-[1.65rem] font-extrabold leading-10 text-[#201833]">
@@ -2969,13 +3560,138 @@ function SpeakEnglishClient() {
                       {nativeSpeech}
                     </h2>
                     <p className="mt-5 text-[1rem] font-extrabold text-[#4b4267]">
-                      试着用英语说出来
+                      看着这句中文，用英语说出来
                     </p>
                   </div>
                 </>
               ) : (
                 <>
                   {hasEnglishAttempt ? (
+                    isFreeConversationMode ? (
+                      <>
+                        <div className="sf-free-practice-user-expression w-full max-w-[360px] text-left">
+                          <p className="text-[1rem] font-extrabold leading-5 text-[#7f7896]">
+                            你的表达：
+                          </p>
+                          <p className="sf-free-practice-user-card mt-3 rounded-[18px] bg-white/10 px-4 py-3 text-[1.05rem] font-bold leading-6 text-[#8f879c]">
+                            {message}
+                          </p>
+                        </div>
+
+                        <div className="mt-5 w-full max-w-[360px] text-left">
+                          <div className="flex items-center gap-2 text-left">
+                            <span className="text-[1.05rem] font-extrabold leading-6 text-[#4f6fe8]">
+                              {selectedFreeConversationExpression.label}
+                            </span>
+                            <button
+                              type="button"
+                              aria-label="切换表达"
+                              onClick={() =>
+                                setSelectedExpressionIndex((index) =>
+                                  (index + 1) %
+                                  freeConversationExpressionVariants.length
+                                )
+                              }
+                              disabled={isLoadingFreeConversation}
+                              className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] transition disabled:opacity-50"
+                            >
+                              →
+                            </button>
+                          </div>
+                          <p className="mt-3 bg-white/18 px-4 py-3 text-center text-[1.35rem] font-extrabold leading-8 text-[#201833]">
+                            {isLoadingFreeConversation
+                              ? "正在生成英文表达..."
+                              : selectedFreeConversationExpressionSegments.map(
+                                  (segment, index) =>
+                                    segment.type === "expression" ? (
+                                      <button
+                                        key={`${segment.value}-${index}`}
+                                        type="button"
+                                        onClick={(event) => {
+                                          event.stopPropagation();
+                                          handleExpressionClick(
+                                            segment.expression,
+                                            selectedFreeConversationExpression.text
+                                          );
+                                        }}
+                                        className="inline rounded-xl bg-[#fff7b8]/70 px-1.5 py-0.5 text-[#201833] shadow-[inset_0_-0.28em_0_rgba(255,215,106,0.55)] transition hover:bg-[#fff0a0]"
+                                      >
+                                        {segment.value}
+                                      </button>
+                                    ) : (
+                                      <span key={`${segment.value}-${index}`}>
+                                        {tokenizeEnglishSentence(segment.value).map(
+                                          (token, tokenIndex) =>
+                                            token.type === "word" &&
+                                            token.normalized ? (
+                                              <button
+                                                key={`${token.value}-${tokenIndex}`}
+                                                type="button"
+                                                onClick={(event) => {
+                                                  event.stopPropagation();
+                                                  handleWordClick(
+                                                    token.value,
+                                                    selectedFreeConversationExpression.text
+                                                  );
+                                                }}
+                                                className="inline rounded-md px-0.5 text-[#201833] transition hover:bg-white/45 active:bg-[#fff7b8]/70"
+                                              >
+                                                {token.value}
+                                              </button>
+                                            ) : (
+                                              <span
+                                                key={`${token.value}-${tokenIndex}`}
+                                              >
+                                                {token.value}
+                                              </span>
+                                            )
+                                        )}
+                                      </span>
+                                    )
+                                )}
+                          </p>
+                          {vocabularyNotice ? (
+                            <p className="sf-free-practice-notice mt-2 text-center text-sm font-semibold text-[#7f7896]">
+                              {vocabularyNotice}
+                            </p>
+                          ) : null}
+                        </div>
+
+                        {isLoadingFreeConversation || freeConversationResponse ? (
+                          <div className="mt-5 w-full max-w-[360px] text-left">
+                            <div className="flex items-center justify-between gap-3">
+                              <p className="text-[0.98rem] font-extrabold leading-5 text-[#5b63ff]">
+                                AI回复：
+                              </p>
+                              {!isLoadingFreeConversation &&
+                              freeConversationResponse?.hintChinese ? (
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setIsFreeConversationHintVisible(true)
+                                  }
+                                  className="rounded-full bg-white/35 px-3 py-1 text-[0.86rem] font-extrabold text-[#5b63ff] transition hover:bg-white/55"
+                                >
+                                  提示
+                                </button>
+                              ) : null}
+                            </div>
+                            <p className="mt-2 text-[1.08rem] font-extrabold leading-7 text-[#201833]">
+                              {isLoadingFreeConversation
+                                ? "AI正在准备下一句回复..."
+                                : freeConversationResponse?.questionEnglish}
+                            </p>
+                            {!isLoadingFreeConversation &&
+                            isFreeConversationHintVisible &&
+                            freeConversationResponse?.hintChinese ? (
+                              <p className="mt-2 rounded-[14px] bg-white/18 px-3 py-2 text-[0.95rem] font-bold leading-6 text-[#4b4267]">
+                                提示：{freeConversationResponse.hintChinese}
+                              </p>
+                            ) : null}
+                          </div>
+                        ) : null}
+                      </>
+                    ) : (
                     <>
                       <div className="sf-free-practice-user-expression w-full max-w-[360px] text-left">
                         <p className="text-[1.05rem] font-extrabold text-[#7f7896]">
@@ -2987,101 +3703,115 @@ function SpeakEnglishClient() {
                       </div>
 
                       <div className="sf-free-practice-standard-block mt-9 w-full max-w-[360px]">
-                        <div className="flex items-center gap-2 text-left">
-                          <button
-                            type="button"
-                            aria-label="上一种表达"
-                            onClick={() =>
-                              setSelectedExpressionIndex((index) =>
-                                Math.max(index - 1, 0)
-                              )
-                            }
-                            disabled={!hasPreviousExpression}
-                            className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] disabled:invisible"
-                          >
-                            ←
-                          </button>
-                          <span className="text-[1.2rem] font-extrabold text-[#4f6fe8]">
-                            {selectedExpression.label}
-                          </span>
-                          <button
-                            type="button"
-                            aria-label="下一种表达"
-                            onClick={() =>
-                              setSelectedExpressionIndex((index) =>
-                                Math.min(
-                                  index + 1,
-                                  expressionVariantLabels.length - 1
+                          <div className="flex items-center gap-2 text-left">
+                            <button
+                              type="button"
+                              aria-label="上一种表达"
+                              onClick={() =>
+                                setSelectedExpressionIndex((index) =>
+                                  Math.max(index - 1, 0)
                                 )
-                              )
-                            }
-                            disabled={!hasNextExpression}
-                            className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] disabled:invisible"
-                          >
-                            →
-                          </button>
-                        </div>
-
-                        <p className="sf-free-practice-expression-text mt-4 bg-white/18 px-4 py-4 text-[1.55rem] font-extrabold leading-9 text-[#201833]">
-                          {isLoadingExpressionVariants
-                            ? "正在生成表达..."
-                            : selectedExpressionSegments.map((segment, index) =>
-                                segment.type === "expression" ? (
-                                  <button
-                                    key={`${segment.value}-${index}`}
-                                    type="button"
-                                    onClick={(event) => {
-                                      event.stopPropagation();
-                                      handleExpressionClick(
-                                        segment.expression,
-                                        selectedExpression.text
-                                      );
-                                    }}
-                                    className="inline rounded-xl bg-[#fff7b8]/70 px-1.5 py-0.5 text-[#201833] shadow-[inset_0_-0.28em_0_rgba(255,215,106,0.55)] transition hover:bg-[#fff0a0]"
-                                  >
-                                    {segment.value}
-                                  </button>
-                                ) : (
-                                  <span key={`${segment.value}-${index}`}>
-                                    {tokenizeEnglishSentence(segment.value).map(
-                                      (token, tokenIndex) =>
-                                        token.type === "word" &&
-                                        token.normalized ? (
-                                          <button
-                                            key={`${token.value}-${tokenIndex}`}
-                                            type="button"
-                                            onClick={(event) => {
-                                              event.stopPropagation();
-                                              handleWordClick(
-                                                token.value,
-                                                selectedExpression.text
-                                              );
-                                            }}
-                                            className="inline rounded-md px-0.5 text-[#201833] transition hover:bg-white/45 active:bg-[#fff7b8]/70"
-                                          >
-                                            {token.value}
-                                          </button>
-                                        ) : (
-                                          <span
-                                            key={`${token.value}-${tokenIndex}`}
-                                          >
-                                            {token.value}
-                                          </span>
-                                        )
-                                    )}
-                                  </span>
+                              }
+                              disabled={!hasPreviousExpression}
+                              className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] disabled:invisible"
+                            >
+                              ←
+                            </button>
+                            <span className="text-[1.2rem] font-extrabold text-[#4f6fe8]">
+                              {selectedExpression.label}
+                            </span>
+                            <button
+                              type="button"
+                              aria-label="下一种表达"
+                              onClick={() =>
+                                setSelectedExpressionIndex((index) =>
+                                  Math.min(
+                                    index + 1,
+                                    expressionVariantLabels.length - 1
+                                  )
                                 )
-                              )}
-                        </p>
+                              }
+                              disabled={!hasNextExpression}
+                              className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] disabled:invisible"
+                            >
+                              →
+                            </button>
+                          </div>
 
-                        {vocabularyNotice ? (
-                          <p className="sf-free-practice-notice mt-3 text-center text-sm font-semibold text-[#7f7896]">
-                            {vocabularyNotice}
+                          <p className="sf-free-practice-expression-text mt-4 bg-white/18 px-4 py-4 text-[1.55rem] font-extrabold leading-9 text-[#201833]">
+                            {isLoadingExpressionVariants
+                              ? "正在生成表达..."
+                              : selectedExpressionSegments.map((segment, index) =>
+                                  segment.type === "expression" ? (
+                                    <button
+                                      key={`${segment.value}-${index}`}
+                                      type="button"
+                                      onClick={(event) => {
+                                        event.stopPropagation();
+                                        handleExpressionClick(
+                                          segment.expression,
+                                          selectedExpression.text
+                                        );
+                                      }}
+                                      className="inline rounded-xl bg-[#fff7b8]/70 px-1.5 py-0.5 text-[#201833] shadow-[inset_0_-0.28em_0_rgba(255,215,106,0.55)] transition hover:bg-[#fff0a0]"
+                                    >
+                                      {segment.value}
+                                    </button>
+                                  ) : (
+                                    <span key={`${segment.value}-${index}`}>
+                                      {tokenizeEnglishSentence(segment.value).map(
+                                        (token, tokenIndex) =>
+                                          token.type === "word" &&
+                                          token.normalized ? (
+                                            <button
+                                              key={`${token.value}-${tokenIndex}`}
+                                              type="button"
+                                              onClick={(event) => {
+                                                event.stopPropagation();
+                                                handleWordClick(
+                                                  token.value,
+                                                  selectedExpression.text
+                                                );
+                                              }}
+                                              className="inline rounded-md px-0.5 text-[#201833] transition hover:bg-white/45 active:bg-[#fff7b8]/70"
+                                            >
+                                              {token.value}
+                                            </button>
+                                          ) : (
+                                            <span
+                                              key={`${token.value}-${tokenIndex}`}
+                                            >
+                                              {token.value}
+                                            </span>
+                                          )
+                                      )}
+                                    </span>
+                                  )
+                                )}
                           </p>
-                        ) : null}
 
+                          {vocabularyNotice ? (
+                            <p className="sf-free-practice-notice mt-3 text-center text-sm font-semibold text-[#7f7896]">
+                              {vocabularyNotice}
+                            </p>
+                          ) : null}
                       </div>
+
+                      {isAiGuidedMode &&
+                      (isLoadingGuidedFollowup || guidedFollowupSuggestion) ? (
+                        <div className="mt-9 w-full max-w-[360px] text-left">
+                          <p className="text-[1rem] font-extrabold leading-6 text-[#5b63ff]">
+                            你可以继续说：
+                          </p>
+                          <p className="mt-2 text-[1.05rem] font-extrabold leading-7 text-[#201833]">
+                            {isLoadingGuidedFollowup
+                              ? "AI正在帮你想下一句..."
+                              : guidedFollowupSuggestion}
+                          </p>
+                        </div>
+                      ) : null}
                     </>
+                    )
                   ) : (
                     <>
                       <p className="max-w-[320px] text-[1.6rem] font-semibold leading-9 tracking-[-0.03em] text-[#fffaff]">
@@ -3120,13 +3850,66 @@ function SpeakEnglishClient() {
             </div>
           ) : null}
 
+          {showAiGuidedNudge ? (
+            <button
+              type="button"
+              onClick={openTrainingGroundMode}
+              className="absolute inset-x-0 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-30 mx-auto flex w-[252px] items-center gap-3 bg-white/72 px-4 py-3 text-left shadow-[0_16px_32px_rgba(84,72,146,0.14),inset_0_1px_0_rgba(255,255,255,0.78)] backdrop-blur-xl transition hover:bg-white/86 active:scale-[0.98]"
+              aria-label="不知道说什么，AI带我练"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center text-[#7c55ff]">
+                <svg
+                  viewBox="0 0 40 40"
+                  aria-hidden="true"
+                  className="h-10 w-10"
+                  fill="none"
+                >
+                  <path
+                    d="M15.5 31.5h9"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="2.4"
+                  />
+                  <path
+                    d="M16.8 35h6.4"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="2.4"
+                  />
+                  <path
+                    d="M26.5 18.3c0-4-2.8-7.1-6.5-7.1s-6.5 3.1-6.5 7.1c0 2.6 1.2 4.7 3.2 6.2.9.7 1.3 1.6 1.3 2.7v.8h4v-.8c0-1.1.5-2 1.4-2.7 1.9-1.5 3.1-3.6 3.1-6.2Z"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2.4"
+                  />
+                  <path
+                    d="M20 4.5v3M8.4 9.3l2.2 2.2M3.8 20h3.1M31.6 9.3l-2.2 2.2M33.1 20h3.1"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="2.4"
+                  />
+                </svg>
+              </span>
+              <span>
+                <span className="block text-[1.22rem] font-extrabold leading-6 text-[#201833]">
+                  不知道说什么？
+                </span>
+                <span className="mt-0.5 block text-[1rem] font-extrabold leading-5 text-[#7c55ff]">
+                  AI带我练
+                </span>
+              </span>
+            </button>
+          ) : null}
+
           {hasEnglishAttempt ? (
             <div className="sf-free-practice-result-actions absolute inset-x-0 bottom-0 z-20 grid min-h-[5.45rem] grid-cols-[1fr_auto_1fr] items-center gap-3 border-t border-[#cfc4ff]/72 bg-[linear-gradient(180deg,rgba(228,220,255,0.78),rgba(215,207,252,0.94))] px-5 pb-[max(0.35rem,env(safe-area-inset-bottom))] pt-1 shadow-[0_-10px_24px_rgba(100,82,180,0.08),inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-xl min-[390px]:gap-4 min-[390px]:px-8">
               <button
                 type="button"
                 aria-label="播放朗读"
                 onClick={() => readStandardEnglish(1)}
-                className="ml-auto flex h-10 min-w-[3.15rem] items-center justify-center rounded-[15px] bg-white/46 px-3 text-[1.05rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] min-[390px]:h-11 min-[390px]:min-w-[3.35rem] min-[390px]:px-4 min-[390px]:text-[1.15rem]"
+                disabled={isFreeConversationMode && isLoadingFreeConversation}
+                className="ml-auto flex h-10 min-w-[3.15rem] items-center justify-center rounded-[15px] bg-white/46 px-3 text-[1.05rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] transition disabled:opacity-50 min-[390px]:h-11 min-[390px]:min-w-[3.35rem] min-[390px]:px-4 min-[390px]:text-[1.15rem]"
               >
                 ▶
               </button>
@@ -3134,8 +3917,11 @@ function SpeakEnglishClient() {
               <button
                 type="button"
                 onClick={handlePrimaryPracticeAction}
-                className="grid place-items-center text-[#7f7896] transition"
-                aria-label="点击开始说话"
+                disabled={isFreeConversationMode && isLoadingFreeConversation}
+                className="grid place-items-center text-[#7f7896] transition disabled:opacity-50"
+                aria-label={
+                  isFreeConversationMode ? "用英文回答AI" : "点击开始说话"
+                }
               >
                 <Image
                   src="/icons/glow-mic.svg"
@@ -3150,7 +3936,8 @@ function SpeakEnglishClient() {
                 type="button"
                 aria-label="慢速朗读"
                 onClick={() => readStandardEnglish(0.5)}
-                className="mr-auto flex h-10 min-w-[4.65rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-3 text-[0.88rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] min-[390px]:h-11 min-[390px]:min-w-[5.35rem] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[0.95rem]"
+                disabled={isFreeConversationMode && isLoadingFreeConversation}
+                className="mr-auto flex h-10 min-w-[4.65rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-3 text-[0.88rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] transition disabled:opacity-50 min-[390px]:h-11 min-[390px]:min-w-[5.35rem] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[0.95rem]"
               >
                 <span className="text-[1.1rem]">▶</span>
                 <span>0.5x</span>
@@ -3280,21 +4067,29 @@ function SpeakEnglishClient() {
                 </div>
               ) : (
                 <div className="grid gap-3 py-2">
-                  {quickPracticeStarters.map((phrase) => (
-                    <div key={phrase} className="grid gap-1">
+                  {quickPracticeStarters.map((item) => (
+                    <div key={item.id} className="grid gap-1">
                       <button
                         type="button"
                         onClick={() => {
                           setShowAccountMenu(false);
 
-                          if (phrase === "新表达") {
+                          if (item.id === "guided") {
+                            openTrainingGroundMode();
+                            setShowExpressionMenu(false);
+                            setShowClassicCoursePicker(false);
+                            resetClassicCoursePicker();
+                            return;
+                          }
+
+                          if (item.id === "expression") {
                             setShowClassicCoursePicker(false);
                             resetClassicCoursePicker();
                             setShowExpressionMenu((current) => !current);
                             return;
                           }
 
-                          if (phrase === "经典场景口语练习") {
+                          if (item.id === "classic") {
                             setShowExpressionMenu(false);
                             resetClassicCoursePicker();
                             setShowClassicCoursePicker(true);
@@ -3306,10 +4101,15 @@ function SpeakEnglishClient() {
                         className="w-full px-1 py-2.5 text-left text-[1.24rem] font-extrabold leading-7 text-[#201833] transition hover:text-[#5b63ff]"
                       >
                         <MenuGlyph level={2} />
-                        {phrase}
+                        <span className="inline-flex flex-col align-top">
+                          <span>{item.title}</span>
+                          <span className="ml-7 mt-1 text-[0.82rem] font-bold leading-5 text-[#7f7896]">
+                            {item.description}
+                          </span>
+                        </span>
                       </button>
 
-                      {phrase === "新表达" && showExpressionMenu ? (
+                      {item.id === "expression" && showExpressionMenu ? (
                         <div className="ml-8 grid gap-1 py-1.5">
                           <button
                             type="button"
@@ -3350,7 +4150,11 @@ function SpeakEnglishClient() {
             </div>
           ) : null}
 
-          {hasPracticeActivity && !hasEnglishAttempt && !showNativeCompletePrompt && !showListeningPrompt ? (
+          {hasPracticeActivity &&
+          !hasEnglishAttempt &&
+          !showNativeCompletePrompt &&
+          !showListeningPrompt &&
+          !showFreeConversationAnswerPrompt ? (
           <div className="sf-keyboard-panel absolute inset-x-0 bottom-0 z-20 rounded-t-[32px] px-3 pb-3 pt-3 text-[#fffaff]">
             <div className="sf-composer mb-3 p-2">
               <div className="flex items-end gap-2">

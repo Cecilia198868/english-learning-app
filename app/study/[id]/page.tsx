@@ -39,6 +39,11 @@ type LocalLessonData = {
   lessons: Lesson[];
 };
 
+type AccountSubscriptionResponse = {
+  currentPeriodEnd?: string | null;
+  subscriptionStatus?: "free" | "pro";
+};
+
 const LESSONS_STORAGE_KEY = "english-app-lessons";
 const DB_NAME = "english-learning-app-db";
 const DB_VERSION = 1;
@@ -353,6 +358,8 @@ export default function StudyPage() {
   const [renameCourseTitle, setRenameCourseTitle] = useState("");
   const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
     useState(false);
+  const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
+    useState<"free" | "pro">("free");
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceName, setSelectedVoiceName] = useState("");
@@ -848,6 +855,39 @@ export default function StudyPage() {
   useEffect(() => {
     let cancelled = false;
 
+    async function loadAccountSubscription() {
+      try {
+        const response = await fetch("/api/me/subscription", {
+          cache: "no-store",
+        });
+
+        if (!response.ok) return;
+
+        const data = (await response.json()) as AccountSubscriptionResponse;
+
+        if (cancelled) return;
+
+        setAccountSubscriptionStatus(
+          data.subscriptionStatus === "pro" ? "pro" : "free"
+        );
+        if (data.subscriptionStatus === "pro") {
+          setShowFreePracticeLimitModal(false);
+        }
+      } catch {
+        // Keep the existing free-user behavior if the subscription check fails.
+      }
+    }
+
+    void loadAccountSubscription();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
     async function loadSourceAudio() {
       stopClipPlayback(true);
 
@@ -1176,17 +1216,42 @@ export default function StudyPage() {
     return `study:${lessonId}:${index}`;
   }
 
-  function ensureFreePracticeAvailable(index = currentIndex) {
+  async function ensureFreePracticeAvailable(index = currentIndex) {
+    if (accountSubscriptionStatus === "pro") return true;
+
     const completionId = getSentenceCompletionId(index);
 
     if (hasFreePracticeCompletion(freePracticeScope, completionId)) return true;
     if (!isFreePracticeLimitReached(freePracticeScope)) return true;
+
+    try {
+      const response = await fetch("/api/me/subscription", {
+        cache: "no-store",
+      });
+
+      if (response.ok) {
+        const data = (await response.json()) as AccountSubscriptionResponse;
+        const nextSubscriptionStatus =
+          data.subscriptionStatus === "pro" ? "pro" : "free";
+
+        setAccountSubscriptionStatus(nextSubscriptionStatus);
+
+        if (nextSubscriptionStatus === "pro") {
+          setShowFreePracticeLimitModal(false);
+          return true;
+        }
+      }
+    } catch {
+      // Keep the existing free-user behavior if the subscription check fails.
+    }
 
     showFreePracticeLimit();
     return false;
   }
 
   function markCurrentSentenceCompleted(index = currentIndex) {
+    if (accountSubscriptionStatus === "pro") return;
+
     recordFreePracticeCompletion(
       freePracticeScope,
       getSentenceCompletionId(index)
@@ -1210,11 +1275,11 @@ export default function StudyPage() {
       return;
     }
 
-    startEnglishRecognition();
+    void startEnglishRecognition();
   }
 
-  function startEnglishRecognition() {
-    if (!ensureFreePracticeAvailable()) return;
+  async function startEnglishRecognition() {
+    if (!(await ensureFreePracticeAvailable())) return;
 
     const RecognitionConstructor = getRecognitionConstructor();
     if (!RecognitionConstructor) {

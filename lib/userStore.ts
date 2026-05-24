@@ -6,7 +6,19 @@ export type StoredUser = {
   email: string;
   passwordHash: string;
   createdAt: string;
+  subscriptionStatus?: "free" | "pro";
+  stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
+  currentPeriodEnd?: string;
 };
+
+export type UserSubscriptionUpdate = Pick<
+  StoredUser,
+  | "currentPeriodEnd"
+  | "stripeCustomerId"
+  | "stripeSubscriptionId"
+  | "subscriptionStatus"
+>;
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const USERS_FILE = path.join(DATA_DIR, "users.json");
@@ -65,6 +77,17 @@ export async function findUserByEmail(email: string) {
   return users.find((user) => user.email === normalizedEmail) || null;
 }
 
+export async function findUserByStripeCustomerId(stripeCustomerId: string) {
+  const normalizedStripeCustomerId = stripeCustomerId.trim();
+  if (!normalizedStripeCustomerId) return null;
+
+  const users = await loadUsers();
+  return (
+    users.find((user) => user.stripeCustomerId === normalizedStripeCustomerId) ||
+    null
+  );
+}
+
 export async function createUser(email: string, password: string) {
   const normalizedEmail = normalizeEmail(email);
   const users = await loadUsers();
@@ -92,4 +115,39 @@ export async function validateUserPassword(email: string, password: string) {
   }
 
   return verifyPassword(password, user.passwordHash) ? user : null;
+}
+
+export async function updateUserSubscriptionByEmail(
+  email: string,
+  data: UserSubscriptionUpdate
+) {
+  const normalizedEmail = normalizeEmail(email);
+  const users = await loadUsers();
+  const userIndex = users.findIndex((user) => user.email === normalizedEmail);
+  const existingUser =
+    userIndex === -1
+      ? {
+          createdAt: new Date().toISOString(),
+          email: normalizedEmail,
+          passwordHash: "",
+        }
+      : users[userIndex];
+
+  const updatedUser: StoredUser = {
+    ...existingUser,
+    currentPeriodEnd: data.currentPeriodEnd,
+    stripeCustomerId: data.stripeCustomerId,
+    stripeSubscriptionId: data.stripeSubscriptionId,
+    subscriptionStatus: data.subscriptionStatus,
+  };
+
+  if (userIndex === -1) {
+    users.push(updatedUser);
+  } else {
+    users[userIndex] = updatedUser;
+  }
+
+  await writeFile(USERS_FILE, JSON.stringify(users, null, 2), "utf8");
+
+  return updatedUser;
 }

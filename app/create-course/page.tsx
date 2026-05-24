@@ -595,7 +595,7 @@ export default function CreateCoursePage() {
       const response = await fetch("/api/youtube-to-training", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan: "free", url: trimmedUrl }),
+        body: JSON.stringify({ url: trimmedUrl }),
       });
       const data = (await response.json()) as YoutubeTrainingResponse;
 

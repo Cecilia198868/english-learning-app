@@ -2,7 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { validateUserPassword } from "@/lib/userStore";
+import { findUserByEmail, validateUserPassword } from "@/lib/userStore";
 
 const appleClientId = process.env.APPLE_CLIENT_ID;
 const appleClientSecret = process.env.APPLE_CLIENT_SECRET;
@@ -85,5 +85,30 @@ export const authOptions: NextAuthOptions = {
   },
   jwt: {
     maxAge: persistentSessionMaxAgeSeconds,
+  },
+  callbacks: {
+    async jwt({ token }) {
+      const email =
+        typeof token.email === "string" ? token.email.trim().toLowerCase() : "";
+      const user = email ? await findUserByEmail(email) : null;
+
+      token.currentPeriodEnd = user?.currentPeriodEnd || null;
+      token.subscriptionStatus =
+        user?.subscriptionStatus === "pro" ? "pro" : "free";
+
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.currentPeriodEnd =
+          typeof token.currentPeriodEnd === "string"
+            ? token.currentPeriodEnd
+            : null;
+        session.user.subscriptionStatus =
+          token.subscriptionStatus === "pro" ? "pro" : "free";
+      }
+
+      return session;
+    },
   },
 };

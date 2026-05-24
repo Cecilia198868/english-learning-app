@@ -2,7 +2,10 @@ export const runtime = "nodejs";
 export const maxDuration = 300;
 
 import OpenAI, { toFile } from "openai";
+import { authOptions } from "@/auth";
 import { normalizeToShortTrainingItems, type TrainingItem } from "@/lib/training";
+import { findUserByEmail } from "@/lib/userStore";
+import { getServerSession } from "next-auth";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || "missing",
@@ -68,8 +71,14 @@ type TrainingPair = {
   endTime?: unknown;
 };
 
-function getRequestedPlan(plan: unknown): YoutubeImportPlan {
-  return plan === "pro" ? "pro" : "free";
+async function getCurrentYoutubeImportPlan(): Promise<YoutubeImportPlan> {
+  const session = await getServerSession(authOptions);
+  const email = session?.user?.email?.trim().toLowerCase();
+
+  if (!email) return "free";
+
+  const user = await findUserByEmail(email);
+  return user?.subscriptionStatus === "pro" ? "pro" : "free";
 }
 
 function friendlyFailure(status = 400) {
@@ -695,8 +704,8 @@ async function generateFromAudio({
 
 export async function POST(req: Request) {
   try {
-    const body = (await req.json()) as { plan?: unknown; url?: unknown };
-    const plan = getRequestedPlan(body.plan);
+    const body = (await req.json()) as { url?: unknown };
+    const plan = await getCurrentYoutubeImportPlan();
     const audioDurationLimitSeconds = AUDIO_DURATION_LIMIT_SECONDS[plan];
     const inputUrl = typeof body.url === "string" ? body.url.trim() : "";
     const videoId = getVideoId(inputUrl);
