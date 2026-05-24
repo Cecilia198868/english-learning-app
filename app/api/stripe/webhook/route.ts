@@ -7,7 +7,7 @@ import Stripe from "stripe";
 
 export const runtime = "nodejs";
 
-type EntitlementStatus = "pro" | "free";
+type EntitlementStatus = "pro" | "free" | "cancels_at_period_end";
 type StripeSubscriptionStatus = Stripe.Subscription.Status | "deleted";
 
 type SubscriptionPersistencePayload = {
@@ -30,9 +30,16 @@ function getCurrentPeriodEnd(subscription: Stripe.Subscription) {
     : null;
 }
 
-function getEntitlementStatus(status: StripeSubscriptionStatus) {
+function getEntitlementStatus(
+  subscription: Stripe.Subscription,
+  forcedStatus?: StripeSubscriptionStatus
+) {
+  const status = forcedStatus || subscription.status;
+
   if (status === "active" || status === "trialing") {
-    return "pro";
+    return subscription.cancel_at_period_end
+      ? "cancels_at_period_end"
+      : "pro";
   }
 
   if (
@@ -44,7 +51,7 @@ function getEntitlementStatus(status: StripeSubscriptionStatus) {
     return "free";
   }
 
-  return null;
+  return "free";
 }
 
 async function saveSubscriptionState(payload: SubscriptionPersistencePayload) {
@@ -83,12 +90,10 @@ async function persistSubscription(
     stripeCustomerId?: string;
   } = {}
 ) {
-  const status = options.forcedStatus || subscription.status;
-  const subscriptionStatus = getEntitlementStatus(status);
-
-  if (!subscriptionStatus) {
-    return;
-  }
+  const subscriptionStatus = getEntitlementStatus(
+    subscription,
+    options.forcedStatus
+  );
 
   const stripeCustomerId =
     options.stripeCustomerId || getStripeId(subscription.customer);
@@ -152,7 +157,7 @@ async function handleCheckoutSessionCompleted(
       currentPeriodEnd: currentPeriodEnd || undefined,
       stripeCustomerId: resolvedStripeCustomerId,
       stripeSubscriptionId: subscription.id,
-      subscriptionStatus: "pro",
+      subscriptionStatus: getEntitlementStatus(subscription),
     });
 
     if (updatedUser) {

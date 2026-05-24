@@ -91,13 +91,15 @@ type BrowserSpeechRecognition = {
 
 type SpeechRecognitionConstructor = new () => BrowserSpeechRecognition;
 
+type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
+
 type SessionResponse = {
   user?: {
     currentPeriodEnd?: string | null;
     email?: string | null;
     image?: string | null;
     name?: string | null;
-    subscriptionStatus?: "free" | "pro";
+    subscriptionStatus?: SubscriptionStatus;
   } | null;
 };
 
@@ -106,8 +108,21 @@ type AccountSubscriptionResponse = {
   email?: string;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
-  subscriptionStatus?: "free" | "pro";
+  subscriptionStatus?: SubscriptionStatus;
 };
+
+function normalizeSubscriptionStatus(
+  subscriptionStatus?: SubscriptionStatus | null
+): SubscriptionStatus {
+  return subscriptionStatus === "pro" ||
+    subscriptionStatus === "cancels_at_period_end"
+    ? subscriptionStatus
+    : "free";
+}
+
+function hasProAccess(subscriptionStatus: SubscriptionStatus) {
+  return subscriptionStatus !== "free";
+}
 
 type AccountPanelView =
   | "menu"
@@ -2094,7 +2109,7 @@ function SpeakEnglishClient() {
   const [accountImage, setAccountImage] = useState("");
   const [accountImageFailed, setAccountImageFailed] = useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
-    useState<"free" | "pro">("free");
+    useState<SubscriptionStatus>("free");
   const [accountCurrentPeriodEnd, setAccountCurrentPeriodEnd] = useState("");
   const [isLoadingAccountSubscription, setIsLoadingAccountSubscription] =
     useState(false);
@@ -2250,7 +2265,9 @@ function SpeakEnglishClient() {
     accountName ||
     (accountEmail ? accountEmail.split("@")[0] : accountCopy.fallbackUser);
   const selectedProPlanDetails = accountCopy.proPlans[selectedProPlan];
-  const isAccountPro = accountSubscriptionStatus === "pro";
+  const hasCanceledAtPeriodEnd =
+    accountSubscriptionStatus === "cancels_at_period_end";
+  const isAccountPro = hasProAccess(accountSubscriptionStatus);
   const accountSubscriptionLabel = isLoadingAccountSubscription
     ? language === "en"
       ? "Checking..."
@@ -2282,10 +2299,21 @@ function SpeakEnglishClient() {
         })()
       : "";
   const accountCurrentPeriodEndLabel = accountCurrentPeriodEndDateLabel
-    ? language === "en"
-      ? `Renews ${accountCurrentPeriodEndDateLabel}`
-      : `\u5230\u671f\u65f6\u95f4 ${accountCurrentPeriodEndDateLabel}`
+    ? hasCanceledAtPeriodEnd
+      ? language === "en"
+        ? `Ends ${accountCurrentPeriodEndDateLabel}`
+        : `\u5c06\u4e8e ${accountCurrentPeriodEndDateLabel} \u5230\u671f`
+      : language === "en"
+        ? `Renews ${accountCurrentPeriodEndDateLabel}`
+        : `\u5230\u671f\u65f6\u95f4 ${accountCurrentPeriodEndDateLabel}`
     : "";
+  const accountSubscriptionDisplayLabel = isLoadingAccountSubscription
+    ? accountSubscriptionLabel
+    : hasCanceledAtPeriodEnd
+    ? language === "en"
+      ? "Canceled"
+      : "\u5df2\u53d6\u6d88"
+    : accountSubscriptionLabel;
   const subscriptionManagementCopy =
     language === "en"
       ? {
@@ -2473,7 +2501,7 @@ function SpeakEnglishClient() {
         setAccountImage(savedAvatar || session.user?.image || "");
         setAccountImageFailed(false);
         setAccountSubscriptionStatus(
-          session.user?.subscriptionStatus === "pro" ? "pro" : "free"
+          normalizeSubscriptionStatus(session.user?.subscriptionStatus)
         );
         setAccountCurrentPeriodEnd(session.user?.currentPeriodEnd || "");
       } catch {
@@ -2512,10 +2540,10 @@ function SpeakEnglishClient() {
         if (cancelled) return;
 
         setAccountSubscriptionStatus(
-          data.subscriptionStatus === "pro" ? "pro" : "free"
+          normalizeSubscriptionStatus(data.subscriptionStatus)
         );
         setAccountCurrentPeriodEnd(data.currentPeriodEnd || "");
-        if (data.subscriptionStatus === "pro") {
+        if (hasProAccess(normalizeSubscriptionStatus(data.subscriptionStatus))) {
           setShowFreePracticeLimitModal(false);
         }
       } catch {
@@ -2662,7 +2690,7 @@ function SpeakEnglishClient() {
   }
 
   async function ensureFreePracticeAvailable() {
-    if (accountSubscriptionStatus === "pro") return true;
+    if (hasProAccess(accountSubscriptionStatus)) return true;
     if (!isFreePracticeLimitReached("free")) return true;
 
     try {
@@ -2673,13 +2701,14 @@ function SpeakEnglishClient() {
 
       if (response.ok) {
         const data = (await response.json()) as AccountSubscriptionResponse;
-        const nextSubscriptionStatus =
-          data.subscriptionStatus === "pro" ? "pro" : "free";
+        const nextSubscriptionStatus = normalizeSubscriptionStatus(
+          data.subscriptionStatus
+        );
 
         setAccountSubscriptionStatus(nextSubscriptionStatus);
         setAccountCurrentPeriodEnd(data.currentPeriodEnd || "");
 
-        if (nextSubscriptionStatus === "pro") {
+        if (hasProAccess(nextSubscriptionStatus)) {
           setShowFreePracticeLimitModal(false);
           return true;
         }
@@ -2695,7 +2724,7 @@ function SpeakEnglishClient() {
   }
 
   function markFreePracticeRoundCompleted() {
-    if (accountSubscriptionStatus === "pro") return;
+    if (hasProAccess(accountSubscriptionStatus)) return;
 
     recordFreePracticeCompletion("free", freePracticeRoundIdRef.current);
   }
@@ -2827,14 +2856,15 @@ function SpeakEnglishClient() {
       }
 
       const subscriptionData = data as AccountSubscriptionResponse;
-      const nextSubscriptionStatus =
-        subscriptionData.subscriptionStatus === "pro" ? "pro" : "free";
+      const nextSubscriptionStatus = normalizeSubscriptionStatus(
+        subscriptionData.subscriptionStatus
+      );
 
       setAccountSubscriptionStatus(nextSubscriptionStatus);
       setAccountCurrentPeriodEnd(subscriptionData.currentPeriodEnd || "");
       setAccountSubscriptionRefreshKey(Date.now());
 
-      if (nextSubscriptionStatus === "pro") {
+      if (hasProAccess(nextSubscriptionStatus)) {
         setShowFreePracticeLimitModal(false);
         setRestorePurchaseNotice(accountCopy.restorePurchaseSuccess);
       } else {
@@ -3790,7 +3820,7 @@ function SpeakEnglishClient() {
       rows: [
         {
           action: "subscription",
-          badge: accountSubscriptionLabel,
+          badge: accountSubscriptionDisplayLabel,
           icon: "star",
           label: "SpeakFlow Pro",
         },
@@ -4670,7 +4700,7 @@ function SpeakEnglishClient() {
                         <span
                           className={`rounded-full px-3 py-1 text-[0.9rem] font-extrabold ${accountSubscriptionBadgeClass}`}
                         >
-                          {accountSubscriptionLabel}
+                          {accountSubscriptionDisplayLabel}
                         </span>
                         <span className="text-[1.75rem] font-semibold text-[#7f7896]">
                           ›
@@ -4790,7 +4820,7 @@ function SpeakEnglishClient() {
                             <span
                               className={`mt-1 inline-flex rounded-full px-3 py-1 text-[0.82rem] font-extrabold ${accountSubscriptionBadgeClass}`}
                             >
-                              {accountSubscriptionLabel}
+                              {accountSubscriptionDisplayLabel}
                             </span>
                           </span>
                         </div>
@@ -4910,7 +4940,9 @@ function SpeakEnglishClient() {
                         {accountCopy.proDescription}
                       </p>
                       <div className="mx-auto mt-4 inline-flex items-center rounded-full bg-[#f0ecff] px-4 py-1.5 text-[0.82rem] font-extrabold text-[#7460e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
-                        {isAccountPro ? accountSubscriptionLabel : accountCopy.proLearners}
+                        {isAccountPro
+                          ? accountSubscriptionDisplayLabel
+                          : accountCopy.proLearners}
                       </div>
                       {accountCurrentPeriodEndLabel ? (
                         <p className="mx-auto mt-2 max-w-[280px] text-[0.86rem] font-bold leading-5 text-[#7f7896]">

@@ -91,10 +91,14 @@ export const authOptions: NextAuthOptions = {
       const email =
         typeof token.email === "string" ? token.email.trim().toLowerCase() : "";
       const user = email ? await findUserByEmail(email) : null;
+      const subscriptionStatus = user?.subscriptionStatus;
 
       token.currentPeriodEnd = user?.currentPeriodEnd || null;
       token.subscriptionStatus =
-        user?.subscriptionStatus === "pro" ? "pro" : "free";
+        subscriptionStatus === "pro" ||
+        subscriptionStatus === "cancels_at_period_end"
+          ? subscriptionStatus
+          : "free";
 
       return token;
     },
@@ -105,7 +109,10 @@ export const authOptions: NextAuthOptions = {
             ? token.currentPeriodEnd
             : null;
         session.user.subscriptionStatus =
-          token.subscriptionStatus === "pro" ? "pro" : "free";
+          token.subscriptionStatus === "pro" ||
+          token.subscriptionStatus === "cancels_at_period_end"
+            ? token.subscriptionStatus
+            : "free";
       }
 
       return session;

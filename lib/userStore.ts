@@ -6,7 +6,7 @@ export type StoredUser = {
   email: string;
   passwordHash: string;
   createdAt: string;
-  subscriptionStatus?: "free" | "pro";
+  subscriptionStatus?: "free" | "pro" | "cancels_at_period_end";
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
   currentPeriodEnd?: string;

@@ -9,7 +9,7 @@ export type AccountSubscriptionState = {
   currentPeriodEnd: string | null;
   stripeCustomerId: string;
   stripeSubscriptionId: string;
-  subscriptionStatus: "free" | "pro";
+  subscriptionStatus: "free" | "pro" | "cancels_at_period_end";
 };
 
 type SelectedStripeSubscription = {
@@ -24,7 +24,11 @@ function toAccountSubscriptionState(
     currentPeriodEnd: user?.currentPeriodEnd || null,
     stripeCustomerId: user?.stripeCustomerId || "",
     stripeSubscriptionId: user?.stripeSubscriptionId || "",
-    subscriptionStatus: user?.subscriptionStatus === "pro" ? "pro" : "free",
+    subscriptionStatus:
+      user?.subscriptionStatus === "pro" ||
+      user?.subscriptionStatus === "cancels_at_period_end"
+        ? user.subscriptionStatus
+        : "free",
   };
 }
 
@@ -36,16 +40,8 @@ function toStripeSubscriptionState(
     currentPeriodEnd: getCurrentPeriodEnd(subscription),
     stripeCustomerId: customerId,
     stripeSubscriptionId: subscription.id,
-    subscriptionStatus: getEntitlementStatus(subscription.status),
+    subscriptionStatus: getEntitlementStatus(subscription),
   };
-}
-
-function isStoredProStillCurrent(subscription: AccountSubscriptionState) {
-  if (subscription.subscriptionStatus !== "pro") return false;
-  if (!subscription.currentPeriodEnd) return true;
-
-  const currentPeriodEnd = new Date(subscription.currentPeriodEnd).getTime();
-  return Number.isNaN(currentPeriodEnd) || currentPeriodEnd > Date.now();
 }
 
 function getCurrentPeriodEnd(subscription: Stripe.Subscription) {
@@ -55,8 +51,17 @@ function getCurrentPeriodEnd(subscription: Stripe.Subscription) {
     : null;
 }
 
-function getEntitlementStatus(status: Stripe.Subscription.Status) {
-  return status === "active" || status === "trialing" ? "pro" : "free";
+function getEntitlementStatus(subscription: Stripe.Subscription) {
+  if (
+    subscription.status === "active" ||
+    subscription.status === "trialing"
+  ) {
+    return subscription.cancel_at_period_end
+      ? "cancels_at_period_end"
+      : "pro";
+  }
+
+  return "free";
 }
 
 async function findLatestSubscriptionForCustomer(
@@ -182,10 +187,6 @@ export async function restoreSubscriptionForEmail(email: string) {
 export async function getAccountSubscriptionForEmail(email: string) {
   const user = await findUserByEmail(email);
   const storedSubscription = toAccountSubscriptionState(user);
-
-  if (isStoredProStillCurrent(storedSubscription)) {
-    return storedSubscription;
-  }
 
   if (!process.env.STRIPE_SECRET_KEY) {
     return storedSubscription;

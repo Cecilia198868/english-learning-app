@@ -3,8 +3,8 @@ export const maxDuration = 300;
 
 import OpenAI, { toFile } from "openai";
 import { authOptions } from "@/auth";
+import { getAccountSubscriptionForEmail } from "@/lib/subscriptionService";
 import { normalizeToShortTrainingItems, type TrainingItem } from "@/lib/training";
-import { findUserByEmail } from "@/lib/userStore";
 import { getServerSession } from "next-auth";
 
 const openai = new OpenAI({
@@ -77,8 +77,8 @@ async function getCurrentYoutubeImportPlan(): Promise<YoutubeImportPlan> {
 
   if (!email) return "free";
 
-  const user = await findUserByEmail(email);
-  return user?.subscriptionStatus === "pro" ? "pro" : "free";
+  const subscription = await getAccountSubscriptionForEmail(email);
+  return subscription.subscriptionStatus === "free" ? "free" : "pro";
 }
 
 function friendlyFailure(status = 400) {

@@ -39,10 +39,25 @@ type LocalLessonData = {
   lessons: Lesson[];
 };
 
+type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
+
 type AccountSubscriptionResponse = {
   currentPeriodEnd?: string | null;
-  subscriptionStatus?: "free" | "pro";
+  subscriptionStatus?: SubscriptionStatus;
 };
+
+function normalizeSubscriptionStatus(
+  subscriptionStatus?: SubscriptionStatus | null
+): SubscriptionStatus {
+  return subscriptionStatus === "pro" ||
+    subscriptionStatus === "cancels_at_period_end"
+    ? subscriptionStatus
+    : "free";
+}
+
+function hasProAccess(subscriptionStatus: SubscriptionStatus) {
+  return subscriptionStatus !== "free";
+}
 
 const LESSONS_STORAGE_KEY = "english-app-lessons";
 const DB_NAME = "english-learning-app-db";
@@ -359,7 +374,7 @@ export default function StudyPage() {
   const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
     useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
-    useState<"free" | "pro">("free");
+    useState<SubscriptionStatus>("free");
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceName, setSelectedVoiceName] = useState("");
@@ -867,10 +882,12 @@ export default function StudyPage() {
 
         if (cancelled) return;
 
-        setAccountSubscriptionStatus(
-          data.subscriptionStatus === "pro" ? "pro" : "free"
+        const nextSubscriptionStatus = normalizeSubscriptionStatus(
+          data.subscriptionStatus
         );
-        if (data.subscriptionStatus === "pro") {
+
+        setAccountSubscriptionStatus(nextSubscriptionStatus);
+        if (hasProAccess(nextSubscriptionStatus)) {
           setShowFreePracticeLimitModal(false);
         }
       } catch {
@@ -1217,7 +1234,7 @@ export default function StudyPage() {
   }
 
   async function ensureFreePracticeAvailable(index = currentIndex) {
-    if (accountSubscriptionStatus === "pro") return true;
+    if (hasProAccess(accountSubscriptionStatus)) return true;
 
     const completionId = getSentenceCompletionId(index);
 
@@ -1231,12 +1248,13 @@ export default function StudyPage() {
 
       if (response.ok) {
         const data = (await response.json()) as AccountSubscriptionResponse;
-        const nextSubscriptionStatus =
-          data.subscriptionStatus === "pro" ? "pro" : "free";
+        const nextSubscriptionStatus = normalizeSubscriptionStatus(
+          data.subscriptionStatus
+        );
 
         setAccountSubscriptionStatus(nextSubscriptionStatus);
 
-        if (nextSubscriptionStatus === "pro") {
+        if (hasProAccess(nextSubscriptionStatus)) {
           setShowFreePracticeLimitModal(false);
           return true;
         }
@@ -1250,7 +1268,7 @@ export default function StudyPage() {
   }
 
   function markCurrentSentenceCompleted(index = currentIndex) {
-    if (accountSubscriptionStatus === "pro") return;
+    if (hasProAccess(accountSubscriptionStatus)) return;
 
     recordFreePracticeCompletion(
       freePracticeScope,
