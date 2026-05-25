@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import ExpressionLearningLimitModal from "@/components/ExpressionLearningLimitModal";
+import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import {
   canLearnExpression,
   getExpressionLearningId,
@@ -10,6 +11,7 @@ import {
 import {
   loadVocabularyWords,
   saveVocabularyWords,
+  updateVocabularyWord,
   type VocabularyWord,
 } from "@/lib/vocabulary";
 
@@ -40,46 +42,6 @@ const EXPRESSION_MEANING_FALLBACKS: Record<string, string> = {
   "bring along": "随身带上",
   "lush and verdant": "生机盎然",
 };
-
-function SoundWaveMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 92 44"
-      className={className}
-      fill="none"
-    >
-      <defs>
-        <linearGradient id="vocabularySoundWaveBorder" x1="10" y1="36" x2="82" y2="8">
-          <stop stopColor="#d85ee9" />
-          <stop offset="1" stopColor="#28d5e8" />
-        </linearGradient>
-        <linearGradient id="vocabularySoundWaveBars" x1="22" y1="22" x2="70" y2="22">
-          <stop stopColor="#d85ee9" />
-          <stop offset="0.48" stopColor="#e9e6ff" />
-          <stop offset="1" stopColor="#28d5e8" />
-        </linearGradient>
-      </defs>
-      <rect
-        x="2"
-        y="3"
-        width="88"
-        height="38"
-        rx="19"
-        fill="rgba(255,255,255,0.34)"
-        stroke="url(#vocabularySoundWaveBorder)"
-        strokeWidth="3"
-      />
-      <path
-        d="M23 22h0.1M33 17v10M43 13v18M53 8v28M63 14v16M73 18v8"
-        stroke="url(#vocabularySoundWaveBars)"
-        strokeLinecap="round"
-        strokeWidth="7"
-      />
-      <circle cx="82" cy="22" r="4" fill="#28d5e8" />
-    </svg>
-  );
-}
 
 function TrashIcon({ className = "" }: { className?: string }) {
   return (
@@ -116,6 +78,17 @@ function getExpressionNativeMeaning(word: VocabularyWord) {
   return EXPRESSION_MEANING_FALLBACKS[word.word.toLowerCase()] || "释义待补充";
 }
 
+function PlayTriangle({ className = "" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`grid shrink-0 place-items-center rounded-full bg-white/54 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.74),0_8px_18px_rgba(84,72,146,0.1)] ${className}`}
+    >
+      ▶
+    </span>
+  );
+}
+
 function navigateToSpeakEnglish(search: string, options: { replace?: boolean } = {}) {
   if (typeof window === "undefined") return;
 
@@ -140,6 +113,8 @@ export default function VocabularyPage() {
   const [accountEmail, setAccountEmail] = useState("");
   const [accountImage, setAccountImage] = useState("");
   const [accountImageFailed, setAccountImageFailed] = useState(false);
+  const [loadingExampleTranslationFor, setLoadingExampleTranslationFor] =
+    useState("");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -217,6 +192,7 @@ export default function VocabularyPage() {
   const displayedExampleText = displayedExpression
     ? getExpressionExample(displayedExpression)
     : "";
+  const displayedExampleZhText = displayedExpression?.exampleZh.trim() || "";
   const displayedMeaningText = displayedExpression
     ? getExpressionNativeMeaning(displayedExpression)
     : "";
@@ -224,6 +200,10 @@ export default function VocabularyPage() {
     if (!displayedExpression) return "";
     return displayedExampleText || displayedExpressionText;
   }, [displayedExpression, displayedExampleText, displayedExpressionText]);
+  const isExampleTranslationLoading =
+    Boolean(displayedExpression) &&
+    loadingExampleTranslationFor === displayedExpression.word &&
+    !displayedExampleZhText;
   const accountAvatarLabel = (accountName || accountEmail || "CL")
     .slice(0, 2)
     .toUpperCase();
@@ -244,6 +224,61 @@ export default function VocabularyPage() {
 
     recordLearnedExpression(expressionId);
   }, [displayedExpression]);
+
+  useEffect(() => {
+    if (
+      !displayedExpression ||
+      !displayedExampleText ||
+      displayedExpression.exampleZh.trim()
+    ) {
+      setLoadingExampleTranslationFor("");
+      return;
+    }
+
+    let cancelled = false;
+    const expressionWord = displayedExpression.word;
+    const exampleSentence = displayedExampleText;
+    setLoadingExampleTranslationFor(expressionWord);
+
+    async function loadExampleTranslation() {
+      try {
+        const response = await fetch("/api/vocabulary/example-translation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sentence: exampleSentence }),
+        });
+        const data = (await response.json()) as { translation?: unknown };
+        const translation =
+          typeof data.translation === "string" ? data.translation.trim() : "";
+
+        if (!response.ok || !translation || cancelled) return;
+
+        updateVocabularyWord(expressionWord, { exampleZh: translation });
+        setWords((currentWords) =>
+          currentWords.map((word) =>
+            word.word === expressionWord
+              ? { ...word, exampleZh: translation }
+              : word
+          )
+        );
+      } catch {
+        // Keep the learning card usable even if translation is temporarily unavailable.
+      } finally {
+        if (!cancelled) {
+          setLoadingExampleTranslationFor("");
+        }
+      }
+    }
+
+    void loadExampleTranslation();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    displayedExpression,
+    displayedExampleText,
+  ]);
 
   function returnToPracticeMenu() {
     setShowExpressionLibrary(false);
@@ -278,14 +313,19 @@ export default function VocabularyPage() {
     }
   }
 
-  function speakExpression(rate: number) {
-    if (!speechText || typeof window === "undefined") return;
+  function speakText(text: string, rate = 1) {
+    const normalizedText = text.trim();
+    if (!normalizedText || typeof window === "undefined") return;
 
-    const utterance = new SpeechSynthesisUtterance(speechText);
+    const utterance = new SpeechSynthesisUtterance(normalizedText);
     utterance.lang = "en-US";
     utterance.rate = rate;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
+  }
+
+  function speakExpression(rate: number) {
+    speakText(speechText, rate);
   }
 
   function removeExpressionFromLibrary(
@@ -338,10 +378,8 @@ export default function VocabularyPage() {
                 </span>
               </button>
 
-              <div className="flex items-center gap-1.5">
-                <span className="grid h-5 w-[42px] place-items-center">
-                  <SoundWaveMark className="h-5 w-[42px] drop-shadow-[0_8px_16px_rgba(91,140,255,0.18)]" />
-                </span>
+              <div className="flex items-center gap-2">
+                <SpeakFlowBrandMark />
                 <div>
                   <h1 className="text-[1.05rem] font-semibold leading-none text-[#201833]">
                     SpeakFlow
@@ -457,19 +495,43 @@ export default function VocabularyPage() {
               </p>
             </div>
 
-            <div className="flex min-h-0 flex-1 flex-col items-center overflow-y-auto pt-7 text-center">
+            <div className="flex min-h-0 flex-1 flex-col items-center overflow-y-auto pt-10 text-center">
               {displayedExpression ? (
-                <div className="min-h-[280px] w-full max-w-[390px] px-7 py-8 text-left">
-                  <h3 className="text-[1.65rem] font-extrabold leading-9 text-[#201833]">
-                    {displayedExpressionText}
-                  </h3>
-                  <p className="mt-2 text-[1.05rem] font-extrabold leading-7 text-[#201833]">
+                <div className="min-h-[360px] w-full max-w-[390px] px-7 py-10 text-left">
+                  <button
+                    type="button"
+                    onClick={() => speakText(displayedExpressionText)}
+                    className="flex w-full items-center gap-3 text-left transition active:scale-[0.99]"
+                    aria-label={`朗读表达 ${displayedExpressionText}`}
+                  >
+                    <span className="min-w-0 flex-1 text-[1.72rem] font-extrabold leading-[2.55rem] text-[#201833]">
+                      {displayedExpressionText}
+                    </span>
+                    <PlayTriangle className="h-10 w-10 text-[1rem]" />
+                  </button>
+                  <p className="mt-4 text-[1.08rem] font-extrabold leading-8 text-[#201833]">
                     中文含义： {displayedMeaningText}
                   </p>
                   {displayedExampleText ? (
-                    <p className="mt-3 text-[1.22rem] font-semibold leading-9 text-[#201833]">
-                      {displayedExampleText}
-                    </p>
+                    <div className="mt-9">
+                      <button
+                        type="button"
+                        onClick={() => speakText(displayedExampleText)}
+                        className="flex w-full items-start gap-3 text-left transition active:scale-[0.99]"
+                        aria-label="朗读例句"
+                      >
+                        <span className="min-w-0 flex-1 text-[1.45rem] font-semibold leading-[2.55rem] text-[#201833]">
+                          {displayedExampleText}
+                        </span>
+                        <PlayTriangle className="mt-2 h-9 w-9 text-[0.92rem]" />
+                      </button>
+                      <p className="mt-5 text-[1.08rem] font-extrabold leading-8 text-[#7f7896]">
+                        {displayedExampleZhText ||
+                          (isExampleTranslationLoading
+                            ? "中文例句生成中..."
+                            : "")}
+                      </p>
+                    </div>
                   ) : (
                     <p className="mt-3 text-[1.1rem] font-semibold leading-8 text-[#7f7896]">
                       这个表达还没有例句。
@@ -505,7 +567,7 @@ export default function VocabularyPage() {
                 type="button"
                 aria-label="播放朗读"
                 onClick={() => speakExpression(1)}
-                disabled={!displayedExpression}
+                disabled={!speechText}
                 className="sf-expression-play-button flex h-11 min-w-[3.55rem] items-center justify-center gap-2 rounded-[15px] bg-white/46 px-4 text-[1.06rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] disabled:opacity-45"
               >
                 ▶
@@ -514,7 +576,7 @@ export default function VocabularyPage() {
                 type="button"
                 aria-label="慢速朗读"
                 onClick={() => speakExpression(0.5)}
-                disabled={!displayedExpression}
+                disabled={!speechText}
                 className="sf-expression-slow-button flex h-11 min-w-[5.15rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-4 text-[0.92rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] disabled:opacity-45"
               >
                 ▶ <span>0.5x</span>

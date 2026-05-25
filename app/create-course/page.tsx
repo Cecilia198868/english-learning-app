@@ -4,6 +4,7 @@ import type { ChangeEvent, ReactNode, RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import AccountAvatarButton from "@/components/AccountAvatarButton";
+import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { serializeTrainingItems, type TrainingItem } from "@/lib/training";
 
 type ImportView = "home" | "paste" | "image" | "camera" | "video" | "youtube";
@@ -148,46 +149,6 @@ function saveGeneratedCourseToStorage({
     window.localStorage.setItem("currentLessonTitle", courseTitle);
     window.localStorage.removeItem(`lesson-progress-${courseId}`);
   }
-}
-
-function SoundWaveMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 92 44"
-      className={className}
-      fill="none"
-    >
-      <defs>
-        <linearGradient id="createCourseSoundWaveBorder" x1="10" y1="36" x2="82" y2="8">
-          <stop stopColor="#d85ee9" />
-          <stop offset="1" stopColor="#28d5e8" />
-        </linearGradient>
-        <linearGradient id="createCourseSoundWaveBars" x1="22" y1="22" x2="70" y2="22">
-          <stop stopColor="#d85ee9" />
-          <stop offset="0.48" stopColor="#e9e6ff" />
-          <stop offset="1" stopColor="#28d5e8" />
-        </linearGradient>
-      </defs>
-      <rect
-        x="2"
-        y="3"
-        width="88"
-        height="38"
-        rx="19"
-        fill="rgba(255,255,255,0.34)"
-        stroke="url(#createCourseSoundWaveBorder)"
-        strokeWidth="3"
-      />
-      <path
-        d="M23 22h0.1M33 17v10M43 13v18M53 8v28M63 14v16M73 18v8"
-        stroke="url(#createCourseSoundWaveBars)"
-        strokeLinecap="round"
-        strokeWidth="7"
-      />
-      <circle cx="82" cy="22" r="4" fill="#28d5e8" />
-    </svg>
-  );
 }
 
 function BackArrowIcon() {
@@ -927,10 +888,8 @@ export default function CreateCoursePage() {
                 {importView === "home" ? <MenuIcon /> : <BackArrowIcon />}
               </button>
 
-              <div className="flex items-center gap-1.5">
-                <span className="grid h-5 w-[42px] place-items-center">
-                  <SoundWaveMark className="h-5 w-[42px] drop-shadow-[0_8px_16px_rgba(91,140,255,0.18)]" />
-                </span>
+              <div className="flex items-center gap-2">
+                <SpeakFlowBrandMark />
                 <div>
                   <h1 className="text-[1.05rem] font-semibold leading-none text-[#201833]">
                     SpeakFlow
