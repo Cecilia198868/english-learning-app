@@ -51,11 +51,7 @@ function normalizeSubscriptionStatus(
   subscriptionStatus?: SubscriptionStatus | null,
   cancelAtPeriodEnd?: boolean | null
 ): SubscriptionStatus {
-  if (
-    cancelAtPeriodEnd === true &&
-    (subscriptionStatus === "pro" ||
-      subscriptionStatus === "cancels_at_period_end")
-  ) {
+  if (cancelAtPeriodEnd === true) {
     return "cancels_at_period_end";
   }
 
@@ -67,6 +63,10 @@ function normalizeSubscriptionStatus(
 
 function hasProAccess(subscriptionStatus: SubscriptionStatus) {
   return subscriptionStatus !== "free";
+}
+
+function createAccountSubscriptionUrl() {
+  return `/api/me/subscription?t=${Date.now()}`;
 }
 
 const LESSONS_STORAGE_KEY = "english-app-lessons";
@@ -882,7 +882,7 @@ export default function StudyPage() {
 
     async function loadAccountSubscription() {
       try {
-        const response = await fetch("/api/me/subscription", {
+        const response = await fetch(createAccountSubscriptionUrl(), {
           cache: "no-store",
         });
 
@@ -1245,15 +1245,13 @@ export default function StudyPage() {
   }
 
   async function ensureFreePracticeAvailable(index = currentIndex) {
-    if (hasProAccess(accountSubscriptionStatus)) return true;
-
     const completionId = getSentenceCompletionId(index);
 
     if (hasFreePracticeCompletion(freePracticeScope, completionId)) return true;
     if (!isFreePracticeLimitReached(freePracticeScope)) return true;
 
     try {
-      const response = await fetch("/api/me/subscription", {
+      const response = await fetch(createAccountSubscriptionUrl(), {
         cache: "no-store",
       });
 

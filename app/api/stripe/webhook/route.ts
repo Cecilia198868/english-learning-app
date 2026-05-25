@@ -129,14 +129,6 @@ async function handleCheckoutSessionCompleted(
   stripe: Stripe,
   session: Stripe.Checkout.Session
 ) {
-  console.log("webhook checkout metadata email:", session.metadata?.email);
-  console.log(
-    "webhook checkout client_reference_id:",
-    session.client_reference_id
-  );
-  console.log("stripe customer:", session.customer);
-  console.log("stripe subscription:", session.subscription);
-
   const subscriptionId = getStripeId(session.subscription);
   const stripeCustomerId = getStripeId(session.customer);
   const email = getCheckoutSessionEmail(session);

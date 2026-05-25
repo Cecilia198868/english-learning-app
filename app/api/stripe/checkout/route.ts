@@ -1,5 +1,8 @@
 import { authOptions } from "@/auth";
-import { upsertProfileStripeCustomerByEmail } from "@/lib/userStore";
+import {
+  findProfileByEmail,
+  upsertProfileStripeCustomerByEmail,
+} from "@/lib/userStore";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import Stripe from "stripe";
@@ -10,6 +13,39 @@ type CheckoutPlan = "monthly" | "yearly";
 
 function isCheckoutPlan(value: unknown): value is CheckoutPlan {
   return value === "monthly" || value === "yearly";
+}
+
+async function getReusableStripeCustomer(stripe: Stripe, email: string) {
+  const profile = await findProfileByEmail(email);
+  const storedStripeCustomerId = profile?.stripeCustomerId?.trim();
+
+  if (storedStripeCustomerId) {
+    try {
+      const storedCustomer =
+        await stripe.customers.retrieve(storedStripeCustomerId);
+
+      if (!("deleted" in storedCustomer && storedCustomer.deleted)) {
+        return storedCustomer as Stripe.Customer;
+      }
+    } catch {
+      // Fall back to lookup by email below.
+    }
+  }
+
+  const customers = await stripe.customers.list({
+    email,
+    limit: 1,
+  });
+
+  return (
+    customers.data[0] ||
+    (await stripe.customers.create({
+      email,
+      metadata: {
+        email,
+      },
+    }))
+  );
 }
 
 export async function POST(req: Request) {
@@ -51,20 +87,8 @@ export async function POST(req: Request) {
     }
 
     const stripe = new Stripe(stripeSecretKey);
-    console.log("creating checkout for email:", email);
 
-    const customers = await stripe.customers.list({
-      email,
-      limit: 1,
-    });
-    const stripeCustomer =
-      customers.data[0] ||
-      (await stripe.customers.create({
-        email,
-        metadata: {
-          email,
-        },
-      }));
+    const stripeCustomer = await getReusableStripeCustomer(stripe, email);
 
     await upsertProfileStripeCustomerByEmail(email, stripeCustomer.id);
 
@@ -86,8 +110,6 @@ export async function POST(req: Request) {
       payment_method_types: ["card"],
       success_url: `${appUrl}/speak-english?pro=1&checkout=success`,
     });
-
-    console.log("Stripe checkout session url:", session.url);
 
     if (!session.url) {
       return NextResponse.json(

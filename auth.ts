@@ -2,7 +2,7 @@ import type { NextAuthOptions } from "next-auth";
 import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { findProfileByEmail, validateUserPassword } from "@/lib/userStore";
+import { validateUserPassword } from "@/lib/userStore";
 
 const appleClientId = process.env.APPLE_CLIENT_ID;
 const appleClientSecret = process.env.APPLE_CLIENT_SECRET;
@@ -85,37 +85,5 @@ export const authOptions: NextAuthOptions = {
   },
   jwt: {
     maxAge: persistentSessionMaxAgeSeconds,
-  },
-  callbacks: {
-    async jwt({ token }) {
-      const email =
-        typeof token.email === "string" ? token.email.trim().toLowerCase() : "";
-      const profile = email ? await findProfileByEmail(email) : null;
-      const subscriptionStatus = profile?.subscriptionStatus;
-
-      token.currentPeriodEnd = profile?.currentPeriodEnd || null;
-      token.subscriptionStatus =
-        subscriptionStatus === "pro" ||
-        subscriptionStatus === "cancels_at_period_end"
-          ? subscriptionStatus
-          : "free";
-
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.currentPeriodEnd =
-          typeof token.currentPeriodEnd === "string"
-            ? token.currentPeriodEnd
-            : null;
-        session.user.subscriptionStatus =
-          token.subscriptionStatus === "pro" ||
-          token.subscriptionStatus === "cancels_at_period_end"
-            ? token.subscriptionStatus
-            : "free";
-      }
-
-      return session;
-    },
   },
 };

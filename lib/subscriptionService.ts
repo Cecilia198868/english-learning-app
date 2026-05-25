@@ -5,76 +5,20 @@ import {
   type StoredUser,
 } from "@/lib/userStore";
 
+export type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
+
 export type AccountSubscriptionState = {
-  cancelAtPeriodEnd: boolean | null;
+  cancelAtPeriodEnd: boolean;
   currentPeriodEnd: string | null;
   stripeCustomerId: string;
   stripeSubscriptionId: string;
-  subscriptionStatus: "free" | "pro" | "cancels_at_period_end";
+  subscriptionStatus: SubscriptionStatus;
 };
 
 type SelectedStripeSubscription = {
   customerId: string;
   subscription: Stripe.Subscription;
 };
-
-function getStripeId(value: string | { id?: string } | null | undefined) {
-  if (!value) return "";
-  return typeof value === "string" ? value : value.id || "";
-}
-
-function toAccountSubscriptionState(
-  user: StoredUser | null | undefined
-): AccountSubscriptionState {
-  return {
-    cancelAtPeriodEnd:
-      user?.cancelAtPeriodEnd ??
-      (user?.subscriptionStatus === "cancels_at_period_end"
-        ? true
-        : null),
-    currentPeriodEnd: user?.currentPeriodEnd || null,
-    stripeCustomerId: user?.stripeCustomerId || "",
-    stripeSubscriptionId: user?.stripeSubscriptionId || "",
-    subscriptionStatus:
-      user?.subscriptionStatus === "pro" ||
-      user?.subscriptionStatus === "cancels_at_period_end"
-        ? user.subscriptionStatus
-        : "free",
-  };
-}
-
-function toStripeSubscriptionState(
-  customerId: string,
-  subscription: Stripe.Subscription
-): AccountSubscriptionState {
-  logStripeSubscriptionState(subscription);
-
-  return {
-    cancelAtPeriodEnd: subscription.cancel_at_period_end === true,
-    currentPeriodEnd: getCurrentPeriodEnd(subscription),
-    stripeCustomerId: customerId,
-    stripeSubscriptionId: subscription.id,
-    subscriptionStatus: getEntitlementStatus(subscription),
-  };
-}
-
-function logStripeSubscriptionState(subscription: Stripe.Subscription) {
-  const subscriptionWithPeriodEnd = subscription as Stripe.Subscription & {
-    current_period_end?: number | null;
-  };
-
-  console.log("Stripe subscription status:", subscription.status);
-  console.log(
-    "Stripe subscription cancel_at_period_end:",
-    subscription.cancel_at_period_end
-  );
-  console.log(
-    "Stripe subscription current_period_end:",
-    subscriptionWithPeriodEnd.current_period_end ??
-      subscription.items.data[0]?.current_period_end ??
-      null
-  );
-}
 
 function getCurrentPeriodEnd(subscription: Stripe.Subscription) {
   const subscriptionWithPeriodEnd = subscription as Stripe.Subscription & {
@@ -90,10 +34,7 @@ function getCurrentPeriodEnd(subscription: Stripe.Subscription) {
 }
 
 function getEntitlementStatus(subscription: Stripe.Subscription) {
-  if (
-    subscription.status === "active" ||
-    subscription.status === "trialing"
-  ) {
+  if (subscription.status === "active" || subscription.status === "trialing") {
     return subscription.cancel_at_period_end
       ? "cancels_at_period_end"
       : "pro";
@@ -102,119 +43,87 @@ function getEntitlementStatus(subscription: Stripe.Subscription) {
   return "free";
 }
 
+function isUsableSubscription(subscription: Stripe.Subscription) {
+  return subscription.status === "active" || subscription.status === "trialing";
+}
+
+function byNewestCreated(
+  left: Stripe.Subscription,
+  right: Stripe.Subscription
+) {
+  return right.created - left.created;
+}
+
+function toFreeState(profile: StoredUser | null): AccountSubscriptionState {
+  return {
+    cancelAtPeriodEnd: false,
+    currentPeriodEnd: null,
+    stripeCustomerId: profile?.stripeCustomerId || "",
+    stripeSubscriptionId: profile?.stripeSubscriptionId || "",
+    subscriptionStatus: "free",
+  };
+}
+
+function toAccountSubscriptionState(
+  customerId: string,
+  subscription: Stripe.Subscription
+): AccountSubscriptionState {
+  const subscriptionStatus = getEntitlementStatus(subscription);
+
+  return {
+    cancelAtPeriodEnd: subscriptionStatus === "cancels_at_period_end",
+    currentPeriodEnd: getCurrentPeriodEnd(subscription),
+    stripeCustomerId: customerId,
+    stripeSubscriptionId: subscription.id,
+    subscriptionStatus,
+  };
+}
+
 async function findLatestSubscriptionForCustomer(
   stripe: Stripe,
   customerId: string
-) {
+): Promise<SelectedStripeSubscription | null> {
   const subscriptions = await stripe.subscriptions.list({
     customer: customerId,
-    limit: 10,
+    limit: 100,
     status: "all",
   });
-  const sortedSubscriptions = subscriptions.data.sort(
-    (left, right) => right.created - left.created
-  );
 
-  return (
-    sortedSubscriptions.find(
-      (subscription) =>
-        subscription.status === "active" || subscription.status === "trialing"
-    ) ||
-    sortedSubscriptions[0] ||
-    null
-  );
-}
+  const sortedSubscriptions = [...subscriptions.data].sort(byNewestCreated);
+  const latestUsableSubscription =
+    sortedSubscriptions.find(isUsableSubscription) || null;
+  const latestSubscription = latestUsableSubscription || sortedSubscriptions[0];
 
-async function findSubscriptionByEmail(
-  stripe: Stripe,
-  email: string,
-  storedStripeCustomerId?: string
-): Promise<SelectedStripeSubscription | null> {
-  const customerIds = new Set<string>();
-
-  if (storedStripeCustomerId?.trim()) {
-    customerIds.add(storedStripeCustomerId.trim());
-  }
-
-  const customers = await stripe.customers.list({
-    email,
-    limit: 10,
-  });
-
-  customers.data.forEach((customer) => {
-    customerIds.add(customer.id);
-  });
-
-  let latestActiveSubscription: SelectedStripeSubscription | null = null;
-  let latestFallbackSubscription: SelectedStripeSubscription | null = null;
-
-  for (const customerId of customerIds) {
-    const subscription = await findLatestSubscriptionForCustomer(
-      stripe,
-      customerId
-    );
-
-    if (!subscription) {
-      continue;
-    }
-
-    if (
-      subscription.status === "active" ||
-      subscription.status === "trialing"
-    ) {
-      if (
-        !latestActiveSubscription ||
-        subscription.created > latestActiveSubscription.subscription.created
-      ) {
-        latestActiveSubscription = { customerId, subscription };
+  return latestSubscription
+    ? {
+        customerId,
+        subscription: latestSubscription,
       }
-      continue;
-    }
-
-    if (
-      !latestFallbackSubscription ||
-      subscription.created > latestFallbackSubscription.subscription.created
-    ) {
-      latestFallbackSubscription = { customerId, subscription };
-    }
-  }
-
-  return latestActiveSubscription || latestFallbackSubscription;
+    : null;
 }
 
-async function retrieveStoredSubscription(
-  stripe: Stripe,
-  user: StoredUser | null
-): Promise<SelectedStripeSubscription | null> {
-  const stripeSubscriptionId = user?.stripeSubscriptionId?.trim();
-
-  if (!stripeSubscriptionId) {
-    return null;
-  }
-
-  try {
-    const subscription =
-      await stripe.subscriptions.retrieve(stripeSubscriptionId);
-    const customerId =
-      getStripeId(subscription.customer) || user?.stripeCustomerId?.trim() || "";
-
-    if (!customerId) {
-      return null;
-    }
-
-    return {
-      customerId,
-      subscription,
-    };
-  } catch (error) {
-    console.error("Retrieve stored Stripe subscription failed:", error);
-    return null;
-  }
+async function persistAccountSubscriptionState(
+  email: string,
+  state: AccountSubscriptionState
+) {
+  await upsertProfileSubscriptionByEmail(email, {
+    cancelAtPeriodEnd: state.cancelAtPeriodEnd,
+    currentPeriodEnd: state.currentPeriodEnd || undefined,
+    stripeCustomerId: state.stripeCustomerId,
+    stripeSubscriptionId: state.stripeSubscriptionId,
+    subscriptionStatus: state.subscriptionStatus,
+  });
 }
 
-export async function restoreSubscriptionForEmail(email: string) {
+export async function getAccountSubscriptionForEmail(email: string) {
   const normalizedEmail = email.trim().toLowerCase();
-  const user = await findProfileByEmail(normalizedEmail);
+  const profile = await findProfileByEmail(normalizedEmail);
+  const stripeCustomerId = profile?.stripeCustomerId?.trim() || "";
+
+  if (!stripeCustomerId) {
+    return toFreeState(profile);
+  }
+
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
   if (!stripeSecretKey) {
@@ -222,50 +131,27 @@ export async function restoreSubscriptionForEmail(email: string) {
   }
 
   const stripe = new Stripe(stripeSecretKey);
-  const selectedSubscription =
-    (await retrieveStoredSubscription(stripe, user)) ||
-    (await findSubscriptionByEmail(
-      stripe,
-      normalizedEmail,
-      user?.stripeCustomerId
-    ));
-
-  if (!selectedSubscription) {
-    return toAccountSubscriptionState(user);
-  }
-
-  const { customerId, subscription } = selectedSubscription;
-  const restoredSubscription = toStripeSubscriptionState(
-    customerId,
-    subscription
+  const selectedSubscription = await findLatestSubscriptionForCustomer(
+    stripe,
+    stripeCustomerId
   );
 
-  try {
-    await upsertProfileSubscriptionByEmail(normalizedEmail, {
-      cancelAtPeriodEnd: restoredSubscription.cancelAtPeriodEnd === true,
-      currentPeriodEnd: restoredSubscription.currentPeriodEnd || undefined,
-      stripeCustomerId: restoredSubscription.stripeCustomerId,
-      stripeSubscriptionId: restoredSubscription.stripeSubscriptionId,
-      subscriptionStatus: restoredSubscription.subscriptionStatus,
-    });
-  } catch (error) {
-    console.error("Persist restored Stripe subscription failed:", error);
-  }
+  const nextState = selectedSubscription
+    ? toAccountSubscriptionState(
+        selectedSubscription.customerId,
+        selectedSubscription.subscription
+      )
+    : {
+        ...toFreeState(profile),
+        stripeCustomerId,
+        stripeSubscriptionId: "",
+      };
 
-  return restoredSubscription;
+  await persistAccountSubscriptionState(normalizedEmail, nextState);
+
+  return nextState;
 }
 
-export async function getAccountSubscriptionForEmail(email: string) {
-  const user = await findProfileByEmail(email);
-  const storedSubscription = toAccountSubscriptionState(user);
-
-  if (!process.env.STRIPE_SECRET_KEY) {
-    return storedSubscription;
-  }
-
-  try {
-    return await restoreSubscriptionForEmail(email);
-  } catch {
-    return storedSubscription;
-  }
+export async function restoreSubscriptionForEmail(email: string) {
+  return getAccountSubscriptionForEmail(email);
 }

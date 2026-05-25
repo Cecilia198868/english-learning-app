@@ -1,7 +1,7 @@
 "use client";
 
 import type { ChangeEvent, MutableRefObject, PointerEvent } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
@@ -102,27 +102,23 @@ type SessionResponse = {
 };
 
 type AccountSubscriptionResponse = {
-  cancelAtPeriodEnd?: boolean | null;
   currentPeriodEnd?: string | null;
-  email?: string;
-  stripeStatus?: string | null;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
   subscriptionStatus?: SubscriptionStatus;
 };
 
 function normalizeSubscriptionStatus(
-  subscriptionStatus?: SubscriptionStatus | null,
-  cancelAtPeriodEnd?: boolean | null
+  subscriptionStatus?: SubscriptionStatus | null
 ): SubscriptionStatus {
-  if (cancelAtPeriodEnd === true) {
-    return "cancels_at_period_end";
-  }
-
   return subscriptionStatus === "pro" ||
     subscriptionStatus === "cancels_at_period_end"
     ? subscriptionStatus
     : "free";
+}
+
+function createAccountSubscriptionUrl() {
+  return `/api/me/subscription?t=${Date.now()}`;
 }
 
 function hasProAccess(subscriptionStatus: SubscriptionStatus) {
@@ -2115,8 +2111,6 @@ function SpeakEnglishClient() {
   const [accountImageFailed, setAccountImageFailed] = useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
     useState<SubscriptionStatus>("free");
-  const [accountCancelAtPeriodEnd, setAccountCancelAtPeriodEnd] =
-    useState(false);
   const [accountCurrentPeriodEnd, setAccountCurrentPeriodEnd] = useState("");
   const [isLoadingAccountSubscription, setIsLoadingAccountSubscription] =
     useState(false);
@@ -2273,7 +2267,6 @@ function SpeakEnglishClient() {
     (accountEmail ? accountEmail.split("@")[0] : accountCopy.fallbackUser);
   const selectedProPlanDetails = accountCopy.proPlans[selectedProPlan];
   const hasCanceledAtPeriodEnd =
-    accountCancelAtPeriodEnd ||
     accountSubscriptionStatus === "cancels_at_period_end";
   const isAccountPro = hasProAccess(accountSubscriptionStatus);
   const accountSubscriptionLabel = isLoadingAccountSubscription
@@ -2500,7 +2493,9 @@ function SpeakEnglishClient() {
 
     async function loadAccountSession() {
       try {
-        const response = await fetch("/api/auth/session");
+        const response = await fetch("/api/auth/session", {
+          cache: "no-store",
+        });
         const session = (await response.json()) as SessionResponse;
         if (cancelled) return;
 
@@ -2530,55 +2525,49 @@ function SpeakEnglishClient() {
     };
   }, []);
 
-  useEffect(() => {
-    let cancelled = false;
+  const refreshAccountSubscription = useCallback(async () => {
+    setIsLoadingAccountSubscription(true);
 
-    async function loadAccountSubscription() {
-      setIsLoadingAccountSubscription(true);
+    try {
+      const response = await fetch(createAccountSubscriptionUrl(), {
+        cache: "no-store",
+      });
 
-      try {
-        const response = await fetch("/api/me/subscription", {
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          throw new Error("Load subscription failed");
-        }
-
-        const data = (await response.json()) as AccountSubscriptionResponse;
-
-        if (cancelled) return;
-
-        const nextSubscriptionStatus = normalizeSubscriptionStatus(
-          data.subscriptionStatus,
-          data.cancelAtPeriodEnd
-        );
-
-        setAccountSubscriptionStatus(nextSubscriptionStatus);
-        setAccountCancelAtPeriodEnd(data.cancelAtPeriodEnd === true);
-        setAccountCurrentPeriodEnd(data.currentPeriodEnd || "");
-        if (hasProAccess(nextSubscriptionStatus)) {
-          setShowFreePracticeLimitModal(false);
-        }
-      } catch {
-        if (!cancelled) {
-          setAccountSubscriptionStatus("free");
-          setAccountCancelAtPeriodEnd(false);
-          setAccountCurrentPeriodEnd("");
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoadingAccountSubscription(false);
-        }
+      if (!response.ok) {
+        throw new Error("Load subscription failed");
       }
+
+      const data = (await response.json()) as AccountSubscriptionResponse;
+      const nextSubscriptionStatus = normalizeSubscriptionStatus(
+        data.subscriptionStatus
+      );
+
+      setAccountSubscriptionStatus(nextSubscriptionStatus);
+      setAccountCurrentPeriodEnd(data.currentPeriodEnd || "");
+      if (hasProAccess(nextSubscriptionStatus)) {
+        setShowFreePracticeLimitModal(false);
+      }
+
+      return nextSubscriptionStatus;
+    } catch {
+      setAccountSubscriptionStatus("free");
+      setAccountCurrentPeriodEnd("");
+      return "free";
+    } finally {
+      setIsLoadingAccountSubscription(false);
     }
+  }, []);
 
-    void loadAccountSubscription();
+  useEffect(() => {
+    if (!showAccountMenu) return;
 
-    return () => {
-      cancelled = true;
-    };
-  }, [accountPanelView, accountSubscriptionRefreshKey, showAccountMenu]);
+    void refreshAccountSubscription();
+  }, [
+    accountPanelView,
+    accountSubscriptionRefreshKey,
+    refreshAccountSubscription,
+    showAccountMenu,
+  ]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -2705,35 +2694,13 @@ function SpeakEnglishClient() {
   }
 
   async function ensureFreePracticeAvailable() {
-    if (hasProAccess(accountSubscriptionStatus)) return true;
     if (!isFreePracticeLimitReached("free")) return true;
 
-    try {
-      setIsLoadingAccountSubscription(true);
-      const response = await fetch("/api/me/subscription", {
-        cache: "no-store",
-      });
+    const nextSubscriptionStatus = await refreshAccountSubscription();
 
-      if (response.ok) {
-        const data = (await response.json()) as AccountSubscriptionResponse;
-        const nextSubscriptionStatus = normalizeSubscriptionStatus(
-          data.subscriptionStatus,
-          data.cancelAtPeriodEnd
-        );
-
-        setAccountSubscriptionStatus(nextSubscriptionStatus);
-        setAccountCancelAtPeriodEnd(data.cancelAtPeriodEnd === true);
-        setAccountCurrentPeriodEnd(data.currentPeriodEnd || "");
-
-        if (hasProAccess(nextSubscriptionStatus)) {
-          setShowFreePracticeLimitModal(false);
-          return true;
-        }
-      }
-    } catch {
-      // Keep the existing free-user behavior if the subscription check fails.
-    } finally {
-      setIsLoadingAccountSubscription(false);
+    if (hasProAccess(nextSubscriptionStatus)) {
+      setShowFreePracticeLimitModal(false);
+      return true;
     }
 
     showFreePracticeLimit();
@@ -2816,7 +2783,8 @@ function SpeakEnglishClient() {
     let didRedirect = false;
 
     try {
-      const response = await fetch("/api/stripe/portal", {
+      const response = await fetch(`/api/stripe/portal?t=${Date.now()}`, {
+        cache: "no-store",
         method: "POST",
       });
       const data = (await response.json().catch(() => ({}))) as {
@@ -2857,12 +2825,13 @@ function SpeakEnglishClient() {
     setRestorePurchaseNotice("");
 
     try {
-      const response = await fetch("/api/stripe/restore", {
+      const response = await fetch(`/api/stripe/restore?t=${Date.now()}`, {
+        cache: "no-store",
         method: "POST",
       });
-      const data = (await response.json().catch(() => ({}))) as
-        | AccountSubscriptionResponse
-        | { error?: unknown };
+      const data = (await response.json().catch(() => ({}))) as {
+        error?: unknown;
+      };
 
       if (!response.ok) {
         const errorMessage =
@@ -2872,16 +2841,7 @@ function SpeakEnglishClient() {
         throw new Error(errorMessage);
       }
 
-      const subscriptionData = data as AccountSubscriptionResponse;
-      const nextSubscriptionStatus = normalizeSubscriptionStatus(
-        subscriptionData.subscriptionStatus,
-        subscriptionData.cancelAtPeriodEnd
-      );
-
-      setAccountSubscriptionStatus(nextSubscriptionStatus);
-      setAccountCancelAtPeriodEnd(subscriptionData.cancelAtPeriodEnd === true);
-      setAccountCurrentPeriodEnd(subscriptionData.currentPeriodEnd || "");
-      setAccountSubscriptionRefreshKey(Date.now());
+      const nextSubscriptionStatus = await refreshAccountSubscription();
 
       if (hasProAccess(nextSubscriptionStatus)) {
         setShowFreePracticeLimitModal(false);
@@ -2954,13 +2914,13 @@ function SpeakEnglishClient() {
   async function startStripeCheckout(selectedPlan: ProPlan = selectedProPlan) {
     if (isStartingCheckout) return;
 
-    console.log("checkout plan:", selectedPlan);
     setIsStartingCheckout(true);
     setCheckoutError("");
 
     try {
-      const response = await fetch("/api/stripe/checkout", {
+      const response = await fetch(`/api/stripe/checkout?t=${Date.now()}`, {
         body: JSON.stringify({ plan: selectedPlan }),
+        cache: "no-store",
         headers: { "Content-Type": "application/json" },
         method: "POST",
       });
@@ -2968,7 +2928,6 @@ function SpeakEnglishClient() {
         error?: unknown;
         url?: unknown;
       };
-      console.log("checkout response:", data);
       const url = typeof data.url === "string" ? data.url : "";
 
       if (!response.ok || !url) {
