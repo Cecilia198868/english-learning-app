@@ -55,10 +55,9 @@ export async function POST(req: Request) {
       ? body.turns
           .map((turn) => ({
             chinese: cleanText(turn.chinese),
-            userEnglish: cleanText(turn.userEnglish),
             recommendedEnglish: cleanText(turn.recommendedEnglish),
           }))
-          .filter((turn) => turn.chinese || turn.userEnglish || turn.recommendedEnglish)
+          .filter((turn) => turn.chinese || turn.recommendedEnglish)
           .slice(-6)
       : [];
 
@@ -80,13 +79,13 @@ export async function POST(req: Request) {
         {
           role: "system",
           content:
-            '你是英语口语训练 App 里的中文引导教练。请根据用户刚才说的中文、用户尝试说出的英文、AI 推荐英文，以及最近几轮上下文，生成下一句适合用户继续用中文说出来的内容。要求：1. 保持情景连续性；2. 让情绪或细节自然递进；3. 像真实日常生活；4. 适合初中级学习者，不要太抽象；5. 只生成一句简体中文，12到24个汉字左右，可自然使用标点；6. 不要解释，不要给英文。只返回 JSON：{"suggestion":"..."}',
+            '你是英语口语训练 App 里的中文引导教练。请根据用户刚才说的中文、AI 推荐英文，以及最近几轮中文上下文，生成下一句适合用户继续用中文说出来的内容。语义优先级必须严格遵守：currentChinese 和 recommendedEnglish 是事实来源；learnerTranscript 只是可能有错的语音识别文本，不能用来新增人物、物品、地点、原因、事件或情节。如果 learnerTranscript 与中文或推荐英文冲突，必须忽略 learnerTranscript。要求：1. 保持情景连续性；2. 让情绪或细节自然递进；3. 像真实日常生活；4. 适合初中级学习者，不要太抽象；5. 只生成一句简体中文，12到24个汉字左右，可自然使用标点；6. 不要解释，不要给英文。只返回 JSON：{"suggestion":"..."}',
         },
         {
           role: "user",
           content: JSON.stringify({
             currentChinese,
-            userEnglish,
+            learnerTranscript: userEnglish,
             recommendedEnglish,
             recentTurns: turns,
           }),

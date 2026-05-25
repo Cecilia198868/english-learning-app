@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         {
           role: "system",
           content:
-            "Translate the user's Chinese into one natural, idiomatic spoken English sentence for daily conversation practice. Return only the English sentence. No explanation.",
+            "Translate the user's Chinese into one natural, idiomatic spoken English sentence for daily conversation practice. Preserve only the meaning in the Chinese. Do not add new facts, reasons, objects, places, or events. Return only the English sentence. No explanation.",
         },
         {
           role: "user",

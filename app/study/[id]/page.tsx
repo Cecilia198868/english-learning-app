@@ -40,6 +40,7 @@ type LocalLessonData = {
 };
 
 type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
+type AppearancePreference = "light" | "dark" | "system";
 
 type AccountSubscriptionResponse = {
   cancelAtPeriodEnd?: boolean | null;
@@ -65,11 +66,16 @@ function hasProAccess(subscriptionStatus: SubscriptionStatus) {
   return subscriptionStatus !== "free";
 }
 
+function isAppearancePreference(value: string): value is AppearancePreference {
+  return value === "light" || value === "dark" || value === "system";
+}
+
 function createAccountSubscriptionUrl() {
   return `/api/me/subscription?t=${Date.now()}`;
 }
 
 const LESSONS_STORAGE_KEY = "english-app-lessons";
+const appearancePreferenceStorageKey = "speakflow-appearance-preference";
 const DB_NAME = "english-learning-app-db";
 const DB_VERSION = 1;
 const AUDIO_STORE_NAME = "audios";
@@ -419,6 +425,38 @@ export default function StudyPage() {
   const speechBufferRef = useRef("");
   const speechSilenceTimerRef = useRef<number | null>(null);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const root = document.documentElement;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const applyAppearance = () => {
+      const savedAppearance = window.localStorage.getItem(
+        appearancePreferenceStorageKey
+      );
+      const appearancePreference =
+        savedAppearance && isAppearancePreference(savedAppearance)
+          ? savedAppearance
+          : "system";
+      const effectiveAppearance =
+        appearancePreference === "system"
+          ? mediaQuery.matches
+            ? "dark"
+            : "light"
+          : appearancePreference;
+
+      root.dataset.speakflowAppearance = appearancePreference;
+      root.dataset.speakflowTheme = effectiveAppearance;
+    };
+
+    applyAppearance();
+    mediaQuery.addEventListener("change", applyAppearance);
+
+    return () => {
+      mediaQuery.removeEventListener("change", applyAppearance);
+    };
+  }, []);
+
   function clearAutoTimer() {
     if (timerRef.current !== null) {
       window.clearTimeout(timerRef.current);
@@ -675,6 +713,15 @@ export default function StudyPage() {
     };
 
     window.speechSynthesis.speak(utterance);
+  }
+
+  function readExpressionVariant(
+    variant: ExpressionVariant,
+    variantIndex: number,
+    rate = 1
+  ) {
+    setSelectedExpressionIndex(variantIndex);
+    speakEnglish(variant.text, rate);
   }
 
   function moveToSentence(index: number) {
@@ -1094,7 +1141,7 @@ export default function StudyPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             chinese: currentPair.chinese,
-            userEnglish: spokenEnglish,
+            userEnglish: "",
             standardEnglish: currentPair.english,
           }),
         });
@@ -1427,17 +1474,13 @@ export default function StudyPage() {
   const showStudyListeningPrompt = isListening;
   const showStudyVoiceOnlyPrompt = showStudyPrompt || showStudyListeningPrompt;
   const showExpressionFeedback = Boolean(spokenDisplay) && !showStudyListeningPrompt;
+  const expressionVariantsForDisplay = expressionVariants.length
+    ? expressionVariants
+    : createFallbackExpressionVariants(currentPair.english || "");
   const selectedExpression =
-    expressionVariants[selectedExpressionIndex] ||
-    createFallbackExpressionVariants(currentPair.english || "")[0];
-  const selectedExpressionSegments = useMemo(
-    () =>
-      splitSentenceByHighlightedExpressions(
-        selectedExpression.text || "",
-        highlightedExpressions
-      ),
-    [highlightedExpressions, selectedExpression.text]
-  );
+    expressionVariantsForDisplay[
+      Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)
+    ] || expressionVariantsForDisplay[0];
 
   useEffect(() => {
     const sentence = selectedExpression.text?.trim();
@@ -1480,10 +1523,6 @@ export default function StudyPage() {
       cancelled = true;
     };
   }, [isLoadingExpressionVariants, selectedExpression.text]);
-  const hasPreviousExpression = selectedExpressionIndex > 0;
-  const hasNextExpression =
-    selectedExpressionIndex < expressionVariantLabels.length - 1;
-
   function openNeighborLesson(targetLesson: { id: string; title: string }) {
     stopAutoPlay();
     window.localStorage.setItem("currentLessonTitle", targetLesson.title);
@@ -1570,7 +1609,7 @@ export default function StudyPage() {
                 showStudyVoiceOnlyPrompt
                   ? "sf-study-content-with-actions sf-study-content-voice justify-start pb-6 pt-10"
                   : showExpressionFeedback
-                    ? "sf-study-content-with-actions sf-study-content-feedback justify-start py-5"
+                    ? "sf-study-content-with-actions sf-study-content-feedback sf-study-content-expression-list justify-start py-5"
                     : "justify-start py-5"
               }`}
             >
@@ -1607,91 +1646,135 @@ export default function StudyPage() {
                   </div>
 
                   <div className="mt-6 w-full max-w-[430px] text-left">
-                    <div className="flex items-center gap-2 text-left">
-                      <button
-                        type="button"
-                        aria-label="上一种表达"
-                        onClick={() =>
-                          setSelectedExpressionIndex((index) =>
-                            Math.max(index - 1, 0)
-                          )
-                        }
-                        disabled={!hasPreviousExpression}
-                        className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] disabled:invisible"
-                      >
-                        ←
-                      </button>
-                      <span className="text-[1.2rem] font-extrabold leading-[1.5] text-[#4f6fe8]">
-                        {selectedExpression.label}
-                      </span>
-                      <button
-                        type="button"
-                        aria-label="下一种表达"
-                        onClick={() =>
-                          setSelectedExpressionIndex((index) =>
-                            Math.min(
-                              index + 1,
-                              expressionVariantLabels.length - 1
-                            )
-                          )
-                        }
-                        disabled={!hasNextExpression}
-                        className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] disabled:invisible"
-                      >
-                        →
-                      </button>
-                    </div>
+                    {isLoadingExpressionVariants ? (
+                      <p className="text-[1.2rem] font-extrabold leading-8 text-[#4f6fe8]">
+                        正在生成表达...
+                      </p>
+                    ) : (
+                      <div className="grid gap-8">
+                        {expressionVariantsForDisplay.map(
+                          (variant, variantIndex) => {
+                            const isSelected =
+                              selectedExpressionIndex === variantIndex;
+                            const segments =
+                              splitSentenceByHighlightedExpressions(
+                                variant.text || "",
+                                isSelected
+                                  ? highlightedExpressions
+                                  : createFallbackHighlightedExpressions(
+                                      variant.text || ""
+                                    )
+                              );
 
-                    <p className="sf-study-expression-text mt-4 bg-white/18 px-4 py-4 text-left text-[clamp(1.55rem,7vw,1.85rem)] font-extrabold leading-[1.5] text-[#201833]">
-                      {isLoadingExpressionVariants
-                        ? "正在生成表达..."
-                        : selectedExpressionSegments.map((segment, index) =>
-                            segment.type === "expression" ? (
-                              <button
-                                key={`${segment.value}-${index}`}
-                                type="button"
-                                onClick={(event) => {
-                                  event.stopPropagation();
-                                  handleExpressionClick(
-                                    segment.expression,
-                                    selectedExpression.text
-                                  );
+                            return (
+                              <div
+                                key={variant.key}
+                                role="button"
+                                tabIndex={0}
+                                aria-label={`选择朗读${variant.label}`}
+                                onClick={() =>
+                                  setSelectedExpressionIndex(variantIndex)
+                                }
+                                onKeyDown={(event) => {
+                                  if (
+                                    event.key === "Enter" ||
+                                    event.key === " "
+                                  ) {
+                                    event.preventDefault();
+                                    setSelectedExpressionIndex(variantIndex);
+                                  }
                                 }}
-                                className="inline rounded-xl bg-[#fff7b8]/70 px-1.5 py-0.5 text-[#201833] shadow-[inset_0_-0.28em_0_rgba(255,215,106,0.55)] transition hover:bg-[#fff0a0]"
+                                className={`cursor-pointer border-l-[4px] py-1 pl-4 text-left transition ${
+                                  isSelected
+                                    ? "border-[#7c55ff]"
+                                    : "border-transparent"
+                                }`}
                               >
-                                {segment.value}
-                              </button>
-                            ) : (
-                              <span key={`${segment.value}-${index}`}>
-                                {tokenizeEnglishSentence(segment.value).map(
-                                  (token, tokenIndex) =>
-                                    token.type === "word" &&
-                                    token.normalized ? (
+                                <div className="flex items-center justify-between gap-3">
+                                  <p
+                                    className={`text-[1.2rem] font-extrabold leading-[1.5] transition ${
+                                      isSelected
+                                        ? "text-[#6b4dff]"
+                                        : "text-[#4f6fe8]"
+                                    }`}
+                                  >
+                                    {variant.label}
+                                  </p>
+                                  <button
+                                    type="button"
+                                    aria-label={`朗读${variant.label}`}
+                                    onClick={(event) => {
+                                      event.stopPropagation();
+                                      readExpressionVariant(
+                                        variant,
+                                        variantIndex
+                                      );
+                                    }}
+                                    className={`grid h-9 w-11 shrink-0 place-items-center rounded-[14px] text-[1rem] font-extrabold shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_8px_18px_rgba(84,72,146,0.1)] transition active:scale-95 ${
+                                      isSelected
+                                        ? "bg-[#efeaff] text-[#6b4dff]"
+                                        : "bg-white/42 text-[#201833]"
+                                    }`}
+                                  >
+                                    ▶
+                                  </button>
+                                </div>
+                                <p className="sf-study-expression-text mt-3 text-left text-[clamp(1.55rem,7vw,1.85rem)] font-extrabold leading-[1.5] text-[#201833]">
+                                  {segments.map((segment, index) =>
+                                    segment.type === "expression" ? (
                                       <button
-                                        key={`${token.value}-${tokenIndex}`}
+                                        key={`${segment.value}-${index}`}
                                         type="button"
                                         onClick={(event) => {
                                           event.stopPropagation();
-                                          handleWordClick(
-                                            token.value,
-                                            selectedExpression.text
+                                          handleExpressionClick(
+                                            segment.expression,
+                                            variant.text
                                           );
                                         }}
-                                        className="inline rounded-md px-0.5 text-[#201833] transition hover:bg-white/45 active:bg-[#fff7b8]/70"
+                                        className="inline rounded-xl bg-[#fff7b8]/70 px-1.5 py-0.5 text-[#201833] shadow-[inset_0_-0.28em_0_rgba(255,215,106,0.55)] transition hover:bg-[#fff0a0]"
                                       >
-                                        {token.value}
+                                        {segment.value}
                                       </button>
                                     ) : (
-                                      <span key={`${token.value}-${tokenIndex}`}>
-                                        {token.value}
+                                      <span key={`${segment.value}-${index}`}>
+                                        {tokenizeEnglishSentence(
+                                          segment.value
+                                        ).map((token, tokenIndex) =>
+                                          token.type === "word" &&
+                                          token.normalized ? (
+                                            <button
+                                              key={`${token.value}-${tokenIndex}`}
+                                              type="button"
+                                              onClick={(event) => {
+                                                event.stopPropagation();
+                                                handleWordClick(
+                                                  token.value,
+                                                  variant.text
+                                                );
+                                              }}
+                                              className="inline rounded-md px-0.5 text-[#201833] transition hover:bg-white/45 active:bg-[#fff7b8]/70"
+                                            >
+                                              {token.value}
+                                            </button>
+                                          ) : (
+                                            <span
+                                              key={`${token.value}-${tokenIndex}`}
+                                            >
+                                              {token.value}
+                                            </span>
+                                          )
+                                        )}
                                       </span>
                                     )
-                                )}
-                              </span>
-                            )
-                          )}
-                    </p>
-
+                                  )}
+                                </p>
+                              </div>
+                            );
+                          }
+                        )}
+                      </div>
+                    )}
                   </div>
                 </>
               )}

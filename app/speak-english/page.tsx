@@ -138,13 +138,10 @@ type AccountPanelView =
   | "aboutSpeakFlow"
   | "phoneTransfer"
   | "accountManagement"
-  | "appearance"
   | "interfaceLanguage"
   | "notifications"
   | "fontSize";
 type ProPlan = "monthly" | "yearly";
-type AppearancePreference = "light" | "dark" | "system";
-type EffectiveAppearance = "light" | "dark";
 type FontSizePreference = "small" | "standard" | "large";
 
 type InterfaceLanguageOption = {
@@ -164,7 +161,6 @@ type AccountMenuAction =
   | "aboutSpeakFlow"
   | "phoneTransfer"
   | "accountManagement"
-  | "appearance"
   | "interfaceLanguage"
   | "notifications"
   | "fontSize"
@@ -259,7 +255,6 @@ const phoneTransferBackupExactKeys = new Set([
   "english-app-lessons",
   "lastStudyProgress",
   "selected-voice-name",
-  "speakflow-appearance-preference",
   "speakflow-font-size-preference",
   "speakflow-free-expression-learning",
   "speakflow-selected-voice-uri",
@@ -291,10 +286,6 @@ function getSpeechSilenceDelay(stage: PracticeStage) {
   if (stage === "native") return speechSilenceDelayMs;
 
   return englishSpeechSilenceDelayMs;
-}
-
-function isAppearancePreference(value: string): value is AppearancePreference {
-  return value === "light" || value === "dark" || value === "system";
 }
 
 function isFontSizePreference(value: string): value is FontSizePreference {
@@ -553,7 +544,6 @@ const accountPanelCopy = {
           { action: "voice", icon: "🎧", label: "Voice" },
           { action: "fontSize", icon: "🔤", label: "Font Size" },
           { icon: "🌐", label: "Interface Language" },
-          { action: "appearance", icon: "🎨", label: "Appearance" },
           { icon: "🔔", label: "Notifications" },
           { icon: "☁️", label: "Data Management" },
         ],
@@ -571,7 +561,6 @@ const accountPanelCopy = {
     ] as readonly AccountMenuSection[],
     aboutSpeakFlowTitle: "About SpeakFlow",
     accountSecurity: "Account & Security",
-    appearanceTitle: "Appearance",
     billingPortalDescription:
       "Manage your plan, payment method, invoices, and cancellation on Stripe's secure page.",
     billingPortalPrimary: "Open subscription management",
@@ -699,7 +688,6 @@ const accountPanelCopy = {
           { action: "voice", icon: "🎧", label: "声音" },
           { action: "fontSize", icon: "🔤", label: "字体大小" },
           { icon: "🌐", label: "界面语言" },
-          { action: "appearance", icon: "🎨", label: "外观" },
           { icon: "🔔", label: "通知" },
           { icon: "☁️", label: "数据管理" },
         ],
@@ -717,7 +705,6 @@ const accountPanelCopy = {
     ] as readonly AccountMenuSection[],
     aboutSpeakFlowTitle: "关于 SpeakFlow",
     accountSecurity: "账户与安全",
-    appearanceTitle: "外观",
     billingPortalDescription:
       "在 Stripe 安全页面中更换套餐、取消订阅、更新付款方式或查看账单。",
     billingPortalPrimary: "打开订阅管理",
@@ -1430,27 +1417,6 @@ const interfaceLanguageOptions: readonly InterfaceLanguageOption[] = [
 
 const displaySettingsContent = {
   en: {
-    appearanceDescription:
-      "Choose how SpeakFlow looks on this device. System follows your browser or operating system appearance.",
-    appearanceOptions: [
-      {
-        description: "A soft lavender interface for daytime practice.",
-        label: "Light",
-        value: "light",
-      },
-      {
-        description: "A darker interface for low-light practice.",
-        label: "Dark",
-        value: "dark",
-      },
-      {
-        description: "Automatically match your device setting.",
-        label: "Follow system",
-        value: "system",
-      },
-    ] as const,
-    effectiveDark: "Currently using dark appearance.",
-    effectiveLight: "Currently using light appearance.",
     fontSizeDescription:
       "Adjust the reading size used across SpeakFlow on this device.",
     fontSizeOptions: [
@@ -1480,27 +1446,6 @@ const displaySettingsContent = {
     saved: "Saved on this device.",
   },
   "zh-CN": {
-    appearanceDescription:
-      "选择 SpeakFlow 在这台设备上的显示方式。跟随系统会自动使用浏览器或系统的明暗设置。",
-    appearanceOptions: [
-      {
-        description: "柔和的浅色界面，适合白天练习。",
-        label: "浅色",
-        value: "light",
-      },
-      {
-        description: "更暗的界面，适合光线较暗时练习。",
-        label: "深色",
-        value: "dark",
-      },
-      {
-        description: "自动跟随设备或浏览器设置。",
-        label: "跟随系统",
-        value: "system",
-      },
-    ] as const,
-    effectiveDark: "当前实际使用深色外观。",
-    effectiveLight: "当前实际使用浅色外观。",
     fontSizeDescription: "调整 SpeakFlow 在这台设备上的整体文字大小。",
     fontSizeOptions: [
       {
@@ -1531,14 +1476,6 @@ const displaySettingsContent = {
 } satisfies Record<
   "en" | "zh-CN",
   {
-    appearanceDescription: string;
-    appearanceOptions: readonly {
-      description: string;
-      label: string;
-      value: AppearancePreference;
-    }[];
-    effectiveDark: string;
-    effectiveLight: string;
     fontSizeDescription: string;
     fontSizeOptions: readonly {
       description: string;
@@ -2525,6 +2462,7 @@ function SpeakEnglishClient() {
   const guidedFollowupRequestKeyRef = useRef("");
   const freeConversationRequestKeyRef = useRef("");
   const freeConversationFetchRequestKeyRef = useRef("");
+  const authoritativeEnglishRequestKeyRef = useRef("");
   const freeConversationPrefetchRef =
     useRef<FreeConversationPrefetch | null>(null);
   const hasEnglishAttemptRef = useRef(false);
@@ -2541,6 +2479,8 @@ function SpeakEnglishClient() {
   const [liveTranscript, setLiveTranscript] = useState("");
   const [practiceStage, setPracticeStage] = useState<PracticeStage>("native");
   const [nativeSpeech, setNativeSpeech] = useState("");
+  const [isNativeSpeechConfirmed, setIsNativeSpeechConfirmed] = useState(false);
+  const [authoritativeEnglish, setAuthoritativeEnglish] = useState("");
   const [hasEnglishAttempt, setHasEnglishAttempt] = useState(false);
   const [standardEnglish, setStandardEnglish] = useState("");
   const [hasNativeSpeech, setHasNativeSpeech] = useState(false);
@@ -2566,10 +2506,6 @@ function SpeakEnglishClient() {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [accountPanelView, setAccountPanelView] =
     useState<AccountPanelView>("menu");
-  const [appearancePreference, setAppearancePreference] =
-    useState<AppearancePreference>("system");
-  const [effectiveAppearance, setEffectiveAppearance] =
-    useState<EffectiveAppearance>("light");
   const [fontSizePreference, setFontSizePreference] =
     useState<FontSizePreference>("standard");
   const [phoneTransferNotice, setPhoneTransferNotice] = useState("");
@@ -2678,8 +2614,16 @@ function SpeakEnglishClient() {
     Boolean(inputText.trim()) ||
     Boolean(liveTranscript.trim());
   const showLandingPrompt = !hasPracticeActivity;
+  const showNativeConfirmationPrompt =
+    hasNativeSpeech &&
+    !isNativeSpeechConfirmed &&
+    !hasEnglishAttempt &&
+    !isListening;
   const showNativeCompletePrompt =
-    hasNativeSpeech && !hasEnglishAttempt && !standardEnglish;
+    hasNativeSpeech &&
+    isNativeSpeechConfirmed &&
+    !hasEnglishAttempt &&
+    !standardEnglish;
   const showListeningPrompt = isListening;
   const showFreeConversationAnswerPrompt =
     isFreeConversationMode &&
@@ -2692,17 +2636,13 @@ function SpeakEnglishClient() {
     showListeningPrompt ||
     showFreeConversationAnswerPrompt;
   const showAiGuidedNudge = hasEnglishAttempt && !isAiGuidedMode;
+  const expressionVariantsForDisplay = expressionVariants.length
+    ? expressionVariants
+    : createFallbackExpressionVariants(standardEnglish);
   const selectedExpression =
-    expressionVariants[selectedExpressionIndex] ||
-    createFallbackExpressionVariants(standardEnglish)[0];
-  const selectedExpressionSegments = useMemo(
-    () =>
-      splitSentenceByHighlightedExpressions(
-        selectedExpression.text || "",
-        highlightedExpressions
-      ),
-    [highlightedExpressions, selectedExpression.text]
-  );
+    expressionVariantsForDisplay[
+      Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)
+    ] || expressionVariantsForDisplay[0];
   const freeConversationExpressionVariants = useMemo(() => {
     const standard =
       freeConversationResponse?.standard ||
@@ -2729,9 +2669,6 @@ function SpeakEnglishClient() {
       ),
     [highlightedExpressions, selectedFreeConversationExpression.text]
   );
-  const lastExpressionIndex = expressionVariantLabels.length - 1;
-  const hasPreviousExpression = selectedExpressionIndex > 0;
-  const hasNextExpression = selectedExpressionIndex < lastExpressionIndex;
   const accountAvatarLabel = (
     accountName || accountEmail || "CL"
   )
@@ -2752,8 +2689,6 @@ function SpeakEnglishClient() {
         ? phoneTransfer.title
       : accountPanelView === "accountManagement"
         ? accountManagement.title
-      : accountPanelView === "appearance"
-        ? accountCopy.appearanceTitle
       : accountPanelView === "interfaceLanguage"
         ? accountHome.interfaceLanguage
       : accountPanelView === "notifications"
@@ -2912,54 +2847,18 @@ function SpeakEnglishClient() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const savedAppearance = window.localStorage.getItem(
-      appearancePreferenceStorageKey
-    );
+    window.localStorage.removeItem(appearancePreferenceStorageKey);
+    delete document.documentElement.dataset.speakflowAppearance;
+    delete document.documentElement.dataset.speakflowTheme;
+
     const savedFontSize = window.localStorage.getItem(
       fontSizePreferenceStorageKey
     );
-
-    if (savedAppearance && isAppearancePreference(savedAppearance)) {
-      setAppearancePreference(savedAppearance);
-    }
 
     if (savedFontSize && isFontSizePreference(savedFontSize)) {
       setFontSizePreference(savedFontSize);
     }
   }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const root = document.documentElement;
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const applyAppearance = () => {
-      const nextEffectiveAppearance =
-        appearancePreference === "system"
-          ? mediaQuery.matches
-            ? "dark"
-            : "light"
-          : appearancePreference;
-
-      setEffectiveAppearance(nextEffectiveAppearance);
-      root.dataset.speakflowAppearance = appearancePreference;
-      root.dataset.speakflowTheme = nextEffectiveAppearance;
-      window.localStorage.setItem(
-        appearancePreferenceStorageKey,
-        appearancePreference
-      );
-    };
-
-    applyAppearance();
-
-    if (appearancePreference !== "system") return;
-
-    mediaQuery.addEventListener("change", applyAppearance);
-
-    return () => {
-      mediaQuery.removeEventListener("change", applyAppearance);
-    };
-  }, [appearancePreference]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -3411,12 +3310,6 @@ function SpeakEnglishClient() {
       return;
     }
 
-    if (action === "appearance") {
-      setShowAvatarEditor(false);
-      setAccountPanelView("appearance");
-      return;
-    }
-
     if (action === "interfaceLanguage") {
       setShowAvatarEditor(false);
       setAccountPanelView("interfaceLanguage");
@@ -3744,10 +3637,17 @@ function SpeakEnglishClient() {
     clearTimer(speechMaxTimerRef);
   }
 
+  function resetAuthoritativeEnglish() {
+    authoritativeEnglishRequestKeyRef.current = "";
+    setAuthoritativeEnglish("");
+  }
+
   function prepareNextNativeRound() {
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
     setPracticeStage("native");
     setNativeSpeech("");
+    setIsNativeSpeechConfirmed(false);
+    resetAuthoritativeEnglish();
     setHasNativeSpeech(false);
     setHasEnglishAttempt(false);
     setStandardEnglish("");
@@ -3764,6 +3664,8 @@ function SpeakEnglishClient() {
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
     setPracticeStage("english");
     setNativeSpeech(suggestion);
+    setIsNativeSpeechConfirmed(true);
+    resetAuthoritativeEnglish();
     setHasNativeSpeech(true);
     setHasEnglishAttempt(false);
     setStandardEnglish("");
@@ -3789,6 +3691,8 @@ function SpeakEnglishClient() {
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
     setPracticeStage("english");
     setNativeSpeech("");
+    setIsNativeSpeechConfirmed(false);
+    resetAuthoritativeEnglish();
     setHasNativeSpeech(false);
     setHasEnglishAttempt(false);
     setStandardEnglish("");
@@ -3883,12 +3787,14 @@ function SpeakEnglishClient() {
           resetFreeConversationState();
         }
         setNativeSpeech(finalTranscript);
+        setIsNativeSpeechConfirmed(false);
+        resetAuthoritativeEnglish();
         setStandardEnglish("");
         setExpressionVariants([]);
         setSelectedExpressionIndex(0);
         setHasEnglishAttempt(false);
         setHasNativeSpeech(true);
-        setPracticeStage("english");
+        setPracticeStage("native");
       } else {
         setHasEnglishAttempt(true);
         markFreePracticeRoundCompleted();
@@ -3922,11 +3828,54 @@ function SpeakEnglishClient() {
       return;
     }
 
+    if (showNativeConfirmationPrompt) {
+      return;
+    }
+
     if (isFreeConversationMode && hasEnglishAttempt && isLoadingFreeConversation) {
       return;
     }
 
     void startRecognition();
+  }
+
+  function confirmNativeSpeech() {
+    const confirmedSpeech = nativeSpeech.trim();
+    if (!confirmedSpeech) return;
+
+    setNativeSpeech(confirmedSpeech);
+    setMessage(confirmedSpeech);
+    setIsNativeSpeechConfirmed(true);
+    setPracticeStage("english");
+    setStandardEnglish("");
+    setExpressionVariants([]);
+    setSelectedExpressionIndex(0);
+    setHighlightedExpressions([]);
+    setVocabularyNotice("");
+    resetGuidedFollowupState();
+    resetAuthoritativeEnglish();
+  }
+
+  function updateNativeSpeechDraft(value: string) {
+    setNativeSpeech(value);
+    setMessage(value);
+    setIsNativeSpeechConfirmed(false);
+    setStandardEnglish("");
+    setExpressionVariants([]);
+    setSelectedExpressionIndex(0);
+    setHighlightedExpressions([]);
+    setVocabularyNotice("");
+    resetGuidedFollowupState();
+    resetAuthoritativeEnglish();
+  }
+
+  function retryNativeSpeech() {
+    prepareNextNativeRound();
+    if (typeof window === "undefined") return;
+
+    window.setTimeout(() => {
+      void startRecognition("native");
+    }, 0);
   }
 
   function handleComposerPracticeAction() {
@@ -3938,7 +3887,7 @@ function SpeakEnglishClient() {
     void startRecognition();
   }
 
-  async function startRecognition() {
+  async function startRecognition(forcedPracticeStage?: PracticeStage) {
     if (isListening) return;
 
     const RecognitionConstructor = getRecognitionConstructor();
@@ -3953,24 +3902,26 @@ function SpeakEnglishClient() {
     speechBufferRef.current = "";
     shouldCommitSpeechRef.current = true;
     const isStartingFreeConversationAnswerRound =
-      isFreeConversationMode && hasEnglishAttempt;
+      !forcedPracticeStage && isFreeConversationMode && hasEnglishAttempt;
     const isStartingGuidedSuggestedEnglishRound =
-      isAiGuidedMode && Boolean(standardEnglish);
+      !forcedPracticeStage && isAiGuidedMode && Boolean(standardEnglish);
     const guidedSuggestedChinese = isStartingGuidedSuggestedEnglishRound
       ? guidedFollowupSuggestion.trim() || "我还想多说一点我的感受。"
       : "";
     const isStartingNextNativeRound =
+      !forcedPracticeStage &&
       Boolean(standardEnglish) &&
       !isStartingGuidedSuggestedEnglishRound &&
       !isStartingFreeConversationAnswerRound;
     const nextPracticeStage: PracticeStage =
-      isStartingFreeConversationAnswerRound
+      forcedPracticeStage ||
+      (isStartingFreeConversationAnswerRound
         ? "english"
         : isStartingGuidedSuggestedEnglishRound
         ? "english"
         : isStartingNextNativeRound
           ? "native"
-          : practiceStage;
+          : practiceStage);
 
     if (
       (nextPracticeStage === "native" ||
@@ -4086,9 +4037,59 @@ function SpeakEnglishClient() {
   }
 
   useEffect(() => {
+    const currentChinese = nativeSpeech.trim();
+
+    if (!hasNativeSpeech || !isNativeSpeechConfirmed || !currentChinese) {
+      if (!currentChinese || !isNativeSpeechConfirmed) {
+        authoritativeEnglishRequestKeyRef.current = "";
+        setAuthoritativeEnglish("");
+      }
+      return;
+    }
+
+    if (authoritativeEnglishRequestKeyRef.current === currentChinese) {
+      return;
+    }
+
+    let cancelled = false;
+    authoritativeEnglishRequestKeyRef.current = currentChinese;
+    setAuthoritativeEnglish("");
+
+    async function loadAuthoritativeEnglish() {
+      try {
+        const response = await fetch("/api/accurate-sentence", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chinese: currentChinese }),
+        });
+        const data = (await response.json()) as { english?: unknown };
+        const english =
+          typeof data.english === "string" ? data.english.trim() : "";
+
+        if (!cancelled && response.ok && english) {
+          setAuthoritativeEnglish(english);
+        }
+      } catch {
+        if (!cancelled) {
+          setAuthoritativeEnglish("");
+        }
+      }
+    }
+
+    void loadAuthoritativeEnglish();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [hasNativeSpeech, isNativeSpeechConfirmed, nativeSpeech]);
+
+  useEffect(() => {
     if (isFreeConversationMode || !hasEnglishAttempt || !nativeSpeech) return;
 
     let cancelled = false;
+    const fallbackVariants = authoritativeEnglish
+      ? createFallbackExpressionVariants(authoritativeEnglish)
+      : [];
     setExpressionVariants([]);
     setSelectedExpressionIndex(0);
     setIsLoadingExpressionVariants(true);
@@ -4100,15 +4101,21 @@ function SpeakEnglishClient() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             chinese: nativeSpeech,
-            userEnglish: message,
-            standardEnglish: "",
+            userEnglish: "",
+            standardEnglish: authoritativeEnglish,
           }),
         });
         const data = (await response.json()) as {
           variants?: Partial<Record<ExpressionVariantKey, string>>;
         };
 
-        if (!response.ok || !data.variants || cancelled) return;
+        if (cancelled) return;
+
+        if (!response.ok || !data.variants) {
+          setExpressionVariants(fallbackVariants);
+          setStandardEnglish(authoritativeEnglish);
+          return;
+        }
 
         const nextVariants = expressionVariantLabels.map(({ key, label }) => ({
           key,
@@ -4121,10 +4128,11 @@ function SpeakEnglishClient() {
         }));
 
         setExpressionVariants(nextVariants);
-        setStandardEnglish(nextVariants[0]?.text || "");
+        setStandardEnglish(nextVariants[0]?.text || authoritativeEnglish);
       } catch {
         if (!cancelled) {
-          setExpressionVariants([]);
+          setExpressionVariants(fallbackVariants);
+          setStandardEnglish(authoritativeEnglish);
         }
       } finally {
         if (!cancelled) {
@@ -4138,16 +4146,19 @@ function SpeakEnglishClient() {
     return () => {
       cancelled = true;
     };
-  }, [hasEnglishAttempt, isFreeConversationMode, message, nativeSpeech]);
+  }, [
+    authoritativeEnglish,
+    hasEnglishAttempt,
+    isFreeConversationMode,
+    nativeSpeech,
+  ]);
 
   useEffect(() => {
     const currentChinese = nativeSpeech.trim();
-    const userEnglish = message.trim();
     const recommendedEnglish = standardEnglish.trim();
     const requestKey = JSON.stringify({
       currentChinese,
       recommendedEnglish,
-      userEnglish,
     });
 
     if (
@@ -4174,8 +4185,13 @@ function SpeakEnglishClient() {
           body: JSON.stringify({
             currentChinese,
             recommendedEnglish,
-            turns: guidedConversationTurnsRef.current,
-            userEnglish,
+            turns: guidedConversationTurnsRef.current.map(
+              ({ chinese, recommendedEnglish: turnRecommendedEnglish }) => ({
+                chinese,
+                recommendedEnglish: turnRecommendedEnglish,
+              })
+            ),
+            userEnglish: "",
           }),
         });
         const data = (await response.json()) as { suggestion?: unknown };
@@ -4198,7 +4214,7 @@ function SpeakEnglishClient() {
             {
               chinese: currentChinese,
               recommendedEnglish,
-              userEnglish,
+              userEnglish: "",
             },
           ].slice(-6);
           setIsLoadingGuidedFollowup(false);
@@ -4215,7 +4231,6 @@ function SpeakEnglishClient() {
     hasEnglishAttempt,
     isAiGuidedMode,
     isLoadingExpressionVariants,
-    message,
     nativeSpeech,
     standardEnglish,
   ]);
@@ -4281,10 +4296,7 @@ function SpeakEnglishClient() {
     selectedExpression.text,
   ]);
 
-  function readStandardEnglish(rate: number) {
-    const text = isFreeConversationMode
-      ? selectedFreeConversationExpression.text
-      : selectedExpression.text || standardEnglish;
+  function speakEnglishText(text: string, rate: number) {
     if (!text || typeof window === "undefined") return;
 
     const utterance = new SpeechSynthesisUtterance(text);
@@ -4301,6 +4313,23 @@ function SpeakEnglishClient() {
       selectedVoice || pickPreferredEnglishVoice(availableVoices) || null;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
+  }
+
+  function readStandardEnglish(rate: number) {
+    const text = isFreeConversationMode
+      ? selectedFreeConversationExpression.text
+      : selectedExpression.text || standardEnglish;
+
+    speakEnglishText(text, rate);
+  }
+
+  function readExpressionVariant(
+    variant: ExpressionVariant,
+    variantIndex: number,
+    rate = 1
+  ) {
+    setSelectedExpressionIndex(variantIndex);
+    speakEnglishText(variant.text || standardEnglish, rate);
   }
 
   function previewVoice(voice: SpeechSynthesisVoice) {
@@ -4526,7 +4555,6 @@ function SpeakEnglishClient() {
           icon: "globe",
           label: accountHome.interfaceLanguage,
         },
-        { action: "appearance", icon: "moon", label: accountCopy.appearanceTitle },
         { action: "notifications", icon: "bell", label: accountHome.notifications },
       ],
       title: accountHome.learningExperience,
@@ -4570,7 +4598,6 @@ function SpeakEnglishClient() {
     <main
       className="responsive-page-shell sf-speak-page min-h-[100dvh] overflow-x-hidden text-white"
       data-speakflow-font-size={fontSizePreference}
-      data-speakflow-theme={effectiveAppearance}
     >
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-[520px] items-center justify-center p-2 sm:p-4">
         <section className="sf-speak-phone relative flex h-[calc(100dvh-16px)] min-h-[calc(100dvh-16px)] w-full max-w-[430px] flex-col overflow-hidden rounded-[34px] sm:min-h-[720px]">
@@ -4675,7 +4702,6 @@ function SpeakEnglishClient() {
               accountPanelView === "aboutSpeakFlow" ||
               accountPanelView === "phoneTransfer" ||
               accountPanelView === "accountManagement" ||
-              accountPanelView === "appearance" ||
               accountPanelView === "interfaceLanguage" ||
               accountPanelView === "notifications" ||
               accountPanelView === "fontSize" ? (
@@ -5338,68 +5364,6 @@ function SpeakEnglishClient() {
 
                     <p className="mt-4 rounded-[18px] bg-white/66 px-4 py-3 text-center text-[0.84rem] font-bold leading-6 text-[#7f7896] ring-1 ring-white/80">
                       {accountManagement.supportNote}
-                    </p>
-                  </section>
-                ) : accountPanelView === "appearance" ? (
-                  <section className="pb-8">
-                    <div className="rounded-[28px] border border-white/80 bg-white/76 px-5 py-6 shadow-[0_22px_58px_rgba(84,72,146,0.13)] ring-1 ring-[#efeaff]">
-                      <div className="flex items-start gap-3">
-                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.35rem] text-[#7460e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
-                          🎨
-                        </span>
-                        <div>
-                          <h3 className="text-[1.36rem] font-black leading-7 text-[#201833]">
-                            {accountCopy.appearanceTitle}
-                          </h3>
-                          <p className="mt-2 text-[0.96rem] font-bold leading-7 text-[#4b4267]">
-                            {displaySettings.appearanceDescription}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 grid gap-3">
-                      {displaySettings.appearanceOptions.map((option) => {
-                        const isSelected = appearancePreference === option.value;
-
-                        return (
-                          <button
-                            key={option.value}
-                            type="button"
-                            onClick={() => setAppearancePreference(option.value)}
-                            className={`flex min-h-[4.65rem] w-full items-center gap-3 rounded-[22px] px-4 py-4 text-left transition ${
-                              isSelected
-                                ? "border-2 border-[#8b67ff] bg-white/86 shadow-[0_18px_44px_rgba(126,92,255,0.14)]"
-                                : "border border-[#e8e2ff] bg-white/66 shadow-[0_12px_30px_rgba(84,72,146,0.08)]"
-                            }`}
-                          >
-                            <span
-                              className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-[0.9rem] font-extrabold ${
-                                isSelected
-                                  ? "bg-[linear-gradient(135deg,#7a5cff_0%,#c85cff_100%)] text-white"
-                                  : "border-2 border-[#c7bddf] text-transparent"
-                              }`}
-                            >
-                              ✓
-                            </span>
-                            <span className="min-w-0 flex-1">
-                              <span className="block text-[1rem] font-extrabold text-[#201833]">
-                                {option.label}
-                              </span>
-                              <span className="mt-1 block text-[0.84rem] font-bold leading-5 text-[#7f7896]">
-                                {option.description}
-                              </span>
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    <p className="mt-4 rounded-[18px] bg-white/66 px-4 py-3 text-center text-[0.86rem] font-bold leading-6 text-[#7f7896] ring-1 ring-white/80">
-                      {effectiveAppearance === "dark"
-                        ? displaySettings.effectiveDark
-                        : displaySettings.effectiveLight}{" "}
-                      {displaySettings.saved}
                     </p>
                   </section>
                 ) : accountPanelView === "interfaceLanguage" ? (
@@ -6340,98 +6304,191 @@ function SpeakEnglishClient() {
               showVoiceOnlyPrompt
                 ? "pb-[calc(5.8rem+env(safe-area-inset-bottom))]"
                 : hasEnglishAttempt
-                  ? showAiGuidedNudge
-                    ? "pb-[calc(12rem+env(safe-area-inset-bottom))]"
-                    : "pb-[calc(5.95rem+env(safe-area-inset-bottom))]"
+                  ? "pb-[calc(6.8rem+env(safe-area-inset-bottom))]"
                   : "pb-[352px]"
             }`}
           >
             <div className="mx-auto h-px w-32 bg-[linear-gradient(90deg,transparent,rgba(145,220,255,0.46),transparent)]" />
 
+            {showAiGuidedNudge ? (
+              <div className="absolute inset-x-0 top-6 z-20 flex justify-center px-6">
+                <button
+                  type="button"
+                  onClick={openTrainingGroundMode}
+                  className="flex items-center gap-3 text-left text-[#7c55ff] transition active:scale-[0.99]"
+                  aria-label="不知道说什么，AI帮我练"
+                >
+                  <span className="grid h-10 w-10 shrink-0 place-items-center">
+                    <svg
+                      viewBox="0 0 40 40"
+                      aria-hidden="true"
+                      className="h-10 w-10"
+                      fill="none"
+                    >
+                      <path
+                        d="M15.5 31.5h9"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="2.4"
+                      />
+                      <path
+                        d="M16.8 35h6.4"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="2.4"
+                      />
+                      <path
+                        d="M26.5 18.3c0-4-2.8-7.1-6.5-7.1s-6.5 3.1-6.5 7.1c0 2.6 1.2 4.7 3.2 6.2.9.7 1.3 1.6 1.3 2.7v.8h4v-.8c0-1.1.5-2 1.4-2.7 1.9-1.5 3.1-3.6 3.1-6.2Z"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2.4"
+                      />
+                      <path
+                        d="M20 4.5v3M8.4 9.3l2.2 2.2M3.8 20h3.1M31.6 9.3l-2.2 2.2M33.1 20h3.1"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="2.4"
+                      />
+                    </svg>
+                  </span>
+                  <span>
+                    <span className="block text-[1.28rem] font-extrabold leading-7 text-[#201833]">
+                      不知道说什么？
+                    </span>
+                    <span className="mt-0.5 block text-[1.08rem] font-extrabold leading-6 text-[#7c55ff]">
+                      AI帮我练
+                    </span>
+                  </span>
+                </button>
+              </div>
+            ) : null}
+
             <div
-              className={`sf-free-practice-content flex min-h-0 flex-1 flex-col items-center overflow-y-auto text-center ${
+              className={`sf-free-practice-content flex min-h-0 flex-1 flex-col items-center overflow-y-auto text-left ${
                 showVoiceOnlyPrompt
                   ? "justify-start pt-28"
                   : hasEnglishAttempt
                     ? `sf-free-practice-result-content justify-start ${
-                        isFreeConversationMode ? "pt-8" : "pt-14"
+                        isFreeConversationMode
+                          ? "pt-8"
+                          : showAiGuidedNudge
+                            ? "pt-[7.5rem]"
+                            : "pt-8"
                       }`
                     : "justify-start pt-14"
               }`}
             >
               {showListeningPrompt ? (
                 practiceStage === "english" && nativeSpeech ? (
-                  <div className="max-w-[360px] bg-white/10 px-5 py-5">
-                    <h2 className="text-[1.75rem] font-extrabold leading-10 text-[#201833]">
+                  <div className="w-full max-w-[360px]">
+                    <h2 className="text-[1.95rem] font-extrabold leading-[2.65rem] text-[#201833]">
                       {nativeSpeech}
                     </h2>
-                    <p className="mt-5 text-[1.25rem] font-extrabold text-[#201833]">
+                    <p className="mt-5 text-[1.35rem] font-extrabold text-[#201833]">
                       正在听你说英文...
                     </p>
-                    <p className="mt-3 text-[1rem] font-extrabold text-[#4b4267]">
+                    <p className="mt-3 text-[1.1rem] font-extrabold text-[#4b4267]">
                       看着这句中文，用英语说出来
                     </p>
                   </div>
                 ) : isFreeConversationMode && freeConversationQuestionPrompt ? (
-                  <div className="max-w-[360px] bg-white/10 px-5 py-5 text-left">
-                    <p className="text-[1rem] font-extrabold leading-6 text-[#5b63ff]">
+                  <div className="w-full max-w-[360px]">
+                    <p className="text-[1.1rem] font-extrabold leading-6 text-[#5b63ff]">
                       AI回复：
                     </p>
-                    <h2 className="mt-4 text-[1.45rem] font-extrabold leading-8 text-[#201833]">
+                    <h2 className="mt-4 text-[1.6rem] font-extrabold leading-9 text-[#201833]">
                       {freeConversationQuestionPrompt.english}
                     </h2>
                     {isFreeConversationHintVisible &&
                     freeConversationQuestionPrompt.hintChinese ? (
-                      <p className="mt-3 rounded-[14px] bg-white/18 px-3 py-2 text-[1rem] font-bold leading-7 text-[#4b4267]">
+                      <p className="mt-3 text-[1.05rem] font-bold leading-7 text-[#4b4267]">
                         提示：{freeConversationQuestionPrompt.hintChinese}
                       </p>
                     ) : null}
-                    <p className="mt-5 text-[0.95rem] font-extrabold leading-6 text-[#201833]">
+                    <p className="mt-5 text-[1.05rem] font-extrabold leading-6 text-[#201833]">
                       用英文回答 AI。
                     </p>
                   </div>
                 ) : (
                   <>
-                    <h2 className="max-w-[360px] text-[1.65rem] font-extrabold leading-10 text-[#201833]">
+                    <h2 className="w-full max-w-[360px] text-[1.9rem] font-extrabold leading-[2.55rem] text-[#201833]">
                       正在听你说话...
                     </h2>
-                    <p className="mt-6 max-w-[340px] text-[1rem] font-semibold leading-7 text-[#201833]">
+                    <p className="mt-6 w-full max-w-[340px] text-[1.08rem] font-semibold leading-7 text-[#201833]">
                       自然地说中文，SpeakFlow 会帮你转换成英语练习。
                     </p>
                   </>
                 )
+              ) : showNativeConfirmationPrompt ? (
+                <div className="w-full max-w-[360px]">
+                  <p className="text-[1.05rem] font-extrabold leading-6 text-[#6b4dff]">
+                    你想表达的是：
+                  </p>
+                  <label className="mt-4 block rounded-[22px] border border-[#d9d0ff] bg-white/58 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_14px_34px_rgba(84,72,146,0.08)]">
+                    <textarea
+                      value={nativeSpeech}
+                      onChange={(event) =>
+                        updateNativeSpeechDraft(event.target.value)
+                      }
+                      rows={3}
+                      lang="zh-CN"
+                      className="block min-h-[7.5rem] w-full resize-none bg-transparent text-[1.55rem] font-extrabold leading-[2.15rem] text-[#201833] outline-none"
+                    />
+                  </label>
+                  <p className="mt-4 text-[0.96rem] font-bold leading-6 text-[#7f7896]">
+                    如果识别错了，可以直接修改，或者重新说一遍。
+                  </p>
+                  <div className="mt-5 grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={retryNativeSpeech}
+                      className="min-h-12 rounded-[18px] bg-white/54 px-4 text-[1rem] font-black text-[#4b4267] shadow-[inset_0_1px_0_rgba(255,255,255,0.76)] transition active:scale-[0.98]"
+                    >
+                      重说
+                    </button>
+                    <button
+                      type="button"
+                      onClick={confirmNativeSpeech}
+                      disabled={!nativeSpeech.trim()}
+                      className="min-h-12 rounded-[18px] bg-[#7c55ff] px-4 text-[1rem] font-black text-white shadow-[0_14px_28px_rgba(124,85,255,0.22)] transition active:scale-[0.98] disabled:opacity-45"
+                    >
+                      确认
+                    </button>
+                  </div>
+                </div>
               ) : showFreeConversationAnswerPrompt &&
                 freeConversationQuestionPrompt ? (
-                <div className="max-w-[360px] bg-white/10 px-5 py-5 text-left">
-                  <p className="text-[1rem] font-extrabold leading-6 text-[#5b63ff]">
+                <div className="w-full max-w-[360px]">
+                  <p className="text-[1.1rem] font-extrabold leading-6 text-[#5b63ff]">
                     AI回复：
                   </p>
-                  <h2 className="mt-4 text-[1.45rem] font-extrabold leading-8 text-[#201833]">
+                  <h2 className="mt-4 text-[1.6rem] font-extrabold leading-9 text-[#201833]">
                     {freeConversationQuestionPrompt.english}
                   </h2>
                   {isFreeConversationHintVisible &&
                   freeConversationQuestionPrompt.hintChinese ? (
-                    <p className="mt-3 rounded-[14px] bg-white/18 px-3 py-2 text-[1rem] font-bold leading-7 text-[#4b4267]">
+                    <p className="mt-3 text-[1.05rem] font-bold leading-7 text-[#4b4267]">
                       提示：{freeConversationQuestionPrompt.hintChinese}
                     </p>
                   ) : null}
-                  <p className="mt-5 text-[0.95rem] font-extrabold leading-6 text-[#201833]">
+                  <p className="mt-5 text-[1.05rem] font-extrabold leading-6 text-[#201833]">
                     点击麦克风，用英文回答 AI。
                   </p>
                 </div>
               ) : showLandingPrompt ? (
                 <>
-                  <h2 className="max-w-[360px] text-[1.65rem] font-extrabold leading-10 text-[#201833]">
+                  <h2 className="w-full max-w-[360px] text-[1.9rem] font-extrabold leading-[2.55rem] text-[#201833]">
                     用中文说出你想表达的内容
                   </h2>
                 </>
               ) : showNativeCompletePrompt ? (
                 <>
-                  <div className="max-w-[360px] bg-white/10 px-5 py-5">
-                    <h2 className="text-[1.75rem] font-extrabold leading-10 text-[#201833]">
+                  <div className="w-full max-w-[360px]">
+                    <h2 className="text-[1.95rem] font-extrabold leading-[2.65rem] text-[#201833]">
                       {nativeSpeech}
                     </h2>
-                    <p className="mt-5 text-[1rem] font-extrabold text-[#4b4267]">
+                    <p className="mt-5 text-[1.15rem] font-extrabold text-[#4b4267]">
                       看着这句中文，用英语说出来
                     </p>
                   </div>
@@ -6566,130 +6623,189 @@ function SpeakEnglishClient() {
                     ) : (
                     <>
                       <div className="sf-free-practice-user-expression w-full max-w-[360px] text-left">
-                        <p className="text-[1.05rem] font-extrabold text-[#7f7896]">
+                        <p className="text-[1.16rem] font-extrabold text-[#7f7896]">
                           你的表达:
                         </p>
-                        <p className="sf-free-practice-user-card mt-5 rounded-[18px] bg-white/10 px-5 py-4 text-[1.15rem] font-bold leading-8 text-[#8f879c]">
+                        <p className="sf-free-practice-user-card mt-5 text-[1.3rem] font-bold leading-9 text-[#8f879c]">
                           {message}
                         </p>
                       </div>
 
-                      <div className="sf-free-practice-standard-block mt-9 w-full max-w-[360px]">
-                          <div className="flex items-center gap-2 text-left">
-                            <button
-                              type="button"
-                              aria-label="上一种表达"
-                              onClick={() =>
-                                setSelectedExpressionIndex((index) =>
-                                  Math.max(index - 1, 0)
-                                )
-                              }
-                              disabled={!hasPreviousExpression}
-                              className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] disabled:invisible"
-                            >
-                              ←
-                            </button>
-                            <span className="text-[1.2rem] font-extrabold text-[#4f6fe8]">
-                              {selectedExpression.label}
+                      {isAiGuidedMode &&
+                      (isLoadingGuidedFollowup || guidedFollowupSuggestion) ? (
+                        <div className="sf-guided-followup-card relative mt-6 w-full max-w-[360px] rounded-[24px] border border-white/75 bg-[linear-gradient(135deg,rgba(255,255,255,0.78)_0%,rgba(247,240,255,0.66)_56%,rgba(230,211,255,0.58)_100%)] px-5 py-5 text-left shadow-[0_14px_34px_rgba(116,83,180,0.18),inset_0_1px_0_rgba(255,255,255,0.86)]">
+                          <span className="pointer-events-none absolute inset-x-0 bottom-0 h-9 rounded-b-[24px] bg-[linear-gradient(90deg,rgba(169,121,255,0.16),rgba(255,255,255,0.06),rgba(169,121,255,0.18))]" />
+                          <div className="relative z-10 flex items-start gap-3">
+                            <div className="min-w-0 flex-1">
+                              <p className="flex items-center gap-2 text-[1.18rem] font-black leading-7 text-[#6b4dff]">
+                                <span className="text-[1.32rem]">🌟</span>
+                                <span>下一句你可以这样说</span>
+                              </p>
+                              <p className="mt-5 text-[1.55rem] font-black leading-[2.15rem] text-[#201833]">
+                                {isLoadingGuidedFollowup
+                                  ? "AI正在帮你想下一句..."
+                                  : guidedFollowupSuggestion}
+                              </p>
+                            </div>
+                            <span className="pointer-events-none relative mt-[-0.15rem] h-12 w-14 shrink-0">
+                              <span className="absolute right-0 top-1 grid h-10 w-12 place-items-center rounded-[20px] bg-[linear-gradient(135deg,#ffffff_0%,#efe8ff_100%)] shadow-[0_8px_22px_rgba(116,83,180,0.18)]">
+                                <span className="relative grid h-7 w-10 place-items-center rounded-[15px] bg-[#29255f] text-[#76fff4] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.16)]">
+                                  <span className="absolute left-2 top-2.5 h-1.5 w-1.5 rounded-full bg-current" />
+                                  <span className="absolute right-2 top-2.5 h-1.5 w-1.5 rounded-full bg-current" />
+                                  <span className="mt-2.5 h-1.5 w-4 rounded-b-full border-b-2 border-current" />
+                                </span>
+                              </span>
+                              <span className="absolute right-3 top-0 h-2.5 w-2.5 rounded-full bg-[#efe8ff] shadow-[0_-7px_0_-2px_#c7b6ff]" />
+                              <span className="absolute right-0 top-0 text-[0.72rem] text-[#9a76ff]">
+                                ✦
+                              </span>
+                              <span className="absolute left-0 bottom-2 text-[0.74rem] text-[#ffd27a]">
+                                ✦
+                              </span>
                             </span>
-                            <button
-                              type="button"
-                              aria-label="下一种表达"
-                              onClick={() =>
-                                setSelectedExpressionIndex((index) =>
-                                  Math.min(
-                                    index + 1,
-                                    expressionVariantLabels.length - 1
-                                  )
-                                )
-                              }
-                              disabled={!hasNextExpression}
-                              className="grid h-8 w-8 place-items-center rounded-full bg-white/35 text-lg font-extrabold text-[#5b8cff] disabled:invisible"
-                            >
-                              →
-                            </button>
                           </div>
+                        </div>
+                      ) : null}
 
-                          <p className="sf-free-practice-expression-text mt-4 bg-white/18 px-4 py-4 text-[1.55rem] font-extrabold leading-9 text-[#201833]">
-                            {isLoadingExpressionVariants
-                              ? "正在生成表达..."
-                              : selectedExpressionSegments.map((segment, index) =>
-                                  segment.type === "expression" ? (
-                                    <button
-                                      key={`${segment.value}-${index}`}
-                                      type="button"
-                                      onClick={(event) => {
-                                        event.stopPropagation();
-                                        handleExpressionClick(
-                                          segment.expression,
-                                          selectedExpression.text
-                                        );
-                                      }}
-                                      className="inline rounded-xl bg-[#fff7b8]/70 px-1.5 py-0.5 text-[#201833] shadow-[inset_0_-0.28em_0_rgba(255,215,106,0.55)] transition hover:bg-[#fff0a0]"
-                                    >
-                                      {segment.value}
-                                    </button>
-                                  ) : (
-                                    <span key={`${segment.value}-${index}`}>
-                                      {tokenizeEnglishSentence(segment.value).map(
-                                        (token, tokenIndex) =>
-                                          token.type === "word" &&
-                                          token.normalized ? (
-                                            <button
-                                              key={`${token.value}-${tokenIndex}`}
-                                              type="button"
-                                              onClick={(event) => {
-                                                event.stopPropagation();
-                                                handleWordClick(
-                                                  token.value,
-                                                  selectedExpression.text
-                                                );
-                                              }}
-                                              className="inline rounded-md px-0.5 text-[#201833] transition hover:bg-white/45 active:bg-[#fff7b8]/70"
-                                            >
-                                              {token.value}
-                                            </button>
-                                          ) : (
-                                            <span
-                                              key={`${token.value}-${tokenIndex}`}
-                                            >
-                                              {token.value}
-                                            </span>
-                                          )
+                      <div className="sf-free-practice-standard-block mt-4 w-full max-w-[360px]">
+                          {isLoadingExpressionVariants ? (
+                            <p className="text-[1.25rem] font-extrabold leading-8 text-[#4f6fe8]">
+                              正在生成表达...
+                            </p>
+                          ) : (
+                            <div className="grid gap-8">
+                              {expressionVariantsForDisplay.map((variant, variantIndex) => {
+                                const segments =
+                                  splitSentenceByHighlightedExpressions(
+                                    variant.text || "",
+                                    highlightedExpressions
+                                  );
+                                const isSelected =
+                                  selectedExpressionIndex === variantIndex;
+
+                                return (
+                                  <div
+                                    key={variant.key}
+                                    role="button"
+                                    tabIndex={0}
+                                    aria-label={`选择朗读${variant.label}`}
+                                    onClick={() =>
+                                      setSelectedExpressionIndex(variantIndex)
+                                    }
+                                    onKeyDown={(event) => {
+                                      if (
+                                        event.key === "Enter" ||
+                                        event.key === " "
+                                      ) {
+                                        event.preventDefault();
+                                        setSelectedExpressionIndex(variantIndex);
+                                      }
+                                    }}
+                                    className={`cursor-pointer border-l-[4px] py-1 pl-4 text-left transition ${
+                                      isSelected
+                                        ? "border-[#7c55ff]"
+                                        : "border-transparent"
+                                    }`}
+                                  >
+                                    <div className="flex items-center justify-between gap-3">
+                                      <p
+                                        className={`text-[1.26rem] font-extrabold leading-7 transition ${
+                                          isSelected
+                                            ? "text-[#6b4dff]"
+                                            : "text-[#4f6fe8]"
+                                        }`}
+                                      >
+                                        {variant.label}
+                                      </p>
+                                      <button
+                                        type="button"
+                                        aria-label={`朗读${variant.label}`}
+                                        onClick={(event) => {
+                                          event.stopPropagation();
+                                          readExpressionVariant(
+                                            variant,
+                                            variantIndex
+                                          );
+                                        }}
+                                        className={`grid h-9 w-11 shrink-0 place-items-center rounded-[14px] text-[1rem] font-extrabold shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_8px_18px_rgba(84,72,146,0.1)] transition active:scale-95 ${
+                                          isSelected
+                                            ? "bg-[#efeaff] text-[#6b4dff]"
+                                            : "bg-white/42 text-[#201833]"
+                                        }`}
+                                      >
+                                        ▶
+                                      </button>
+                                    </div>
+                                    <p className="sf-free-practice-expression-text mt-3 text-[1.78rem] font-extrabold leading-[2.55rem] text-[#201833]">
+                                      {segments.map((segment, index) =>
+                                        segment.type === "expression" ? (
+                                          <button
+                                            key={`${segment.value}-${index}`}
+                                            type="button"
+                                            onClick={(event) => {
+                                              event.stopPropagation();
+                                              handleExpressionClick(
+                                                segment.expression,
+                                                variant.text
+                                              );
+                                            }}
+                                            className="inline rounded-xl bg-[#fff7b8]/70 px-1.5 py-0.5 text-[#201833] shadow-[inset_0_-0.28em_0_rgba(255,215,106,0.55)] transition hover:bg-[#fff0a0]"
+                                          >
+                                            {segment.value}
+                                          </button>
+                                        ) : (
+                                          <span key={`${segment.value}-${index}`}>
+                                            {tokenizeEnglishSentence(
+                                              segment.value
+                                            ).map((token, tokenIndex) =>
+                                              token.type === "word" &&
+                                              token.normalized ? (
+                                                <button
+                                                  key={`${token.value}-${tokenIndex}`}
+                                                  type="button"
+                                                  onClick={(event) => {
+                                                    event.stopPropagation();
+                                                    handleWordClick(
+                                                      token.value,
+                                                      variant.text
+                                                    );
+                                                  }}
+                                                  className="inline rounded-md px-0.5 text-[#201833] transition hover:bg-white/45 active:bg-[#fff7b8]/70"
+                                                >
+                                                  {token.value}
+                                                </button>
+                                              ) : (
+                                                <span
+                                                  key={`${token.value}-${tokenIndex}`}
+                                                >
+                                                  {token.value}
+                                                </span>
+                                              )
+                                            )}
+                                          </span>
+                                        )
                                       )}
-                                    </span>
-                                  )
-                                )}
-                          </p>
+                                    </p>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
 
                           {vocabularyNotice ? (
-                            <p className="sf-free-practice-notice mt-3 text-center text-sm font-semibold text-[#7f7896]">
+                            <p className="sf-free-practice-notice mt-6 text-left text-[0.98rem] font-semibold text-[#7f7896]">
                               {vocabularyNotice}
                             </p>
                           ) : null}
                       </div>
-
-                      {isAiGuidedMode &&
-                      (isLoadingGuidedFollowup || guidedFollowupSuggestion) ? (
-                        <div className="mt-9 w-full max-w-[360px] text-left">
-                          <p className="text-[1rem] font-extrabold leading-6 text-[#5b63ff]">
-                            你可以继续说：
-                          </p>
-                          <p className="mt-2 text-[1.05rem] font-extrabold leading-7 text-[#201833]">
-                            {isLoadingGuidedFollowup
-                              ? "AI正在帮你想下一句..."
-                              : guidedFollowupSuggestion}
-                          </p>
-                        </div>
-                      ) : null}
                     </>
                     )
                   ) : (
                     <>
-                      <p className="max-w-[320px] text-[1.6rem] font-semibold leading-9 tracking-[-0.03em] text-[#fffaff]">
+                      <p className="w-full max-w-[360px] text-[1.9rem] font-extrabold leading-[2.55rem] text-[#201833]">
                         {message}
                       </p>
-                      <div className="mt-4 max-w-[340px] text-[0.95rem] font-medium leading-6 text-[#c9c0df]">
+                      <div className="mt-4 w-full max-w-[340px] text-[1.08rem] font-extrabold leading-7 text-[#4b4267]">
                         {hasNativeSpeech
                           ? "试着用英语说出来"
                           : "自然地说中文，SpeakFlow 会帮你转换成英语练习。"}
@@ -6720,58 +6836,6 @@ function SpeakEnglishClient() {
                 />
               </button>
             </div>
-          ) : null}
-
-          {showAiGuidedNudge ? (
-            <button
-              type="button"
-              onClick={openTrainingGroundMode}
-              className="absolute inset-x-0 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-30 mx-auto flex w-[252px] items-center gap-3 bg-white/72 px-4 py-3 text-left shadow-[0_16px_32px_rgba(84,72,146,0.14),inset_0_1px_0_rgba(255,255,255,0.78)] backdrop-blur-xl transition hover:bg-white/86 active:scale-[0.98]"
-              aria-label="不知道说什么，AI带我练"
-            >
-              <span className="grid h-10 w-10 shrink-0 place-items-center text-[#7c55ff]">
-                <svg
-                  viewBox="0 0 40 40"
-                  aria-hidden="true"
-                  className="h-10 w-10"
-                  fill="none"
-                >
-                  <path
-                    d="M15.5 31.5h9"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeWidth="2.4"
-                  />
-                  <path
-                    d="M16.8 35h6.4"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeWidth="2.4"
-                  />
-                  <path
-                    d="M26.5 18.3c0-4-2.8-7.1-6.5-7.1s-6.5 3.1-6.5 7.1c0 2.6 1.2 4.7 3.2 6.2.9.7 1.3 1.6 1.3 2.7v.8h4v-.8c0-1.1.5-2 1.4-2.7 1.9-1.5 3.1-3.6 3.1-6.2Z"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.4"
-                  />
-                  <path
-                    d="M20 4.5v3M8.4 9.3l2.2 2.2M3.8 20h3.1M31.6 9.3l-2.2 2.2M33.1 20h3.1"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeWidth="2.4"
-                  />
-                </svg>
-              </span>
-              <span>
-                <span className="block text-[1.22rem] font-extrabold leading-6 text-[#201833]">
-                  不知道说什么？
-                </span>
-                <span className="mt-0.5 block text-[1rem] font-extrabold leading-5 text-[#7c55ff]">
-                  AI带我练
-                </span>
-              </span>
-            </button>
           ) : null}
 
           {hasEnglishAttempt ? (
@@ -6818,7 +6882,7 @@ function SpeakEnglishClient() {
           ) : null}
 
           {showQuickPanel ? (
-            <div className="absolute inset-x-0 bottom-0 top-[86px] z-40 overflow-y-auto bg-[linear-gradient(180deg,#d8cffc_0%,#ddd5ff_52%,#e7e0ff_100%)] px-11 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-3 text-[#201833]">
+            <div className="sf-quick-panel absolute inset-x-0 bottom-0 top-[86px] z-40 overflow-y-auto bg-[linear-gradient(180deg,#d8cffc_0%,#ddd5ff_52%,#e7e0ff_100%)] px-11 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-3 text-[#201833]">
               {showClassicCoursePicker ? (
                 <div className="grid gap-2 py-2">
                   <button
@@ -7024,6 +7088,7 @@ function SpeakEnglishClient() {
 
           {hasPracticeActivity &&
           !hasEnglishAttempt &&
+          !showNativeConfirmationPrompt &&
           !showNativeCompletePrompt &&
           !showListeningPrompt &&
           !showFreeConversationAnswerPrompt ? (

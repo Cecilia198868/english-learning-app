@@ -12,6 +12,10 @@ type VariantResponse = {
   natural?: string;
 };
 
+function cleanText(value: unknown) {
+  return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
+}
+
 export async function POST(req: Request) {
   try {
     const { chinese, userEnglish, standardEnglish } = (await req.json()) as {
@@ -20,7 +24,11 @@ export async function POST(req: Request) {
       standardEnglish?: unknown;
     };
 
-    if (typeof chinese !== "string" || !chinese.trim()) {
+    const chineseText = cleanText(chinese);
+    const learnerTranscript = cleanText(userEnglish);
+    const authoritativeEnglish = cleanText(standardEnglish);
+
+    if (!chineseText) {
       return NextResponse.json({ error: "NO_CHINESE" }, { status: 400 });
     }
 
@@ -38,16 +46,14 @@ export async function POST(req: Request) {
         {
           role: "system",
           content:
-            'Create four English alternatives for a spoken English learner. Return only JSON with keys "standard", "idiomatic", "simple", and "natural". Keep each value one sentence. "standard" should be accurate and polished. "idiomatic" should sound more native. "simple" should be easy beginner English. "natural" should sound casual and everyday.',
+            'Create four English alternatives for a spoken English learner. Semantic authority is strict: use "authoritativeEnglish" when it is provided; otherwise use only the meaning of "chinese". "learnerTranscript" is an unreliable speech-recognition transcript of the learner\'s attempt. It may contain wrong words or extra facts. Never copy or preserve facts, nouns, reasons, places, events, or causal links from learnerTranscript unless they are clearly supported by chinese or authoritativeEnglish. If learnerTranscript conflicts with chinese or authoritativeEnglish, ignore learnerTranscript. Return only JSON with keys "standard", "idiomatic", "simple", and "natural". Keep each value one sentence. "standard" should be accurate and polished. "idiomatic" should sound more native. "simple" should be easy beginner English. "natural" should sound casual and everyday.',
         },
         {
           role: "user",
           content: JSON.stringify({
-            chinese: chinese.trim(),
-            userEnglish:
-              typeof userEnglish === "string" ? userEnglish.trim() : "",
-            standardEnglish:
-              typeof standardEnglish === "string" ? standardEnglish.trim() : "",
+            authoritativeEnglish,
+            chinese: chineseText,
+            learnerTranscript,
           }),
         },
       ],
