@@ -8,7 +8,7 @@ const termsContent = {
     title: "Terms of Service",
     updated: "Last updated: May 23, 2026",
     intro:
-      "Welcome to SpeakFlow. These Terms of Service explain the rules for using SpeakFlow, including our language learning, speech practice, vocabulary, course creation, AI-assisted learning, interface settings, notification inbox, phone transfer, and account management features.",
+      "Welcome to SpeakFlow. These Terms of Service explain the rules for using SpeakFlow, including our language learning, speech practice, vocabulary, course creation, AI-assisted learning, invite friends and referral rewards, interface language, notification inbox, phone transfer, and account management features.",
     sections: [
       {
         title: "1. Acceptance of These Terms",
@@ -22,7 +22,7 @@ const termsContent = {
         body: [
           "SpeakFlow is an English speaking practice app. It may help users generate practice sentences, transform user input into English expressions, create learning courses, review vocabulary, practice pronunciation, and save expressions or words to a personal library.",
           "Some content may be generated or assisted by AI. AI-generated content can be useful for practice, but it may be incomplete, inaccurate, or unsuitable for a particular situation. You are responsible for checking important information before relying on it.",
-          "SpeakFlow may also provide account settings such as interface language, notification inbox, phone transfer backup and restore, subscription management, and account deletion request flows.",
+          "SpeakFlow may also provide account settings such as Invite Friends, interface language, notification inbox, phone transfer backup and restore, subscription management, and account deletion request flows.",
         ],
       },
       {
@@ -54,6 +54,7 @@ const termsContent = {
         body: [
           "Some features may require a paid subscription or one-time payment. Prices, features, and billing periods will be shown before purchase.",
           "Subscriptions may renew automatically unless canceled through the relevant app store, payment provider, or account settings. Refunds, cancellations, and billing disputes may be handled according to the rules of the payment provider you used.",
+          "Referral or bonus Pro rewards, when offered, are account-based, limited, non-transferable, and may require successful registration or payment events before they are applied.",
         ],
       },
       {
@@ -74,7 +75,7 @@ const termsContent = {
         title: "9. Privacy",
         body: [
           "Your use of SpeakFlow is also governed by our Privacy Policy. The Privacy Policy explains how information may be collected, used, stored, and protected.",
-          "If you use speech, audio, AI, account, notification inbox, interface language, or phone transfer features, your content or account status may need to be processed to provide those features.",
+          "If you use speech, audio, AI, account, invite rewards, notification inbox, interface language, or phone transfer features, your content or account status may need to be processed to provide those features.",
         ],
       },
       {
@@ -125,7 +126,7 @@ const termsContent = {
     title: "用户协议",
     updated: "最后更新日期：2026 年 5 月 23 日",
     intro:
-      "欢迎使用 SpeakFlow。本用户协议说明您使用 SpeakFlow 时需要遵守的规则，包括语言学习、口语练习、表达库、课程生成、AI 辅助学习、界面设置、通知收件箱、更换手机和账号管理等功能。",
+      "欢迎使用 SpeakFlow。本用户协议说明您使用 SpeakFlow 时需要遵守的规则，包括语言学习、口语练习、表达库、课程生成、AI 辅助学习、邀请好友与邀请奖励、界面语言、通知收件箱、更换手机和账号管理等功能。",
     sections: [
       {
         title: "1. 接受本协议",
@@ -139,7 +140,7 @@ const termsContent = {
         body: [
           "SpeakFlow 是一款英语口语练习应用。它可以帮助用户生成练习句子、把用户输入转换成英文表达、创建学习课程、复习词汇、练习发音，并把表达或单词保存到个人表达库。",
           "部分内容可能由 AI 生成或辅助生成。AI 内容适合用于学习练习，但可能不完整、不准确，或不适合特定场景。重要信息请您自行核实。",
-          "SpeakFlow 也可能提供界面语言、通知收件箱、更换手机备份与恢复、订阅管理和删除账号请求等账户设置功能。",
+          "SpeakFlow 也可能提供邀请好友、界面语言、通知收件箱、更换手机备份与恢复、订阅管理和删除账号请求等账户设置功能。",
         ],
       },
       {
@@ -171,6 +172,7 @@ const termsContent = {
         body: [
           "部分功能可能需要付费订阅或一次性购买。价格、功能和计费周期会在购买前展示。",
           "订阅可能会自动续费，除非您通过对应应用商店、支付服务商或账户设置取消。退款、取消和账单争议可能按照您所使用支付渠道的规则处理。",
+          "邀请或奖励 Pro 权限如有提供，通常绑定账户、次数有限、不可转让，并可能需要成功注册或成功付款事件后才会生效。",
         ],
       },
       {
@@ -191,7 +193,7 @@ const termsContent = {
         title: "9. 隐私",
         body: [
           "您使用 SpeakFlow 也受我们的隐私政策约束。隐私政策说明信息如何被收集、使用、存储和保护。",
-          "如果您使用语音、音频、AI、账户、通知收件箱、界面语言或更换手机功能，您的内容或账户状态可能需要被处理，以便提供相应功能。",
+          "如果您使用语音、音频、AI、账户、邀请奖励、通知收件箱、界面语言或更换手机功能，您的内容或账户状态可能需要被处理，以便提供相应功能。",
         ],
       },
       {

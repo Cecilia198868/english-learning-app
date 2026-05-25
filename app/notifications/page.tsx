@@ -25,13 +25,13 @@ const notificationPageCopy = {
   en: {
     back: "Back",
     emptyBody:
-      "Subscription changes, learning reminders, account safety messages, and replies from SpeakFlow will appear here.",
+      "Subscription changes, invite reward messages, learning reminders, account safety messages, and replies from SpeakFlow will appear here.",
     emptyTitle: "No notifications yet",
     error: "Unable to load notifications. Please try again later.",
     loading: "Loading notifications...",
     read: "Read",
     subtitle:
-      "System messages from SpeakFlow are collected here, like an inbox.",
+      "System messages, subscription updates, and invite reward messages from SpeakFlow are collected here, like an inbox.",
     title: "Notifications",
     typeLabels: {
       account: "Account",
@@ -45,12 +45,12 @@ const notificationPageCopy = {
   "zh-CN": {
     back: "返回",
     emptyBody:
-      "订阅变化、学习提醒、账号安全消息和 SpeakFlow 的回复都会出现在这里。",
+      "订阅变化、邀请奖励、学习提醒、账号安全消息和 SpeakFlow 的回复都会出现在这里。",
     emptyTitle: "暂时没有通知",
     error: "通知加载失败，请稍后再试。",
     loading: "正在加载通知...",
     read: "已读",
-    subtitle: "SpeakFlow 发给你的系统消息会集中显示在这里，就像收件箱。",
+    subtitle: "SpeakFlow 发给你的系统消息、订阅更新和邀请奖励会集中显示在这里，就像收件箱。",
     title: "通知",
     typeLabels: {
       account: "账号",

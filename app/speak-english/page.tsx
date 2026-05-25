@@ -564,16 +564,27 @@ const accountPanelCopy = {
             icon: "💳",
             label: "Manage Subscription",
           },
+          {
+            action: "referrals",
+            icon: "🎁",
+            label: "Invite Friends",
+          },
         ],
       },
       {
-        title: "Settings",
+        title: "Learning Experience",
         items: [
           { action: "voice", icon: "🎧", label: "Voice" },
           { action: "fontSize", icon: "🔤", label: "Font Size" },
           { icon: "🌐", label: "Interface Language" },
           { icon: "🔔", label: "Notifications" },
-          { icon: "☁️", label: "Data Management" },
+        ],
+      },
+      {
+        title: "Data & Security",
+        items: [
+          { action: "phoneTransfer", icon: "☁️", label: "Switch Phones" },
+          { action: "accountManagement", icon: "🔏", label: "Account Management" },
         ],
       },
       {
@@ -708,16 +719,23 @@ const accountPanelCopy = {
             trailing: "未订阅",
           },
           { action: "manageSubscription", icon: "💳", label: "管理订阅" },
+          { action: "referrals", icon: "🎁", label: "邀请好友" },
         ],
       },
       {
-        title: "设置",
+        title: "学习体验",
         items: [
           { action: "voice", icon: "🎧", label: "声音" },
           { action: "fontSize", icon: "🔤", label: "字体大小" },
           { icon: "🌐", label: "界面语言" },
           { icon: "🔔", label: "通知" },
-          { icon: "☁️", label: "数据管理" },
+        ],
+      },
+      {
+        title: "数据与安全",
+        items: [
+          { action: "phoneTransfer", icon: "☁️", label: "更换手机" },
+          { action: "accountManagement", icon: "🔏", label: "账号管理" },
         ],
       },
       {
@@ -980,7 +998,7 @@ const helpCenterContent: Record<
       {
         title: "Settings and Device Management",
         description:
-          "Use Account settings to change devices, language, notification preferences, and account records.",
+          "Use Account settings to invite friends, change devices, choose language, read notifications, and manage account records.",
         articles: [
           {
             title: "How do I switch phones?",
@@ -999,8 +1017,8 @@ const helpCenterContent: Record<
           {
             title: "What appears in Notifications?",
             body: [
-              "Open Account, Notifications to read system messages from SpeakFlow, including subscription changes, billing status, account security, and support replies.",
-              "For example, if you cancel a subscription but still have Pro access until the period end, SpeakFlow shows that message here.",
+              "Open Account, Notifications to read messages from SpeakFlow, including subscription changes, referral rewards, account security, and support replies.",
+              "For example, if a friend registers through your invite link or later subscribes to Pro, reward messages appear in Notifications as unread items.",
             ],
           },
           {
@@ -1017,6 +1035,13 @@ const helpCenterContent: Record<
         description:
           "Use the same login email for practice, payment, and restoration.",
         articles: [
+          {
+            title: "How do referral rewards work?",
+            body: [
+              "Open Account, Invite Friends, then copy your invite link and send it to a friend.",
+              "Your friend gets 7 days of Pro after registering through the link. You get 30 days of Pro after their first successful paid subscription. Reward messages are written to Notifications.",
+            ],
+          },
           {
             title: "What does SpeakFlow Pro unlock?",
             body: [
@@ -1223,7 +1248,7 @@ const helpCenterContent: Record<
       {
         title: "设置与设备管理",
         description:
-          "在账户设置里处理更换手机、界面语言、通知偏好和账号管理。",
+          "在账户设置里处理邀请好友、更换手机、界面语言、通知收件箱和账号管理。",
         articles: [
           {
             title: "如何更换手机？",
@@ -1242,8 +1267,8 @@ const helpCenterContent: Record<
           {
             title: "通知里会出现什么？",
             body: [
-              "打开 账户、通知，可以查看 SpeakFlow 发给你的系统消息，包括订阅变动、账单状态、账号安全和客服回复。",
-              "例如，用户取消订阅但 Pro 权限仍可使用到到期日时，这里会显示清楚的提醒。",
+              "打开 账户、通知，可以查看 SpeakFlow 发给你的消息，包括订阅变动、邀请奖励、账号安全和客服回复。",
+              "例如，好友通过你的邀请链接注册，或之后成功订阅 Pro，相关奖励会以未读通知出现。",
             ],
           },
           {
@@ -1259,6 +1284,13 @@ const helpCenterContent: Record<
         title: "账户和订阅",
         description: "登录、付款、恢复购买最好始终使用同一个邮箱。",
         articles: [
+          {
+            title: "邀请奖励如何生效？",
+            body: [
+              "打开 账户、邀请好友，复制你的邀请链接并发给好友。",
+              "好友通过链接注册后，会获得 7 天 Pro；好友首次成功付费订阅后，你会获得 30 天 Pro。奖励到账消息会写入通知。",
+            ],
+          },
           {
             title: "SpeakFlow Pro 有什么作用？",
             body: [
@@ -1342,6 +1374,7 @@ const supportFeedbackContent = {
   en: {
     categories: [
       { label: "Payment or Pro status", value: "payment" },
+      { label: "Invite friends or rewards", value: "referral" },
       { label: "Microphone or playback", value: "voice" },
       { label: "AI expression quality", value: "ai_expression" },
       { label: "Practice flow", value: "practice_flow" },
@@ -1356,7 +1389,7 @@ const supportFeedbackContent = {
     contactEmail: "Reply email",
     contactPlaceholder: "you@example.com",
     description:
-      "Use this to contact SpeakFlow about bugs, payment issues, Pro status, voice problems, phone transfer, interface language, notifications, account management, AI output, or product suggestions.",
+      "Use this to contact SpeakFlow about bugs, payment issues, Pro status, invite rewards, voice problems, phone transfer, interface language, notifications, account management, AI output, or product suggestions.",
     detailHelp:
       "Helpful details: what you were doing, the exact screen, browser, Pro or Free status, device type, and one example sentence if speech or AI output was involved.",
     error: "Unable to send feedback. Please try again.",
@@ -1365,7 +1398,7 @@ const supportFeedbackContent = {
       "Describe the issue or suggestion. If possible, include the sentence you were practicing and what you expected.",
     page: "Related screen",
     pagePlaceholder:
-      "For example: Switch Phones, Interface Language, Notifications, Account Management, Pro page",
+      "For example: Invite Friends, Switch Phones, Interface Language, Notifications, Account Management, Pro page",
     required: "Please describe the issue in more detail.",
     submit: "Send feedback",
     submitting: "Sending...",
@@ -1376,6 +1409,7 @@ const supportFeedbackContent = {
   "zh-CN": {
     categories: [
       { label: "付款或 Pro 状态", value: "payment" },
+      { label: "邀请好友或奖励", value: "referral" },
       { label: "麦克风或朗读", value: "voice" },
       { label: "AI 表达质量", value: "ai_expression" },
       { label: "练习流程", value: "practice_flow" },
@@ -1390,7 +1424,7 @@ const supportFeedbackContent = {
     contactEmail: "回复邮箱",
     contactPlaceholder: "you@example.com",
     description:
-      "这里是用户联系 SpeakFlow 的入口。付款异常、Pro 状态、麦克风、更换手机、界面语言、通知、账号管理、AI 表达和功能建议，都可以从这里发给你。",
+      "这里是用户联系 SpeakFlow 的入口。付款异常、Pro 状态、邀请奖励、麦克风、更换手机、界面语言、通知、账号管理、AI 表达和功能建议，都可以从这里发给你。",
     detailHelp:
       "最好写清楚：当时在做什么、在哪个界面、用什么浏览器或手机、账号是 Pro 还是免费；如果和语音或 AI 表达有关，附上一条例句最有用。",
     error: "反馈发送失败，请稍后再试。",
@@ -1398,7 +1432,7 @@ const supportFeedbackContent = {
     messagePlaceholder:
       "请描述遇到的问题或建议。可以写下正在练习的句子，以及你原本期待的结果。",
     page: "相关界面",
-    pagePlaceholder: "例如：更换手机、界面语言、通知、账号管理、Pro 页面",
+    pagePlaceholder: "例如：邀请好友、更换手机、界面语言、通知、账号管理、Pro 页面",
     required: "请把问题描述得更具体一点。",
     submit: "发送反馈",
     submitting: "正在发送...",
@@ -1529,9 +1563,9 @@ const notificationSettingsContent = {
     canceledBodySuffix: "You can keep using Pro features before that date.",
     canceledTitle: "Your subscription has been canceled",
     description:
-      "System messages, subscription updates, account security, and support replies from SpeakFlow appear here.",
+      "System messages, subscription updates, invite rewards, account security, and support replies from SpeakFlow appear here.",
     emptyBody:
-      "Subscription updates, support replies, security alerts, and important system messages will appear in this inbox.",
+      "Subscription updates, invite rewards, support replies, security alerts, and important system messages will appear in this inbox.",
     emptyTitle: "No new notifications",
     inboxTitle: "Inbox",
     justNow: "Just now",
@@ -1539,7 +1573,7 @@ const notificationSettingsContent = {
     senderSupport: "SpeakFlow Support",
     senderSystem: "SpeakFlow System",
     systemBody:
-      "Notifications now work like an inbox. Important messages from SpeakFlow will be collected here instead of being mixed with settings.",
+      "Notifications now work like an inbox. Subscription, invite reward, support, and security messages are collected here instead of being mixed with settings.",
     systemTag: "System",
     systemTitle: "Notification inbox is ready",
     tagAccount: "Account",
@@ -1556,9 +1590,9 @@ const notificationSettingsContent = {
       "\u5728\u6b64\u65e5\u671f\u524d\uff0c\u6240\u6709 Pro \u529f\u80fd\u4e0d\u53d7\u5f71\u54cd\u3002",
     canceledTitle: "\u60a8\u7684\u8ba2\u9605\u5df2\u53d6\u6d88",
     description:
-      "SpeakFlow \u53d1\u7ed9\u4f60\u7684\u7cfb\u7edf\u6d88\u606f\u3001\u8ba2\u9605\u53d8\u52a8\u3001\u8d26\u6237\u5b89\u5168\u548c\u5ba2\u670d\u56de\u590d\u4f1a\u663e\u793a\u5728\u8fd9\u91cc\u3002",
+      "SpeakFlow \u53d1\u7ed9\u4f60\u7684\u7cfb\u7edf\u6d88\u606f\u3001\u8ba2\u9605\u53d8\u52a8\u3001\u9080\u8bf7\u5956\u52b1\u3001\u8d26\u6237\u5b89\u5168\u548c\u5ba2\u670d\u56de\u590d\u4f1a\u663e\u793a\u5728\u8fd9\u91cc\u3002",
     emptyBody:
-      "\u8ba2\u9605\u53d8\u52a8\u3001\u5ba2\u670d\u56de\u590d\u3001\u5b89\u5168\u63d0\u9192\u548c\u91cd\u8981\u7cfb\u7edf\u6d88\u606f\u4f1a\u51fa\u73b0\u5728\u8fd9\u4e2a\u6536\u4ef6\u7bb1\u91cc\u3002",
+      "\u8ba2\u9605\u53d8\u52a8\u3001\u9080\u8bf7\u5956\u52b1\u3001\u5ba2\u670d\u56de\u590d\u3001\u5b89\u5168\u63d0\u9192\u548c\u91cd\u8981\u7cfb\u7edf\u6d88\u606f\u4f1a\u51fa\u73b0\u5728\u8fd9\u4e2a\u6536\u4ef6\u7bb1\u91cc\u3002",
     emptyTitle: "\u6682\u65e0\u65b0\u901a\u77e5",
     inboxTitle: "\u6536\u4ef6\u7bb1",
     justNow: "\u521a\u521a",
@@ -1566,7 +1600,7 @@ const notificationSettingsContent = {
     senderSupport: "SpeakFlow \u5ba2\u670d",
     senderSystem: "SpeakFlow \u7cfb\u7edf",
     systemBody:
-      "\u901a\u77e5\u5df2\u6539\u4e3a\u6536\u4ef6\u7bb1\u5f62\u5f0f\u3002SpeakFlow \u7684\u91cd\u8981\u6d88\u606f\u4f1a\u7edf\u4e00\u6536\u5728\u8fd9\u91cc\uff0c\u4e0d\u518d\u548c\u8bbe\u7f6e\u5f00\u5173\u6df7\u5728\u4e00\u8d77\u3002",
+      "\u901a\u77e5\u5df2\u6539\u4e3a\u6536\u4ef6\u7bb1\u5f62\u5f0f\u3002\u8ba2\u9605\u3001\u9080\u8bf7\u5956\u52b1\u3001\u5ba2\u670d\u548c\u5b89\u5168\u6d88\u606f\u4f1a\u7edf\u4e00\u6536\u5728\u8fd9\u91cc\uff0c\u4e0d\u518d\u548c\u8bbe\u7f6e\u5f00\u5173\u6df7\u5728\u4e00\u8d77\u3002",
     systemTag: "\u7cfb\u7edf",
     systemTitle: "\u901a\u77e5\u6536\u4ef6\u7bb1\u5df2\u542f\u7528",
     tagAccount: "\u8d26\u6237",
@@ -1704,7 +1738,6 @@ const accountHomeContent = {
     accountManagement: "Account Management",
     contactFeedback: "Contact & Feedback",
     dataAndSecurity: "Data & Security",
-    dataManagement: "Data Management",
     fontSize: "Font Size",
     help: "Help",
     helpCenter: "Help Center",
@@ -1722,7 +1755,6 @@ const accountHomeContent = {
     accountManagement: "\u8d26\u53f7\u7ba1\u7406",
     contactFeedback: "联系与反馈",
     dataAndSecurity: "数据与安全",
-    dataManagement: "数据管理",
     fontSize: "字体大小",
     help: "帮助",
     helpCenter: "帮助中心",
@@ -1792,7 +1824,7 @@ const aboutSpeakFlowContent = {
       "A useful English sentence should be clear, natural, repeatable, and connected to a real situation.",
       "Good AI practice should keep the conversation moving instead of only correcting isolated mistakes.",
       "Vocabulary is easier to remember when it is saved from sentences you actually wanted to say.",
-      "Account settings should make practical tasks easy: changing phones, choosing interface language, reading system notifications, and managing account records.",
+      "Account settings should make practical tasks easy: inviting friends, changing phones, choosing interface language, reading reward notifications, and managing account records.",
     ],
     sections: [
       {
@@ -1820,7 +1852,7 @@ const aboutSpeakFlowContent = {
       {
         body: [
           "Switch Phones exports a learning backup that can be shared directly to a new phone, then restored from the backup file.",
-          "Interface Language, Notifications, and Account Management keep global learners in control of the app language, system messages, support contact, and account deletion requests.",
+          "Invite Friends, Interface Language, Notifications, and Account Management keep learners in control of referral rewards, app language, system messages, support contact, and account deletion requests.",
         ],
         title: "Account settings",
       },
@@ -1834,13 +1866,13 @@ const aboutSpeakFlowContent = {
       {
         body: [
           "SpeakFlow Pro removes free practice limits and supports regular AI speaking practice, AI conversation, and course generation.",
-          "Payments and subscription management are handled through Stripe. SpeakFlow stores only the subscription information needed to recognize your Pro account.",
+          "Payments and subscription management are handled through Stripe. SpeakFlow stores only the subscription and reward information needed to recognize your Pro access.",
         ],
         title: "Pro and privacy",
       },
       {
         body: [
-          "If you have a question, payment issue, microphone problem, or product suggestion, use Contact & Feedback in the Help section.",
+          "If you have a question, payment issue, invite reward issue, microphone problem, or product suggestion, use Contact & Feedback in the Help section.",
           "Real learner feedback is important because SpeakFlow is built around practical speaking problems, not abstract feature lists.",
         ],
         title: "Contact",
@@ -1857,7 +1889,7 @@ const aboutSpeakFlowContent = {
       "一句有用的英文，应该清楚、自然、能复用，并且连接真实生活场景。",
       "好的 AI 口语练习，不只是纠错，还应该让对话继续往前走。",
       "从自己真正想说的句子里收藏词汇和表达，会比孤立背单词更容易记住。",
-      "账户设置应该让真实任务变简单：更换手机、选择界面语言、查看系统通知和处理账号记录。",
+      "账户设置应该让真实任务变简单：邀请好友、更换手机、选择界面语言、查看奖励通知和处理账号记录。",
     ],
     sections: [
       {
@@ -1885,7 +1917,7 @@ const aboutSpeakFlowContent = {
       {
         body: [
           "更换手机会导出学习备份，保存后可以直接分享给新手机，再从备份文件恢复。",
-          "界面语言、通知和账号管理让全球用户可以控制软件语言、系统消息、客服联系方式和删除账号请求。",
+          "邀请好友、界面语言、通知和账号管理让用户可以管理邀请奖励、软件语言、系统消息、客服联系方式和删除账号请求。",
         ],
         title: "账户设置",
       },
@@ -1899,13 +1931,13 @@ const aboutSpeakFlowContent = {
       {
         body: [
           "SpeakFlow Pro 会解除免费练习限制，支持更长期的 AI 口语练习、AI 对话和课程生成。",
-          "付款和订阅管理由 Stripe 处理。SpeakFlow 只保存识别 Pro 账户所需的订阅信息。",
+          "付款和订阅管理由 Stripe 处理。SpeakFlow 只保存识别 Pro 权限所需的订阅和奖励信息。",
         ],
         title: "Pro 和隐私",
       },
       {
         body: [
-          "如果你有问题、付款异常、麦克风问题或功能建议，可以在帮助里的“联系与反馈”提交。",
+          "如果你有问题、付款异常、邀请奖励、麦克风问题或功能建议，可以在帮助里的“联系与反馈”提交。",
           "真实学习者的反馈很重要，因为 SpeakFlow 是围绕实际开口问题做出来的，不是为了堆功能清单。",
         ],
         title: "联系",
