@@ -4129,10 +4129,28 @@ function SpeakEnglishClient() {
                                 {row.label}
                               </span>
                               {row.badge ? (
-                                <span className="shrink-0 rounded-full bg-[#f0ebff] px-3.5 py-1.5 text-[0.95rem] font-extrabold leading-none text-[#8264ff]">
-                                  {row.badge}
-                                </span>
-                              ) : null}
+  <span className="flex shrink-0 flex-col items-end gap-1">
+    <span
+      className={`rounded-full px-3.5 py-1.5 text-[0.95rem] font-extrabold leading-none ${
+        row.label === "SpeakFlow Pro"
+          ? accountSubscriptionBadgeClass
+          : "bg-[#f0ebff] text-[#8264ff]"
+      }`}
+    >
+      {row.badge}
+    </span>
+
+    {row.label === "SpeakFlow Pro" && accountCurrentPeriodEndLabel ? (
+      <span
+        className={`max-w-[8.5rem] text-right text-[0.72rem] font-bold leading-4 ${
+          hasCanceledAtPeriodEnd ? "text-[#b45d05]" : "text-[#7f7896]"
+        }`}
+      >
+        {accountCurrentPeriodEndLabel}
+      </span>
+    ) : null}
+  </span>
+) : null}
                               <span className="shrink-0 text-[2rem] font-light leading-none text-[#7f7896]">
                                 ›
                               </span>
