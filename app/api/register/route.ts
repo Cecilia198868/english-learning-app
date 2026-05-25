@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { registerReferralForNewUser } from "@/lib/referrals";
 import { createUser } from "@/lib/userStore";
 
 export async function POST(request: Request) {
   try {
     const body = (await request.json().catch(() => null)) as
-      | { email?: string; password?: string }
+      | { email?: string; password?: string; referralCode?: string }
       | null;
 
     const email = body?.email?.trim().toLowerCase() || "";
@@ -19,7 +20,21 @@ export async function POST(request: Request) {
     }
 
     await createUser(email, password);
-    return NextResponse.json({ ok: true });
+    let referralBonusGranted = false;
+
+    if (body?.referralCode) {
+      try {
+        const referralResult = await registerReferralForNewUser(
+          email,
+          body.referralCode
+        );
+        referralBonusGranted = referralResult.bonusGranted;
+      } catch (referralError) {
+        console.error("Register referral failed", referralError);
+      }
+    }
+
+    return NextResponse.json({ ok: true, referralBonusGranted });
   } catch (error) {
     if (error instanceof Error && error.message === "USER_EXISTS") {
       return NextResponse.json({ error: "USER_EXISTS" }, { status: 409 });

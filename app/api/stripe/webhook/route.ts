@@ -2,6 +2,7 @@ import {
   findProfileByStripeCustomerId,
   upsertProfileSubscriptionByEmail,
 } from "@/lib/userStore";
+import { rewardInviterForPaidReferral } from "@/lib/referrals";
 import { ensureSubscriptionNotificationsForState } from "@/lib/subscriptionNotifications";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
@@ -145,6 +146,24 @@ function getCheckoutSessionEmail(session: Stripe.Checkout.Session) {
   );
 }
 
+function isPaidCheckoutSession(session: Stripe.Checkout.Session) {
+  return session.payment_status === "paid" && (session.amount_total || 0) > 0;
+}
+
+async function rewardCheckoutReferralIfNeeded(
+  session: Stripe.Checkout.Session,
+  email: string,
+  stripeSubscriptionId: string
+) {
+  if (!isPaidCheckoutSession(session)) return;
+
+  try {
+    await rewardInviterForPaidReferral(email, stripeSubscriptionId);
+  } catch (error) {
+    console.error("Reward paid referral failed", error);
+  }
+}
+
 async function handleCheckoutSessionCompleted(
   stripe: Stripe,
   session: Stripe.Checkout.Session
@@ -181,6 +200,11 @@ async function handleCheckoutSessionCompleted(
         currentPeriodEnd,
         subscriptionStatus: getEntitlementStatus(subscription),
       });
+      await rewardCheckoutReferralIfNeeded(
+        session,
+        updatedProfile.email,
+        subscription.id
+      );
       return;
     }
   }
@@ -195,6 +219,7 @@ async function handleCheckoutSessionCompleted(
       currentPeriodEnd: result.currentPeriodEnd,
       subscriptionStatus: result.nextSubscriptionStatus,
     });
+    await rewardCheckoutReferralIfNeeded(session, result.email, subscription.id);
   }
 }
 

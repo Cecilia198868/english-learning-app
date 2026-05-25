@@ -31,10 +31,15 @@ function getProfileSubscriptionState(
   if (!profile?.subscriptionStatus) return null;
 
   return {
+    bonusProUntil: null,
     cancelAtPeriodEnd:
       profile.cancelAtPeriodEnd === true ||
       profile.subscriptionStatus === "cancels_at_period_end",
     currentPeriodEnd: profile.currentPeriodEnd || null,
+    entitlementSource:
+      profile.subscriptionStatus === "free"
+        ? ("free" as const)
+        : ("stripe" as const),
     stripeCustomerId: profile.stripeCustomerId || "",
     stripeSubscriptionId: profile.stripeSubscriptionId || "",
     subscriptionStatus: profile.subscriptionStatus,

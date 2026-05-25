@@ -104,10 +104,23 @@ type SessionResponse = {
 };
 
 type AccountSubscriptionResponse = {
+  bonusProUntil?: string | null;
   currentPeriodEnd?: string | null;
+  entitlementSource?: "bonus" | "free" | "stripe";
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
   subscriptionStatus?: SubscriptionStatus;
+};
+
+type ReferralAccountResponse = {
+  available?: boolean;
+  bonusProUntil?: string | null;
+  inviteLink?: string;
+  invitedCount?: number;
+  paidRewardCount?: number;
+  referralCode?: string;
+  referredByEmail?: string | null;
+  signupBonusUntil?: string | null;
 };
 
 function normalizeSubscriptionStatus(
@@ -123,6 +136,10 @@ function createAccountSubscriptionUrl() {
   return `/api/me/subscription?t=${Date.now()}`;
 }
 
+function createReferralAccountUrl() {
+  return `/api/referrals/me?t=${Date.now()}`;
+}
+
 function hasProAccess(subscriptionStatus: SubscriptionStatus) {
   return subscriptionStatus !== "free";
 }
@@ -134,6 +151,7 @@ type AccountPanelView =
   | "checkout"
   | "voice"
   | "manageSubscription"
+  | "referrals"
   | "helpCenter"
   | "reportIssue"
   | "aboutSpeakFlow"
@@ -157,6 +175,7 @@ type AccountMenuAction =
   | "subscription"
   | "voice"
   | "manageSubscription"
+  | "referrals"
   | "helpCenter"
   | "reportIssue"
   | "aboutSpeakFlow"
@@ -217,6 +236,7 @@ type PhoneTransferBackup = {
 type AccountMenuIconName =
   | "star"
   | "card"
+  | "gift"
   | "refresh"
   | "headphones"
   | "font"
@@ -419,6 +439,13 @@ function AccountLineIcon({
         <>
           <rect height="18" rx="2.8" width="22" x="5" y="7" />
           <path d="M5 13h22M9.5 20h3.5M17 20h4.5" />
+        </>
+      ) : null}
+      {name === "gift" ? (
+        <>
+          <path d="M6.5 14h19v12h-19V14Z" />
+          <path d="M5 10h22v4H5v-4ZM16 10v16" />
+          <path d="M16 10c-3.8 0-6.5-1.2-6.5-3.1 0-1.3 1-2.4 2.4-2.4 2.3 0 3.7 3 4.1 5.5ZM16 10c3.8 0 6.5-1.2 6.5-3.1 0-1.3-1-2.4-2.4-2.4-2.3 0-3.7 3-4.1 5.5Z" />
         </>
       ) : null}
       {name === "refresh" ? (
@@ -1682,6 +1709,7 @@ const accountHomeContent = {
     help: "Help",
     helpCenter: "Help Center",
     interfaceLanguage: "Interface Language",
+    inviteFriends: "Invite Friends",
     learningExperience: "Learning Experience",
     notifications: "Notifications",
     phoneTransfer: "Switch Phones",
@@ -1699,12 +1727,58 @@ const accountHomeContent = {
     help: "帮助",
     helpCenter: "帮助中心",
     interfaceLanguage: "界面语言",
+    inviteFriends: "邀请好友",
     learningExperience: "学习体验",
     notifications: "通知",
     phoneTransfer: "\u66f4\u6362\u624b\u673a",
     privacyPolicy: "隐私政策",
     signOut: "退出登录",
     terms: "用户协议",
+  },
+} as const;
+
+const referralContent = {
+  en: {
+    bonusUntil: "Bonus Pro until",
+    code: "Invite code",
+    copied: "Copied",
+    copy: "Copy",
+    friendReward: "7 days of Pro after first registration",
+    friendRewardTitle: "Friend reward",
+    inviteLink: "Invite link",
+    invited: "Invited",
+    loading: "Preparing your invite link...",
+    noBonus: "No bonus Pro yet",
+    paidRewards: "Paid rewards",
+    rewardsUnit: "rewards",
+    statsTitle: "Reward status",
+    subtitle:
+      "Share your link with a friend. They get 7 days of Pro after registering, and you get 30 days of Pro after their first paid subscription.",
+    title: "Invite Friends",
+    unavailable: "Invite rewards are temporarily unavailable. Please try again later.",
+    yourReward: "30 days of Pro after their first paid subscription",
+    yourRewardTitle: "Your reward",
+  },
+  "zh-CN": {
+    bonusUntil: "奖励 Pro 有效期",
+    code: "邀请码",
+    copied: "已复制",
+    copy: "复制",
+    friendReward: "首次注册后获得 7 天 Pro",
+    friendRewardTitle: "好友奖励",
+    inviteLink: "邀请链接",
+    invited: "已邀请",
+    loading: "正在生成邀请链接...",
+    noBonus: "暂无 Pro 奖励",
+    paidRewards: "付费奖励",
+    rewardsUnit: "次",
+    statsTitle: "奖励状态",
+    subtitle:
+      "把链接发给好友。对方注册后获得 7 天 Pro；对方首次付费后，你获得 30 天 Pro。",
+    title: "邀请好友",
+    unavailable: "邀请奖励暂时不可用，请稍后再试。",
+    yourReward: "对方首次付费后获得 30 天 Pro",
+    yourRewardTitle: "你的奖励",
   },
 } as const;
 
@@ -2500,6 +2574,10 @@ function SpeakEnglishClient() {
     useState(false);
   const [accountSubscriptionRefreshKey, setAccountSubscriptionRefreshKey] =
     useState(0);
+  const [referralState, setReferralState] =
+    useState<ReferralAccountResponse | null>(null);
+  const [isLoadingReferralState, setIsLoadingReferralState] = useState(false);
+  const [referralNotice, setReferralNotice] = useState("");
   const [showAvatarEditor, setShowAvatarEditor] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("");
   const [avatarEditorNotice, setAvatarEditorNotice] = useState("");
@@ -2547,6 +2625,7 @@ function SpeakEnglishClient() {
   const phoneTransfer = phoneTransferContent[language];
   const accountManagement = accountManagementContent[language];
   const accountHome = accountHomeContent[language];
+  const referrals = referralContent[language];
   const currentInterfaceLanguage =
     interfaceLanguageOptions.find((option) => option.uiLanguage === language) ||
     interfaceLanguageOptions[0];
@@ -2640,6 +2719,8 @@ function SpeakEnglishClient() {
       ? accountCopy.subscriptionTitle
       : accountPanelView === "manageSubscription"
         ? accountCopy.manageSubscriptionTitle
+      : accountPanelView === "referrals"
+        ? referrals.title
       : accountPanelView === "helpCenter"
         ? accountCopy.helpCenterTitle
       : accountPanelView === "reportIssue"
@@ -2710,6 +2791,18 @@ function SpeakEnglishClient() {
       : language === "en"
         ? `Renews ${accountCurrentPeriodEndDateLabel}`
         : `\u5230\u671f\u65f6\u95f4 ${accountCurrentPeriodEndDateLabel}`
+    : "";
+  const referralBonusUntilLabel = referralState?.bonusProUntil
+    ? (() => {
+        const bonusDate = new Date(referralState.bonusProUntil || "");
+        if (Number.isNaN(bonusDate.getTime())) return "";
+
+        return bonusDate.toLocaleDateString(language === "en" ? "en-US" : "zh-CN", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      })()
     : "";
   const accountSubscriptionDisplayLabel = isLoadingAccountSubscription
     ? accountSubscriptionLabel
@@ -2964,6 +3057,28 @@ function SpeakEnglishClient() {
     }
   }, []);
 
+  const loadReferralState = useCallback(async () => {
+    setIsLoadingReferralState(true);
+    setReferralNotice("");
+
+    try {
+      const response = await fetch(createReferralAccountUrl(), {
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error("Load referrals failed");
+      }
+
+      const data = (await response.json()) as ReferralAccountResponse;
+      setReferralState(data);
+    } catch {
+      setReferralState({ available: false });
+    } finally {
+      setIsLoadingReferralState(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (!showAccountMenu) return;
 
@@ -2974,6 +3089,12 @@ function SpeakEnglishClient() {
     refreshAccountSubscription,
     showAccountMenu,
   ]);
+
+  useEffect(() => {
+    if (!showAccountMenu || accountPanelView !== "referrals") return;
+
+    void loadReferralState();
+  }, [accountPanelView, loadReferralState, showAccountMenu]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -3239,6 +3360,13 @@ function SpeakEnglishClient() {
       return;
     }
 
+    if (action === "referrals") {
+      setShowAvatarEditor(false);
+      setReferralNotice("");
+      setAccountPanelView("referrals");
+      return;
+    }
+
     if (action === "helpCenter") {
       setShowAvatarEditor(false);
       setAccountPanelView("helpCenter");
@@ -3302,6 +3430,18 @@ function SpeakEnglishClient() {
 
     if (action === "privacy") {
       window.location.href = "/privacy";
+    }
+  }
+
+  async function copyReferralInviteLink() {
+    const inviteLink = referralState?.inviteLink || "";
+    if (!inviteLink) return;
+
+    try {
+      await navigator.clipboard.writeText(inviteLink);
+      setReferralNotice(referrals.copied);
+    } catch {
+      setReferralNotice(inviteLink);
     }
   }
 
@@ -4505,6 +4645,11 @@ function SpeakEnglishClient() {
           icon: "card",
           label: accountCopy.manageSubscription,
         },
+        {
+          action: "referrals",
+          icon: "gift",
+          label: accountHome.inviteFriends,
+        },
       ],
     },
     {
@@ -4656,6 +4801,7 @@ function SpeakEnglishClient() {
               ) : accountPanelView === "subscription" ||
               accountPanelView === "checkout" ||
               accountPanelView === "manageSubscription" ||
+              accountPanelView === "referrals" ||
               accountPanelView === "helpCenter" ||
               accountPanelView === "reportIssue" ||
               accountPanelView === "aboutSpeakFlow" ||
@@ -4888,6 +5034,124 @@ function SpeakEnglishClient() {
                       </span>
                     </button>
                   </div>
+                ) : accountPanelView === "referrals" ? (
+                  <section className="pb-8">
+                    <div className="rounded-[28px] border border-white/80 bg-white/76 px-5 py-6 shadow-[0_22px_58px_rgba(84,72,146,0.13)] ring-1 ring-[#efeaff]">
+                      <div className="flex items-start gap-3">
+                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[#7460e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
+                          <AccountLineIcon name="gift" />
+                        </span>
+                        <div>
+                          <h3 className="text-[1.36rem] font-black leading-7 text-[#201833]">
+                            {referrals.title}
+                          </h3>
+                          <p className="mt-2 text-[0.96rem] font-bold leading-7 text-[#4b4267]">
+                            {referrals.subtitle}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 rounded-[26px] bg-white/72 px-5 py-5 shadow-[0_16px_38px_rgba(84,72,146,0.1)] ring-1 ring-white/85">
+                      {isLoadingReferralState ? (
+                        <p className="text-[0.96rem] font-extrabold leading-7 text-[#7460e8]">
+                          {referrals.loading}
+                        </p>
+                      ) : referralState?.available ? (
+                        <>
+                          <div>
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-[0.88rem] font-black text-[#7f7896]">
+                                {referrals.inviteLink}
+                              </span>
+                              {referralState.referralCode ? (
+                                <span className="rounded-full bg-[#efeaff] px-3 py-1 text-[0.78rem] font-black text-[#7460e8]">
+                                  {referrals.code}: {referralState.referralCode}
+                                </span>
+                              ) : null}
+                            </div>
+                            <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_auto]">
+                              <p className="min-h-12 break-all rounded-[18px] bg-[#fbf9ff] px-4 py-3 text-[0.9rem] font-extrabold leading-6 text-[#201833] ring-1 ring-[#e8e2ff]">
+                                {referralState.inviteLink}
+                              </p>
+                              <button
+                                type="button"
+                                onClick={() => void copyReferralInviteLink()}
+                                disabled={!referralState.inviteLink}
+                                className="min-h-12 rounded-[18px] bg-[linear-gradient(135deg,#7a5cff_0%,#c85cff_100%)] px-5 text-[0.98rem] font-black text-white shadow-[0_16px_34px_rgba(126,92,255,0.22)] transition disabled:opacity-60"
+                              >
+                                {referralNotice === referrals.copied
+                                  ? referrals.copied
+                                  : referrals.copy}
+                              </button>
+                            </div>
+                            {referralNotice && referralNotice !== referrals.copied ? (
+                              <p className="mt-3 break-all rounded-[16px] bg-[#efeaff] px-4 py-3 text-[0.82rem] font-bold leading-6 text-[#7460e8]">
+                                {referralNotice}
+                              </p>
+                            ) : null}
+                          </div>
+
+                          <div className="mt-5 grid gap-3">
+                            <div className="rounded-[20px] bg-[#fbf9ff]/78 px-4 py-4 ring-1 ring-white/80">
+                              <h4 className="text-[0.96rem] font-black text-[#201833]">
+                                {referrals.friendRewardTitle}
+                              </h4>
+                              <p className="mt-1 text-[0.9rem] font-bold leading-6 text-[#5f5680]">
+                                {referrals.friendReward}
+                              </p>
+                            </div>
+                            <div className="rounded-[20px] bg-[#fbf9ff]/78 px-4 py-4 ring-1 ring-white/80">
+                              <h4 className="text-[0.96rem] font-black text-[#201833]">
+                                {referrals.yourRewardTitle}
+                              </h4>
+                              <p className="mt-1 text-[0.9rem] font-bold leading-6 text-[#5f5680]">
+                                {referrals.yourReward}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <p className="text-[0.94rem] font-bold leading-7 text-[#7f7896]">
+                          {referrals.unavailable}
+                        </p>
+                      )}
+                    </div>
+
+                    {referralState?.available ? (
+                      <div className="mt-4 rounded-[26px] bg-white/70 px-5 py-5 shadow-[0_16px_38px_rgba(84,72,146,0.1)] ring-1 ring-white/85">
+                        <h3 className="text-[1.08rem] font-black text-[#201833]">
+                          {referrals.statsTitle}
+                        </h3>
+                        <div className="mt-4 grid grid-cols-3 gap-2">
+                          <div className="rounded-[18px] bg-[#fbf9ff] px-3 py-4 text-center ring-1 ring-[#e8e2ff]">
+                            <p className="text-[1.35rem] font-black text-[#201833]">
+                              {referralState.invitedCount || 0}
+                            </p>
+                            <p className="mt-1 text-[0.72rem] font-extrabold leading-5 text-[#7f7896]">
+                              {referrals.invited}
+                            </p>
+                          </div>
+                          <div className="rounded-[18px] bg-[#fbf9ff] px-3 py-4 text-center ring-1 ring-[#e8e2ff]">
+                            <p className="text-[1.35rem] font-black text-[#201833]">
+                              {referralState.paidRewardCount || 0}
+                            </p>
+                            <p className="mt-1 text-[0.72rem] font-extrabold leading-5 text-[#7f7896]">
+                              {referrals.paidRewards}
+                            </p>
+                          </div>
+                          <div className="rounded-[18px] bg-[#fbf9ff] px-3 py-4 text-center ring-1 ring-[#e8e2ff]">
+                            <p className="text-[0.86rem] font-black leading-5 text-[#201833]">
+                              {referralBonusUntilLabel || referrals.noBonus}
+                            </p>
+                            <p className="mt-1 text-[0.72rem] font-extrabold leading-5 text-[#7f7896]">
+                              {referrals.bonusUntil}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                  </section>
                 ) : accountPanelView === "helpCenter" ? (
                   <section className="pb-8">
                     <div className="rounded-[28px] border border-white/80 bg-white/76 px-5 py-6 shadow-[0_22px_58px_rgba(84,72,146,0.13)] ring-1 ring-[#efeaff]">

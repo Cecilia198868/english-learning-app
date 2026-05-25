@@ -6,6 +6,10 @@ import { useLanguage } from "@/components/LanguageProvider";
 
 const REGISTER_DRAFT_STORAGE_KEY = "english-app-register-draft";
 
+type RegisterPageClientProps = {
+  initialReferralCode?: string;
+};
+
 function loadRegisterDraft() {
   if (typeof window === "undefined") {
     return { email: "", password: "", confirmPassword: "" };
@@ -33,15 +37,37 @@ function loadRegisterDraft() {
   }
 }
 
-export default function RegisterPageClient() {
-  const { t } = useLanguage();
+function normalizeReferralCode(referralCode?: string) {
+  return (referralCode || "")
+    .trim()
+    .replace(/[^a-zA-Z0-9_-]/g, "")
+    .slice(0, 48)
+    .toUpperCase();
+}
+
+export default function RegisterPageClient({
+  initialReferralCode = "",
+}: RegisterPageClientProps) {
+  const { language, t } = useLanguage();
   const [email, setEmail] = useState(() => loadRegisterDraft().email);
   const [password, setPassword] = useState(() => loadRegisterDraft().password);
   const [confirmPassword, setConfirmPassword] = useState(
     () => loadRegisterDraft().confirmPassword
   );
+  const [referralCode] = useState(() =>
+    normalizeReferralCode(initialReferralCode)
+  );
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const referralCopy =
+    language === "en"
+      ? {
+          active: "Invite link detected. Your account will receive 7 days of Pro after registration.",
+        }
+      : {
+          active:
+            "\u5df2\u8bc6\u522b\u9080\u8bf7\u94fe\u63a5\uff0c\u6ce8\u518c\u540e\u5c06\u81ea\u52a8\u83b7\u5f97 7 \u5929 Pro\u3002",
+        };
 
   useEffect(() => {
     try {
@@ -84,11 +110,12 @@ export default function RegisterPageClient() {
       body: JSON.stringify({
         email: normalizedEmail,
         password,
+        referralCode: referralCode || undefined,
       }),
     });
 
     const result = (await response.json().catch(() => null)) as
-      | { error?: string; ok?: boolean }
+      | { error?: string; ok?: boolean; referralBonusGranted?: boolean }
       | null;
 
     if (!response.ok) {
@@ -104,9 +131,13 @@ export default function RegisterPageClient() {
 
     setIsSubmitting(false);
     window.sessionStorage.removeItem(REGISTER_DRAFT_STORAGE_KEY);
-    window.location.assign(
-      `/login/email?registered=1&email=${encodeURIComponent(normalizedEmail)}`
-    );
+    const loginUrl = new URL("/login/email", window.location.origin);
+    loginUrl.searchParams.set("registered", "1");
+    loginUrl.searchParams.set("email", normalizedEmail);
+    if (result?.referralBonusGranted) {
+      loginUrl.searchParams.set("referral", "1");
+    }
+    window.location.assign(`${loginUrl.pathname}${loginUrl.search}`);
   }
 
   return (
@@ -120,6 +151,12 @@ export default function RegisterPageClient() {
             {t("registerTitle")}
           </h1>
           <div className="sf-brand-hairline mx-auto mt-6 w-40" />
+
+          {referralCode ? (
+            <p className="mx-auto mt-5 max-w-[420px] rounded-[20px] bg-white/64 px-4 py-3 text-sm font-semibold leading-6 text-[#6d55ef] ring-1 ring-white/70">
+              {referralCopy.active}
+            </p>
+          ) : null}
 
           <form onSubmit={handleSubmit} noValidate className="mt-8 text-left">
             <label className="block font-[var(--font-sora)] text-sm font-semibold uppercase tracking-[0.14em] text-[#655b78]">

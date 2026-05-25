@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { getBonusProUntilForEmail } from "@/lib/referrals";
 import { ensureSubscriptionNotificationsForState } from "@/lib/subscriptionNotifications";
 import {
   findProfileByEmail,
@@ -9,8 +10,10 @@ import {
 export type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
 
 export type AccountSubscriptionState = {
+  bonusProUntil: string | null;
   cancelAtPeriodEnd: boolean;
   currentPeriodEnd: string | null;
+  entitlementSource: "bonus" | "free" | "stripe";
   stripeCustomerId: string;
   stripeSubscriptionId: string;
   subscriptionStatus: SubscriptionStatus;
@@ -57,8 +60,10 @@ function byNewestCreated(
 
 function toFreeState(profile: StoredUser | null): AccountSubscriptionState {
   return {
+    bonusProUntil: null,
     cancelAtPeriodEnd: false,
     currentPeriodEnd: null,
+    entitlementSource: "free",
     stripeCustomerId: profile?.stripeCustomerId || "",
     stripeSubscriptionId: profile?.stripeSubscriptionId || "",
     subscriptionStatus: "free",
@@ -72,11 +77,54 @@ function toAccountSubscriptionState(
   const subscriptionStatus = getEntitlementStatus(subscription);
 
   return {
+    bonusProUntil: null,
     cancelAtPeriodEnd: subscriptionStatus === "cancels_at_period_end",
     currentPeriodEnd: getCurrentPeriodEnd(subscription),
+    entitlementSource: "stripe",
     stripeCustomerId: customerId,
     stripeSubscriptionId: subscription.id,
     subscriptionStatus,
+  };
+}
+
+function getFutureIso(value?: string | null) {
+  if (!value) return null;
+
+  const date = new Date(value);
+  return date.getTime() > Date.now() ? value : null;
+}
+
+async function applyBonusEntitlement(
+  email: string,
+  state: AccountSubscriptionState
+): Promise<AccountSubscriptionState> {
+  const bonusProUntil = getFutureIso(await getBonusProUntilForEmail(email));
+
+  if (!bonusProUntil) {
+    return {
+      ...state,
+      bonusProUntil: null,
+      entitlementSource:
+        state.subscriptionStatus === "free"
+          ? ("free" as const)
+          : ("stripe" as const),
+    };
+  }
+
+  if (state.subscriptionStatus === "free") {
+    return {
+      ...state,
+      bonusProUntil,
+      currentPeriodEnd: bonusProUntil,
+      entitlementSource: "bonus" as const,
+      subscriptionStatus: "pro" as const,
+    };
+  }
+
+  return {
+    ...state,
+    bonusProUntil,
+    entitlementSource: "stripe" as const,
   };
 }
 
@@ -124,7 +172,7 @@ export async function getAccountSubscriptionForEmail(email: string) {
   const stripeCustomerId = profile?.stripeCustomerId?.trim() || "";
 
   if (!stripeCustomerId) {
-    return toFreeState(profile);
+    return applyBonusEntitlement(normalizedEmail, toFreeState(profile));
   }
 
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -152,7 +200,7 @@ export async function getAccountSubscriptionForEmail(email: string) {
 
   await persistAccountSubscriptionState(normalizedEmail, nextState);
 
-  return nextState;
+  return applyBonusEntitlement(normalizedEmail, nextState);
 }
 
 export async function restoreSubscriptionForEmail(email: string) {
