@@ -3,6 +3,7 @@ import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export type NotificationType =
   | "subscription"
+  | "referral"
   | "learning"
   | "account"
   | "system";

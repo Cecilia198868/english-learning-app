@@ -1,4 +1,5 @@
 import { createHmac, randomBytes } from "node:crypto";
+import { createNotificationIfMissing } from "@/lib/notifications";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const INVITEE_SIGNUP_BONUS_DAYS = 7;
@@ -64,6 +65,16 @@ type ReferralLedgerRow = {
 
 const REFERRAL_LEDGER_TITLE = "__speakflow_internal:referral";
 const SIGNED_REFERRAL_CODE_VERSION = "SFV1";
+const INVITEE_SIGNUP_REWARD_NOTIFICATION = {
+  message:
+    "你通过好友邀请注册，已获得 7 天 SpeakFlow Pro 体验。",
+  title: "欢迎奖励已到账",
+} as const;
+const INVITER_PAID_REWARD_NOTIFICATION = {
+  message:
+    "你的好友已成功订阅 SpeakFlow Pro。你已获得 30 天 Pro 奖励。",
+  title: "邀请奖励已到账",
+} as const;
 
 function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
@@ -236,6 +247,22 @@ async function getLedgerBonusProUntilForEmail(email: string) {
   }, null);
 }
 
+async function createReferralRewardNotification(
+  userEmail: string,
+  notification: { message: string; title: string }
+) {
+  try {
+    await createNotificationIfMissing(
+      userEmail,
+      notification.title,
+      notification.message,
+      "referral"
+    );
+  } catch (error) {
+    console.error("Create referral reward notification failed", error);
+  }
+}
+
 function isSupabaseErrorLike(error: unknown): error is SupabaseErrorLike {
   return Boolean(error && typeof error === "object");
 }
@@ -321,6 +348,10 @@ async function registerReferralInLedger(
       referralCode,
     }),
   ]);
+  await createReferralRewardNotification(
+    normalizedInviteeEmail,
+    INVITEE_SIGNUP_REWARD_NOTIFICATION
+  );
 
   return { bonusGranted: true, bonusProUntil };
 }
@@ -398,6 +429,10 @@ async function rewardInviterInLedger(
     kind: "inviter_paid_reward",
     stripeSubscriptionId,
   });
+  await createReferralRewardNotification(
+    inviterEmail,
+    INVITER_PAID_REWARD_NOTIFICATION
+  );
 
   return true;
 }
@@ -619,6 +654,11 @@ export async function registerReferralForNewUser(
     throw insertError;
   }
 
+  await createReferralRewardNotification(
+    normalizedInviteeEmail,
+    INVITEE_SIGNUP_REWARD_NOTIFICATION
+  );
+
   return { bonusGranted: true, bonusProUntil };
 }
 
@@ -754,6 +794,11 @@ export async function rewardInviterForPaidReferral(
 
     throw updateProfileError;
   }
+
+  await createReferralRewardNotification(
+    inviterEmail,
+    INVITER_PAID_REWARD_NOTIFICATION
+  );
 
   return true;
 }

@@ -21,7 +21,7 @@ type NotificationResponseItem = {
   isRead: boolean;
   message: string;
   title: string;
-  type: "subscription" | "learning" | "account" | "system";
+  type: "subscription" | "referral" | "learning" | "account" | "system";
   userEmail: string;
 };
 

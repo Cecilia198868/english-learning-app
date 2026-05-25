@@ -4,7 +4,12 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
 
-type NotificationType = "subscription" | "learning" | "account" | "system";
+type NotificationType =
+  | "subscription"
+  | "referral"
+  | "learning"
+  | "account"
+  | "system";
 
 type UserNotification = {
   createdAt: string;
@@ -31,6 +36,7 @@ const notificationPageCopy = {
     typeLabels: {
       account: "Account",
       learning: "Learning",
+      referral: "Referral",
       subscription: "Subscription",
       system: "System",
     },
@@ -49,6 +55,7 @@ const notificationPageCopy = {
     typeLabels: {
       account: "账号",
       learning: "学习",
+      referral: "邀请奖励",
       subscription: "订阅",
       system: "系统",
     },
@@ -72,6 +79,10 @@ function formatNotificationTime(value: string, language: "en" | "zh-CN") {
 function getTypeTone(type: NotificationType) {
   if (type === "subscription") {
     return "bg-[#fff2db] text-[#b45d05] ring-[#ffd99a]";
+  }
+
+  if (type === "referral") {
+    return "bg-[#f0ebff] text-[#7460e8] ring-[#e2d8ff]";
   }
 
   if (type === "learning") {
