@@ -1958,6 +1958,7 @@ const pinyinDictionary: Record<string, string[]> = {
 };
 
 const defaultChineseCandidates = ["？", "！", "我", "你", "好", "这", "谢谢"];
+const defaultFreeLearningPrompt = "用中文说出你想表达的内容";
 const handwritingCandidates = ["我", "你", "好", "吗", "谢", "爱", "说"];
 const quickPracticeStarters: Array<{
   id: "guided" | "expression" | "classic";
@@ -2529,7 +2530,7 @@ function SpeakEnglishClient() {
   const hasEnglishAttemptRef = useRef(false);
   const messageRef = useRef("");
 
-  const [message, setMessage] = useState("用中文说出你想表达的内容");
+  const [message, setMessage] = useState(defaultFreeLearningPrompt);
   const [inputText, setInputText] = useState("");
   const [keyboardMode, setKeyboardMode] = useState<KeyboardMode>("zh");
   const [trainingGroundMode, setTrainingGroundMode] =
@@ -3823,6 +3824,38 @@ function SpeakEnglishClient() {
     }
   }
 
+  function returnToFreeLearningHome() {
+    setTrainingGroundMode("default");
+    guidedConversationTurnsRef.current = [];
+    prepareNextNativeRound();
+    setInputText("");
+    setComposingPinyin("");
+    setLiveTranscript("");
+    setKeyboardMode("zh");
+    setMessage(defaultFreeLearningPrompt);
+    setShowQuickPanel(false);
+    setShowExpressionMenu(false);
+    setShowClassicCoursePicker(false);
+    resetClassicCoursePicker();
+  }
+
+  function togglePracticeMenu() {
+    if (isListening) {
+      cancelRecognition();
+    }
+
+    setShowAccountMenu(false);
+    setAccountPanelView("menu");
+    setShowAvatarEditor(false);
+
+    if (showQuickPanel) {
+      returnToFreeLearningHome();
+      return;
+    }
+
+    setShowQuickPanel(true);
+  }
+
   function openTrainingGroundMode() {
     setTrainingGroundMode("guided");
     guidedConversationTurnsRef.current = [];
@@ -3832,7 +3865,7 @@ function SpeakEnglishClient() {
     setComposingPinyin("");
     setLiveTranscript("");
     setKeyboardMode("zh");
-    setMessage("用中文说出你想表达的内容");
+    setMessage(defaultFreeLearningPrompt);
     setShowQuickPanel(false);
     setShowExpressionMenu(false);
     setShowClassicCoursePicker(false);
@@ -4550,15 +4583,7 @@ function SpeakEnglishClient() {
                 <button
                   type="button"
                   aria-label="打开菜单"
-                  onClick={() => {
-                    if (isListening) {
-                      cancelRecognition();
-                    }
-                    setShowQuickPanel((current) => !current);
-                    setShowAccountMenu(false);
-                    setAccountPanelView("menu");
-                    setShowAvatarEditor(false);
-                  }}
+                  onClick={togglePracticeMenu}
                   className="sf-header-button"
                 >
                   <span className="relative block h-4 w-5 before:absolute before:left-0 before:top-0 before:h-px before:w-4 before:bg-[#efe9ff] after:absolute after:bottom-0 after:left-0 after:h-px after:w-5 after:bg-[#efe9ff]">
@@ -7008,7 +7033,7 @@ function SpeakEnglishClient() {
                 <button
                   type="button"
                   aria-label="打开菜单"
-                  onClick={() => setShowQuickPanel((current) => !current)}
+                  onClick={togglePracticeMenu}
                   className="grid h-12 w-14 shrink-0 place-items-center rounded-[22px] border border-white/10 bg-white/[0.08] text-3xl font-light text-[#efe9ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
                 >
                   +
@@ -7076,7 +7101,7 @@ function SpeakEnglishClient() {
                     ))}
                     <button
                       type="button"
-                      onClick={() => setShowQuickPanel((current) => !current)}
+                      onClick={togglePracticeMenu}
                       className="ml-auto shrink-0 text-xl text-[#91dcff]"
                     >
                       ⌄

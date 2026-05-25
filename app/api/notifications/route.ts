@@ -1,5 +1,6 @@
 import { authOptions } from "@/auth";
 import { listNotificationsForUser } from "@/lib/notifications";
+import { getAccountSubscriptionForEmail } from "@/lib/subscriptionService";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -15,6 +16,7 @@ export async function GET() {
   }
 
   try {
+    await getAccountSubscriptionForEmail(email);
     const notifications = await listNotificationsForUser(email);
 
     return NextResponse.json(

@@ -1,9 +1,8 @@
 import {
-  findProfileByEmail,
   findProfileByStripeCustomerId,
   upsertProfileSubscriptionByEmail,
 } from "@/lib/userStore";
-import { createNotification } from "@/lib/notifications";
+import { ensureSubscriptionNotificationsForState } from "@/lib/subscriptionNotifications";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -22,9 +21,9 @@ type SubscriptionPersistencePayload = {
 };
 
 type SubscriptionPersistenceResult = {
+  currentPeriodEnd: string | null;
   email: string;
   nextSubscriptionStatus: EntitlementStatus;
-  previousSubscriptionStatus?: EntitlementStatus;
 };
 
 function getStripeId(value: string | { id?: string } | null | undefined) {
@@ -73,9 +72,6 @@ async function saveSubscriptionState(payload: SubscriptionPersistencePayload) {
   };
 
   if (payload.email) {
-    const previousProfile = await findProfileByEmail(payload.email).catch(
-      () => null
-    );
     const updatedProfile = await upsertProfileSubscriptionByEmail(
       payload.email,
       subscriptionData
@@ -83,9 +79,9 @@ async function saveSubscriptionState(payload: SubscriptionPersistencePayload) {
 
     if (updatedProfile) {
       return {
+        currentPeriodEnd: payload.currentPeriodEnd,
         email: updatedProfile.email,
         nextSubscriptionStatus: payload.subscriptionStatus,
-        previousSubscriptionStatus: previousProfile?.subscriptionStatus,
       } satisfies SubscriptionPersistenceResult;
     }
   }
@@ -102,9 +98,9 @@ async function saveSubscriptionState(payload: SubscriptionPersistencePayload) {
   );
 
   return {
+    currentPeriodEnd: payload.currentPeriodEnd,
     email: updatedProfile.email,
     nextSubscriptionStatus: payload.subscriptionStatus,
-    previousSubscriptionStatus: profile.subscriptionStatus,
   } satisfies SubscriptionPersistenceResult;
 }
 
@@ -139,18 +135,6 @@ async function persistSubscription(
   });
 }
 
-async function createNotificationSafely(
-  userEmail: string,
-  title: string,
-  message: string
-) {
-  try {
-    await createNotification(userEmail, title, message, "subscription");
-  } catch (error) {
-    console.error("Create subscription notification failed", error);
-  }
-}
-
 function getCheckoutSessionEmail(session: Stripe.Checkout.Session) {
   return (
     session.metadata?.email?.trim().toLowerCase() ||
@@ -182,7 +166,6 @@ async function handleCheckoutSessionCompleted(
   const resolvedStripeCustomerId =
     stripeCustomerId || getStripeId(subscription.customer);
   const currentPeriodEnd = getCurrentPeriodEnd(subscription);
-  const previousProfile = await findProfileByEmail(email).catch(() => null);
 
   if (resolvedStripeCustomerId) {
     const updatedProfile = await upsertProfileSubscriptionByEmail(email, {
@@ -194,13 +177,10 @@ async function handleCheckoutSessionCompleted(
     });
 
     if (updatedProfile) {
-      if (previousProfile?.subscriptionStatus !== "pro") {
-        await createNotificationSafely(
-          updatedProfile.email,
-          "SpeakFlow Pro \u5df2\u5f00\u901a",
-          "\u4f60\u5df2\u6210\u529f\u8ba2\u9605 SpeakFlow Pro\u3002\u73b0\u5728\u53ef\u4ee5\u4f7f\u7528\u5168\u90e8 Pro \u529f\u80fd\u3002"
-        );
-      }
+      await ensureSubscriptionNotificationsForState(updatedProfile.email, {
+        currentPeriodEnd,
+        subscriptionStatus: getEntitlementStatus(subscription),
+      });
       return;
     }
   }
@@ -211,13 +191,10 @@ async function handleCheckoutSessionCompleted(
   });
 
   if (result?.email) {
-    if (result.previousSubscriptionStatus !== "pro") {
-      await createNotificationSafely(
-        result.email,
-        "SpeakFlow Pro \u5df2\u5f00\u901a",
-        "\u4f60\u5df2\u6210\u529f\u8ba2\u9605 SpeakFlow Pro\u3002\u73b0\u5728\u53ef\u4ee5\u4f7f\u7528\u5168\u90e8 Pro \u529f\u80fd\u3002"
-      );
-    }
+    await ensureSubscriptionNotificationsForState(result.email, {
+      currentPeriodEnd: result.currentPeriodEnd,
+      subscriptionStatus: result.nextSubscriptionStatus,
+    });
   }
 }
 
@@ -235,16 +212,11 @@ async function handleStripeEvent(stripe: Stripe, event: Stripe.Event) {
         const result = await persistSubscription(
           event.data.object as Stripe.Subscription
         );
-        if (
-          result?.email &&
-          result.nextSubscriptionStatus === "cancels_at_period_end" &&
-          result.previousSubscriptionStatus !== "cancels_at_period_end"
-        ) {
-          await createNotificationSafely(
-            result.email,
-            "\u8ba2\u9605\u5df2\u53d6\u6d88",
-            "\u4f60\u7684\u8ba2\u9605\u5df2\u53d6\u6d88\u3002Pro \u6743\u76ca\u4ecd\u53ef\u4f7f\u7528\u5230\u5f53\u524d\u8ba2\u9605\u5468\u671f\u7ed3\u675f\u3002"
-          );
+        if (result?.email) {
+          await ensureSubscriptionNotificationsForState(result.email, {
+            currentPeriodEnd: result.currentPeriodEnd,
+            subscriptionStatus: result.nextSubscriptionStatus,
+          });
         }
       }
       break;

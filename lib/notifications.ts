@@ -77,6 +77,48 @@ export async function createNotification(
   return rowToNotification(data);
 }
 
+export async function createNotificationIfMissing(
+  userEmail: string,
+  title: string,
+  message: string,
+  type: NotificationType
+) {
+  const normalizedEmail = normalizeEmail(userEmail);
+  const normalizedTitle = title.trim();
+  const normalizedMessage = message.trim();
+
+  if (!normalizedEmail || !normalizedTitle || !normalizedMessage) {
+    throw new Error("Invalid notification");
+  }
+
+  const supabase = getSupabaseAdmin();
+  const { data: existingNotification, error: existingError } = await supabase
+    .from("notifications")
+    .select("id, user_email, title, message, type, is_read, created_at")
+    .eq("user_email", normalizedEmail)
+    .eq("type", type)
+    .eq("title", normalizedTitle)
+    .eq("message", normalizedMessage)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle<NotificationRow>();
+
+  if (existingError) {
+    throw existingError;
+  }
+
+  if (existingNotification) {
+    return rowToNotification(existingNotification);
+  }
+
+  return createNotification(
+    normalizedEmail,
+    normalizedTitle,
+    normalizedMessage,
+    type
+  );
+}
+
 export async function listNotificationsForUser(userEmail: string) {
   const normalizedEmail = normalizeEmail(userEmail);
 

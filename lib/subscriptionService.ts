@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { ensureSubscriptionNotificationsForState } from "@/lib/subscriptionNotifications";
 import {
   findProfileByEmail,
   upsertProfileSubscriptionByEmail,
@@ -113,6 +114,8 @@ async function persistAccountSubscriptionState(
     stripeSubscriptionId: state.stripeSubscriptionId,
     subscriptionStatus: state.subscriptionStatus,
   });
+
+  await ensureSubscriptionNotificationsForState(email, state);
 }
 
 export async function getAccountSubscriptionForEmail(email: string) {
