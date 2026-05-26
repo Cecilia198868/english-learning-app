@@ -24,10 +24,39 @@ type SessionResponse = {
   } | null;
 };
 
+type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
+
+type AccountSubscriptionResponse = {
+  cancelAtPeriodEnd?: boolean | null;
+  subscriptionStatus?: SubscriptionStatus;
+};
+
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
 
 function getAccountAvatarStorageKey(identifier: string) {
   return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
+}
+
+function normalizeSubscriptionStatus(
+  subscriptionStatus?: SubscriptionStatus | null,
+  cancelAtPeriodEnd?: boolean | null
+): SubscriptionStatus {
+  if (cancelAtPeriodEnd === true) {
+    return "cancels_at_period_end";
+  }
+
+  return subscriptionStatus === "pro" ||
+    subscriptionStatus === "cancels_at_period_end"
+    ? subscriptionStatus
+    : "free";
+}
+
+function hasProAccess(subscriptionStatus: SubscriptionStatus) {
+  return subscriptionStatus !== "free";
+}
+
+function createAccountSubscriptionUrl() {
+  return `/api/me/subscription?t=${Date.now()}`;
 }
 
 const GENERIC_EXPRESSION_MEANINGS = new Set([
@@ -115,6 +144,10 @@ export default function VocabularyPage() {
   const [accountEmail, setAccountEmail] = useState("");
   const [accountImage, setAccountImage] = useState("");
   const [accountImageFailed, setAccountImageFailed] = useState(false);
+  const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
+    useState<SubscriptionStatus>("free");
+  const [hasLoadedAccountSubscription, setHasLoadedAccountSubscription] =
+    useState(false);
   const [hasLoadedVocabulary, setHasLoadedVocabulary] = useState(false);
   const [loadingExampleTranslationFor, setLoadingExampleTranslationFor] =
     useState("");
@@ -187,6 +220,45 @@ export default function VocabularyPage() {
     };
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadAccountSubscription() {
+      try {
+        const response = await fetch(createAccountSubscriptionUrl(), {
+          cache: "no-store",
+        });
+
+        if (response.ok) {
+          const data = (await response.json()) as AccountSubscriptionResponse;
+          const nextSubscriptionStatus = normalizeSubscriptionStatus(
+            data.subscriptionStatus,
+            data.cancelAtPeriodEnd
+          );
+
+          if (cancelled) return;
+
+          setAccountSubscriptionStatus(nextSubscriptionStatus);
+          if (hasProAccess(nextSubscriptionStatus)) {
+            setShowExpressionLimitModal(false);
+          }
+        }
+      } catch {
+        // Keep the existing free-user behavior if the subscription check fails.
+      } finally {
+        if (!cancelled) {
+          setHasLoadedAccountSubscription(true);
+        }
+      }
+    }
+
+    void loadAccountSubscription();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const progressText = hasLoadedVocabulary
     ? `\u4f60\u5df2\u7ecf\u5b66\u4f1a\u4e86 ${words.length} \u4e2a\u8868\u8fbe`
     : "";
@@ -213,9 +285,11 @@ export default function VocabularyPage() {
   const accountAvatarLabel = (accountName || accountEmail || "CL")
     .slice(0, 2)
     .toUpperCase();
+  const isAccountPro = hasProAccess(accountSubscriptionStatus);
 
   useEffect(() => {
     if (!displayedExpression) return;
+    if (!hasLoadedAccountSubscription || isAccountPro) return;
 
     const expressionId = getExpressionLearningId(displayedExpression);
     if (!canLearnExpression(expressionId)) {
@@ -229,7 +303,7 @@ export default function VocabularyPage() {
     }
 
     recordLearnedExpression(expressionId);
-  }, [displayedExpression]);
+  }, [displayedExpression, hasLoadedAccountSubscription, isAccountPro]);
 
   useEffect(() => {
     if (!displayedExpression) return;
@@ -356,7 +430,11 @@ export default function VocabularyPage() {
     if (!expression) return;
 
     const expressionId = getExpressionLearningId(expression);
-    if (!canLearnExpression(expressionId)) {
+    if (
+      hasLoadedAccountSubscription &&
+      !isAccountPro &&
+      !canLearnExpression(expressionId)
+    ) {
       setShowExpressionLimitModal(true);
       return;
     }
