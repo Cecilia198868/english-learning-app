@@ -41,7 +41,8 @@
 .sf-expression-library-panel,
 .sf-expression-library-scroll,
 .sf-account-panel,
-.sf-account-panel-scroll {
+.sf-account-panel-scroll,
+.sf-quick-panel {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -49,7 +50,8 @@
 .sf-expression-library-panel::-webkit-scrollbar,
 .sf-expression-library-scroll::-webkit-scrollbar,
 .sf-account-panel::-webkit-scrollbar,
-.sf-account-panel-scroll::-webkit-scrollbar {
+.sf-account-panel-scroll::-webkit-scrollbar,
+.sf-quick-panel::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
@@ -1406,6 +1408,23 @@ body {
     linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(241, 238, 255, 0.34)),
     radial-gradient(circle at 20% 0%, rgba(115, 92, 255, 0.22), transparent 34%),
     radial-gradient(circle at 88% 18%, rgba(95, 145, 255, 0.2), transparent 34%) !important;
+}
+
+.sf-speak-phone.sf-speak-phone-classic-menu-open {
+  background: #ffffff !important;
+}
+
+.sf-speak-phone.sf-speak-phone-classic-menu-open::before,
+.sf-speak-phone.sf-speak-phone-classic-menu-open::after {
+  opacity: 0 !important;
+}
+
+.sf-speak-header {
+  padding-top: max(2.75rem, calc(env(safe-area-inset-top, 0px) + 0.75rem));
+}
+
+.sf-quick-panel {
+  top: max(6.35rem, calc(env(safe-area-inset-top, 0px) + 4.2rem)) !important;
 }
 
 .sf-keyboard-panel,

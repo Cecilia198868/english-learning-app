@@ -2201,11 +2201,6 @@ const classicCourseCategories: ClassicCourseCategory[] = [
   },
 ];
 
-const CLASSIC_MENU_CROP_HEIGHT = 1404;
-const CLASSIC_MENU_IMAGE_WIDTH = 1024;
-const FINANCE_MENU_CROP_HEIGHT = 1454;
-const FINANCE_MENU_IMAGE_WIDTH = 1024;
-
 const classicSceneMenuHotspots: Array<{
   id: string;
   label: string;
@@ -2291,6 +2286,79 @@ const classicCategoryDescriptions: Record<string, string> = {
   "education-work-social": "\u5de5\u4f5c\u6c9f\u901a\u3001\u9762\u8bd5\u3001\u793e\u4ea4\u3001\u5b66\u6821\u751f\u6d3b",
 };
 
+type ClassicMenuCardVisual = {
+  accent: string;
+  background: string;
+  icon: string;
+};
+
+const defaultClassicMenuCardVisual: ClassicMenuCardVisual = {
+  accent: "#735cff",
+  background: "linear-gradient(135deg,#f8f5ff 0%,#eef2ff 100%)",
+  icon: "\u8bfe",
+};
+
+const classicMenuCardVisuals: Record<string, ClassicMenuCardVisual> = {
+  "finance-government": {
+    accent: "#d89216",
+    background: "linear-gradient(135deg,#fff8e8 0%,#fff0d0 58%,#fffaf2 100%)",
+    icon: "\u91d1",
+  },
+  "shopping-consumption": {
+    accent: "#8b5cf6",
+    background: "linear-gradient(135deg,#f8f2ff 0%,#efe4ff 58%,#fff7fb 100%)",
+    icon: "\u8d2d",
+  },
+  "restaurant-takeout": {
+    accent: "#d74777",
+    background: "linear-gradient(135deg,#fff2f6 0%,#ffe6ee 58%,#fff8f0 100%)",
+    icon: "\u9910",
+  },
+  "transportation-travel": {
+    accent: "#3478d8",
+    background: "linear-gradient(135deg,#eef6ff 0%,#e3eeff 58%,#f5fbff 100%)",
+    icon: "\u884c",
+  },
+  "housing-home": {
+    accent: "#21a08d",
+    background: "linear-gradient(135deg,#effcf8 0%,#dff7f1 58%,#f7fffc 100%)",
+    icon: "\u4f4f",
+  },
+  "health-medical": {
+    accent: "#31a86b",
+    background: "linear-gradient(135deg,#effdf4 0%,#dff7e7 58%,#f8fff9 100%)",
+    icon: "\u533b",
+  },
+  "service-repair": {
+    accent: "#d8791f",
+    background: "linear-gradient(135deg,#fff6ea 0%,#ffe8cd 58%,#fffaf3 100%)",
+    icon: "\u4fee",
+  },
+  "education-work-social": {
+    accent: "#6654df",
+    background: "linear-gradient(135deg,#f4f2ff 0%,#e7e5ff 58%,#f8f9ff 100%)",
+    icon: "\u5b66",
+  },
+  guided: {
+    accent: "#6654df",
+    background: "linear-gradient(135deg,#ebe8ff 0%,#d8d4ff 58%,#f2f6ff 100%)",
+    icon: "AI",
+  },
+  expression: {
+    accent: "#1689d8",
+    background: "linear-gradient(135deg,#eaf7ff 0%,#d5efff 58%,#f2fbff 100%)",
+    icon: "\u65b0",
+  },
+};
+
+function getClassicCourseLessonCount(category: ClassicCourseCategory) {
+  return category.sections.reduce(
+    (total, section) =>
+      total + section.lessons.filter((lesson) => Boolean(lesson.id)).length,
+    0
+  );
+}
+
 const financeGovernmentMenuHotspots: Array<{
   id: string;
   label: string;
@@ -2358,6 +2426,61 @@ const financeGovernmentMenuHotspots: Array<{
     rect: { x: 518, y: 1244, width: 458, height: 205 },
   },
 ];
+
+const financeGovernmentSectionDescriptions: Record<string, string> = {
+  "bank-finance":
+    "\u5f00\u6237\u3001\u5b58\u6b3e\u3001\u53d6\u6b3e\u3001\u8f6c\u8d26\u3001\u7406\u8d22\u7b49\u5e38\u7528\u8868\u8fbe",
+  "driver-vehicle":
+    "\u9a7e\u7167\u8003\u8bd5\u3001\u6362\u8bc1\u3001\u8f66\u8f86\u6ce8\u518c\u3001\u5e74\u68c0\u7b49\u573a\u666f",
+  "identity-immigration":
+    "\u62a4\u7167\u3001\u7b7e\u8bc1\u3001\u5c45\u7559\u7533\u8bf7\u3001\u79fb\u6c11\u9762\u8bd5\u7b49\u573a\u666f",
+  "insurance-consulting":
+    "\u54a8\u8be2\u4fdd\u9669\u3001\u8d2d\u4e70\u4fdd\u9669\u3001\u7406\u8d54\u3001\u4fdd\u9669\u6761\u6b3e\u7406\u89e3\u7b49\u8868\u8fbe",
+  "insurance-traffic-safety":
+    "\u4ea4\u901a\u89c4\u5219\u3001\u8fdd\u7ae0\u5904\u7406\u3001\u7f5a\u6b3e\u3001\u4ea4\u901a\u4e8b\u6545\u7b49\u573a\u666f",
+  "public-services":
+    "\u793e\u4fdd\u3001\u5931\u4e1a\u6551\u6d4e\u3001\u516c\u5171\u670d\u52a1\u7533\u8bf7\u7b49\u8868\u8fbe",
+  "tax-government-forms":
+    "\u62a5\u7a0e\u3001\u7a0e\u52a1\u54a8\u8be2\u3001\u586b\u5199\u653f\u5e9c\u8868\u683c\u7b49\u5e38\u7528\u8868\u8fbe",
+};
+
+const financeGovernmentSectionVisuals: Record<string, ClassicMenuCardVisual> = {
+  "bank-finance": {
+    accent: "#d89216",
+    background: "linear-gradient(135deg,#fff8e8 0%,#fff0d0 58%,#fffaf2 100%)",
+    icon: "\u94f6",
+  },
+  "driver-vehicle": {
+    accent: "#25a58e",
+    background: "linear-gradient(135deg,#effcf8 0%,#ddf6ef 58%,#f7fffc 100%)",
+    icon: "\u8f66",
+  },
+  "identity-immigration": {
+    accent: "#477edb",
+    background: "linear-gradient(135deg,#eef6ff 0%,#e2edff 58%,#f8fbff 100%)",
+    icon: "\u8bc1",
+  },
+  "insurance-consulting": {
+    accent: "#d64b84",
+    background: "linear-gradient(135deg,#fff1f6 0%,#ffe5ef 58%,#fff8fb 100%)",
+    icon: "\u4fdd",
+  },
+  "insurance-traffic-safety": {
+    accent: "#d8a21b",
+    background: "linear-gradient(135deg,#fff9e8 0%,#ffefc7 58%,#fffaf2 100%)",
+    icon: "\u5b89",
+  },
+  "public-services": {
+    accent: "#7c5ce6",
+    background: "linear-gradient(135deg,#f5f2ff 0%,#e8e2ff 58%,#fbf9ff 100%)",
+    icon: "\u653f",
+  },
+  "tax-government-forms": {
+    accent: "#3478d8",
+    background: "linear-gradient(135deg,#eef6ff 0%,#dfeeff 58%,#f7fbff 100%)",
+    icon: "\u7a0e",
+  },
+};
 
 const emojis = ["😊", "👍", "🙏", "❤️", "😂", "😅"] as const;
 const expressionVariantLabels: Array<{
@@ -2583,10 +2706,14 @@ function SpeakEnglishClient() {
   const [accountEmail, setAccountEmail] = useState("");
   const [accountImage, setAccountImage] = useState("");
   const [accountImageFailed, setAccountImageFailed] = useState(false);
+  const [hasLoadedAccountSession, setHasLoadedAccountSession] =
+    useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
     useState<SubscriptionStatus>("free");
   const [accountCurrentPeriodEnd, setAccountCurrentPeriodEnd] = useState("");
   const [isLoadingAccountSubscription, setIsLoadingAccountSubscription] =
+    useState(false);
+  const [hasCheckedAccountSubscription, setHasCheckedAccountSubscription] =
     useState(false);
   const [accountSubscriptionRefreshKey, setAccountSubscriptionRefreshKey] =
     useState(0);
@@ -2769,6 +2896,11 @@ function SpeakEnglishClient() {
   const hasCanceledAtPeriodEnd =
     accountSubscriptionStatus === "cancels_at_period_end";
   const isAccountPro = hasProAccess(accountSubscriptionStatus);
+  const shouldShowFreePracticeUsageMeter =
+    !isAccountPro &&
+    hasLoadedAccountSession &&
+    (!accountEmail || hasCheckedAccountSubscription) &&
+    !isLoadingAccountSubscription;
   const accountSubscriptionLabel = isLoadingAccountSubscription
     ? language === "en"
       ? "Checking..."
@@ -3049,6 +3181,10 @@ function SpeakEnglishClient() {
           setAccountEmail("");
           setAccountImage("");
         }
+      } finally {
+        if (!cancelled) {
+          setHasLoadedAccountSession(true);
+        }
       }
     }
 
@@ -3066,6 +3202,7 @@ function SpeakEnglishClient() {
   }, [accountEmail]);
 
   const refreshAccountSubscription = useCallback(async () => {
+    setHasCheckedAccountSubscription(false);
     setIsLoadingAccountSubscription(true);
 
     try {
@@ -3095,8 +3232,22 @@ function SpeakEnglishClient() {
       return "free";
     } finally {
       setIsLoadingAccountSubscription(false);
+      setHasCheckedAccountSubscription(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (!hasLoadedAccountSession) return;
+
+    if (!accountEmail) {
+      setHasCheckedAccountSubscription(true);
+      setAccountSubscriptionStatus("free");
+      setAccountCurrentPeriodEnd("");
+      return;
+    }
+
+    void refreshAccountSubscription();
+  }, [accountEmail, hasLoadedAccountSession, refreshAccountSubscription]);
 
   const loadReferralState = useCallback(async () => {
     setIsLoadingReferralState(true);
@@ -4589,7 +4740,7 @@ function SpeakEnglishClient() {
           onClick={resetClassicCoursePicker}
           className="w-full text-left text-[1rem] font-extrabold text-[#5b63ff]"
         >
-          ← 返回经典口语练习
+          ← 返回上一级
         </button>
         <div className="grid gap-2">
           <h2 className="text-[1.85rem] font-extrabold leading-tight text-[#201833]">
@@ -4644,63 +4795,59 @@ function SpeakEnglishClient() {
       : "\u8bfe\u7a0b\u6574\u7406\u4e2d";
 
     return (
-      <div className="mx-auto grid w-full max-w-[360px] gap-4 py-2">
+      <div className="mx-auto grid w-full max-w-[430px] gap-6 py-2">
         <button
           type="button"
           onClick={() => setSelectedClassicCourseSectionId("")}
-          className="w-full px-1 text-left text-[0.96rem] font-extrabold text-[#5b63ff] transition hover:text-[#201833]"
+          className="w-full text-left text-[0.98rem] font-extrabold text-[#5b63ff] transition hover:text-[#201833]"
         >
           {"\u2190 \u8fd4\u56de\u7ecf\u5178\u53e3\u8bed\u7ec3\u4e60"}
         </button>
-        <div className="rounded-[22px] bg-white/45 px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_14px_34px_rgba(89,75,150,0.1)]">
-          <h2 className="text-[1.65rem] font-extrabold leading-tight text-[#201833]">
+
+        <div className="grid gap-2">
+          <h2 className="text-[1.82rem] font-black leading-tight text-[#201833]">
             {categoryTitle}
           </h2>
-          <p className="mt-2 text-[0.88rem] font-bold leading-6 text-[#6f6685]">
+          <p className="text-[0.92rem] font-bold leading-6 text-[#6f6685]">
             {categoryDescription}
           </p>
         </div>
-        <div className="overflow-hidden rounded-[20px] bg-white/52 shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_12px_28px_rgba(89,75,150,0.08)]">
-          <div className="flex items-center justify-between gap-3 px-4 py-3">
-            <span className="min-w-0">
-              <span className="block text-[1.08rem] font-extrabold leading-6 text-[#201833]">
-                {section.label}
-              </span>
-              <span className="mt-0.5 block text-[0.78rem] font-bold text-[#7f7896]">
-                {lessonCountText}
-              </span>
-            </span>
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/72 text-[1.35rem] font-extrabold leading-none text-[#6b4dff] shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_8px_16px_rgba(89,75,150,0.1)]">
-              {"\u2193"}
-            </span>
-          </div>
-          <div className="border-t border-[#d4c9fb] px-0 py-2">
-            {section.lessons.length ? (
-              section.lessons.map((lesson) =>
-                lesson.id ? (
-                  <button
-                    key={lesson.id}
-                    type="button"
-                    onClick={() => openClassicLesson(lesson.id!, lesson.title)}
-                    className="block w-full px-6 py-2.5 text-left text-[0.98rem] font-extrabold leading-6 text-[#201833] transition hover:bg-white/62 active:bg-white/78"
-                  >
-                    {lesson.title}
-                  </button>
-                ) : (
-                  <div
-                    key={lesson.title}
-                    className="block w-full px-6 py-2.5 text-left text-[0.98rem] font-extrabold leading-6 text-[#7f7896]"
-                  >
-                    {lesson.title}
-                  </div>
-                )
+
+        <div className="grid gap-1">
+          <h3 className="text-[1.34rem] font-black leading-7 text-[#201833]">
+            {section.label}
+          </h3>
+          <p className="text-[0.95rem] font-extrabold leading-5 text-[#7f7896]">
+            {lessonCountText}
+          </p>
+        </div>
+
+        <div className="grid gap-1.5">
+          {section.lessons.length ? (
+            section.lessons.map((lesson) =>
+              lesson.id ? (
+                <button
+                  key={lesson.id}
+                  type="button"
+                  onClick={() => openClassicLesson(lesson.id!, lesson.title)}
+                  className="block min-h-12 w-full rounded-[12px] px-0 py-2.5 text-left text-[1.08rem] font-black leading-7 text-[#201833] transition hover:text-[#5b63ff] active:scale-[0.99]"
+                >
+                  {lesson.title}
+                </button>
+              ) : (
+                <div
+                  key={lesson.title}
+                  className="block min-h-12 w-full px-0 py-2.5 text-left text-[1.08rem] font-black leading-7 text-[#7f7896]"
+                >
+                  {lesson.title}
+                </div>
               )
-            ) : (
-              <p className="px-6 py-4 text-[0.98rem] font-bold leading-6 text-[#7f7896]">
-                {"\u8fd9\u4e2a\u5c0f\u7c7b\u7684\u8bfe\u7a0b\u8fd8\u5728\u6574\u7406\u4e2d"}
-              </p>
-            )}
-          </div>
+            )
+          ) : (
+            <p className="py-4 text-[1rem] font-bold leading-6 text-[#7f7896]">
+              {"\u8fd9\u4e2a\u5c0f\u7c7b\u7684\u8bfe\u7a0b\u8fd8\u5728\u6574\u7406\u4e2d"}
+            </p>
+          )}
         </div>
       </div>
     );
@@ -4742,47 +4889,117 @@ function SpeakEnglishClient() {
       return renderClassicSectionLessons(category, selectedSection);
     }
 
+    const sectionEntries = financeGovernmentMenuHotspots
+      .filter((hotspot) => hotspot.kind === "section")
+      .map((hotspot) => ({
+        hotspot,
+        section: category.sections.find((section) => section.id === hotspot.id),
+      }))
+      .filter(
+        (
+          entry
+        ): entry is {
+          hotspot: (typeof financeGovernmentMenuHotspots)[number];
+          section: ClassicCourseSection;
+        } => Boolean(entry.section)
+      );
+    const allCoursesHotspot = financeGovernmentMenuHotspots.find(
+      (hotspot) => hotspot.kind === "all"
+    );
+    const totalLessonCount = category.sections.reduce(
+      (total, section) => total + section.lessons.length,
+      0
+    );
+
     return (
-      <div className="py-2">
-        <div className="relative mx-auto w-full max-w-[430px] overflow-hidden rounded-[28px] bg-[#f8f6ff] shadow-[0_18px_40px_rgba(89,75,150,0.16)]">
-          <div
-            className="relative overflow-hidden"
-            style={{
-              aspectRatio: `${FINANCE_MENU_IMAGE_WIDTH} / ${FINANCE_MENU_CROP_HEIGHT}`,
-            }}
+      <div className="mx-auto grid w-full max-w-[430px] gap-5 py-2">
+        <div className="grid gap-3">
+          <button
+            type="button"
+            onClick={resetClassicCoursePicker}
+            className="w-fit text-left text-[0.98rem] font-extrabold text-[#5b63ff] transition hover:text-[#201833]"
           >
-            <Image
-              src="/finance-government-menu.png"
-              alt="金融与行政事务分类菜单"
-              width={1024}
-              height={1536}
-              priority
-              className="block h-auto w-full select-none"
-            />
-            {financeGovernmentMenuHotspots.map((hotspot) => (
-              <button
-                key={`${hotspot.kind}-${hotspot.id}`}
-                type="button"
-                aria-label={hotspot.label}
-                onClick={() => handleFinanceGovernmentHotspot(hotspot)}
-                className="absolute rounded-[24px] transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-[#7c55ff]/28 active:scale-[0.99]"
-                style={{
-                  left: `${
-                    (hotspot.rect.x / FINANCE_MENU_IMAGE_WIDTH) * 100
-                  }%`,
-                  top: `${
-                    (hotspot.rect.y / FINANCE_MENU_CROP_HEIGHT) * 100
-                  }%`,
-                  width: `${
-                    (hotspot.rect.width / FINANCE_MENU_IMAGE_WIDTH) * 100
-                  }%`,
-                  height: `${
-                    (hotspot.rect.height / FINANCE_MENU_CROP_HEIGHT) * 100
-                  }%`,
-                }}
-              />
-            ))}
+            {"\u2190 \u8fd4\u56de\u4e0a\u4e00\u7ea7"}
+          </button>
+          <div className="grid gap-2">
+            <h2 className="text-[1.72rem] font-black leading-tight text-[#201833]">
+              {classicSceneMenuHotspots.find((item) => item.id === category.id)
+                ?.label || category.label}
+            </h2>
+            <p className="text-[0.86rem] font-bold leading-5 text-[#6f6685]">
+              {classicCategoryDescriptions[category.id]}
+            </p>
           </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          {sectionEntries.map(({ hotspot, section }) => {
+            const visual =
+              financeGovernmentSectionVisuals[section.id] ||
+              defaultClassicMenuCardVisual;
+
+            return (
+              <button
+                key={section.id}
+                type="button"
+                onClick={() => handleFinanceGovernmentHotspot(hotspot)}
+                className="group min-h-[142px] overflow-hidden rounded-[18px] border border-[#eee8f8] px-3.5 py-3 text-left shadow-[0_10px_22px_rgba(84,72,146,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(84,72,146,0.13)] active:scale-[0.99]"
+                style={{ background: visual.background }}
+              >
+                <span className="flex items-start justify-between gap-2">
+                  <span
+                    className="grid h-9 w-9 place-items-center rounded-full bg-white/78 text-[0.95rem] font-black shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_8px_16px_rgba(84,72,146,0.1)]"
+                    style={{ color: visual.accent }}
+                  >
+                    {visual.icon}
+                  </span>
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/82 text-[1.15rem] font-black leading-none text-[#5b63ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.78)] transition group-hover:translate-x-0.5">
+                    {"\u2192"}
+                  </span>
+                </span>
+                <span className="mt-3 block text-[1rem] font-black leading-5 text-[#201833]">
+                  {hotspot.label}
+                </span>
+                <span className="mt-1.5 block text-[0.72rem] font-bold leading-4 text-[#6f6685]">
+                  {financeGovernmentSectionDescriptions[section.id]}
+                </span>
+                <span className="mt-3 block text-[0.72rem] font-black leading-none text-[#8d84a5]">
+                  {section.lessons.length
+                    ? `${section.lessons.length} \u4e2a\u8bfe\u7a0b`
+                    : "\u8bfe\u7a0b\u6574\u7406\u4e2d"}
+                </span>
+              </button>
+            );
+          })}
+          {allCoursesHotspot ? (
+            <button
+              type="button"
+              onClick={() => handleFinanceGovernmentHotspot(allCoursesHotspot)}
+              className="group min-h-[142px] overflow-hidden rounded-[18px] border border-[#eee8f8] px-3.5 py-3 text-left shadow-[0_10px_22px_rgba(84,72,146,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(84,72,146,0.13)] active:scale-[0.99]"
+              style={{
+                background:
+                  "linear-gradient(135deg,#f0edff 0%,#dcd7ff 58%,#f7f9ff 100%)",
+              }}
+            >
+              <span className="flex items-start justify-between gap-2">
+                <span className="grid h-9 min-w-9 place-items-center rounded-full bg-white/78 px-2 text-[0.82rem] font-black text-[#6654df] shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_8px_16px_rgba(84,72,146,0.1)]">
+                  ALL
+                </span>
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/82 text-[1.15rem] font-black leading-none text-[#5b63ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.78)] transition group-hover:translate-x-0.5">
+                  {"\u2192"}
+                </span>
+              </span>
+              <span className="mt-3 block text-[1rem] font-black leading-5 text-[#201833]">
+                {"\u67e5\u770b\u5168\u90e8"}
+              </span>
+              <span className="mt-1.5 block text-[0.72rem] font-bold leading-4 text-[#6f6685]">
+                {"\u4ece\u91d1\u878d\u3001\u8eab\u4efd\u3001\u653f\u5e9c\u3001\u7a0e\u52a1\u7b49\u5c0f\u7c7b\u91cc\u5feb\u901f\u627e\u8bfe\u7a0b"}
+              </span>
+              <span className="mt-3 block text-[0.72rem] font-black leading-none text-[#8d84a5]">
+                {`${totalLessonCount} \u4e2a\u8bfe\u7a0b`}
+              </span>
+            </button>
+          ) : null}
         </div>
       </div>
     );
@@ -4791,7 +5008,8 @@ function SpeakEnglishClient() {
   function renderClassicCategoryOverview(category: ClassicCourseCategory) {
     const title = selectedClassicCourseMeta?.label || category.label;
     const description =
-      classicCategoryDescriptions[category.id] || "按真实生活场景练高频口语";
+      classicCategoryDescriptions[category.id] ||
+      "\u6309\u771f\u5b9e\u751f\u6d3b\u573a\u666f\u7ec3\u9ad8\u9891\u53e3\u8bed";
 
     return (
       <div className="grid gap-4 py-2">
@@ -4800,9 +5018,9 @@ function SpeakEnglishClient() {
           onClick={resetClassicCoursePicker}
           className="w-full text-left text-[1rem] font-extrabold text-[#5b63ff]"
         >
-          ← 返回经典口语练习
+          {"\u2190 \u8fd4\u56de\u7ecf\u5178\u53e3\u8bed\u7ec3\u4e60"}
         </button>
-        <div className="rounded-[24px] bg-white/45 px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_14px_34px_rgba(89,75,150,0.1)]">
+        <div className="rounded-[24px] bg-white px-5 py-4 shadow-[0_14px_34px_rgba(89,75,150,0.1)]">
           <h2 className="text-[1.65rem] font-extrabold leading-tight text-[#201833]">
             {title}
           </h2>
@@ -4817,14 +5035,14 @@ function SpeakEnglishClient() {
             return (
               <div
                 key={section.id}
-                className="overflow-hidden rounded-[20px] bg-white/54 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_10px_22px_rgba(89,75,150,0.08)]"
+                className="overflow-hidden rounded-[20px] border border-[#eee8f8] bg-white shadow-[0_10px_22px_rgba(89,75,150,0.08)]"
               >
                 <button
                   type="button"
                   onClick={() =>
                     setSelectedClassicCourseSectionId(isOpen ? "" : section.id)
                   }
-                  className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-white/38"
+                  className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-[#f8f6ff]"
                 >
                   <span className="min-w-0">
                     <span className="block text-[1.08rem] font-extrabold leading-6 text-[#201833]">
@@ -4832,21 +5050,21 @@ function SpeakEnglishClient() {
                     </span>
                     <span className="mt-0.5 block text-[0.76rem] font-bold text-[#7f7896]">
                       {section.lessons.length
-                        ? `${section.lessons.length} 个课程`
-                        : "课程整理中"}
+                        ? `${section.lessons.length} \u4e2a\u8bfe\u7a0b`
+                        : "\u8bfe\u7a0b\u6574\u7406\u4e2d"}
                     </span>
                   </span>
                   <span
-                    className={`grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/70 text-[1.2rem] font-extrabold text-[#5b63ff] transition ${
+                    className={`grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#f4f0ff] text-[1.2rem] font-extrabold text-[#5b63ff] transition ${
                       isOpen ? "rotate-90" : ""
                     }`}
                   >
-                    →
+                    {"\u2192"}
                   </span>
                 </button>
 
                 {isOpen ? (
-                  <div className="grid gap-1 border-t border-[#d6cdfd] px-4 py-3">
+                  <div className="grid gap-1 border-t border-[#eee8f8] px-4 py-3">
                     {section.lessons.length ? (
                       section.lessons.map((lesson) =>
                         lesson.id ? (
@@ -4856,7 +5074,7 @@ function SpeakEnglishClient() {
                             onClick={() =>
                               openClassicLesson(lesson.id!, lesson.title)
                             }
-                            className="rounded-[14px] px-3 py-2 text-left text-[0.98rem] font-bold leading-6 text-[#201833] transition hover:bg-white/64"
+                            className="rounded-[14px] px-3 py-2 text-left text-[0.98rem] font-bold leading-6 text-[#201833] transition hover:bg-[#f8f6ff]"
                           >
                             {lesson.title}
                           </button>
@@ -4870,8 +5088,8 @@ function SpeakEnglishClient() {
                         )
                       )
                     ) : (
-                      <p className="rounded-[14px] bg-white/35 px-3 py-3 text-[0.95rem] font-bold leading-6 text-[#7f7896]">
-                        这个小类的课程还在整理中
+                      <p className="rounded-[14px] bg-[#f8f6ff] px-3 py-3 text-[0.95rem] font-bold leading-6 text-[#7f7896]">
+                        {"\u8fd9\u4e2a\u5c0f\u7c7b\u7684\u8bfe\u7a0b\u8fd8\u5728\u6574\u7406\u4e2d"}
                       </p>
                     )}
                   </div>
@@ -4901,48 +5119,125 @@ function SpeakEnglishClient() {
       return renderClassicCategoryDetail(selectedClassicCourseCategory);
     }
 
+    const categoryHotspots = classicSceneMenuHotspots.filter(
+      (hotspot) => hotspot.kind === "category"
+    );
+    const featureHotspots = classicSceneMenuHotspots.filter(
+      (hotspot) => hotspot.kind === "guided" || hotspot.kind === "expression"
+    );
+
     return (
-      <div className="py-2">
-        <div className="relative mx-auto w-full max-w-[430px] overflow-hidden rounded-[28px] bg-[#f8f6ff] shadow-[0_18px_40px_rgba(89,75,150,0.16)]">
-          <div
-            className="relative overflow-hidden"
-            style={{
-              aspectRatio: `${CLASSIC_MENU_IMAGE_WIDTH} / ${CLASSIC_MENU_CROP_HEIGHT}`,
+      <div className="mx-auto grid w-full max-w-[430px] gap-5 py-2">
+        <div className="grid gap-3">
+          <button
+            type="button"
+            onClick={() => {
+              setShowClassicCoursePicker(false);
+              resetClassicCoursePicker();
             }}
+            className="w-fit text-left text-[0.98rem] font-extrabold text-[#5b63ff] transition hover:text-[#201833]"
           >
-            <Image
-              src="/classic-scenes-menu.png"
-              alt="经典口语练习分类菜单"
-              width={1024}
-              height={1536}
-              priority
-              className="block h-auto w-full select-none"
-            />
-            {classicSceneMenuHotspots.map((hotspot) => (
-              <button
-                key={`${hotspot.kind}-${hotspot.id}`}
-                type="button"
-                aria-label={hotspot.label}
-                onClick={() => handleClassicMenuHotspot(hotspot)}
-                className="absolute rounded-[24px] transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-[#7c55ff]/28 active:scale-[0.99]"
-                style={{
-                  left: `${(hotspot.rect.x / CLASSIC_MENU_IMAGE_WIDTH) * 100}%`,
-                  top: `${(hotspot.rect.y / CLASSIC_MENU_CROP_HEIGHT) * 100}%`,
-                  width: `${
-                    (hotspot.rect.width / CLASSIC_MENU_IMAGE_WIDTH) * 100
-                  }%`,
-                  height: `${
-                    (hotspot.rect.height / CLASSIC_MENU_CROP_HEIGHT) * 100
-                  }%`,
-                }}
-              />
-            ))}
+            {"\u2190 \u8fd4\u56de\u4e0a\u4e00\u7ea7"}
+          </button>
+          <div className="min-w-0">
+            <h2 className="text-[1.86rem] font-black leading-tight text-[#201833]">
+              {"\u7ecf\u5178\u53e3\u8bed\u7ec3\u4e60"}
+            </h2>
+            <p className="mt-2 text-[0.86rem] font-bold leading-5 text-[#6f6685]">
+              {"\u8986\u76d6\u65e5\u5e38\u751f\u6d3b\u573a\u666f\uff0c\u6309\u5206\u7c7b\u7ec3\u9ad8\u9891\u8868\u8fbe"}
+            </p>
           </div>
         </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          {categoryHotspots.map((hotspot) => {
+            const category = classicCourseCategories.find(
+              (item) => item.id === hotspot.id
+            );
+
+            if (!category) return null;
+
+            const lessonCount = getClassicCourseLessonCount(category);
+            const visual =
+              classicMenuCardVisuals[hotspot.id] || defaultClassicMenuCardVisual;
+
+            return (
+              <button
+                key={hotspot.id}
+                type="button"
+                onClick={() => handleClassicMenuHotspot(hotspot)}
+                className="group min-h-[142px] overflow-hidden rounded-[18px] border border-[#eee8f8] px-3.5 py-3 text-left shadow-[0_10px_22px_rgba(84,72,146,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(84,72,146,0.13)] active:scale-[0.99]"
+                style={{ background: visual.background }}
+              >
+                <span className="flex items-start justify-between gap-2">
+                  <span
+                    className="grid h-9 w-9 place-items-center rounded-full bg-white/78 text-[0.95rem] font-black shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_8px_16px_rgba(84,72,146,0.1)]"
+                    style={{ color: visual.accent }}
+                  >
+                    {visual.icon}
+                  </span>
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/82 text-[1.15rem] font-black leading-none text-[#5b63ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.78)] transition group-hover:translate-x-0.5">
+                    {"\u2192"}
+                  </span>
+                </span>
+                <span className="mt-3 block text-[1rem] font-black leading-5 text-[#201833]">
+                  {hotspot.label}
+                </span>
+                <span className="mt-1.5 block text-[0.72rem] font-bold leading-4 text-[#6f6685]">
+                  {classicCategoryDescriptions[hotspot.id]}
+                </span>
+                <span className="mt-3 block text-[0.72rem] font-black leading-none text-[#8d84a5]">
+                  {lessonCount
+                    ? `${lessonCount} \u4e2a\u8bfe\u7a0b`
+                    : "\u8bfe\u7a0b\u6574\u7406\u4e2d"}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          {featureHotspots.map((hotspot) => {
+            const visual =
+              classicMenuCardVisuals[hotspot.id] || defaultClassicMenuCardVisual;
+            const description =
+              hotspot.kind === "guided"
+                ? "\u6839\u636e\u4f60\u7684\u60f3\u6cd5\uff0cAI \u5e2e\u4f60\u7ec4\u7ec7\u66f4\u5730\u9053\u7684\u8868\u8fbe"
+                : "\u5b66\u4e60\u6700\u5e38\u7528\u8868\u8fbe\uff0c\u8ba9\u4f60\u7684\u82f1\u8bed\u66f4\u81ea\u7136";
+
+            return (
+              <button
+                key={hotspot.id}
+                type="button"
+                onClick={() => handleClassicMenuHotspot(hotspot)}
+                className="group min-h-[96px] overflow-hidden rounded-[18px] border border-[#eee8f8] px-3.5 py-3 text-left shadow-[0_10px_22px_rgba(84,72,146,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(84,72,146,0.13)] active:scale-[0.99]"
+                style={{ background: visual.background }}
+              >
+                <span className="flex items-center justify-between gap-2">
+                  <span
+                    className="grid h-8 min-w-8 place-items-center rounded-full bg-white/78 px-2 text-[0.78rem] font-black shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_8px_16px_rgba(84,72,146,0.1)]"
+                    style={{ color: visual.accent }}
+                  >
+                    {visual.icon}
+                  </span>
+                  <span className="rounded-full bg-white/72 px-2 py-1 text-[0.62rem] font-black leading-none text-[#7b6f96]">
+                    NEW
+                  </span>
+                </span>
+                <span className="mt-2.5 block text-[0.98rem] font-black leading-5 text-[#201833]">
+                  {hotspot.label}
+                </span>
+                <span className="mt-1 block text-[0.7rem] font-bold leading-4 text-[#6f6685]">
+                  {description}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
       </div>
     );
   }
-
   function handleKeyPress(key: string) {
     if (key === "shift") {
       setIsShifted((current) => !current);
@@ -5120,11 +5415,23 @@ function SpeakEnglishClient() {
       data-speakflow-font-size={fontSizePreference}
     >
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-[520px] items-center justify-center p-2 sm:p-4">
-        <section className="sf-speak-phone relative flex h-[calc(100dvh-16px)] min-h-[calc(100dvh-16px)] w-full max-w-[430px] flex-col overflow-hidden rounded-[34px] sm:min-h-[720px]">
-          <div className="pointer-events-none absolute left-1/2 top-[19%] z-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full border border-[#91dcff]/10" />
-          <div className="pointer-events-none absolute left-1/2 top-[25%] z-0 h-[300px] w-[300px] -translate-x-1/2 rounded-full border border-[#b799ff]/10" />
+        <section
+          className={`sf-speak-phone relative flex h-[calc(100dvh-16px)] min-h-[calc(100dvh-16px)] w-full max-w-[430px] flex-col overflow-hidden rounded-[34px] sm:min-h-[720px] ${
+            showClassicCoursePicker ? "sf-speak-phone-classic-menu-open" : ""
+          }`}
+        >
+          <div
+            className={`pointer-events-none absolute left-1/2 top-[19%] z-0 h-[420px] w-[420px] -translate-x-1/2 rounded-full border border-[#91dcff]/10 ${
+              showClassicCoursePicker ? "hidden" : ""
+            }`}
+          />
+          <div
+            className={`pointer-events-none absolute left-1/2 top-[25%] z-0 h-[300px] w-[300px] -translate-x-1/2 rounded-full border border-[#b799ff]/10 ${
+              showClassicCoursePicker ? "hidden" : ""
+            }`}
+          />
 
-          <header className="relative z-10 shrink-0 px-5 pt-6">
+          <header className="sf-speak-header relative z-10 shrink-0 px-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <button
@@ -6920,12 +7227,13 @@ function SpeakEnglishClient() {
                     : "justify-start pt-14"
               }`}
             >
-              <FreeUsageMeter
-                className="mb-6"
-                isPro={isAccountPro}
-                limit={FREE_PRACTICE_DAILY_LIMIT}
-                used={freePracticeUsageCount}
-              />
+              {shouldShowFreePracticeUsageMeter ? (
+                <FreeUsageMeter
+                  className="mb-6"
+                  limit={FREE_PRACTICE_DAILY_LIMIT}
+                  used={freePracticeUsageCount}
+                />
+              ) : null}
 
               {showListeningPrompt ? (
                 practiceStage === "english" && nativeSpeech ? (
@@ -7430,7 +7738,13 @@ function SpeakEnglishClient() {
           ) : null}
 
           {showQuickPanel ? (
-            <div className="sf-quick-panel absolute inset-x-0 bottom-0 top-[86px] z-40 overflow-y-auto bg-[linear-gradient(180deg,#d8cffc_0%,#ddd5ff_52%,#e7e0ff_100%)] px-11 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-3 text-[#201833]">
+            <div
+              className={`sf-quick-panel absolute inset-x-0 bottom-0 top-[86px] z-40 overflow-y-auto pb-[calc(2rem+env(safe-area-inset-bottom))] pt-3 text-[#201833] ${
+                showClassicCoursePicker
+                  ? "bg-white px-5 min-[390px]:px-6"
+                  : "bg-[linear-gradient(180deg,#d8cffc_0%,#ddd5ff_52%,#e7e0ff_100%)] px-11"
+              }`}
+            >
               {showClassicCoursePicker ? (
                 selectedClassicCourseCategoryId !== "__legacy-classic-menu" ? (
                   renderClassicCoursePicker()
