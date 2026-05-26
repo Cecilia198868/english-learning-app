@@ -46,6 +46,10 @@ function getExpressionLearningUsage(): ExpressionLearningUsage {
   }
 }
 
+export function getExpressionLearningUsageCount() {
+  return getExpressionLearningUsage().learnedIds.length;
+}
+
 function saveExpressionLearningUsage(usage: ExpressionLearningUsage) {
   if (typeof window === "undefined") return;
 

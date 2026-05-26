@@ -6,12 +6,15 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import AccountAvatarButton from "@/components/AccountAvatarButton";
 import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
+import FreeUsageMeter from "@/components/FreeUsageMeter";
+import PlayIcon from "@/components/PlayIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
 import {
   featuredLessonRecords,
   getFeaturedLessonById,
 } from "@/data/featuredCourses";
+import { getPrebuiltClassicExpressionSet } from "@/data/prebuiltClassicExpressions";
 import {
   addVocabularyWord,
   generateVocabularyDefinition,
@@ -25,6 +28,8 @@ import {
   type HighlightedExpression,
 } from "@/lib/expressionHighlights";
 import {
+  FREE_PRACTICE_DAILY_LIMIT,
+  getFreePracticeUsage,
   hasFreePracticeCompletion,
   isFreePracticeLimitReached,
   recordFreePracticeCompletion,
@@ -349,6 +354,7 @@ export default function StudyPage() {
     useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
     useState<SubscriptionStatus>("free");
+  const [freePracticeUsageCount, setFreePracticeUsageCount] = useState(0);
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceName, setSelectedVoiceName] = useState("");
@@ -370,6 +376,7 @@ export default function StudyPage() {
   const freePracticeScope = isMyCourseLesson
     ? (`course:${lessonId}` as const)
     : "classic";
+  const isAccountPro = hasProAccess(accountSubscriptionStatus);
 
   const autoPlayRef = useRef(false);
   const currentIndexRef = useRef(0);
@@ -382,6 +389,14 @@ export default function StudyPage() {
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const speechBufferRef = useRef("");
   const speechSilenceTimerRef = useRef<number | null>(null);
+
+  const refreshFreePracticeUsageCount = useCallback(() => {
+    setFreePracticeUsageCount(getFreePracticeUsage(freePracticeScope).count);
+  }, [freePracticeScope]);
+
+  useEffect(() => {
+    refreshFreePracticeUsageCount();
+  }, [refreshFreePracticeUsageCount]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -1072,6 +1087,10 @@ export default function StudyPage() {
   const currentPair = useMemo(() => {
     return pairs[currentIndex] || { chinese: "", english: "" };
   }, [pairs, currentIndex]);
+  const prebuiltClassicExpressionSet = useMemo(
+    () => getPrebuiltClassicExpressionSet(lessonId, currentIndex),
+    [currentIndex, lessonId]
+  );
   const isSourcePlaybackActive = isClipPlaying || isAutoPlaying;
   const hasSourceAudioId = Boolean(lesson?.sourceAudioId);
   const hasValidTimeRange =
@@ -1105,10 +1124,19 @@ export default function StudyPage() {
     const fallbackVariants = createFallbackExpressionVariants(
       currentPair.english || ""
     );
+    const prebuiltVariants = prebuiltClassicExpressionSet?.variants || [];
 
-    setExpressionVariants(fallbackVariants);
+    setExpressionVariants(
+      prebuiltVariants.length ? prebuiltVariants : fallbackVariants
+    );
     setSelectedExpressionIndex(0);
     setIsLoadingExpressionVariants(false);
+
+    if (prebuiltVariants.length) {
+      return () => {
+        cancelled = true;
+      };
+    }
 
     async function loadExpressionVariants() {
       try {
@@ -1160,6 +1188,7 @@ export default function StudyPage() {
     currentPair.chinese,
     currentPair.english,
     isListening,
+    prebuiltClassicExpressionSet,
     spokenEnglish,
   ]);
 
@@ -1254,6 +1283,7 @@ export default function StudyPage() {
 
   function showFreePracticeLimit() {
     stopSequencePlayback();
+    refreshFreePracticeUsageCount();
     setShowFreePracticeLimitModal(true);
   }
 
@@ -1301,12 +1331,13 @@ export default function StudyPage() {
   }
 
   function markCurrentSentenceCompleted(index = currentIndex) {
-    if (hasProAccess(accountSubscriptionStatus)) return;
+    if (isAccountPro) return;
 
-    recordFreePracticeCompletion(
+    const result = recordFreePracticeCompletion(
       freePracticeScope,
       getSentenceCompletionId(index)
     );
+    setFreePracticeUsageCount(result.count);
   }
 
   function getRecognitionConstructor() {
@@ -1465,6 +1496,18 @@ export default function StudyPage() {
       return;
     }
 
+    const prebuiltHighlights =
+      prebuiltClassicExpressionSet?.highlights?.[selectedExpression.key] || [];
+
+    if (prebuiltClassicExpressionSet) {
+      setHighlightedExpressions(
+        prebuiltHighlights.length
+          ? prebuiltHighlights
+          : createFallbackHighlightedExpressions(sentence)
+      );
+      return;
+    }
+
     let cancelled = false;
     setHighlightedExpressions(createFallbackHighlightedExpressions(sentence));
 
@@ -1498,7 +1541,12 @@ export default function StudyPage() {
     return () => {
       cancelled = true;
     };
-  }, [isLoadingExpressionVariants, selectedExpression.text]);
+  }, [
+    isLoadingExpressionVariants,
+    prebuiltClassicExpressionSet,
+    selectedExpression.key,
+    selectedExpression.text,
+  ]);
   function openNeighborLesson(targetLesson: { id: string; title: string }) {
     stopAutoPlay();
     window.localStorage.setItem("currentLessonTitle", targetLesson.title);
@@ -1576,6 +1624,12 @@ export default function StudyPage() {
               <p className="mt-1 text-[1rem] font-extrabold text-[#9a93a9]">
                 {sentenceProgressText}
               </p>
+              <FreeUsageMeter
+                className="mt-3"
+                isPro={isAccountPro}
+                limit={FREE_PRACTICE_DAILY_LIMIT}
+                used={freePracticeUsageCount}
+              />
             </div>
 
             <div
@@ -1690,7 +1744,7 @@ export default function StudyPage() {
                                         : "bg-white/42 text-[#201833]"
                                     }`}
                                   >
-                                    ▶
+                                    <PlayIcon className="h-4 w-4 translate-x-[1px]" />
                                   </button>
                                 </div>
                                 <p className="sf-study-expression-text mt-3 text-left text-[clamp(1.55rem,7vw,1.85rem)] font-extrabold leading-[1.5] text-[#201833]">

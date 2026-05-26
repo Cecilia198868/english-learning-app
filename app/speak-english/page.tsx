@@ -5,12 +5,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
+import FreeUsageMeter from "@/components/FreeUsageMeter";
 import { useLanguage } from "@/components/LanguageProvider";
+import PlayIcon from "@/components/PlayIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import {
   addVocabularyWord,
   generateVocabularyDefinition,
   hasUsableMeaning,
+  syncVocabularyWordsWithCloud,
   tokenizeEnglishSentence,
   updateVocabularyWord,
 } from "@/lib/vocabulary";
@@ -21,6 +24,8 @@ import {
   type HighlightedExpression,
 } from "@/lib/expressionHighlights";
 import {
+  FREE_PRACTICE_DAILY_LIMIT,
+  getFreePracticeUsage,
   isFreePracticeLimitReached,
   recordFreePracticeCompletion,
 } from "@/lib/freePracticeLimit";
@@ -157,7 +162,6 @@ type AccountPanelView =
   | "helpCenter"
   | "reportIssue"
   | "aboutSpeakFlow"
-  | "phoneTransfer"
   | "accountManagement"
   | "interfaceLanguage"
   | "notifications"
@@ -181,7 +185,6 @@ type AccountMenuAction =
   | "helpCenter"
   | "reportIssue"
   | "aboutSpeakFlow"
-  | "phoneTransfer"
   | "accountManagement"
   | "interfaceLanguage"
   | "notifications"
@@ -227,14 +230,6 @@ type NotificationInboxItem = {
   unread?: boolean;
 };
 
-type PhoneTransferBackup = {
-  app: "SpeakFlow";
-  backupType: "learning-content";
-  exportedAt: string;
-  localStorage: Record<string, string>;
-  version: 1;
-};
-
 type AccountMenuIconName =
   | "star"
   | "card"
@@ -245,7 +240,6 @@ type AccountMenuIconName =
   | "globe"
   | "moon"
   | "bell"
-  | "cloud"
   | "help"
   | "chat"
   | "file"
@@ -269,28 +263,6 @@ const accountAvatarStoragePrefix = "speakflow-account-avatar";
 const appearancePreferenceStorageKey = "speakflow-appearance-preference";
 const fontSizePreferenceStorageKey = "speakflow-font-size-preference";
 const selectedVoiceStorageKey = "speakflow-selected-voice-uri";
-const phoneTransferBackupMimeType = "application/json";
-const phoneTransferBackupExactKeys = new Set([
-  "currentLessonTitle",
-  "english-app-base-language",
-  "english-app-data",
-  "english-app-language",
-  "english-app-lessons",
-  "lastStudyProgress",
-  "selected-voice-name",
-  "speakflow-font-size-preference",
-  "speakflow-free-expression-learning",
-  "speakflow-selected-voice-uri",
-  "study-gap-seconds",
-  "study-prep-seconds",
-  "vocabulary_group_mastery",
-  "vocabulary_words",
-]);
-const phoneTransferBackupKeyPrefixes = [
-  "lesson-progress-",
-  "speakflow-account-avatar:",
-  "speakflow-free-practice-usage:",
-];
 const speechSilenceDelayMs = 1000;
 const englishSpeechSilenceDelayMs = 2000;
 const speechNoInputTimeoutMs = 12000;
@@ -313,83 +285,6 @@ function getSpeechSilenceDelay(stage: PracticeStage) {
 
 function isFontSizePreference(value: string): value is FontSizePreference {
   return value === "small" || value === "standard" || value === "large";
-}
-
-function shouldIncludePhoneTransferStorageKey(key: string) {
-  return (
-    phoneTransferBackupExactKeys.has(key) ||
-    phoneTransferBackupKeyPrefixes.some((prefix) => key.startsWith(prefix))
-  );
-}
-
-function createPhoneTransferBackup(): PhoneTransferBackup {
-  const localStorageData: Record<string, string> = {};
-
-  for (let index = 0; index < window.localStorage.length; index += 1) {
-    const key = window.localStorage.key(index);
-    if (!key || !shouldIncludePhoneTransferStorageKey(key)) continue;
-
-    const value = window.localStorage.getItem(key);
-    if (typeof value === "string") {
-      localStorageData[key] = value;
-    }
-  }
-
-  return {
-    app: "SpeakFlow",
-    backupType: "learning-content",
-    exportedAt: new Date().toISOString(),
-    localStorage: localStorageData,
-    version: 1,
-  };
-}
-
-function parsePhoneTransferBackup(rawText: string): PhoneTransferBackup {
-  const parsed = JSON.parse(rawText) as Partial<PhoneTransferBackup>;
-
-  if (
-    parsed.app !== "SpeakFlow" ||
-    parsed.backupType !== "learning-content" ||
-    parsed.version !== 1 ||
-    !parsed.localStorage ||
-    typeof parsed.localStorage !== "object"
-  ) {
-    throw new Error("Invalid SpeakFlow backup file");
-  }
-
-  const localStorageData: Record<string, string> = {};
-
-  Object.entries(parsed.localStorage).forEach(([key, value]) => {
-    if (
-      shouldIncludePhoneTransferStorageKey(key) &&
-      typeof value === "string"
-    ) {
-      localStorageData[key] = value;
-    }
-  });
-
-  return {
-    app: "SpeakFlow",
-    backupType: "learning-content",
-    exportedAt:
-      typeof parsed.exportedAt === "string"
-        ? parsed.exportedAt
-        : new Date().toISOString(),
-    localStorage: localStorageData,
-    version: 1,
-  };
-}
-
-function restorePhoneTransferBackup(backup: PhoneTransferBackup) {
-  Object.entries(backup.localStorage).forEach(([key, value]) => {
-    if (shouldIncludePhoneTransferStorageKey(key)) {
-      window.localStorage.setItem(key, value);
-    }
-  });
-}
-
-function getPhoneTransferBackupFileName() {
-  return `speakflow-learning-backup-${new Date().toISOString().slice(0, 10)}.json`;
 }
 
 function CloseGlyph({ className = "" }: { className?: string }) {
@@ -476,9 +371,6 @@ function AccountLineIcon({
           <path d="M9 23h14l-1.5-2.4V15a5.5 5.5 0 0 0-11 0v5.6L9 23Z" />
           <path d="M13.4 25a3 3 0 0 0 5.2 0" />
         </>
-      ) : null}
-      {name === "cloud" ? (
-        <path d="M10.4 23.5h12.2a5 5 0 0 0 .4-10 7.2 7.2 0 0 0-13.8-1.8A5.9 5.9 0 0 0 10.4 23.5Z" />
       ) : null}
       {name === "help" ? (
         <>
@@ -585,7 +477,6 @@ const accountPanelCopy = {
       {
         title: "Data & Security",
         items: [
-          { action: "phoneTransfer", icon: "☁️", label: "Switch Phones" },
           { action: "accountManagement", icon: "🔏", label: "Account Management" },
         ],
       },
@@ -736,7 +627,6 @@ const accountPanelCopy = {
       {
         title: "数据与安全",
         items: [
-          { action: "phoneTransfer", icon: "☁️", label: "更换手机" },
           { action: "accountManagement", icon: "🔏", label: "账号管理" },
         ],
       },
@@ -1003,10 +893,10 @@ const helpCenterContent: Record<
           "Use Account settings to invite friends, change devices, choose language, read notifications, and manage account records.",
         articles: [
           {
-            title: "How do I switch phones?",
+            title: "How does expression library sync work?",
             body: [
-              "Open Account, Switch Phones. On the old phone, save the learning backup and share it to your new phone through WeChat, AirDrop, email, Google Drive, Files, or another share option.",
-              "On the new phone, open Switch Phones and choose the backup file. SpeakFlow restores local courses, vocabulary, progress, and settings saved in the backup.",
+              "After you sign in, SpeakFlow syncs your expression library to your account automatically.",
+              "When you use another phone, sign in with the same account and your saved expressions will be restored from the cloud.",
             ],
           },
           {
@@ -1250,13 +1140,13 @@ const helpCenterContent: Record<
       {
         title: "设置与设备管理",
         description:
-          "在账户设置里处理邀请好友、更换手机、界面语言、通知收件箱和账号管理。",
+          "在账户设置里处理邀请好友、界面语言、通知收件箱和账号管理。",
         articles: [
           {
-            title: "如何更换手机？",
+            title: "表达库如何云端同步？",
             body: [
-              "打开 账户、更换手机。在旧手机上保存学习内容，然后通过微信、AirDrop、邮件、Google Drive 或文件分享发送到新手机。",
-              "在新手机上打开更换手机，选择备份文件即可恢复本地课程、单词、学习进度和设置。",
+              "登录后，SpeakFlow 会自动把你的表达库同步到账号云端。",
+              "换手机时，用同一个账号登录，保存过的表达会自动从云端恢复。",
             ],
           },
           {
@@ -1380,7 +1270,7 @@ const supportFeedbackContent = {
       { label: "Microphone or playback", value: "voice" },
       { label: "AI expression quality", value: "ai_expression" },
       { label: "Practice flow", value: "practice_flow" },
-      { label: "Switch phones or backup", value: "phone_transfer" },
+      { label: "Expression library sync", value: "vocabulary_sync" },
       { label: "Interface language", value: "interface_language" },
       { label: "Notifications", value: "notifications" },
       { label: "Account management or deletion", value: "account_management" },
@@ -1391,7 +1281,7 @@ const supportFeedbackContent = {
     contactEmail: "Reply email",
     contactPlaceholder: "you@example.com",
     description:
-      "Use this to contact SpeakFlow about bugs, payment issues, Pro status, invite rewards, voice problems, phone transfer, interface language, notifications, account management, AI output, or product suggestions.",
+      "Use this to contact SpeakFlow about bugs, payment issues, Pro status, invite rewards, voice problems, expression library sync, interface language, notifications, account management, AI output, or product suggestions.",
     detailHelp:
       "Helpful details: what you were doing, the exact screen, browser, Pro or Free status, device type, and one example sentence if speech or AI output was involved.",
     error: "Unable to send feedback. Please try again.",
@@ -1400,7 +1290,7 @@ const supportFeedbackContent = {
       "Describe the issue or suggestion. If possible, include the sentence you were practicing and what you expected.",
     page: "Related screen",
     pagePlaceholder:
-      "For example: Invite Friends, Switch Phones, Interface Language, Notifications, Account Management, Pro page",
+      "For example: Invite Friends, Expression Library, Interface Language, Notifications, Account Management, Pro page",
     required: "Please describe the issue in more detail.",
     submit: "Send feedback",
     submitting: "Sending...",
@@ -1415,7 +1305,7 @@ const supportFeedbackContent = {
       { label: "麦克风或朗读", value: "voice" },
       { label: "AI 表达质量", value: "ai_expression" },
       { label: "练习流程", value: "practice_flow" },
-      { label: "更换手机或备份", value: "phone_transfer" },
+      { label: "表达库云同步", value: "vocabulary_sync" },
       { label: "界面语言", value: "interface_language" },
       { label: "通知", value: "notifications" },
       { label: "账号管理或删除", value: "account_management" },
@@ -1426,7 +1316,7 @@ const supportFeedbackContent = {
     contactEmail: "回复邮箱",
     contactPlaceholder: "you@example.com",
     description:
-      "这里是用户联系 SpeakFlow 的入口。付款异常、Pro 状态、邀请奖励、麦克风、更换手机、界面语言、通知、账号管理、AI 表达和功能建议，都可以从这里发给你。",
+      "这里是用户联系 SpeakFlow 的入口。付款异常、Pro 状态、邀请奖励、麦克风、表达库云同步、界面语言、通知、账号管理、AI 表达和功能建议，都可以从这里发给你。",
     detailHelp:
       "最好写清楚：当时在做什么、在哪个界面、用什么浏览器或手机、账号是 Pro 还是免费；如果和语音或 AI 表达有关，附上一条例句最有用。",
     error: "反馈发送失败，请稍后再试。",
@@ -1434,7 +1324,7 @@ const supportFeedbackContent = {
     messagePlaceholder:
       "请描述遇到的问题或建议。可以写下正在练习的句子，以及你原本期待的结果。",
     page: "相关界面",
-    pagePlaceholder: "例如：邀请好友、更换手机、界面语言、通知、账号管理、Pro 页面",
+    pagePlaceholder: "例如：邀请好友、表达库、界面语言、通知、账号管理、Pro 页面",
     required: "请把问题描述得更具体一点。",
     submit: "发送反馈",
     submitting: "正在发送...",
@@ -1634,63 +1524,6 @@ const notificationSettingsContent = {
   }
 >;
 
-const phoneTransferContent = {
-  en: {
-    backupSaved:
-      "Saved. Send this backup file to your new phone, then restore it there.",
-    chooseBackup: "Choose backup file",
-    description:
-      "Before switching phones, save your learning content. After installing SpeakFlow on the new phone, restore the backup file.",
-    exportHelp:
-      "After saving, share the backup through WeChat, AirDrop, email, Google Drive, Files, or any app your phone offers.",
-    exportTitle: "Save learning content",
-    importHelp:
-      "On the new phone, choose the SpeakFlow backup file you received. Your courses, vocabulary, progress, and settings will be restored.",
-    importTitle: "Restore learning content",
-    invalidFile: "This is not a valid SpeakFlow backup file.",
-    newPhone: "New phone",
-    oldPhone: "Old phone",
-    restoreSuccess:
-      "Restored. Reopen your courses or vocabulary page to see the recovered content.",
-    saveButton: "Save to phone",
-    saving: "Saving...",
-    shareAgain: "Share backup file",
-    shareChannels: ["WeChat", "AirDrop", "Email", "Google Drive", "Files"],
-    sharingFailed:
-      "The backup was created, but sharing was not available. It has been downloaded instead.",
-    subtitle:
-      "Save, share, then restore. You do not need to find a hidden folder.",
-    title: "Switch Phones",
-  },
-  "zh-CN": {
-    backupSaved:
-      "\u4fdd\u5b58\u6210\u529f\u3002\u8bf7\u5c06\u8fd9\u4e2a\u5907\u4efd\u6587\u4ef6\u53d1\u9001\u5230\u4f60\u7684\u65b0\u624b\u673a\uff0c\u7136\u540e\u5728\u65b0\u624b\u673a\u4e0a\u6062\u590d\u3002",
-    chooseBackup: "\u9009\u62e9\u5907\u4efd\u6587\u4ef6",
-    description:
-      "\u6362\u624b\u673a\u524d\uff0c\u8bf7\u5148\u4fdd\u5b58\u5b66\u4e60\u5185\u5bb9\u3002\u65b0\u624b\u673a\u5b89\u88c5 SpeakFlow \u540e\uff0c\u518d\u6062\u590d\u5373\u53ef\u3002",
-    exportHelp:
-      "\u4fdd\u5b58\u540e\uff0c\u53ef\u901a\u8fc7\u5fae\u4fe1\u3001AirDrop\u3001\u90ae\u4ef6\u3001Google Drive \u6216\u6587\u4ef6\u53d1\u9001\u5230\u65b0\u624b\u673a\u3002",
-    exportTitle: "\u4fdd\u5b58\u5b66\u4e60\u5185\u5bb9",
-    importHelp:
-      "\u5728\u65b0\u624b\u673a\u4e0a\uff0c\u9009\u62e9\u4f60\u6536\u5230\u7684 SpeakFlow \u5907\u4efd\u6587\u4ef6\u3002\u8bfe\u7a0b\u3001\u5355\u8bcd\u3001\u5b66\u4e60\u8fdb\u5ea6\u548c\u8bbe\u7f6e\u4f1a\u88ab\u6062\u590d\u3002",
-    importTitle: "\u6062\u590d\u5b66\u4e60\u5185\u5bb9",
-    invalidFile: "\u8fd9\u4e0d\u662f\u6709\u6548\u7684 SpeakFlow \u5907\u4efd\u6587\u4ef6\u3002",
-    newPhone: "\u65b0\u624b\u673a",
-    oldPhone: "\u65e7\u624b\u673a",
-    restoreSuccess:
-      "\u6062\u590d\u6210\u529f\u3002\u91cd\u65b0\u6253\u5f00\u8bfe\u7a0b\u6216\u5355\u8bcd\u9875\uff0c\u5c31\u80fd\u770b\u5230\u6062\u590d\u7684\u5185\u5bb9\u3002",
-    saveButton: "\u4fdd\u5b58\u5230\u624b\u673a",
-    saving: "\u6b63\u5728\u4fdd\u5b58...",
-    shareAgain: "\u5206\u4eab\u5907\u4efd\u6587\u4ef6",
-    shareChannels: ["\u5fae\u4fe1", "AirDrop", "\u90ae\u4ef6", "Google Drive", "\u6587\u4ef6"],
-    sharingFailed:
-      "\u5907\u4efd\u5df2\u521b\u5efa\uff0c\u4f46\u5f53\u524d\u8bbe\u5907\u65e0\u6cd5\u76f4\u63a5\u5206\u4eab\u3002\u5df2\u6539\u4e3a\u4e0b\u8f7d\u5907\u4efd\u6587\u4ef6\u3002",
-    subtitle:
-      "\u4fdd\u5b58\u3001\u5206\u4eab\u3001\u65b0\u624b\u673a\u6062\u590d\u3002\u4e0d\u9700\u8981\u81ea\u5df1\u627e\u6587\u4ef6\u5939\u3002",
-    title: "\u66f4\u6362\u624b\u673a",
-  },
-} as const;
-
 const accountManagementContent = {
   en: {
     contactEmailDescription:
@@ -1747,7 +1580,6 @@ const accountHomeContent = {
     inviteFriends: "Invite Friends",
     learningExperience: "Learning Experience",
     notifications: "Notifications",
-    phoneTransfer: "Switch Phones",
     privacyPolicy: "Privacy Policy",
     signOut: "Sign Out",
     terms: "Terms of Service",
@@ -1764,7 +1596,6 @@ const accountHomeContent = {
     inviteFriends: "邀请好友",
     learningExperience: "学习体验",
     notifications: "通知",
-    phoneTransfer: "\u66f4\u6362\u624b\u673a",
     privacyPolicy: "隐私政策",
     signOut: "退出登录",
     terms: "用户协议",
@@ -1826,7 +1657,7 @@ const aboutSpeakFlowContent = {
       "A useful English sentence should be clear, natural, repeatable, and connected to a real situation.",
       "Good AI practice should keep the conversation moving instead of only correcting isolated mistakes.",
       "Vocabulary is easier to remember when it is saved from sentences you actually wanted to say.",
-      "Account settings should make practical tasks easy: inviting friends, changing phones, choosing interface language, reading reward notifications, and managing account records.",
+      "Account settings should make practical tasks easy: inviting friends, syncing saved expressions, choosing interface language, reading reward notifications, and managing account records.",
     ],
     sections: [
       {
@@ -1853,7 +1684,7 @@ const aboutSpeakFlowContent = {
       },
       {
         body: [
-          "Switch Phones exports a learning backup that can be shared directly to a new phone, then restored from the backup file.",
+          "Expression library sync keeps saved expressions connected to the learner's account across phones.",
           "Invite Friends, Interface Language, Notifications, and Account Management keep learners in control of referral rewards, app language, system messages, support contact, and account deletion requests.",
         ],
         title: "Account settings",
@@ -1891,7 +1722,7 @@ const aboutSpeakFlowContent = {
       "一句有用的英文，应该清楚、自然、能复用，并且连接真实生活场景。",
       "好的 AI 口语练习，不只是纠错，还应该让对话继续往前走。",
       "从自己真正想说的句子里收藏词汇和表达，会比孤立背单词更容易记住。",
-      "账户设置应该让真实任务变简单：邀请好友、更换手机、选择界面语言、查看奖励通知和处理账号记录。",
+      "账户设置应该让真实任务变简单：邀请好友、同步表达库、选择界面语言、查看奖励通知和处理账号记录。",
     ],
     sections: [
       {
@@ -1918,7 +1749,7 @@ const aboutSpeakFlowContent = {
       },
       {
         body: [
-          "更换手机会导出学习备份，保存后可以直接分享给新手机，再从备份文件恢复。",
+          "表达库云同步会把收藏过的表达保存到账号中，换手机登录后自动恢复。",
           "邀请好友、界面语言、通知和账号管理让用户可以管理邀请奖励、软件语言、系统消息、客服联系方式和删除账号请求。",
         ],
         title: "账户设置",
@@ -2124,14 +1955,14 @@ const insuranceConsultingLessons: ClassicCourseLesson[] = [
   ...createClassicLessons([
     { id: "bank_insurance_products_zh", title: "银行提供的保险产品" },
   ]),
-  { title: "了解美国医疗保险基本类型" },
-  { title: "新移民如何申请 Obamacare（ACA）医疗保险" },
-  { title: "选择合适的健康保险计划" },
-  { title: "保险覆盖范围咨询" },
-  { title: "寻找初级保健医生" },
-  { title: "处理保险拒赔或预授权问题" },
-  { title: "租房者保险咨询" },
-  { title: "购买房屋保险" },
+  { id: "health_insurance_basic_types_zh", title: "了解美国医疗保险基本类型" },
+  { id: "health_insurance_obamacare_aca_zh", title: "新移民如何申请 Obamacare（ACA）医疗保险" },
+  { id: "health_insurance_choose_plan_zh", title: "选择合适的健康保险计划" },
+  { id: "health_insurance_coverage_consultation_zh", title: "保险覆盖范围咨询" },
+  { id: "health_insurance_find_primary_care_doctor_zh", title: "寻找初级保健医生" },
+  { id: "health_insurance_denial_preauthorization_zh", title: "处理保险拒赔或预授权问题" },
+  { id: "renter_insurance_consultation_zh", title: "租房者保险咨询" },
+  { id: "homeowners_insurance_purchase_zh", title: "购买房屋保险" },
   { title: "财产损失或盗窃后的理赔流程" },
   { title: "了解洪水保险和地震保险" },
   { title: "申请雇主提供的团体保险福利" },
@@ -2516,8 +2347,6 @@ function SpeakEnglishClient() {
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const avatarFileInputRef = useRef<HTMLInputElement | null>(null);
-  const phoneTransferBackupFileRef = useRef<File | null>(null);
-  const phoneTransferFileInputRef = useRef<HTMLInputElement | null>(null);
   const isDrawingRef = useRef(false);
   const speechBufferRef = useRef("");
   const shouldCommitSpeechRef = useRef(false);
@@ -2577,12 +2406,6 @@ function SpeakEnglishClient() {
     useState<AccountPanelView>("menu");
   const [fontSizePreference, setFontSizePreference] =
     useState<FontSizePreference>("standard");
-  const [phoneTransferNotice, setPhoneTransferNotice] = useState("");
-  const [phoneTransferBackupName, setPhoneTransferBackupName] = useState("");
-  const [isPreparingPhoneTransferBackup, setIsPreparingPhoneTransferBackup] =
-    useState(false);
-  const [isRestoringPhoneTransferBackup, setIsRestoringPhoneTransferBackup] =
-    useState(false);
   const [selectedProPlan, setSelectedProPlan] = useState<ProPlan>("yearly");
   const [isStartingCheckout, setIsStartingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
@@ -2639,6 +2462,7 @@ function SpeakEnglishClient() {
   const [showPreviewKeyboard, setShowPreviewKeyboard] = useState(true);
   const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
     useState(false);
+  const [freePracticeUsageCount, setFreePracticeUsageCount] = useState(0);
 
   const activeRows = keyboardMode === "symbols" ? symbolRows : letterRows;
   const baseInputValue =
@@ -2656,7 +2480,6 @@ function SpeakEnglishClient() {
   const aboutSpeakFlow = aboutSpeakFlowContent[language];
   const displaySettings = displaySettingsContent[language];
   const notificationSettings = notificationSettingsContent[language];
-  const phoneTransfer = phoneTransferContent[language];
   const accountManagement = accountManagementContent[language];
   const accountHome = accountHomeContent[language];
   const referrals = referralContent[language];
@@ -2768,8 +2591,6 @@ function SpeakEnglishClient() {
         ? accountCopy.reportIssueTitle
       : accountPanelView === "aboutSpeakFlow"
         ? accountCopy.aboutSpeakFlowTitle
-      : accountPanelView === "phoneTransfer"
-        ? phoneTransfer.title
       : accountPanelView === "accountManagement"
         ? accountManagement.title
       : accountPanelView === "interfaceLanguage"
@@ -2890,6 +2711,14 @@ function SpeakEnglishClient() {
   const accountPlanName = isAccountPro
     ? subscriptionManagementCopy.proPlan
     : subscriptionManagementCopy.freePlan;
+
+  const refreshFreePracticeUsageCount = useCallback(() => {
+    setFreePracticeUsageCount(getFreePracticeUsage("free").count);
+  }, []);
+
+  useEffect(() => {
+    refreshFreePracticeUsageCount();
+  }, [refreshFreePracticeUsageCount]);
   const accountCurrentPeriodEndValue =
     accountCurrentPeriodEndDateLabel || subscriptionManagementCopy.noExpiration;
   const notificationPeriodEndLabel =
@@ -3069,6 +2898,12 @@ function SpeakEnglishClient() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    if (!accountEmail) return;
+
+    void syncVocabularyWordsWithCloud();
+  }, [accountEmail]);
 
   const refreshAccountSubscription = useCallback(async () => {
     setIsLoadingAccountSubscription(true);
@@ -3251,103 +3086,8 @@ function SpeakEnglishClient() {
     setSelectedClassicCourseSectionId("");
   }
 
-  function downloadPhoneTransferBackup(file: File) {
-    const url = URL.createObjectURL(file);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = file.name;
-    link.click();
-    window.setTimeout(() => URL.revokeObjectURL(url), 0);
-  }
-
-  async function sharePhoneTransferBackup(file: File) {
-    const shareData = {
-      files: [file],
-      text:
-        language === "en"
-          ? "SpeakFlow learning backup"
-          : "SpeakFlow 学习内容备份",
-      title: "SpeakFlow",
-    };
-    const shareNavigator = navigator as Navigator & {
-      canShare?: (data: ShareData) => boolean;
-      share?: (data: ShareData) => Promise<void>;
-    };
-
-    if (
-      shareNavigator.share &&
-      (!shareNavigator.canShare || shareNavigator.canShare(shareData))
-    ) {
-      await shareNavigator.share(shareData);
-      return;
-    }
-
-    downloadPhoneTransferBackup(file);
-  }
-
-  async function savePhoneTransferBackup() {
-    if (typeof window === "undefined" || isPreparingPhoneTransferBackup) return;
-
-    setIsPreparingPhoneTransferBackup(true);
-    setPhoneTransferNotice("");
-
-    try {
-      const backup = createPhoneTransferBackup();
-      const file = new File(
-        [JSON.stringify(backup, null, 2)],
-        getPhoneTransferBackupFileName(),
-        { type: phoneTransferBackupMimeType }
-      );
-
-      phoneTransferBackupFileRef.current = file;
-      setPhoneTransferBackupName(file.name);
-      setPhoneTransferNotice(phoneTransfer.backupSaved);
-
-      try {
-        await sharePhoneTransferBackup(file);
-      } catch {
-        downloadPhoneTransferBackup(file);
-        setPhoneTransferNotice(phoneTransfer.sharingFailed);
-      }
-    } catch {
-      setPhoneTransferNotice(phoneTransfer.invalidFile);
-    } finally {
-      setIsPreparingPhoneTransferBackup(false);
-    }
-  }
-
-  async function shareSavedPhoneTransferBackup() {
-    const file = phoneTransferBackupFileRef.current;
-
-    if (!file) {
-      await savePhoneTransferBackup();
-      return;
-    }
-
-    try {
-      await sharePhoneTransferBackup(file);
-    } catch {
-      downloadPhoneTransferBackup(file);
-      setPhoneTransferNotice(phoneTransfer.sharingFailed);
-    }
-  }
-
-  async function restorePhoneTransferBackupFile(file: File) {
-    setIsRestoringPhoneTransferBackup(true);
-    setPhoneTransferNotice("");
-
-    try {
-      const backup = parsePhoneTransferBackup(await file.text());
-      restorePhoneTransferBackup(backup);
-      setPhoneTransferNotice(phoneTransfer.restoreSuccess);
-    } catch {
-      setPhoneTransferNotice(phoneTransfer.invalidFile);
-    } finally {
-      setIsRestoringPhoneTransferBackup(false);
-    }
-  }
-
   function showFreePracticeLimit() {
+    refreshFreePracticeUsageCount();
     setShowFreePracticeLimitModal(true);
   }
 
@@ -3379,7 +3119,11 @@ function SpeakEnglishClient() {
   function markFreePracticeRoundCompleted() {
     if (hasProAccess(accountSubscriptionStatus)) return;
 
-    recordFreePracticeCompletion("free", freePracticeRoundIdRef.current);
+    const result = recordFreePracticeCompletion(
+      "free",
+      freePracticeRoundIdRef.current
+    );
+    setFreePracticeUsageCount(result.count);
   }
 
   function requestAccountDeletion() {
@@ -3430,12 +3174,6 @@ function SpeakEnglishClient() {
     if (action === "aboutSpeakFlow") {
       setShowAvatarEditor(false);
       setAccountPanelView("aboutSpeakFlow");
-      return;
-    }
-
-    if (action === "phoneTransfer") {
-      setShowAvatarEditor(false);
-      setAccountPanelView("phoneTransfer");
       return;
     }
 
@@ -4753,11 +4491,6 @@ function SpeakEnglishClient() {
     {
       rows: [
         {
-          action: "phoneTransfer",
-          icon: "cloud",
-          label: accountHome.phoneTransfer,
-        },
-        {
           action: "accountManagement",
           icon: "lock",
           label: accountHome.accountManagement,
@@ -4890,7 +4623,6 @@ function SpeakEnglishClient() {
               accountPanelView === "helpCenter" ||
               accountPanelView === "reportIssue" ||
               accountPanelView === "aboutSpeakFlow" ||
-              accountPanelView === "phoneTransfer" ||
               accountPanelView === "accountManagement" ||
               accountPanelView === "interfaceLanguage" ||
               accountPanelView === "notifications" ||
@@ -5510,109 +5242,6 @@ function SpeakEnglishClient() {
                         </section>
                       ))}
                     </div>
-                  </section>
-                ) : accountPanelView === "phoneTransfer" ? (
-                  <section className="pb-8">
-                    <div className="rounded-[28px] border border-white/80 bg-white/76 px-5 py-6 shadow-[0_22px_58px_rgba(84,72,146,0.13)] ring-1 ring-[#efeaff]">
-                      <div className="flex items-start gap-3">
-                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[#7460e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
-                          <AccountLineIcon name="cloud" />
-                        </span>
-                        <div>
-                          <h3 className="text-[1.36rem] font-black leading-7 text-[#201833]">
-                            {phoneTransfer.title}
-                          </h3>
-                          <p className="mt-2 text-[0.96rem] font-bold leading-7 text-[#4b4267]">
-                            {phoneTransfer.description}
-                          </p>
-                          <p className="mt-2 text-[0.86rem] font-extrabold leading-6 text-[#8264ff]">
-                            {phoneTransfer.subtitle}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 rounded-[26px] bg-white/72 px-5 py-5 shadow-[0_16px_38px_rgba(84,72,146,0.1)] ring-1 ring-white/85">
-                      <span className="rounded-full bg-[#efeaff] px-3 py-1 text-[0.78rem] font-extrabold text-[#8264ff]">
-                        {phoneTransfer.oldPhone}
-                      </span>
-                      <h3 className="mt-4 text-[1.12rem] font-black leading-7 text-[#201833]">
-                        ① {phoneTransfer.exportTitle}
-                      </h3>
-                      <p className="mt-2 text-[0.92rem] font-bold leading-6 text-[#7f7896]">
-                        {phoneTransfer.exportHelp}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => void savePhoneTransferBackup()}
-                        disabled={isPreparingPhoneTransferBackup}
-                        className="mt-4 min-h-12 w-full rounded-[18px] bg-[linear-gradient(135deg,#4f2fff_0%,#7437ff_52%,#9b34e8_100%)] px-4 text-[0.98rem] font-black !text-white shadow-[0_16px_34px_rgba(92,58,214,0.3)] transition disabled:opacity-60 disabled:!text-white/80"
-                      >
-                        {isPreparingPhoneTransferBackup
-                          ? phoneTransfer.saving
-                          : phoneTransfer.saveButton}
-                      </button>
-                      {phoneTransferBackupName ? (
-                        <button
-                          type="button"
-                          onClick={() => void shareSavedPhoneTransferBackup()}
-                          className="mt-3 min-h-11 w-full rounded-[16px] bg-[#efeaff] px-4 text-[0.92rem] font-black text-[#7460e8] transition hover:bg-[#e8e0ff]"
-                        >
-                          {phoneTransfer.shareAgain}
-                        </button>
-                      ) : null}
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {phoneTransfer.shareChannels.map((channel) => (
-                          <span
-                            key={channel}
-                            className="rounded-full bg-[#fbf9ff] px-3 py-1 text-[0.72rem] font-extrabold text-[#7f7896] ring-1 ring-[#e8e2ff]"
-                          >
-                            {channel}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="mt-4 rounded-[26px] bg-white/72 px-5 py-5 shadow-[0_16px_38px_rgba(84,72,146,0.1)] ring-1 ring-white/85">
-                      <span className="rounded-full bg-[#efeaff] px-3 py-1 text-[0.78rem] font-extrabold text-[#8264ff]">
-                        {phoneTransfer.newPhone}
-                      </span>
-                      <h3 className="mt-4 text-[1.12rem] font-black leading-7 text-[#201833]">
-                        ② {phoneTransfer.importTitle}
-                      </h3>
-                      <p className="mt-2 text-[0.92rem] font-bold leading-6 text-[#7f7896]">
-                        {phoneTransfer.importHelp}
-                      </p>
-                      <input
-                        ref={phoneTransferFileInputRef}
-                        type="file"
-                        accept=".json,application/json"
-                        className="hidden"
-                        onChange={(event) => {
-                          const file = event.currentTarget.files?.[0];
-                          event.currentTarget.value = "";
-                          if (file) {
-                            void restorePhoneTransferBackupFile(file);
-                          }
-                        }}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => phoneTransferFileInputRef.current?.click()}
-                        disabled={isRestoringPhoneTransferBackup}
-                        className="mt-4 min-h-12 w-full rounded-[18px] bg-[linear-gradient(135deg,#4f2fff_0%,#7437ff_52%,#9b34e8_100%)] px-4 text-[0.98rem] font-black !text-white shadow-[0_16px_34px_rgba(92,58,214,0.3)] transition disabled:opacity-60 disabled:!text-white/80"
-                      >
-                        {isRestoringPhoneTransferBackup
-                          ? phoneTransfer.saving
-                          : phoneTransfer.chooseBackup}
-                      </button>
-                    </div>
-
-                    {phoneTransferNotice ? (
-                      <p className="mt-4 rounded-[18px] bg-white/68 px-4 py-3 text-center text-[0.86rem] font-extrabold leading-6 text-[#4b4267] ring-1 ring-white/80">
-                        {phoneTransferNotice}
-                      </p>
-                    ) : null}
                   </section>
                 ) : accountPanelView === "accountManagement" ? (
                   <section className="pb-8">
@@ -6695,6 +6324,13 @@ function SpeakEnglishClient() {
                     : "justify-start pt-14"
               }`}
             >
+              <FreeUsageMeter
+                className="mb-6"
+                isPro={isAccountPro}
+                limit={FREE_PRACTICE_DAILY_LIMIT}
+                used={freePracticeUsageCount}
+              />
+
               {showListeningPrompt ? (
                 practiceStage === "english" && nativeSpeech ? (
                   <div className="w-full max-w-[360px]">
@@ -7049,7 +6685,7 @@ function SpeakEnglishClient() {
                                             : "bg-white/42 text-[#201833]"
                                         }`}
                                       >
-                                        ▶
+                                        <PlayIcon className="h-4 w-4 translate-x-[1px]" />
                                       </button>
                                     </div>
                                     <p className="sf-free-practice-expression-text mt-3 text-[1.78rem] font-extrabold leading-[2.55rem] text-[#201833]">
@@ -7163,7 +6799,7 @@ function SpeakEnglishClient() {
                 disabled={isFreeConversationMode && isLoadingFreeConversation}
                 className="ml-auto flex h-10 min-w-[3.15rem] items-center justify-center rounded-[15px] bg-white/46 px-3 text-[1.05rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] transition disabled:opacity-50 min-[390px]:h-11 min-[390px]:min-w-[3.35rem] min-[390px]:px-4 min-[390px]:text-[1.15rem]"
               >
-                ▶
+                <PlayIcon className="h-4 w-4 translate-x-[1px]" />
               </button>
 
               <button
@@ -7191,7 +6827,7 @@ function SpeakEnglishClient() {
                 disabled={isFreeConversationMode && isLoadingFreeConversation}
                 className="mr-auto flex h-10 min-w-[4.65rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-3 text-[0.88rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] transition disabled:opacity-50 min-[390px]:h-11 min-[390px]:min-w-[5.35rem] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[0.95rem]"
               >
-                <span className="text-[1.1rem]">▶</span>
+                <PlayIcon className="h-4 w-4 translate-x-[1px]" />
                 <span>0.5x</span>
               </button>
             </div>

@@ -1,16 +1,22 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ExpressionLearningLimitModal from "@/components/ExpressionLearningLimitModal";
+import FreeUsageMeter from "@/components/FreeUsageMeter";
+import PlayIcon from "@/components/PlayIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import {
+  FREE_EXPRESSION_LEARNING_LIMIT,
   canLearnExpression,
   getExpressionLearningId,
+  getExpressionLearningUsageCount,
   recordLearnedExpression,
 } from "@/lib/freeExpressionLearningLimit";
 import {
   generateVocabularyDefinition,
+  deleteVocabularyWordFromCloud,
   loadVocabularyWords,
+  syncVocabularyWordsWithCloud,
   saveVocabularyWords,
   updateVocabularyWord,
   type VocabularyWord,
@@ -115,7 +121,7 @@ function PlayTriangle({ className = "" }: { className?: string }) {
       aria-hidden="true"
       className={`grid shrink-0 place-items-center rounded-full bg-white/54 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.74),0_8px_18px_rgba(84,72,146,0.1)] ${className}`}
     >
-      ▶
+      <PlayIcon className="h-[55%] w-[55%] translate-x-[1px]" />
     </span>
   );
 }
@@ -151,6 +157,12 @@ export default function VocabularyPage() {
   const [hasLoadedVocabulary, setHasLoadedVocabulary] = useState(false);
   const [loadingExampleTranslationFor, setLoadingExampleTranslationFor] =
     useState("");
+  const [expressionLearningUsageCount, setExpressionLearningUsageCount] =
+    useState(0);
+
+  const refreshExpressionLearningUsageCount = useCallback(() => {
+    setExpressionLearningUsageCount(getExpressionLearningUsageCount());
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -159,6 +171,10 @@ export default function VocabularyPage() {
     delete document.documentElement.dataset.speakflowAppearance;
     delete document.documentElement.dataset.speakflowTheme;
   }, []);
+
+  useEffect(() => {
+    refreshExpressionLearningUsageCount();
+  }, [refreshExpressionLearningUsageCount]);
 
   useEffect(() => {
     const loadTimer = window.setTimeout(() => {
@@ -170,6 +186,25 @@ export default function VocabularyPage() {
       window.clearTimeout(loadTimer);
     };
   }, []);
+
+  useEffect(() => {
+    if (!hasLoadedVocabulary || !hasLoadedAccountSubscription) return;
+
+    let cancelled = false;
+
+    async function syncVocabulary() {
+      const syncedWords = await syncVocabularyWordsWithCloud();
+      if (!cancelled) {
+        setWords([...syncedWords].reverse());
+      }
+    }
+
+    void syncVocabulary();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [hasLoadedAccountSubscription, hasLoadedVocabulary]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -293,6 +328,7 @@ export default function VocabularyPage() {
 
     const expressionId = getExpressionLearningId(displayedExpression);
     if (!canLearnExpression(expressionId)) {
+      refreshExpressionLearningUsageCount();
       const showTimer = window.setTimeout(() => {
         setShowExpressionLimitModal(true);
       }, 0);
@@ -303,7 +339,13 @@ export default function VocabularyPage() {
     }
 
     recordLearnedExpression(expressionId);
-  }, [displayedExpression, hasLoadedAccountSubscription, isAccountPro]);
+    refreshExpressionLearningUsageCount();
+  }, [
+    displayedExpression,
+    hasLoadedAccountSubscription,
+    isAccountPro,
+    refreshExpressionLearningUsageCount,
+  ]);
 
   useEffect(() => {
     if (!displayedExpression) return;
@@ -435,6 +477,7 @@ export default function VocabularyPage() {
       !isAccountPro &&
       !canLearnExpression(expressionId)
     ) {
+      refreshExpressionLearningUsageCount();
       setShowExpressionLimitModal(true);
       return;
     }
@@ -474,6 +517,7 @@ export default function VocabularyPage() {
     const nextVisibleWords = [...nextStoredWords].reverse();
 
     saveVocabularyWords(nextStoredWords);
+    void deleteVocabularyWordFromCloud(expression.word);
     setWords(nextVisibleWords);
     setCurrentIndex((index) => {
       const maxIndex = Math.max(nextVisibleWords.length - 1, 0);
@@ -625,6 +669,14 @@ export default function VocabularyPage() {
               <p className="mt-4 text-[1.08rem] font-extrabold text-[#9a93a9]">
                 {progressText}
               </p>
+              <FreeUsageMeter
+                actionLabel="学习"
+                className="mt-4"
+                isPro={isAccountPro}
+                limit={FREE_EXPRESSION_LEARNING_LIMIT}
+                unitLabel="个表达"
+                used={expressionLearningUsageCount}
+              />
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col items-center overflow-y-auto pt-10 text-center">
@@ -702,7 +754,7 @@ export default function VocabularyPage() {
                 disabled={!speechText}
                 className="sf-expression-play-button flex h-11 min-w-[3.55rem] items-center justify-center gap-2 rounded-[15px] bg-white/46 px-4 text-[1.06rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] disabled:opacity-45"
               >
-                ▶
+                <PlayIcon className="h-4 w-4 translate-x-[1px]" />
               </button>
               <button
                 type="button"
@@ -711,7 +763,8 @@ export default function VocabularyPage() {
                 disabled={!speechText}
                 className="sf-expression-slow-button flex h-11 min-w-[5.15rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-4 text-[0.92rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] disabled:opacity-45"
               >
-                ▶ <span>0.5x</span>
+                <PlayIcon className="h-4 w-4 translate-x-[1px]" />
+                <span>0.5x</span>
               </button>
               <button
                 type="button"

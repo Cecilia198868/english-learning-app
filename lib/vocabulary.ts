@@ -16,6 +16,7 @@ export type VocabularyGroupMastery = Record<string, number>;
 export const VOCABULARY_WORDS_KEY = "vocabulary_words";
 export const VOCABULARY_GROUP_MASTERY_KEY = "vocabulary_group_mastery";
 export const VOCABULARY_GROUP_SIZE = 30;
+let vocabularyCloudSyncTimer: number | null = null;
 export const PLACEHOLDER_MEANING = "释义待补充";
 
 const GENERIC_MEANINGS = new Set([
@@ -249,9 +250,165 @@ export function loadVocabularyWords(): VocabularyWord[] {
     );
 }
 
-export function saveVocabularyWords(words: VocabularyWord[]) {
+function getValidTime(value: string) {
+  const time = new Date(value).getTime();
+  return Number.isFinite(time) ? time : Number.POSITIVE_INFINITY;
+}
+
+function mergeVocabularyWord(
+  currentWord: VocabularyWord,
+  incomingWord: VocabularyWord
+): VocabularyWord {
+  const currentMeaningUsable = hasUsableMeaning(currentWord.meaning);
+  const incomingMeaningUsable = hasUsableMeaning(incomingWord.meaning);
+  const currentCreatedTime = getValidTime(currentWord.createdAt);
+  const incomingCreatedTime = getValidTime(incomingWord.createdAt);
+
+  return {
+    word: currentWord.word,
+    meaning:
+      incomingMeaningUsable && !currentMeaningUsable
+        ? incomingWord.meaning
+        : currentWord.meaning || incomingWord.meaning,
+    partOfSpeech: currentWord.partOfSpeech || incomingWord.partOfSpeech,
+    example: currentWord.example || incomingWord.example,
+    exampleZh: currentWord.exampleZh || incomingWord.exampleZh,
+    createdAt:
+      incomingCreatedTime < currentCreatedTime
+        ? incomingWord.createdAt
+        : currentWord.createdAt,
+    sourceSentence: currentWord.sourceSentence || incomingWord.sourceSentence,
+    masteredCount: Math.max(currentWord.masteredCount, incomingWord.masteredCount),
+    wrongCount: Math.max(currentWord.wrongCount, incomingWord.wrongCount),
+    correctCount: Math.max(currentWord.correctCount, incomingWord.correctCount),
+  };
+}
+
+export function mergeVocabularyWords(
+  ...wordLists: Array<readonly StoredVocabularyWord[]>
+) {
+  const mergedWords = new Map<string, VocabularyWord>();
+
+  wordLists.forEach((wordList) => {
+    wordList.forEach((word) => {
+      const normalizedWord = normalizeStoredVocabularyWord(word);
+      if (!normalizedWord) return;
+
+      const existingWord = mergedWords.get(normalizedWord.word);
+      mergedWords.set(
+        normalizedWord.word,
+        existingWord
+          ? mergeVocabularyWord(existingWord, normalizedWord)
+          : normalizedWord
+      );
+    });
+  });
+
+  return Array.from(mergedWords.values()).sort(
+    (a, b) =>
+      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  );
+}
+
+export function saveVocabularyWords(
+  words: VocabularyWord[],
+  options: { sync?: boolean } = {}
+) {
   if (!canUseStorage()) return;
   localStorage.setItem(VOCABULARY_WORDS_KEY, JSON.stringify(words));
+
+  if (options.sync !== false) {
+    scheduleVocabularyCloudSync();
+  }
+}
+
+function parseCloudVocabularyResponse(raw: string) {
+  const parsed = safeJsonParse<{ words?: StoredVocabularyWord[] }>(raw, {});
+  return Array.isArray(parsed.words)
+    ? mergeVocabularyWords(parsed.words)
+    : ([] as VocabularyWord[]);
+}
+
+async function requestCloudVocabulary(
+  method: "GET" | "POST",
+  words?: VocabularyWord[]
+) {
+  if (!canUseStorage()) return null;
+
+  const response = await fetch(`/api/vocabulary/sync?t=${Date.now()}`, {
+    method,
+    headers:
+      method === "POST"
+        ? {
+            "Content-Type": "application/json",
+          }
+        : undefined,
+    body: method === "POST" ? JSON.stringify({ words: words || [] }) : undefined,
+  });
+
+  if (response.status === 401) return null;
+
+  const text = await response.text();
+  if (!response.ok) {
+    throw new Error(text || "Vocabulary cloud sync failed");
+  }
+
+  return parseCloudVocabularyResponse(text);
+}
+
+export async function syncVocabularyWordsWithCloud() {
+  const localWords = loadVocabularyWords();
+
+  try {
+    const cloudWords = await requestCloudVocabulary("POST", localWords);
+    if (!cloudWords) return localWords;
+
+    const mergedWords = mergeVocabularyWords(localWords, cloudWords);
+    saveVocabularyWords(mergedWords, { sync: false });
+    return mergedWords;
+  } catch {
+    return localWords;
+  }
+}
+
+export async function loadVocabularyWordsFromCloud() {
+  const localWords = loadVocabularyWords();
+
+  try {
+    const cloudWords = await requestCloudVocabulary("GET");
+    if (!cloudWords) return localWords;
+
+    const mergedWords = mergeVocabularyWords(localWords, cloudWords);
+    saveVocabularyWords(mergedWords, { sync: false });
+    return mergedWords;
+  } catch {
+    return localWords;
+  }
+}
+
+export async function deleteVocabularyWordFromCloud(word: string) {
+  const normalizedWord = normalizeVocabularyWord(word);
+  if (!normalizedWord || !canUseStorage()) return;
+
+  try {
+    await fetch(
+      `/api/vocabulary/sync?word=${encodeURIComponent(normalizedWord)}`,
+      {
+        method: "DELETE",
+      }
+    );
+  } catch {
+    // Local deletion should still work if cloud sync is temporarily unavailable.
+  }
+}
+
+export function scheduleVocabularyCloudSync() {
+  if (!canUseStorage() || vocabularyCloudSyncTimer !== null) return;
+
+  vocabularyCloudSyncTimer = window.setTimeout(() => {
+    vocabularyCloudSyncTimer = null;
+    void syncVocabularyWordsWithCloud();
+  }, 800);
 }
 
 export function addVocabularyWord(word: string, sourceSentence?: string) {

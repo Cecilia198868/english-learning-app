@@ -8,14 +8,14 @@ const privacyContent = {
     title: "Privacy Policy",
     updated: "Last updated: May 23, 2026",
     intro:
-      "This Privacy Policy explains how SpeakFlow collects, uses, shares, stores, and protects information when you use our English speaking practice app, including speech practice, AI-assisted expressions, course creation, vocabulary, account, subscription, invite friends and referral rewards, interface language, notification inbox, phone transfer, and account management features.",
+      "This Privacy Policy explains how SpeakFlow collects, uses, shares, stores, and protects information when you use our English speaking practice app, including speech practice, AI-assisted expressions, course creation, vocabulary cloud sync, account, subscription, invite friends and referral rewards, interface language, notification inbox, and account management features.",
     sections: [
       {
         title: "1. Information We Collect",
         body: [
           "Account information: your name, email address, profile photo, login provider, and account identifiers when you sign in or create an account.",
           "Learning content: text you type, speech or audio you record, transcripts, generated English expressions, course materials, saved words, saved expressions, practice history, learning progress, and pronunciation or answer feedback.",
-          "Device and usage information: app pages you open, feature interactions, invite link and reward interactions, interface language preference, notification inbox interactions, selected voice settings, phone transfer backup interactions, error information, browser or device type, and similar technical data.",
+          "Device and usage information: app pages you open, feature interactions, invite link and reward interactions, interface language preference, notification inbox interactions, selected voice settings, expression library sync interactions, error information, browser or device type, and similar technical data.",
           "Payment information: if you subscribe or purchase paid features, payment details may be processed by an app store or payment provider. SpeakFlow does not need to store your full card number.",
         ],
       },
@@ -23,7 +23,7 @@ const privacyContent = {
         title: "2. How We Use Information",
         body: [
           "We use information to provide SpeakFlow features, including speech recognition, pronunciation practice, AI-assisted expression suggestions, course generation, vocabulary review, account access, saved progress, and customer support.",
-          "We may use information to improve app reliability, personalize your learning experience, remember your selected language, show account and referral reward notifications, support phone transfer, prevent misuse, debug issues, and understand which features are helpful.",
+          "We may use information to improve app reliability, personalize your learning experience, remember your selected language, show account and referral reward notifications, sync saved vocabulary and expressions, prevent misuse, debug issues, and understand which features are helpful.",
           "We may use account, subscription, and referral reward information to manage billing status, Pro access, purchase restoration, invite rewards, and related notices.",
         ],
       },
@@ -53,7 +53,7 @@ const privacyContent = {
       {
         title: "6. Cookies and Local Storage",
         body: [
-          "SpeakFlow uses cookies and local storage to remember your selected language, login state, app preferences, voice settings, free usage status, saved vocabulary, progress, phone transfer backup data you create, and similar app settings.",
+          "SpeakFlow uses cookies and local storage to remember your selected language, login state, app preferences, voice settings, free usage status, saved vocabulary, progress, expression library sync status, and similar app settings.",
           "You can clear browser storage or cookies through your device or browser settings, but some app features may stop working or reset if you do.",
         ],
       },
@@ -67,7 +67,7 @@ const privacyContent = {
       {
         title: "8. Your Choices and Rights",
         body: [
-          "You may update certain account information, share or stop sharing invite links, change language preferences, review notification inbox messages, export or restore local learning backups for phone transfer, delete local browser data, request account deletion, sign out, or stop using SpeakFlow at any time.",
+          "You may update certain account information, share or stop sharing invite links, change language preferences, review notification inbox messages, delete local browser data, request account deletion, sign out, or stop using SpeakFlow at any time.",
           "Depending on where you live, you may have rights to request access, correction, deletion, portability, or restriction of certain personal information. You may also have the right to object to some processing or withdraw consent where applicable.",
           "To make a privacy request, contact SpeakFlow support through the app's help or report issue options. We may need to verify your identity before fulfilling a request.",
         ],
@@ -111,14 +111,14 @@ const privacyContent = {
     title: "隐私政策",
     updated: "最后更新日期：2026 年 5 月 23 日",
     intro:
-      "本隐私政策说明您使用 SpeakFlow 英语口语练习应用时，我们如何收集、使用、共享、存储和保护信息，包括口语练习、AI 辅助表达、课程生成、表达库、账户、订阅、邀请好友与邀请奖励、界面语言、通知收件箱、更换手机和账号管理功能。",
+      "本隐私政策说明您使用 SpeakFlow 英语口语练习应用时，我们如何收集、使用、共享、存储和保护信息，包括口语练习、AI 辅助表达、课程生成、表达库云同步、账户、订阅、邀请好友与邀请奖励、界面语言、通知收件箱和账号管理功能。",
     sections: [
       {
         title: "1. 我们收集的信息",
         body: [
           "账户信息：当您登录或创建账户时，我们可能收集您的姓名、邮箱地址、头像、登录服务提供商和账户标识符。",
           "学习内容：您输入的文字、录制的语音或音频、转写文本、生成的英文表达、课程材料、保存的单词、保存的表达、练习记录、学习进度、发音或答题反馈。",
-          "设备和使用信息：您打开的页面、功能交互、邀请链接和奖励交互、界面语言偏好、通知收件箱交互、选择的语音设置、更换手机备份操作、错误信息、浏览器或设备类型，以及类似技术数据。",
+          "设备和使用信息：您打开的页面、功能交互、邀请链接和奖励交互、界面语言偏好、通知收件箱交互、选择的语音设置、表达库同步操作、错误信息、浏览器或设备类型，以及类似技术数据。",
           "付款信息：如果您订阅或购买付费功能，付款详情可能由应用商店或支付服务商处理。SpeakFlow 不需要保存您的完整银行卡号。",
         ],
       },
@@ -126,7 +126,7 @@ const privacyContent = {
         title: "2. 我们如何使用信息",
         body: [
           "我们使用信息来提供 SpeakFlow 功能，包括语音识别、发音练习、AI 辅助表达建议、课程生成、词汇复习、账户访问、进度保存和客户支持。",
-          "我们可能使用信息来提升应用稳定性、个性化学习体验、记住您的语言选择、显示账户和邀请奖励通知、支持更换手机、防止滥用、排查问题，并了解哪些功能对用户有帮助。",
+          "我们可能使用信息来提升应用稳定性、个性化学习体验、记住您的语言选择、显示账户和邀请奖励通知、同步保存的词汇和表达、防止滥用、排查问题，并了解哪些功能对用户有帮助。",
           "我们可能使用账户、订阅和邀请奖励信息来管理账单状态、Pro 权限、恢复购买、邀请奖励以及相关通知。",
         ],
       },
@@ -156,7 +156,7 @@ const privacyContent = {
       {
         title: "6. Cookie 与本地存储",
         body: [
-          "SpeakFlow 使用 Cookie 和本地存储来记住您的语言选择、登录状态、应用偏好、语音设置、免费使用状态、保存的词汇、学习进度、您创建的更换手机备份数据和类似应用设置。",
+          "SpeakFlow 使用 Cookie 和本地存储来记住您的语言选择、登录状态、应用偏好、语音设置、免费使用状态、保存的词汇、学习进度、表达库同步状态和类似应用设置。",
           "您可以通过设备或浏览器设置清除浏览器存储或 Cookie，但清除后部分功能可能停止工作或被重置。",
         ],
       },
@@ -170,7 +170,7 @@ const privacyContent = {
       {
         title: "8. 您的选择和权利",
         body: [
-          "您可以更新部分账户信息、分享或停止分享邀请链接、更改语言偏好、查看通知收件箱消息、导出或恢复用于更换手机的本地学习备份、删除本地浏览器数据、申请删除账号、退出登录，或随时停止使用 SpeakFlow。",
+          "您可以更新部分账户信息、分享或停止分享邀请链接、更改语言偏好、查看通知收件箱消息、删除本地浏览器数据、申请删除账号、退出登录，或随时停止使用 SpeakFlow。",
           "根据您所在地区的法律，您可能有权请求访问、更正、删除、导出或限制处理某些个人信息，也可能有权反对某些处理或在适用情况下撤回同意。",
           "如需提出隐私请求，请通过应用内帮助或报告问题入口联系 SpeakFlow 支持。我们可能需要先验证您的身份。",
         ],
