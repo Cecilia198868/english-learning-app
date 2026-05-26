@@ -2200,6 +2200,165 @@ const classicCourseCategories: ClassicCourseCategory[] = [
     ],
   },
 ];
+
+const CLASSIC_MENU_CROP_HEIGHT = 1404;
+const CLASSIC_MENU_IMAGE_WIDTH = 1024;
+const FINANCE_MENU_CROP_HEIGHT = 1454;
+const FINANCE_MENU_IMAGE_WIDTH = 1024;
+
+const classicSceneMenuHotspots: Array<{
+  id: string;
+  label: string;
+  kind: "category" | "search" | "guided" | "expression";
+  rect: { x: number; y: number; width: number; height: number };
+}> = [
+  {
+    id: "search",
+    label: "\u641c\u7d22\u7ecf\u5178\u573a\u666f\u8bfe\u7a0b",
+    kind: "search",
+    rect: { x: 902, y: 52, width: 76, height: 76 },
+  },
+  {
+    id: "finance-government",
+    label: "\u91d1\u878d\u4e0e\u884c\u653f\u4e8b\u52a1",
+    kind: "category",
+    rect: { x: 47, y: 195, width: 456, height: 282 },
+  },
+  {
+    id: "shopping-consumption",
+    label: "\u8d2d\u7269\u4e0e\u6d88\u8d39",
+    kind: "category",
+    rect: { x: 521, y: 195, width: 456, height: 282 },
+  },
+  {
+    id: "restaurant-takeout",
+    label: "\u9910\u996e\u4e0e\u5916\u5356",
+    kind: "category",
+    rect: { x: 47, y: 491, width: 456, height: 257 },
+  },
+  {
+    id: "transportation-travel",
+    label: "\u4ea4\u901a\u4e0e\u51fa\u884c",
+    kind: "category",
+    rect: { x: 521, y: 491, width: 456, height: 257 },
+  },
+  {
+    id: "housing-home",
+    label: "\u4f4f\u5bbf\u4e0e\u5bb6\u5c45",
+    kind: "category",
+    rect: { x: 47, y: 765, width: 456, height: 242 },
+  },
+  {
+    id: "health-medical",
+    label: "\u5065\u5eb7\u4e0e\u533b\u7597",
+    kind: "category",
+    rect: { x: 521, y: 765, width: 456, height: 242 },
+  },
+  {
+    id: "service-repair",
+    label: "\u670d\u52a1\u4e0e\u7ef4\u4fee",
+    kind: "category",
+    rect: { x: 47, y: 1020, width: 456, height: 242 },
+  },
+  {
+    id: "education-work-social",
+    label: "\u6559\u80b2\u3001\u5de5\u4f5c\u4e0e\u793e\u4ea4\u751f\u6d3b",
+    kind: "category",
+    rect: { x: 521, y: 1020, width: 456, height: 242 },
+  },
+  {
+    id: "guided",
+    label: "AI \u5f15\u5bfc\u8868\u8fbe",
+    kind: "guided",
+    rect: { x: 47, y: 1280, width: 456, height: 122 },
+  },
+  {
+    id: "expression",
+    label: "\u65b0\u8868\u8fbe",
+    kind: "expression",
+    rect: { x: 521, y: 1280, width: 456, height: 122 },
+  },
+];
+
+const classicCategoryDescriptions: Record<string, string> = {
+  "finance-government": "\u94f6\u884c\u3001\u652f\u4ed8\u3001\u7a0e\u52a1\u3001\u7b7e\u8bc1\u7b49\u573a\u666f",
+  "shopping-consumption": "\u8d2d\u7269\u3001\u9000\u6362\u3001\u652f\u4ed8\u3001\u8ba8\u4ef7\u8fd8\u4ef7",
+  "restaurant-takeout": "\u70b9\u9910\u3001\u5916\u5356\u3001\u5496\u5561\u3001\u9910\u5385\u6c9f\u901a",
+  "transportation-travel": "\u673a\u573a\u3001\u5730\u94c1\u3001\u6253\u8f66\u3001\u95ee\u8def",
+  "housing-home": "\u9152\u5e97\u5165\u4f4f\u3001\u79df\u623f\u3001\u5bb6\u5c45\u751f\u6d3b",
+  "health-medical": "\u770b\u75c5\u3001\u4e70\u836f\u3001\u4f53\u68c0\u3001\u5065\u5eb7\u54a8\u8be2",
+  "service-repair": "\u5feb\u9012\u3001\u552e\u540e\u3001\u7ef4\u4fee\u3001\u7f8e\u5bb9\u7f8e\u53d1",
+  "education-work-social": "\u5de5\u4f5c\u6c9f\u901a\u3001\u9762\u8bd5\u3001\u793e\u4ea4\u3001\u5b66\u6821\u751f\u6d3b",
+};
+
+const financeGovernmentMenuHotspots: Array<{
+  id: string;
+  label: string;
+  kind: "back" | "home" | "section" | "all";
+  rect: { x: number; y: number; width: number; height: number };
+}> = [
+  {
+    id: "back",
+    label: "\u8fd4\u56de\u7ecf\u5178\u573a\u666f\u5206\u7c7b",
+    kind: "back",
+    rect: { x: 30, y: 32, width: 58, height: 58 },
+  },
+  {
+    id: "home",
+    label: "\u8fd4\u56de\u9996\u9875",
+    kind: "home",
+    rect: { x: 926, y: 32, width: 58, height: 58 },
+  },
+  {
+    id: "bank-finance",
+    label: "\u94f6\u884c\u4e0e\u91d1\u878d\u4ea4\u6613",
+    kind: "section",
+    rect: { x: 48, y: 357, width: 458, height: 289 },
+  },
+  {
+    id: "identity-immigration",
+    label: "\u8eab\u4efd\u4e0e\u79fb\u6c11\u76f8\u5173",
+    kind: "section",
+    rect: { x: 518, y: 357, width: 458, height: 289 },
+  },
+  {
+    id: "public-services",
+    label: "\u653f\u5e9c\u798f\u5229\u4e0e\u516c\u5171\u670d\u52a1",
+    kind: "section",
+    rect: { x: 48, y: 663, width: 458, height: 277 },
+  },
+  {
+    id: "driver-vehicle",
+    label: "\u9a7e\u7167\u4e0e\u8f66\u8f86\u7ba1\u7406",
+    kind: "section",
+    rect: { x: 518, y: 663, width: 458, height: 277 },
+  },
+  {
+    id: "insurance-consulting",
+    label: "\u4fdd\u9669\u54a8\u8be2",
+    kind: "section",
+    rect: { x: 48, y: 958, width: 458, height: 267 },
+  },
+  {
+    id: "insurance-traffic-safety",
+    label: "\u4ea4\u901a\u5b89\u5168",
+    kind: "section",
+    rect: { x: 518, y: 958, width: 458, height: 267 },
+  },
+  {
+    id: "tax-government-forms",
+    label: "\u7a0e\u52a1\u4e0e\u653f\u5e9c\u8868\u683c",
+    kind: "section",
+    rect: { x: 48, y: 1244, width: 458, height: 205 },
+  },
+  {
+    id: "all-finance-government",
+    label: "\u67e5\u770b\u5168\u90e8\u91d1\u878d\u4e0e\u884c\u653f\u8bfe\u7a0b",
+    kind: "all",
+    rect: { x: 518, y: 1244, width: 458, height: 205 },
+  },
+];
+
 const emojis = ["😊", "👍", "🙏", "❤️", "😂", "😅"] as const;
 const expressionVariantLabels: Array<{
   key: ExpressionVariantKey;
@@ -2454,6 +2613,7 @@ function SpeakEnglishClient() {
     useState("");
   const [selectedClassicCourseSectionId, setSelectedClassicCourseSectionId] =
     useState("");
+  const [classicCourseSearchQuery, setClassicCourseSearchQuery] = useState("");
   const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>(
     []
   );
@@ -3084,6 +3244,7 @@ function SpeakEnglishClient() {
   function resetClassicCoursePicker() {
     setSelectedClassicCourseCategoryId("");
     setSelectedClassicCourseSectionId("");
+    setClassicCourseSearchQuery("");
   }
 
   function showFreePracticeLimit() {
@@ -4345,6 +4506,441 @@ function SpeakEnglishClient() {
       window.localStorage.setItem("currentLessonTitle", title);
       window.location.href = `/study/${id}`;
     }
+  }
+
+  const selectedClassicCourseCategory = classicCourseCategories.find(
+    (category) => category.id === selectedClassicCourseCategoryId
+  );
+  const selectedClassicCourseMeta = classicSceneMenuHotspots.find(
+    (item) => item.id === selectedClassicCourseCategory?.id
+  );
+  const isClassicCourseSearchOpen =
+    selectedClassicCourseCategoryId === "__classic-search";
+  const classicSearchEntries = useMemo(() => {
+    return classicCourseCategories.flatMap((category) =>
+      category.sections.flatMap((section) =>
+        section.lessons
+          .filter((lesson) => Boolean(lesson.id))
+          .map((lesson) => ({
+            id: lesson.id || "",
+            title: lesson.title,
+            categoryId: category.id,
+            categoryLabel:
+              classicSceneMenuHotspots.find((item) => item.id === category.id)
+                ?.label || category.label,
+            sectionId: section.id,
+            sectionLabel: section.label,
+          }))
+      )
+    );
+  }, []);
+  const classicSearchResults = useMemo(() => {
+    const query = classicCourseSearchQuery.trim().toLowerCase();
+
+    if (!query) {
+      return classicSearchEntries.slice(0, 16);
+    }
+
+    return classicSearchEntries
+      .filter((entry) =>
+        `${entry.title} ${entry.categoryLabel} ${entry.sectionLabel}`
+          .toLowerCase()
+          .includes(query)
+      )
+      .slice(0, 30);
+  }, [classicCourseSearchQuery, classicSearchEntries]);
+
+  function openClassicCourseCategory(categoryId: string) {
+    setSelectedClassicCourseCategoryId(categoryId);
+    setSelectedClassicCourseSectionId("");
+    setClassicCourseSearchQuery("");
+  }
+
+  function handleClassicMenuHotspot(
+    hotspot: (typeof classicSceneMenuHotspots)[number]
+  ) {
+    if (hotspot.kind === "search") {
+      setSelectedClassicCourseCategoryId("__classic-search");
+      setSelectedClassicCourseSectionId("");
+      setClassicCourseSearchQuery("");
+      return;
+    }
+
+    if (hotspot.kind === "guided") {
+      openTrainingGroundMode();
+      setShowClassicCoursePicker(false);
+      resetClassicCoursePicker();
+      return;
+    }
+
+    if (hotspot.kind === "expression") {
+      window.location.href = "/vocabulary";
+      return;
+    }
+
+    openClassicCourseCategory(hotspot.id);
+  }
+
+  function renderClassicSearchView() {
+    return (
+      <div className="grid gap-4 py-2">
+        <button
+          type="button"
+          onClick={resetClassicCoursePicker}
+          className="w-full text-left text-[1rem] font-extrabold text-[#5b63ff]"
+        >
+          ← 返回经典口语练习
+        </button>
+        <div className="grid gap-2">
+          <h2 className="text-[1.85rem] font-extrabold leading-tight text-[#201833]">
+            搜索经典场景
+          </h2>
+          <input
+            value={classicCourseSearchQuery}
+            onChange={(event) => setClassicCourseSearchQuery(event.target.value)}
+            placeholder="搜索课程或场景"
+            className="h-12 w-full rounded-[18px] border border-[#c9beff] bg-white/70 px-4 text-[1rem] font-bold text-[#201833] outline-none transition focus:border-[#7c55ff] focus:ring-4 focus:ring-[#7c55ff]/14"
+          />
+        </div>
+        <div className="grid gap-2">
+          {classicSearchResults.length ? (
+            classicSearchResults.map((entry) => (
+              <button
+                key={`${entry.sectionId}-${entry.id}`}
+                type="button"
+                onClick={() => openClassicLesson(entry.id, entry.title)}
+                className="rounded-[18px] bg-white/58 px-4 py-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_10px_22px_rgba(89,75,150,0.08)] transition hover:bg-white/80 active:scale-[0.99]"
+              >
+                <span className="block text-[1.04rem] font-extrabold leading-6 text-[#201833]">
+                  {entry.title}
+                </span>
+                <span className="mt-1 block text-[0.76rem] font-bold leading-5 text-[#7f7896]">
+                  {entry.categoryLabel} / {entry.sectionLabel}
+                </span>
+              </button>
+            ))
+          ) : (
+            <p className="rounded-[18px] bg-white/42 px-4 py-5 text-[1rem] font-bold text-[#7f7896]">
+              没有找到相关课程
+            </p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  function renderClassicSectionLessons(
+    category: ClassicCourseCategory,
+    section: ClassicCourseSection
+  ) {
+    const categoryTitle =
+      classicSceneMenuHotspots.find((item) => item.id === category.id)?.label ||
+      category.label;
+    const categoryDescription =
+      classicCategoryDescriptions[category.id] ||
+      "\u6309\u771f\u5b9e\u751f\u6d3b\u573a\u666f\u7ec3\u9ad8\u9891\u53e3\u8bed";
+    const lessonCountText = section.lessons.length
+      ? String(section.lessons.length) + " \u4e2a\u8bfe\u7a0b"
+      : "\u8bfe\u7a0b\u6574\u7406\u4e2d";
+
+    return (
+      <div className="mx-auto grid w-full max-w-[360px] gap-4 py-2">
+        <button
+          type="button"
+          onClick={() => setSelectedClassicCourseSectionId("")}
+          className="w-full px-1 text-left text-[0.96rem] font-extrabold text-[#5b63ff] transition hover:text-[#201833]"
+        >
+          {"\u2190 \u8fd4\u56de\u7ecf\u5178\u53e3\u8bed\u7ec3\u4e60"}
+        </button>
+        <div className="rounded-[22px] bg-white/45 px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_14px_34px_rgba(89,75,150,0.1)]">
+          <h2 className="text-[1.65rem] font-extrabold leading-tight text-[#201833]">
+            {categoryTitle}
+          </h2>
+          <p className="mt-2 text-[0.88rem] font-bold leading-6 text-[#6f6685]">
+            {categoryDescription}
+          </p>
+        </div>
+        <div className="overflow-hidden rounded-[20px] bg-white/52 shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_12px_28px_rgba(89,75,150,0.08)]">
+          <div className="flex items-center justify-between gap-3 px-4 py-3">
+            <span className="min-w-0">
+              <span className="block text-[1.08rem] font-extrabold leading-6 text-[#201833]">
+                {section.label}
+              </span>
+              <span className="mt-0.5 block text-[0.78rem] font-bold text-[#7f7896]">
+                {lessonCountText}
+              </span>
+            </span>
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/72 text-[1.35rem] font-extrabold leading-none text-[#6b4dff] shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_8px_16px_rgba(89,75,150,0.1)]">
+              {"\u2193"}
+            </span>
+          </div>
+          <div className="border-t border-[#d4c9fb] px-0 py-2">
+            {section.lessons.length ? (
+              section.lessons.map((lesson) =>
+                lesson.id ? (
+                  <button
+                    key={lesson.id}
+                    type="button"
+                    onClick={() => openClassicLesson(lesson.id!, lesson.title)}
+                    className="block w-full px-6 py-2.5 text-left text-[0.98rem] font-extrabold leading-6 text-[#201833] transition hover:bg-white/62 active:bg-white/78"
+                  >
+                    {lesson.title}
+                  </button>
+                ) : (
+                  <div
+                    key={lesson.title}
+                    className="block w-full px-6 py-2.5 text-left text-[0.98rem] font-extrabold leading-6 text-[#7f7896]"
+                  >
+                    {lesson.title}
+                  </div>
+                )
+              )
+            ) : (
+              <p className="px-6 py-4 text-[0.98rem] font-bold leading-6 text-[#7f7896]">
+                {"\u8fd9\u4e2a\u5c0f\u7c7b\u7684\u8bfe\u7a0b\u8fd8\u5728\u6574\u7406\u4e2d"}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function handleFinanceGovernmentHotspot(
+    hotspot: (typeof financeGovernmentMenuHotspots)[number]
+  ) {
+    if (hotspot.kind === "back") {
+      resetClassicCoursePicker();
+      return;
+    }
+
+    if (hotspot.kind === "home") {
+      setShowClassicCoursePicker(false);
+      setShowQuickPanel(false);
+      resetClassicCoursePicker();
+      return;
+    }
+
+    if (hotspot.kind === "all") {
+      setSelectedClassicCourseSectionId("__finance-all");
+      return;
+    }
+
+    setSelectedClassicCourseSectionId(hotspot.id);
+  }
+
+  function renderFinanceGovernmentCategory(category: ClassicCourseCategory) {
+    if (selectedClassicCourseSectionId === "__finance-all") {
+      return renderClassicCategoryOverview(category);
+    }
+
+    const selectedSection = category.sections.find(
+      (section) => section.id === selectedClassicCourseSectionId
+    );
+
+    if (selectedSection) {
+      return renderClassicSectionLessons(category, selectedSection);
+    }
+
+    return (
+      <div className="py-2">
+        <div className="relative mx-auto w-full max-w-[430px] overflow-hidden rounded-[28px] bg-[#f8f6ff] shadow-[0_18px_40px_rgba(89,75,150,0.16)]">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              aspectRatio: `${FINANCE_MENU_IMAGE_WIDTH} / ${FINANCE_MENU_CROP_HEIGHT}`,
+            }}
+          >
+            <Image
+              src="/finance-government-menu.png"
+              alt="金融与行政事务分类菜单"
+              width={1024}
+              height={1536}
+              priority
+              className="block h-auto w-full select-none"
+            />
+            {financeGovernmentMenuHotspots.map((hotspot) => (
+              <button
+                key={`${hotspot.kind}-${hotspot.id}`}
+                type="button"
+                aria-label={hotspot.label}
+                onClick={() => handleFinanceGovernmentHotspot(hotspot)}
+                className="absolute rounded-[24px] transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-[#7c55ff]/28 active:scale-[0.99]"
+                style={{
+                  left: `${
+                    (hotspot.rect.x / FINANCE_MENU_IMAGE_WIDTH) * 100
+                  }%`,
+                  top: `${
+                    (hotspot.rect.y / FINANCE_MENU_CROP_HEIGHT) * 100
+                  }%`,
+                  width: `${
+                    (hotspot.rect.width / FINANCE_MENU_IMAGE_WIDTH) * 100
+                  }%`,
+                  height: `${
+                    (hotspot.rect.height / FINANCE_MENU_CROP_HEIGHT) * 100
+                  }%`,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function renderClassicCategoryOverview(category: ClassicCourseCategory) {
+    const title = selectedClassicCourseMeta?.label || category.label;
+    const description =
+      classicCategoryDescriptions[category.id] || "按真实生活场景练高频口语";
+
+    return (
+      <div className="grid gap-4 py-2">
+        <button
+          type="button"
+          onClick={resetClassicCoursePicker}
+          className="w-full text-left text-[1rem] font-extrabold text-[#5b63ff]"
+        >
+          ← 返回经典口语练习
+        </button>
+        <div className="rounded-[24px] bg-white/45 px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_14px_34px_rgba(89,75,150,0.1)]">
+          <h2 className="text-[1.65rem] font-extrabold leading-tight text-[#201833]">
+            {title}
+          </h2>
+          <p className="mt-2 text-[0.9rem] font-bold leading-6 text-[#6f6685]">
+            {description}
+          </p>
+        </div>
+        <div className="grid gap-2.5">
+          {category.sections.map((section) => {
+            const isOpen = selectedClassicCourseSectionId === section.id;
+
+            return (
+              <div
+                key={section.id}
+                className="overflow-hidden rounded-[20px] bg-white/54 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_10px_22px_rgba(89,75,150,0.08)]"
+              >
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSelectedClassicCourseSectionId(isOpen ? "" : section.id)
+                  }
+                  className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-white/38"
+                >
+                  <span className="min-w-0">
+                    <span className="block text-[1.08rem] font-extrabold leading-6 text-[#201833]">
+                      {section.label}
+                    </span>
+                    <span className="mt-0.5 block text-[0.76rem] font-bold text-[#7f7896]">
+                      {section.lessons.length
+                        ? `${section.lessons.length} 个课程`
+                        : "课程整理中"}
+                    </span>
+                  </span>
+                  <span
+                    className={`grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/70 text-[1.2rem] font-extrabold text-[#5b63ff] transition ${
+                      isOpen ? "rotate-90" : ""
+                    }`}
+                  >
+                    →
+                  </span>
+                </button>
+
+                {isOpen ? (
+                  <div className="grid gap-1 border-t border-[#d6cdfd] px-4 py-3">
+                    {section.lessons.length ? (
+                      section.lessons.map((lesson) =>
+                        lesson.id ? (
+                          <button
+                            key={lesson.id}
+                            type="button"
+                            onClick={() =>
+                              openClassicLesson(lesson.id!, lesson.title)
+                            }
+                            className="rounded-[14px] px-3 py-2 text-left text-[0.98rem] font-bold leading-6 text-[#201833] transition hover:bg-white/64"
+                          >
+                            {lesson.title}
+                          </button>
+                        ) : (
+                          <div
+                            key={lesson.title}
+                            className="rounded-[14px] px-3 py-2 text-left text-[0.98rem] font-bold leading-6 text-[#7f7896]"
+                          >
+                            {lesson.title}
+                          </div>
+                        )
+                      )
+                    ) : (
+                      <p className="rounded-[14px] bg-white/35 px-3 py-3 text-[0.95rem] font-bold leading-6 text-[#7f7896]">
+                        这个小类的课程还在整理中
+                      </p>
+                    )}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  function renderClassicCategoryDetail(category: ClassicCourseCategory) {
+    if (category.id === "finance-government") {
+      return renderFinanceGovernmentCategory(category);
+    }
+
+    return renderClassicCategoryOverview(category);
+  }
+
+  function renderClassicCoursePicker() {
+    if (isClassicCourseSearchOpen) {
+      return renderClassicSearchView();
+    }
+
+    if (selectedClassicCourseCategory) {
+      return renderClassicCategoryDetail(selectedClassicCourseCategory);
+    }
+
+    return (
+      <div className="py-2">
+        <div className="relative mx-auto w-full max-w-[430px] overflow-hidden rounded-[28px] bg-[#f8f6ff] shadow-[0_18px_40px_rgba(89,75,150,0.16)]">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              aspectRatio: `${CLASSIC_MENU_IMAGE_WIDTH} / ${CLASSIC_MENU_CROP_HEIGHT}`,
+            }}
+          >
+            <Image
+              src="/classic-scenes-menu.png"
+              alt="经典口语练习分类菜单"
+              width={1024}
+              height={1536}
+              priority
+              className="block h-auto w-full select-none"
+            />
+            {classicSceneMenuHotspots.map((hotspot) => (
+              <button
+                key={`${hotspot.kind}-${hotspot.id}`}
+                type="button"
+                aria-label={hotspot.label}
+                onClick={() => handleClassicMenuHotspot(hotspot)}
+                className="absolute rounded-[24px] transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-[#7c55ff]/28 active:scale-[0.99]"
+                style={{
+                  left: `${(hotspot.rect.x / CLASSIC_MENU_IMAGE_WIDTH) * 100}%`,
+                  top: `${(hotspot.rect.y / CLASSIC_MENU_CROP_HEIGHT) * 100}%`,
+                  width: `${
+                    (hotspot.rect.width / CLASSIC_MENU_IMAGE_WIDTH) * 100
+                  }%`,
+                  height: `${
+                    (hotspot.rect.height / CLASSIC_MENU_CROP_HEIGHT) * 100
+                  }%`,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   function handleKeyPress(key: string) {
@@ -6836,6 +7432,9 @@ function SpeakEnglishClient() {
           {showQuickPanel ? (
             <div className="sf-quick-panel absolute inset-x-0 bottom-0 top-[86px] z-40 overflow-y-auto bg-[linear-gradient(180deg,#d8cffc_0%,#ddd5ff_52%,#e7e0ff_100%)] px-11 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-3 text-[#201833]">
               {showClassicCoursePicker ? (
+                selectedClassicCourseCategoryId !== "__legacy-classic-menu" ? (
+                  renderClassicCoursePicker()
+                ) : (
                 <div className="grid gap-2 py-2">
                   <button
                     type="button"
@@ -6953,6 +7552,7 @@ function SpeakEnglishClient() {
                     })}
                   </div>
                 </div>
+                )
               ) : (
                 <div className="grid gap-3 py-2">
                   {quickPracticeStarters.map((item) => (
