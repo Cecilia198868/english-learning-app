@@ -9,6 +9,7 @@ import {
   recordLearnedExpression,
 } from "@/lib/freeExpressionLearningLimit";
 import {
+  generateVocabularyDefinition,
   loadVocabularyWords,
   saveVocabularyWords,
   updateVocabularyWord,
@@ -33,6 +34,7 @@ const GENERIC_EXPRESSION_MEANINGS = new Set([
   "",
   "✨ 值得学习的表达",
   "值得学习的表达",
+  "📘 收藏这个单词",
   "释义待补充",
 ]);
 
@@ -227,6 +229,54 @@ export default function VocabularyPage() {
     }
 
     recordLearnedExpression(expressionId);
+  }, [displayedExpression]);
+
+  useEffect(() => {
+    if (!displayedExpression) return;
+    if (getExpressionNativeMeaning(displayedExpression) !== "释义待补充") return;
+
+    let cancelled = false;
+    const expressionWord = displayedExpression.word;
+
+    async function loadNativeMeaning() {
+      try {
+        const definition = await generateVocabularyDefinition(expressionWord);
+        const generatedMeaning = definition.meaning.trim();
+
+        if (
+          cancelled ||
+          !generatedMeaning ||
+          GENERIC_EXPRESSION_MEANINGS.has(generatedMeaning)
+        ) {
+          return;
+        }
+
+        const updates = {
+          meaning: generatedMeaning,
+          partOfSpeech:
+            definition.partOfSpeech ||
+            displayedExpression?.partOfSpeech ||
+            "word",
+          example: displayedExpression?.example || definition.example,
+          exampleZh: displayedExpression?.exampleZh || definition.exampleZh,
+        };
+
+        updateVocabularyWord(expressionWord, updates);
+        setWords((currentWords) =>
+          currentWords.map((word) =>
+            word.word === expressionWord ? { ...word, ...updates } : word
+          )
+        );
+      } catch {
+        // Keep the card usable if the definition service is temporarily unavailable.
+      }
+    }
+
+    void loadNativeMeaning();
+
+    return () => {
+      cancelled = true;
+    };
   }, [displayedExpression]);
 
   useEffect(() => {

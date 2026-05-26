@@ -18,6 +18,13 @@ export const VOCABULARY_GROUP_MASTERY_KEY = "vocabulary_group_mastery";
 export const VOCABULARY_GROUP_SIZE = 30;
 export const PLACEHOLDER_MEANING = "释义待补充";
 
+const GENERIC_MEANINGS = new Set([
+  PLACEHOLDER_MEANING,
+  "📘 收藏这个单词",
+  "✨ 值得学习的表达",
+  "值得学习的表达",
+]);
+
 const BUILT_IN_DICTIONARY: Record<string, string> = {
   apple: "苹果",
   boat: "船",
@@ -113,10 +120,10 @@ export function normalizeVocabularyWord(rawWord: string) {
 }
 
 export function hasUsableMeaning(meaning: unknown) {
+  const normalizedMeaning = typeof meaning === "string" ? meaning.trim() : "";
+
   return (
-    typeof meaning === "string" &&
-    meaning.trim() !== "" &&
-    meaning.trim() !== PLACEHOLDER_MEANING
+    normalizedMeaning !== "" && !GENERIC_MEANINGS.has(normalizedMeaning)
   );
 }
 

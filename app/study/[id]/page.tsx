@@ -14,6 +14,8 @@ import {
 } from "@/data/featuredCourses";
 import {
   addVocabularyWord,
+  generateVocabularyDefinition,
+  hasUsableMeaning,
   tokenizeEnglishSentence,
   updateVocabularyWord,
 } from "@/lib/vocabulary";
@@ -559,24 +561,53 @@ export default function StudyPage() {
     setIsSavingExpression(false);
   }
 
-  function handleConfirmAddExpression() {
+  async function handleConfirmAddExpression() {
     if (!pendingExpression || isSavingExpression) return;
 
     setIsSavingExpression(true);
 
     const sourceSentence = pendingExpression.sourceSentence;
     const isWord = pendingExpression.kind === "word";
+    let wordDefinition: Awaited<
+      ReturnType<typeof generateVocabularyDefinition>
+    > | null = null;
+
+    if (isWord) {
+      try {
+        wordDefinition = await generateVocabularyDefinition(
+          pendingExpression.phrase
+        );
+        if (!hasUsableMeaning(wordDefinition.meaning)) {
+          throw new Error("Missing native meaning");
+        }
+      } catch {
+        setIsSavingExpression(false);
+        setMessage("中文释义生成失败，请稍后再试");
+        return;
+      }
+    }
+
     const result = addVocabularyWord(
       pendingExpression.phrase,
       sourceSentence
     );
 
     if (!result.ok) {
+      if (isWord && wordDefinition) {
+        updateVocabularyWord(pendingExpression.phrase, {
+          meaning: wordDefinition.meaning,
+          partOfSpeech: wordDefinition.partOfSpeech || "word",
+          example: sourceSentence || wordDefinition.example,
+          exampleZh: wordDefinition.exampleZh,
+          sourceSentence,
+        });
+      }
+
       closeExpressionModal();
       setMessage(
         result.reason === "DUPLICATE"
           ? isWord
-            ? "这个单词已经收藏过了"
+            ? "这个单词已经收藏过了，中文释义已更新"
             : "这个表达已经收藏过了"
           : result.message
       );
@@ -585,9 +616,18 @@ export default function StudyPage() {
 
     const savedWord = result.word.word;
     updateVocabularyWord(savedWord, {
-      ...(isWord ? {} : { meaning: pendingExpression.meaning }),
-      partOfSpeech: isWord ? "word" : "phrase",
-      example: sourceSentence,
+      meaning: isWord
+        ? wordDefinition?.meaning || result.word.meaning
+        : pendingExpression.meaning,
+      partOfSpeech: isWord
+        ? wordDefinition?.partOfSpeech || "word"
+        : "phrase",
+      example: isWord
+        ? sourceSentence || wordDefinition?.example || ""
+        : sourceSentence,
+      exampleZh: isWord
+        ? wordDefinition?.exampleZh || ""
+        : result.word.exampleZh,
       sourceSentence,
     });
     closeExpressionModal();
