@@ -6640,7 +6640,11 @@ function SpeakEnglishClient() {
                 showVoiceOnlyPrompt
                   ? "justify-start pt-28"
                   : hasEnglishAttempt
-                    ? `sf-free-practice-result-content justify-start ${
+                    ? `sf-free-practice-result-content ${
+                        showAiGuidedNudge
+                          ? "sf-free-practice-result-content-with-nudge"
+                          : ""
+                      } justify-start ${
                         isFreeConversationMode
                           ? "pt-8"
                           : showAiGuidedNudge

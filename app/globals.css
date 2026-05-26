@@ -816,6 +816,10 @@ body {
     padding-top: clamp(0.65rem, 1.8dvh, 1rem) !important;
   }
 
+  .sf-speak-phone .sf-free-practice-result-content-with-nudge {
+    padding-top: clamp(6.4rem, 13.5dvh, 7.5rem) !important;
+  }
+
   .sf-speak-phone .sf-native-confirmation-content {
     padding-top: clamp(1.9rem, 6dvh, 3.5rem) !important;
   }
@@ -951,6 +955,10 @@ body {
 
   .sf-speak-phone .sf-free-practice-result-content {
     padding-top: 0.5rem !important;
+  }
+
+  .sf-speak-phone .sf-free-practice-result-content-with-nudge {
+    padding-top: clamp(5.4rem, 11dvh, 6.35rem) !important;
   }
 
   .sf-speak-phone .sf-native-confirmation-content {
