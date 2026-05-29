@@ -7614,7 +7614,7 @@ function SpeakEnglishClient() {
               menuLabel="重新说中文"
               onMenuClick={openFreeStudyStepTwoForNextChinese}
               accountLabel={accountCopy.openAccountMenu}
-              onAccountClick={openReferenceAccountMenu}
+              onAccountClick={openAccountPage}
               avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
               avatarAlt={accountEmail || accountName || "user"}
               onAvatarError={() => setAccountImageFailed(true)}
