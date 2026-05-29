@@ -511,14 +511,14 @@ const accountPanelCopy = {
             label: "Manage Subscription",
           },
           {
-            action: "accountManagement",
-            icon: "🔏",
-            label: "Account Management",
-          },
-          {
             action: "referrals",
             icon: "🎁",
             label: "Invite Friends",
+          },
+          {
+            action: "accountManagement",
+            icon: "🔏",
+            label: "Account Management",
           },
         ],
       },
@@ -663,8 +663,8 @@ const accountPanelCopy = {
             trailing: "未订阅",
           },
           { action: "manageSubscription", icon: "💳", label: "管理订阅" },
-          { action: "accountManagement", icon: "🔏", label: "账号管理" },
           { action: "referrals", icon: "🎁", label: "邀请好友" },
+          { action: "accountManagement", icon: "🔏", label: "账号管理" },
         ],
       },
       {
@@ -4383,6 +4383,19 @@ function SpeakEnglishClient() {
     router.push("/menu");
   }
 
+  function openAccountPage() {
+    if (isListening) {
+      cancelRecognition();
+    }
+
+    setShowQuickPanel(false);
+    setShowClassicCoursePicker(false);
+    resetClassicCoursePicker();
+    setShowAccountMenu(true);
+    setAccountPanelView("menu");
+    setShowAvatarEditor(false);
+  }
+
   function openReferenceAccountMenu() {
     if (isListening) {
       cancelRecognition();
@@ -6115,6 +6128,11 @@ function SpeakEnglishClient() {
           icon: "gift",
           label: accountHome.inviteFriends,
         },
+        {
+          action: "accountManagement",
+          icon: "lock",
+          label: accountHome.accountManagement,
+        },
       ],
     },
     {
@@ -6129,16 +6147,6 @@ function SpeakEnglishClient() {
         { action: "notifications", icon: "bell", label: accountHome.notifications },
       ],
       title: accountHome.learningExperience,
-    },
-    {
-      rows: [
-        {
-          action: "accountManagement",
-          icon: "lock",
-          label: accountHome.accountManagement,
-        },
-      ],
-      title: accountHome.dataAndSecurity,
     },
     {
       rows: [
@@ -7577,7 +7585,7 @@ function SpeakEnglishClient() {
               menuLabel="打开菜单"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
-              onAccountClick={openReferenceAccountMenu}
+              onAccountClick={openAccountPage}
               avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
               avatarAlt={accountEmail || accountName || "user"}
               onAvatarError={() => setAccountImageFailed(true)}
@@ -7587,6 +7595,13 @@ function SpeakEnglishClient() {
 
           {showReferenceListening ? (
             <FreeStudyPageTwo
+              menuLabel="打开菜单"
+              onMenuClick={openMenuPage}
+              accountLabel={accountCopy.openAccountMenu}
+              onAccountClick={openAccountPage}
+              avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
+              avatarAlt={accountEmail || accountName || "user"}
+              onAvatarError={() => setAccountImageFailed(true)}
               isRecordingChinese={isListening}
               isTranscribingChinese={isRecognizingNativeSpeech}
               onMicrophoneClick={handlePrimaryPracticeAction}
@@ -7611,17 +7626,26 @@ function SpeakEnglishClient() {
 
           {showReferenceEnglishPrompt || showReferenceEnglishListening ? (
             <FreeStudyPageFour
-              isRecordingEnglish={isListening || showReferenceEnglishPrompt}
-              nativeSpeech={nativeSpeech}
+               isRecordingEnglish={isListening || showReferenceEnglishPrompt}
+  nativeSpeech={nativeSpeech}
+  menuLabel="打开菜单"
+  onMenuClick={openMenuPage}
+  accountLabel={accountCopy.openAccountMenu}
+  onAccountClick={openReferenceAccountMenu}
+  avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
+  avatarAlt={accountEmail || accountName || "user"}
+  onAvatarError={() => setAccountImageFailed(true)}
             />
           ) : null}
 
           {showReferenceResult ? (
             <div className="sf-free-practice-reference-result absolute inset-0 z-[90] overflow-hidden">
               <FreeStudyPageFiveTop
-                userEnglishText={message}
-                onAiGuidedPractice={openAiGuidedExpressionStepOne}
-                onRetryEnglish={openFreeStudyStepFourForRetry}
+                  userEnglishText={message}
+  onAiGuidedPractice={openAiGuidedExpressionStepOne}
+  onRetryEnglish={openFreeStudyStepFourForRetry}
+  onMenuClick={openMenuPage}
+  onAccountClick={openReferenceAccountMenu}
               />
               <div
                 className="pointer-events-none absolute z-[121] flex items-center gap-1.5 font-black leading-none text-[#755cff] drop-shadow-[0_4px_10px_rgba(117,92,255,0.16)]"

@@ -1,15 +1,19 @@
 "use client";
 
 type FreeStudyPageFiveTopProps = {
-  userEnglishText: string;
+   userEnglishText: string;
   onAiGuidedPractice: () => void;
   onRetryEnglish: () => void;
+  onMenuClick: () => void;
+  onAccountClick: () => void;
 };
 
 export default function FreeStudyPageFiveTop({
-  userEnglishText,
+    userEnglishText,
   onAiGuidedPractice,
   onRetryEnglish,
+  onMenuClick,
+  onAccountClick,
 }: FreeStudyPageFiveTopProps) {
   const displayText = userEnglishText.trim() || " ";
 
@@ -24,30 +28,56 @@ export default function FreeStudyPageFiveTop({
           className="sf-free-study-page-five-top-image"
           draggable={false}
         />
-        <p
-          lang="en"
-          className="sf-free-study-page-five-top-expression-text"
-        >
-          {displayText}
-        </p>
+        <button
+  type="button"
+  aria-label="打开菜单"
+  onClick={onMenuClick}
+  className="sf-free-study-page-five-top-menu"
+/>
+
+<button
+  type="button"
+  aria-label="打开账户"
+  onClick={onAccountClick}
+  className="sf-free-study-page-five-top-account"
+/>
+
         <button
           type="button"
           aria-label="Open AI guided expression practice"
           onClick={onAiGuidedPractice}
           className="sf-free-study-page-five-top-hit sf-free-study-page-five-top-ai"
         />
-        <button
-          type="button"
-          aria-label="Record English again"
-          onClick={onRetryEnglish}
-          className="sf-free-study-page-five-top-hit sf-free-study-page-five-top-expression"
-        />
-        <button
-          type="button"
-          aria-label="Record English again"
-          onClick={onRetryEnglish}
-          className="sf-free-study-page-five-top-hit sf-free-study-page-five-top-retry"
-        />
+       <div className="sf-free-study-page-five-top-expression">
+  <p
+    lang="en"
+    className="sf-free-study-page-five-top-expression-text"
+  >
+    {displayText}
+  </p>
+
+  <button
+    type="button"
+    aria-label="Record English again"
+    onClick={onRetryEnglish}
+    className="sf-free-study-page-five-top-hit sf-free-study-page-five-top-retry"
+  />
+</div><div className="sf-free-study-page-five-top-expression">
+  <p
+    lang="en"
+    className="sf-free-study-page-five-top-expression-text"
+  >
+    {displayText}
+  </p>
+
+  <button
+    type="button"
+    aria-label="Record English again"
+    onClick={onRetryEnglish}
+    className="sf-free-study-page-five-top-hit sf-free-study-page-five-top-retry"
+  />
+</div>
+       
       </div>
     </div>
   );

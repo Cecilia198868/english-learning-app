@@ -5,6 +5,13 @@ import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 type FreeStudyPageFourProps = {
   isRecordingEnglish: boolean;
   nativeSpeech: string;
+  menuLabel?: string;
+  accountLabel?: string;
+  avatarSrc?: string;
+  avatarAlt?: string;
+  onMenuClick: () => void;
+  onAccountClick: () => void;
+  onAvatarError?: () => void;
 };
 
 function getChineseCharacterCount(value: string) {
@@ -58,6 +65,13 @@ function applyChineseTextFit(
 export default function FreeStudyPageFour({
   isRecordingEnglish,
   nativeSpeech,
+  menuLabel = "打开菜单",
+  accountLabel = "打开账户",
+  avatarSrc = "",
+  avatarAlt = "user",
+  onMenuClick,
+  onAccountClick,
+  onAvatarError,
 }: FreeStudyPageFourProps) {
   const chineseTextRef = useRef<HTMLParagraphElement>(null);
   const chineseCharacterCount = getChineseCharacterCount(nativeSpeech);
@@ -126,7 +140,27 @@ export default function FreeStudyPageFour({
           className="sf-free-study-page-four-bg"
           draggable={false}
         />
+        <button
+  type="button"
+  aria-label={menuLabel}
+  onClick={onMenuClick}
+  className="sf-free-study-page-four-menu"
+/>
 
+<button
+  type="button"
+  aria-label={accountLabel}
+  onClick={onAccountClick}
+  className="sf-free-study-page-four-avatar-button"
+>
+  <img
+    src={avatarSrc || "/default-avatar.png"}
+    alt={avatarAlt}
+    className="sf-free-study-page-four-avatar-image"
+    onError={onAvatarError}
+    draggable={false}
+  />
+</button>
         <div className="sf-free-study-page-four-chinese">
           <p
             ref={chineseTextRef}

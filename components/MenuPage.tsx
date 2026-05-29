@@ -78,14 +78,14 @@ export default function MenuPage() {
 
           <button
             type="button"
-            aria-label="Open free study"
+            aria-label="返回自由学习第一页"
             onClick={() => router.push("/free-study/step-1")}
             className="sf-menu-page-hit sf-menu-page-menu-hit"
           />
           <button
             type="button"
-            aria-label="Open account"
-            onClick={() => router.push("/account")}
+            aria-label="打开账户界面"
+            onClick={() => router.push("/speak-english?account=1")}
             className="sf-menu-page-hit sf-menu-page-avatar-hit"
           />
           <button
