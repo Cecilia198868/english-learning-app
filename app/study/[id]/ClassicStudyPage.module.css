@@ -1,0 +1,1652 @@
+.classicShell {
+  min-height: 100dvh;
+  width: 100%;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.82), transparent 30%),
+    linear-gradient(180deg, #f4eee7 0%, #fbf5ee 48%, #f9efe4 100%);
+  color: #3d281b;
+  font-family: var(--sf-font-zh), "Microsoft YaHei", Arial, sans-serif;
+}
+
+.classicShell *,
+.classicShell *::before,
+.classicShell *::after {
+  box-sizing: border-box;
+  letter-spacing: 0;
+}
+
+.classicPhone {
+  position: relative;
+  width: min(100%, 430px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(12px + env(safe-area-inset-top)) 8px 14px;
+  overflow-x: hidden;
+  border: 1px solid rgba(166, 118, 76, 0.12);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(193, 143, 96, 0.09), transparent 34%),
+    linear-gradient(180deg, #fffdf9 0%, #fbf3ea 48%, #fffaf5 100%);
+  box-shadow:
+    0 18px 44px rgba(111, 73, 39, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.classicTopbar {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) 70px;
+  align-items: center;
+  min-height: 68px;
+  padding: 0 10px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow:
+    0 12px 28px rgba(107, 73, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.menuButton,
+.avatarButton {
+  position: relative;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #765032;
+  box-shadow:
+    0 8px 18px rgba(111, 73, 39, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.menuButton svg {
+  width: 29px;
+  height: 29px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 3.3;
+}
+
+.avatarButton {
+  justify-self: end;
+  overflow: visible;
+  padding: 0;
+}
+
+.avatarImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  object-fit: cover;
+  filter: sepia(0.48) saturate(0.82) hue-rotate(340deg);
+}
+
+.avatarDot {
+  position: absolute;
+  right: 2px;
+  bottom: 7px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #fff7ef;
+  border-radius: 999px;
+  background: #b67f52;
+}
+
+.brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #4a2e1e;
+}
+
+.brandIcon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: #955e2d;
+}
+
+.brandIcon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.4;
+}
+
+.brandCopy {
+  display: grid;
+  min-width: 0;
+  line-height: 1;
+}
+
+.brandTitle {
+  color: #3d281b;
+  font-size: clamp(1.35rem, 6vw, 1.72rem);
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.brandSubtitle {
+  margin-top: 6px;
+  color: #bb8a62;
+  font-size: clamp(0.67rem, 3.2vw, 0.9rem);
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.topicBar {
+  display: grid;
+  grid-template-columns: 34px 58px minmax(0, auto) 34px;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+  min-height: 96px;
+  padding: 13px 10px 9px;
+}
+
+.topicArrow {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #5c3924;
+}
+
+.topicArrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.topicArrow svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.2;
+}
+
+.topicIcon {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  color: #c29166;
+}
+
+.topicIcon svg {
+  width: 54px;
+  height: 54px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.1;
+}
+
+.topicIcon text {
+  fill: currentColor;
+  stroke: none;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.topicCopy {
+  min-width: 0;
+}
+
+.topicTitle {
+  max-width: 210px;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #3d281b;
+  font-size: clamp(1.32rem, 6.4vw, 1.62rem);
+  font-weight: 900;
+  line-height: 1.18;
+}
+
+.topicProgress {
+  margin: 7px 0 0;
+  color: #8d5f3f;
+  font-size: clamp(1rem, 4.8vw, 1.2rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.dialogCard {
+  position: relative;
+  min-height: 262px;
+  margin: 0 18px;
+  padding: 16px 16px 14px;
+  overflow: hidden;
+  border: 1px solid rgba(202, 161, 126, 0.18);
+  border-radius: 26px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 252, 248, 0.92)),
+    radial-gradient(circle at 74% 64%, rgba(202, 161, 126, 0.14), transparent 30%);
+  box-shadow:
+    0 13px 30px rgba(105, 70, 39, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.speakerLine {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.speakerAvatar {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #f5e6d7;
+}
+
+.speakerAvatar svg {
+  width: 50px;
+  height: 50px;
+}
+
+.roleBadge {
+  display: inline-flex;
+  min-height: 31px;
+  align-items: center;
+  border-radius: 12px;
+  background: #f7ece1;
+  padding: 0 15px;
+  color: #7c5235;
+  font-size: 0.98rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.speechBubble {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  min-height: 118px;
+  margin-top: 17px;
+  place-items: center;
+  border: 1px solid rgba(220, 181, 148, 0.42);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(235, 207, 180, 0.18), transparent 30%),
+    rgba(255, 252, 248, 0.92);
+  box-shadow:
+    0 10px 26px rgba(109, 75, 45, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.speechBubble::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -17px;
+  width: 24px;
+  height: 24px;
+  border-right: 1px solid rgba(220, 181, 148, 0.42);
+  border-bottom: 1px solid rgba(220, 181, 148, 0.42);
+  background: rgba(255, 252, 248, 0.95);
+  transform: rotate(45deg);
+}
+
+.quoteStart,
+.quoteEnd {
+  position: absolute;
+  color: rgba(196, 147, 103, 0.34);
+  font-size: 3.4rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.quoteStart {
+  left: 20px;
+  top: 14px;
+}
+
+.quoteEnd {
+  right: 20px;
+  bottom: 8px;
+}
+
+.chinesePrompt {
+  max-width: 86%;
+  margin: 0;
+  color: #3d281b;
+  font-size: clamp(1.25rem, 6.4vw, 1.62rem);
+  font-weight: 900 !important;
+  line-height: 1.34;
+  text-align: center;
+}
+
+.sceneIllustration {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 178px;
+  height: 68px;
+  opacity: 0.46;
+}
+
+.bankCounter {
+  position: absolute;
+  right: 22px;
+  bottom: 0;
+  width: 118px;
+  height: 38px;
+  border-radius: 18px 18px 5px 5px;
+  background: linear-gradient(180deg, #f3ddca, #d9b38e);
+}
+
+.bankSign {
+  position: absolute;
+  right: 67px;
+  bottom: 43px;
+  border-radius: 4px;
+  background: #c1946d;
+  padding: 3px 10px;
+  color: white;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.bankPlant {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 28px;
+  height: 58px;
+  border-bottom: 28px solid #c9ab8d;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+}
+
+.bankPlant::before {
+  content: "";
+  position: absolute;
+  left: -17px;
+  top: -6px;
+  width: 50px;
+  height: 34px;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 22% 56%, #c8ac8d 0 22%, transparent 24%),
+    radial-gradient(ellipse at 52% 26%, #c8ac8d 0 24%, transparent 26%),
+    radial-gradient(ellipse at 76% 58%, #c8ac8d 0 22%, transparent 24%);
+}
+
+.bankChairOne,
+.bankChairTwo {
+  position: absolute;
+  bottom: 0;
+  width: 28px;
+  height: 36px;
+  border-radius: 10px 10px 4px 4px;
+  background: #d4b091;
+}
+
+.bankChairOne {
+  right: 138px;
+}
+
+.bankChairTwo {
+  right: 88px;
+}
+
+.promptHint {
+  position: absolute;
+  z-index: 3;
+  left: 26px;
+  bottom: 17px;
+  margin: 0;
+  color: #946238;
+  font-size: 0.98rem;
+  font-weight: 800 !important;
+  line-height: 1.2;
+}
+
+.promptHint span {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+.methodCard {
+  margin: 10px 18px 0;
+  padding: 10px 12px 12px;
+  border: 1px solid rgba(202, 161, 126, 0.16);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 11px 24px rgba(105, 70, 39, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.methodTitle {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  color: #7a4f31;
+}
+
+.methodTitle span {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(179, 128, 88, 0.28), transparent);
+}
+
+.methodTitle strong {
+  font-size: 0.98rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.methodSteps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.methodStep {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  column-gap: 2px;
+  align-items: center;
+  min-width: 0;
+}
+
+.methodIcon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 999px;
+  background: #f3e4d6;
+  color: #966337;
+}
+
+.methodIcon svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.stepNumber {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  transform: translate(21px, -14px);
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #8c5b33;
+  color: #fffaf5;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.stepCopy {
+  display: grid;
+  min-width: 0;
+}
+
+.stepCopy strong {
+  color: #3d281b;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+.stepCopy small {
+  margin-top: 4px;
+  color: #8b5d3c;
+  font-size: 0.64rem;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.methodArrow {
+  display: none;
+}
+
+.practiceControls {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 102px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  margin: 12px 22px 0;
+}
+
+.sentenceButton {
+  display: flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(207, 168, 135, 0.25);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #7b4b2d;
+  box-shadow:
+    0 9px 19px rgba(107, 73, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.sentenceButton:disabled {
+  opacity: 0.42;
+}
+
+.sentenceButton svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.sentenceButton span {
+  color: #7b4b2d;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.micButton {
+  position: relative;
+  display: grid;
+  width: 102px;
+  height: 102px;
+  place-items: center;
+  border: 7px solid rgba(218, 187, 158, 0.56);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 24%, rgba(255, 237, 215, 0.35), transparent 28%),
+    linear-gradient(145deg, #c99258, #905a2d);
+  color: #fffaf5;
+  box-shadow:
+    0 14px 30px rgba(123, 77, 38, 0.25),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25);
+}
+
+.micButton svg {
+  position: relative;
+  z-index: 2;
+  width: 52px;
+  height: 52px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 7;
+}
+
+.micButtonActive {
+  transform: scale(1.03);
+  box-shadow:
+    0 16px 34px rgba(123, 77, 38, 0.32),
+    0 0 0 8px rgba(196, 143, 91, 0.12),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25);
+}
+
+.micPulseOne,
+.micPulseTwo {
+  position: absolute;
+  inset: -18px;
+  border: 1px dashed rgba(202, 161, 126, 0.42);
+  border-radius: 999px;
+}
+
+.micPulseTwo {
+  inset: -31px;
+  opacity: 0.5;
+}
+
+.micHint {
+  display: flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 18px 0;
+  color: #7c5235;
+  font-size: 0.95rem;
+  font-weight: 800 !important;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.tipCard {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 78px;
+  align-items: center;
+  min-height: 60px;
+  margin: 8px 18px 0;
+  padding: 9px 10px 9px 12px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 174, 142, 0.28);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 92% 50%, rgba(192, 133, 75, 0.16), transparent 30%),
+    rgba(255, 247, 238, 0.94);
+  box-shadow: 0 8px 20px rgba(105, 70, 39, 0.07);
+}
+
+.tipIcon {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 999px;
+  background: #a66e3d;
+  color: white;
+  font-size: 0.92rem;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.tipCopy {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.tipCopy strong {
+  color: #7b4b2d;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tipCopy small {
+  color: #7d563a;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.tipArt {
+  position: relative;
+  justify-self: end;
+  width: 66px;
+  height: 54px;
+}
+
+.tipArt::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 3px;
+  width: 34px;
+  height: 45px;
+  border: 3px solid #946238;
+  border-radius: 5px;
+  background: #fff8ef;
+  transform: rotate(7deg);
+}
+
+.tipArt::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  width: 31px;
+  height: 24px;
+  border-radius: 4px 4px 12px 12px;
+  background: #a66e3d;
+  box-shadow: inset 0 -9px 0 rgba(255, 255, 255, 0.18);
+}
+
+.tipArt span {
+  position: absolute;
+  left: 17px;
+  top: 15px;
+  z-index: 2;
+  width: 18px;
+  height: 22px;
+  background:
+    linear-gradient(#946238, #946238) 0 2px / 18px 2px no-repeat,
+    linear-gradient(#946238, #946238) 0 10px / 14px 2px no-repeat,
+    linear-gradient(#946238, #946238) 0 18px / 16px 2px no-repeat;
+}
+
+.resultTopicBar {
+  min-height: 86px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.resultPhone {
+  padding-bottom: 8px;
+}
+
+.resultPhone .classicTopbar {
+  min-height: 56px;
+}
+
+.resultPhone .menuButton,
+.resultPhone .avatarButton {
+  width: 48px;
+  height: 48px;
+}
+
+.resultPhone .avatarImage {
+  width: 44px;
+  height: 44px;
+}
+
+.resultPhone .avatarDot {
+  right: 1px;
+  bottom: 6px;
+}
+
+.resultPhone .brandIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.resultPhone .brandTitle {
+  font-size: clamp(1.24rem, 5.7vw, 1.5rem);
+}
+
+.resultPhone .brandSubtitle {
+  margin-top: 5px;
+  font-size: clamp(0.62rem, 2.9vw, 0.76rem);
+}
+
+.resultPhone .resultTopicBar {
+  min-height: 62px;
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+.resultPhone .topicIcon {
+  width: 47px;
+  height: 47px;
+}
+
+.resultPhone .topicIcon svg {
+  width: 45px;
+  height: 45px;
+}
+
+.resultPhone .topicTitle {
+  font-size: clamp(1.16rem, 5.5vw, 1.36rem);
+  line-height: 1.08;
+}
+
+.resultPhone .topicProgress {
+  margin-top: 3px;
+  font-size: clamp(0.9rem, 4.1vw, 1rem);
+}
+
+.resultPhone .resultHint {
+  min-height: 22px;
+  margin-bottom: 5px;
+  font-size: 0.78rem;
+}
+
+.resultPhone .userExpressionCard {
+  padding-top: 9px;
+  padding-bottom: 10px;
+}
+
+.resultPhone .userExpressionText {
+  margin-top: 8px;
+  font-size: clamp(0.98rem, 4.8vw, 1.13rem);
+  line-height: 1.2;
+}
+
+.resultPhone .expressionList {
+  gap: 7px;
+}
+
+.resultPhone .expressionCard {
+  min-height: 58px;
+}
+
+.resultPhone .expressionCardFeatured {
+  min-height: 68px;
+}
+
+.resultPhone .expressionSelectArea {
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 8px;
+  padding: 8px 2px 8px 9px;
+}
+
+.resultPhone .variantRibbon {
+  width: 30px;
+  height: 45px;
+  padding-top: 8px;
+}
+
+.resultPhone .variantRibbon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.resultPhone .variantTitle {
+  font-size: 0.72rem;
+}
+
+.resultPhone .variantText {
+  font-size: clamp(0.9rem, 4vw, 1rem);
+  line-height: 1.06;
+}
+
+.resultPhone .expressionCardFeatured .variantText {
+  font-size: clamp(0.96rem, 4.35vw, 1.06rem);
+}
+
+.resultPhone .variantNote {
+  font-size: 0.64rem;
+  line-height: 1.08;
+}
+
+.resultPhone .variantSpeaker {
+  width: 34px;
+  height: 34px;
+}
+
+.resultPhone .variantSpeaker svg {
+  width: 21px;
+  height: 21px;
+}
+
+.resultPhone .followCard {
+  margin-top: 7px;
+  padding: 6px 9px 6px;
+}
+
+.resultPhone .followReadButton {
+  gap: 8px;
+}
+
+.resultPhone .followReadButton strong {
+  font-size: 0.92rem;
+}
+
+.resultPhone .followReadButton small {
+  margin-top: 3px;
+  font-size: 0.63rem;
+}
+
+.resultPhone .followBookIcon {
+  width: 34px;
+  height: 34px;
+}
+
+.resultPhone .followBookIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.resultPhone .slowReadButton {
+  min-width: 90px;
+  height: 33px;
+  gap: 5px;
+  font-size: 0.68rem;
+}
+
+.resultPhone .slowReadButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.resultPhone .followControls {
+  grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+  gap: 7px;
+  margin-top: 5px;
+}
+
+.resultPhone .followControls .sentenceButton {
+  min-height: 39px;
+}
+
+.resultPhone .followControls .sentenceButton span {
+  font-size: 0.8rem;
+}
+
+.resultPhone .followMicButton {
+  width: 64px;
+  height: 64px;
+  border-width: 5px;
+}
+
+.resultPhone .followMicButton svg {
+  width: 33px;
+  height: 33px;
+}
+
+.resultPhone .followMicLabel {
+  font-size: 0.68rem;
+}
+
+.resultHint {
+  display: flex;
+  min-height: 25px;
+  align-items: center;
+  gap: 9px;
+  margin: 0 26px 8px;
+  color: #8b6043;
+  font-size: 0.85rem;
+  font-weight: 800 !important;
+  line-height: 1.25;
+}
+
+.resultHintIcon {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 999px;
+  background: #a87145;
+  color: #fff8ef;
+  font-size: 0.78rem;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.userExpressionCard {
+  margin: 0 18px 8px;
+  padding: 14px 14px 17px;
+  border: 1px solid rgba(213, 168, 132, 0.38);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(205, 145, 93, 0.08), transparent 34%),
+    rgba(255, 252, 248, 0.92);
+  box-shadow:
+    0 9px 22px rgba(105, 70, 39, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.userExpressionLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #7a4d31;
+  font-size: 0.98rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.userExpressionIcon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  color: #a27352;
+}
+
+.userExpressionIcon svg {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.userExpressionIcon path:nth-child(3) {
+  fill: #fff8ef;
+}
+
+.userExpressionText {
+  margin: 13px 0 0 42px;
+  overflow-wrap: anywhere;
+  color: #2b2018;
+  font-size: clamp(1.12rem, 5.6vw, 1.38rem);
+  font-weight: 700 !important;
+  line-height: 1.28;
+}
+
+.expressionList {
+  display: grid;
+  gap: 8px;
+  margin: 0 18px;
+}
+
+.loadingExpressions {
+  margin: 0;
+  border: 1px solid rgba(213, 168, 132, 0.28);
+  border-radius: 16px;
+  background: rgba(255, 252, 248, 0.9);
+  padding: 20px;
+  color: #8b6043;
+  font-size: 1rem;
+  font-weight: 900 !important;
+}
+
+.expressionCard {
+  --tone: #b78158;
+  --tone-soft: #f7eee8;
+  --tone-pale: rgba(183, 129, 88, 0.1);
+  --tone-border: rgba(183, 129, 88, 0.22);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 48px;
+  align-items: center;
+  min-height: 73px;
+  overflow: hidden;
+  border: 1px solid var(--tone-border);
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 16% 0%, var(--tone-pale), transparent 38%),
+    rgba(255, 252, 248, 0.9);
+  box-shadow:
+    0 8px 18px rgba(105, 70, 39, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.expressionCardFeatured {
+  min-height: 92px;
+  border-color: rgba(199, 126, 77, 0.68);
+  box-shadow:
+    0 10px 24px rgba(166, 100, 57, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.expressionCardSelected {
+  border-color: color-mix(in srgb, var(--tone) 72%, white);
+}
+
+.expressionSelectArea {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  padding: 10px 4px 10px 10px;
+  color: inherit;
+  text-align: left;
+}
+
+.variantRibbon {
+  display: grid;
+  width: 34px;
+  height: 52px;
+  align-self: start;
+  place-items: start center;
+  border-radius: 7px 7px 5px 5px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--tone) 76%, white), color-mix(in srgb, var(--tone) 52%, white));
+  color: white;
+  padding-top: 10px;
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 75%, 0 88%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.variantRibbon svg {
+  width: 23px;
+  height: 23px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+.variantCopy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.variantTitle {
+  color: var(--tone);
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.variantText {
+  overflow-wrap: anywhere;
+  color: #2a2019;
+  font-size: clamp(1.03rem, 5.05vw, 1.24rem);
+  font-weight: 900;
+  line-height: 1.18;
+}
+
+.expressionCardFeatured .variantText {
+  font-size: clamp(1.16rem, 5.8vw, 1.36rem);
+}
+
+.variantNote {
+  color: #8c674f;
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.18;
+}
+
+.variantSpeaker {
+  display: grid;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  justify-self: center;
+  border: 1px solid rgba(181, 133, 100, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--tone);
+  box-shadow:
+    0 8px 18px rgba(107, 73, 42, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.variantSpeaker svg {
+  width: 23px;
+  height: 23px;
+  fill: currentColor;
+}
+
+.variantSpeaker svg path:not(:first-child) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 3.2;
+}
+
+.cornerStar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  width: 35px;
+  height: 35px;
+  place-items: start end;
+  background: linear-gradient(135deg, transparent 0 48%, color-mix(in srgb, var(--tone) 72%, white) 50%);
+  color: #fffaf5;
+  padding: 5px 5px 0 0;
+}
+
+.cornerStar svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.toneRecommended {
+  --tone: #c27d52;
+  --tone-soft: #f8eee7;
+  --tone-pale: rgba(194, 125, 82, 0.12);
+  --tone-border: rgba(194, 125, 82, 0.34);
+}
+
+.toneIdiomatic {
+  --tone: #9270ad;
+  --tone-soft: #f1ebf7;
+  --tone-pale: rgba(146, 112, 173, 0.1);
+  --tone-border: rgba(146, 112, 173, 0.26);
+}
+
+.toneSimple {
+  --tone: #5989cf;
+  --tone-soft: #edf4ff;
+  --tone-pale: rgba(89, 137, 207, 0.1);
+  --tone-border: rgba(89, 137, 207, 0.24);
+}
+
+.toneNatural {
+  --tone: #6f9566;
+  --tone-soft: #eef6ec;
+  --tone-pale: rgba(111, 149, 102, 0.1);
+  --tone-border: rgba(111, 149, 102, 0.24);
+}
+
+.followCard {
+  margin: 9px 18px 0;
+  padding: 11px 10px 10px;
+  border: 1px solid rgba(213, 168, 132, 0.28);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 88%, rgba(205, 145, 93, 0.1), transparent 34%),
+    rgba(255, 250, 245, 0.92);
+  box-shadow:
+    0 9px 22px rgba(105, 70, 39, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.followTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.followReadButton {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  background: transparent;
+  color: #7a4d31;
+  padding: 0;
+  text-align: left;
+}
+
+.followReadButton strong,
+.followReadButton small {
+  display: block;
+}
+
+.followReadButton strong {
+  color: #7a4d31;
+  font-size: 1.08rem;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.followReadButton small {
+  margin-top: 5px;
+  color: #9a755c;
+  font-size: 0.77rem;
+  font-weight: 750;
+  line-height: 1.15;
+}
+
+.followBookIcon {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 12px;
+  background: #f7eadf;
+  color: #a87145;
+}
+
+.followBookIcon svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.slowReadButton {
+  display: flex;
+  min-width: 102px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid rgba(196, 151, 113, 0.22);
+  border-radius: 12px;
+  background: rgba(255, 249, 243, 0.9);
+  color: #8b5734;
+  font-size: 0.78rem;
+  font-weight: 900;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.slowReadButton svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.followControls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 84px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.followControls .sentenceButton {
+  min-height: 46px;
+  gap: 7px;
+  border-radius: 23px;
+}
+
+.followControls .sentenceButton svg {
+  width: 22px;
+  height: 22px;
+}
+
+.followControls .sentenceButton span {
+  font-size: 0.92rem;
+}
+
+.followMicWrap {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+}
+
+.followMicButton {
+  position: relative;
+  display: grid;
+  width: 84px;
+  height: 84px;
+  place-items: center;
+  border: 6px solid rgba(218, 187, 158, 0.56);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 24%, rgba(255, 237, 215, 0.35), transparent 28%),
+    linear-gradient(145deg, #c99258, #905a2d);
+  color: #fffaf5;
+  box-shadow:
+    0 12px 25px rgba(123, 77, 38, 0.23),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25);
+}
+
+.followMicButton svg {
+  position: relative;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 7;
+}
+
+.followMicLabel {
+  color: #815235;
+  font-size: 0.76rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.followModalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  background: rgba(52, 35, 24, 0.28);
+  padding: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.followModal {
+  width: min(100%, 330px);
+  border: 1px solid rgba(213, 168, 132, 0.32);
+  border-radius: 22px;
+  background: rgba(255, 251, 246, 0.98);
+  padding: 22px;
+  color: #3d281b;
+  box-shadow: 0 26px 70px rgba(71, 44, 24, 0.25);
+}
+
+.followModal h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.followModal p {
+  margin: 12px 0 18px;
+  color: #80604a;
+  font-size: 0.96rem;
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+.followModalButton {
+  width: 100%;
+  min-height: 44px;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #c99258, #905a2d);
+  color: #fffaf5;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+@media (max-width: 374px) {
+  .classicPhone {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .classicTopbar {
+    grid-template-columns: 58px minmax(0, 1fr) 58px;
+    min-height: 66px;
+    padding: 0 8px;
+  }
+
+  .menuButton,
+  .avatarButton {
+    width: 48px;
+    height: 48px;
+  }
+
+  .avatarImage {
+    width: 45px;
+    height: 45px;
+  }
+
+  .brandIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .topicBar {
+    grid-template-columns: 28px 48px minmax(0, auto) 28px;
+    column-gap: 5px;
+  }
+
+  .topicIcon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .topicIcon svg {
+    width: 45px;
+    height: 45px;
+  }
+
+  .dialogCard,
+  .methodCard,
+  .tipCard {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .resultHint,
+  .userExpressionCard,
+  .expressionList,
+  .followCard {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .practiceControls {
+    grid-template-columns: minmax(0, 1fr) 94px minmax(0, 1fr);
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+
+  .micButton {
+    width: 94px;
+    height: 94px;
+  }
+
+  .sentenceButton span {
+    font-size: 0.9rem;
+  }
+
+  .expressionCard {
+    grid-template-columns: minmax(0, 1fr) 42px;
+  }
+
+  .expressionSelectArea {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 8px;
+    padding-left: 8px;
+  }
+
+  .variantRibbon {
+    width: 30px;
+    height: 48px;
+  }
+
+  .variantText {
+    font-size: 1rem;
+  }
+
+  .followControls {
+    grid-template-columns: minmax(0, 1fr) 78px minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .followMicButton {
+    width: 78px;
+    height: 78px;
+  }
+}
+
+@media (max-height: 780px) and (max-width: 540px) {
+  .classicPhone {
+    padding-top: calc(10px + env(safe-area-inset-top));
+    padding-bottom: 10px;
+  }
+
+  .classicTopbar {
+    min-height: 64px;
+  }
+
+  .topicBar {
+    min-height: 92px;
+    padding-top: 12px;
+    padding-bottom: 8px;
+  }
+
+  .dialogCard {
+    min-height: 264px;
+    padding-top: 14px;
+  }
+
+  .speechBubble {
+    min-height: 112px;
+    margin-top: 15px;
+  }
+
+  .methodCard {
+    margin-top: 9px;
+    padding-top: 9px;
+    padding-bottom: 11px;
+  }
+
+  .methodSteps {
+    margin-top: 10px;
+  }
+
+  .practiceControls {
+    grid-template-columns: minmax(0, 1fr) 94px minmax(0, 1fr);
+    margin-top: 10px;
+  }
+
+  .micButton {
+    width: 94px;
+    height: 94px;
+    border-width: 6px;
+  }
+
+  .micButton svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  .tipCard {
+    min-height: 58px;
+    margin-top: 7px;
+  }
+
+  .resultTopicBar {
+    min-height: 78px;
+    padding-top: 8px;
+  }
+
+  .resultHint {
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+  }
+
+  .userExpressionCard {
+    padding-top: 12px;
+    padding-bottom: 13px;
+  }
+
+  .userExpressionText {
+    margin-top: 10px;
+  }
+
+  .expressionList {
+    gap: 7px;
+  }
+
+  .expressionCard {
+    min-height: 68px;
+  }
+
+  .expressionCardFeatured {
+    min-height: 86px;
+  }
+
+  .variantRibbon {
+    height: 46px;
+  }
+
+  .variantNote {
+    font-size: 0.68rem;
+  }
+
+  .followCard {
+    margin-top: 8px;
+    padding-top: 9px;
+  }
+
+  .followControls {
+    margin-top: 9px;
+  }
+
+  .followMicButton {
+    width: 78px;
+    height: 78px;
+  }
+}

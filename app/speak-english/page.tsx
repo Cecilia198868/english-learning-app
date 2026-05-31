@@ -1885,6 +1885,61 @@ const pinyinDictionary: Record<string, string[]> = {
 const defaultChineseCandidates = ["？", "！", "我", "你", "好", "这", "谢谢"];
 const defaultFreeLearningPrompt = "用中文说出你想表达的内容";
 const handwritingCandidates = ["我", "你", "好", "吗", "谢", "爱", "说"];
+type InitialStudyRouteViewState = {
+  hasNativeSpeech: boolean;
+  isNativeSpeechConfirmed: boolean;
+  keyboardMode: KeyboardMode;
+  message: string;
+  nativeSpeech: string;
+  practiceStage: PracticeStage;
+  primingPracticeStage: PracticeStage | null;
+  trainingGroundMode: TrainingGroundMode;
+};
+
+function createInitialStudyRouteViewState(
+  pathname: string | null
+): InitialStudyRouteViewState {
+  const baseState: InitialStudyRouteViewState = {
+    hasNativeSpeech: false,
+    isNativeSpeechConfirmed: false,
+    keyboardMode: "zh",
+    message: defaultFreeLearningPrompt,
+    nativeSpeech: "",
+    practiceStage: "native",
+    primingPracticeStage: null,
+    trainingGroundMode: pathname?.startsWith("/ai-guided-expression")
+      ? "guided"
+      : "default",
+  };
+
+  if (
+    pathname === "/free-study/step-2" ||
+    pathname === "/ai-guided-expression/step-2"
+  ) {
+    return {
+      ...baseState,
+      message: "正在听你说话...",
+      primingPracticeStage: "native",
+    };
+  }
+
+  if (
+    pathname === "/free-study/step-4" ||
+    pathname === "/ai-guided-expression/step-4"
+  ) {
+    return {
+      ...baseState,
+      hasNativeSpeech: true,
+      isNativeSpeechConfirmed: true,
+      keyboardMode: "en",
+      practiceStage: "english",
+      primingPracticeStage: "english",
+    };
+  }
+
+  return baseState;
+}
+
 const freePracticeLandingSteps = [
   {
     description: "说出你想表达的内容，尽量具体",
@@ -2936,20 +2991,6 @@ function VoiceGlyph({ active = false }: { active?: boolean }) {
 }
 
 export default function SpeakEnglishPage() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    const mountedTimer = window.setTimeout(() => setIsMounted(true), 0);
-
-    return () => window.clearTimeout(mountedTimer);
-  }, []);
-
-  if (!isMounted) {
-    return (
-      <main className="min-h-screen bg-[linear-gradient(180deg,#c6b7ff_0%,#eeeaff_44%,#f8f7ff_100%)]" />
-    );
-  }
-
   return <SpeakEnglishClient />;
 }
 
@@ -2957,6 +2998,13 @@ function SpeakEnglishClient() {
   const router = useRouter();
   const pathname = usePathname();
   const { language, setLanguage } = useLanguage();
+  const initialRouteViewStateRef = useRef<InitialStudyRouteViewState | null>(
+    null
+  );
+  if (initialRouteViewStateRef.current === null) {
+    initialRouteViewStateRef.current = createInitialStudyRouteViewState(pathname);
+  }
+  const initialRouteViewState = initialRouteViewStateRef.current!;
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -2968,7 +3016,9 @@ function SpeakEnglishClient() {
   const speechNoInputTimerRef = useRef<number | null>(null);
   const speechStopFallbackTimerRef = useRef<number | null>(null);
   const speechMaxTimerRef = useRef<number | null>(null);
-  const activeRecognitionStageRef = useRef<PracticeStage>("native");
+  const activeRecognitionStageRef = useRef<PracticeStage>(
+    initialRouteViewState.practiceStage
+  );
   const freePracticeRoundIdRef = useRef(createFreePracticeRoundId());
   const guidedConversationTurnsRef = useRef<GuidedConversationTurn[]>([]);
   const guidedFollowupRequestKeyRef = useRef("");
@@ -2981,24 +3031,38 @@ function SpeakEnglishClient() {
   const messageRef = useRef("");
   const handledStepRouteRef = useRef("");
 
-  const [message, setMessage] = useState(defaultFreeLearningPrompt);
+  const [message, setMessage] = useState(initialRouteViewState.message);
   const [inputText, setInputText] = useState("");
-  const [keyboardMode, setKeyboardMode] = useState<KeyboardMode>("zh");
+  const [keyboardMode, setKeyboardMode] = useState<KeyboardMode>(
+    initialRouteViewState.keyboardMode
+  );
   const [trainingGroundMode, setTrainingGroundMode] =
-    useState<TrainingGroundMode>("default");
+    useState<TrainingGroundMode>(initialRouteViewState.trainingGroundMode);
   const [composingPinyin, setComposingPinyin] = useState("");
   const [isShifted, setIsShifted] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isRecognizingNativeSpeech, setIsRecognizingNativeSpeech] =
     useState(false);
   const [liveTranscript, setLiveTranscript] = useState("");
-  const [practiceStage, setPracticeStage] = useState<PracticeStage>("native");
-  const [nativeSpeech, setNativeSpeech] = useState("");
-  const [isNativeSpeechConfirmed, setIsNativeSpeechConfirmed] = useState(false);
+  const [practiceStage, setPracticeStage] = useState<PracticeStage>(
+    initialRouteViewState.practiceStage
+  );
+  const [nativeSpeech, setNativeSpeech] = useState(
+    initialRouteViewState.nativeSpeech
+  );
+  const [isNativeSpeechConfirmed, setIsNativeSpeechConfirmed] = useState(
+    initialRouteViewState.isNativeSpeechConfirmed
+  );
   const [authoritativeEnglish, setAuthoritativeEnglish] = useState("");
   const [hasEnglishAttempt, setHasEnglishAttempt] = useState(false);
   const [standardEnglish, setStandardEnglish] = useState("");
-  const [hasNativeSpeech, setHasNativeSpeech] = useState(false);
+  const [hasNativeSpeech, setHasNativeSpeech] = useState(
+    initialRouteViewState.hasNativeSpeech
+  );
+  const [primingPracticeStage, setPrimingPracticeStage] =
+    useState<PracticeStage | null>(
+      initialRouteViewState.primingPracticeStage
+    );
   const [expressionVariants, setExpressionVariants] = useState<
     ExpressionVariant[]
   >([]);
@@ -3018,6 +3082,7 @@ function SpeakEnglishClient() {
   >([]);
   const [hasInk, setHasInk] = useState(false);
   const [showQuickPanel, setShowQuickPanel] = useState(false);
+  const previousShowQuickPanelRef = useRef(false);
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [accountPanelView, setAccountPanelView] =
     useState<AccountPanelView>("menu");
@@ -3113,6 +3178,15 @@ function SpeakEnglishClient() {
   const voiceMenuItemLabel = language === "en" ? "Voice" : "声音";
   const isAiGuidedMode = trainingGroundMode === "guided";
   const isFreeConversationMode = false;
+  const isPrimingNativeSpeech =
+    primingPracticeStage === "native" &&
+    practiceStage === "native" &&
+    !hasNativeSpeech &&
+    !hasEnglishAttempt;
+  const isPrimingEnglishSpeech =
+    primingPracticeStage === "english" &&
+    practiceStage === "english" &&
+    !hasEnglishAttempt;
   const trainingGroundTitle = isAiGuidedMode ? "AI引导表达" : "";
   const chineseCandidates = useMemo(() => {
     const pinyin = composingPinyin.toLowerCase();
@@ -3126,6 +3200,7 @@ function SpeakEnglishClient() {
     return unique([...exact, ...prefixMatches, pinyin]).slice(0, 7);
   }, [composingPinyin]);
   const hasPracticeActivity =
+    Boolean(primingPracticeStage) ||
     hasNativeSpeech ||
     hasEnglishAttempt ||
     Boolean(standardEnglish) ||
@@ -3155,7 +3230,9 @@ function SpeakEnglishClient() {
     !hasEnglishAttempt &&
     !nativeSpeech;
   const showFreePracticeNativeListeningPrompt =
-    (showListeningPrompt || showNativeRecognitionPrompt) &&
+    (showListeningPrompt ||
+      showNativeRecognitionPrompt ||
+      isPrimingNativeSpeech) &&
     !(practiceStage === "english" && nativeSpeech) &&
     !(isFreeConversationMode && freeConversationQuestionPrompt);
   const showVoiceOnlyPrompt =
@@ -3181,9 +3258,9 @@ function SpeakEnglishClient() {
     !showQuickPanel &&
     !showAccountMenu;
   const showReferenceEnglishListening =
-    showListeningPrompt &&
+    (showListeningPrompt || isPrimingEnglishSpeech) &&
     practiceStage === "english" &&
-    Boolean(nativeSpeech) &&
+    (Boolean(nativeSpeech) || isPrimingEnglishSpeech) &&
     !isAiGuidedMode &&
     !showQuickPanel &&
     !showAccountMenu;
@@ -3207,9 +3284,9 @@ function SpeakEnglishClient() {
     !showAccountMenu;
   const showGuidedReferenceEnglishListening =
     isAiGuidedMode &&
-    showListeningPrompt &&
+    (showListeningPrompt || isPrimingEnglishSpeech) &&
     practiceStage === "english" &&
-    Boolean(nativeSpeech) &&
+    (Boolean(nativeSpeech) || isPrimingEnglishSpeech) &&
     !showQuickPanel &&
     !showAccountMenu;
   const showGuidedReferenceResult =
@@ -3708,6 +3785,8 @@ function SpeakEnglishClient() {
     const shouldOpenAccount = searchParams.get("account") === "1";
     const checkoutStatus = searchParams.get("checkout");
     const requestedSubmenu = searchParams.get("submenu");
+    const requestedClassicCategory = searchParams.get("classicCategory");
+    const requestedClassicSection = searchParams.get("classicSection");
     if (searchParams.get("menu") !== "1" && !shouldOpenPro && !shouldOpenAccount)
       return;
 
@@ -3721,10 +3800,18 @@ function SpeakEnglishClient() {
         setSelectedClassicCourseSectionId("");
         setClassicCourseSearchQuery("");
       } else if (requestedSubmenu === "classic") {
+        const classicCategory = classicCourseCategories.find(
+          (category) => category.id === requestedClassicCategory
+        );
+        const classicSection =
+          classicCategory?.sections.find(
+            (section) => section.id === requestedClassicSection
+          ) || null;
+
         setShowExpressionMenu(false);
         setShowClassicCoursePicker(true);
-        setSelectedClassicCourseCategoryId("");
-        setSelectedClassicCourseSectionId("");
+        setSelectedClassicCourseCategoryId(classicCategory?.id || "");
+        setSelectedClassicCourseSectionId(classicSection?.id || "");
         setClassicCourseSearchQuery("");
       }
     }
@@ -3753,7 +3840,10 @@ function SpeakEnglishClient() {
   }, []);
 
   useEffect(() => {
-    if (!showQuickPanel) {
+    const wasQuickPanelOpen = previousShowQuickPanelRef.current;
+    previousShowQuickPanelRef.current = showQuickPanel;
+
+    if (wasQuickPanelOpen && !showQuickPanel) {
       setShowExpressionMenu(false);
       setShowClassicCoursePicker(false);
       resetClassicCoursePicker();
@@ -4269,6 +4359,7 @@ function SpeakEnglishClient() {
 
   function prepareNextNativeRound() {
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
+    setPrimingPracticeStage(null);
     setPracticeStage("native");
     setNativeSpeech("");
     setIsNativeSpeechConfirmed(false);
@@ -4288,6 +4379,7 @@ function SpeakEnglishClient() {
 
   function prepareGuidedSuggestedEnglishRound(suggestion: string) {
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
+    setPrimingPracticeStage("english");
     setPracticeStage("english");
     setNativeSpeech(suggestion);
     setIsNativeSpeechConfirmed(true);
@@ -4315,6 +4407,7 @@ function SpeakEnglishClient() {
       : freeConversationQuestionPrompt;
 
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
+    setPrimingPracticeStage("english");
     setPracticeStage("english");
     setNativeSpeech("");
     setIsNativeSpeechConfirmed(false);
@@ -4375,6 +4468,7 @@ function SpeakEnglishClient() {
       cancelRecognition();
     }
 
+    setPrimingPracticeStage(null);
     setShowAccountMenu(false);
     setAccountPanelView("menu");
     setShowAvatarEditor(false);
@@ -4392,6 +4486,7 @@ function SpeakEnglishClient() {
       cancelRecognition();
     }
 
+    setPrimingPracticeStage(null);
     setShowAccountMenu(false);
     setAccountPanelView("menu");
     setShowAvatarEditor(false);
@@ -4406,6 +4501,7 @@ function SpeakEnglishClient() {
       cancelRecognition();
     }
 
+    setPrimingPracticeStage(null);
     setShowQuickPanel(false);
     setShowClassicCoursePicker(false);
     resetClassicCoursePicker();
@@ -4419,6 +4515,7 @@ function SpeakEnglishClient() {
       cancelRecognition();
     }
 
+    setPrimingPracticeStage(null);
     setShowQuickPanel(false);
     setShowClassicCoursePicker(false);
     resetClassicCoursePicker();
@@ -4455,6 +4552,7 @@ function SpeakEnglishClient() {
     }
 
     openTrainingGroundMode();
+    setPrimingPracticeStage("native");
 
     if (typeof window === "undefined") return;
 
@@ -4489,6 +4587,7 @@ function SpeakEnglishClient() {
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
     setTrainingGroundMode("default");
     guidedConversationTurnsRef.current = [];
+    setPrimingPracticeStage("english");
     setPracticeStage("english");
     setNativeSpeech(normalizedSpeech);
     setMessage(normalizedSpeech);
@@ -4531,6 +4630,7 @@ function SpeakEnglishClient() {
 
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
     setTrainingGroundMode("guided");
+    setPrimingPracticeStage("english");
     setPracticeStage("english");
     setNativeSpeech(normalizedSpeech);
     setMessage(normalizedSpeech);
@@ -4568,6 +4668,7 @@ function SpeakEnglishClient() {
       cancelRecognition();
     }
 
+    setPrimingPracticeStage(null);
     setShowQuickPanel(false);
     setShowClassicCoursePicker(false);
     resetClassicCoursePicker();
@@ -4614,6 +4715,7 @@ function SpeakEnglishClient() {
     setTrainingGroundMode("default");
     guidedConversationTurnsRef.current = [];
     prepareNextNativeRound();
+    setPrimingPracticeStage("native");
     setInputText("");
     setComposingPinyin("");
     setLiveTranscript("");
@@ -4672,6 +4774,7 @@ function SpeakEnglishClient() {
     recognitionRef.current = null;
     setLiveTranscript("");
     setIsListening(false);
+    setPrimingPracticeStage(null);
     setIsRecognizingNativeSpeech(false);
   }
 
@@ -4683,6 +4786,7 @@ function SpeakEnglishClient() {
     speechBufferRef.current = "";
     setLiveTranscript("");
     setIsListening(false);
+    setPrimingPracticeStage(null);
     setIsRecognizingNativeSpeech(false);
     if (options.message) {
       setMessage(options.message);
@@ -4713,6 +4817,7 @@ function SpeakEnglishClient() {
     setNativeSpeech(confirmedSpeech);
     setMessage(confirmedSpeech);
     setIsNativeSpeechConfirmed(true);
+    setPrimingPracticeStage("english");
     setPracticeStage("english");
     setStandardEnglish("");
     setExpressionVariants([]);
@@ -4748,6 +4853,7 @@ function SpeakEnglishClient() {
     if (!nativeSpeech.trim()) return;
 
     setPracticeStage("english");
+    setPrimingPracticeStage("english");
     setHasEnglishAttempt(false);
     setStandardEnglish("");
     setExpressionVariants([]);
@@ -4785,6 +4891,7 @@ function SpeakEnglishClient() {
 
   function retryNativeSpeech() {
     prepareNextNativeRound();
+    setPrimingPracticeStage("native");
     if (typeof window === "undefined") return;
 
     window.setTimeout(() => {
@@ -4875,6 +4982,7 @@ function SpeakEnglishClient() {
     const RecognitionConstructor = getRecognitionConstructor();
 
     if (!RecognitionConstructor) {
+      setPrimingPracticeStage(null);
       setMessage("Speech recognition is not available in this browser");
       return;
     }
@@ -4904,6 +5012,8 @@ function SpeakEnglishClient() {
           ? "native"
           : practiceStage);
 
+    setPrimingPracticeStage(nextPracticeStage);
+
     if (
       (nextPracticeStage === "native" ||
         isStartingGuidedSuggestedEnglishRound ||
@@ -4911,6 +5021,7 @@ function SpeakEnglishClient() {
       !(await ensureFreePracticeAvailable())
     ) {
       shouldCommitSpeechRef.current = false;
+      setPrimingPracticeStage(null);
       return;
     }
 
@@ -4933,6 +5044,7 @@ function SpeakEnglishClient() {
     setLiveTranscript("");
     setIsRecognizingNativeSpeech(false);
     setIsListening(true);
+    setPrimingPracticeStage(null);
     if (nextPracticeStage === "native") {
       setMessage("正在听你说话…");
     }
@@ -4987,6 +5099,7 @@ function SpeakEnglishClient() {
       shouldCommitSpeechRef.current = false;
       clearAllSpeechTimers();
       setIsListening(false);
+      setPrimingPracticeStage(null);
       setMessage("Speech recognition could not start");
     }
   }
@@ -5752,6 +5865,11 @@ function SpeakEnglishClient() {
 
     if (hotspot.kind === "all") {
       setSelectedClassicCourseSectionId("__finance-all");
+      return;
+    }
+
+    if (hotspot.id === "bank-finance") {
+      router.push("/classic-scenes/bank-finance");
       return;
     }
 

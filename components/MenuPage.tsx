@@ -39,7 +39,7 @@ const MENU_ENTRIES: MenuEntry[] = [
     title: "新表达",
     primary: "收藏、学习和复习你的常用表达",
     secondary: "打造你的专属表达库",
-    route: "/speak-english?menu=1&submenu=expression",
+    route: "/new-expressions",
     ariaLabel: "进入新表达下一级菜单",
   },
   {

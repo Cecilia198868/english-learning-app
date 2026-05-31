@@ -1,0 +1,1825 @@
+.mount {
+  isolation: isolate;
+}
+
+:global(.sf-vocabulary-learning-page) {
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(223, 218, 255, 0.92), transparent 31%),
+    radial-gradient(circle at 96% 4%, rgba(236, 255, 249, 0.65), transparent 26%),
+    linear-gradient(180deg, #fafbff 0%, #f4f6ff 54%, #eef2ff 100%);
+  color: #071642;
+  font-family: var(--sf-font-zh);
+}
+
+:global(.sf-vocabulary-learning-page svg) {
+  display: block;
+  flex-shrink: 0;
+}
+
+:global(.sf-vocabulary-learning-phone) {
+  position: relative;
+  width: min(100%, 430px);
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow-x: hidden;
+  padding:
+    max(0.48rem, calc(env(safe-area-inset-top, 0px) + 0.38rem))
+    0.96rem
+    max(0.42rem, calc(env(safe-area-inset-bottom, 0px) + 0.36rem));
+  border: 1px solid rgba(211, 205, 255, 0.82);
+  border-radius: 0 0 1.35rem 1.35rem;
+  background:
+    radial-gradient(circle at 25% 14%, rgba(117, 94, 255, 0.08), transparent 24%),
+    radial-gradient(circle at 92% 58%, rgba(123, 204, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 255, 0.98));
+}
+
+:global(.sf-vocabulary-learning-phone::before) {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4.45rem;
+  pointer-events: none;
+  border-bottom: 1px solid rgba(213, 207, 255, 0.68);
+  border-radius: 0 0 1.35rem 1.35rem;
+  background: linear-gradient(180deg, rgba(246, 245, 255, 0.84), rgba(255, 255, 255, 0.42));
+  box-shadow: 0 14px 32px rgba(91, 80, 168, 0.08);
+}
+
+:global(.sf-vocabulary-learning-header) {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 3.68rem minmax(0, 1fr) 3.68rem;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 3.62rem;
+}
+
+:global(.sf-vocabulary-back-button),
+:global(.sf-vocabulary-avatar-button),
+:global(.sf-vocabulary-audio-button),
+:global(.sf-vocabulary-learning-actions button),
+:global(.sf-vocabulary-library-panel button) {
+  border: 0;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:global(.sf-vocabulary-back-button),
+:global(.sf-vocabulary-avatar-button) {
+  display: grid;
+  place-items: center;
+  width: 3.18rem;
+  height: 3.18rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+:global(.sf-vocabulary-back-button) {
+  border-radius: 999px;
+  color: #0b1747;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 17px 34px rgba(95, 89, 162, 0.13);
+}
+
+:global(.sf-vocabulary-back-button svg) {
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+:global(.sf-vocabulary-back-button path),
+:global(.sf-vocabulary-nav-action path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4.1;
+}
+
+:global(.sf-vocabulary-brand) {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.62rem;
+}
+
+:global(.sf-vocabulary-brand-mark) {
+  width: 2.08rem !important;
+  height: 2.08rem !important;
+  flex: 0 0 auto;
+}
+
+:global(.sf-vocabulary-brand strong) {
+  display: block;
+  color: #071642;
+  font-family: var(--font-sora), var(--font-geist-sans), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-brand small) {
+  display: block;
+  margin-top: 0.32rem;
+  color: #6c55ef;
+  font-family: var(--font-sora), var(--font-geist-sans), sans-serif;
+  font-size: 0.56rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+:global(.sf-vocabulary-avatar-button) {
+  position: relative;
+  justify-self: end;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #ffffff 0%, #efffff 100%);
+  box-shadow: 0 14px 28px rgba(80, 83, 151, 0.12);
+}
+
+:global(.sf-vocabulary-avatar-button img),
+:global(.sf-vocabulary-avatar-fallback) {
+  width: calc(100% - 0.38rem);
+  height: calc(100% - 0.38rem);
+  border-radius: inherit;
+}
+
+:global(.sf-vocabulary-avatar-button img) {
+  object-fit: cover;
+}
+
+:global(.sf-vocabulary-avatar-fallback) {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #8ed7ff, #7665ef);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+:global(.sf-vocabulary-avatar-button i) {
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0.22rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 0.16rem solid #ffffff;
+  border-radius: 999px;
+  background: #35ce64;
+}
+
+:global(.sf-vocabulary-learning-title) {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 0.86rem 0 0.68rem;
+  text-align: center;
+}
+
+:global(.sf-vocabulary-learning-title svg) {
+  width: 1.54rem;
+  height: 1.54rem;
+  color: #7358ea;
+}
+
+:global(.sf-vocabulary-learning-title svg path) {
+  fill: currentColor;
+}
+
+:global(.sf-vocabulary-learning-title h1) {
+  margin: 0.1rem 0 0;
+  color: #071642;
+  font-size: 1.72rem;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-learning-title p) {
+  margin: 0.44rem 0 0;
+  color: #121b58;
+  font-size: 0.98rem;
+  font-weight: 560;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-learning-title p strong) {
+  color: #7058e9;
+  font-size: 1.14em;
+  font-weight: 840;
+}
+
+:global(.sf-vocabulary-progress-row) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.78rem;
+  padding: 0.1rem 1.22rem 0.78rem;
+  color: #101a5a;
+}
+
+:global(.sf-vocabulary-progress-row span),
+:global(.sf-vocabulary-progress-row strong) {
+  font-size: 0.94rem;
+  font-weight: 820;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+:global(.sf-vocabulary-progress-row strong) {
+  color: #6e55ed;
+}
+
+:global(.sf-vocabulary-progress-row div) {
+  height: 0.4rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5e2f8;
+}
+
+:global(.sf-vocabulary-progress-row div i) {
+  display: block;
+  width: var(--sf-vocabulary-progress, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #7c52ef, #5e44e8);
+  box-shadow: 0 0 18px rgba(108, 82, 236, 0.38);
+}
+
+:global(.sf-vocabulary-study-card) {
+  position: relative;
+  min-height: 10.35rem;
+  overflow: hidden;
+  border: 1px solid rgba(217, 212, 255, 0.92);
+  border-radius: 1.34rem;
+  background:
+    radial-gradient(circle at 83% 28%, rgba(228, 225, 255, 0.72), transparent 28%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(251, 252, 255, 0.98));
+  box-shadow: 0 16px 34px rgba(76, 72, 146, 0.08);
+}
+
+:global(.sf-vocabulary-word-card) {
+  margin-top: 0;
+}
+
+:global(.sf-vocabulary-example-card) {
+  min-height: 9.5rem;
+  margin-top: 0.58rem;
+}
+
+:global(.sf-vocabulary-card-copy) {
+  position: relative;
+  z-index: 2;
+  width: 59%;
+  min-width: 0;
+  padding: 1.02rem 0 0.9rem 1.42rem;
+}
+
+:global(.sf-vocabulary-saved-pill),
+:global(.sf-vocabulary-example-pill) {
+  display: inline-flex;
+  min-height: 1.72rem;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.78rem;
+  border-radius: 999px;
+  background: #f0ecff;
+  color: #6f53ed;
+  font-size: 0.76rem;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-saved-pill svg),
+:global(.sf-vocabulary-example-pill svg) {
+  width: 0.94rem;
+  height: 0.94rem;
+}
+
+:global(.sf-vocabulary-saved-pill path),
+:global(.sf-vocabulary-example-pill path),
+:global(.sf-vocabulary-label path),
+:global(.sf-vocabulary-label circle) {
+  fill: currentColor;
+}
+
+:global(.sf-vocabulary-label path:nth-child(2)) {
+  fill: none;
+  stroke: #ffffff;
+  stroke-linecap: round;
+  stroke-width: 1.8;
+}
+
+:global(.sf-vocabulary-word-line),
+:global(.sf-vocabulary-example-line) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2.42rem;
+  align-items: center;
+  gap: 0.62rem;
+}
+
+:global(.sf-vocabulary-word-line) {
+  margin-top: 0.86rem;
+}
+
+:global(.sf-vocabulary-example-line) {
+  margin-top: 0.78rem;
+}
+
+:global(.sf-vocabulary-word-line h2),
+:global(.sf-vocabulary-example-line h2) {
+  min-width: 0;
+  margin: 0;
+  color: #071642;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-word-line h2) {
+  overflow-wrap: anywhere;
+  font-size: 2.52rem;
+  line-height: 1.02;
+}
+
+:global(.sf-vocabulary-example-line h2) {
+  font-size: 1.18rem;
+  line-height: 1.18;
+}
+
+:global(.sf-vocabulary-example-line h2 strong) {
+  color: #6e53ed;
+}
+
+:global(.sf-vocabulary-audio-button) {
+  display: grid;
+  width: 2.42rem;
+  height: 2.42rem;
+  place-items: center;
+  padding: 0;
+  border-radius: 999px;
+  color: #7055ed;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 12px 28px rgba(94, 82, 166, 0.11);
+  cursor: pointer;
+}
+
+:global(.sf-vocabulary-audio-button svg) {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+:global(.sf-vocabulary-audio-button path) {
+  fill: currentColor;
+}
+
+:global(.sf-vocabulary-audio-button path:nth-child(n+2)) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+:global(.sf-vocabulary-card-rule) {
+  display: block;
+  width: 1.54rem;
+  height: 0.2rem;
+  margin: 0.78rem 0 0.7rem;
+  border-radius: 999px;
+  background: #7b5df0;
+}
+
+:global(.sf-vocabulary-label) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  color: #7055ed;
+  font-size: 0.8rem;
+  font-weight: 870;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-label svg) {
+  width: 0.88rem;
+  height: 0.88rem;
+}
+
+:global(.sf-vocabulary-meaning),
+:global(.sf-vocabulary-translation) {
+  margin: 0.44rem 0 0;
+  color: #141b55;
+  font-size: 0.94rem;
+  font-weight: 620;
+  line-height: 1.32;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-card-art) {
+  position: absolute;
+  z-index: 1;
+  right: -0.9rem;
+  top: 1.1rem;
+  width: 46%;
+  max-width: 13.1rem;
+  pointer-events: none;
+}
+
+:global(.sf-vocabulary-example-card .sf-vocabulary-card-art) {
+  top: 0.82rem;
+  right: -1.05rem;
+  width: 45%;
+}
+
+:global(.sf-vocabulary-card-art svg) {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 20px 28px rgba(84, 74, 174, 0.12));
+}
+
+:global(.sf-vocabulary-empty-card) {
+  display: grid;
+  min-height: 21.8rem;
+  place-items: center;
+  align-content: center;
+  gap: 0.8rem;
+  margin-top: 0.2rem;
+  padding: 2rem;
+  border: 1px solid rgba(217, 212, 255, 0.92);
+  border-radius: 1.34rem;
+  background: rgba(255, 255, 255, 0.86);
+  text-align: center;
+}
+
+:global(.sf-vocabulary-empty-card h2) {
+  margin: 0;
+  color: #071642;
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+:global(.sf-vocabulary-empty-card p) {
+  margin: 0;
+  color: #657295;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+:global(.sf-vocabulary-learning-actions) {
+  display: grid;
+  grid-template-columns: 1.25fr 0.82fr 0.92fr 1.25fr;
+  gap: 0.56rem;
+  align-items: center;
+  margin-top: 0.66rem;
+}
+
+:global(.sf-vocabulary-learning-actions button) {
+  cursor: pointer;
+}
+
+:global(.sf-vocabulary-nav-action),
+:global(.sf-vocabulary-slow-action) {
+  min-width: 0;
+  min-height: 3.12rem;
+  border-radius: 0.86rem;
+  color: #7257ee;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    0 14px 26px rgba(97, 86, 166, 0.1);
+}
+
+:global(.sf-vocabulary-nav-action) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0 0.54rem;
+  font-size: 0.86rem;
+  font-weight: 820;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-nav-action svg) {
+  width: 1.18rem;
+  height: 1.18rem;
+}
+
+:global(.sf-vocabulary-follow-action) {
+  display: grid;
+  width: 3.96rem;
+  height: 3.96rem;
+  place-items: center;
+  justify-self: center;
+  border-radius: 999px;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.36), transparent 26%),
+    linear-gradient(145deg, #9c76ff 0%, #5a39df 100%);
+  box-shadow: 0 17px 32px rgba(101, 66, 225, 0.28);
+}
+
+:global(.sf-vocabulary-follow-action svg) {
+  width: 1.38rem;
+  height: 1.38rem;
+  transform: translateX(0.12rem);
+}
+
+:global(.sf-vocabulary-follow-action span) {
+  margin-top: -0.38rem;
+  font-size: 0.76rem;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-slow-action) {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.16rem;
+  padding: 0.3rem;
+}
+
+:global(.sf-vocabulary-slow-action strong) {
+  color: #7257ee;
+  font-size: 1.04rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-slow-action span) {
+  color: #221a55;
+  font-size: 0.72rem;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-vocabulary-learning-actions button:disabled) {
+  cursor: default;
+  opacity: 0.42;
+}
+
+:global(.sf-vocabulary-tip) {
+  display: flex;
+  width: min(100%, 18.5rem);
+  min-height: 1.34rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38rem;
+  margin: 0.5rem auto 0;
+  padding: 0.2rem 0.62rem;
+  border: 1px solid rgba(211, 205, 255, 0.76);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  color: #7257ee;
+  font-size: 0.62rem;
+  font-weight: 720;
+  line-height: 1.18;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+:global(.sf-vocabulary-tip svg) {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: #8064ef;
+}
+
+:global(.sf-vocabulary-tip svg path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.1;
+}
+
+:global(.sf-vocabulary-library-panel) {
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  left: 50%;
+  display: flex;
+  width: min(100%, 430px);
+  height: 100dvh;
+  flex-direction: column;
+  padding:
+    max(1.2rem, calc(env(safe-area-inset-top, 0px) + 1rem))
+    1.25rem
+    max(1rem, calc(env(safe-area-inset-bottom, 0px) + 1rem));
+  background: linear-gradient(180deg, #f8f8ff 0%, #eceaff 100%);
+  color: #071642;
+  transform: translateX(-50%);
+}
+
+:global(.sf-vocabulary-library-header) {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+:global(.sf-vocabulary-library-header h2) {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+:global(.sf-vocabulary-library-header p) {
+  margin: 0.62rem 0 0;
+  color: #657295;
+  font-size: 1rem;
+  font-weight: 750;
+}
+
+:global(.sf-vocabulary-library-header button) {
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  place-items: center;
+  padding: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #071642;
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 12px 24px rgba(85, 78, 149, 0.1);
+}
+
+:global(.sf-vocabulary-library-list) {
+  min-height: 0;
+  margin-top: 1.2rem;
+  overflow-y: auto;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+:global(.sf-vocabulary-library-item) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2.7rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(216, 211, 255, 0.72);
+  padding: 0.9rem 0.92rem;
+}
+
+:global(.sf-vocabulary-library-item.is-active) {
+  background: rgba(227, 222, 255, 0.76);
+}
+
+:global(.sf-vocabulary-library-item button) {
+  min-width: 0;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  text-align: left;
+}
+
+:global(.sf-vocabulary-library-item button:first-child strong),
+:global(.sf-vocabulary-library-item button:first-child span) {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:global(.sf-vocabulary-library-item button:first-child strong) {
+  color: #071642;
+  font-size: 1.16rem;
+  font-weight: 900;
+}
+
+:global(.sf-vocabulary-library-item button:first-child span) {
+  margin-top: 0.3rem;
+  color: #657295;
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+:global(.sf-vocabulary-library-item button:last-child) {
+  display: grid;
+  width: 2.42rem;
+  height: 2.42rem;
+  place-items: center;
+  justify-self: end;
+  border-radius: 999px;
+  color: #6b6f89;
+}
+
+:global(.sf-vocabulary-library-item button:last-child svg) {
+  width: 1.12rem;
+  height: 1.12rem;
+}
+
+:global(.sf-vocabulary-library-item button:last-child path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+:global(.sf-vocabulary-library-empty) {
+  margin: 0;
+  padding: 2rem 1rem;
+  color: #657295;
+  font-size: 1rem;
+  font-weight: 750;
+  text-align: center;
+}
+
+:global(.sf-vocabulary-back-button:active),
+:global(.sf-vocabulary-avatar-button:active),
+:global(.sf-vocabulary-audio-button:active),
+:global(.sf-vocabulary-learning-actions button:not(:disabled):active) {
+  transform: translateY(1px) scale(0.99);
+}
+
+:global(.sf-expression-library-page) {
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(222, 217, 255, 0.95), transparent 32%),
+    radial-gradient(circle at 95% 6%, rgba(235, 255, 249, 0.68), transparent 28%),
+    linear-gradient(180deg, #fbfcff 0%, #f4f6ff 52%, #eef3ff 100%);
+  color: #071642;
+  font-family: var(--sf-font-zh);
+}
+
+:global(.sf-expression-library-page svg) {
+  display: block;
+  flex-shrink: 0;
+}
+
+:global(.sf-expression-library-phone) {
+  position: relative;
+  display: flex;
+  width: min(100%, 430px);
+  max-width: 430px;
+  height: 100dvh;
+  min-height: 100dvh;
+  flex-direction: column;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(211, 205, 255, 0.82);
+  border-radius: 0 0 1.35rem 1.35rem;
+  background:
+    radial-gradient(circle at 23% 12%, rgba(116, 93, 255, 0.08), transparent 24%),
+    radial-gradient(circle at 91% 50%, rgba(124, 205, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 255, 0.98));
+}
+
+:global(.sf-expression-library-topbar) {
+  position: relative;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: 3.56rem minmax(0, 1fr) 3.56rem;
+  align-items: center;
+  gap: 0.72rem;
+  min-height: 4.6rem;
+  padding:
+    max(0.48rem, calc(env(safe-area-inset-top, 0px) + 0.38rem))
+    0.95rem
+    0.44rem;
+  border-bottom: 1px solid rgba(215, 210, 255, 0.72);
+  background: linear-gradient(180deg, rgba(247, 246, 255, 0.9), rgba(255, 255, 255, 0.58));
+  box-shadow: 0 12px 30px rgba(92, 84, 157, 0.08);
+}
+
+:global(.sf-expression-library-back),
+:global(.sf-expression-library-avatar),
+:global(.sf-expression-library-search-row button),
+:global(.sf-expression-library-item button),
+:global(.sf-expression-library-bottom-bar button),
+:global(.sf-expression-library-delete-dialog button) {
+  border: 0;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:global(.sf-expression-library-back),
+:global(.sf-expression-library-avatar) {
+  display: grid;
+  width: 3.28rem;
+  height: 3.28rem;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+:global(.sf-expression-library-back) {
+  border-radius: 999px;
+  color: #0b1747;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 16px 32px rgba(95, 89, 162, 0.13);
+}
+
+:global(.sf-expression-library-back svg) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+:global(.sf-expression-library-back path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4.2;
+}
+
+:global(.sf-expression-library-brand) {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.62rem;
+}
+
+:global(.sf-expression-library-brand-mark) {
+  width: 2.2rem !important;
+  height: 2.2rem !important;
+}
+
+:global(.sf-expression-library-brand strong) {
+  display: block;
+  color: #071642;
+  font-family: var(--font-sora), var(--font-geist-sans), sans-serif;
+  font-size: 1.46rem;
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: 0;
+}
+
+:global(.sf-expression-library-brand small) {
+  display: block;
+  margin-top: 0.34rem;
+  color: #6c55ef;
+  font-family: var(--font-sora), var(--font-geist-sans), sans-serif;
+  font-size: 0.58rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+:global(.sf-expression-library-avatar) {
+  position: relative;
+  justify-self: end;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #ffffff 0%, #efffff 100%);
+  box-shadow: 0 14px 28px rgba(80, 83, 151, 0.12);
+}
+
+:global(.sf-expression-library-avatar img),
+:global(.sf-expression-library-avatar > span) {
+  width: calc(100% - 0.34rem);
+  height: calc(100% - 0.34rem);
+  border-radius: inherit;
+}
+
+:global(.sf-expression-library-avatar img) {
+  object-fit: cover;
+}
+
+:global(.sf-expression-library-avatar > span) {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #8ed7ff, #7665ef);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+:global(.sf-expression-library-avatar i) {
+  position: absolute;
+  right: 0.1rem;
+  bottom: 0.22rem;
+  width: 0.86rem;
+  height: 0.86rem;
+  border: 0.15rem solid #ffffff;
+  border-radius: 999px;
+  background: #35ce64;
+}
+
+:global(.sf-expression-library-hero) {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.72rem minmax(0, 1fr) 6.15rem;
+  align-items: center;
+  gap: 0.62rem;
+  min-height: 5.65rem;
+  padding: 0.74rem 1.35rem 0.58rem;
+}
+
+:global(.sf-expression-library-title-icon) {
+  display: grid;
+  width: 3.22rem;
+  height: 3.22rem;
+  place-items: center;
+  border-radius: 999px;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 34% 22%, rgba(255, 255, 255, 0.3), transparent 28%),
+    linear-gradient(145deg, #9a79ff 0%, #5840e5 100%);
+  box-shadow: 0 14px 30px rgba(91, 64, 225, 0.24);
+}
+
+:global(.sf-expression-library-title-icon svg) {
+  width: 1.72rem;
+  height: 1.72rem;
+}
+
+:global(.sf-expression-library-title-icon path:first-child) {
+  fill: currentColor;
+}
+
+:global(.sf-expression-library-title-icon path:nth-child(2)) {
+  fill: none;
+  stroke: #cfc8ff;
+  stroke-linecap: round;
+  stroke-width: 2.5;
+}
+
+:global(.sf-expression-library-title-copy h1) {
+  margin: 0;
+  color: #071642;
+  font-size: 1.62rem;
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+:global(.sf-expression-library-title-copy p) {
+  margin: 0.44rem 0 0;
+  color: #647194;
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-expression-library-hero-art) {
+  justify-self: end;
+  width: 6.1rem;
+  pointer-events: none;
+}
+
+:global(.sf-expression-library-hero-art svg) {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 16px 24px rgba(91, 64, 225, 0.14));
+}
+
+:global(.sf-expression-library-stats) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.54rem;
+  padding: 0 1.35rem 0.88rem;
+}
+
+:global(.sf-expression-library-stat) {
+  display: grid;
+  min-height: 4.42rem;
+  grid-template-columns: 2.08rem minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 0.46rem;
+  align-content: center;
+  border: 1px solid rgba(224, 220, 255, 0.92);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 12px 28px rgba(80, 80, 140, 0.07);
+  padding: 0.55rem;
+}
+
+:global(.sf-expression-library-stat > span) {
+  display: grid;
+  grid-row: 1 / 3;
+  width: 1.96rem;
+  height: 1.96rem;
+  place-items: center;
+  align-self: center;
+  border-radius: 0.72rem;
+  color: #7256ed;
+  background: #f0ecff;
+}
+
+:global(.sf-expression-library-stat.is-blue > span) {
+  color: #567df3;
+  background: #edf3ff;
+}
+
+:global(.sf-expression-library-stat.is-green > span) {
+  color: #35bc79;
+  background: #e8fbf2;
+}
+
+:global(.sf-expression-library-stat svg) {
+  width: 1.12rem;
+  height: 1.12rem;
+}
+
+:global(.sf-expression-library-stat path),
+:global(.sf-expression-library-stat circle) {
+  fill: currentColor;
+}
+
+:global(.sf-expression-library-stat path:nth-child(n+2)) {
+  fill: none;
+  stroke: #ffffff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+:global(.sf-expression-library-stat p) {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0 0 0.2rem;
+  color: #465171;
+  font-size: 0.62rem;
+  font-weight: 820;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+:global(.sf-expression-library-stat strong) {
+  color: #071642;
+  font-size: 1.2rem;
+  font-weight: 930;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-expression-library-stat b) {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 0.22rem;
+  font-style: normal;
+}
+
+:global(.sf-expression-library-stat em) {
+  color: #6c7696;
+  font-size: 0.54rem;
+  font-style: normal;
+  font-weight: 720;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+:global(.sf-expression-library-search-row) {
+  position: relative;
+  z-index: 7;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 3.28rem;
+  gap: 0.82rem;
+  padding: 0 1.35rem 0.68rem;
+}
+
+:global(.sf-expression-library-search) {
+  display: grid;
+  min-height: 2.8rem;
+  grid-template-columns: 1.34rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.68rem;
+  border: 1px solid rgba(226, 229, 246, 0.96);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 26px rgba(84, 88, 145, 0.07);
+  padding: 0 1rem;
+}
+
+:global(.sf-expression-library-search svg) {
+  width: 1.22rem;
+  height: 1.22rem;
+  color: #8d95b6;
+}
+
+:global(.sf-expression-library-search circle),
+:global(.sf-expression-library-search path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+:global(.sf-expression-library-search input) {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #071642;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+:global(.sf-expression-library-search input::placeholder) {
+  color: #a8afca;
+}
+
+:global(.sf-expression-library-filter) {
+  display: grid;
+  width: 2.84rem;
+  height: 2.84rem;
+  place-items: center;
+  border-radius: 999px;
+  color: #697397;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 12px 26px rgba(84, 88, 145, 0.08);
+  cursor: pointer;
+}
+
+:global(.sf-expression-library-filter svg) {
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+:global(.sf-expression-library-filter path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2.6;
+}
+
+:global(.sf-expression-library-filter circle) {
+  fill: currentColor;
+}
+
+:global(.sf-expression-library-suggestions),
+:global(.sf-expression-library-filter-menu),
+:global(.sf-expression-library-sort-select > div),
+:global(.sf-expression-library-item-menu) {
+  position: absolute;
+  z-index: 20;
+  overflow: hidden;
+  border: 1px solid rgba(218, 212, 255, 0.9);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 18px 34px rgba(75, 72, 135, 0.14);
+}
+
+:global(.sf-expression-library-suggestions) {
+  top: calc(100% - 0.52rem);
+  left: 1.35rem;
+  right: 4.95rem;
+}
+
+:global(.sf-expression-library-suggestions button),
+:global(.sf-expression-library-filter-menu button),
+:global(.sf-expression-library-sort-select > div button),
+:global(.sf-expression-library-item-menu button) {
+  display: block;
+  width: 100%;
+  padding: 0.72rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: #071642;
+  font-size: 0.86rem;
+  font-weight: 760;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+:global(.sf-expression-library-suggestions button + button),
+:global(.sf-expression-library-filter-menu button + button),
+:global(.sf-expression-library-sort-select > div button + button),
+:global(.sf-expression-library-item-menu button + button) {
+  border-top: 1px solid rgba(226, 222, 252, 0.8);
+}
+
+:global(.sf-expression-library-suggestions strong),
+:global(.sf-expression-library-suggestions span) {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:global(.sf-expression-library-suggestions span) {
+  margin-top: 0.2rem;
+  color: #6b7597;
+  font-size: 0.74rem;
+  font-weight: 650;
+}
+
+:global(.sf-expression-library-filter-menu) {
+  top: calc(100% - 0.52rem);
+  right: 1.35rem;
+  width: 8.2rem;
+}
+
+:global(.sf-expression-library-list) {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  gap: 0.62rem;
+  overflow-y: auto;
+  padding: 0 1.35rem 4.55rem;
+  scrollbar-width: none;
+}
+
+:global(.sf-expression-library-list::-webkit-scrollbar) {
+  display: none;
+}
+
+:global(.sf-expression-library-item) {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2.76rem;
+  align-items: center;
+  min-height: 4.72rem;
+  gap: 0.8rem;
+  border: 1px solid rgba(224, 228, 246, 0.92);
+  border-radius: 1.08rem;
+  background:
+    radial-gradient(circle at 84% 22%, rgba(231, 229, 255, 0.46), transparent 24%),
+    rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 26px rgba(80, 86, 144, 0.07);
+  padding: 0.62rem 0.9rem;
+}
+
+:global(.sf-expression-library-list.is-compact) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.58rem;
+}
+
+:global(.sf-expression-library-list.is-compact .sf-expression-library-item) {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 8.8rem;
+  padding: 0.74rem;
+}
+
+:global(.sf-expression-library-list.is-compact .sf-expression-library-item-actions) {
+  position: absolute;
+  top: 0.62rem;
+  right: 0.62rem;
+}
+
+:global(.sf-expression-library-list.is-compact .sf-expression-library-item-main) {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+}
+
+:global(.sf-expression-library-list.is-compact .sf-library-word-thumb) {
+  width: 3.4rem;
+  height: 3.4rem;
+}
+
+:global(.sf-expression-library-item-main) {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 3.16rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.74rem;
+  cursor: pointer;
+}
+
+:global(.sf-library-word-thumb) {
+  display: grid;
+  width: 3.06rem;
+  height: 3.06rem;
+  place-items: center;
+  border-radius: 999px;
+  color: #7f63ec;
+  background: #eee7ff;
+}
+
+:global(.sf-library-word-thumb.is-green) {
+  color: #32a965;
+  background: #d9f8df;
+}
+
+:global(.sf-library-word-thumb.is-blue) {
+  color: #5d85f4;
+  background: #dbe7ff;
+}
+
+:global(.sf-library-word-thumb.is-orange) {
+  color: #f06f3c;
+  background: #ffe4d2;
+}
+
+:global(.sf-library-word-thumb.is-pink) {
+  color: #f45a94;
+  background: #ffd8e8;
+}
+
+:global(.sf-library-word-thumb svg) {
+  width: 1.78rem;
+  height: 1.78rem;
+}
+
+:global(.sf-library-word-thumb path),
+:global(.sf-library-word-thumb circle) {
+  fill: currentColor;
+}
+
+:global(.sf-library-word-thumb path:nth-child(n+2)) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+}
+
+:global(.sf-expression-library-item-copy) {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+}
+
+:global(.sf-expression-library-word-line) {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.44rem;
+}
+
+:global(.sf-expression-library-word-line strong) {
+  min-width: 0;
+  overflow: hidden;
+  color: #071642;
+  font-size: 1.16rem;
+  font-weight: 920;
+  line-height: 1.1;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:global(.sf-expression-library-word-line button) {
+  display: grid;
+  width: 1.42rem;
+  height: 1.42rem;
+  place-items: center;
+  padding: 0;
+  border-radius: 999px;
+  color: #7256ef;
+  background: #f0ecff;
+  cursor: pointer;
+}
+
+:global(.sf-expression-library-word-line button svg) {
+  width: 0.92rem;
+  height: 0.92rem;
+}
+
+:global(.sf-expression-library-word-line button path:first-child) {
+  fill: currentColor;
+}
+
+:global(.sf-expression-library-word-line button path:nth-child(n+2)) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+:global(.sf-expression-library-meaning) {
+  display: block;
+  min-width: 0;
+  margin-top: 0.26rem;
+  overflow: hidden;
+  color: #5e6b91;
+  font-size: 0.8rem;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:global(.sf-expression-library-tag) {
+  justify-self: start;
+  margin-top: 0.34rem;
+  padding: 0.18rem 0.5rem 0.22rem;
+  border-radius: 0.36rem;
+  background: #efe9ff;
+  color: #7356ef;
+  font-size: 0.72rem;
+  font-weight: 760;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+:global(.sf-expression-library-tag.is-green) {
+  background: #dff8e8;
+  color: #2dab68;
+}
+
+:global(.sf-expression-library-tag.is-blue) {
+  background: #e5edff;
+  color: #5578ee;
+}
+
+:global(.sf-expression-library-tag.is-orange) {
+  background: #fff0e7;
+  color: #ef6f38;
+}
+
+:global(.sf-expression-library-tag.is-pink) {
+  background: #ffe7f0;
+  color: #e64d89;
+}
+
+:global(.sf-expression-library-item-actions) {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+:global(.sf-expression-library-item-actions > button) {
+  display: grid;
+  width: 2.58rem;
+  height: 2.58rem;
+  place-items: center;
+  padding: 0;
+  border-radius: 999px;
+  color: #5f688a;
+  background: #f3f2fc;
+  cursor: pointer;
+}
+
+:global(.sf-expression-library-item-actions > button svg) {
+  width: 1.38rem;
+  height: 1.38rem;
+}
+
+:global(.sf-expression-library-item-actions > button circle) {
+  fill: currentColor;
+}
+
+:global(.sf-expression-library-item-menu) {
+  top: 3rem;
+  right: 0;
+  width: 8.3rem;
+}
+
+:global(.sf-expression-library-empty) {
+  display: grid;
+  min-height: 12rem;
+  place-items: center;
+  align-content: center;
+  gap: 0.58rem;
+  border: 1px solid rgba(224, 228, 246, 0.92);
+  border-radius: 1.08rem;
+  background: rgba(255, 255, 255, 0.86);
+  padding: 1rem;
+  text-align: center;
+}
+
+:global(.sf-expression-library-empty h2) {
+  margin: 0;
+  color: #071642;
+  font-size: 1.18rem;
+  font-weight: 900;
+}
+
+:global(.sf-expression-library-empty p) {
+  margin: 0;
+  color: #647194;
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+:global(.sf-expression-library-bottom-bar) {
+  position: absolute;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  min-height: calc(3.55rem + env(safe-area-inset-bottom, 0px));
+  grid-template-columns: 6.65rem minmax(0, 1fr) 3rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding:
+    0.62rem 1.35rem
+    max(0.62rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem));
+  border-top: 1px solid rgba(217, 221, 240, 0.76);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 -14px 34px rgba(78, 83, 142, 0.09);
+  backdrop-filter: blur(18px);
+}
+
+:global(.sf-expression-library-sort-toggle),
+:global(.sf-expression-library-view-toggle),
+:global(.sf-expression-library-sort-select > button) {
+  display: flex;
+  min-width: 0;
+  min-height: 2.36rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  border: 1px solid rgba(218, 223, 246, 0.95);
+  border-radius: 0.86rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #5d698c;
+  box-shadow: 0 10px 22px rgba(83, 88, 145, 0.07);
+  cursor: pointer;
+}
+
+:global(.sf-expression-library-sort-toggle) {
+  font-size: 0.78rem;
+  font-weight: 820;
+  letter-spacing: 0;
+}
+
+:global(.sf-expression-library-sort-toggle svg) {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+:global(.sf-expression-library-sort-toggle path),
+:global(.sf-expression-library-sort-select path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.3;
+}
+
+:global(.sf-expression-library-sort-select) {
+  position: relative;
+  min-width: 0;
+}
+
+:global(.sf-expression-library-sort-select > button) {
+  width: 100%;
+  padding: 0 0.7rem;
+  border-color: transparent;
+  box-shadow: none;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  font-weight: 820;
+}
+
+:global(.sf-expression-library-sort-select svg) {
+  width: 1rem;
+  height: 1rem;
+}
+
+:global(.sf-expression-library-sort-select > div) {
+  right: 0;
+  bottom: calc(100% + 0.48rem);
+  left: 0;
+}
+
+:global(.sf-expression-library-view-toggle) {
+  width: 2.78rem;
+  min-height: 2.36rem;
+}
+
+:global(.sf-expression-library-view-toggle svg) {
+  width: 1.44rem;
+  height: 1.44rem;
+  color: #596489;
+}
+
+:global(.sf-expression-library-view-toggle rect) {
+  fill: currentColor;
+}
+
+:global(.sf-expression-library-view-toggle path) {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+:global(.sf-expression-library-delete-backdrop) {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(17, 22, 57, 0.2);
+  padding: 1.35rem;
+  backdrop-filter: blur(10px);
+}
+
+:global(.sf-expression-library-delete-dialog) {
+  width: min(100%, 19rem);
+  border: 1px solid rgba(224, 220, 255, 0.94);
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 24px 54px rgba(35, 32, 92, 0.18);
+  padding: 1.2rem;
+}
+
+:global(.sf-expression-library-delete-dialog h2) {
+  margin: 0;
+  color: #071642;
+  font-size: 1.32rem;
+  font-weight: 900;
+}
+
+:global(.sf-expression-library-delete-dialog p) {
+  margin: 0.72rem 0 0;
+  color: #637094;
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+:global(.sf-expression-library-delete-dialog div) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.62rem;
+  margin-top: 1rem;
+}
+
+:global(.sf-expression-library-delete-dialog button) {
+  min-height: 2.7rem;
+  border-radius: 0.78rem;
+  color: #5e6687;
+  background: #f1f3fb;
+  font-weight: 840;
+  cursor: pointer;
+}
+
+:global(.sf-expression-library-delete-dialog button:last-child) {
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff7897, #f04870);
+}
+
+:global(.sf-expression-library-back:active),
+:global(.sf-expression-library-avatar:active),
+:global(.sf-expression-library-search-row button:active),
+:global(.sf-expression-library-bottom-bar button:active),
+:global(.sf-expression-library-item-actions > button:active) {
+  transform: translateY(1px) scale(0.99);
+}
+
+@media (max-width: 390px) {
+  :global(.sf-vocabulary-learning-phone) {
+    padding-inline: 0.9rem;
+  }
+
+  :global(.sf-vocabulary-learning-header) {
+    grid-template-columns: 3.56rem minmax(0, 1fr) 3.56rem;
+  }
+
+  :global(.sf-vocabulary-brand) {
+    gap: 0.5rem;
+  }
+
+  :global(.sf-vocabulary-brand-mark) {
+    width: 2.2rem !important;
+    height: 2.2rem !important;
+  }
+
+  :global(.sf-vocabulary-brand strong) {
+    font-size: 1.56rem;
+  }
+
+  :global(.sf-vocabulary-brand small) {
+    font-size: 0.58rem;
+  }
+
+  :global(.sf-vocabulary-card-copy) {
+    width: 60%;
+    padding-left: 1.32rem;
+  }
+
+  :global(.sf-vocabulary-word-line h2) {
+    font-size: 2.76rem;
+  }
+
+  :global(.sf-vocabulary-example-line h2) {
+    font-size: 1.32rem;
+  }
+
+  :global(.sf-vocabulary-learning-actions) {
+    gap: 0.54rem;
+  }
+
+  :global(.sf-vocabulary-nav-action) {
+    padding-inline: 0.52rem;
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-height: 780px) {
+  :global(.sf-vocabulary-learning-phone) {
+    padding-top: max(0.44rem, calc(env(safe-area-inset-top, 0px) + 0.38rem));
+  }
+
+  :global(.sf-vocabulary-learning-header) {
+    min-height: 3.34rem;
+  }
+
+  :global(.sf-vocabulary-back-button),
+  :global(.sf-vocabulary-avatar-button) {
+    width: 2.96rem;
+    height: 2.96rem;
+  }
+
+  :global(.sf-vocabulary-learning-title) {
+    padding-top: 0.62rem;
+    padding-bottom: 0.48rem;
+  }
+
+  :global(.sf-vocabulary-learning-title h1) {
+    font-size: 1.58rem;
+  }
+
+  :global(.sf-vocabulary-learning-title p) {
+    margin-top: 0.36rem;
+    font-size: 0.88rem;
+  }
+
+  :global(.sf-vocabulary-progress-row) {
+    padding-bottom: 0.52rem;
+  }
+
+  :global(.sf-vocabulary-study-card) {
+    min-height: 9.48rem;
+  }
+
+  :global(.sf-vocabulary-example-card) {
+    min-height: 8.72rem;
+    margin-top: 0.48rem;
+  }
+
+  :global(.sf-vocabulary-card-copy) {
+    padding-top: 0.82rem;
+    padding-bottom: 0.68rem;
+  }
+
+  :global(.sf-vocabulary-word-line) {
+    margin-top: 0.68rem;
+  }
+
+  :global(.sf-vocabulary-example-line) {
+    margin-top: 0.66rem;
+  }
+
+  :global(.sf-vocabulary-card-rule) {
+    margin: 0.62rem 0 0.58rem;
+  }
+
+  :global(.sf-vocabulary-word-line h2) {
+    font-size: 2.28rem;
+  }
+
+  :global(.sf-vocabulary-example-line h2) {
+    font-size: 1.06rem;
+  }
+
+  :global(.sf-vocabulary-meaning),
+  :global(.sf-vocabulary-translation) {
+    margin-top: 0.34rem;
+    font-size: 0.84rem;
+  }
+
+  :global(.sf-vocabulary-card-art) {
+    top: 0.78rem;
+    width: 44%;
+  }
+
+  :global(.sf-vocabulary-learning-actions) {
+    margin-top: 0.52rem;
+  }
+
+  :global(.sf-vocabulary-nav-action),
+  :global(.sf-vocabulary-slow-action) {
+    min-height: 2.9rem;
+  }
+
+  :global(.sf-vocabulary-follow-action) {
+    width: 3.68rem;
+    height: 3.68rem;
+  }
+
+  :global(.sf-vocabulary-tip) {
+    margin-top: 0.38rem;
+  }
+}

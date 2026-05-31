@@ -34,6 +34,7 @@ import {
   isFreePracticeLimitReached,
   recordFreePracticeCompletion,
 } from "@/lib/freePracticeLimit";
+import styles from "./ClassicStudyPage.module.css";
 
 type Lesson = {
   id: string;
@@ -98,7 +99,7 @@ const bankFinanceLessonTitleOrder = [
   "银行客服电话口语课",
   "申请个人贷款",
   "房屋抵押贷款咨询",
-  "银行保险简",
+  "银行保险箱",
   "银行提供的保险产品",
   "投资产品与财富管理",
   "退休储蓄与养老金计划",
@@ -314,6 +315,247 @@ function createFallbackExpressionVariants(standardEnglish: string) {
   }));
 }
 
+function getClassicTopicRole(lessonId: string, title: string) {
+  const source = `${lessonId} ${title}`.toLowerCase();
+
+  if (source.includes("bank") || title.includes("银行")) return "银行职员";
+  if (source.includes("driver") || title.includes("驾照")) return "办事人员";
+  if (source.includes("government") || title.includes("政府")) return "窗口工作人员";
+  if (source.includes("health") || title.includes("医疗")) return "接待人员";
+  if (source.includes("restaurant") || title.includes("餐")) return "服务员";
+  if (source.includes("hotel") || title.includes("住宿")) return "前台人员";
+
+  return "场景角色";
+}
+
+function MenuLinesIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+      <path d="M8 10h16M8 16h16M8 22h16" />
+    </svg>
+  );
+}
+
+function BrandBubbleIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 52 52">
+      <path d="M10 25.4C10 14.7 18.4 7 29 7c10.3 0 18 7.2 18 17.2 0 10.4-8.1 17.4-18.5 17.4-2.1 0-4.1-.3-5.9-.9L11.8 45l3-9.6A16 16 0 0 1 10 25.4Z" />
+      <path d="M22 20v9M29 16v17M36 21v8M17 24v3M41 24v3" />
+    </svg>
+  );
+}
+
+function ArrowLeftIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+      <path d="M19 8 11 16l8 8M12 16h16" />
+    </svg>
+  );
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+      <path d="m13 8 8 8-8 8M4 16h16" />
+    </svg>
+  );
+}
+
+function TopicIcon({ lessonId, title }: { lessonId: string; title: string }) {
+  const source = `${lessonId} ${title}`.toLowerCase();
+  const icon =
+    source.includes("atm") || title.includes("ATM")
+      ? "atm"
+      : source.includes("phone") || title.includes("电话")
+        ? "phone"
+        : source.includes("loan") || title.includes("贷款")
+          ? "home"
+          : source.includes("insurance") || title.includes("保险")
+            ? "shield"
+            : source.includes("bank") || title.includes("银行")
+              ? "bank"
+              : "dialog";
+
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      {icon === "atm" ? (
+        <>
+          <rect x="9" y="9" width="30" height="30" rx="7" />
+          <text x="24" y="22" textAnchor="middle">
+            ATM
+          </text>
+          <text x="24" y="32" textAnchor="middle">
+            ATM
+          </text>
+        </>
+      ) : icon === "phone" ? (
+        <path d="M17 10 11 16c1.7 9.8 10.2 18.2 20 20l6-6-7-5-3.6 3.5c-3.2-1.4-5.6-3.8-7-7l3.6-3.5-5-8Z" />
+      ) : icon === "home" ? (
+        <>
+          <path d="M8 23 24 10l16 13" />
+          <path d="M13 22v17h22V22" />
+          <path d="M21 39V28h6v11" />
+        </>
+      ) : icon === "shield" ? (
+        <>
+          <path d="M24 8 37 13v9c0 8-5.4 14-13 18-7.6-4-13-10-13-18v-9l13-5Z" />
+          <path d="M18 24 22 28l8-9" />
+        </>
+      ) : icon === "bank" ? (
+        <>
+          <path d="M6 18h36L24 8 6 18Z" />
+          <path d="M10 39h28M8 43h32M13 18v17M21 18v17M29 18v17M37 18v17" />
+        </>
+      ) : (
+        <>
+          <path d="M10 15c3.3-4 7.7-6 13.1-6C32 9 39 15 39 23.4S32.2 38 23 38c-2 0-3.8-.3-5.5-.8L9 41l2.5-8A15.4 15.4 0 0 1 10 15Z" />
+          <path d="M18 23h.1M24 23h.1M30 23h.1" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+function SpeakerAvatarIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 72 72">
+      <circle cx="36" cy="36" r="33" fill="#f2dfcc" />
+      <path d="M20 61c3-11 9-17 16-17s13 6 16 17" fill="#8a562f" />
+      <path d="M24 25c2-10 9-16 18-14 9 2 13 10 10 20-2-7-7-10-14-9-7 1-11 2-14 3Z" fill="#6d4228" />
+      <circle cx="35" cy="31" r="16" fill="#ffe3cc" />
+      <path d="M25 31c2-5 7-8 15-8 5 0 9 2 12 6-2-11-10-17-20-14-8 2-12 8-12 17 2 0 3 0 5-1Z" fill="#7b4a2d" />
+      <circle cx="30" cy="33" r="1.8" fill="#55331f" />
+      <circle cx="41" cy="33" r="1.8" fill="#55331f" />
+      <path d="M31 41c3 2 6 2 9 0" fill="none" stroke="#55331f" strokeLinecap="round" strokeWidth="2" />
+      <path d="M28 48h16l-8 8-8-8Z" fill="#fff8ef" />
+    </svg>
+  );
+}
+
+function BookMethodIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      <path d="M8 10h13c3 0 5 2 5 5v25c0-3-2-5-5-5H8V10Z" />
+      <path d="M40 10H27c-3 0-5 2-5 5v25c0-3 2-5 5-5h13V10Z" />
+    </svg>
+  );
+}
+
+function MicMethodIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      <rect x="18" y="7" width="12" height="22" rx="6" />
+      <path d="M12 23c0 7 5 12 12 12s12-5 12-12M24 35v7M17 42h14" />
+    </svg>
+  );
+}
+
+function StarMethodIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      <path d="m24 8 4.8 10 11 1.6-8 7.7 1.9 10.8L24 33l-9.7 5.1 1.9-10.8-8-7.7 11-1.6L24 8Z" />
+    </svg>
+  );
+}
+
+function BigMicIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 96 96">
+      <rect x="36" y="16" width="24" height="44" rx="12" />
+      <path d="M24 47c0 14 10 24 24 24s24-10 24-24M48 71v13M35 84h26" />
+    </svg>
+  );
+}
+
+function UserResultIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="18" />
+      <circle cx="20" cy="15" r="6" />
+      <path d="M9 32c2.4-7.1 6.1-10.6 11-10.6S28.6 24.9 31 32" />
+    </svg>
+  );
+}
+
+function SpeakerIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      <path d="M8 19h8l12-9v28l-12-9H8V19Z" />
+      <path d="M34 18c2.3 2.3 3.5 4.9 3.5 8s-1.2 5.7-3.5 8" />
+      <path d="M39 13c3.7 3.7 5.5 8 5.5 13S42.7 35.3 39 39" />
+    </svg>
+  );
+}
+
+function HeadphonesIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      <path d="M10 27v-4c0-8 6-14 14-14s14 6 14 14v4" />
+      <rect x="7" y="25" width="9" height="13" rx="4" />
+      <rect x="32" y="25" width="9" height="13" rx="4" />
+    </svg>
+  );
+}
+
+function ResultVariantIcon({ variantKey }: { variantKey: ExpressionVariantKey }) {
+  if (variantKey === "idiomatic") {
+    return (
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 40 40">
+        <path d="M20 5 34 19 20 35 6 19 20 5Z" />
+        <path d="M13 19h14M20 5l-6 14 6 16 6-16-6-14Z" />
+      </svg>
+    );
+  }
+
+  if (variantKey === "simple") {
+    return (
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 40 40">
+        <path d="M11 29 26 14l5 5-15 15H9v-7Z" />
+        <path d="m23 17 5 5" />
+      </svg>
+    );
+  }
+
+  if (variantKey === "natural") {
+    return (
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 40 40">
+        <path d="M31 9C20 10 11 18 10 31c12-1 20-9 21-22Z" />
+        <path d="M12 29c5-5 10-9 16-13" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 40 40">
+      <path d="m20 6 4.1 8.3 9.2 1.4-6.7 6.5 1.6 9.2L20 27l-8.2 4.4 1.6-9.2-6.7-6.5 9.2-1.4L20 6Z" />
+    </svg>
+  );
+}
+
+function ResultBookIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 52 52">
+      <path d="M8 12h16c3 0 5 2 5 5v27c0-3-2-5-5-5H8V12Z" />
+      <path d="M44 12H28c-3 0-5 2-5 5v27c0-3 2-5 5-5h16V12Z" />
+      <path d="M14 19h8M14 25h8M30 19h8M30 25h8" />
+    </svg>
+  );
+}
+
+function getResultVariantNote(variantKey: ExpressionVariantKey) {
+  if (variantKey === "standard") return "最自然、最常用的表达";
+  if (variantKey === "idiomatic") return "更符合母语者习惯";
+  if (variantKey === "simple") return "用词更简单，容易说";
+  return "日常交流中更自然的说法";
+}
+
+function getResultVariantToneClass(variantKey: ExpressionVariantKey) {
+  if (variantKey === "idiomatic") return styles.toneIdiomatic;
+  if (variantKey === "simple") return styles.toneSimple;
+  if (variantKey === "natural") return styles.toneNatural;
+  return styles.toneRecommended;
+}
+
 export default function StudyPage() {
   const params = useParams();
   const router = useRouter();
@@ -352,6 +594,7 @@ export default function StudyPage() {
   const [renameCourseTitle, setRenameCourseTitle] = useState("");
   const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
     useState(false);
+  const [showFollowReadModal, setShowFollowReadModal] = useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
     useState<SubscriptionStatus>("free");
   const [freePracticeUsageCount, setFreePracticeUsageCount] = useState(0);
@@ -434,6 +677,7 @@ export default function StudyPage() {
     setExpressionVariants([]);
     setSelectedExpressionIndex(0);
     setIsLoadingExpressionVariants(false);
+    setShowFollowReadModal(false);
     speechBufferRef.current = "";
     clearSpeechSilenceTimer();
     recognitionRef.current?.abort?.();
@@ -1551,6 +1795,472 @@ export default function StudyPage() {
     stopAutoPlay();
     window.localStorage.setItem("currentLessonTitle", targetLesson.title);
     router.replace(`/study/${targetLesson.id}`);
+  }
+
+  if (showStudyVoiceOnlyPrompt) {
+    const speakerRole = getClassicTopicRole(lessonId, courseTitle);
+    const displayedChinese = currentPair.chinese || "没有内容";
+
+    return (
+      <main className={styles.classicShell}>
+        <section className={styles.classicPhone} aria-labelledby="classic-study-title">
+          <header className={styles.classicTopbar}>
+            <button
+              type="button"
+              aria-label="返回主菜单"
+              className={styles.menuButton}
+              onClick={handleBackToPreviousPage}
+            >
+              <MenuLinesIcon />
+            </button>
+
+            <div className={styles.brand} aria-label="SpeakFlow Voice Practice">
+              <span className={styles.brandIcon}>
+                <BrandBubbleIcon />
+              </span>
+              <span className={styles.brandCopy}>
+                <span className={styles.brandTitle}>SpeakFlow</span>
+                <span className={styles.brandSubtitle}>VOICE PRACTICE</span>
+              </span>
+            </div>
+
+            <button
+              type="button"
+              aria-label="进入账户界面"
+              className={styles.avatarButton}
+              onClick={() => router.push("/account")}
+            >
+              <Image
+                src="/default-avatar.png"
+                alt=""
+                width={68}
+                height={68}
+                className={styles.avatarImage}
+                priority
+              />
+              <span aria-hidden="true" className={styles.avatarDot} />
+            </button>
+          </header>
+
+          <section className={styles.topicBar} aria-label="当前话题">
+            <button
+              type="button"
+              aria-label="上一个话题"
+              className={`${styles.topicArrow} ${styles.topicArrowLeft}`}
+              onClick={() => previousLesson && openNeighborLesson(previousLesson)}
+              disabled={!previousLesson}
+            >
+              <ArrowLeftIcon />
+            </button>
+
+            <span className={styles.topicIcon}>
+              <TopicIcon lessonId={lessonId} title={courseTitle} />
+            </span>
+
+            <div className={styles.topicCopy}>
+              <h1 id="classic-study-title" className={styles.topicTitle}>
+                {courseTitle}
+              </h1>
+              <p className={styles.topicProgress}>{sentenceProgressText}</p>
+            </div>
+
+            <button
+              type="button"
+              aria-label="下一个话题"
+              className={`${styles.topicArrow} ${styles.topicArrowRight}`}
+              onClick={() => nextLesson && openNeighborLesson(nextLesson)}
+              disabled={!nextLesson}
+            >
+              <ArrowRightIcon />
+            </button>
+          </section>
+
+          <section className={styles.dialogCard} aria-label="中文提示">
+            <div className={styles.speakerLine}>
+              <span className={styles.speakerAvatar}>
+                <SpeakerAvatarIcon />
+              </span>
+              <span className={styles.roleBadge}>{speakerRole}</span>
+            </div>
+
+            <div className={styles.speechBubble}>
+              <span aria-hidden="true" className={styles.quoteStart}>
+                “
+              </span>
+              <p className={styles.chinesePrompt}>{displayedChinese}</p>
+              <span aria-hidden="true" className={styles.quoteEnd}>
+                ”
+              </span>
+            </div>
+
+            <div className={styles.sceneIllustration} aria-hidden="true">
+              <span className={styles.bankCounter} />
+              <span className={styles.bankSign}>BANK</span>
+              <span className={styles.bankPlant} />
+              <span className={styles.bankChairOne} />
+              <span className={styles.bankChairTwo} />
+            </div>
+
+            <p className={styles.promptHint}>
+              看着中文，尝试说出英文
+            </p>
+          </section>
+
+          <section className={styles.methodCard} aria-label="练习方法">
+            <div className={styles.methodTitle}>
+              <span />
+              <strong>练习方法</strong>
+              <span />
+            </div>
+            <div className={styles.methodSteps}>
+              <div className={styles.methodStep}>
+                <span className={styles.methodIcon}>
+                  <BookMethodIcon />
+                </span>
+                <span className={styles.stepNumber}>1</span>
+                <span className={styles.stepCopy}>
+                  <strong>看中文</strong>
+                  <small>理解场景意思</small>
+                </span>
+              </div>
+              <span className={styles.methodArrow}>→</span>
+              <div className={styles.methodStep}>
+                <span className={styles.methodIcon}>
+                  <MicMethodIcon />
+                </span>
+                <span className={styles.stepNumber}>2</span>
+                <span className={styles.stepCopy}>
+                  <strong>说英文</strong>
+                  <small>尝试表达出来</small>
+                </span>
+              </div>
+              <span className={styles.methodArrow}>→</span>
+              <div className={styles.methodStep}>
+                <span className={styles.methodIcon}>
+                  <StarMethodIcon />
+                </span>
+                <span className={styles.stepNumber}>3</span>
+                <span className={styles.stepCopy}>
+                  <strong>学地道表达</strong>
+                  <small>查看更自然的说法</small>
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.practiceControls} aria-label="句子练习控制">
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              className={styles.sentenceButton}
+              aria-label="上一句"
+            >
+              <ArrowLeftIcon />
+              <span>上一句</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleEnglishPracticeAction}
+              className={`${styles.micButton} ${isListening ? styles.micButtonActive : ""}`}
+              aria-label={isListening ? "停止录音" : "点击麦克风开始练习"}
+            >
+              <span className={styles.micPulseOne} />
+              <span className={styles.micPulseTwo} />
+              <BigMicIcon />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={currentIndex >= pairs.length - 1}
+              className={styles.sentenceButton}
+              aria-label="下一句"
+            >
+              <span>下一句</span>
+              <ArrowRightIcon />
+            </button>
+          </section>
+
+          <p className={styles.micHint}>
+            {isListening
+              ? liveTranscript || "正在听你说英文..."
+              : message || "点击麦克风开始练习"}
+          </p>
+
+          <aside className={styles.tipCard} aria-label="小贴士">
+            <span className={styles.tipIcon}>i</span>
+            <span className={styles.tipCopy}>
+              <strong>小贴士</strong>
+              <small>系统会在下一页显示你的录音和参考表达，帮助你说得更地道！</small>
+            </span>
+            <span className={styles.tipArt} aria-hidden="true">
+              <span />
+            </span>
+          </aside>
+        </section>
+
+        {showFreePracticeLimitModal ? (
+          <FreePracticeLimitModal
+            onDismiss={() => setShowFreePracticeLimitModal(false)}
+            onUnlockPro={openProFromFreePracticeLimit}
+          />
+        ) : null}
+      </main>
+    );
+  }
+
+  if (showExpressionFeedback) {
+    const resultVariants = expressionVariantsForDisplay.slice(0, 4);
+    const selectedReadText =
+      selectedExpression?.text || resultVariants[0]?.text || currentPair.english || "";
+
+    return (
+      <main className={styles.classicShell}>
+        <section
+          className={`${styles.classicPhone} ${styles.resultPhone}`}
+          aria-labelledby="classic-result-title"
+        >
+          <header className={styles.classicTopbar}>
+            <button
+              type="button"
+              aria-label="返回主菜单"
+              className={styles.menuButton}
+              onClick={handleBackToPreviousPage}
+            >
+              <MenuLinesIcon />
+            </button>
+
+            <div className={styles.brand} aria-label="SpeakFlow Voice Practice">
+              <span className={styles.brandIcon}>
+                <BrandBubbleIcon />
+              </span>
+              <span className={styles.brandCopy}>
+                <span className={styles.brandTitle}>SpeakFlow</span>
+                <span className={styles.brandSubtitle}>VOICE PRACTICE</span>
+              </span>
+            </div>
+
+            <button
+              type="button"
+              aria-label="进入账户界面"
+              className={styles.avatarButton}
+              onClick={() => router.push("/account")}
+            >
+              <Image
+                src="/default-avatar.png"
+                alt=""
+                width={68}
+                height={68}
+                className={styles.avatarImage}
+                priority
+              />
+              <span aria-hidden="true" className={styles.avatarDot} />
+            </button>
+          </header>
+
+          <section className={`${styles.topicBar} ${styles.resultTopicBar}`} aria-label="当前话题">
+            <button
+              type="button"
+              aria-label="上一个话题"
+              className={`${styles.topicArrow} ${styles.topicArrowLeft}`}
+              onClick={() => previousLesson && openNeighborLesson(previousLesson)}
+              disabled={!previousLesson}
+            >
+              <ArrowLeftIcon />
+            </button>
+
+            <span className={styles.topicIcon}>
+              <TopicIcon lessonId={lessonId} title={courseTitle} />
+            </span>
+
+            <div className={styles.topicCopy}>
+              <h1 id="classic-result-title" className={styles.topicTitle}>
+                {courseTitle}
+              </h1>
+              <p className={styles.topicProgress}>{sentenceProgressText}</p>
+            </div>
+
+            <button
+              type="button"
+              aria-label="下一个话题"
+              className={`${styles.topicArrow} ${styles.topicArrowRight}`}
+              onClick={() => nextLesson && openNeighborLesson(nextLesson)}
+              disabled={!nextLesson}
+            >
+              <ArrowRightIcon />
+            </button>
+          </section>
+
+          <p className={styles.resultHint}>
+            <span aria-hidden="true" className={styles.resultHintIcon}>
+              i
+            </span>
+            学习不同表达方式，找到最适合你的说法
+          </p>
+
+          <section className={styles.userExpressionCard} aria-label="你的表达">
+            <div className={styles.userExpressionLabel}>
+              <span className={styles.userExpressionIcon}>
+                <UserResultIcon />
+              </span>
+              <strong>你的表达</strong>
+            </div>
+            <p className={styles.userExpressionText}>{spokenDisplay}</p>
+          </section>
+
+          <section className={styles.expressionList} aria-label="推荐表达">
+            {isLoadingExpressionVariants ? (
+              <p className={styles.loadingExpressions}>正在生成表达...</p>
+            ) : (
+              resultVariants.map((variant, variantIndex) => {
+                const isSelected = selectedExpressionIndex === variantIndex;
+                const isFeatured = variant.key === "standard";
+                const toneClass = getResultVariantToneClass(variant.key);
+
+                return (
+                  <article
+                    key={`${variant.key}-${variantIndex}`}
+                    className={`${styles.expressionCard} ${toneClass} ${
+                      isFeatured ? styles.expressionCardFeatured : ""
+                    } ${isSelected ? styles.expressionCardSelected : ""}`}
+                  >
+                    <button
+                      type="button"
+                      className={styles.expressionSelectArea}
+                      onClick={() => setSelectedExpressionIndex(variantIndex)}
+                      aria-label={`选择${variant.label}`}
+                    >
+                      <span className={styles.variantRibbon}>
+                        <ResultVariantIcon variantKey={variant.key} />
+                      </span>
+                      <span className={styles.variantCopy}>
+                        <span className={styles.variantTitle}>{variant.label}</span>
+                        <span className={styles.variantText}>{variant.text}</span>
+                        <span className={styles.variantNote}>
+                          {getResultVariantNote(variant.key)}
+                        </span>
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.variantSpeaker}
+                      aria-label={`朗读${variant.label}`}
+                      onClick={() => readExpressionVariant(variant, variantIndex)}
+                    >
+                      <SpeakerIcon />
+                    </button>
+
+                    {isFeatured ? (
+                      <span className={styles.cornerStar} aria-hidden="true">
+                        <ResultVariantIcon variantKey="standard" />
+                      </span>
+                    ) : null}
+                  </article>
+                );
+              })
+            )}
+          </section>
+
+          <section className={styles.followCard} aria-label="跟读练习">
+            <div className={styles.followTop}>
+              <button
+                type="button"
+                className={styles.followReadButton}
+                onClick={() => speakEnglish(selectedReadText, 1)}
+                aria-label="播放指定句子的朗读"
+              >
+                <span className={styles.followBookIcon}>
+                  <ResultBookIcon />
+                </span>
+                <span>
+                  <strong>跟读练习</strong>
+                  <small>听标准发音，跟读练习更地道</small>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                className={styles.slowReadButton}
+                onClick={() => speakEnglish(selectedReadText, 0.5)}
+                aria-label="播放指定句子的慢速朗读"
+              >
+                <HeadphonesIcon />
+                <span>慢速朗读</span>
+              </button>
+            </div>
+
+            <div className={styles.followControls}>
+              <button
+                type="button"
+                onClick={handlePrev}
+                disabled={currentIndex === 0}
+                className={styles.sentenceButton}
+                aria-label="上一句"
+              >
+                <ArrowLeftIcon />
+                <span>上一句</span>
+              </button>
+
+              <div className={styles.followMicWrap}>
+                <button
+                  type="button"
+                  onClick={() => setShowFollowReadModal(true)}
+                  className={styles.followMicButton}
+                  aria-label="打开跟读录音弹窗"
+                >
+                  <span className={styles.micPulseOne} />
+                  <span className={styles.micPulseTwo} />
+                  <BigMicIcon />
+                </button>
+                <span className={styles.followMicLabel}>跟读录音</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleNext}
+                disabled={currentIndex >= pairs.length - 1}
+                className={styles.sentenceButton}
+                aria-label="下一句"
+              >
+                <span>下一句</span>
+                <ArrowRightIcon />
+              </button>
+            </div>
+          </section>
+        </section>
+
+        {showFollowReadModal ? (
+          <div className={styles.followModalBackdrop} role="presentation">
+            <section
+              className={styles.followModal}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="follow-read-modal-title"
+            >
+              <h2 id="follow-read-modal-title">跟读录音</h2>
+              <p>弹窗设计稍后接入。这里会放录音、评分和重录操作。</p>
+              <button
+                type="button"
+                className={styles.followModalButton}
+                onClick={() => setShowFollowReadModal(false)}
+              >
+                关闭
+              </button>
+            </section>
+          </div>
+        ) : null}
+
+        {showFreePracticeLimitModal ? (
+          <FreePracticeLimitModal
+            onDismiss={() => setShowFreePracticeLimitModal(false)}
+            onUnlockPro={openProFromFreePracticeLimit}
+          />
+        ) : null}
+      </main>
+    );
   }
 
   return (

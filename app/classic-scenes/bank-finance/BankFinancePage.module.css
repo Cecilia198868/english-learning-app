@@ -1,0 +1,206 @@
+.pageShell {
+  min-height: 100dvh;
+  width: 100%;
+  overflow-x: hidden;
+  background:
+    linear-gradient(90deg, rgba(182, 166, 255, 0.92), rgba(238, 235, 255, 0.78) 12%, rgba(250, 250, 255, 1) 50%, rgba(238, 235, 255, 0.78) 88%, rgba(182, 166, 255, 0.92));
+  color: #071346;
+}
+
+.phone {
+  position: relative;
+  width: min(100%, 430px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(40px + env(safe-area-inset-top)) 15px 28px;
+  overflow-x: hidden;
+  border-radius: 22px 22px 0 0;
+  background:
+    radial-gradient(circle at 50% 2%, rgba(135, 110, 255, 0.16), transparent 32%),
+    linear-gradient(180deg, #fbfbff 0%, #ffffff 30%, #fbfbff 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(129, 104, 255, 0.16),
+    0 18px 40px rgba(83, 65, 151, 0.14);
+}
+
+.header {
+  position: relative;
+  display: grid;
+  min-height: 101px;
+  place-items: start center;
+  padding-top: 8px;
+}
+
+.backButton {
+  position: absolute;
+  left: 4px;
+  top: 0;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 12px 28px rgba(89, 82, 152, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.backButton svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #091149;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.4;
+}
+
+.title {
+  max-width: calc(100% - 120px);
+  margin: 13px 0 0;
+  font-size: clamp(1.38rem, 6.2vw, 1.72rem);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  color: #091149;
+  letter-spacing: 0;
+}
+
+.lessonList {
+  display: grid;
+  gap: 8px;
+}
+
+.lessonCard {
+  display: grid;
+  grid-template-columns: 80px 36px minmax(0, 1fr) 40px;
+  align-items: center;
+  min-height: 82px;
+  width: 100%;
+  padding: 8px 16px 8px 15px;
+  border: 1px solid rgba(232, 234, 247, 0.86);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 10px 22px rgba(72, 63, 129, 0.055),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.lessonCard:active {
+  transform: scale(0.992);
+}
+
+@media (hover: hover) {
+  .lessonCard:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 14px 28px rgba(72, 63, 129, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.98);
+  }
+}
+
+.iconTile {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--lesson-tile);
+  color: var(--lesson-accent);
+}
+
+.lessonIcon {
+  width: 34px;
+  height: 34px;
+  color: currentColor;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.1;
+}
+
+.lessonIcon text {
+  fill: currentColor;
+  stroke: none;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.numberBadge {
+  display: grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.65), transparent 30%),
+    linear-gradient(135deg, #a994ff, #6f57ed);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 5px 11px rgba(112, 87, 237, 0.24);
+}
+
+.lessonTitle {
+  min-width: 0;
+  padding-right: 10px;
+  overflow-wrap: anywhere;
+  color: #071346;
+  font-size: clamp(1rem, 4.4vw, 1.18rem);
+  font-weight: 900;
+  line-height: 1.28;
+  letter-spacing: 0;
+}
+
+.chevron {
+  justify-self: end;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: #735cff;
+}
+
+.chevron svg {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.2;
+}
+
+@media (max-width: 374px) {
+  .phone {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .lessonCard {
+    grid-template-columns: 62px 30px minmax(0, 1fr) 30px;
+    min-height: 76px;
+    padding-right: 11px;
+    padding-left: 11px;
+  }
+
+  .iconTile {
+    width: 48px;
+    height: 48px;
+  }
+
+  .numberBadge {
+    width: 21px;
+    height: 21px;
+    font-size: 0.76rem;
+  }
+}
