@@ -1671,7 +1671,7 @@ body {
 .sf-menu-page-card {
   position: relative;
   display: grid;
-  grid-template-columns: clamp(70px, 18.5vw, 82px) minmax(0, 1fr) clamp(38px, 10vw, 46px);
+  grid-template-columns: clamp(70px, 18.5vw, 82px) minmax(0, 1fr);
   gap: clamp(12px, 3.2vw, 18px);
   align-items: center;
   min-height: clamp(132px, 17dvh, 154px);
@@ -1792,6 +1792,10 @@ body {
 
 .sf-menu-page-card-text {
   display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #727596;
   font-size: clamp(12px, 3.25vw, 14px);
   font-weight: 700;
@@ -1861,7 +1865,7 @@ body {
   }
 
   .sf-menu-page-card {
-    grid-template-columns: 62px minmax(0, 1fr) 36px;
+    grid-template-columns: 62px minmax(0, 1fr);
     min-height: 118px;
     padding: 15px 14px;
   }
@@ -13316,7 +13320,7 @@ body :is(.responsive-page-shell, [class^="sf-"], [class*=" sf-"]) :is(h1, h2, h3
 .sf-menu-page-card {
   position: relative !important;
   display: grid !important;
-  grid-template-columns: 7.3rem minmax(0, 1fr) 3.6rem !important;
+  grid-template-columns: 7.3rem minmax(0, 1fr) !important;
   align-items: center !important;
   gap: 1rem !important;
   min-height: 10.55rem !important;
@@ -13407,6 +13411,10 @@ body :is(.responsive-page-shell, [class^="sf-"], [class*=" sf-"]) :is(h1, h2, h3
 
 .sf-menu-page-card-text {
   display: block !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
   color: #6b668c !important;
   font-size: 1.03rem !important;
   font-weight: 530 !important;
@@ -13496,7 +13504,7 @@ body :is(.responsive-page-shell, [class^="sf-"], [class*=" sf-"]) :is(h1, h2, h3
   }
 
   .sf-menu-page-card {
-    grid-template-columns: 6.35rem minmax(0, 1fr) 3.1rem !important;
+    grid-template-columns: 6.35rem minmax(0, 1fr) !important;
     min-height: 9.7rem !important;
     gap: 0.82rem !important;
     padding: 1.05rem 0.85rem 1.05rem 1rem !important;

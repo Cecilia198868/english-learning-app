@@ -71,14 +71,6 @@ function MenuGlyph() {
   );
 }
 
-function ChevronGlyph() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <path d="m13 9 7 7-7 7" />
-    </svg>
-  );
-}
-
 function AiIllustration() {
   return (
     <svg viewBox="0 0 160 160" aria-hidden="true" focusable="false">
@@ -308,9 +300,6 @@ export default function MenuPage() {
                   <span className="sf-menu-page-card-text">{entry.secondary}</span>
                 </span>
 
-                <span aria-hidden="true" className="sf-menu-page-card-arrow">
-                  <ChevronGlyph />
-                </span>
               </button>
             ))}
           </nav>
