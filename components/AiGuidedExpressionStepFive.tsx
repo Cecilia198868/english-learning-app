@@ -532,17 +532,6 @@ export default function AiGuidedExpressionStepFive({
                       >
                         <PlayGlyph />
                       </button>
-                      <button
-                        type="button"
-                        aria-label={`朗读表达 ${index + 1}`}
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          onPlayExpression(index, 1);
-                        }}
-                        className="sf-ai-guided-step-five-wave-button"
-                      >
-                        <WaveGlyph />
-                      </button>
                     </div>
                   </article>
                 );
