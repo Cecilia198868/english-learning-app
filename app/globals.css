@@ -15538,7 +15538,7 @@ body :is(.responsive-page-shell, [class^="sf-"], [class*=" sf-"]) :is(h1, h2, h3
 }
 
 .sf-ai-guided-step-five-record-card {
-  grid-template-columns: 2.75rem minmax(0, 1fr) 5.45rem !important;
+  grid-template-columns: 2.75rem minmax(0, 1fr) 2.34rem !important;
   gap: 0.56rem !important;
   min-height: 4.15rem !important;
   padding: 0.56rem 0.62rem !important;
@@ -15596,7 +15596,11 @@ body :is(.responsive-page-shell, [class^="sf-"], [class*=" sf-"]) :is(h1, h2, h3
   grid-column: auto !important;
   display: flex !important;
   justify-content: flex-end !important;
-  gap: 0.36rem !important;
+  gap: 0 !important;
+}
+
+.sf-ai-guided-step-five-wave-button {
+  display: none !important;
 }
 
 .sf-ai-guided-step-five-play,
@@ -15793,7 +15797,7 @@ body :is(.responsive-page-shell, [class^="sf-"], [class*=" sf-"]) :is(h1, h2, h3
   }
 
   .sf-ai-guided-step-five-record-card {
-    grid-template-columns: 2.5rem minmax(0, 1fr) 5rem !important;
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2.12rem !important;
     min-height: 3.88rem !important;
     gap: 0.48rem !important;
     padding: 0.48rem 0.54rem !important;
