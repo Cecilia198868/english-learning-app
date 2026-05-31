@@ -26,9 +26,9 @@
   margin: 0 auto;
   overflow-x: hidden;
   padding:
-    max(1.05rem, calc(env(safe-area-inset-top, 0px) + 0.85rem))
-    1.06rem
-    calc(7.25rem + env(safe-area-inset-bottom, 0px));
+    max(0.95rem, calc(env(safe-area-inset-top, 0px) + 0.74rem))
+    1.25rem
+    calc(6.86rem + env(safe-area-inset-bottom, 0px));
   background:
     radial-gradient(circle at 8% 8%, rgba(115, 101, 255, 0.08), transparent 22%),
     radial-gradient(circle at 94% 52%, rgba(75, 210, 173, 0.09), transparent 24%),
@@ -65,10 +65,10 @@
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 4.1rem minmax(0, 1fr) 4.1rem;
+  grid-template-columns: 3.78rem minmax(0, 1fr) 3.78rem;
   align-items: center;
-  gap: 0.9rem;
-  min-height: 5.2rem;
+  gap: 0.78rem;
+  min-height: 4.82rem;
 }
 
 :global(.sf-new-expressions-back),
@@ -80,17 +80,17 @@
 }
 
 :global(.sf-new-expressions-back) {
-  width: 4.1rem;
-  height: 4.1rem;
-  border-radius: 1.28rem;
+  width: 3.78rem;
+  height: 3.78rem;
+  border-radius: 1.18rem;
   color: #081640;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 18px 36px rgba(68, 86, 133, 0.08);
 }
 
 :global(.sf-new-expressions-back svg) {
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 :global(.sf-new-expressions-back svg path),
@@ -107,12 +107,12 @@
   min-width: 0;
   align-items: center;
   justify-content: center;
-  gap: 0.72rem;
+  gap: 0.62rem;
 }
 
 :global(.sf-new-expressions-logo) {
-  width: 3rem !important;
-  height: 3rem !important;
+  width: 2.68rem !important;
+  height: 2.68rem !important;
   flex: 0 0 auto;
 }
 
@@ -120,7 +120,7 @@
   display: block;
   color: #071642;
   font-family: var(--font-sora), var(--font-geist-sans), sans-serif;
-  font-size: 2.02rem;
+  font-size: 1.82rem;
   font-weight: 900;
   line-height: 0.96;
   letter-spacing: 0;
@@ -128,10 +128,10 @@
 
 :global(.sf-new-expressions-brand small) {
   display: block;
-  margin-top: 0.48rem;
+  margin-top: 0.4rem;
   color: #735bff;
   font-family: var(--font-sora), var(--font-geist-sans), sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0;
@@ -141,8 +141,8 @@
 :global(.sf-new-expressions-avatar) {
   position: relative;
   justify-self: end;
-  width: 4.1rem;
-  height: 4.1rem;
+  width: 3.78rem;
+  height: 3.78rem;
   border-radius: 999px;
   background: linear-gradient(145deg, #ffffff 0%, #eef6ff 100%);
   box-shadow: 0 16px 32px rgba(62, 84, 128, 0.1);
@@ -157,11 +157,11 @@
 
 :global(.sf-new-expressions-avatar span) {
   position: absolute;
-  right: 0.24rem;
-  bottom: 0.34rem;
-  width: 1rem;
-  height: 1rem;
-  border: 0.18rem solid #ffffff;
+  right: 0.22rem;
+  bottom: 0.3rem;
+  width: 0.92rem;
+  height: 0.92rem;
+  border: 0.17rem solid #ffffff;
   border-radius: 999px;
   background: #35c963;
 }
@@ -170,31 +170,31 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 5.2rem minmax(0, 1fr);
+  grid-template-columns: 4rem minmax(0, 1fr);
   align-items: center;
-  gap: 1.35rem;
-  min-height: 8.2rem;
-  padding-block: 0.82rem 1.1rem;
+  gap: 0.72rem;
+  min-height: 7.58rem;
+  padding-block: 0.7rem 1rem;
 }
 
 :global(.sf-new-expressions-hero svg) {
-  width: 4.25rem;
-  height: 4.25rem;
+  width: 4.05rem;
+  height: 4.05rem;
 }
 
 :global(.sf-new-expressions-hero h1) {
   margin: 0;
   color: #071642;
-  font-size: 2.78rem;
+  font-size: 2.48rem;
   font-weight: 900;
   line-height: 1.02;
   letter-spacing: 0;
 }
 
 :global(.sf-new-expressions-hero p) {
-  margin: 0.68rem 0 0;
+  margin: 0.55rem 0 0;
   color: #667396;
-  font-size: 1.04rem;
+  font-size: 0.98rem;
   font-weight: 650;
   line-height: 1.35;
   letter-spacing: 0;
@@ -204,16 +204,16 @@
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 1.05rem;
+  gap: 0.98rem;
 }
 
 :global(.sf-new-expressions-card) {
   position: relative;
   display: block;
-  min-height: 15.35rem;
+  min-height: 17.8rem;
   overflow: hidden;
   border: 1px solid rgba(226, 234, 255, 0.88);
-  border-radius: 1.65rem;
+  border-radius: 1.55rem;
   background:
     radial-gradient(circle at 86% 24%, rgba(238, 245, 255, 0.96), transparent 22%),
     linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(247, 250, 255, 0.98));
@@ -232,12 +232,12 @@
 
 :global(.sf-new-expressions-card-icon) {
   position: absolute;
-  top: 1.58rem;
+  top: 1.52rem;
   left: 1.55rem;
   z-index: 2;
   display: grid;
-  width: 3.16rem;
-  height: 3.16rem;
+  width: 3.14rem;
+  height: 3.14rem;
   place-items: center;
   border-radius: 999px;
   color: #ffffff;
@@ -251,8 +251,8 @@
 }
 
 :global(.sf-new-expressions-card-icon svg) {
-  width: 1.54rem;
-  height: 1.54rem;
+  width: 1.52rem;
+  height: 1.52rem;
 }
 
 :global(.sf-new-expressions-card-icon svg path),
@@ -266,13 +266,14 @@
   z-index: 2;
   display: block;
   max-width: 62%;
-  padding: 3.38rem 0 4.05rem 1.72rem;
+  padding: 2.92rem 0 3.82rem 1.62rem;
 }
 
 :global(.sf-new-expressions-card-copy strong) {
   display: block;
   color: #071642;
-  font-size: 1.72rem;
+  margin-left: 3.28rem;
+  font-size: 1.62rem;
   font-weight: 900;
   line-height: 1.08;
   letter-spacing: 0;
@@ -282,7 +283,7 @@
   display: block;
   width: 2.35rem;
   height: 0.24rem;
-  margin: 0.58rem 0 0.72rem;
+  margin: 0.56rem 0 0.86rem 3.28rem;
   border-radius: 999px;
   background: #407aff;
 }
@@ -341,11 +342,11 @@
 
 :global(.sf-new-expressions-card-art) {
   position: absolute;
-  top: 3.95rem;
-  right: -0.75rem;
+  top: 4.5rem;
+  right: -0.35rem;
   z-index: 1;
-  width: 47%;
-  max-width: 12.5rem;
+  width: 48%;
+  max-width: 13.2rem;
   pointer-events: none;
 }
 
@@ -361,18 +362,18 @@
 
 :global(.sf-new-expressions-cta) {
   position: absolute;
-  bottom: 1.04rem;
-  left: 1.72rem;
+  bottom: 1rem;
+  left: 1.62rem;
   z-index: 3;
   display: inline-flex;
-  min-width: 12.75rem;
-  min-height: 2.82rem;
+  min-width: 11rem;
+  min-height: 2.66rem;
   align-items: center;
   justify-content: center;
-  gap: 1.6rem;
-  border-radius: 0.58rem;
+  gap: 1.22rem;
+  border-radius: 0.56rem;
   color: #ffffff;
-  font-size: 1.08rem;
+  font-size: 1.02rem;
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0;
@@ -389,8 +390,8 @@
 }
 
 :global(.sf-new-expressions-cta svg) {
-  width: 1.32rem;
-  height: 1.32rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 :global(.sf-new-expressions-sparkle) {
@@ -448,14 +449,14 @@
   bottom: 0;
   display: grid;
   width: min(100%, 430px);
-  min-height: calc(5.9rem + env(safe-area-inset-bottom, 0px));
+  min-height: calc(5.58rem + env(safe-area-inset-bottom, 0px));
   grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: end;
   gap: 0.1rem;
   padding:
-    0.66rem 0.42rem
-    max(0.86rem, calc(env(safe-area-inset-bottom, 0px) + 0.62rem));
-  border-radius: 1.55rem 1.55rem 0 0;
+    0.6rem 0.42rem
+    max(0.72rem, calc(env(safe-area-inset-bottom, 0px) + 0.54rem));
+  border-radius: 1.42rem 1.42rem 0 0;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 -16px 38px rgba(75, 88, 132, 0.1);
   transform: translateX(-50%);
@@ -465,19 +466,19 @@
 :global(.sf-new-expressions-tab) {
   display: grid;
   min-width: 0;
-  min-height: 4.38rem;
+  min-height: 3.96rem;
   place-items: center;
   align-content: center;
-  gap: 0.28rem;
-  border-radius: 1.05rem;
+  gap: 0.22rem;
+  border-radius: 0.98rem;
   color: #b4bdd9;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
 
 :global(.sf-new-expressions-tab svg) {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.66rem;
+  height: 1.66rem;
 }
 
 :global(.sf-new-expressions-tab span) {
@@ -485,24 +486,25 @@
   min-width: 0;
   max-width: 100%;
   color: currentColor;
-  font-size: 0.95rem;
+  font-size: 0.84rem;
   font-weight: 760;
   line-height: 1.08;
   letter-spacing: 0;
   text-align: center;
+  white-space: nowrap;
 }
 
 :global(.sf-new-expressions-tab.is-active) {
-  min-height: 6.18rem;
-  margin-top: -1.38rem;
+  min-height: 5.78rem;
+  margin-top: -1.2rem;
   color: #2462f2;
   background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
   box-shadow: 0 14px 32px rgba(76, 95, 145, 0.13);
 }
 
 :global(.sf-new-expressions-tab.is-active svg) {
-  width: 2.15rem;
-  height: 2.15rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 :global(.sf-new-expressions-back:active),
@@ -514,34 +516,34 @@
 
 @media (max-width: 390px) {
   :global(.sf-new-expressions-phone) {
-    padding-inline: 0.88rem;
+    padding-inline: 0.95rem;
   }
 
   :global(.sf-new-expressions-header) {
-    grid-template-columns: 3.78rem minmax(0, 1fr) 3.78rem;
+    grid-template-columns: 3.5rem minmax(0, 1fr) 3.5rem;
   }
 
   :global(.sf-new-expressions-back),
   :global(.sf-new-expressions-avatar) {
-    width: 3.72rem;
-    height: 3.72rem;
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   :global(.sf-new-expressions-brand) {
-    gap: 0.52rem;
+    gap: 0.54rem;
   }
 
   :global(.sf-new-expressions-logo) {
-    width: 2.58rem !important;
-    height: 2.58rem !important;
+    width: 2.42rem !important;
+    height: 2.42rem !important;
   }
 
   :global(.sf-new-expressions-brand strong) {
-    font-size: 1.72rem;
+    font-size: 1.62rem;
   }
 
   :global(.sf-new-expressions-brand small) {
-    font-size: 0.74rem;
+    font-size: 0.66rem;
   }
 
   :global(.sf-new-expressions-card-copy) {
@@ -550,17 +552,17 @@
   }
 
   :global(.sf-new-expressions-card-icon) {
-    left: 1.2rem;
+    left: 1.32rem;
   }
 
   :global(.sf-new-expressions-cta) {
     left: 1.42rem;
-    min-width: 12.55rem;
+    min-width: 10.4rem;
   }
 
   :global(.sf-new-expressions-card-art) {
-    right: -1.3rem;
-    width: 47%;
+    right: -0.7rem;
+    width: 49%;
   }
 }
 
@@ -570,16 +572,16 @@
   }
 
   :global(.sf-new-expressions-header) {
-    min-height: 4.25rem;
+    min-height: 4.35rem;
   }
 
   :global(.sf-new-expressions-hero) {
-    min-height: 7rem;
-    padding-block: 0.62rem 0.82rem;
+    min-height: 7.1rem;
+    padding-block: 0.56rem 0.84rem;
   }
 
   :global(.sf-new-expressions-hero h1) {
-    font-size: 2.5rem;
+    font-size: 2.34rem;
   }
 
   :global(.sf-new-expressions-card-list) {
@@ -587,28 +589,29 @@
   }
 
   :global(.sf-new-expressions-card) {
-    min-height: 15.2rem;
+    min-height: 16.5rem;
   }
 
   :global(.sf-new-expressions-card-copy) {
-    padding-top: 3.18rem;
-    padding-bottom: 3.86rem;
+    padding-top: 2.72rem;
+    padding-bottom: 3.56rem;
   }
 
   :global(.sf-new-expressions-card-copy strong) {
-    font-size: 1.58rem;
+    font-size: 1.54rem;
   }
 
   :global(.sf-new-expressions-card-copy i) {
-    margin: 0.78rem 0 1.1rem;
+    margin-top: 0.52rem;
+    margin-bottom: 0.78rem;
   }
 
   :global(.sf-new-expressions-card-art) {
-    top: 4rem;
+    top: 4.2rem;
   }
 
   :global(.sf-new-expressions-cta) {
-    bottom: 1.06rem;
-    min-height: 2.68rem;
+    bottom: 0.94rem;
+    min-height: 2.48rem;
   }
 }
