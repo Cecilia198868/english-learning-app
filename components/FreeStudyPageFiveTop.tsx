@@ -32,7 +32,6 @@ const COPY = {
   menuLabel: "\u56de\u5230\u82f1\u6587\u5f55\u97f3\u9875",
   pageLabel: "\u81ea\u7531\u5b66\u4e60\u82f1\u6587\u7ed3\u679c",
   playExpression: "\u64ad\u653e\u5f53\u524d\u53e5\u5b50",
-  readExpression: "\u8ddf\u8bfb\u5f53\u524d\u53e5\u5b50",
   recommended: "\u63a8\u8350\u8868\u8fbe",
   seeMore: "\u5411\u4e0b\u67e5\u770b\u66f4\u591a\u8868\u8fbe",
   retry: "\u91cd\u65b0\u8bf4",
@@ -437,16 +436,6 @@ export default function FreeStudyPageFiveTop({
                     }}
                   >
                     <PlayGlyph />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label={COPY.readExpression}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onPlayExpression(index, 1);
-                    }}
-                  >
-                    <WaveGlyph />
                   </button>
                 </div>
               </article>
