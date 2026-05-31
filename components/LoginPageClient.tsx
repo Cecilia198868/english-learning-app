@@ -1,19 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useLanguage } from "@/components/LanguageProvider";
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import styles from "./LoginPageClient.module.css";
 
 type LoginPageClientProps = {
+  isAppleEnabled?: boolean;
   isGoogleEnabled?: boolean;
+  isWechatEnabled?: boolean;
+  isXEnabled?: boolean;
 };
 
 function GoogleMark() {
-  return <span aria-hidden="true">G</span>;
+  return (
+    <span className={styles.googleMark} aria-hidden="true">
+      G
+    </span>
+  );
 }
 
 function AppleMark() {
   return (
-    <svg viewBox="0 0 28 28" aria-hidden="true" className="h-8 w-8">
+    <svg viewBox="0 0 28 28" aria-hidden="true">
       <path
         fill="currentColor"
         d="M18.9 3.1c.1 1.3-.4 2.6-1.2 3.5-.8.9-2.1 1.6-3.3 1.5-.2-1.3.4-2.6 1.1-3.5.8-.9 2.2-1.5 3.4-1.5Zm4.2 18.4c-.7 1.5-1.1 2.1-2 3.4-1.3 1.9-3.1 4.2-5.4 4.2-2 0-2.5-1.2-5.3-1.2-2.7 0-3.4 1.2-5.3 1.2-2.3.1-4-2-5.3-3.9-3.6-5.2-4-11.4-1.8-14.7 1.5-2.3 3.9-3.7 6.1-3.7 2.3 0 3.7 1.2 5.5 1.2 1.8 0 2.9-1.2 5.5-1.2 2 0 4.1 1.1 5.6 2.9-4.9 2.7-4.1 9.7.7 11.8Z"
@@ -23,169 +32,198 @@ function AppleMark() {
   );
 }
 
-function MailMark() {
+function WechatMark() {
   return (
-    <svg viewBox="0 0 28 28" aria-hidden="true" className="h-8 w-8">
+    <svg viewBox="0 0 36 36" aria-hidden="true">
       <path
-        d="M5.2 7.5h17.6v13H5.2v-13Z"
-        fill="none"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="2.3"
-      />
-      <path
-        d="m5.8 8.4 8.2 6.2 8.2-6.2"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2.3"
+        fill="currentColor"
+        d="M14.2 9.5c-5 0-9 3.2-9 7.2 0 2.2 1.2 4.2 3.2 5.5l-.7 2.4 2.9-1.4c1.1.4 2.3.7 3.6.7 5 0 9-3.2 9-7.2s-4-7.2-9-7.2Zm-3.1 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm6 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm7.5 1.5c3.6.6 6.2 3.2 6.2 6.3 0 1.9-1 3.6-2.6 4.7l.6 2.1-2.5-1.2c-.9.3-1.9.5-3 .5-3.7 0-6.9-2.2-7.8-5.1.9.2 1.8.3 2.8.3 5.6 0 10.1-3.4 10.3-7.6Zm-3 6a.9.9 0 1 0 0-1.8.9.9 0 0 0 0 1.8Zm5 0a.9.9 0 1 0 0-1.8.9.9 0 0 0 0 1.8Z"
       />
     </svg>
   );
 }
 
-function UserPlusMark() {
+function MailMark() {
   return (
-    <svg viewBox="0 0 28 28" aria-hidden="true" className="h-8 w-8">
-      <path
-        d="M14 14.1a4.1 4.1 0 1 0 0-8.2 4.1 4.1 0 0 0 0 8.2Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.3"
-      />
-      <path
-        d="M6.6 23.1c1.1-3.5 3.6-5.5 7.4-5.5 1.3 0 2.5.2 3.5.7"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="2.3"
-      />
-      <path
-        d="M21.6 17.8v6.1M18.6 20.9h6"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="2.3"
-      />
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M7 9h18v14H7z" />
+      <path d="m8 10 8 6.5L24 10" />
+    </svg>
+  );
+}
+
+function PhoneMark() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="10" y="5" width="12" height="22" rx="3" />
+      <path d="M14 8h4M15 24h2" />
+    </svg>
+  );
+}
+
+function XMark() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M8 7l16 18M24 7 8 25" />
     </svg>
   );
 }
 
 function ShieldMark() {
   return (
-    <svg viewBox="0 0 28 28" aria-hidden="true" className="h-7 w-7">
-      <path
-        d="M14 3.8 22 7v6.3c0 5.1-3.2 9.4-8 11-4.8-1.6-8-5.9-8-11V7l8-3.2Z"
-        fill="none"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="2.1"
-      />
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 5 25 8.5v6.7c0 5.3-3.7 9.6-9 11.8-5.3-2.2-9-6.5-9-11.8V8.5L16 5Z" />
+      <path d="m12.4 16 2.4 2.4 5-5.2" />
     </svg>
   );
 }
 
 export default function LoginPageClient({
+  isAppleEnabled = true,
   isGoogleEnabled = true,
+  isWechatEnabled = false,
+  isXEnabled = false,
 }: LoginPageClientProps) {
-  const { language, t } = useLanguage();
-  const isChinese = language === "zh-CN";
-  const welcomeLabel = isChinese ? "欢迎回来" : t("welcomeBack");
-  const subtitle = isChinese
-    ? "继续你的英语口语练习"
-    : "Continue your English speaking practice.";
-  const googleLabel = isChinese ? "Google 登录" : t("signInWithGoogle");
-  const appleLabel = isChinese ? "Apple 登录" : "Sign in with Apple";
-  const emailLabel = isChinese ? "邮箱登录" : t("signInWithEmail");
-  const createLabel = isChinese ? "创建账号" : "Create Account";
-  const agreementLead = isChinese
-    ? "登录即表示你同意我们的"
-    : "By signing in, you agree to our";
-  const termsLabel = isChinese ? "用户协议" : "Terms";
-  const andLabel = isChinese ? "和" : "and";
-  const privacyLabel = isChinese ? "隐私政策" : "Privacy Policy";
-  const languageSelectionLabel = isChinese
-    ? "返回语言选择"
-    : "Back to language selection";
+  const searchParams = useSearchParams();
+  const [manualNotice, setManualNotice] = useState("");
+  const callbackUrl = searchParams.get("callbackUrl") || "/start";
+  const queryNotice =
+    searchParams.get("wechat") === "not-configured"
+      ? "微信登录暂未配置，请稍后再试。"
+      : searchParams.get("x") === "not-configured"
+        ? "X 登录暂未配置，请稍后再试。"
+        : searchParams.get("apple") === "not-configured"
+          ? "Apple 登录暂未配置，请稍后再试。"
+          : searchParams.get("google") === "not-configured"
+            ? "Google 登录暂未配置，请稍后再试。"
+            : "";
+  const notice = manualNotice || queryNotice;
 
-  const loginOptions = [
-    ...(isGoogleEnabled
-      ? [
-          {
-            href: "/api/auth/google/start",
-            label: googleLabel,
-            icon: <GoogleMark />,
-            className: "sf-login-google",
-          },
-        ]
-      : []),
-    {
-      href: "/api/auth/apple/start",
-      label: appleLabel,
-      icon: <AppleMark />,
-      className: "sf-login-apple",
-    },
-    {
-      href: "/login/email",
-      label: emailLabel,
-      icon: <MailMark />,
-      className: "sf-login-email",
-    },
-    {
-      href: "/register",
-      label: createLabel,
-      icon: <UserPlusMark />,
-      className: "sf-login-create-icon",
-    },
-  ];
+  function withCallback(path: string) {
+    const params = new URLSearchParams({ callbackUrl });
+    return `${path}?${params.toString()}`;
+  }
 
   return (
-    <main className="responsive-page-shell sf-brand-page sf-login-page relative min-h-[100dvh] w-full overflow-x-hidden">
-      <div className="sf-login-wrap relative mx-auto flex min-h-[100dvh] w-full max-w-5xl flex-col px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <div className="sf-login-topbar relative z-20 flex items-center justify-between">
-          <Link
-            href="/languages"
-            aria-label={languageSelectionLabel}
-            className="sf-login-back"
-          >
-            <span aria-hidden="true" />
-          </Link>
+    <main className={styles.page}>
+      <section className={styles.sheet} aria-label="登录 SpeakFlow">
+        <span className={styles.handle} aria-hidden="true" />
+        <h1>欢迎使用 SpeakFlow <span aria-hidden="true">👋</span></h1>
+        <p>选择一种继续方式</p>
+
+        <div className={styles.oauthStack}>
+          {isGoogleEnabled ? (
+            <Link
+              href={withCallback("/api/auth/google/start")}
+              className={styles.oauthButton}
+            >
+              <GoogleMark />
+              <span>Google</span>
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className={styles.oauthButton}
+              onClick={() => setManualNotice("Google 登录暂未配置，请稍后再试。")}
+            >
+              <GoogleMark />
+              <span>Google</span>
+            </button>
+          )}
+
+          {isAppleEnabled ? (
+            <Link
+              href={withCallback("/api/auth/apple/start")}
+              className={styles.oauthButton}
+            >
+              <AppleMark />
+              <span>Apple</span>
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className={styles.oauthButton}
+              onClick={() => setManualNotice("Apple 登录暂未配置，请稍后再试。")}
+            >
+              <AppleMark />
+              <span>Apple</span>
+            </button>
+          )}
+
+          {isWechatEnabled ? (
+            <Link
+              href={withCallback("/api/auth/wechat/start")}
+              className={styles.oauthButton}
+            >
+              <span className={styles.wechatIcon}>
+                <WechatMark />
+              </span>
+              <span>微信</span>
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className={styles.oauthButton}
+              onClick={() => setManualNotice("微信登录暂未配置，请稍后再试。")}
+            >
+              <span className={styles.wechatIcon}>
+                <WechatMark />
+              </span>
+              <span>微信</span>
+            </button>
+          )}
         </div>
 
-        <section className="sf-login-panel relative min-w-0">
-          <h1 className="sf-login-title font-[var(--font-sora)] text-2xl font-semibold leading-[1.5] text-[#201833] sm:text-3xl">
-            {welcomeLabel}
-          </h1>
-          <p className="sf-login-subtitle mt-3 text-sm font-medium leading-[1.5] text-[#655b78]">
-            {subtitle}
-          </p>
+        <div className={styles.moreDivider}>更多方式</div>
 
-          <div className="sf-login-options relative z-10">
-            {loginOptions.map((option) => (
-              <Link
-                key={option.href}
-                href={option.href}
-                className="sf-login-action group flex min-w-0 w-full items-center font-[var(--font-sora)] text-sm font-semibold transition duration-300 sm:text-base"
-              >
-                <span className={`sf-auth-icon ${option.className}`}>
-                  {option.icon}
-                </span>
-                <span className="sf-login-action-label">{option.label}</span>
-                <span className="sf-login-chevron" aria-hidden="true" />
-              </Link>
-            ))}
+        <div className={styles.moreGrid}>
+          <Link href={withCallback("/login/email")} className={styles.moreItem}>
+            <span>
+              <MailMark />
+            </span>
+            邮箱登录
+          </Link>
+          <Link href={withCallback("/login/phone")} className={styles.moreItem}>
+            <span>
+              <PhoneMark />
+            </span>
+            手机号登录
+          </Link>
+          {isXEnabled ? (
+            <Link href={withCallback("/api/auth/x/start")} className={styles.moreItem}>
+              <span>
+                <XMark />
+              </span>
+              X 登录
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className={styles.moreItem}
+              onClick={() => setManualNotice("X 登录暂未配置，请稍后再试。")}
+            >
+              <span>
+                <XMark />
+              </span>
+              X 登录
+            </button>
+          )}
+        </div>
+
+        {notice ? (
+          <div className={styles.notice} role="status">
+            {notice}
           </div>
-        </section>
+        ) : null}
 
-        <footer className="sf-login-terms">
-          <ShieldMark />
-          <span>{agreementLead}</span>
-          <a href="#">{termsLabel}</a>
-          <span>{andLabel}</span>
-          <a href="#">{privacyLabel}</a>
+        <footer className={styles.passwordless}>
+          <span>
+            <ShieldMark />
+          </span>
+          <strong>无需设置密码</strong>
+          <small>首次登录自动创建账号</small>
         </footer>
-      </div>
+      </section>
     </main>
   );
 }

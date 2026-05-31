@@ -1,15 +1,17 @@
-import { isAppleAuthConfigured } from "@/auth";
+import { isWechatAuthConfigured } from "@/auth";
 import { createOAuthStartResponse } from "@/lib/oauthStart";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
-  if (!isAppleAuthConfigured) {
-    return NextResponse.redirect(new URL("/login?apple=not-configured", request.url));
+  if (!isWechatAuthConfigured) {
+    return NextResponse.redirect(
+      new URL("/login?wechat=not-configured", request.url)
+    );
   }
 
   return createOAuthStartResponse(request, {
-    providerId: "apple",
+    providerId: "wechat",
   });
 }

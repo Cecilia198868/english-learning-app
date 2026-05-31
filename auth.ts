@@ -1,13 +1,33 @@
 import type { NextAuthOptions } from "next-auth";
+import type { OAuthConfig } from "next-auth/providers/oauth";
 import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { validateUserPassword } from "@/lib/userStore";
+import TwitterProvider from "next-auth/providers/twitter";
+import {
+  consumePasswordlessCode,
+  normalizePasswordlessTarget,
+} from "@/lib/passwordlessCodes";
+import { ensurePasswordlessUserProfile } from "@/lib/userStore";
+
+type WechatProfile = {
+  errcode?: number;
+  headimgurl?: string;
+  nickname?: string;
+  openid?: string;
+  unionid?: string;
+};
 
 const appleClientId = process.env.APPLE_CLIENT_ID;
 const appleClientSecret = process.env.APPLE_CLIENT_SECRET;
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const wechatClientId = process.env.WECHAT_CLIENT_ID || process.env.WECHAT_APP_ID;
+const wechatClientSecret =
+  process.env.WECHAT_CLIENT_SECRET || process.env.WECHAT_APP_SECRET;
+const xClientId = process.env.X_CLIENT_ID || process.env.TWITTER_CLIENT_ID;
+const xClientSecret =
+  process.env.X_CLIENT_SECRET || process.env.TWITTER_CLIENT_SECRET;
 const nextAuthSecret =
   process.env.NEXTAUTH_SECRET || "dev-only-nextauth-secret-change-me";
 const persistentSessionMaxAgeSeconds = 60 * 60 * 24 * 365 * 5;
@@ -18,6 +38,114 @@ export const isAppleAuthConfigured =
 
 export const isGoogleAuthConfigured =
   Boolean(googleClientId) && Boolean(googleClientSecret);
+
+export const isWechatAuthConfigured =
+  Boolean(wechatClientId) && Boolean(wechatClientSecret);
+
+export const isXAuthConfigured = Boolean(xClientId) && Boolean(xClientSecret);
+
+function safeIdentifier(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
+function providerProfileEmail(provider: string, providerAccountId: string) {
+  const safeProvider = safeIdentifier(provider) || "oauth";
+  const safeAccountId = safeIdentifier(providerAccountId) || "user";
+  return `${safeProvider}-${safeAccountId}@oauth.speakflow.local`;
+}
+
+function phoneLoginEmail(phoneTarget: string) {
+  const safePhone = phoneTarget.replace(/[^\d]/g, "");
+  return `phone-${safePhone}@phone.speakflow.local`;
+}
+
+function resolveUserEmail(
+  email: string | null | undefined,
+  provider: string | undefined,
+  providerAccountId: string | undefined
+) {
+  const normalizedEmail = email?.trim().toLowerCase();
+  if (normalizedEmail && normalizedEmail.includes("@")) {
+    return normalizedEmail;
+  }
+
+  if (provider && providerAccountId) {
+    return providerProfileEmail(provider, providerAccountId);
+  }
+
+  return "";
+}
+
+function WechatProvider(options: {
+  clientId: string;
+  clientSecret: string;
+}): OAuthConfig<WechatProfile> {
+  return {
+    id: "wechat",
+    name: "WeChat",
+    type: "oauth",
+    authorization: {
+      url: "https://open.weixin.qq.com/connect/qrconnect",
+      params: {
+        appid: options.clientId,
+        response_type: "code",
+        scope: "snsapi_login",
+      },
+    },
+    token: {
+      url: "https://api.weixin.qq.com/sns/oauth2/access_token",
+      async request({ params, provider }) {
+        const tokenUrl = new URL(
+          "https://api.weixin.qq.com/sns/oauth2/access_token"
+        );
+        tokenUrl.searchParams.set("appid", provider.clientId || "");
+        tokenUrl.searchParams.set("secret", provider.clientSecret || "");
+        tokenUrl.searchParams.set("code", String(params.code || ""));
+        tokenUrl.searchParams.set("grant_type", "authorization_code");
+
+        const response = await fetch(tokenUrl, { cache: "no-store" });
+        const tokens = await response.json();
+
+        return { tokens };
+      },
+    },
+    userinfo: {
+      url: "https://api.weixin.qq.com/sns/userinfo",
+      async request({ tokens }) {
+        const tokenSet = tokens as typeof tokens & { openid?: string };
+        const userInfoUrl = new URL("https://api.weixin.qq.com/sns/userinfo");
+        userInfoUrl.searchParams.set("access_token", String(tokens.access_token || ""));
+        userInfoUrl.searchParams.set("openid", String(tokenSet.openid || ""));
+        userInfoUrl.searchParams.set("lang", "zh_CN");
+
+        const response = await fetch(userInfoUrl, { cache: "no-store" });
+        return response.json();
+      },
+    },
+    profile(profile) {
+      const id = profile.unionid || profile.openid || "wechat-user";
+      return {
+        id,
+        name: profile.nickname || "微信用户",
+        email: providerProfileEmail("wechat", id),
+        image: profile.headimgurl || null,
+      };
+    },
+    checks: ["state"],
+    clientId: options.clientId,
+    clientSecret: options.clientSecret,
+    style: {
+      bg: "#07c160",
+      logo: "/wechat.svg",
+      text: "#fff",
+    },
+  };
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -42,41 +170,122 @@ export const authOptions: NextAuthOptions = {
           }),
         ]
       : []),
+    ...(isWechatAuthConfigured
+      ? [
+          WechatProvider({
+            clientId: wechatClientId!,
+            clientSecret: wechatClientSecret!,
+          }),
+        ]
+      : []),
+    ...(isXAuthConfigured
+      ? [
+          TwitterProvider({
+            clientId: xClientId!,
+            clientSecret: xClientSecret!,
+            version: "2.0",
+          }),
+        ]
+      : []),
     CredentialsProvider({
-      id: "email-login",
-      name: "Email Login",
+      id: "email-code",
+      name: "Email Code",
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "you@example.com",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-        },
+        code: { label: "Code", type: "text" },
+        email: { label: "Email", type: "email" },
       },
       async authorize(credentials) {
-        const email = credentials?.email?.trim().toLowerCase();
-        const password = credentials?.password ?? "";
+        const email = normalizePasswordlessTarget(
+          "email",
+          credentials?.email || ""
+        );
+        const code = credentials?.code || "";
+        const isValidCode = await consumePasswordlessCode("email", email, code);
 
-        if (!email || !email.includes("@") || !password) {
-          return null;
-        }
+        if (!isValidCode) return null;
 
-        const user = await validateUserPassword(email, password);
-        if (!user) {
-          return null;
-        }
+        await ensurePasswordlessUserProfile(email);
 
         return {
-          id: user.email,
-          email: user.email,
-          name: user.email.split("@")[0] || user.email,
+          id: email,
+          email,
+          name: email.split("@")[0] || email,
+        };
+      },
+    }),
+    CredentialsProvider({
+      id: "phone-code",
+      name: "Phone Code",
+      credentials: {
+        code: { label: "Code", type: "text" },
+        countryCode: { label: "Country Code", type: "text" },
+        phone: { label: "Phone", type: "tel" },
+      },
+      async authorize(credentials) {
+        const phoneTarget = normalizePasswordlessTarget(
+          "phone",
+          credentials?.phone || "",
+          credentials?.countryCode || ""
+        );
+        const code = credentials?.code || "";
+        const isValidCode = await consumePasswordlessCode(
+          "phone",
+          phoneTarget,
+          code
+        );
+
+        if (!isValidCode) return null;
+
+        const email = phoneLoginEmail(phoneTarget);
+        await ensurePasswordlessUserProfile(email);
+
+        return {
+          id: email,
+          email,
+          name: phoneTarget,
         };
       },
     }),
   ],
+  callbacks: {
+    async signIn({ account, user }) {
+      const email = resolveUserEmail(
+        user.email,
+        account?.provider,
+        account?.providerAccountId
+      );
+
+      if (!email) return false;
+
+      user.email = email;
+      await ensurePasswordlessUserProfile(email);
+      return true;
+    },
+    async jwt({ account, token, user }) {
+      const email = resolveUserEmail(
+        typeof user?.email === "string" ? user.email : token.email,
+        account?.provider,
+        account?.providerAccountId
+      );
+
+      if (email) token.email = email;
+      if (user?.name) token.name = user.name;
+      if (user?.image) token.picture = user.image;
+
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.email = typeof token.email === "string" ? token.email : "";
+        session.user.name =
+          typeof token.name === "string" ? token.name : session.user.email;
+        session.user.image =
+          typeof token.picture === "string" ? token.picture : "";
+      }
+
+      return session;
+    },
+  },
   secret: nextAuthSecret,
   session: {
     strategy: "jwt",

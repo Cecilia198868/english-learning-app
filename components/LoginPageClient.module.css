@@ -1,0 +1,248 @@
+.page {
+  display: grid;
+  min-height: 100dvh;
+  width: 100%;
+  place-items: end center;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 16% 6%, rgba(255, 255, 255, 0.94), transparent 38%),
+    radial-gradient(circle at 88% 12%, rgba(204, 191, 255, 0.28), transparent 34%),
+    linear-gradient(180deg, #f9f6ff 0%, #f2edff 100%);
+  color: #14132f;
+  padding: 18px 14px calc(env(safe-area-inset-bottom, 0px) + 22px);
+}
+
+.sheet {
+  position: relative;
+  width: min(100%, 390px);
+  border: 1px solid rgba(229, 224, 246, 0.8);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.86);
+  padding: 24px 20px 22px;
+  text-align: center;
+  box-shadow:
+    0 28px 72px rgba(72, 60, 128, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(18px);
+}
+
+.handle {
+  display: block;
+  width: 44px;
+  height: 4px;
+  margin: 0 auto 18px;
+  border-radius: 999px;
+  background: #c7bde8;
+}
+
+.sheet h1 {
+  margin: 0;
+  color: #14132f;
+  font-size: 1.04rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+.sheet p {
+  margin: 8px 0 17px;
+  color: rgba(35, 31, 73, 0.5);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.oauthStack {
+  display: grid;
+  gap: 11px;
+}
+
+.oauthButton {
+  display: grid;
+  min-height: 48px;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 13px;
+  border: 1px solid rgba(224, 220, 237, 0.84);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #111226;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 900;
+  padding: 0 18px;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(82, 67, 126, 0.08);
+}
+
+.oauthButton:active,
+.moreItem:active {
+  transform: translateY(1px);
+}
+
+.oauthButton > svg,
+.oauthButton > span:first-child {
+  justify-self: end;
+}
+
+.oauthButton svg {
+  width: 23px;
+  height: 23px;
+}
+
+.oauthButton > span:last-child {
+  justify-self: start;
+}
+
+.googleMark {
+  display: inline-grid;
+  width: 23px;
+  height: 23px;
+  place-items: center;
+  background: conic-gradient(
+    from -45deg,
+    #4285f4 0 25%,
+    #34a853 0 43%,
+    #fbbc05 0 62%,
+    #ea4335 0 82%,
+    #4285f4 0
+  );
+  background-clip: text;
+  color: transparent;
+  font-family: Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.wechatIcon {
+  color: #23b54a;
+}
+
+.moreDivider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0 14px;
+  color: rgba(42, 34, 89, 0.48);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.moreDivider::before,
+.moreDivider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(221, 216, 238, 0.9);
+}
+
+.moreGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.moreItem {
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: rgba(37, 31, 78, 0.66);
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 900;
+  line-height: 1.2;
+  padding: 0;
+  text-decoration: none;
+}
+
+.moreItem span {
+  display: grid;
+  width: 47px;
+  height: 47px;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #faf8ff 0%, #f0ecff 100%);
+  color: #6c55e8;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.moreItem svg {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.1;
+}
+
+.notice {
+  margin-top: 15px;
+  border: 1px solid rgba(125, 98, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(246, 242, 255, 0.9);
+  color: #6953d8;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.5;
+  padding: 9px 11px;
+}
+
+.passwordless {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  column-gap: 8px;
+  row-gap: 2px;
+  margin-top: 21px;
+  color: #7560ed;
+}
+
+.passwordless span {
+  grid-row: span 2;
+  align-self: center;
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+}
+
+.passwordless svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.passwordless strong {
+  justify-self: start;
+  color: #342a79;
+  font-size: 0.8rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.passwordless small {
+  justify-self: start;
+  color: rgba(44, 38, 82, 0.48);
+  font-size: 0.73rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+@media (min-height: 760px) {
+  .page {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 34px);
+  }
+
+  .sheet {
+    padding-top: 28px;
+    padding-bottom: 26px;
+  }
+}

@@ -251,6 +251,50 @@ export async function createUser(email: string, password: string) {
   return nextUser;
 }
 
+async function ensureLocalPasswordlessUser(email: string) {
+  const normalizedEmail = normalizeEmail(email);
+  const users = await loadUsers();
+  const existingUser =
+    users.find((user) => user.email === normalizedEmail) || null;
+
+  if (existingUser) return existingUser;
+
+  const nextUser: StoredUser = {
+    email: normalizedEmail,
+    passwordHash: "",
+    createdAt: new Date().toISOString(),
+    subscriptionStatus: "free",
+  };
+
+  users.push(nextUser);
+  await writeFile(USERS_FILE, JSON.stringify(users, null, 2), "utf8");
+
+  return nextUser;
+}
+
+export async function ensurePasswordlessUserProfile(email: string) {
+  const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail || !normalizedEmail.includes("@")) {
+    throw new Error("INVALID_EMAIL");
+  }
+
+  const existingProfile = await findProfileByEmail(normalizedEmail).catch(
+    () => null
+  );
+
+  if (existingProfile) {
+    return existingProfile;
+  }
+
+  try {
+    return await upsertProfileSubscriptionByEmail(normalizedEmail, {
+      subscriptionStatus: "free",
+    });
+  } catch {
+    return ensureLocalPasswordlessUser(normalizedEmail);
+  }
+}
+
 export async function validateUserPassword(email: string, password: string) {
   const user = await findUserByEmail(email);
   if (!user) {
