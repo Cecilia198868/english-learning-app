@@ -53,6 +53,7 @@ const sceneCards: SceneCard[] = [
   {
     accent: "#d86835",
     description: "购物、退换、支付、\n讨价还价",
+    href: "/classic-scenes/shopping-consumption",
     icon: "bag",
     iconBackground: "#fff1e8",
     id: "shopping-consumption",
@@ -62,6 +63,7 @@ const sceneCards: SceneCard[] = [
   {
     accent: "#d45d35",
     description: "点餐、外卖、咖啡、\n餐厅沟通",
+    href: "/classic-scenes/restaurant-takeout",
     icon: "utensils",
     iconBackground: "#fff0eb",
     id: "restaurant-takeout",
@@ -71,6 +73,7 @@ const sceneCards: SceneCard[] = [
   {
     accent: "#3d8990",
     description: "机场、地铁、打车、\n问路",
+    href: "/classic-scenes/transportation-travel",
     icon: "car",
     iconBackground: "#ecf6f4",
     id: "transportation-travel",
@@ -80,6 +83,7 @@ const sceneCards: SceneCard[] = [
   {
     accent: "#7d965d",
     description: "酒店入住、租房、\n家居生活",
+    href: "/classic-scenes/housing-home",
     icon: "home",
     iconBackground: "#f3f5e9",
     id: "housing-home",
@@ -89,6 +93,7 @@ const sceneCards: SceneCard[] = [
   {
     accent: "#4f9567",
     description: "看病、买药、体检、\n健康咨询",
+    href: "/classic-scenes/health-medical",
     icon: "shield",
     iconBackground: "#edf6ec",
     id: "health-medical",
@@ -98,6 +103,7 @@ const sceneCards: SceneCard[] = [
   {
     accent: "#df8b22",
     description: "快递、售后、维修、\n美容美发",
+    href: "/classic-scenes/service-repair",
     icon: "wrench",
     iconBackground: "#fff6dd",
     id: "service-repair",
@@ -107,33 +113,12 @@ const sceneCards: SceneCard[] = [
   {
     accent: "#766c83",
     description: "工作沟通、面试、社交、\n学校生活",
+    href: "/classic-scenes/education-work-social",
     icon: "graduation",
     iconBackground: "#f3eef1",
     id: "education-work-social",
     meta: "课程整理中",
     title: "教育、工作与社交生活",
-  },
-  {
-    accent: "#4b854a",
-    badge: "NEW",
-    description: "根据你的想法，AI 帮你\n组织更地道的表达",
-    href: "/ai-guided-expression/step-1",
-    icon: "ai",
-    iconBackground: "#eef6ea",
-    id: "guided",
-    meta: "",
-    title: "AI 引导表达",
-  },
-  {
-    accent: "#dd9228",
-    badge: "NEW",
-    description: "学习最常用表达，\n让你的英语更自然",
-    href: "/new-expressions",
-    icon: "chat",
-    iconBackground: "#fff4df",
-    id: "expression",
-    meta: "",
-    title: "新表达",
   },
 ];
 
