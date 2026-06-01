@@ -4637,7 +4637,7 @@ function SpeakEnglishClient() {
     setShowQuickPanel(false);
     setShowClassicCoursePicker(false);
     resetClassicCoursePicker();
-    router.push("/menu");
+    router.push("/account");
   }
 
   function openAccountPage() {
@@ -6727,7 +6727,7 @@ function SpeakEnglishClient() {
                 <header className="sf-ai-guided-step-two-header">
                   <button
                     type="button"
-                    aria-label="返回主菜单"
+                    aria-label="打开账户界面"
                     onClick={openMenuPage}
                     className="sf-ai-guided-step-two-menu"
                   >
@@ -6881,7 +6881,7 @@ function SpeakEnglishClient() {
               chineseText={nativeSpeech}
               headingText="太棒了！ 你想表达的是："
               menuIcon="menu"
-              menuLabel="返回主菜单"
+              menuLabel="打开账户界面"
               variant="guided"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
@@ -6899,7 +6899,7 @@ function SpeakEnglishClient() {
             <AiGuidedExpressionStepFour
               isRecordingEnglish={isListening}
               nativeSpeech={nativeSpeech}
-              menuLabel="回到主菜单"
+              menuLabel="打开账户界面"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
@@ -6917,14 +6917,13 @@ function SpeakEnglishClient() {
               isLoadingNextChinese={isLoadingGuidedFollowup}
               expressions={referenceResultVariantTexts}
               selectedExpressionIndex={selectedExpressionIndex}
-              menuLabel="回到主菜单"
+              menuLabel="打开账户界面"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
               avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
               avatarAlt={accountEmail || accountName || "user"}
               onAvatarError={() => setAccountImageFailed(true)}
-              onBackToEnglish={openAiGuidedStepFourForRetry}
               onRetryEnglish={openAiGuidedStepFourForRetry}
               onUseNextChinese={startAiGuidedSuggestedRound}
               onChangeNextChinese={requestAnotherGuidedFollowup}
@@ -8123,7 +8122,7 @@ function SpeakEnglishClient() {
 
           {showReferenceLanding ? (
             <FreeStudyPageOne
-              menuLabel="打开菜单"
+              menuLabel="打开账户界面"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
@@ -8136,7 +8135,7 @@ function SpeakEnglishClient() {
 
           {showReferenceListening ? (
             <FreeStudyPageTwo
-              menuLabel="打开菜单"
+              menuLabel="打开账户界面"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
@@ -8152,8 +8151,9 @@ function SpeakEnglishClient() {
           {showReferenceConfirmation ? (
             <FreeStudyPageThree
               chineseText={nativeSpeech}
-              menuLabel="重新说中文"
-              onMenuClick={openFreeStudyStepTwoForNextChinese}
+              menuIcon="menu"
+              menuLabel="打开账户界面"
+              onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
               avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
@@ -8169,7 +8169,7 @@ function SpeakEnglishClient() {
             <FreeStudyPageFour
               isRecordingEnglish={isListening || showReferenceEnglishPrompt}
               nativeSpeech={nativeSpeech}
-              menuLabel="回到主菜单"
+              menuLabel="打开账户界面"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
@@ -8191,7 +8191,7 @@ function SpeakEnglishClient() {
                 onAvatarError={() => setAccountImageFailed(true)}
                 onAiGuidedPractice={openAiGuidedExpressionStepOne}
                 onRetryEnglish={openFreeStudyStepFourForRetry}
-                onMenuClick={openFreeStudyStepFourForRetry}
+                onMenuClick={openMenuPage}
                 onAccountClick={openAccountPage}
                 onPlayExpression={readReferenceResultVariant}
                 onSelectExpression={setSelectedExpressionIndex}
@@ -8406,7 +8406,7 @@ function SpeakEnglishClient() {
 
           {!showReferenceLanding && !showReferenceConfirmation && !showAccountMenu ? (
             <FreeStudyHeader
-              menuLabel="打开菜单"
+              menuLabel="打开账户界面"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openReferenceAccountMenu}

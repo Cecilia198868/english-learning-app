@@ -220,7 +220,7 @@ export default function PrivacyPage() {
     <main className="responsive-page-shell min-h-[100dvh] bg-[linear-gradient(180deg,#d9d1ff_0%,#eeeaff_48%,#f8f6ff_100%)] px-5 py-6 font-[var(--font-sora)] text-[#201833]">
       <div className="mx-auto w-full max-w-3xl pb-16">
         <Link
-          href="/speak-english?account=1"
+          href="/account"
           className="inline-flex min-h-11 items-center rounded-full bg-white/60 px-5 text-sm font-extrabold text-[#5b63ff] shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_10px_24px_rgba(84,72,146,0.12)]"
         >
           {copy.back}

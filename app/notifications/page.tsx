@@ -188,7 +188,7 @@ export default function NotificationsPage() {
       <div className="mx-auto flex min-h-[calc(100dvh-2.5rem)] w-full max-w-[520px] flex-col rounded-[34px] border border-white/60 bg-[#f2edff]/72 px-5 pb-8 pt-5 shadow-[0_30px_80px_rgba(84,72,146,0.18)]">
         <header className="grid grid-cols-[3rem_1fr_3rem] items-center gap-3">
           <Link
-            href="/speak-english?account=1"
+            href="/account"
             aria-label={copy.back}
             className="grid h-11 w-11 place-items-center rounded-[18px] bg-[#efeaff] text-[1.45rem] font-black text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
           >

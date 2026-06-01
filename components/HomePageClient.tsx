@@ -86,11 +86,6 @@ export default function HomePageClient() {
   return (
     <main className={styles.page}>
       <section className={styles.phone} aria-label="SpeakFlow 首页">
-        <div className={styles.statusBar} aria-hidden="true">
-          <span>10:15</span>
-          <span className={styles.statusIcons}>⌁ ◒ ▰</span>
-        </div>
-
         <div className={styles.logoWrap}>
           <div className={styles.logoCard}>
             <Image

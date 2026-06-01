@@ -2,34 +2,12 @@
 
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import type {
   ClassicSceneCategoryIcon,
   ClassicSceneCategoryMenu,
   ClassicSceneSubcategory,
 } from "@/data/classicSceneCategoryMenus";
 import styles from "./ClassicSceneCategoryMenuPage.module.css";
-
-type SessionResponse = {
-  user?: {
-    avatarUrl?: string | null;
-    image?: string | null;
-    photoURL?: string | null;
-    photoUrl?: string | null;
-    picture?: string | null;
-  } | null;
-};
-
-function getAvatarSrc(user?: SessionResponse["user"]) {
-  return (
-    user?.avatarUrl ||
-    user?.image ||
-    user?.photoURL ||
-    user?.photoUrl ||
-    user?.picture ||
-    "/default-avatar.png"
-  );
-}
 
 function BackIcon() {
   return (
@@ -352,31 +330,6 @@ export default function ClassicSceneCategoryMenuPage({
 }: {
   menu: ClassicSceneCategoryMenu;
 }) {
-  const [avatarSrc, setAvatarSrc] = useState("/default-avatar.png");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadSession() {
-      try {
-        const response = await fetch("/api/auth/session", { cache: "no-store" });
-        const session = (await response.json()) as SessionResponse;
-
-        if (!cancelled) {
-          setAvatarSrc(getAvatarSrc(session.user));
-        }
-      } catch {
-        if (!cancelled) setAvatarSrc("/default-avatar.png");
-      }
-    }
-
-    void loadSession();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
   const categoryStyle = {
     "--category-accent": menu.accent,
   } as CSSProperties;
@@ -400,14 +353,7 @@ export default function ClassicSceneCategoryMenuPage({
             </p>
           </div>
 
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={avatarSrc}
-            alt=""
-            className={styles.avatar}
-            draggable={false}
-            onError={() => setAvatarSrc("/default-avatar.png")}
-          />
+          <span aria-hidden="true" />
         </header>
 
         <section className={styles.hero} aria-label={menu.title}>

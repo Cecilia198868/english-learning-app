@@ -1,19 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { syncVocabularyWordsWithCloud } from "@/lib/vocabulary";
 
 type SessionResponse = {
   user?: {
-    avatarUrl?: string | null;
     email?: string | null;
-    image?: string | null;
     name?: string | null;
-    photoURL?: string | null;
-    photoUrl?: string | null;
-    picture?: string | null;
   } | null;
 };
 
@@ -52,17 +47,6 @@ const MENU_ENTRIES: MenuEntry[] = [
     ariaLabel: "进入经典场景口语练习下一级菜单",
   },
 ];
-
-function getAvatarSrc(user?: SessionResponse["user"]) {
-  return (
-    user?.avatarUrl ||
-    user?.image ||
-    user?.photoURL ||
-    user?.photoUrl ||
-    user?.picture ||
-    "/default-avatar.png"
-  );
-}
 
 function MenuGlyph() {
   return (
@@ -207,7 +191,6 @@ function CardIllustration({ tone }: { tone: MenuEntry["tone"] }) {
 
 export default function MenuPage() {
   const router = useRouter();
-  const [avatarSrc, setAvatarSrc] = useState("/default-avatar.png");
 
   useEffect(() => {
     let cancelled = false;
@@ -217,18 +200,10 @@ export default function MenuPage() {
         const response = await fetch("/api/auth/session", { cache: "no-store" });
         const session = (await response.json()) as SessionResponse;
 
-        if (!cancelled) {
-          setAvatarSrc(getAvatarSrc(session.user));
-        }
-
-        if (session.user?.email || session.user?.name) {
+        if (!cancelled && (session.user?.email || session.user?.name)) {
           void syncVocabularyWordsWithCloud();
         }
-      } catch {
-        if (!cancelled) {
-          setAvatarSrc("/default-avatar.png");
-        }
-      }
+      } catch {}
     }
 
     void loadSession();
@@ -245,8 +220,8 @@ export default function MenuPage() {
           <header className="sf-menu-page-header">
             <button
               type="button"
-              aria-label="进入自由学习界面第一页"
-              onClick={() => router.push("/free-study/step-1")}
+              aria-label="打开账户界面"
+              onClick={() => router.push("/account")}
               className="sf-menu-page-menu-button"
             >
               <MenuGlyph />
@@ -262,22 +237,7 @@ export default function MenuPage() {
               </span>
             </div>
 
-            <button
-              type="button"
-              aria-label="打开账户界面"
-              onClick={() => router.push("/account")}
-              className="sf-menu-page-avatar-button"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={avatarSrc}
-                alt=""
-                className="sf-menu-page-avatar-image"
-                onError={() => setAvatarSrc("/default-avatar.png")}
-                draggable={false}
-              />
-              <span aria-hidden="true" className="sf-menu-page-avatar-dot" />
-            </button>
+            <span aria-hidden="true" />
           </header>
 
           <nav className="sf-menu-page-card-list" aria-label="学习入口">

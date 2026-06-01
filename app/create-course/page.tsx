@@ -3,7 +3,6 @@
 import type { ChangeEvent, ReactNode, RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import AccountAvatarButton from "@/components/AccountAvatarButton";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { serializeTrainingItems, type TrainingItem } from "@/lib/training";
 
@@ -528,7 +527,7 @@ export default function CreateCoursePage() {
       return;
     }
 
-    router.replace("/speak-english?menu=1");
+    router.replace("/account");
   }
 
   async function requestTrainingItemsFromText({
@@ -902,7 +901,7 @@ export default function CreateCoursePage() {
             <div className="sf-app-topbar-inner flex items-center justify-between">
               <button
                 type="button"
-                aria-label={importView === "home" ? "返回菜单" : "返回上一页"}
+                aria-label={importView === "home" ? "打开账户界面" : "返回上一页"}
                 onClick={goBackFromCurrentView}
                 className="sf-header-button"
               >
@@ -926,7 +925,7 @@ export default function CreateCoursePage() {
                 aria-label={importView === "home" ? "返回练习页" : "帮助"}
                 onClick={() => {
                   if (importView !== "home") return;
-                  router.replace("/speak-english?menu=1");
+                  router.replace("/account");
                 }}
                 className={`hidden sf-header-button font-extrabold text-[#201833] ${
                   importView === "home" ? "text-[1.05rem]" : "text-[1.1rem]"
@@ -934,7 +933,7 @@ export default function CreateCoursePage() {
               >
                 {importView === "home" ? "v" : "?"}
               </button>
-              <AccountAvatarButton />
+              <span aria-hidden="true" className="h-11 w-11 shrink-0" />
             </div>
           </header>
 

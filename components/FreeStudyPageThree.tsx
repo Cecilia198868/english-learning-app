@@ -27,6 +27,8 @@ const COPY = {
   editChinese: "\u7f16\u8f91\u4e2d\u6587",
   editRecognized: "\u7f16\u8f91\u8bc6\u522b\u51fa\u7684\u4e2d\u6587",
   footnote: "\u4f60\u7684\u7ec3\u4e60\u8bb0\u5f55\u5c06\u5e2e\u52a9 AI \u66f4\u61c2\u4f60",
+  freeMode: "\u81ea\u7531\u5b66\u4e60",
+  guidedMode: "AI\u5f15\u5bfc\u8868\u8fbe",
   nextHeading: "\u63a5\u4e0b\u6765\u6211\u4eec\u4e00\u8d77\uff1a",
   nextLabel: "\u63a5\u4e0b\u6765\u7684\u7ec3\u4e60\u6b65\u9aa4",
   pageLabel: "\u786e\u8ba4\u4e2d\u6587\u8868\u8fbe",
@@ -34,6 +36,7 @@ const COPY = {
   received: "\u6536\u5230\u5566\uff01 \u4f60\u60f3\u8868\u8fbe\u7684\u662f\uff1a",
   retryAria: "\u8fd4\u56de\u7b2c\u4e8c\u9875\u91cd\u65b0\u5f55\u97f3",
   retryButton: "\u91cd\u65b0\u8bf4",
+  toolbarBack: "\u8fd4\u56de",
 } as const;
 
 const nextSteps = [
@@ -248,9 +251,6 @@ function StepIcon({ name }: { name: (typeof nextSteps)[number]["icon"] }) {
 
 export default function FreeStudyPageThree({
   chineseText,
-  avatarSrc = "",
-  avatarAlt = "user",
-  accountLabel = COPY.accountLabel,
   headingText = COPY.received,
   menuLabel = COPY.retryAria,
   menuIcon = "back",
@@ -258,12 +258,11 @@ export default function FreeStudyPageThree({
   onEditChinese,
   onRetryChinese,
   onStartEnglishPractice,
-  onAccountClick,
-  onAvatarError,
   onMenuClick,
 }: FreeStudyPageThreeProps) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const canConfirm = Boolean(chineseText.trim());
+  const modeLabel = variant === "guided" ? COPY.guidedMode : COPY.freeMode;
 
   useLayoutEffect(() => {
     const textarea = textareaRef.current;
@@ -333,23 +332,25 @@ export default function FreeStudyPageThree({
             </span>
           </div>
 
+          <span className="sf-free-study-page-three-header-spacer" aria-hidden="true" />
+        </header>
+
+        <div className="sf-free-study-page-three-toolbar">
           <button
             type="button"
-            aria-label={accountLabel}
-            onClick={onAccountClick}
-            className="sf-free-study-page-three-avatar-button"
-            title={avatarAlt}
+            aria-label={COPY.retryAria}
+            onClick={onRetryChinese}
+            className="sf-free-study-page-three-toolbar-back"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={avatarSrc || "/default-avatar.png"}
-              alt=""
-              className="sf-free-study-page-three-avatar-image"
-              onError={onAvatarError}
-              draggable={false}
-            />
+            <BackGlyph />
+            <span>{COPY.toolbarBack}</span>
           </button>
-        </header>
+
+          <div className="sf-free-study-page-three-mode" aria-label={modeLabel}>
+            <SparklesGlyph />
+            <span>{modeLabel}</span>
+          </div>
+        </div>
 
         <main className="sf-free-study-page-three-content">
           <section

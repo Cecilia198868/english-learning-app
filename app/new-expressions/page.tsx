@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { syncVocabularyWordsWithCloud } from "@/lib/vocabulary";
 import styles from "./NewExpressionsPage.module.css";
@@ -9,29 +9,9 @@ import styles from "./NewExpressionsPage.module.css";
 type SessionResponse = {
   user?: {
     email?: string | null;
-    image?: string | null;
     name?: string | null;
-    photoURL?: string | null;
-    photoUrl?: string | null;
-    picture?: string | null;
   } | null;
 };
-
-const accountAvatarStoragePrefix = "speakflow-account-avatar";
-
-function getAccountAvatarStorageKey(identifier: string) {
-  return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
-}
-
-function getSessionAvatar(user?: SessionResponse["user"]) {
-  return (
-    user?.image ||
-    user?.photoURL ||
-    user?.photoUrl ||
-    user?.picture ||
-    ""
-  );
-}
 
 function BackIcon() {
   return (
@@ -264,9 +244,6 @@ function BookmarkTabIcon() {
 }
 
 export default function NewExpressionsPage() {
-  const [avatarSrc, setAvatarSrc] = useState("/default-avatar.png");
-  const [avatarFailed, setAvatarFailed] = useState(false);
-
   useEffect(() => {
     let cancelled = false;
 
@@ -274,27 +251,11 @@ export default function NewExpressionsPage() {
       try {
         const response = await fetch("/api/auth/session", { cache: "no-store" });
         const session = (await response.json()) as SessionResponse;
-        const identifier =
-          session.user?.email || session.user?.name || "local-user";
-        const savedAvatar = window.localStorage.getItem(
-          getAccountAvatarStorageKey(identifier)
-        );
-        const nextAvatar = savedAvatar || getSessionAvatar(session.user);
 
-        if (!cancelled) {
-          setAvatarSrc(nextAvatar || "/default-avatar.png");
-          setAvatarFailed(false);
-        }
-
-        if (session.user?.email || session.user?.name) {
+        if (!cancelled && (session.user?.email || session.user?.name)) {
           void syncVocabularyWordsWithCloud();
         }
-      } catch {
-        if (!cancelled) {
-          setAvatarSrc("/default-avatar.png");
-          setAvatarFailed(false);
-        }
-      }
+      } catch {}
     }
 
     void loadSession();
@@ -308,7 +269,7 @@ export default function NewExpressionsPage() {
     <main className={`${styles.mount} sf-new-expressions-page`}>
       <section className="sf-new-expressions-phone" aria-label="新表达菜单">
         <header className="sf-new-expressions-header">
-          <Link href="/menu" aria-label="返回主菜单" className="sf-new-expressions-back">
+          <Link href="/start" aria-label="返回首页" className="sf-new-expressions-back">
             <BackIcon />
           </Link>
 
@@ -320,16 +281,7 @@ export default function NewExpressionsPage() {
             </span>
           </div>
 
-          <Link href="/account" aria-label="打开账户界面" className="sf-new-expressions-avatar">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={avatarFailed ? "/default-avatar.png" : avatarSrc}
-              alt=""
-              draggable={false}
-              onError={() => setAvatarFailed(true)}
-            />
-            <span />
-          </Link>
+          <span aria-hidden="true" />
         </header>
 
         <section className="sf-new-expressions-hero" aria-labelledby="new-expressions-title">
@@ -390,7 +342,7 @@ export default function NewExpressionsPage() {
         </div>
 
         <nav className="sf-new-expressions-tabs" aria-label="底部导航">
-          <Link href="/menu" className="sf-new-expressions-tab">
+          <Link href="/start" className="sf-new-expressions-tab">
             <HomeTabIcon />
             <span>首页</span>
           </Link>

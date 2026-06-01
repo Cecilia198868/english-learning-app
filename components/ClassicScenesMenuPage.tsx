@@ -1,19 +1,8 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./ClassicScenesMenuPage.module.css";
-
-type SessionResponse = {
-  user?: {
-    avatarUrl?: string | null;
-    image?: string | null;
-    photoURL?: string | null;
-    photoUrl?: string | null;
-    picture?: string | null;
-  } | null;
-};
 
 type SceneCardIcon =
   | "bank"
@@ -122,17 +111,6 @@ const sceneCards: SceneCard[] = [
   },
 ];
 
-function getAvatarSrc(user?: SessionResponse["user"]) {
-  return (
-    user?.avatarUrl ||
-    user?.image ||
-    user?.photoURL ||
-    user?.photoUrl ||
-    user?.picture ||
-    "/default-avatar.png"
-  );
-}
-
 function MenuIcon() {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
@@ -147,14 +125,6 @@ function BrandMarkIcon() {
       <path d="M35.5 9.5c14.8 0 26.7 11.2 26.7 25.3S50.3 60.2 35.5 60.2c-3.7 0-7.2-.7-10.3-2.1l-13.1 4.5 4.1-12.3a24.3 24.3 0 0 1-7.4-17.4C8.8 20.7 20.8 9.5 35.5 9.5Z" />
       <path d="M24.8 32.4v7.2M31.8 26.8v18.4M38.8 30.4v11.2M45.8 34.2v3.6" />
       <circle cx="51.2" cy="36" r="2.1" />
-    </svg>
-  );
-}
-
-function ArrowLeft() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M19 12H5M11 6l-6 6 6 6" />
     </svg>
   );
 }
@@ -266,32 +236,6 @@ function HeroVisual() {
 
 export default function ClassicScenesMenuPage() {
   const router = useRouter();
-  const [avatarSrc, setAvatarSrc] = useState("/default-avatar.png");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadSession() {
-      try {
-        const response = await fetch("/api/auth/session", { cache: "no-store" });
-        const session = (await response.json()) as SessionResponse;
-
-        if (!cancelled) {
-          setAvatarSrc(getAvatarSrc(session.user));
-        }
-      } catch {
-        if (!cancelled) setAvatarSrc("/default-avatar.png");
-      }
-    }
-
-    void loadSession();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const goHome = () => router.push("/menu");
   const openAccount = () => router.push("/account");
   const openCard = (card: SceneCard) => {
     if (card.href) {
@@ -306,8 +250,8 @@ export default function ClassicScenesMenuPage() {
           <button
             className={styles.menuButton}
             type="button"
-            aria-label="回到主菜单"
-            onClick={goHome}
+            aria-label="打开账户界面"
+            onClick={openAccount}
           >
             <MenuIcon />
           </button>
@@ -322,28 +266,10 @@ export default function ClassicScenesMenuPage() {
             </div>
           </div>
 
-          <button
-            className={styles.avatarButton}
-            type="button"
-            aria-label="进入账户界面"
-            onClick={openAccount}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={avatarSrc}
-              alt=""
-              className={styles.avatar}
-              onError={() => setAvatarSrc("/default-avatar.png")}
-              draggable={false}
-            />
-          </button>
+          <span aria-hidden="true" />
         </header>
 
         <section className={styles.hero}>
-          <button className={styles.backLink} type="button" onClick={goHome}>
-            <ArrowLeft />
-            返回上一级
-          </button>
           <div className={styles.heroText}>
             <h1>经典场景口语练习</h1>
             <p>覆盖日常生活场景，按分类练高频表达</p>

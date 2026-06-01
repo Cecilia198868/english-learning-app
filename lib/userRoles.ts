@@ -1,6 +1,6 @@
 export type UserRole = "user" | "admin";
 
-export const DEFAULT_ADMIN_EMAIL = "xilichenzk@gmail.com";
+export const DEFAULT_ADMIN_EMAIL = "xuhuiyangny@gmail.com";
 
 export function normalizeUserRole(role: unknown): UserRole {
   return role === "admin" ? "admin" : "user";

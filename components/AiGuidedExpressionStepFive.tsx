@@ -14,7 +14,6 @@ type AiGuidedExpressionStepFiveProps = {
   accountLabel?: string;
   menuLabel?: string;
   onMenuClick: () => void;
-  onBackToEnglish: () => void;
   onRetryEnglish: () => void;
   onUseNextChinese: () => void;
   onChangeNextChinese: () => void;
@@ -93,20 +92,6 @@ function MenuGlyph() {
         stroke="currentColor"
         strokeLinecap="round"
         strokeWidth="2.5"
-      />
-    </svg>
-  );
-}
-
-function BackGlyph() {
-  return (
-    <svg aria-hidden="true" fill="none" viewBox="0 0 32 32">
-      <path
-        d="m19 8-8 8 8 8"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2.8"
       />
     </svg>
   );
@@ -328,7 +313,6 @@ export default function AiGuidedExpressionStepFive({
   accountLabel = COPY.accountLabel,
   menuLabel = COPY.menuLabel,
   onMenuClick,
-  onBackToEnglish,
   onRetryEnglish,
   onUseNextChinese,
   onChangeNextChinese,
@@ -392,22 +376,6 @@ export default function AiGuidedExpressionStepFive({
             />
           </button>
         </header>
-
-        <div className="sf-ai-guided-step-five-modebar">
-          <button
-            type="button"
-            aria-label={COPY.backAria}
-            onClick={onBackToEnglish}
-            className="sf-ai-guided-step-five-back"
-          >
-            <BackGlyph />
-            <span>{COPY.back}</span>
-          </button>
-          <div className="sf-ai-guided-step-five-mode-title">
-            <SparklesGlyph />
-            <span>{COPY.mode}</span>
-          </div>
-        </div>
 
         <main className="sf-ai-guided-step-five-scroll">
           <section className="sf-ai-guided-step-five-user-card">

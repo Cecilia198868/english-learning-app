@@ -2243,95 +2243,97 @@ export default function StudyPage() {
             学习不同表达方式，找到最适合你的说法
           </p>
 
-          <section className={styles.resultExpressionPanel} aria-label="表达对比">
-            <section className={styles.userExpressionCard} aria-label="你的表达">
-              <div className={styles.userExpressionLabel}>
-                <span className={styles.userExpressionIcon}>
-                  <UserResultIcon />
-                </span>
-                <strong>你的表达</strong>
-              </div>
-              <div className={styles.userExpressionBubble}>
-                <p className={styles.userExpressionText}>
-                  {renderClassicHighlightedText(spokenDisplay)}
-                </p>
-                <button
-                  type="button"
-                  className={styles.userExpressionSpeaker}
-                  aria-label="朗读你的表达"
-                  onClick={() => speakEnglish(spokenDisplay, 1)}
-                >
-                  <SpeakerIcon />
-                </button>
-              </div>
-            </section>
+          <div className={styles.resultScrollArea}>
+            <section className={styles.resultExpressionPanel} aria-label="表达对比">
+              <section className={styles.userExpressionCard} aria-label="你的表达">
+                <div className={styles.userExpressionLabel}>
+                  <span className={styles.userExpressionIcon}>
+                    <UserResultIcon />
+                  </span>
+                  <strong>你的表达</strong>
+                </div>
+                <div className={styles.userExpressionBubble}>
+                  <p className={styles.userExpressionText}>
+                    {renderClassicHighlightedText(spokenDisplay)}
+                  </p>
+                  <button
+                    type="button"
+                    className={styles.userExpressionSpeaker}
+                    aria-label="朗读你的表达"
+                    onClick={() => speakEnglish(spokenDisplay, 1)}
+                  >
+                    <SpeakerIcon />
+                  </button>
+                </div>
+              </section>
 
-            <section className={styles.expressionList} aria-label="推荐表达">
-              {isLoadingExpressionVariants ? (
-                <p className={styles.loadingExpressions}>正在生成表达...</p>
-              ) : (
-                resultVariants.map((variant, variantIndex) => {
-                  const isSelected = selectedExpressionIndex === variantIndex;
-                  const isFeatured = variant.key === "standard";
-                  const toneClass = getResultVariantToneClass(variant.key);
+              <section className={styles.expressionList} aria-label="推荐表达">
+                {isLoadingExpressionVariants ? (
+                  <p className={styles.loadingExpressions}>正在生成表达...</p>
+                ) : (
+                  resultVariants.map((variant, variantIndex) => {
+                    const isSelected = selectedExpressionIndex === variantIndex;
+                    const isFeatured = variant.key === "standard";
+                    const toneClass = getResultVariantToneClass(variant.key);
 
-                  return (
-                    <article
-                      key={`${variant.key}-${variantIndex}`}
-                      className={`${styles.expressionCard} ${toneClass} ${
-                        isFeatured ? styles.expressionCardFeatured : ""
-                      } ${isSelected ? styles.expressionCardSelected : ""}`}
-                    >
-                      <div
-                        role="button"
-                        tabIndex={0}
-                        className={styles.expressionSelectArea}
-                        onClick={() => setSelectedExpressionIndex(variantIndex)}
-                        onKeyDown={(event) => {
-                          if (
-                            event.target === event.currentTarget &&
-                            (event.key === "Enter" || event.key === " ")
-                          ) {
-                            event.preventDefault();
-                            setSelectedExpressionIndex(variantIndex);
-                          }
-                        }}
-                        aria-label={`选择${variant.label}`}
+                    return (
+                      <article
+                        key={`${variant.key}-${variantIndex}`}
+                        className={`${styles.expressionCard} ${toneClass} ${
+                          isFeatured ? styles.expressionCardFeatured : ""
+                        } ${isSelected ? styles.expressionCardSelected : ""}`}
                       >
-                        <span className={styles.variantRibbon}>
-                          <ResultVariantIcon variantKey={variant.key} />
-                        </span>
-                        <span className={styles.variantCopy}>
-                          <span className={styles.variantTitle}>{variant.label}</span>
-                          <span className={styles.variantText}>
-                            {renderClassicHighlightedText(variant.text, variant.key)}
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          className={styles.expressionSelectArea}
+                          onClick={() => setSelectedExpressionIndex(variantIndex)}
+                          onKeyDown={(event) => {
+                            if (
+                              event.target === event.currentTarget &&
+                              (event.key === "Enter" || event.key === " ")
+                            ) {
+                              event.preventDefault();
+                              setSelectedExpressionIndex(variantIndex);
+                            }
+                          }}
+                          aria-label={`选择${variant.label}`}
+                        >
+                          <span className={styles.variantRibbon}>
+                            <ResultVariantIcon variantKey={variant.key} />
                           </span>
-                          <span className={styles.variantNote}>
-                            {getResultVariantNote(variant.key)}
+                          <span className={styles.variantCopy}>
+                            <span className={styles.variantTitle}>{variant.label}</span>
+                            <span className={styles.variantText}>
+                              {renderClassicHighlightedText(variant.text, variant.key)}
+                            </span>
+                            <span className={styles.variantNote}>
+                              {getResultVariantNote(variant.key)}
+                            </span>
                           </span>
-                        </span>
-                      </div>
+                        </div>
 
-                      <button
-                        type="button"
-                        className={styles.variantSpeaker}
-                        aria-label={`朗读${variant.label}`}
-                        onClick={() => readExpressionVariant(variant, variantIndex)}
-                      >
-                        <SpeakerIcon />
-                      </button>
+                        <button
+                          type="button"
+                          className={styles.variantSpeaker}
+                          aria-label={`朗读${variant.label}`}
+                          onClick={() => readExpressionVariant(variant, variantIndex)}
+                        >
+                          <SpeakerIcon />
+                        </button>
 
-                      {isFeatured ? (
-                        <span className={styles.cornerStar} aria-hidden="true">
-                          <ResultVariantIcon variantKey="standard" />
-                        </span>
-                      ) : null}
-                    </article>
-                  );
-                })
-              )}
+                        {isFeatured ? (
+                          <span className={styles.cornerStar} aria-hidden="true">
+                            <ResultVariantIcon variantKey="standard" />
+                          </span>
+                        ) : null}
+                      </article>
+                    );
+                  })
+                )}
+              </section>
             </section>
-          </section>
+          </div>
 
           <section className={styles.followCard} aria-label="跟读练习">
             <div className={styles.followTop}>

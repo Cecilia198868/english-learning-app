@@ -80,7 +80,7 @@ export default function AccountAvatarButton({
       return;
     }
 
-    router.push("/speak-english?account=1");
+    router.push("/account");
   }
 
   return (
