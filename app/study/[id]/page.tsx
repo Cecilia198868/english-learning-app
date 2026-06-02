@@ -7,6 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 import AccountAvatarButton from "@/components/AccountAvatarButton";
 import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
 import FreeUsageMeter from "@/components/FreeUsageMeter";
+import HomeMenuIcon from "@/components/HomeMenuIcon";
 import PlayIcon from "@/components/PlayIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
@@ -328,14 +329,6 @@ function getClassicTopicRole(lessonId: string, title: string) {
   if (source.includes("hotel") || title.includes("住宿")) return "前台人员";
 
   return "场景角色";
-}
-
-function MenuLinesIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
-      <path d="M8 10h16M8 16h16M8 22h16" />
-    </svg>
-  );
 }
 
 function BrandBubbleIcon() {
@@ -1481,6 +1474,18 @@ export default function StudyPage() {
     router.replace("/menu");
   }
 
+  function handleClassicHomeClick() {
+    stopAutoPlay();
+
+    if (typeof window !== "undefined") {
+      window.speechSynthesis?.cancel();
+      window.location.assign("/start");
+      return;
+    }
+
+    router.replace("/start");
+  }
+
   function openRenameCourseDialog() {
     setRenameCourseTitle(getDisplayCourseFileName(courseTitle));
     setShowCourseFileMenu(false);
@@ -1959,11 +1964,11 @@ export default function StudyPage() {
           <header className={styles.classicTopbar}>
             <button
               type="button"
-              aria-label="返回主菜单"
+              aria-label="回到首页"
               className={styles.menuButton}
-              onClick={handleBackToPreviousPage}
+              onClick={handleClassicHomeClick}
             >
-              <MenuLinesIcon />
+              <HomeMenuIcon label={null} />
             </button>
 
             <div className={styles.brand} aria-label="SpeakFlow Voice Practice">
@@ -2182,11 +2187,11 @@ export default function StudyPage() {
           <header className={styles.classicTopbar}>
             <button
               type="button"
-              aria-label="返回主菜单"
+              aria-label="回到首页"
               className={styles.menuButton}
-              onClick={handleBackToPreviousPage}
+              onClick={handleClassicHomeClick}
             >
-              <MenuLinesIcon />
+              <HomeMenuIcon label={null} />
             </button>
 
             <div className={styles.brand} aria-label="SpeakFlow Voice Practice">

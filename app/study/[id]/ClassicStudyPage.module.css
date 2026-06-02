@@ -62,13 +62,24 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
+.menuButton {
+  background: transparent;
+  color: #000000;
+  box-shadow: none;
+}
+
 .menuButton svg {
-  width: 26px;
-  height: 26px;
+  width: 1.45rem;
+  height: 1.45rem;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
-  stroke-width: 3.3;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.menuButton :global(.sf-home-menu-icon) {
+  font-size: 1.62rem;
 }
 
 .avatarButton {
@@ -1773,6 +1784,12 @@
   box-shadow:
     0 10px 22px rgba(58, 82, 45, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.resultPhone .menuButton {
+  background: transparent;
+  color: #000000;
+  box-shadow: none;
 }
 
 .resultPhone .avatarImage {

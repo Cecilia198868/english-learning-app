@@ -164,14 +164,6 @@ function navigateTo(target: string, options: { replace?: boolean } = {}) {
   window.location.assign(target);
 }
 
-function BackIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 32 32">
-      <path d="M19.5 7.5 11 16l8.5 8.5" />
-    </svg>
-  );
-}
-
 function SpeakerIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 32 32">
@@ -1031,12 +1023,6 @@ export default function VocabularyPage() {
     };
   }, [displayedExampleText, displayedExpression]);
 
-  function returnToNewExpressionMenu() {
-    setShowExpressionLibrary(false);
-    setShowExpressionLimitModal(false);
-    navigateTo("/new-expressions", { replace: true });
-  }
-
   function openAccountFromVocabulary() {
     setShowExpressionLibrary(false);
     setShowExpressionLimitModal(false);
@@ -1052,6 +1038,16 @@ export default function VocabularyPage() {
   function openProFromExpressionLimit() {
     setShowExpressionLimitModal(false);
     navigateTo(createLoginUrl(subscriptionCallbackUrl));
+  }
+
+  function openLoginFromExpressionLimit() {
+    setShowExpressionLimitModal(false);
+    navigateTo(createLoginUrl(subscriptionCallbackUrl));
+  }
+
+  function openRegisterFromExpressionLimit() {
+    setShowExpressionLimitModal(false);
+    navigateTo("/register");
   }
 
   function openExpressionAt(index: number, options: { closeLibrary?: boolean } = {}) {
@@ -1223,11 +1219,11 @@ export default function VocabularyPage() {
           <header className="sf-expression-library-topbar">
             <button
               type="button"
-              aria-label="回到新表达菜单"
+              aria-label="回到首页"
               className="sf-expression-library-back"
-              onClick={returnToNewExpressionMenu}
+              onClick={openHomeFromVocabulary}
             >
-              <BackIcon />
+              <HomeMenuIcon label={null} />
             </button>
 
             <div className="sf-expression-library-brand" aria-label="SpeakFlow AI Voice Practice">
@@ -1557,7 +1553,7 @@ export default function VocabularyPage() {
             className="sf-vocabulary-menu-button is-home"
             onClick={openHomeFromVocabulary}
           >
-            <HomeMenuIcon />
+            <HomeMenuIcon label={null} />
           </button>
 
           <div className="sf-vocabulary-brand" aria-label="SpeakFlow AI Voice Practice">
@@ -1574,11 +1570,11 @@ export default function VocabularyPage() {
         <div className="sf-vocabulary-learning-scroll">
           <button
             type="button"
-            aria-label="回到新表达菜单"
+            aria-label="回到首页"
             className="sf-vocabulary-back-button"
-            onClick={returnToNewExpressionMenu}
+            onClick={openHomeFromVocabulary}
           >
-            <BackIcon />
+            <HomeMenuIcon label={null} />
           </button>
 
           <section className="sf-vocabulary-learning-title">
@@ -1863,6 +1859,8 @@ export default function VocabularyPage() {
       {showExpressionLimitModal ? (
         <ExpressionLearningLimitModal
           onDismiss={() => setShowExpressionLimitModal(false)}
+          onLogin={openLoginFromExpressionLimit}
+          onRegister={openRegisterFromExpressionLimit}
           onUnlockPro={openProFromExpressionLimit}
         />
       ) : null}

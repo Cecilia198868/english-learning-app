@@ -91,21 +91,28 @@
   box-shadow: 0 17px 34px rgba(95, 89, 162, 0.13);
 }
 
-:global(.sf-vocabulary-menu-button.is-home) {
-  color: #aeb8d4;
+:global(.sf-vocabulary-menu-button.is-home),
+:global(.sf-vocabulary-back-button) {
+  border-radius: 999px;
+  color: #000000;
+  background: transparent;
+  box-shadow: none;
 }
 
-:global(.sf-vocabulary-menu-button.is-home .sf-home-menu-icon) {
-  font-size: 1.28rem;
+:global(.sf-vocabulary-menu-button.is-home .sf-home-menu-icon),
+:global(.sf-vocabulary-back-button .sf-home-menu-icon) {
+  font-size: 1.62rem;
 }
 
-:global(.sf-vocabulary-menu-button.is-home .sf-home-menu-icon svg) {
-  width: 1.2rem;
-  height: 1.2rem;
+:global(.sf-vocabulary-menu-button.is-home .sf-home-menu-icon svg),
+:global(.sf-vocabulary-back-button .sf-home-menu-icon svg) {
+  width: 1.48rem;
+  height: 1.48rem;
 }
 
-:global(.sf-vocabulary-menu-button.is-home .sf-home-menu-icon span) {
-  font-size: 0.55rem;
+:global(.sf-vocabulary-menu-button.is-home .sf-home-menu-icon span),
+:global(.sf-vocabulary-back-button .sf-home-menu-icon span) {
+  display: none;
 }
 
 :global(.sf-vocabulary-header-spacer) {
@@ -123,11 +130,7 @@
   height: 2.2rem;
   place-items: center;
   padding: 0;
-  border-radius: 0.2rem;
-  color: #0b1747;
-  background: rgba(255, 255, 255, 0.84);
   cursor: pointer;
-  box-shadow: 0 10px 22px rgba(95, 89, 162, 0.08);
 }
 
 :global(.sf-vocabulary-menu-button svg),
@@ -146,8 +149,9 @@
   stroke-width: 4.1;
 }
 
-:global(.sf-vocabulary-menu-button.is-home .sf-home-menu-icon path) {
-  stroke-width: 2.6;
+:global(.sf-vocabulary-menu-button.is-home .sf-home-menu-icon path),
+:global(.sf-vocabulary-back-button .sf-home-menu-icon path) {
+  stroke-width: 3;
 }
 
 :global(.sf-vocabulary-brand) {
@@ -1188,14 +1192,27 @@
 
 :global(.sf-expression-library-back) {
   border-radius: 999px;
-  color: #0b1747;
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 16px 32px rgba(95, 89, 162, 0.13);
+  color: #000000;
+  background: transparent;
+  box-shadow: none;
 }
 
 :global(.sf-expression-library-back svg) {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+:global(.sf-expression-library-back .sf-home-menu-icon) {
+  font-size: 1.62rem;
+}
+
+:global(.sf-expression-library-back .sf-home-menu-icon svg) {
+  width: 1.48rem;
+  height: 1.48rem;
+}
+
+:global(.sf-expression-library-back .sf-home-menu-icon span) {
+  display: none;
 }
 
 :global(.sf-expression-library-back path) {
@@ -1204,6 +1221,10 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 4.2;
+}
+
+:global(.sf-expression-library-back .sf-home-menu-icon path) {
+  stroke-width: 3;
 }
 
 :global(.sf-expression-library-brand) {

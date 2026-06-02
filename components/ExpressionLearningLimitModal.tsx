@@ -1,5 +1,7 @@
 type ExpressionLearningLimitModalProps = {
   onDismiss: () => void;
+  onLogin: () => void;
+  onRegister: () => void;
   onUnlockPro: () => void;
 };
 
@@ -11,6 +13,8 @@ const proBenefits = [
 
 export default function ExpressionLearningLimitModal({
   onDismiss,
+  onLogin,
+  onRegister,
   onUnlockPro,
 }: ExpressionLearningLimitModalProps) {
   return (
@@ -47,14 +51,30 @@ export default function ExpressionLearningLimitModal({
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="mt-6 grid gap-3">
           <button
             type="button"
             onClick={onUnlockPro}
-            className="min-h-12 rounded-[18px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-4 text-[1.02rem] font-extrabold text-white shadow-[0_16px_34px_rgba(126,92,255,0.3)]"
+            className="sf-expression-learning-limit-primary min-h-12 rounded-[18px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-4 text-[1.02rem] font-black shadow-[0_16px_34px_rgba(126,92,255,0.3)]"
           >
             解锁 Pro
           </button>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={onLogin}
+              className="min-h-12 rounded-[18px] border border-[#d8d0f4] bg-white px-4 text-[1.02rem] font-extrabold text-[#5f4bea] hover:bg-[#efeaff]"
+            >
+              登录
+            </button>
+            <button
+              type="button"
+              onClick={onRegister}
+              className="min-h-12 rounded-[18px] border border-[#d8d0f4] bg-white px-4 text-[1.02rem] font-extrabold text-[#5f4bea] hover:bg-[#efeaff]"
+            >
+              注册
+            </button>
+          </div>
           <button
             type="button"
             onClick={onDismiss}

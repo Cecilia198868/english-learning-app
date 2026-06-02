@@ -52,7 +52,8 @@ type RowProps = {
 };
 
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
-const accountPanelUrl = (panel: string) => `/speak-english?account=1&panel=${panel}`;
+const accountPanelUrl = (panel: string) =>
+  `/speak-english?account=1&fromAccount=1&panel=${panel}`;
 
 function getAccountAvatarStorageKey(identifier: string) {
   return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
@@ -385,7 +386,7 @@ export default function AccountPageClient({
 
         <Section>
           <Row
-            href="/speak-english?pro=1"
+            href="/speak-english?pro=1&fromAccount=1"
             icon="star"
             label="SpeakFlow Pro"
             description={subscriptionCopy.subtitle}

@@ -713,6 +713,7 @@ const accountPanelCopy = {
     restorePurchaseSuccess: "SpeakFlow Pro has been restored.",
     reportIssueTitle: "Contact & Feedback",
     returnAccountMenu: "Back to account menu",
+    returnLearningHome: "Back to learning home",
     returnProPage: "Back to Pro page",
     save: "Save",
     saveAvatarFailed: "Save failed. Please choose a smaller image.",
@@ -856,6 +857,7 @@ const accountPanelCopy = {
     restorePurchaseSuccess: "已恢复 SpeakFlow Pro。",
     reportIssueTitle: "联系与反馈",
     returnAccountMenu: "返回账户菜单",
+    returnLearningHome: "返回学习首页",
     returnProPage: "返回 Pro 页面",
     save: "Save",
     saveAvatarFailed: "保存失败，请换一张更小的图片",
@@ -3160,6 +3162,9 @@ function SpeakEnglishClient() {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [accountPanelView, setAccountPanelView] =
     useState<AccountPanelView>("menu");
+  const [accountPanelReturnTarget, setAccountPanelReturnTarget] = useState<
+    "account" | "local"
+  >("local");
   const [fontSizePreference, setFontSizePreference] =
     useState<FontSizePreference>("standard");
   const [selectedProPlan, setSelectedProPlan] = useState<ProPlan>("yearly");
@@ -3904,6 +3909,8 @@ function SpeakEnglishClient() {
     const searchParams = new URLSearchParams(window.location.search);
     const shouldOpenPro = searchParams.get("pro") === "1";
     const shouldOpenAccount = searchParams.get("account") === "1";
+    const shouldReturnToAccountPage =
+      searchParams.get("fromAccount") === "1" || shouldOpenAccount;
     const checkoutStatus = searchParams.get("checkout");
     const requestedSubmenu = searchParams.get("submenu");
     const requestedAccountPanel = getAccountPanelViewFromSearch(
@@ -3915,6 +3922,13 @@ function SpeakEnglishClient() {
       return;
 
     const refreshTimers: number[] = [];
+    setAccountPanelReturnTarget(
+      shouldOpenPro || shouldOpenAccount
+        ? shouldReturnToAccountPage
+          ? "account"
+          : "local"
+        : "local"
+    );
     setShowQuickPanel(!shouldOpenAccount);
     if (!shouldOpenPro && !shouldOpenAccount) {
       if (requestedSubmenu === "expression") {
@@ -4707,11 +4721,51 @@ function SpeakEnglishClient() {
     setPrimingPracticeStage(null);
     setShowAccountMenu(false);
     setAccountPanelView("menu");
+    setAccountPanelReturnTarget("local");
     setShowAvatarEditor(false);
     setShowQuickPanel(false);
     setShowClassicCoursePicker(false);
     resetClassicCoursePicker();
     router.push("/start");
+  }
+
+  function returnToStandaloneAccountPage() {
+    setShowAccountMenu(false);
+    setAccountPanelView("menu");
+    setAccountPanelReturnTarget("local");
+    setShowAvatarEditor(false);
+    router.push("/account");
+  }
+
+  function closeAccountPanel() {
+    if (accountPanelReturnTarget === "account") {
+      returnToStandaloneAccountPage();
+      return;
+    }
+
+    setShowAccountMenu(false);
+    setAccountPanelView("menu");
+    setShowAvatarEditor(false);
+  }
+
+  function returnFromAccountPanel() {
+    setShowAvatarEditor(false);
+
+    if (accountPanelReturnTarget === "account") {
+      returnToStandaloneAccountPage();
+      return;
+    }
+
+    setAccountPanelView("menu");
+  }
+
+  function returnFromSubscriptionPanel() {
+    if (accountPanelReturnTarget === "account") {
+      returnToStandaloneAccountPage();
+      return;
+    }
+
+    openLoggedInHomePage();
   }
 
   function openAccountPage() {
@@ -4725,6 +4779,7 @@ function SpeakEnglishClient() {
     resetClassicCoursePicker();
     setShowAccountMenu(true);
     setAccountPanelView("menu");
+    setAccountPanelReturnTarget("local");
     setShowAvatarEditor(false);
   }
 
@@ -4741,6 +4796,7 @@ function SpeakEnglishClient() {
       const next = !current;
       if (next) {
         setAccountPanelView("menu");
+        setAccountPanelReturnTarget("local");
       } else {
         setShowAvatarEditor(false);
       }
@@ -8510,11 +8566,7 @@ function SpeakEnglishClient() {
                   <button
                     type="button"
                     aria-label={accountCopy.closeAccountMenu}
-                    onClick={() => {
-                      setShowAccountMenu(false);
-                      setAccountPanelView("menu");
-                      setShowAvatarEditor(false);
-                    }}
+                    onClick={closeAccountPanel}
                     className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/65 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_10px_24px_rgba(84,72,146,0.1)]"
                   >
                     <CloseGlyph />
@@ -8535,15 +8587,22 @@ function SpeakEnglishClient() {
                   <button
                     type="button"
                     aria-label={
-                      accountPanelView === "checkout"
-                        ? accountCopy.returnProPage
+                      accountPanelView === "checkout" ||
+                      accountPanelView === "subscription"
+                        ? accountCopy.returnLearningHome
                         : accountCopy.returnAccountMenu
                     }
-                    onClick={() =>
-                      setAccountPanelView(
-                        accountPanelView === "checkout" ? "subscription" : "menu"
-                      )
-                    }
+                    onClick={() => {
+                      if (
+                        accountPanelView === "checkout" ||
+                        accountPanelView === "subscription"
+                      ) {
+                        returnFromSubscriptionPanel();
+                        return;
+                      }
+
+                      returnFromAccountPanel();
+                    }}
                     className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.55rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
                   >
                     ‹
@@ -8562,10 +8621,7 @@ function SpeakEnglishClient() {
                   <button
                     type="button"
                     aria-label={accountCopy.returnAccountMenu}
-                    onClick={() => {
-                      setShowAvatarEditor(false);
-                      setAccountPanelView("menu");
-                    }}
+                    onClick={returnFromAccountPanel}
                     className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.55rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
                   >
                     ‹
@@ -8573,11 +8629,7 @@ function SpeakEnglishClient() {
                   <button
                     type="button"
                     aria-label={accountCopy.closeAccountMenu}
-                    onClick={() => {
-                      setShowAccountMenu(false);
-                      setAccountPanelView("menu");
-                      setShowAvatarEditor(false);
-                    }}
+                    onClick={closeAccountPanel}
                     className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/65 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_10px_24px_rgba(84,72,146,0.1)]"
                   >
                     <CloseGlyph />
@@ -8589,10 +8641,7 @@ function SpeakEnglishClient() {
                     <button
                       type="button"
                       aria-label={accountCopy.returnAccountMenu}
-                      onClick={() => {
-                        setShowAvatarEditor(false);
-                        setAccountPanelView("menu");
-                      }}
+                      onClick={returnFromAccountPanel}
                       className="grid h-11 w-11 shrink-0 place-items-center rounded-[18px] bg-[#efeaff] text-[1.35rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
                     >
                       ←
@@ -8624,11 +8673,7 @@ function SpeakEnglishClient() {
                   <button
                     type="button"
                     aria-label={accountCopy.closeAccountMenu}
-                    onClick={() => {
-                      setShowAccountMenu(false);
-                      setAccountPanelView("menu");
-                      setShowAvatarEditor(false);
-                    }}
+                    onClick={closeAccountPanel}
                     className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/65 text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.78),0_10px_24px_rgba(84,72,146,0.1)]"
                   >
                     <CloseGlyph />

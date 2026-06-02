@@ -97,6 +97,10 @@
   height: 1.62rem;
 }
 
+:global(.sf-new-expressions-back .sf-home-menu-icon span) {
+  display: none;
+}
+
 :global(.sf-new-expressions-back svg) {
   width: 1.5rem;
   height: 1.5rem;
@@ -476,6 +480,13 @@
     height: 3.5rem;
   }
 
+  :global(.sf-new-expressions-back) {
+    border-radius: 999px;
+    color: #000000;
+    background: transparent;
+    box-shadow: none;
+  }
+
   :global(.sf-new-expressions-brand) {
     gap: 0.54rem;
   }
@@ -578,6 +589,13 @@
     width: 3.26rem;
     height: 3.26rem;
     border-radius: 1.02rem;
+  }
+
+  :global(.sf-new-expressions-back) {
+    border-radius: 999px;
+    color: #000000;
+    background: transparent;
+    box-shadow: none;
   }
 
   :global(.sf-new-expressions-avatar) {
