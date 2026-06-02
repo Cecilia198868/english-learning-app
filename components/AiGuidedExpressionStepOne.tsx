@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import GuestAiPracticeProgress from "@/components/GuestAiPracticeProgress";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import type { AiGuidedProgressSnapshot } from "@/lib/aiGuidedExpressionProgress";
@@ -13,6 +14,10 @@ type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
 type AccountSubscriptionResponse = {
   cancelAtPeriodEnd?: boolean | null;
   subscriptionStatus?: SubscriptionStatus;
+};
+
+type AiGuidedExpressionStepOneProps = {
+  showGuestProgress?: boolean;
 };
 
 const defaultProgress: AiGuidedProgressSnapshot = {
@@ -194,7 +199,9 @@ function FlowIcon({ icon }: { icon: (typeof learningFlow)[number]["icon"] }) {
   return <MicGlyph />;
 }
 
-export default function AiGuidedExpressionStepOne() {
+export default function AiGuidedExpressionStepOne({
+  showGuestProgress = false,
+}: AiGuidedExpressionStepOneProps) {
   const router = useRouter();
   const [progress, setProgress] =
     useState<AiGuidedProgressSnapshot>(defaultProgress);
@@ -300,6 +307,8 @@ export default function AiGuidedExpressionStepOne() {
 
             <span aria-hidden="true" />
           </header>
+
+          {showGuestProgress ? <GuestAiPracticeProgress /> : null}
 
           <section className="sf-ai-guided-step-one-hero">
             <span

@@ -17640,3 +17640,110 @@ body .sf-guided-reference-home-icon span {
   }
 }
 
+.sf-guest-ai-progress {
+  position: relative;
+  z-index: 18;
+  width: min(86%, 348px);
+  margin: 8px auto 10px;
+  padding: 8px 12px 9px;
+  border: 1px solid rgba(221, 226, 255, 0.86);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow:
+    0 12px 28px rgba(77, 104, 180, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+  backdrop-filter: blur(14px);
+}
+
+.sf-guest-ai-progress.is-floating {
+  position: absolute;
+  left: 50%;
+  top: 10.5%;
+  z-index: 96;
+  width: min(82%, 340px);
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+.sf-guest-ai-progress-top {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  color: #0b123d;
+  font-family: var(--font-sora), var(--font-noto-sans-sc), sans-serif;
+  line-height: 1;
+}
+
+.sf-guest-ai-progress-top span {
+  min-width: 0;
+  font-size: clamp(0.72rem, 2.5vw, 0.82rem);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.sf-guest-ai-progress-top strong {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f3efff 0%, #ece9ff 100%);
+  color: #7356ff;
+  font-size: clamp(0.6rem, 2vw, 0.68rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  padding: 4px 8px;
+}
+
+.sf-guest-ai-progress-top b {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: baseline;
+  margin-left: auto;
+  color: #0b123d;
+  font-size: clamp(0.95rem, 3.2vw, 1.12rem);
+  font-weight: 950;
+  line-height: 1;
+}
+
+.sf-guest-ai-progress-top i {
+  color: #858ca8;
+  font-size: 0.82em;
+  font-style: normal;
+  font-weight: 800;
+  margin-left: 3px;
+}
+
+.sf-guest-ai-progress-bars {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.sf-guest-ai-progress-bars span {
+  height: 6px;
+  border-radius: 999px;
+  background: #e8ecf7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.sf-guest-ai-progress-bars span.is-used {
+  background: linear-gradient(90deg, #8155ff 0%, #645cff 100%);
+  box-shadow: 0 4px 9px rgba(105, 81, 255, 0.23);
+}
+
+@media (max-width: 390px) {
+  .sf-guest-ai-progress {
+    width: min(90%, 332px);
+    padding: 7px 10px 8px;
+  }
+
+  .sf-guest-ai-progress.is-floating {
+    width: min(84%, 328px);
+    top: 10.2%;
+  }
+
+  .sf-guest-ai-progress-bars {
+    gap: 4px;
+  }
+}

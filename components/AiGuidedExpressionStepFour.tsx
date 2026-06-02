@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 
 type AiGuidedExpressionStepFourProps = {
@@ -10,6 +10,7 @@ type AiGuidedExpressionStepFourProps = {
   accountLabel?: string;
   avatarSrc?: string;
   avatarAlt?: string;
+  headerAddon?: ReactNode;
   onMenuClick: () => void;
   onAccountClick: () => void;
   onMicrophoneClick: () => void;
@@ -170,6 +171,7 @@ export default function AiGuidedExpressionStepFour({
   accountLabel = COPY.accountLabel,
   avatarSrc = "",
   avatarAlt = "user",
+  headerAddon,
   onMenuClick,
   onAccountClick,
   onMicrophoneClick,
@@ -228,6 +230,8 @@ export default function AiGuidedExpressionStepFour({
             />
           </button>
         </header>
+
+        {headerAddon}
 
         <main className="sf-ai-guided-step-four-content">
           <section className="sf-ai-guided-step-four-hero" aria-label={COPY.body}>

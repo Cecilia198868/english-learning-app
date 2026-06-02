@@ -13,6 +13,7 @@ import FreeStudyPageThree from "@/components/FreeStudyPageThree";
 import FreeStudyPageFour from "@/components/FreeStudyPageFour";
 import FreeStudyPageFiveTop from "@/components/FreeStudyPageFiveTop";
 import FreeStudyPageFiveBottomBar from "@/components/FreeStudyPageFiveBottomBar";
+import GuestAiPracticeProgress from "@/components/GuestAiPracticeProgress";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
 import AiGuidedExpressionStepFour from "@/components/AiGuidedExpressionStepFour";
 import AiGuidedExpressionStepFive from "@/components/AiGuidedExpressionStepFive";
@@ -3479,11 +3480,14 @@ function SpeakEnglishClient() {
     accountSubscriptionStatus === "cancels_at_period_end";
   const isAccountPro = hasProAccess(accountSubscriptionStatus);
   const isAccountAdmin = accountRole === "admin";
+  const menuPageLabel = accountEmail ? "打开账户界面" : "打开游客菜单";
   const shouldShowFreePracticeUsageMeter =
     !isAccountPro &&
     hasLoadedAccountSession &&
     (!accountEmail || hasCheckedAccountSubscription) &&
     !isLoadingAccountSubscription;
+  const shouldShowGuestAiProgress =
+    isAiGuidedMode && hasLoadedAccountSession && !accountEmail;
   const accountSubscriptionLabel = isLoadingAccountSubscription
     ? language === "en"
       ? "Checking..."
@@ -4096,7 +4100,7 @@ function SpeakEnglishClient() {
 
   function openLoginFromFreePracticeLimit() {
     setShowFreePracticeLimitModal(false);
-    router.push(createLoginUrl(subscriptionCallbackUrl));
+    router.push(createLoginUrl("/start"));
   }
 
   function openRegisterFromFreePracticeLimit() {
@@ -4710,7 +4714,7 @@ function SpeakEnglishClient() {
     setShowQuickPanel(false);
     setShowClassicCoursePicker(false);
     resetClassicCoursePicker();
-    router.push("/account");
+    router.push(accountEmail ? "/account" : "/menu");
   }
 
   function openLoggedInHomePage() {
@@ -6832,6 +6836,12 @@ function SpeakEnglishClient() {
                 onClick={openReferenceAccountMenu}
                 className="absolute right-[7.1%] top-[3.1%] h-[5.9%] w-[11.5%] rounded-full border-0 bg-transparent"
               />
+              {shouldShowGuestAiProgress ? (
+                <GuestAiPracticeProgress
+                  className="is-floating"
+                  used={freePracticeUsageCount}
+                />
+              ) : null}
               <button
                 type="button"
                 aria-label="Back"
@@ -6859,7 +6869,7 @@ function SpeakEnglishClient() {
                 <header className="sf-ai-guided-step-two-header">
                   <button
                     type="button"
-                    aria-label="打开账户界面"
+                    aria-label={menuPageLabel}
                     onClick={openMenuPage}
                     className="sf-ai-guided-step-two-menu"
                   >
@@ -6904,6 +6914,10 @@ function SpeakEnglishClient() {
                     )}
                   </button>
                 </header>
+
+                {shouldShowGuestAiProgress ? (
+                  <GuestAiPracticeProgress used={freePracticeUsageCount} />
+                ) : null}
 
                 <div className="sf-ai-guided-step-two-toolbar">
                   <button
@@ -7011,9 +7025,14 @@ function SpeakEnglishClient() {
           {showGuidedReferenceConfirmation ? (
             <FreeStudyPageThree
               chineseText={nativeSpeech}
+              headerAddon={
+                shouldShowGuestAiProgress ? (
+                  <GuestAiPracticeProgress used={freePracticeUsageCount} />
+                ) : undefined
+              }
               headingText="太棒了！ 你想表达的是："
               menuIcon="menu"
-              menuLabel="打开账户界面"
+              menuLabel={menuPageLabel}
               variant="guided"
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
@@ -7031,7 +7050,12 @@ function SpeakEnglishClient() {
             <AiGuidedExpressionStepFour
               isRecordingEnglish={isListening}
               nativeSpeech={nativeSpeech}
-              menuLabel="打开账户界面"
+              headerAddon={
+                shouldShowGuestAiProgress ? (
+                  <GuestAiPracticeProgress used={freePracticeUsageCount} />
+                ) : undefined
+              }
+              menuLabel={menuPageLabel}
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
@@ -7049,7 +7073,12 @@ function SpeakEnglishClient() {
               isLoadingNextChinese={isLoadingGuidedFollowup}
               expressions={referenceResultVariantTexts}
               selectedExpressionIndex={selectedExpressionIndex}
-              menuLabel="打开账户界面"
+              headerAddon={
+                shouldShowGuestAiProgress ? (
+                  <GuestAiPracticeProgress used={freePracticeUsageCount} />
+                ) : undefined
+              }
+              menuLabel={menuPageLabel}
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
@@ -8268,7 +8297,7 @@ function SpeakEnglishClient() {
 
           {showReferenceListening ? (
             <FreeStudyPageTwo
-              menuLabel="打开账户界面"
+              menuLabel={menuPageLabel}
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
@@ -8285,7 +8314,7 @@ function SpeakEnglishClient() {
             <FreeStudyPageThree
               chineseText={nativeSpeech}
               menuIcon="menu"
-              menuLabel="打开账户界面"
+              menuLabel={menuPageLabel}
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
@@ -8302,7 +8331,7 @@ function SpeakEnglishClient() {
             <FreeStudyPageFour
               isRecordingEnglish={isListening || showReferenceEnglishPrompt}
               nativeSpeech={nativeSpeech}
-              menuLabel="打开账户界面"
+              menuLabel={menuPageLabel}
               onMenuClick={openMenuPage}
               accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}

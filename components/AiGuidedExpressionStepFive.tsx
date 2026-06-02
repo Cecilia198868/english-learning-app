@@ -11,6 +11,7 @@ type AiGuidedExpressionStepFiveProps = {
   selectedExpressionIndex: number;
   avatarSrc?: string;
   avatarAlt?: string;
+  headerAddon?: ReactNode;
   accountLabel?: string;
   menuLabel?: string;
   onMenuClick: () => void;
@@ -310,6 +311,7 @@ export default function AiGuidedExpressionStepFive({
   selectedExpressionIndex,
   avatarSrc = "",
   avatarAlt = "user",
+  headerAddon,
   accountLabel = COPY.accountLabel,
   menuLabel = COPY.menuLabel,
   onMenuClick,
@@ -376,6 +378,8 @@ export default function AiGuidedExpressionStepFive({
             />
           </button>
         </header>
+
+        {headerAddon}
 
         <main className="sf-ai-guided-step-five-scroll">
           <section className="sf-ai-guided-step-five-user-card">

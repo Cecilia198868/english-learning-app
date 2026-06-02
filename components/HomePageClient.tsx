@@ -80,7 +80,7 @@ export default function HomePageClient() {
   const router = useRouter();
 
   function startPractice() {
-    router.push("/start");
+    router.push("/ai-guided-expression/step-1");
   }
 
   return (

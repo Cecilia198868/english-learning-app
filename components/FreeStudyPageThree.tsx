@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useLayoutEffect, useRef } from "react";
 
 type FreeStudyPageThreeProps = {
@@ -8,6 +9,7 @@ type FreeStudyPageThreeProps = {
   avatarAlt?: string;
   accountLabel?: string;
   headingText?: string;
+  headerAddon?: ReactNode;
   menuLabel?: string;
   menuIcon?: "back" | "menu";
   variant?: "free" | "guided";
@@ -252,6 +254,7 @@ function StepIcon({ name }: { name: (typeof nextSteps)[number]["icon"] }) {
 export default function FreeStudyPageThree({
   chineseText,
   headingText = COPY.received,
+  headerAddon,
   menuLabel = COPY.retryAria,
   menuIcon = "back",
   variant = "free",
@@ -334,6 +337,8 @@ export default function FreeStudyPageThree({
 
           <span className="sf-free-study-page-three-header-spacer" aria-hidden="true" />
         </header>
+
+        {headerAddon}
 
         <div className="sf-free-study-page-three-toolbar">
           <button

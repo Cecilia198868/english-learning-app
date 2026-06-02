@@ -305,6 +305,7 @@ export default function StartPageClient({
   userName,
 }: StartPageClientProps) {
   const name = displayName(userName, userEmail);
+  const isSignedIn = Boolean(userEmail.trim() || userName.trim());
   const [continueStudy, setContinueStudy] = useState(fallbackContinueStudy);
   const [heroAvatar, setHeroAvatar] = useState({
     failed: false,
@@ -348,12 +349,14 @@ export default function StartPageClient({
     () => ({ "--progress-percent": `${continuePercent}%` }) as CSSProperties,
     [continuePercent]
   );
+  const menuHref = isSignedIn ? "/account" : "/menu";
+  const menuLabel = isSignedIn ? "打开账户界面" : "打开游客菜单";
 
   return (
     <main className={styles.page}>
       <section className={styles.phone} aria-label="登录后的 SpeakFlow 首页">
         <header className={styles.topBar}>
-          <Link href="/account" className={styles.menuButton} aria-label="打开账户界面">
+          <Link href={menuHref} className={styles.menuButton} aria-label={menuLabel}>
             <MenuIcon />
           </Link>
           <Link href="/start" className={styles.brand} aria-label="SpeakFlow 首页">
@@ -377,10 +380,22 @@ export default function StartPageClient({
         <section className={styles.hero} aria-labelledby="start-title">
           <div className={styles.heroCopy}>
             <p className={styles.heroKicker}>
-              太好了！<span aria-hidden="true">🎉</span>
+              {isSignedIn ? (
+                <>
+                  太好了！<span aria-hidden="true">🎉</span>
+                </>
+              ) : (
+                "你好"
+              )}
             </p>
-            <h1 id="start-title">欢迎回来 {name}</h1>
-            <p className={styles.heroSubcopy}>今天也一起大胆开口说英语吧！</p>
+            <h1 id="start-title">
+              {isSignedIn ? `欢迎回来 ${name}` : "你好，先体验一下 SpeakFlow"}
+            </h1>
+            <p className={styles.heroSubcopy}>
+              {isSignedIn
+                ? "今天也一起大胆开口说英语吧！"
+                : "先选一个练习方式，马上开始开口。"}
+            </p>
           </div>
           {heroAvatar.src && !heroAvatar.failed ? (
             <span className={styles.heroAvatar} aria-label="用户头像">
