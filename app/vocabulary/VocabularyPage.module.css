@@ -4195,3 +4195,11 @@
   opacity: 0.78;
   filter: brightness(0.86) saturate(0.86);
 }
+
+:global(.sf-expression-library-bottom-bar) {
+  display: none !important;
+}
+
+:global(.sf-expression-library-list) {
+  padding-bottom: max(1.4rem, calc(env(safe-area-inset-bottom, 0px) + 1rem)) !important;
+}
