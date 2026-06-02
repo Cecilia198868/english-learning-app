@@ -246,7 +246,7 @@ export default function ClassicScenesMenuPage() {
             aria-label="回到首页"
             onClick={openHome}
           >
-            <HomeMenuIcon />
+            <HomeMenuIcon label={null} />
           </button>
 
           <div className={styles.brand} aria-label="SpeakFlow Voice Practice">

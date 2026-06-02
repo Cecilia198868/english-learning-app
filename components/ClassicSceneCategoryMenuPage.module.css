@@ -26,39 +26,37 @@
 
 .topbar {
   display: grid;
-  grid-template-columns: 172px 1fr 80px;
+  grid-template-columns: 80px 1fr 80px;
   align-items: start;
   column-gap: 18px;
 }
 
-.backButton {
-  display: inline-flex;
-  width: fit-content;
-  min-width: 132px;
+.homeButton {
+  display: grid;
+  width: 58px;
+  min-width: 0;
   height: 58px;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 1px solid rgba(32, 37, 52, 0.08);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--category-accent);
-  font-size: 1.05rem;
-  font-weight: 760;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #000000;
   text-decoration: none;
-  box-shadow:
-    0 12px 26px rgba(49, 44, 36, 0.075),
-    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  box-shadow: none;
 }
 
-.backButton svg {
-  width: 24px;
-  height: 24px;
+.homeButton svg {
+  width: 1.45rem;
+  height: 1.45rem;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 3.2;
+  stroke-width: 3;
+}
+
+.homeButton :global(.sf-home-menu-icon) {
+  font-size: 1.62rem;
 }
 
 .titleBlock {
@@ -501,21 +499,20 @@
   }
 
   .topbar {
-    grid-template-columns: 106px 1fr 52px;
+    grid-template-columns: 52px 1fr 52px;
     column-gap: 8px;
   }
 
-  .backButton {
-    min-width: 96px;
+  .homeButton {
+    width: 44px;
+    min-width: 0;
     height: 44px;
-    gap: 5px;
-    border-radius: 13px;
-    font-size: 0.74rem;
   }
 
-  .backButton svg {
-    width: 19px;
-    height: 19px;
+  .homeButton svg {
+    width: 1.38rem;
+    height: 1.38rem;
+    stroke-width: 3.05;
   }
 
   .titleBlock {
@@ -747,12 +744,12 @@
   }
 
   .topbar {
-    grid-template-columns: 88px 1fr 44px;
+    grid-template-columns: 44px 1fr 44px;
   }
 
-  .backButton {
-    min-width: 78px;
-    font-size: 0.66rem;
+  .homeButton {
+    width: 40px;
+    height: 40px;
   }
 
   .titleBlock h1 {

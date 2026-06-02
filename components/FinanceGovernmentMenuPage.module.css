@@ -26,7 +26,7 @@
 
 .header {
   display: grid;
-  grid-template-columns: 86px 1fr 98px;
+  grid-template-columns: 86px 1fr 86px;
   align-items: center;
   min-height: 82px;
   column-gap: 18px;
@@ -37,13 +37,11 @@
   width: 68px;
   height: 68px;
   place-items: center;
-  border: 1px solid rgba(37, 83, 47, 0.12);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.92);
-  color: #1f5a31;
-  box-shadow:
-    0 10px 24px rgba(42, 72, 37, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #000000;
+  box-shadow: none;
   transition:
     transform 140ms ease,
     box-shadow 140ms ease;
@@ -54,12 +52,17 @@
 }
 
 .menuButton svg {
-  width: 32px;
-  height: 32px;
+  width: 1.45rem;
+  height: 1.45rem;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
-  stroke-width: 2.6;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.menuButton :global(.sf-home-menu-icon) {
+  font-size: 1.62rem;
 }
 
 .brand {
@@ -551,7 +554,7 @@
   }
 
   .header {
-    grid-template-columns: 54px 1fr 62px;
+    grid-template-columns: 54px 1fr 54px;
     min-height: 58px;
     column-gap: 8px;
   }
@@ -559,13 +562,12 @@
   .menuButton {
     width: 48px;
     height: 48px;
-    border-radius: 13px;
   }
 
   .menuButton svg {
-    width: 25px;
-    height: 25px;
-    stroke-width: 2.8;
+    width: 1.38rem;
+    height: 1.38rem;
+    stroke-width: 3.05;
   }
 
   .brand {
@@ -824,7 +826,7 @@
   }
 
   .header {
-    grid-template-columns: 48px 1fr 54px;
+    grid-template-columns: 48px 1fr 48px;
   }
 
   .brandMark {

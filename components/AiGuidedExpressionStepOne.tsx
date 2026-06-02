@@ -278,7 +278,7 @@ export default function AiGuidedExpressionStepOne() {
               onClick={() => router.push("/start")}
               className="sf-ai-guided-step-one-menu is-home"
             >
-              <HomeMenuIcon />
+              <HomeMenuIcon label={null} />
             </button>
 
             <div

@@ -229,7 +229,7 @@ export default function FreeStudyPageOne({
               menuIcon === "home" ? "is-home" : ""
             }`}
           >
-            {menuIcon === "home" ? <HomeMenuIcon /> : <MenuGlyph />}
+            {menuIcon === "home" ? <HomeMenuIcon label={null} /> : <MenuGlyph />}
           </button>
 
           <div className="sf-free-study-page-one-brand" aria-label="SpeakFlow AI Voice Practice">

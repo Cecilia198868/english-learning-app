@@ -56,7 +56,7 @@ export default function FreePracticeLimitModal({
           <button
             type="button"
             onClick={onUnlockPro}
-            className="min-h-12 rounded-[18px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-4 text-[1.02rem] font-extrabold text-white shadow-[0_16px_34px_rgba(126,92,255,0.3)]"
+            className="sf-free-practice-limit-primary min-h-12 rounded-[18px] bg-[linear-gradient(135deg,#6f55ff_0%,#a549ff_58%,#c85cff_100%)] px-4 text-[1.02rem] font-black shadow-[0_16px_34px_rgba(126,92,255,0.3)]"
           >
             订阅 Pro，继续练习
           </button>

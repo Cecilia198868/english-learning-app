@@ -219,7 +219,7 @@ export default function NewExpressionsPage() {
       <section className="sf-new-expressions-phone" aria-label="新表达菜单">
         <header className="sf-new-expressions-header">
           <Link href="/start" aria-label="返回首页" className="sf-new-expressions-back">
-            <HomeMenuIcon />
+            <HomeMenuIcon label={null} />
           </Link>
 
           <div className="sf-new-expressions-brand" aria-label="SpeakFlow AI Voice Practice">

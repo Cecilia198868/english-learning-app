@@ -83,22 +83,18 @@
   width: 3.78rem;
   height: 3.78rem;
   border-radius: 999px;
-  color: #aeb8d4;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 18px 36px rgba(68, 86, 133, 0.08);
+  color: #000000;
+  background: transparent;
+  box-shadow: none;
 }
 
 :global(.sf-new-expressions-back .sf-home-menu-icon) {
-  font-size: 1.34rem;
+  font-size: 1.62rem;
 }
 
 :global(.sf-new-expressions-back .sf-home-menu-icon svg) {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-:global(.sf-new-expressions-back .sf-home-menu-icon span) {
-  font-size: 0.58rem;
+  width: 1.62rem;
+  height: 1.62rem;
 }
 
 :global(.sf-new-expressions-back svg) {
@@ -116,7 +112,7 @@
 }
 
 :global(.sf-new-expressions-back .sf-home-menu-icon svg path) {
-  stroke-width: 2.65;
+  stroke-width: 3;
 }
 
 :global(.sf-new-expressions-brand) {

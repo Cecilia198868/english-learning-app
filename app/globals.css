@@ -1257,6 +1257,18 @@ body {
   color: #201833 !important;
 }
 
+.sf-free-practice-limit-primary,
+.sf-speak-page .sf-free-practice-limit-primary,
+.responsive-page-shell .sf-free-practice-limit-primary {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+.sf-free-practice-limit-primary * {
+  color: inherit !important;
+  font-weight: inherit !important;
+}
+
 .sf-speak-page [class~="text-[#91dcff]"] {
   color: #5b60e8 !important;
 }
@@ -6597,17 +6609,17 @@ html[data-speakflow-font-size="large"] {
 }
 
 .sf-free-study-page-one-menu.is-home {
-  color: #aeb8d4;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: #000000;
   font-size: clamp(17px, 4.4vw, 24px);
 }
 
 .sf-free-study-page-one-menu.is-home .sf-home-menu-icon svg {
-  width: 1.25em;
-  height: 1.25em;
-}
-
-.sf-free-study-page-one-menu.is-home .sf-home-menu-icon span {
-  font-size: clamp(8px, 2.15vw, 11px);
+  width: 1.38em;
+  height: 1.38em;
+  stroke-width: 3.05;
 }
 
 .sf-free-study-page-one-menu::before {
@@ -17586,17 +17598,17 @@ body .sf-ai-guided-start-button {
 }
 
 body .sf-ai-guided-step-one-menu.is-home {
-  color: #aeb8d4 !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #000000 !important;
   font-size: 1.42rem !important;
 }
 
 body .sf-ai-guided-step-one-menu.is-home .sf-home-menu-icon svg {
-  width: 1.35rem !important;
-  height: 1.35rem !important;
-}
-
-body .sf-ai-guided-step-one-menu.is-home .sf-home-menu-icon span {
-  font-size: 0.58rem !important;
+  width: 1.48rem !important;
+  height: 1.48rem !important;
+  stroke-width: 3 !important;
 }
 
 body .sf-guided-reference-home-icon {

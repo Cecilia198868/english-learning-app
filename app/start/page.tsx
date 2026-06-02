@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import StartPageClient from "@/components/StartPageClient";
@@ -66,12 +65,7 @@ function createFallbackContinueStudy() {
 
 export default async function StartPage() {
   const session = await getServerSession(authOptions);
-
-  if (!session?.user) {
-    redirect("/");
-  }
-
-  const userEmail = session.user.email?.trim().toLowerCase() || "";
+  const userEmail = session?.user?.email?.trim().toLowerCase() || "";
   const aiProgress = await loadAiProgress(userEmail);
 
   return (
@@ -79,9 +73,9 @@ export default async function StartPage() {
       aiProgress={aiProgress}
       fallbackContinueStudy={createFallbackContinueStudy()}
       featuredLessons={FEATURED_LESSON_SUMMARIES}
-      userEmail={session.user.email || ""}
-      userImage={session.user.image || ""}
-      userName={session.user.name || ""}
+      userEmail={session?.user?.email || ""}
+      userImage={session?.user?.image || ""}
+      userName={session?.user?.name || ""}
     />
   );
 }

@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
+import HomeMenuIcon from "@/components/HomeMenuIcon";
 import styles from "./FinanceGovernmentMenuPage.module.css";
 
 type FinanceCardIcon =
@@ -107,14 +108,6 @@ const financeCards: FinanceCard[] = [
     iconBackground: "#eef7ef",
   },
 ];
-
-function MenuIcon() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <path d="M8.5 10.5h15M8.5 16h15M8.5 21.5h15" />
-    </svg>
-  );
-}
 
 function BrandMarkIcon() {
   return (
@@ -233,7 +226,7 @@ function HeroVisual() {
 export default function FinanceGovernmentMenuPage() {
   const router = useRouter();
   const goBack = () => router.push("/classic-scenes");
-  const openAccount = () => router.push("/account");
+  const openHome = () => router.push("/start");
 
   return (
     <main className={styles.pageShell}>
@@ -242,10 +235,10 @@ export default function FinanceGovernmentMenuPage() {
           <button
             className={styles.menuButton}
             type="button"
-            aria-label="打开账户界面"
-            onClick={openAccount}
+            aria-label="回到首页"
+            onClick={openHome}
           >
-            <MenuIcon />
+            <HomeMenuIcon label={null} />
           </button>
 
           <div className={styles.brand} aria-label="SpeakFlow Voice Practice">
