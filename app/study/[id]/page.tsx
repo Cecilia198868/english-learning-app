@@ -2061,6 +2061,7 @@ export default function StudyPage() {
             >
               <span className={styles.homeIconBox}>
                 <HomeMenuIcon label={null} showHint={false} />
+                <span className={styles.homeShortcutText}>学习首页</span>
               </span>
             </button>
 
@@ -2318,6 +2319,7 @@ export default function StudyPage() {
             >
               <span className={styles.homeIconBox}>
                 <HomeMenuIcon label={null} showHint={false} />
+                <span className={styles.homeShortcutText}>学习首页</span>
               </span>
             </button>
 

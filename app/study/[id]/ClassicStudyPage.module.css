@@ -2685,7 +2685,7 @@
 .studyTopbar {
   position: relative;
   display: grid;
-  grid-template-columns: 66px minmax(0, 1fr) max-content;
+  grid-template-columns: 76px minmax(0, 1fr) max-content;
   gap: 7px;
   min-height: 106px;
   align-items: flex-start;
@@ -2700,7 +2700,6 @@
   position: static;
   display: grid;
   justify-items: center;
-  gap: 10px;
   justify-self: start;
   border: 0;
   background: transparent;
@@ -2712,9 +2711,11 @@
 
 .homeIconBox {
   display: grid;
-  width: 66px;
-  height: 66px;
+  width: 76px;
+  min-height: 76px;
   place-items: center;
+  gap: 5px;
+  padding: 9px 7px 8px;
   border: 1px solid rgba(35, 70, 32, 0.1);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.86);
@@ -2725,8 +2726,8 @@
 }
 
 .homeIconBox svg {
-  width: 1.78rem;
-  height: 1.78rem;
+  width: 1.62rem;
+  height: 1.62rem;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
@@ -2735,7 +2736,20 @@
 }
 
 .homeIconBox :global(.sf-home-menu-icon) {
-  font-size: 2.05rem;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  font-size: 1.85rem;
+}
+
+.homeShortcutText {
+  display: block;
+  color: #133f1d;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .switchCourseButton {
@@ -3256,14 +3270,25 @@
 
 @media (max-width: 410px) {
   .studyTopbar {
-    grid-template-columns: 62px minmax(0, 1fr) max-content;
+    grid-template-columns: 68px minmax(0, 1fr) max-content;
     gap: 6px;
   }
 
   .homeIconBox {
-    width: 62px;
-    height: 62px;
+    width: 68px;
+    min-height: 68px;
+    padding: 8px 5px 7px;
     border-radius: 22px;
+  }
+
+  .homeIconBox :global(.sf-home-menu-icon) {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 1.7rem;
+  }
+
+  .homeShortcutText {
+    font-size: 0.7rem;
   }
 
   .switchCourseButton {
@@ -3378,13 +3403,24 @@
   }
 
   .homeIconBox {
-    width: 58px;
-    height: 58px;
+    width: 62px;
+    min-height: 62px;
+    padding: 7px 4px 6px;
     border-radius: 21px;
   }
 
   .homeShortcut {
     font-size: 0.82rem;
+  }
+
+  .homeIconBox :global(.sf-home-menu-icon) {
+    width: 1.62rem;
+    height: 1.62rem;
+    font-size: 1.55rem;
+  }
+
+  .homeShortcutText {
+    font-size: 0.65rem;
   }
 
   .switchCourseButton {
@@ -3672,6 +3708,7 @@
 
 :global(html[data-app-theme]) .topicArrow,
 :global(html[data-app-theme]) .homeShortcut,
+:global(html[data-app-theme]) .homeShortcutText,
 :global(html[data-app-theme]) .switchCourseButton,
 :global(html[data-app-theme]) .sentenceButton,
 :global(html[data-app-theme]) .lessonArrowButton,
