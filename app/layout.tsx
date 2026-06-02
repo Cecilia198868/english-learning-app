@@ -22,6 +22,37 @@ const sora = Sora({
   subsets: ["latin"],
 });
 
+const displayPreferenceScript = `
+(() => {
+  const themeKey = "speakflow-appearance-preference";
+  const brightnessKey = "speakflow-display-brightness";
+  const fontSizeKey = "speakflow-font-size-preference";
+  const validThemes = new Set(["light", "dark"]);
+  const validBrightness = new Set(["dim", "standard", "bright"]);
+  const validFontSizes = new Set(["small", "standard", "large"]);
+
+  try {
+    const root = document.documentElement;
+    const theme = localStorage.getItem(themeKey);
+    const brightness = localStorage.getItem(brightnessKey);
+    const fontSize = localStorage.getItem(fontSizeKey);
+
+    root.dataset.appTheme = validThemes.has(theme) ? theme : "light";
+    root.dataset.speakflowTheme = root.dataset.appTheme;
+    root.dataset.appBrightness = validBrightness.has(brightness)
+      ? brightness
+      : "standard";
+    root.dataset.speakflowFontSize = validFontSizes.has(fontSize)
+      ? fontSize
+      : "standard";
+  } catch {
+    document.documentElement.dataset.appTheme = "light";
+    document.documentElement.dataset.appBrightness = "standard";
+    document.documentElement.dataset.speakflowFontSize = "standard";
+  }
+})();
+`;
+
 export const metadata: Metadata = {
   applicationName: "SpeakFlow",
   title: "SpeakFlow",
@@ -87,8 +118,9 @@ export default async function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col bg-[#090110]"
+        className="min-h-full flex flex-col"
       >
+        <script dangerouslySetInnerHTML={{ __html: displayPreferenceScript }} />
         <LanguageProvider initialLanguage={initialLanguage}>
           <PwaRegister />
           <PageViewTracker />

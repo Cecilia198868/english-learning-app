@@ -1612,3 +1612,108 @@
       linear-gradient(180deg, #f8fbff 0%, #f4f6ff 54%, #ffffff 100%);
   }
 }
+
+:global(html[data-app-theme]) .page,
+:global(html[data-app-theme]) .starterPage {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .menuButton,
+:global(html[data-app-theme]) .starterMenuButton,
+:global(html[data-app-theme]) .brandIcon,
+:global(html[data-app-theme]) .starterBrandIcon,
+:global(html[data-app-theme]) .subscriberAvatar,
+:global(html[data-app-theme]) .proStatusCard,
+:global(html[data-app-theme]) .subscriberRecommended,
+:global(html[data-app-theme]) .starterRecommended,
+:global(html[data-app-theme]) .practiceCard,
+:global(html[data-app-theme]) .starterPracticeCard,
+:global(html[data-app-theme]) .resumeCard,
+:global(html[data-app-theme]) .challengeCard {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 18px 38px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .brand,
+:global(html[data-app-theme]) .starterBrand,
+:global(html[data-app-theme]) .brandCopy strong,
+:global(html[data-app-theme]) .starterBrandCopy strong,
+:global(html[data-app-theme]) .proStatusHeader h1,
+:global(html[data-app-theme]) .subscriberWelcomeCopy h2,
+:global(html[data-app-theme]) .subscriberRecommendedCopy h2,
+:global(html[data-app-theme]) .sectionHeading h2,
+:global(html[data-app-theme]) .practiceCopy strong,
+:global(html[data-app-theme]) .resumeContent strong,
+:global(html[data-app-theme]) .challengeCopy strong,
+:global(html[data-app-theme]) .starterHeroCopy h1,
+:global(html[data-app-theme]) .starterRecommendedCopy h2,
+:global(html[data-app-theme]) .starterSectionHeading h2,
+:global(html[data-app-theme]) .starterPracticeCopy strong {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .brandCopy small,
+:global(html[data-app-theme]) .starterBrandCopy small {
+  color: var(--accent-primary);
+}
+
+:global(html[data-app-theme]) .proBenefit small,
+:global(html[data-app-theme]) .subscriberWelcomeCopy small,
+:global(html[data-app-theme]) .subscriberRecommendedCopy p,
+:global(html[data-app-theme]) .practiceCopy small,
+:global(html[data-app-theme]) .resumeMeta,
+:global(html[data-app-theme]) .resumeProgressRow small,
+:global(html[data-app-theme]) .challengeCopy small,
+:global(html[data-app-theme]) .starterBenefitRow span,
+:global(html[data-app-theme]) .starterTrust,
+:global(html[data-app-theme]) .starterRecommendedCopy p,
+:global(html[data-app-theme]) .starterSectionHeading span,
+:global(html[data-app-theme]) .starterPracticeCopy small {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .subscriberPrimaryCta,
+:global(html[data-app-theme]) .starterPrimaryCta,
+:global(html[data-app-theme]) .resumeButton {
+  background: var(--button-bg);
+  color: var(--button-text);
+  box-shadow: 0 16px 30px color-mix(in srgb, var(--shadow-color) 72%, transparent);
+}
+
+:global(html[data-app-theme]) .progressTrack {
+  background: var(--progress-track);
+}
+
+:global(html[data-app-theme]) .progressTrack span {
+  background: var(--progress-fill);
+}
+
+:global(html[data-app-theme]) .practiceChevron,
+:global(html[data-app-theme]) .challengeChevron,
+:global(html[data-app-theme]) .starterPracticeChevron {
+  color: var(--accent-primary);
+}
+
+:global(html[data-app-theme]) .subscriberSpeechBubble,
+:global(html[data-app-theme]) .starterBenefitRow i {
+  background: var(--chip-bg);
+  color: var(--chip-text);
+}
+
+:global(html[data-app-theme="dark"]) .proStatusCard {
+  background:
+    radial-gradient(circle at 92% 20%, rgba(245, 181, 75, 0.16), transparent 28%),
+    var(--card-bg);
+}
+
+:global(html[data-app-theme="dark"]) .subscriberRobotImage,
+:global(html[data-app-theme="dark"]) .starterBubbleImage,
+:global(html[data-app-theme="dark"]) .coffeeScene {
+  filter: brightness(0.88) saturate(0.88);
+}

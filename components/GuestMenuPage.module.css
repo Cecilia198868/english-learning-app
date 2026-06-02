@@ -307,3 +307,45 @@
     height: 46px;
   }
 }
+
+:global(html[data-app-theme]) .page {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .menuRow,
+:global(html[data-app-theme]) .proPill {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 14px 34px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .brandText,
+:global(html[data-app-theme]) .heroCopy h1,
+:global(html[data-app-theme]) .rowCopy strong {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .heroCopy p,
+:global(html[data-app-theme]) .rowCopy small {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .rowIcon {
+  background: var(--chip-bg);
+  color: var(--accent-blue);
+}
+
+:global(html[data-app-theme]) .chevron,
+:global(html[data-app-theme]) .proPill {
+  color: var(--accent-primary);
+}
+
+:global(html[data-app-theme="dark"]) .hero::before,
+:global(html[data-app-theme="dark"]) .hero::after {
+  opacity: 0.34;
+}

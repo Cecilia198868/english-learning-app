@@ -8,6 +8,7 @@ import { signOut } from "next-auth/react";
 import styles from "./AccountPageClient.module.css";
 
 type AccountPageClientProps = {
+  initialPanel?: string;
   isAdmin: boolean;
   showProSuccessOnLoad: boolean;
   userEmail: string;
@@ -28,6 +29,7 @@ type AccountSubscriptionResponse = {
 type IconName =
   | "bell"
   | "card"
+  | "display"
   | "document"
   | "feedback"
   | "gift"
@@ -54,9 +56,78 @@ type RowProps = {
 };
 
 type ProFeatureIconName = "bookmark" | "cloud" | "graduation" | "infinity";
+type DisplayTheme = "light" | "dark";
+type DisplayBrightness = "dim" | "standard" | "bright";
+type DisplayFontSize = "small" | "standard" | "large";
 
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
 const accountPageUrl = (panel: string) => `/account?panel=${panel}`;
+const appearancePreferenceStorageKey = "speakflow-appearance-preference";
+const brightnessPreferenceStorageKey = "speakflow-display-brightness";
+const fontSizePreferenceStorageKey = "speakflow-font-size-preference";
+
+const displayThemeOptions: Array<{
+  description: string;
+  label: string;
+  value: DisplayTheme;
+}> = [
+  {
+    description: "清爽明亮，适合白天使用",
+    label: "浅色屏幕",
+    value: "light",
+  },
+  {
+    description: "降低眩光，适合夜间练习",
+    label: "深色屏幕",
+    value: "dark",
+  },
+];
+
+const displayFontSizeOptions: Array<{
+  description: string;
+  label: string;
+  value: DisplayFontSize;
+}> = [
+  {
+    description: "信息更紧凑",
+    label: "小",
+    value: "small",
+  },
+  {
+    description: "默认阅读大小",
+    label: "标准",
+    value: "standard",
+  },
+  {
+    description: "文字更醒目",
+    label: "大",
+    value: "large",
+  },
+];
+
+function isDisplayTheme(value: string | null): value is DisplayTheme {
+  return value === "light" || value === "dark";
+}
+
+function isDisplayBrightness(value: string | null): value is DisplayBrightness {
+  return value === "dim" || value === "standard" || value === "bright";
+}
+
+function isDisplayFontSize(value: string | null): value is DisplayFontSize {
+  return value === "small" || value === "standard" || value === "large";
+}
+
+function brightnessToSliderValue(value: DisplayBrightness) {
+  if (value === "dim") return 0;
+  if (value === "bright") return 2;
+  return 1;
+}
+
+function sliderValueToBrightness(value: string): DisplayBrightness {
+  if (value === "0") return "dim";
+  if (value === "2") return "bright";
+  return "standard";
+}
 
 const proSuccessFeatures: Array<{
   description: string;
@@ -157,6 +228,13 @@ function MenuIcon({ name }: { name: IconName }) {
         <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
           <rect x="5" y="8" width="22" height="16" rx="3" />
           <path d="M5 13h22M9 20h6" />
+        </svg>
+      );
+    case "display":
+      return (
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+          <rect x="5" y="7" width="22" height="15" rx="3" />
+          <path d="M12 27h8M16 22v5M21.5 11.5l2 2-2 2M10.5 11.5l-2 2 2 2" />
         </svg>
       );
     case "gift":
@@ -415,6 +493,7 @@ function Section({
 }
 
 export default function AccountPageClient({
+  initialPanel = "",
   isAdmin,
   showProSuccessOnLoad,
   userEmail,
@@ -433,6 +512,14 @@ export default function AccountPageClient({
   const [subscription, setSubscription] =
     useState<AccountSubscriptionResponse | null | undefined>(undefined);
   const [isProSuccessDismissed, setIsProSuccessDismissed] = useState(false);
+  const [activePanel, setActivePanel] = useState(initialPanel);
+  const [displayTheme, setDisplayTheme] = useState<DisplayTheme>("light");
+  const [displayBrightness, setDisplayBrightness] =
+    useState<DisplayBrightness>("standard");
+  const [displayFontSize, setDisplayFontSize] =
+    useState<DisplayFontSize>("standard");
+  const [displayPreferencesLoaded, setDisplayPreferencesLoaded] =
+    useState(false);
   const subscriptionCopy = useMemo(
     () => getSubscriptionCopy(subscription),
     [subscription]
@@ -458,6 +545,68 @@ export default function AccountPageClient({
 
     return () => window.clearTimeout(timer);
   }, [userEmail, userImage, userName]);
+
+  useEffect(() => {
+    setActivePanel(initialPanel);
+  }, [initialPanel]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const savedTheme = window.localStorage.getItem(appearancePreferenceStorageKey);
+    const savedBrightness = window.localStorage.getItem(
+      brightnessPreferenceStorageKey
+    );
+    const savedFontSize = window.localStorage.getItem(fontSizePreferenceStorageKey);
+
+    if (isDisplayTheme(savedTheme)) {
+      setDisplayTheme(savedTheme);
+    }
+
+    if (isDisplayBrightness(savedBrightness)) {
+      setDisplayBrightness(savedBrightness);
+    }
+
+    if (isDisplayFontSize(savedFontSize)) {
+      setDisplayFontSize(savedFontSize);
+    }
+
+    setDisplayPreferencesLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !displayPreferencesLoaded) return;
+
+    document.documentElement.dataset.appTheme = displayTheme;
+    document.documentElement.dataset.speakflowTheme = displayTheme;
+    window.localStorage.setItem(appearancePreferenceStorageKey, displayTheme);
+  }, [displayPreferencesLoaded, displayTheme]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !displayPreferencesLoaded) return;
+
+    document.documentElement.dataset.appBrightness = displayBrightness;
+    window.localStorage.setItem(brightnessPreferenceStorageKey, displayBrightness);
+  }, [displayBrightness, displayPreferencesLoaded]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !displayPreferencesLoaded) return;
+
+    document.documentElement.dataset.speakflowFontSize = displayFontSize;
+    window.localStorage.setItem(fontSizePreferenceStorageKey, displayFontSize);
+  }, [displayFontSize, displayPreferencesLoaded]);
+
+  function updateDisplayTheme(value: DisplayTheme) {
+    setDisplayTheme(value);
+  }
+
+  function updateDisplayBrightness(value: DisplayBrightness) {
+    setDisplayBrightness(value);
+  }
+
+  function updateDisplayFontSize(value: DisplayFontSize) {
+    setDisplayFontSize(value);
+  }
 
   function clearCheckoutSuccessUrl() {
     const currentUrl = new URL(window.location.href);
@@ -501,6 +650,129 @@ export default function AccountPageClient({
   function startLearning() {
     setIsProSuccessDismissed(true);
     router.push("/start");
+  }
+
+  function closePanel() {
+    setActivePanel("");
+    router.replace("/account", { scroll: false });
+  }
+
+  if (activePanel === "displayBrightness") {
+    return (
+      <main className={styles.page}>
+        <section className={`${styles.phone} ${styles.settingsPhone}`} aria-label="显示与亮度设置">
+          <header className={styles.settingsHeader}>
+            <button
+              type="button"
+              className={styles.settingsBack}
+              onClick={closePanel}
+              aria-label="返回账户设置"
+            >
+              <ChevronIcon />
+            </button>
+            <div className={styles.settingsTitle}>
+              <p>学习体验</p>
+              <h1>显示与亮度</h1>
+            </div>
+          </header>
+
+          <section className={styles.settingsSection} aria-labelledby="display-theme-title">
+            <h2 id="display-theme-title">屏幕模式</h2>
+            <div className={styles.themeChoiceGrid}>
+              {displayThemeOptions.map((option) => (
+                <button
+                  type="button"
+                  key={option.value}
+                  className={styles.themeChoice}
+                  data-selected={displayTheme === option.value}
+                  onClick={() => updateDisplayTheme(option.value)}
+                >
+                  <span
+                    className={styles.themePreview}
+                    data-theme-preview={option.value}
+                    aria-hidden="true"
+                  >
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                  <strong>{option.label}</strong>
+                  <small>{option.description}</small>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className={styles.settingsSection} aria-labelledby="display-font-title">
+            <h2 id="display-font-title">文字大小</h2>
+            <div className={styles.optionStack}>
+              {displayFontSizeOptions.map((option) => (
+                <button
+                  type="button"
+                  key={option.value}
+                  className={styles.optionRow}
+                  data-selected={displayFontSize === option.value}
+                  onClick={() => updateDisplayFontSize(option.value)}
+                >
+                  <span className={styles.optionText}>
+                    <strong>{option.label}</strong>
+                    <small>{option.description}</small>
+                  </span>
+                  <span className={styles.sampleText} data-size={option.value}>
+                    Aa
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className={styles.settingsSection} aria-labelledby="display-brightness-title">
+            <div className={styles.brightnessHeader}>
+              <h2 id="display-brightness-title">亮度</h2>
+              <strong>
+                {displayBrightness === "dim"
+                  ? "柔和"
+                  : displayBrightness === "bright"
+                    ? "明亮"
+                    : "标准"}
+              </strong>
+            </div>
+            <div className={styles.brightnessCard}>
+              <div className={styles.brightnessPreview} aria-hidden="true">
+                <span />
+                <span />
+              </div>
+              <input
+                aria-label="选择屏幕亮度"
+                className={styles.brightnessSlider}
+                type="range"
+                min="0"
+                max="2"
+                step="1"
+                value={brightnessToSliderValue(displayBrightness)}
+                onChange={(event) =>
+                  updateDisplayBrightness(
+                    sliderValueToBrightness(event.currentTarget.value)
+                  )
+                }
+              />
+              <div className={styles.brightnessLabels} aria-hidden="true">
+                <span>柔和</span>
+                <span>标准</span>
+                <span>明亮</span>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.settingsNote}>
+            <MenuIcon name="display" />
+            <p>
+              设置会保存在这台设备上，并同步影响首页、学习页、表达库、账户页和弹窗。
+            </p>
+          </section>
+        </section>
+      </main>
+    );
   }
 
   return (
@@ -568,6 +840,11 @@ export default function AccountPageClient({
         <Section title="学习体验">
           <Row href={accountPageUrl("voice")} icon="headphones" label="声音" />
           <Row href={accountPageUrl("fontSize")} icon="text" label="字体大小" />
+          <Row
+            href={accountPageUrl("displayBrightness")}
+            icon="display"
+            label="显示与亮度"
+          />
           <Row
             href={accountPageUrl("interfaceLanguage")}
             icon="globe"

@@ -674,3 +674,63 @@
     min-width: 168px;
   }
 }
+
+:global(html[data-app-theme]) .page,
+:global(html[data-app-theme]) .phone {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .homeIconBox,
+:global(html[data-app-theme]) .actionCard,
+:global(html[data-app-theme]) .tipCard {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 16px 34px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .homeButton,
+:global(html[data-app-theme]) .brand strong,
+:global(html[data-app-theme]) .hero h1,
+:global(html[data-app-theme]) .cardCopy strong,
+:global(html[data-app-theme]) .tipCard h2 {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .hero p,
+:global(html[data-app-theme]) .cardCopy span,
+:global(html[data-app-theme]) .featureItem,
+:global(html[data-app-theme]) .tipCard p {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .brand small,
+:global(html[data-app-theme]) .tipCard h2 {
+  color: var(--accent-primary);
+}
+
+:global(html[data-app-theme]) .cardButton {
+  background: var(--button-bg);
+  color: var(--button-text);
+  box-shadow: 0 15px 30px color-mix(in srgb, var(--shadow-color) 72%, transparent);
+}
+
+:global(html[data-app-theme]) .libraryCard .cardButton {
+  background: linear-gradient(135deg, var(--accent-green), #27a565);
+}
+
+:global(html[data-app-theme]) .checkIcon,
+:global(html[data-app-theme]) .tipIcon {
+  background: var(--chip-bg);
+  color: var(--chip-text);
+}
+
+:global(html[data-app-theme="dark"]) .learnArt,
+:global(html[data-app-theme="dark"]) .libraryArt {
+  opacity: 0.82;
+  filter: brightness(0.86) saturate(0.88);
+}

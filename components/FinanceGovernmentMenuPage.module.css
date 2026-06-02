@@ -984,3 +984,58 @@
     font-size: 0.68rem;
   }
 }
+
+:global(html[data-app-theme]) .pageShell,
+:global(html[data-app-theme]) .panel {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .hero,
+:global(html[data-app-theme]) .sceneCard,
+:global(html[data-app-theme]) .arrowCircle,
+:global(html[data-app-theme]) .lockBadge {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 16px 34px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .menuButton,
+:global(html[data-app-theme]) .avatarButton,
+:global(html[data-app-theme]) .topBackLink,
+:global(html[data-app-theme]) .brand,
+:global(html[data-app-theme]) .brandText strong,
+:global(html[data-app-theme]) .heroText h1,
+:global(html[data-app-theme]) .cardCopy strong {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .brandText span,
+:global(html[data-app-theme]) .heroText p,
+:global(html[data-app-theme]) .cardCopy span,
+:global(html[data-app-theme]) .cardMeta {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .backLink,
+:global(html[data-app-theme]) .topBackLink,
+:global(html[data-app-theme]) .arrowCircle {
+  color: var(--accent-green);
+}
+
+:global(html[data-app-theme]) .iconTile {
+  background: var(--chip-bg);
+  color: var(--accent-green);
+}
+
+:global(html[data-app-theme="dark"]) .heroVisual,
+:global(html[data-app-theme="dark"]) .backCard,
+:global(html[data-app-theme="dark"]) .frontCard,
+:global(html[data-app-theme="dark"]) .bubble {
+  opacity: 0.72;
+  filter: brightness(0.82) saturate(0.82);
+}

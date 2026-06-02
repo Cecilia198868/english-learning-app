@@ -823,14 +823,6 @@ export default function VocabularyPage() {
   }, []);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    window.localStorage.removeItem("speakflow-appearance-preference");
-    delete document.documentElement.dataset.speakflowAppearance;
-    delete document.documentElement.dataset.speakflowTheme;
-  }, []);
-
-  useEffect(() => {
     refreshExpressionLearningUsageCount();
   }, [refreshExpressionLearningUsageCount]);
 

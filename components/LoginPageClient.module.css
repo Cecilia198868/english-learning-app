@@ -246,3 +246,40 @@
     padding-bottom: 26px;
   }
 }
+
+:global(html[data-app-theme]) .page {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .sheet,
+:global(html[data-app-theme]) .oauthButton,
+:global(html[data-app-theme]) .moreItem,
+:global(html[data-app-theme]) .notice,
+:global(html[data-app-theme]) .passwordless {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 16px 34px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .sheet h1,
+:global(html[data-app-theme]) .oauthButton,
+:global(html[data-app-theme]) .moreItem span,
+:global(html[data-app-theme]) .passwordless strong {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .sheet p,
+:global(html[data-app-theme]) .moreDivider,
+:global(html[data-app-theme]) .passwordless small {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .notice,
+:global(html[data-app-theme]) .passwordless {
+  color: var(--accent-primary);
+}

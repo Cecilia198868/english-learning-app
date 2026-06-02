@@ -25,6 +25,7 @@ export default async function AccountPage({
 
   return (
     <AccountPageClient
+      initialPanel={getStringParam(resolvedSearchParams.panel) || ""}
       isAdmin={isAdmin}
       showProSuccessOnLoad={
         getStringParam(resolvedSearchParams.checkout) === "success"

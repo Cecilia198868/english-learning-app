@@ -820,3 +820,58 @@
     font-size: 0.67rem;
   }
 }
+
+:global(html[data-app-theme]) .pageShell,
+:global(html[data-app-theme]) .panel {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .homeButton,
+:global(html[data-app-theme]) .hero,
+:global(html[data-app-theme]) .sceneCard,
+:global(html[data-app-theme]) .arrowCircle,
+:global(html[data-app-theme]) .tip {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 16px 34px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .topBackLink,
+:global(html[data-app-theme]) .titleBlock h1,
+:global(html[data-app-theme]) .heroCopy h2,
+:global(html[data-app-theme]) .cardCopy strong {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .subtitle,
+:global(html[data-app-theme]) .heroCopy p,
+:global(html[data-app-theme]) .cardCopy span,
+:global(html[data-app-theme]) .cardMeta,
+:global(html[data-app-theme]) .tip {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .arrowCircle,
+:global(html[data-app-theme]) .topBackLink,
+:global(html[data-app-theme]) .subtitleIcon,
+:global(html[data-app-theme]) .tipIcon {
+  color: var(--accent-green);
+}
+
+:global(html[data-app-theme]) .cardIconWrap,
+:global(html[data-app-theme]) .visualIcon {
+  background: var(--chip-bg);
+  color: var(--accent-green);
+}
+
+:global(html[data-app-theme="dark"]) .heroVisual,
+:global(html[data-app-theme="dark"]) .visualCard,
+:global(html[data-app-theme="dark"]) .visualBubble {
+  opacity: 0.72;
+  filter: brightness(0.82) saturate(0.82);
+}

@@ -244,3 +244,39 @@
     font-size: 0.98rem;
   }
 }
+
+:global(html[data-app-theme]) .pageShell,
+:global(html[data-app-theme]) .phone {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .backButton,
+:global(html[data-app-theme]) .lessonCard {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 14px 30px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .title,
+:global(html[data-app-theme]) .lessonTitle,
+:global(html[data-app-theme]) .backButton {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .iconTile {
+  background: var(--chip-bg);
+}
+
+:global(html[data-app-theme]) .numberBadge {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+:global(html[data-app-theme]) .chevron {
+  color: var(--accent-green);
+}

@@ -431,3 +431,55 @@
     font-size: 1.15rem;
   }
 }
+
+:global(html[data-app-theme]) .page {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .logoCard,
+:global(html[data-app-theme]) .featureCard,
+:global(html[data-app-theme]) .trialNote,
+:global(html[data-app-theme]) .limitModal,
+:global(html[data-app-theme]) .modalSecondary {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 18px 38px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .brand,
+:global(html[data-app-theme]) .heroTitle,
+:global(html[data-app-theme]) .featureCard strong,
+:global(html[data-app-theme]) .trialNote strong,
+:global(html[data-app-theme]) .limitModal h2 {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .heroCopy,
+:global(html[data-app-theme]) .featureCard small,
+:global(html[data-app-theme]) .trialNote small,
+:global(html[data-app-theme]) .limitModal p {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .primaryCta,
+:global(html[data-app-theme]) .modalPrimary {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+:global(html[data-app-theme]) .loginLink,
+:global(html[data-app-theme]) .modalSecondary {
+  color: var(--accent-primary);
+}
+
+:global(html[data-app-theme]) .featureIcon,
+:global(html[data-app-theme]) .shield,
+:global(html[data-app-theme]) .modalBadge {
+  background: var(--chip-bg);
+  color: var(--chip-text);
+}

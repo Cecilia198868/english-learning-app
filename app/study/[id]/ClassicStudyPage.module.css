@@ -3388,3 +3388,141 @@
     font-size: 0.82rem;
   }
 }
+
+:global(html[data-app-theme]) .classicShell,
+:global(html[data-app-theme]) .classicPhone,
+:global(html[data-app-theme]) .studyPhone,
+:global(html[data-app-theme]) .resultPhone {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .classicTopbar,
+:global(html[data-app-theme]) .studyTopbar,
+:global(html[data-app-theme]) .menuButton,
+:global(html[data-app-theme]) .avatarButton,
+:global(html[data-app-theme]) .homeIconBox,
+:global(html[data-app-theme]) .switchCourseButton,
+:global(html[data-app-theme]) .topicBar,
+:global(html[data-app-theme]) .studyTopicBar,
+:global(html[data-app-theme]) .resultTopicBar,
+:global(html[data-app-theme]) .dialogCard,
+:global(html[data-app-theme]) .methodCard,
+:global(html[data-app-theme]) .tipCard,
+:global(html[data-app-theme]) .sentenceButton,
+:global(html[data-app-theme]) .resultHint,
+:global(html[data-app-theme]) .userExpressionCard,
+:global(html[data-app-theme]) .userExpressionBubble,
+:global(html[data-app-theme]) .expressionCard,
+:global(html[data-app-theme]) .followCard,
+:global(html[data-app-theme]) .followReadButton,
+:global(html[data-app-theme]) .slowReadButton,
+:global(html[data-app-theme]) .followModal {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 14px 30px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .brand,
+:global(html[data-app-theme]) .brandTitle,
+:global(html[data-app-theme]) .topicTitle,
+:global(html[data-app-theme]) .studyTopicBar .topicTitle,
+:global(html[data-app-theme]) .chinesePrompt,
+:global(html[data-app-theme]) .methodTitle strong,
+:global(html[data-app-theme]) .stepCopy strong,
+:global(html[data-app-theme]) .tipCopy strong,
+:global(html[data-app-theme]) .variantTitle,
+:global(html[data-app-theme]) .variantText,
+:global(html[data-app-theme]) .userExpressionText,
+:global(html[data-app-theme]) .followReadButton strong,
+:global(html[data-app-theme]) .followModal h2 {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .brandSubtitle,
+:global(html[data-app-theme]) .topicProgress,
+:global(html[data-app-theme]) .studyTopicBar .topicProgress,
+:global(html[data-app-theme]) .bubbleSubtitle,
+:global(html[data-app-theme]) .stepCopy small,
+:global(html[data-app-theme]) .tipCopy small,
+:global(html[data-app-theme]) .variantNote,
+:global(html[data-app-theme]) .followReadButton small,
+:global(html[data-app-theme]) .followMicLabel,
+:global(html[data-app-theme]) .followModal p,
+:global(html[data-app-theme]) .loadingExpressions {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .roleBadge,
+:global(html[data-app-theme]) .categoryPill,
+:global(html[data-app-theme]) .methodIcon,
+:global(html[data-app-theme]) .stepNumber,
+:global(html[data-app-theme]) .userExpressionLabel,
+:global(html[data-app-theme]) .variantRibbon,
+:global(html[data-app-theme]) .resultHintIcon {
+  background: var(--chip-bg);
+  color: var(--chip-text);
+}
+
+:global(html[data-app-theme]) .speechBubble {
+  border-color: var(--border-color);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--card-bg-solid) 92%, var(--accent-green) 8%), var(--card-bg-solid));
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .speechBubble::after,
+:global(html[data-app-theme]) .userExpressionBubble::after {
+  border-color: var(--border-color);
+  background: var(--card-bg-solid);
+}
+
+:global(html[data-app-theme]) .promptHint,
+:global(html[data-app-theme]) .recordingPrompt {
+  color: var(--accent-primary);
+}
+
+:global(html[data-app-theme]) .progressTrack {
+  background: var(--progress-track);
+}
+
+:global(html[data-app-theme]) .progressTrack span {
+  background: var(--progress-fill);
+}
+
+:global(html[data-app-theme]) .micButton,
+:global(html[data-app-theme]) .followMicButton,
+:global(html[data-app-theme]) .followModalButton {
+  background: var(--button-bg);
+  color: var(--button-text);
+  box-shadow: 0 18px 34px color-mix(in srgb, var(--shadow-color) 72%, transparent);
+}
+
+:global(html[data-app-theme]) .topicArrow,
+:global(html[data-app-theme]) .homeShortcut,
+:global(html[data-app-theme]) .switchCourseButton,
+:global(html[data-app-theme]) .sentenceButton,
+:global(html[data-app-theme]) .variantSpeaker,
+:global(html[data-app-theme]) .slowReadButton {
+  color: var(--icon-color);
+}
+
+:global(html[data-app-theme]) .expressionCardFeatured {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--card-bg-solid) 84%, var(--accent-primary) 16%), var(--card-bg-solid));
+}
+
+:global(html[data-app-theme]) .followModalBackdrop {
+  background: var(--overlay-bg);
+}
+
+:global(html[data-app-theme="dark"]) .sceneIllustration,
+:global(html[data-app-theme="dark"]) .tipArt,
+:global(html[data-app-theme="dark"]) .cornerStar {
+  opacity: 0.68;
+  filter: brightness(0.82) saturate(0.82);
+}

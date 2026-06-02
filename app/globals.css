@@ -3,6 +3,41 @@
 :root {
   --background: #090110;
   --foreground: #fff8ff;
+  --app-bg: #f7f9ff;
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --text-primary: #10163b;
+  --text-secondary: #66708f;
+  --border-color: rgba(218, 226, 246, 0.86);
+  --button-bg: #ffffff;
+  --button-text: #10163b;
+  --shadow-color: rgba(91, 120, 186, 0.14);
+  --input-bg: rgba(255, 255, 255, 0.92);
+  --input-text: #10163b;
+  --chip-bg: rgba(239, 236, 255, 0.92);
+  --chip-text: #684cff;
+  --icon-color: #6257d9;
+  --app-bg-gradient:
+    radial-gradient(circle at 12% 0%, rgba(207, 235, 255, 0.72), transparent 32%),
+    radial-gradient(circle at 88% 16%, rgba(224, 215, 255, 0.68), transparent 34%),
+    linear-gradient(180deg, #f7fbff 0%, #f5f4ff 52%, #ffffff 100%);
+  --card-bg-solid: #ffffff;
+  --card-bg-soft: rgba(255, 255, 255, 0.86);
+  --surface-raised: rgba(255, 255, 255, 0.96);
+  --surface-muted: rgba(244, 247, 255, 0.92);
+  --overlay-bg: rgba(12, 15, 28, 0.74);
+  --accent-primary: #6d55ff;
+  --accent-primary-soft: rgba(109, 85, 255, 0.12);
+  --accent-blue: #3f72ff;
+  --accent-green: #20a76b;
+  --accent-cyan: #22b8c7;
+  --accent-pink: #eb4f8b;
+  --progress-track: rgba(203, 211, 237, 0.72);
+  --progress-fill: linear-gradient(90deg, #7d5cff, #436cff);
+  --hint-bg: rgba(246, 248, 255, 0.9);
+  --fixed-bar-bg: rgba(255, 255, 255, 0.9);
+  --theme-inset: rgba(255, 255, 255, 0.96);
+  --app-brightness-overlay: transparent;
+  --app-brightness-saturate: 1;
   --sf-font-zh: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   --sf-text-title: #1f1b3d;
   --sf-text-body: #302b63;
@@ -16,6 +51,87 @@
   --sf-line-subtitle: 1.3;
   --sf-line-body: 1.5;
   --sf-line-muted: 1.45;
+}
+
+html[data-app-theme="dark"] {
+  color-scheme: dark;
+  --background: #050816;
+  --foreground: #f5f7ff;
+  --app-bg: #07101f;
+  --card-bg: rgba(18, 27, 45, 0.94);
+  --text-primary: #f4f7ff;
+  --text-secondary: #aeb8d4;
+  --border-color: rgba(136, 153, 196, 0.28);
+  --button-bg: rgba(30, 42, 68, 0.94);
+  --button-text: #f4f7ff;
+  --shadow-color: rgba(0, 0, 0, 0.48);
+  --input-bg: rgba(10, 18, 32, 0.92);
+  --input-text: #f4f7ff;
+  --chip-bg: rgba(115, 96, 255, 0.18);
+  --chip-text: #d7d1ff;
+  --icon-color: #b9c3ff;
+  --app-bg-gradient:
+    radial-gradient(circle at 12% 0%, rgba(75, 106, 180, 0.24), transparent 32%),
+    radial-gradient(circle at 88% 16%, rgba(107, 82, 194, 0.2), transparent 36%),
+    linear-gradient(180deg, #081322 0%, #07101f 54%, #050a16 100%);
+  --card-bg-solid: #111a2b;
+  --card-bg-soft: rgba(18, 27, 45, 0.82);
+  --surface-raised: rgba(22, 32, 52, 0.96);
+  --surface-muted: rgba(13, 22, 38, 0.92);
+  --overlay-bg: rgba(2, 6, 15, 0.78);
+  --accent-primary: #9d8cff;
+  --accent-primary-soft: rgba(157, 140, 255, 0.18);
+  --accent-blue: #85a7ff;
+  --accent-green: #65d7a2;
+  --accent-cyan: #62d7e5;
+  --accent-pink: #ff7aac;
+  --progress-track: rgba(126, 143, 184, 0.22);
+  --progress-fill: linear-gradient(90deg, #a996ff, #78a1ff);
+  --hint-bg: rgba(17, 27, 46, 0.92);
+  --fixed-bar-bg: rgba(13, 22, 38, 0.92);
+  --theme-inset: rgba(255, 255, 255, 0.08);
+}
+
+html[data-app-brightness="dim"] {
+  --app-brightness-overlay: rgba(2, 6, 14, 0.16);
+  --app-brightness-saturate: 0.94;
+}
+
+html[data-app-brightness="bright"] {
+  --app-brightness-overlay: rgba(255, 255, 255, 0.06);
+  --app-brightness-saturate: 1.08;
+}
+
+html[data-app-theme="dark"][data-app-brightness="bright"] {
+  --app-brightness-overlay: rgba(255, 255, 255, 0.035);
+}
+
+html[data-speakflow-font-size="small"] {
+  --app-font-scale: 0.94;
+}
+
+html,
+html[data-speakflow-font-size="standard"] {
+  --app-font-scale: 1;
+}
+
+html[data-speakflow-font-size="large"] {
+  --app-font-scale: 1.08;
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--text-primary);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: var(--app-brightness-overlay);
+  pointer-events: none;
+  mix-blend-mode: multiply;
 }
 
 @theme inline {
@@ -18489,4 +18605,224 @@ body .sf-ai-guided-trial-note svg {
     margin-top: 0.72rem !important;
     font-size: 0.9rem !important;
   }
+}
+
+html[data-app-theme] body :where(
+  .sf-speak-page,
+  .sf-speak-phone,
+  .sf-free-study-page-one,
+  .sf-free-study-page-two,
+  .sf-free-study-page-three,
+  .sf-free-study-page-four,
+  .sf-free-study-page-five-top,
+  .sf-ai-guided-step-one-page,
+  .sf-ai-guided-step-one-phone,
+  .sf-ai-guided-step-two,
+  .sf-ai-guided-step-four,
+  .sf-ai-guided-step-five,
+  .sf-vocabulary-learning-page,
+  .sf-expression-library-page,
+  .sf-menu-page,
+  .sf-account-panel,
+  .sf-quick-panel
+) {
+  background: var(--app-bg-gradient) !important;
+  color: var(--text-primary) !important;
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+html[data-app-theme] body :where(
+  .sf-free-study-header-card,
+  .sf-free-study-page-one-menu,
+  .sf-free-study-page-one-avatar-button,
+  .sf-free-study-page-two-menu,
+  .sf-free-study-page-two-avatar-button,
+  .sf-free-study-page-three-back,
+  .sf-free-study-page-three-confirm-card,
+  .sf-free-study-page-three-step-list,
+  .sf-free-study-page-four-menu,
+  .sf-free-study-page-four-avatar-button,
+  .sf-free-study-page-four-native-card,
+  .sf-free-study-page-four-tip,
+  .sf-free-study-page-five-top-menu,
+  .sf-free-study-page-five-user-card,
+  .sf-free-study-page-five-expression-card,
+  .sf-ai-guided-step-one-menu,
+  .sf-ai-guided-step-one-guest-progress,
+  .sf-ai-guided-trial-card,
+  .sf-ai-guided-flow-section,
+  .sf-ai-guided-step-two-menu,
+  .sf-ai-guided-step-two-avatar-button,
+  .sf-ai-guided-step-two-tip,
+  .sf-ai-guided-step-four-menu,
+  .sf-ai-guided-step-four-avatar-button,
+  .sf-ai-guided-step-four-native-card,
+  .sf-ai-guided-step-five-menu,
+  .sf-ai-guided-step-five-avatar-button,
+  .sf-ai-guided-step-five-user-card,
+  .sf-ai-guided-step-five-next-card,
+  .sf-ai-guided-step-five-expression-card,
+  .sf-vocabulary-learning-phone,
+  .sf-vocabulary-menu-button,
+  .sf-vocabulary-word-card,
+  .sf-vocabulary-example-card,
+  .sf-vocabulary-progress-card,
+  .sf-vocabulary-bottom-bar,
+  .sf-expression-library-phone,
+  .sf-expression-library-stat-card,
+  .sf-expression-library-search,
+  .sf-expression-library-filter-button,
+  .sf-expression-library-chip,
+  .sf-expression-library-word-row,
+  .sf-expression-library-bottom-bar,
+  .sf-menu-page-card,
+  .sf-account-panel-card,
+  .sf-account-panel-row,
+  .sf-quick-panel-card
+) {
+  border-color: var(--border-color) !important;
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  box-shadow:
+    0 16px 36px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset) !important;
+}
+
+html[data-app-theme] body :where(
+  .sf-free-study-page-one-brand-title,
+  .sf-free-study-page-one-hero h1,
+  .sf-free-study-page-two-brand-title,
+  .sf-free-study-page-two-hero h1,
+  .sf-free-study-page-three-brand-title,
+  .sf-free-study-page-three-confirm-card h1,
+  .sf-free-study-page-four-brand-title,
+  .sf-free-study-page-four-hero h1,
+  .sf-free-study-page-five-brand-title,
+  .sf-free-study-page-five-user-text,
+  .sf-ai-guided-step-one-brand-title,
+  .sf-ai-guided-step-one-hero h1,
+  .sf-ai-guided-step-two-brand-title,
+  .sf-ai-guided-step-two-hero h1,
+  .sf-ai-guided-step-four-brand-title,
+  .sf-ai-guided-step-four-hero h1,
+  .sf-ai-guided-step-five-brand-title,
+  .sf-ai-guided-step-five-user-text,
+  .sf-vocabulary-brand strong,
+  .sf-vocabulary-learning-title h1,
+  .sf-expression-library-brand strong,
+  .sf-expression-library-title h1,
+  .sf-menu-page-brand-title,
+  .sf-menu-page-card-title
+) {
+  color: var(--text-primary) !important;
+  text-shadow: none !important;
+}
+
+html[data-app-theme] body :where(
+  .sf-free-study-page-one-brand-subtitle,
+  .sf-free-study-page-one-hero p,
+  .sf-free-study-step-description,
+  .sf-free-study-page-two-brand-subtitle,
+  .sf-free-study-page-two-hero p,
+  .sf-free-study-page-three-brand-subtitle,
+  .sf-free-study-page-three-step small,
+  .sf-free-study-page-four-brand-subtitle,
+  .sf-free-study-page-four-tip-copy span,
+  .sf-free-study-page-five-brand-subtitle,
+  .sf-ai-guided-step-one-brand-subtitle,
+  .sf-ai-guided-step-one-hero p,
+  .sf-ai-guided-trial-copy span,
+  .sf-ai-guided-flow-item small,
+  .sf-ai-guided-step-two-brand-subtitle,
+  .sf-ai-guided-step-two-hero p,
+  .sf-ai-guided-step-two-tip-copy span,
+  .sf-ai-guided-step-four-brand-subtitle,
+  .sf-ai-guided-step-five-brand-subtitle,
+  .sf-vocabulary-brand small,
+  .sf-vocabulary-learning-title p,
+  .sf-expression-library-brand small,
+  .sf-expression-library-title p,
+  .sf-menu-page-card-text,
+  .sf-account-panel-row small
+) {
+  color: var(--text-secondary) !important;
+}
+
+html[data-app-theme] body :where(
+  button,
+  input,
+  textarea,
+  select,
+  .sf-vocabulary-search-input,
+  .sf-expression-library-search input
+) {
+  color: var(--input-text);
+}
+
+html[data-app-theme] body :where(input, textarea, select, .sf-vocabulary-search-input) {
+  border-color: var(--border-color) !important;
+  background: var(--input-bg) !important;
+}
+
+html[data-app-theme] body :where(
+  .sf-free-study-page-one-primary-button,
+  .sf-ai-guided-start-button,
+  .sf-vocabulary-follow-button,
+  .sf-vocabulary-next-button,
+  .sf-vocabulary-bottom-mic,
+  .sf-expression-library-bottom-bar button,
+  .sf-free-study-page-five-follow,
+  .sf-free-study-page-five-mic,
+  .sf-free-study-page-five-slow
+) {
+  background: var(--progress-fill) !important;
+  color: #ffffff !important;
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--accent-primary) 30%, transparent) !important;
+}
+
+html[data-app-theme] body :where(
+  .sf-vocabulary-status-pill,
+  .sf-expression-library-chip,
+  .sf-free-study-page-three-mode,
+  .sf-free-study-page-five-mode,
+  .sf-ai-guided-step-two-mode,
+  .sf-ai-guided-step-five-tags span
+) {
+  background: var(--chip-bg) !important;
+  color: var(--chip-text) !important;
+}
+
+html[data-app-theme] body :where(
+  .sf-vocabulary-progress-track,
+  .sf-expression-library-progress-track,
+  .sf-free-study-page-four-progress,
+  .sf-ai-guided-progress-track
+) {
+  background: var(--progress-track) !important;
+}
+
+html[data-app-theme] body :where(
+  .sf-vocabulary-progress-fill,
+  .sf-expression-library-progress-fill,
+  .sf-free-study-page-four-progress span,
+  .sf-ai-guided-progress-fill
+) {
+  background: var(--progress-fill) !important;
+}
+
+html[data-app-theme] body :where(
+  .sf-vocabulary-bottom-bar,
+  .sf-expression-library-bottom-bar,
+  .sf-free-study-page-five-bottom-bar
+) {
+  background: var(--fixed-bar-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+html[data-app-theme] body :where(svg, .sf-home-menu-icon) {
+  color: currentColor;
+}
+
+html[data-app-theme="dark"] body :where(img) {
+  filter: saturate(0.94) brightness(0.92);
 }

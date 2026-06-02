@@ -775,3 +775,368 @@
     min-height: 60px;
   }
 }
+
+.settingsPhone {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  font-size: calc(1rem * var(--app-font-scale, 1));
+}
+
+.settingsHeader {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.settingsBack {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  box-shadow:
+    0 14px 28px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+.settingsBack svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.4;
+  transform: rotate(180deg);
+}
+
+.settingsTitle,
+.optionText {
+  display: grid;
+  gap: 5px;
+}
+
+.settingsTitle p,
+.settingsTitle h1,
+.settingsSection h2,
+.brightnessHeader h2,
+.brightnessHeader strong,
+.settingsNote p {
+  margin: 0;
+}
+
+.settingsTitle p {
+  color: var(--chip-text);
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.settingsTitle h1 {
+  color: var(--text-primary);
+  font-size: clamp(1.55rem, 7vw, 2.1rem);
+  font-weight: 950;
+  line-height: 1.08;
+}
+
+.settingsSection {
+  display: grid;
+  gap: 12px;
+}
+
+.settingsSection h2,
+.brightnessHeader h2 {
+  color: var(--text-primary);
+  font-size: clamp(1.04rem, 4.5vw, 1.18rem);
+  font-weight: 950;
+}
+
+.themeChoiceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.themeChoice,
+.optionRow,
+.brightnessCard,
+.settingsNote {
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  box-shadow:
+    0 18px 42px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+.themeChoice,
+.optionRow {
+  text-align: left;
+}
+
+.themeChoice {
+  display: grid;
+  gap: 9px;
+  border-radius: 22px;
+  padding: 13px;
+  color: var(--text-primary);
+}
+
+.themeChoice[data-selected="true"],
+.optionRow[data-selected="true"] {
+  border-color: color-mix(in srgb, var(--accent-primary) 58%, var(--border-color));
+  box-shadow:
+    0 18px 42px var(--shadow-color),
+    0 0 0 3px var(--accent-primary-soft),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+.themePreview {
+  display: grid;
+  gap: 7px;
+  min-height: 88px;
+  border-radius: 17px;
+  padding: 14px;
+}
+
+.themePreview[data-theme-preview="light"] {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(125, 92, 255, 0.16), transparent 38%),
+    linear-gradient(180deg, #ffffff, #eef3ff);
+}
+
+.themePreview[data-theme-preview="dark"] {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(157, 140, 255, 0.22), transparent 40%),
+    linear-gradient(180deg, #0e1727, #070d19);
+}
+
+.themePreview i {
+  display: block;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(118, 92, 255, 0.45);
+}
+
+.themePreview i:nth-child(1) {
+  width: 58%;
+}
+
+.themePreview i:nth-child(2) {
+  width: 88%;
+  background: rgba(126, 143, 184, 0.4);
+}
+
+.themePreview i:nth-child(3) {
+  width: 72%;
+  background: rgba(126, 143, 184, 0.28);
+}
+
+.themeChoice strong,
+.optionRow strong {
+  color: var(--text-primary);
+  font-size: 1.02rem;
+  font-weight: 950;
+}
+
+.themeChoice small,
+.optionRow small {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+.optionStack {
+  display: grid;
+  gap: 10px;
+}
+
+.optionRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  border-radius: 20px;
+  padding: 12px 14px;
+  color: var(--text-primary);
+}
+
+.sampleText {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  font-family: var(--font-sora), var(--font-geist-sans), sans-serif;
+  font-weight: 900;
+}
+
+.sampleText[data-size="small"] {
+  font-size: 1rem;
+}
+
+.sampleText[data-size="standard"] {
+  font-size: 1.24rem;
+}
+
+.sampleText[data-size="large"] {
+  font-size: 1.46rem;
+}
+
+.brightnessHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brightnessHeader strong {
+  color: var(--chip-text);
+  font-size: 0.95rem;
+  font-weight: 950;
+}
+
+.brightnessCard {
+  display: grid;
+  gap: 14px;
+  border-radius: 22px;
+  padding: 16px;
+}
+
+.brightnessPreview {
+  display: grid;
+  gap: 10px;
+  min-height: 74px;
+  border-radius: 18px;
+  background: var(--app-bg-gradient);
+  padding: 18px;
+}
+
+.brightnessPreview span {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--chip-bg);
+}
+
+.brightnessPreview span:first-child {
+  width: 46%;
+  background: var(--accent-primary);
+}
+
+.brightnessPreview span:last-child {
+  width: 76%;
+}
+
+.brightnessSlider {
+  width: 100%;
+  accent-color: var(--accent-primary);
+}
+
+.brightnessLabels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.settingsNote {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  border-radius: 20px;
+  padding: 14px;
+  color: var(--text-secondary);
+}
+
+.settingsNote svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: var(--icon-color);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.7;
+}
+
+.settingsNote p {
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.42;
+}
+
+:global(html[data-app-theme]) .page {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) .profile,
+:global(html[data-app-theme]) .sectionCard,
+:global(html[data-app-theme]) .logoutRow,
+:global(html[data-app-theme]) .proFeaturePanel,
+:global(html[data-app-theme]) .proMemberCard {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  box-shadow:
+    0 18px 46px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .profileCopy h1,
+:global(html[data-app-theme]) .section h2,
+:global(html[data-app-theme]) .rowTitleLine strong,
+:global(html[data-app-theme]) .logoutRow strong,
+:global(html[data-app-theme]) .proSuccessHero h2,
+:global(html[data-app-theme]) .proFeatureCopy strong,
+:global(html[data-app-theme]) .proMemberCopy strong {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) .profileCopy span,
+:global(html[data-app-theme]) .rowCopy small,
+:global(html[data-app-theme]) .proSuccessHero p,
+:global(html[data-app-theme]) .proFeatureCopy small,
+:global(html[data-app-theme]) .proMemberCopy small {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .rowIcon,
+:global(html[data-app-theme]) .logoutIcon,
+:global(html[data-app-theme]) .chevron {
+  color: var(--icon-color);
+}
+
+:global(html[data-app-theme]) .row + .row,
+:global(html[data-app-theme]) .proFeatureRow + .proFeatureRow {
+  border-color: var(--border-color);
+}
+
+:global(html[data-app-theme]) .proSuccessOverlay {
+  background: var(--overlay-bg);
+}
+
+:global(html[data-app-theme]) .proSuccessDialog {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 28px 84px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) .proSuccessClose {
+  border-color: var(--border-color);
+  background: var(--button-bg);
+  color: var(--button-text);
+}

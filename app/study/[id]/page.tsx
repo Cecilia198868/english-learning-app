@@ -692,14 +692,6 @@ export default function StudyPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    window.localStorage.removeItem("speakflow-appearance-preference");
-    delete document.documentElement.dataset.speakflowAppearance;
-    delete document.documentElement.dataset.speakflowTheme;
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
     const flushVocabulary = () => {
       void flushVocabularyCloudSync();
     };

@@ -284,7 +284,6 @@ type HelpCenterSection = {
 };
 
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
-const appearancePreferenceStorageKey = "speakflow-appearance-preference";
 const fontSizePreferenceStorageKey = "speakflow-font-size-preference";
 const freeStudyRouteStateStorageKey = "speakflow-free-study-route-state";
 const selectedVoiceStorageKey = "speakflow-selected-voice-uri";
@@ -3633,10 +3632,6 @@ function SpeakEnglishClient() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
-    window.localStorage.removeItem(appearancePreferenceStorageKey);
-    delete document.documentElement.dataset.speakflowAppearance;
-    delete document.documentElement.dataset.speakflowTheme;
 
     const savedFontSize = window.localStorage.getItem(
       fontSizePreferenceStorageKey

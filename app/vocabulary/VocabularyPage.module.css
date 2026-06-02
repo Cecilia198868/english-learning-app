@@ -4103,3 +4103,95 @@
     font-size: 0.68rem;
   }
 }
+
+:global(html[data-app-theme]) :global(.sf-vocabulary-learning-page),
+:global(html[data-app-theme]) :global(.sf-expression-library-page) {
+  background: var(--app-bg-gradient);
+  color: var(--text-primary);
+  filter: saturate(var(--app-brightness-saturate, 1));
+}
+
+:global(html[data-app-theme]) :global(.sf-vocabulary-learning-phone),
+:global(html[data-app-theme]) :global(.sf-expression-library-phone),
+:global(html[data-app-theme]) :global(.sf-vocabulary-learning-card),
+:global(html[data-app-theme]) :global(.sf-vocabulary-word-card),
+:global(html[data-app-theme]) :global(.sf-vocabulary-example-card),
+:global(html[data-app-theme]) :global(.sf-vocabulary-progress-card),
+:global(html[data-app-theme]) :global(.sf-vocabulary-control-bar),
+:global(html[data-app-theme]) :global(.sf-expression-library-topbar),
+:global(html[data-app-theme]) :global(.sf-expression-library-stat),
+:global(html[data-app-theme]) :global(.sf-expression-library-search),
+:global(html[data-app-theme]) :global(.sf-expression-library-filter),
+:global(html[data-app-theme]) :global(.sf-expression-library-item),
+:global(html[data-app-theme]) :global(.sf-expression-library-bottom-nav) {
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow:
+    0 14px 30px var(--shadow-color),
+    inset 0 1px 0 var(--theme-inset);
+}
+
+:global(html[data-app-theme]) :global(.sf-vocabulary-brand strong),
+:global(html[data-app-theme]) :global(.sf-vocabulary-title h1),
+:global(html[data-app-theme]) :global(.sf-vocabulary-word),
+:global(html[data-app-theme]) :global(.sf-vocabulary-example-text),
+:global(html[data-app-theme]) :global(.sf-vocabulary-progress-title),
+:global(html[data-app-theme]) :global(.sf-expression-library-brand strong),
+:global(html[data-app-theme]) :global(.sf-expression-library-title-copy h1),
+:global(html[data-app-theme]) :global(.sf-expression-library-stat strong),
+:global(html[data-app-theme]) :global(.sf-expression-library-word-line strong) {
+  color: var(--text-primary);
+}
+
+:global(html[data-app-theme]) :global(.sf-vocabulary-brand small),
+:global(html[data-app-theme]) :global(.sf-vocabulary-subtitle),
+:global(html[data-app-theme]) :global(.sf-vocabulary-phonetic),
+:global(html[data-app-theme]) :global(.sf-vocabulary-meaning),
+:global(html[data-app-theme]) :global(.sf-vocabulary-example-translation),
+:global(html[data-app-theme]) :global(.sf-expression-library-brand small),
+:global(html[data-app-theme]) :global(.sf-expression-library-title-copy p),
+:global(html[data-app-theme]) :global(.sf-expression-library-stat p),
+:global(html[data-app-theme]) :global(.sf-expression-library-meaning),
+:global(html[data-app-theme]) :global(.sf-expression-library-item-status) {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) :global(.sf-expression-library-search input) {
+  background: transparent;
+  color: var(--input-text);
+}
+
+:global(html[data-app-theme]) :global(.sf-expression-library-search input::placeholder) {
+  color: color-mix(in srgb, var(--text-secondary) 72%, transparent);
+}
+
+:global(html[data-app-theme]) :global(.sf-vocabulary-progress-track),
+:global(html[data-app-theme]) :global(.sf-expression-library-progress-track) {
+  background: var(--progress-track);
+}
+
+:global(html[data-app-theme]) :global(.sf-vocabulary-progress-fill),
+:global(html[data-app-theme]) :global(.sf-expression-library-progress-fill) {
+  background: var(--progress-fill);
+}
+
+:global(html[data-app-theme]) :global(.sf-vocabulary-primary-button),
+:global(html[data-app-theme]) :global(.sf-vocabulary-follow-button),
+:global(html[data-app-theme]) :global(.sf-expression-library-bottom-tab.is-active) {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+:global(html[data-app-theme]) :global(.sf-vocabulary-menu-button),
+:global(html[data-app-theme]) :global(.sf-vocabulary-back-button),
+:global(html[data-app-theme]) :global(.sf-expression-library-home),
+:global(html[data-app-theme]) :global(.sf-expression-library-more-button) {
+  color: var(--icon-color);
+}
+
+:global(html[data-app-theme="dark"]) :global(.sf-expression-library-hero-art),
+:global(html[data-app-theme="dark"]) :global(.sf-vocabulary-art) {
+  opacity: 0.78;
+  filter: brightness(0.86) saturate(0.86);
+}
