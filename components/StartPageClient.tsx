@@ -486,9 +486,12 @@ export default function StartPageClient({
     () => ({ "--progress-percent": `${continuePercent}%` }) as CSSProperties,
     [continuePercent]
   );
-  const menuHref = "/menu";
-  const menuLabel = isSignedIn ? "打开学习菜单" : "打开游客菜单";
-  const showStarterHome = !isSignedIn;
+  const showGuestHome = !isSignedIn;
+  const guestMenuHref = "/menu";
+  const subscriberMenuHref = "/account";
+  const menuHref = showGuestHome ? guestMenuHref : subscriberMenuHref;
+  const menuLabel = showGuestHome ? "打开游客菜单" : "打开订阅用户账户界面";
+  const showStarterHome = showGuestHome;
 
   if (showStarterHome) {
     return (
