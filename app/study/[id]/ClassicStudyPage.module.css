@@ -2684,10 +2684,12 @@
 
 .studyTopbar {
   position: relative;
-  display: flex;
-  min-height: 92px;
+  display: grid;
+  grid-template-columns: 66px minmax(0, 1fr) max-content;
+  gap: 7px;
+  min-height: 106px;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: stretch;
   padding: 0;
   border-radius: 0;
   background: transparent;
@@ -2695,12 +2697,11 @@
 }
 
 .homeShortcut {
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: static;
   display: grid;
   justify-items: center;
-  gap: 9px;
+  gap: 10px;
+  justify-self: start;
   border: 0;
   background: transparent;
   color: #133f1d;
@@ -2738,19 +2739,19 @@
 }
 
 .switchCourseButton {
-  position: absolute;
-  right: 0;
-  top: 3px;
+  position: static;
   display: inline-flex;
-  min-height: 56px;
+  min-height: 53px;
   align-items: center;
-  gap: 8px;
+  align-self: start;
+  justify-self: end;
+  gap: 7px;
   border: 1px solid rgba(35, 70, 32, 0.11);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.88);
   color: #143f1e;
-  padding: 0 15px;
-  font-size: 0.96rem;
+  padding: 0 13px;
+  font-size: 0.92rem;
   font-weight: 900;
   line-height: 1;
   white-space: nowrap;
@@ -2760,8 +2761,8 @@
 }
 
 .switchCourseButton svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
@@ -2770,57 +2771,60 @@
 }
 
 .switchCourseButton svg:last-child {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   stroke-width: 3.2;
 }
 
 .studyPhone .brand {
-  gap: 10px;
+  min-width: 0;
+  gap: 8px;
+  justify-self: center;
   color: #174521;
-  padding-top: 2px;
+  padding-top: 6px;
 }
 
 .studyPhone .brandIcon {
-  width: 45px;
-  height: 45px;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
   color: #4f8a58;
 }
 
 .studyPhone .brandTitle {
   color: #174521;
-  font-size: clamp(1.58rem, 7vw, 1.9rem);
+  font-size: clamp(1.38rem, 5.5vw, 1.66rem);
   font-weight: 900;
   line-height: 0.98;
 }
 
 .studyPhone .brandSubtitle {
-  margin-top: 7px;
+  margin-top: 6px;
   color: #557c4f;
-  font-size: clamp(0.68rem, 3vw, 0.84rem);
+  font-size: clamp(0.6rem, 2.55vw, 0.74rem);
   font-weight: 900;
   line-height: 1;
 }
 
 .studyTopicBar {
   display: grid;
-  grid-template-columns: 88px minmax(0, 1fr);
-  align-items: end;
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: center;
   justify-content: stretch;
-  column-gap: 18px;
+  column-gap: 16px;
   min-height: auto;
-  padding: 20px 18px 12px;
+  padding: 16px 18px 10px;
 }
 
 .studyTopicBar .topicIcon {
-  width: 86px;
-  height: 86px;
+  width: 104px;
+  height: 104px;
   color: #6fa06d;
 }
 
 .studyTopicBar .topicIcon svg {
-  width: 86px;
-  height: 86px;
+  width: 104px;
+  height: 104px;
   stroke-width: 2.8;
 }
 
@@ -2852,16 +2856,16 @@
 .studyTopicBar .topicTitle {
   max-width: none;
   color: #143f1e;
-  font-size: clamp(1.95rem, 8.4vw, 2.42rem);
+  font-size: clamp(2rem, 8vw, 2.35rem);
   font-weight: 900;
-  line-height: 1.12;
+  line-height: 1.08;
   white-space: normal;
 }
 
 .studyTopicBar .topicProgress {
   margin: 0;
   color: #51784d;
-  font-size: clamp(1.15rem, 5vw, 1.42rem);
+  font-size: clamp(1.15rem, 4.8vw, 1.34rem);
   font-weight: 650;
   line-height: 1;
 }
@@ -2899,9 +2903,9 @@
 }
 
 .studyPhone .dialogCard {
-  min-height: 282px;
+  min-height: 310px;
   margin: 16px 6px 0;
-  padding: 29px 24px 26px;
+  padding: 26px 28px 22px;
   border-color: rgba(126, 159, 102, 0.18);
   border-radius: 30px;
   background:
@@ -2913,6 +2917,8 @@
 }
 
 .studyPhone .speakerLine {
+  display: flex;
+  align-items: center;
   gap: 17px;
 }
 
@@ -2938,11 +2944,11 @@
 }
 
 .studyPhone .speechBubble {
-  min-height: 139px;
-  margin-top: 24px;
+  min-height: 132px;
+  margin-top: 25px;
   justify-items: center;
-  gap: 14px;
-  padding: 32px 38px 27px;
+  gap: 10px;
+  padding: 26px 42px 25px;
   border-color: rgba(126, 159, 102, 0.58);
   border-radius: 23px;
   background:
@@ -2961,24 +2967,24 @@
 .studyPhone .quoteStart,
 .studyPhone .quoteEnd {
   color: rgba(232, 149, 73, 0.68);
-  font-size: 4rem;
+  font-size: 3.5rem;
 }
 
 .studyPhone .quoteStart {
-  left: 38px;
-  top: 22px;
+  left: 42px;
+  top: 20px;
 }
 
 .studyPhone .quoteEnd {
   right: 36px;
-  bottom: 17px;
+  bottom: 16px;
 }
 
 .studyPhone .chinesePrompt {
   color: #143f1e;
-  font-size: clamp(1.58rem, 6.9vw, 2rem);
+  font-size: clamp(1.42rem, 5.7vw, 1.78rem);
   font-weight: 900 !important;
-  line-height: 1.22;
+  line-height: 1.18;
   text-align: center;
 }
 
@@ -3000,13 +3006,14 @@
 }
 
 .studyPhone .promptHint {
-  left: 30px;
-  bottom: 25px;
+  position: static;
+  width: fit-content;
+  margin-top: 17px;
   border: 0;
   background: transparent;
   padding: 0;
   color: #dd6630;
-  font-size: 1.06rem;
+  font-size: 1.02rem;
   font-weight: 900 !important;
 }
 
@@ -3017,9 +3024,9 @@
 }
 
 .studyPhone .methodCard {
-  min-height: 126px;
+  min-height: 92px;
   margin: 16px 6px 0;
-  padding: 14px 20px 17px;
+  padding: 11px 17px 14px;
   border-color: rgba(126, 159, 102, 0.16);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.92);
@@ -3033,51 +3040,55 @@
 }
 
 .studyPhone .methodTitle strong {
-  font-size: 1.12rem;
+  font-size: 1.05rem;
 }
 
 .studyPhone .methodSteps {
-  gap: 8px;
-  margin-top: 15px;
+  grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1fr) 14px minmax(0, 1.18fr);
+  gap: 4px;
+  margin-top: 12px;
 }
 
 .studyPhone .methodStep {
-  grid-template-columns: 50px minmax(0, 1fr);
-  column-gap: 8px;
+  grid-template-columns: 38px minmax(0, 1fr);
+  column-gap: 6px;
+  align-items: center;
 }
 
 .studyPhone .methodIcon {
-  width: 50px;
-  height: 50px;
+  width: 38px;
+  height: 38px;
   background: #edf5e8;
   color: #5f8f5d;
 }
 
 .studyPhone .methodIcon svg {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   stroke-width: 3;
 }
 
 .studyPhone .stepNumber {
-  width: 24px;
-  height: 24px;
-  transform: translate(32px, -19px);
+  width: 21px;
+  height: 21px;
+  transform: translate(24px, -16px);
   background: #5c8a50;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
 }
 
 .studyPhone .stepCopy strong {
   color: #143f1e;
-  font-size: 0.94rem;
+  font-size: 0.76rem;
   line-height: 1.08;
+  white-space: nowrap;
 }
 
 .studyPhone .stepCopy small {
-  margin-top: 7px;
+  margin-top: 5px;
   color: #486d45;
-  font-size: 0.76rem;
+  font-size: 0.58rem;
   line-height: 1.18;
+  white-space: normal;
 }
 
 .studyPhone .methodArrow {
@@ -3087,8 +3098,8 @@
 
 .studyPhone .practiceControls {
   grid-template-columns: minmax(0, 1fr) 112px minmax(0, 1fr);
-  gap: 28px;
-  margin: 64px 10px 0;
+  gap: 26px;
+  margin: 52px 10px 0;
 }
 
 .studyPhone .sentenceButton {
@@ -3200,6 +3211,89 @@
   height: 29px;
 }
 
+@media (max-width: 410px) {
+  .studyTopbar {
+    grid-template-columns: 62px minmax(0, 1fr) max-content;
+    gap: 6px;
+  }
+
+  .homeIconBox {
+    width: 62px;
+    height: 62px;
+    border-radius: 22px;
+  }
+
+  .switchCourseButton {
+    min-height: 50px;
+    gap: 6px;
+    padding: 0 10px;
+    font-size: 0.84rem;
+  }
+
+  .switchCourseButton svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .switchCourseButton svg:last-child {
+    width: 16px;
+    height: 16px;
+  }
+
+  .studyPhone .brand {
+    gap: 7px;
+    padding-top: 6px;
+  }
+
+  .studyPhone .brandIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .studyPhone .brandTitle {
+    font-size: 1.34rem;
+  }
+
+  .studyPhone .brandSubtitle {
+    font-size: 0.58rem;
+  }
+
+  .studyPhone .methodSteps {
+    grid-template-columns: minmax(0, 1fr) 12px minmax(0, 1fr) 12px minmax(0, 1.22fr);
+    gap: 3px;
+  }
+
+  .studyPhone .methodStep {
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 5px;
+  }
+
+  .studyPhone .methodIcon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .studyPhone .methodIcon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .studyPhone .stepNumber {
+    width: 19px;
+    height: 19px;
+    transform: translate(21px, -15px);
+    font-size: 0.68rem;
+  }
+
+  .studyPhone .stepCopy strong {
+    font-size: 0.68rem;
+  }
+
+  .studyPhone .stepCopy small {
+    font-size: 0.52rem;
+  }
+}
+
 @media (max-width: 374px) {
   .studyPhone {
     padding-right: 12px;
@@ -3223,8 +3317,8 @@
   .switchCourseButton {
     min-height: 50px;
     gap: 6px;
-    padding: 0 11px;
-    font-size: 0.86rem;
+    padding: 0 8px;
+    font-size: 0.78rem;
   }
 
   .switchCourseButton svg {
@@ -3233,20 +3327,20 @@
   }
 
   .studyPhone .brand {
-    gap: 7px;
+    gap: 6px;
   }
 
   .studyPhone .brandIcon {
-    width: 38px;
-    height: 38px;
+    width: 35px;
+    height: 35px;
   }
 
   .studyPhone .brandTitle {
-    font-size: 1.42rem;
+    font-size: 1.22rem;
   }
 
   .studyPhone .brandSubtitle {
-    font-size: 0.6rem;
+    font-size: 0.52rem;
   }
 
   .studyTopicBar {
@@ -3325,30 +3419,30 @@
   }
 
   .studyPhone .methodStep {
-    grid-template-columns: 38px minmax(0, 1fr);
-    column-gap: 5px;
+    grid-template-columns: 31px minmax(0, 1fr);
+    column-gap: 4px;
   }
 
   .studyPhone .methodIcon {
-    width: 38px;
-    height: 38px;
+    width: 31px;
+    height: 31px;
   }
 
   .studyPhone .methodIcon svg {
-    width: 24px;
-    height: 24px;
+    width: 19px;
+    height: 19px;
   }
 
   .studyPhone .stepNumber {
-    transform: translate(24px, -16px);
+    transform: translate(20px, -14px);
   }
 
   .studyPhone .stepCopy strong {
-    font-size: 0.78rem;
+    font-size: 0.62rem;
   }
 
   .studyPhone .stepCopy small {
-    font-size: 0.64rem;
+    font-size: 0.48rem;
   }
 
   .studyPhone .practiceControls {
