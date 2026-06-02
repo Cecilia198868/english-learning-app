@@ -1,4 +1,6 @@
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
+import { authOptions } from "@/auth";
 import FinanceGovernmentSectionMenuPage from "@/components/FinanceGovernmentSectionMenuPage";
 import {
   financeGovernmentSectionIds,
@@ -21,5 +23,12 @@ export default async function Page({
     notFound();
   }
 
-  return <FinanceGovernmentSectionMenuPage section={section} />;
+  const session = await getServerSession(authOptions);
+
+  return (
+    <FinanceGovernmentSectionMenuPage
+      isGuest={!session?.user?.email}
+      section={section}
+    />
+  );
 }

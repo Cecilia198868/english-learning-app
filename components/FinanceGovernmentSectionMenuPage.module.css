@@ -83,6 +83,7 @@
 }
 
 .lessonCard {
+  position: relative;
   display: grid;
   grid-template-columns: 82px 52px minmax(0, 1fr) 34px;
   align-items: center;
@@ -112,6 +113,49 @@
 .pendingCard {
   cursor: default;
   opacity: 0.82;
+}
+
+.lockedCard {
+  opacity: 1;
+}
+
+.lockedCard .iconTile,
+.lockedCard .numberBadge,
+.lockedCard .lessonTitle,
+.lockedCard .chevron {
+  opacity: 0.56;
+}
+
+.lockBadge {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  z-index: 2;
+  display: inline-flex;
+  min-height: 23px;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(70, 94, 60, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #31513a;
+  font-size: 0.72rem;
+  font-weight: 760;
+  line-height: 1;
+  padding: 0 8px;
+  box-shadow:
+    0 8px 16px rgba(49, 81, 58, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.lockBadge svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.3;
 }
 
 @media (hover: hover) {
@@ -258,5 +302,19 @@
 
   .lessonTitle {
     font-size: 0.98rem;
+  }
+
+  .lockBadge {
+    right: 8px;
+    top: 7px;
+    min-height: 19px;
+    gap: 4px;
+    font-size: 0.6rem;
+    padding: 0 6px;
+  }
+
+  .lockBadge svg {
+    width: 10px;
+    height: 10px;
   }
 }

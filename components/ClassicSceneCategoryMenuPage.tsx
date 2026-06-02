@@ -7,8 +7,15 @@ import type {
   ClassicSceneCategoryMenu,
   ClassicSceneSubcategory,
 } from "@/data/classicSceneCategoryMenus";
-import HomeMenuIcon from "@/components/HomeMenuIcon";
 import styles from "./ClassicSceneCategoryMenuPage.module.css";
+
+function ArrowLeftIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M19 12H5M11 6l-6 6 6 6" />
+    </svg>
+  );
+}
 
 function ArrowRightIcon() {
   return (
@@ -331,8 +338,13 @@ export default function ClassicSceneCategoryMenuPage({
     <main className={styles.pageShell} style={categoryStyle}>
       <section className={styles.panel} aria-labelledby="classic-category-title">
         <header className={styles.topbar}>
-          <Link className={styles.homeButton} href="/start" aria-label="回到首页">
-            <HomeMenuIcon label={null} />
+          <Link
+            className={styles.topBackLink}
+            href="/classic-scenes"
+            aria-label="返回经典场景一级菜单"
+          >
+            <ArrowLeftIcon />
+            返回上一级
           </Link>
 
           <div className={styles.titleBlock}>

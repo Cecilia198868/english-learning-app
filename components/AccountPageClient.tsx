@@ -3,11 +3,13 @@
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import styles from "./AccountPageClient.module.css";
 
 type AccountPageClientProps = {
   isAdmin: boolean;
+  showProSuccessOnLoad: boolean;
   userEmail: string;
   userImage: string;
   userName: string;
@@ -51,8 +53,37 @@ type RowProps = {
   tone?: "blue" | "cyan" | "indigo" | "plain" | "purple";
 };
 
+type ProFeatureIconName = "bookmark" | "cloud" | "graduation" | "infinity";
+
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
 const accountPageUrl = (panel: string) => `/account?panel=${panel}`;
+
+const proSuccessFeatures: Array<{
+  description: string;
+  icon: ProFeatureIconName;
+  title: string;
+}> = [
+  {
+    description: "不限制练习次数，想练就练",
+    icon: "infinity",
+    title: "无限练习",
+  },
+  {
+    description: "随心收藏表达，永久保存",
+    icon: "bookmark",
+    title: "无限收藏",
+  },
+  {
+    description: "所有课程和场景，全部为你开放",
+    icon: "graduation",
+    title: "全部课程开放",
+  },
+  {
+    description: "学习进度云端保存，永不丢失",
+    icon: "cloud",
+    title: "学习记录永久保存",
+  },
+];
 
 function getAccountAvatarStorageKey(identifier: string) {
   return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
@@ -233,6 +264,107 @@ function ChevronIcon() {
   );
 }
 
+function ArrowRightIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="M5 12h14M13 5l7 7-7 7" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="m6 12.5 4 4L18 7" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
+function PartyIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 96 96">
+      <path
+        d="M22 78 39 26l31 31-52 17c-2.4.8-4.2-1-3.4-3.4L22 78Z"
+        fill="#6d4cff"
+      />
+      <path d="m30 53 19 19-27 8 8-27Z" fill="#4a6cff" />
+      <path d="m35 39 23 23-8 2-18-18 3-7Z" fill="#ffd45a" />
+      <path d="m40 26 31 31" fill="none" stroke="#ffb33f" strokeWidth="6" />
+      <path
+        d="M51 23c2-8 9-6 8 0-1 5-5 5-5 10M63 32c8-7 14-1 8 5-4 4-8 1-11 8M48 15c-1-8 8-9 9-2M71 23c3-8 12-4 8 3"
+        fill="none"
+        stroke="#6d6cff"
+        strokeLinecap="round"
+        strokeWidth="4"
+      />
+      <path
+        d="M58 20c7 1 10 6 10 13M69 43c5-2 9-1 12 3"
+        fill="none"
+        stroke="#ff5f91"
+        strokeLinecap="round"
+        strokeWidth="4"
+      />
+      <path
+        d="M40 20h.1M73 17h.1M84 37h.1M63 8h.1"
+        fill="none"
+        strokeLinecap="round"
+        strokeWidth="7"
+      />
+    </svg>
+  );
+}
+
+function ProFeatureIcon({ name }: { name: ProFeatureIconName }) {
+  if (name === "bookmark") {
+    return (
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+        <path d="M10 6h12a2 2 0 0 1 2 2v20l-8-5-8 5V8a2 2 0 0 1 2-2Z" />
+      </svg>
+    );
+  }
+
+  if (name === "cloud") {
+    return (
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+        <path d="M11 25h15a5 5 0 0 0 0-10 8.2 8.2 0 0 0-15.8-2.2A6.3 6.3 0 0 0 11 25Z" />
+        <path d="M16 23v-8M12.5 18.5 16 15l3.5 3.5" />
+      </svg>
+    );
+  }
+
+  if (name === "graduation") {
+    return (
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+        <path d="m4 12 12-6 12 6-12 6-12-6Z" />
+        <path d="M9 15v6c3 4 11 4 14 0v-6M27 13v7" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+      <path d="M11 21c-4 0-6-3.1-6-5s2-5 6-5c5 0 7 10 12 10 4 0 6-3.1 6-5s-2-5-6-5c-5 0-7 10-12 10Z" />
+    </svg>
+  );
+}
+
+function ShieldStarIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 80 80">
+      <path d="M40 7 64 16v17c0 15-9.8 26.7-24 33-14.2-6.3-24-18-24-33V16L40 7Z" />
+      <path d="m40 21 5.2 10.5 11.6 1.7-8.4 8.2 2 11.5L40 47.5 29.6 53l2-11.5-8.4-8.2 11.6-1.7L40 21Z" />
+    </svg>
+  );
+}
+
 function Row({ badge, description, href, icon, label, onClick, tone = "plain" }: RowProps) {
   const content = (
     <>
@@ -284,10 +416,12 @@ function Section({
 
 export default function AccountPageClient({
   isAdmin,
+  showProSuccessOnLoad,
   userEmail,
   userImage,
   userName,
 }: AccountPageClientProps) {
+  const router = useRouter();
   const displayName = useMemo(
     () => getDisplayName(userName, userEmail),
     [userEmail, userName]
@@ -298,10 +432,16 @@ export default function AccountPageClient({
   });
   const [subscription, setSubscription] =
     useState<AccountSubscriptionResponse | null | undefined>(undefined);
+  const [isProSuccessDismissed, setIsProSuccessDismissed] = useState(false);
   const subscriptionCopy = useMemo(
     () => getSubscriptionCopy(subscription),
     [subscription]
   );
+  const isProSubscription =
+    subscription?.subscriptionStatus === "pro" ||
+    subscription?.subscriptionStatus === "cancels_at_period_end";
+  const showProSuccessModal =
+    showProSuccessOnLoad && isProSubscription && !isProSuccessDismissed;
 
   useEffect(() => {
     const identifier = userEmail || userName || "local-user";
@@ -318,6 +458,14 @@ export default function AccountPageClient({
 
     return () => window.clearTimeout(timer);
   }, [userEmail, userImage, userName]);
+
+  function clearCheckoutSuccessUrl() {
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete("checkout");
+    router.replace(`${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`, {
+      scroll: false,
+    });
+  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -344,6 +492,16 @@ export default function AccountPageClient({
 
     return () => controller.abort();
   }, []);
+
+  function closeProSuccessModal() {
+    setIsProSuccessDismissed(true);
+    clearCheckoutSuccessUrl();
+  }
+
+  function startLearning() {
+    setIsProSuccessDismissed(true);
+    router.push("/start");
+  }
 
   return (
     <main className={styles.page}>
@@ -449,6 +607,85 @@ export default function AccountPageClient({
           <strong>退出登录</strong>
         </button>
       </section>
+      {showProSuccessModal ? (
+        <div
+          className={styles.proSuccessOverlay}
+          aria-labelledby="pro-success-title"
+          aria-modal="true"
+          role="dialog"
+        >
+          <div className={styles.proConfettiLayer} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+          <section className={styles.proSuccessDialog}>
+            <button
+              type="button"
+              className={styles.proSuccessClose}
+              aria-label="关闭订阅成功弹窗"
+              onClick={closeProSuccessModal}
+            >
+              <CloseIcon />
+            </button>
+
+            <div className={styles.proSuccessHero}>
+              <span className={styles.proPartyIcon}>
+                <PartyIcon />
+              </span>
+              <h2 id="pro-success-title">
+                <span>订阅成功！</span>
+                欢迎加入 <strong>SpeakFlow Pro</strong>
+              </h2>
+              <p>从现在开始，解锁完整学习体验</p>
+            </div>
+
+            <div className={styles.proFeaturePanel}>
+              {proSuccessFeatures.map((feature) => (
+                <div className={styles.proFeatureRow} key={feature.title}>
+                  <span className={styles.proFeatureIcon}>
+                    <ProFeatureIcon name={feature.icon} />
+                  </span>
+                  <span className={styles.proFeatureCopy}>
+                    <strong>
+                      {feature.title}
+                      <em>∞</em>
+                    </strong>
+                    <small>{feature.description}</small>
+                  </span>
+                  <span className={styles.proFeatureCheck}>
+                    <CheckIcon />
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.proMemberCard}>
+              <span className={styles.proMemberBadge}>
+                <ShieldStarIcon />
+              </span>
+              <span className={styles.proMemberCopy}>
+                <strong>你已成为 SpeakFlow Pro 会员</strong>
+                <small>让我们一起，持续提升英语表达能力吧！</small>
+              </span>
+            </div>
+
+            <button
+              type="button"
+              className={styles.proStartButton}
+              onClick={startLearning}
+            >
+              开始学习
+              <ArrowRightIcon />
+            </button>
+          </section>
+        </div>
+      ) : null}
     </main>
   );
 }

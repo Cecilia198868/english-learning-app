@@ -2,7 +2,6 @@
 
 import type { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
-import HomeMenuIcon from "@/components/HomeMenuIcon";
 import styles from "./FinanceGovernmentMenuPage.module.css";
 
 type FinanceCardIcon =
@@ -135,6 +134,15 @@ function ArrowRight() {
   );
 }
 
+function LockIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="6.5" y="10.5" width="11" height="9" rx="2" />
+      <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14v2.5" />
+    </svg>
+  );
+}
+
 function CardIcon({ icon }: { icon: FinanceCardIcon }) {
   return (
     <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
@@ -223,22 +231,26 @@ function HeroVisual() {
   );
 }
 
-export default function FinanceGovernmentMenuPage() {
+export default function FinanceGovernmentMenuPage({
+  isGuest = false,
+}: {
+  isGuest?: boolean;
+}) {
   const router = useRouter();
   const goBack = () => router.push("/classic-scenes");
-  const openHome = () => router.push("/start");
 
   return (
     <main className={styles.pageShell}>
       <section className={styles.panel} aria-label="金融与行政事务二级菜单">
         <header className={styles.header}>
           <button
-            className={styles.menuButton}
+            className={styles.topBackLink}
             type="button"
-            aria-label="回到首页"
-            onClick={openHome}
+            aria-label="返回经典场景一级菜单"
+            onClick={goBack}
           >
-            <HomeMenuIcon label={null} />
+            <ArrowLeft />
+            返回上一级
           </button>
 
           <div className={styles.brand} aria-label="SpeakFlow Voice Practice">
@@ -255,10 +267,6 @@ export default function FinanceGovernmentMenuPage() {
         </header>
 
         <section className={styles.hero}>
-          <button className={styles.backLink} type="button" onClick={goBack}>
-            <ArrowLeft />
-            返回上一级
-          </button>
           <div className={styles.heroText}>
             <h1>金融与行政事务</h1>
             <p>银行、支付、税务、签证等场景</p>
@@ -267,33 +275,48 @@ export default function FinanceGovernmentMenuPage() {
         </section>
 
         <section className={styles.cardGrid} aria-label="金融与行政事务分类">
-          {financeCards.map((card) => (
-            <button
-              key={card.id}
-              type="button"
-              className={styles.sceneCard}
-              style={
-                {
-                  "--card-accent": card.accent,
-                  "--icon-bg": card.iconBackground,
-                } as CSSProperties
-              }
-              onClick={() => router.push(card.href)}
-              aria-label={`进入${card.title}`}
-            >
-              <span className={styles.iconTile} aria-hidden="true">
-                <CardIcon icon={card.icon} />
-              </span>
-              <span className={styles.cardCopy}>
-                <strong>{card.title}</strong>
-                <span>{card.description}</span>
-              </span>
-              <span className={styles.cardMeta}>{card.count} 个课程</span>
-              <span className={styles.arrowCircle} aria-hidden="true">
-                <ArrowRight />
-              </span>
-            </button>
-          ))}
+          {financeCards.map((card, index) => {
+            const isLocked = isGuest && index > 0;
+
+            return (
+              <button
+                key={card.id}
+                type="button"
+                className={`${styles.sceneCard} ${isLocked ? styles.lockedCard : ""}`}
+                style={
+                  {
+                    "--card-accent": card.accent,
+                    "--icon-bg": card.iconBackground,
+                  } as CSSProperties
+                }
+                onClick={() => {
+                  if (!isLocked) router.push(card.href);
+                }}
+                disabled={isLocked}
+                aria-label={
+                  isLocked ? `${card.title}，游客没有权限` : `进入${card.title}`
+                }
+              >
+                {isLocked ? (
+                  <span className={styles.lockBadge}>
+                    <LockIcon />
+                    游客无权限
+                  </span>
+                ) : null}
+                <span className={styles.iconTile} aria-hidden="true">
+                  <CardIcon icon={card.icon} />
+                </span>
+                <span className={styles.cardCopy}>
+                  <strong>{card.title}</strong>
+                  <span>{card.description}</span>
+                </span>
+                <span className={styles.cardMeta}>{card.count} 个课程</span>
+                <span className={styles.arrowCircle} aria-hidden="true">
+                  <ArrowRight />
+                </span>
+              </button>
+            );
+          })}
         </section>
       </section>
     </main>

@@ -31,6 +31,15 @@ function ChevronIcon() {
   );
 }
 
+function LockIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <rect x="6.5" y="10.5" width="11" height="9" rx="2" />
+      <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14v2.5" />
+    </svg>
+  );
+}
+
 function LessonIcon({ type }: { type: FinanceGovernmentLessonIcon }) {
   return (
     <svg
@@ -167,7 +176,13 @@ function LessonIcon({ type }: { type: FinanceGovernmentLessonIcon }) {
   );
 }
 
-function LessonCard({ lesson }: { lesson: FinanceGovernmentLesson }) {
+function LessonCard({
+  isLocked = false,
+  lesson,
+}: {
+  isLocked?: boolean;
+  lesson: FinanceGovernmentLesson;
+}) {
   const cardStyle = {
     "--lesson-accent": lesson.accent,
     "--lesson-tile": lesson.tile,
@@ -180,17 +195,28 @@ function LessonCard({ lesson }: { lesson: FinanceGovernmentLesson }) {
       </span>
       <span className={styles.numberBadge}>{lesson.number}</span>
       <span className={styles.lessonTitle}>{lesson.title}</span>
+      {isLocked ? (
+        <span className={styles.lockBadge}>
+          <LockIcon />
+          游客无权限
+        </span>
+      ) : null}
       <span className={styles.chevron}>
         <ChevronIcon />
       </span>
     </>
   );
 
-  if (!lesson.href) {
+  if (isLocked || !lesson.href) {
     return (
       <div
         aria-disabled="true"
-        className={`${styles.lessonCard} ${styles.pendingCard}`}
+        aria-label={
+          isLocked ? `${lesson.title}，游客没有权限` : `${lesson.title}，暂不可用`
+        }
+        className={`${styles.lessonCard} ${styles.pendingCard} ${
+          isLocked ? styles.lockedCard : ""
+        }`}
         style={cardStyle}
       >
         {cardContent}
@@ -212,10 +238,15 @@ function LessonCard({ lesson }: { lesson: FinanceGovernmentLesson }) {
 }
 
 export default function FinanceGovernmentSectionMenuPage({
+  isGuest = false,
   section,
 }: {
+  isGuest?: boolean;
   section: FinanceGovernmentSection;
 }) {
+  const shouldLockGuestLesson = (index: number) =>
+    isGuest && (section.id !== "bank-finance" || index > 0);
+
   return (
     <main className={styles.pageShell}>
       <section className={styles.phone} aria-labelledby="finance-section-title">
@@ -233,8 +264,12 @@ export default function FinanceGovernmentSectionMenuPage({
         </header>
 
         <nav className={styles.lessonList} aria-label={`${section.title}话题`}>
-          {section.lessons.map((lesson) => (
-            <LessonCard key={`${lesson.number}-${lesson.title}`} lesson={lesson} />
+          {section.lessons.map((lesson, index) => (
+            <LessonCard
+              key={`${lesson.number}-${lesson.title}`}
+              isLocked={shouldLockGuestLesson(index)}
+              lesson={lesson}
+            />
           ))}
         </nav>
       </section>

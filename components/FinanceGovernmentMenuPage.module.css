@@ -25,11 +25,42 @@
 }
 
 .header {
-  display: grid;
-  grid-template-columns: 86px 1fr 86px;
+  position: relative;
+  display: flex;
+  justify-content: center;
   align-items: center;
   min-height: 82px;
-  column-gap: 18px;
+}
+
+.topBackLink {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  color: #0f5a2b;
+  font-size: 1.08rem;
+  font-weight: 850;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+.topBackLink:active {
+  transform: translateY(-50%) translateY(1px);
+}
+
+.topBackLink svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.7;
 }
 
 .menuButton {
@@ -444,12 +475,67 @@
   transform: scale(0.99);
 }
 
+.lockedCard {
+  cursor: not-allowed;
+}
+
+.lockedCard .cardCopy,
+.lockedCard .cardMeta,
+.lockedCard .iconTile,
+.lockedCard .arrowCircle {
+  opacity: 0.58;
+}
+
+.lockedCard:disabled {
+  color: #151515;
+}
+
+.lockBadge {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 3;
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(74, 80, 54, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #31513a;
+  font-size: 0.76rem;
+  font-weight: 760;
+  line-height: 1;
+  padding: 0 8px;
+  box-shadow:
+    0 8px 16px rgba(49, 81, 58, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.lockBadge svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.3;
+}
+
 @media (hover: hover) {
   .sceneCard:hover {
     transform: translateY(-2px);
     border-color: rgba(65, 79, 42, 0.18);
     box-shadow:
       0 18px 34px rgba(57, 54, 38, 0.09),
+      inset 0 1px 0 rgba(255, 255, 255, 0.98);
+  }
+
+  .lockedCard:hover {
+    transform: none;
+    border-color: rgba(65, 79, 42, 0.13);
+    box-shadow:
+      0 15px 28px rgba(57, 54, 38, 0.055),
       inset 0 1px 0 rgba(255, 255, 255, 0.98);
   }
 }
@@ -554,9 +640,18 @@
   }
 
   .header {
-    grid-template-columns: 54px 1fr 54px;
     min-height: 58px;
-    column-gap: 8px;
+  }
+
+  .topBackLink {
+    gap: 7px;
+    font-size: 0.86rem;
+  }
+
+  .topBackLink svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2.8;
   }
 
   .menuButton {
@@ -817,6 +912,20 @@
     height: 18px;
     stroke-width: 3.5;
   }
+
+  .lockBadge {
+    right: 7px;
+    top: 7px;
+    min-height: 20px;
+    gap: 4px;
+    font-size: 0.62rem;
+    padding: 0 6px;
+  }
+
+  .lockBadge svg {
+    width: 11px;
+    height: 11px;
+  }
 }
 
 @media (max-width: 374px) {
@@ -826,7 +935,17 @@
   }
 
   .header {
-    grid-template-columns: 48px 1fr 48px;
+    min-height: 52px;
+  }
+
+  .topBackLink {
+    gap: 5px;
+    font-size: 0.78rem;
+  }
+
+  .topBackLink svg {
+    width: 16px;
+    height: 16px;
   }
 
   .brandMark {

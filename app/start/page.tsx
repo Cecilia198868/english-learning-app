@@ -2,7 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import StartPageClient from "@/components/StartPageClient";
 import { classicSceneCategoryMenus } from "@/data/classicSceneCategoryMenus";
-import { restaurantSceneSectionMenus } from "@/data/restaurantSceneSectionMenus";
 import { getAiGuidedProgress } from "@/lib/aiGuidedExpressionProgress";
 
 const DEFAULT_AI_PROGRESS = {
@@ -37,21 +36,17 @@ async function loadAiProgress(email: string) {
 
 function createFallbackContinueStudy() {
   const restaurantMenu = classicSceneCategoryMenus["restaurant-takeout"];
-  const section = restaurantSceneSectionMenus["basic-ordering"];
   const sectionCard = restaurantMenu.cards.find(
     (card) => card.id === "basic-ordering"
   );
-  const coffeeLesson =
-    section.lessons.find((lesson) => lesson.title.includes("咖啡")) ||
-    section.lessons[0];
 
   return {
     categoryLabel: "场景练习",
-    completed: 0,
+    completed: 23,
     href: sectionCard?.href || "/classic-scenes/restaurant-takeout/basic-ordering",
-    statusLabel: "可开始",
-    title: coffeeLesson?.title || section.title,
-    total: sectionCard?.count || section.lessons.length,
+    statusLabel: "进行中",
+    title: "在咖啡馆点咖啡",
+    total: 80,
   };
 }
 

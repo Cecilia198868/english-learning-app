@@ -44,15 +44,29 @@ type StoredLastStudy = {
   sentenceIndex?: unknown;
 };
 
-type PracticeCardTone = "violet" | "blue" | "cyan" | "pink";
-type PracticeCardIcon = "mic" | "chat" | "bank" | "star";
+type PracticeCardTone = "violet" | "cyan" | "pink";
+type PracticeCardIcon = "mic" | "bank" | "star";
 
 const LAST_STUDY_PROGRESS_KEY = "lastStudyProgress";
 const LESSONS_STORAGE_KEY = "english-app-lessons";
-const BEGINNER_BADGE_LABEL = "🌱 初学者勋章";
 const ACCOUNT_AVATAR_STORAGE_PREFIX = "speakflow-account-avatar";
 
-const practiceCards: Array<{
+const proBenefits = [
+  {
+    description: "不限制练习次数",
+    title: "无限练习",
+  },
+  {
+    description: "随心收藏表达",
+    title: "无限收藏",
+  },
+  {
+    description: "所有课程任你学",
+    title: "全部课程开放",
+  },
+];
+
+const subscriberPracticeCards: Array<{
   href: string;
   icon: PracticeCardIcon;
   subtitle: string;
@@ -62,16 +76,9 @@ const practiceCards: Array<{
   {
     href: "/free-study/step-1",
     icon: "mic",
-    subtitle: "想到什么说什么，完全自由练习",
+    subtitle: "想说什么就说什么，完全自由练习",
     title: "自由学习",
     tone: "violet",
-  },
-  {
-    href: "/ai-guided-expression/step-1",
-    icon: "chat",
-    subtitle: "不知道说什么？AI 带你聊",
-    title: "AI 引导表达",
-    tone: "blue",
   },
   {
     href: "/classic-scenes",
@@ -83,7 +90,7 @@ const practiceCards: Array<{
   {
     href: "/new-expressions",
     icon: "star",
-    subtitle: "复习和巩固你学到的地道表达",
+    subtitle: "学习和巩固你学到的地道表达",
     title: "新表达",
     tone: "pink",
   },
@@ -91,10 +98,10 @@ const practiceCards: Array<{
 
 const starterPracticeCards: Array<{
   href: string;
-  icon: Exclude<PracticeCardIcon, "chat">;
+  icon: PracticeCardIcon;
   subtitle: string;
   title: string;
-  tone: Exclude<PracticeCardTone, "blue">;
+  tone: PracticeCardTone;
 }> = [
   {
     href: "/free-study/step-1",
@@ -138,17 +145,8 @@ function displayName(userName: string, userEmail: string) {
   return localPart || "SpeakFlow 用户";
 }
 
-function getAvatarInitials(name: string, email: string, isSignedIn: boolean) {
-  if (!isSignedIn) return "Hi";
-
-  const source = name.trim() || email.split("@")[0]?.trim() || "S";
-  const words = source.split(/\s+/).filter(Boolean);
-  const initials =
-    words.length > 1
-      ? `${words[0]?.[0] ?? ""}${words[1]?.[0] ?? ""}`
-      : source.slice(0, 2);
-
-  return initials.toUpperCase() || "S";
+function getInitial(name: string) {
+  return name.trim().slice(0, 1).toUpperCase() || "S";
 }
 
 function getAccountAvatarStorageKey(identifier: string) {
@@ -186,7 +184,9 @@ function countTrainingItems(content: string, fallbackTotal: number) {
   return Math.max(Math.ceil(nonEmptyLines.length / 2), fallbackTotal);
 }
 
-function createContinueStudyFromStorage(fallback: ContinueStudySummary): ContinueStudySummary {
+function createContinueStudyFromStorage(
+  fallback: ContinueStudySummary
+): ContinueStudySummary {
   try {
     const raw = window.localStorage.getItem(LAST_STUDY_PROGRESS_KEY);
     const saved = raw ? (JSON.parse(raw) as StoredLastStudy) : null;
@@ -213,8 +213,7 @@ function createContinueStudyFromStorage(fallback: ContinueStudySummary): Continu
         typeof storedLesson.txt_content === "string"
           ? storedLesson.txt_content
           : "";
-      const total =
-        countTrainingItems(content, Math.max(sentenceIndex + 1, 1));
+      const total = countTrainingItems(content, Math.max(sentenceIndex + 1, 1));
 
       return {
         categoryLabel: "自建课程",
@@ -240,8 +239,6 @@ function createContinueStudyFromStorage(fallback: ContinueStudySummary): Continu
   } catch {
     return fallback;
   }
-
-  return fallback;
 }
 
 function MenuIcon() {
@@ -260,17 +257,33 @@ function ChevronIcon() {
   );
 }
 
-function PracticeIcon({ type }: { type: PracticeCardIcon }) {
-  if (type === "chat") {
-    return (
-      <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
-        <path d="M9 22c0-8 6.8-14 16-14s16 6 16 14-6.8 14-16 14c-1.8 0-3.5-.2-5.1-.7L10 40l2.6-8A13.5 13.5 0 0 1 9 22Z" />
-        <path d="M17 23h.1M24 23h.1M31 23h.1" />
-        <path d="m34 8 1.7 3.5 3.8.5-2.7 2.7.6 3.8-3.4-1.8-3.4 1.8.6-3.8-2.7-2.7 3.8-.5L34 8Z" />
-      </svg>
-    );
-  }
+function CrownIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      <path d="M8 36h32l3-22-11 8-8-13-8 13-11-8 3 22Z" />
+      <path d="M10 40h28" />
+    </svg>
+  );
+}
 
+function CheckIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="m6 12 4 4 8-9" />
+    </svg>
+  );
+}
+
+function SparkleIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      <path d="M24 4c2.8 10.2 5.8 13.2 16 16-10.2 2.8-13.2 5.8-16 16-2.8-10.2-5.8-13.2-16-16 10.2-2.8 13.2-5.8 16-16Z" />
+      <path d="M39 30c1.4 5 2.8 6.4 8 8-5.2 1.6-6.6 3-8 8-1.6-5-3-6.4-8-8 5-1.6 6.4-3 8-8Z" />
+    </svg>
+  );
+}
+
+function PracticeIcon({ type }: { type: PracticeCardIcon }) {
   if (type === "bank") {
     return (
       <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
@@ -296,44 +309,71 @@ function PracticeIcon({ type }: { type: PracticeCardIcon }) {
   );
 }
 
-function StarBuddy() {
+function SubscriberStarBuddy() {
   return (
-    <svg aria-hidden="true" className={styles.starBuddy} focusable="false" viewBox="0 0 168 168">
+    <svg
+      aria-hidden="true"
+      className={styles.subscriberStarBuddy}
+      focusable="false"
+      viewBox="0 0 180 180"
+    >
       <defs>
-        <linearGradient id="start-star-gradient" x1="30" x2="132" y1="24" y2="144">
-          <stop stopColor="#a985ff" />
-          <stop offset="1" stopColor="#5e73ff" />
+        <linearGradient id="subscriber-star-gradient" x1="28" x2="152" y1="20" y2="152">
+          <stop stopColor="#9f82ff" />
+          <stop offset="1" stopColor="#6a5bff" />
         </linearGradient>
       </defs>
       <path
-        d="m84 17 20.2 42.8 45.5 6.9-33 33.2 7.8 46.9L84 124.5l-40.5 22.3 7.8-46.9-33-33.2 45.5-6.9L84 17Z"
-        fill="url(#start-star-gradient)"
+        d="m90 16 22.4 47 51.8 7.5-37.5 36.6 8.9 51.6L90 134.5l-45.6 24.2 8.9-51.6L15.8 70.5 67.6 63 90 16Z"
+        fill="url(#subscriber-star-gradient)"
       />
-      <path d="M66 83c4 5.2 10 8 18 8s14-2.8 18-8" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="5" />
-      <circle cx="68" cy="70" r="5" fill="#fff" />
-      <circle cx="100" cy="70" r="5" fill="#fff" />
-      <path d="M29 98h.1M139 46h.1M147 78h.1M42 42h.1" fill="none" stroke="#c7beff" strokeLinecap="round" strokeWidth="10" />
+      <circle cx="70" cy="78" r="6" fill="#fff" />
+      <circle cx="104" cy="78" r="6" fill="#fff" />
+      <path
+        d="M72 101c5.4 5.6 14.6 8.5 23 6.5 4-.9 7.8-3 10.5-6.5"
+        fill="none"
+        stroke="#fff"
+        strokeLinecap="round"
+        strokeWidth="5.2"
+      />
+      <path
+        d="M31 122h.1M145 58h.1M151 98h.1M48 50h.1"
+        fill="none"
+        stroke="#c4bcff"
+        strokeLinecap="round"
+        strokeWidth="10"
+      />
     </svg>
   );
 }
 
 function CoffeeScene() {
   return (
-    <svg aria-hidden="true" className={styles.coffeeScene} focusable="false" viewBox="0 0 120 120">
+    <svg
+      aria-hidden="true"
+      className={styles.coffeeScene}
+      focusable="false"
+      viewBox="0 0 120 88"
+    >
       <defs>
-        <linearGradient id="start-coffee-bg" x1="10" x2="108" y1="8" y2="112">
-          <stop stopColor="#f8f4ea" />
-          <stop offset="1" stopColor="#dbe9f6" />
+        <linearGradient id="start-coffee-bg" x1="8" x2="112" y1="2" y2="86">
+          <stop stopColor="#f2efe8" />
+          <stop offset=".5" stopColor="#d5e0e7" />
+          <stop offset="1" stopColor="#bb8e62" />
         </linearGradient>
       </defs>
-      <rect width="120" height="120" rx="28" fill="url(#start-coffee-bg)" />
-      <path d="M0 84c27-22 56-24 120-18v54H0V84Z" fill="#c99f70" opacity=".38" />
-      <ellipse cx="57" cy="83" fill="#a87344" opacity=".28" rx="42" ry="11" />
-      <path d="M33 47h44v19c0 14-10 23-22 23S33 80 33 66V47Z" fill="#fff" />
-      <path d="M77 54h9c7 0 12 5 12 12s-5 12-12 12h-9" fill="none" stroke="#fff" strokeWidth="8" />
-      <ellipse cx="55" cy="48" fill="#8c5730" rx="23" ry="8" />
-      <ellipse cx="55" cy="45" fill="#c98a4a" rx="21" ry="6" />
-      <path d="M45 33c-5-7 4-11-1-17M60 34c-6-7 4-12-1-18M74 35c-5-7 4-10 0-16" fill="none" stroke="#ffffff" strokeLinecap="round" strokeWidth="4" opacity=".82" />
+      <rect width="120" height="88" rx="16" fill="url(#start-coffee-bg)" />
+      <rect y="58" width="120" height="30" fill="#a36d42" opacity=".35" />
+      <ellipse cx="60" cy="62" rx="39" ry="9" fill="#6f4d32" opacity=".26" />
+      <path d="M36 31h42v17c0 13-9.5 21-21 21S36 61 36 48V31Z" fill="#fff" />
+      <path
+        d="M78 38h7c6 0 10 4.5 10 10s-4 10-10 10h-7"
+        fill="none"
+        stroke="#fff"
+        strokeWidth="7"
+      />
+      <ellipse cx="57" cy="31" rx="22" ry="7" fill="#8d552f" />
+      <ellipse cx="57" cy="29" rx="20" ry="5" fill="#c68748" />
     </svg>
   );
 }
@@ -374,40 +414,30 @@ function StarterStarIcon() {
 
 function StarterRobot() {
   return (
-    <svg
-      aria-hidden="true"
+    <Image
+      alt=""
       className={styles.starterRobot}
-      focusable="false"
-      viewBox="0 0 190 190"
-    >
-      <defs>
-        <linearGradient id="starter-robot-shadow" x1="28" x2="156" y1="26" y2="162">
-          <stop stopColor="#efe8ff" />
-          <stop offset="1" stopColor="#dbe9ff" />
-        </linearGradient>
-        <linearGradient id="starter-robot-accent" x1="52" x2="150" y1="34" y2="154">
-          <stop stopColor="#7d5cff" />
-          <stop offset="1" stopColor="#3d78ff" />
-        </linearGradient>
-      </defs>
-      <circle cx="105" cy="104" r="74" fill="url(#starter-robot-shadow)" opacity=".78" />
-      <path
-        d="M62 74c5-30 31-48 63-41 29 6 48 30 44 59-5 32-35 51-70 42-28-7-47-31-41-61Z"
-        fill="#fff"
-      />
-      <path
-        d="M68 74c6-23 27-37 53-32 23 5 39 24 35 47-5 25-29 39-56 32-23-6-37-26-32-47Z"
-        fill="url(#starter-robot-accent)"
-        opacity=".92"
-      />
-      <rect x="81" y="61" width="63" height="46" rx="22" fill="#111943" />
-      <path d="M94 83c4 4 8 4 12 0M124 83c4 4 8 4 12 0" fill="none" stroke="#52e3ff" strokeLinecap="round" strokeWidth="5" />
-      <path d="M57 103c-19 5-29 23-22 41 4 11 12 17 24 19" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="14" />
-      <path d="M59 112c-12 4-17 15-13 26" fill="none" stroke="#7d5cff" strokeLinecap="round" strokeWidth="8" opacity=".82" />
-      <path d="M54 144c2-11 12-18 22-16" fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="12" />
-      <path d="M159 65h11M50 50l-9-12M42 69l-14-3" fill="none" stroke="#9d88ff" strokeLinecap="round" strokeWidth="8" opacity=".72" />
-      <path d="M159 131h.1M37 91h.1M151 31h.1" fill="none" stroke="#b7a7ff" strokeLinecap="round" strokeWidth="9" />
-    </svg>
+      draggable={false}
+      height={330}
+      priority
+      sizes="170px"
+      src="/images/starter-robot-standard.png"
+      width={328}
+    />
+  );
+}
+
+function SubscriberRobot() {
+  return (
+    <Image
+      alt=""
+      className={styles.subscriberRobotImage}
+      draggable={false}
+      height={330}
+      sizes="178px"
+      src="/images/starter-robot-standard.png"
+      width={328}
+    />
   );
 }
 
@@ -421,7 +451,7 @@ export default function StartPageClient({
   const name = displayName(userName, userEmail);
   const isSignedIn = Boolean(userEmail.trim() || userName.trim());
   const [continueStudy, setContinueStudy] = useState(fallbackContinueStudy);
-  const [heroAvatar, setHeroAvatar] = useState({
+  const [accountAvatar, setAccountAvatar] = useState({
     failed: false,
     src: userImage,
   });
@@ -430,11 +460,6 @@ export default function StartPageClient({
     aiProgress.challengeCompleted,
     challengeGoal
   );
-  const challengeRemaining = Math.max(challengeGoal - challengeCompleted, 0);
-  const challengeRewardText =
-    challengeRemaining > 0
-      ? `再完成 ${challengeRemaining} 句，即可解锁`
-      : "已解锁";
   const continuePercent = getPercent(continueStudy.completed, continueStudy.total);
 
   useEffect(() => {
@@ -448,9 +473,9 @@ export default function StartPageClient({
         const savedAvatar = window.localStorage.getItem(
           getAccountAvatarStorageKey(identifier)
         );
-        setHeroAvatar({ failed: false, src: savedAvatar || userImage });
+        setAccountAvatar({ failed: false, src: savedAvatar || userImage });
       } catch {
-        setHeroAvatar({ failed: false, src: userImage });
+        setAccountAvatar({ failed: false, src: userImage });
       }
     }, 0);
 
@@ -461,22 +486,16 @@ export default function StartPageClient({
     () => ({ "--progress-percent": `${continuePercent}%` }) as CSSProperties,
     [continuePercent]
   );
-  const menuHref = isSignedIn ? "/account" : "/menu";
-  const menuLabel = isSignedIn ? "打开账户界面" : "打开游客菜单";
-  const isNewUser =
-    isSignedIn &&
-    aiProgress.todayCompleted <= 0 &&
-    aiProgress.totalCompleted <= 0 &&
-    aiProgress.streakDays <= 0;
-  const showStarterHome = !isSignedIn || isNewUser;
-  const starterInitials = getAvatarInitials(name, userEmail, isSignedIn);
+  const menuHref = "/menu";
+  const menuLabel = isSignedIn ? "打开学习菜单" : "打开游客菜单";
+  const showStarterHome = !isSignedIn;
 
   if (showStarterHome) {
     return (
       <main className={styles.starterPage}>
         <section
           className={styles.starterPhone}
-          aria-label="游客和新用户的 SpeakFlow 学习首页"
+          aria-label="游客的 SpeakFlow 学习首页"
         >
           <header className={styles.starterTopBar}>
             <Link
@@ -502,26 +521,7 @@ export default function StartPageClient({
                 <small>AI 英语口语练习伙伴</small>
               </span>
             </Link>
-            {isSignedIn && heroAvatar.src && !heroAvatar.failed ? (
-              <span className={styles.starterAvatar} aria-label="用户头像">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={heroAvatar.src}
-                  alt=""
-                  draggable={false}
-                  onError={() =>
-                    setHeroAvatar((current) => ({ ...current, failed: true }))
-                  }
-                />
-              </span>
-            ) : (
-              <span
-                className={styles.starterAvatar}
-                aria-label={isSignedIn ? "用户头像" : "游客体验标识"}
-              >
-                {starterInitials}
-              </span>
-            )}
+            <span className={styles.starterTopSpacer} aria-hidden="true" />
           </header>
 
           <section className={styles.starterHero} aria-labelledby="starter-title">
@@ -563,8 +563,15 @@ export default function StartPageClient({
                 <p>AI 会一步一步引导你表达想法，轻松开口，自信说英语。</p>
               </div>
               <div className={styles.starterBubbleArt} aria-hidden="true">
-                <span />
-                <small />
+                <Image
+                  alt=""
+                  className={styles.starterBubbleImage}
+                  draggable={false}
+                  height={260}
+                  sizes="150px"
+                  src="/images/starter-bubbles-standard.png"
+                  width={300}
+                />
               </div>
               <Link
                 className={styles.starterPrimaryCta}
@@ -620,7 +627,7 @@ export default function StartPageClient({
 
   return (
     <main className={styles.page}>
-      <section className={styles.phone} aria-label="登录后的 SpeakFlow 首页">
+      <section className={styles.phone} aria-label="订阅者 SpeakFlow 学习首页">
         <header className={styles.topBar}>
           <Link href={menuHref} className={styles.menuButton} aria-label={menuLabel}>
             <MenuIcon />
@@ -641,53 +648,117 @@ export default function StartPageClient({
               <small>AI VOICE PRACTICE</small>
             </span>
           </Link>
-        </header>
-
-        <section className={styles.hero} aria-labelledby="start-title">
-          <div className={styles.heroCopy}>
-            <p className={styles.heroKicker}>
-              {isSignedIn ? (
+          <Link
+            href="/account"
+            className={styles.subscriberAvatarButton}
+            aria-label="打开账户界面"
+          >
+            <span className={styles.subscriberAvatar}>
+              {accountAvatar.src && !accountAvatar.failed ? (
                 <>
-                  太好了！<span aria-hidden="true">🎉</span>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={accountAvatar.src}
+                    alt=""
+                    draggable={false}
+                    onError={() =>
+                      setAccountAvatar((current) => ({ ...current, failed: true }))
+                    }
+                  />
                 </>
               ) : (
-                "你好"
+                <span>{getInitial(name)}</span>
               )}
-            </p>
-            <h1 id="start-title">
-              {isSignedIn ? `欢迎回来 ${name}` : "你好，先体验一下 SpeakFlow"}
-            </h1>
-            <p className={styles.heroSubcopy}>
-              {isSignedIn
-                ? "今天也一起大胆开口说英语吧！"
-                : "先选一个练习方式，马上开始开口。"}
-            </p>
-          </div>
-          {heroAvatar.src && !heroAvatar.failed ? (
-            <span className={styles.heroAvatar} aria-label="用户头像">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={heroAvatar.src}
-                alt=""
-                draggable={false}
-                onError={() =>
-                  setHeroAvatar((current) => ({ ...current, failed: true }))
-                }
-              />
             </span>
-          ) : (
-            <StarBuddy />
-          )}
+            <span className={styles.subscriberProBadge}>PRO</span>
+          </Link>
+        </header>
+
+        <section className={styles.proStatusCard} aria-label="SpeakFlow Pro 状态">
+          <div className={styles.proStatusHeader}>
+            <span className={styles.proCrown}>
+              <CrownIcon />
+            </span>
+            <h1>
+              <CheckIcon />
+              SpeakFlow Pro 已激活
+            </h1>
+            <span className={styles.proSparkle}>
+              <SparkleIcon />
+            </span>
+          </div>
+          <div className={styles.proBenefitGrid}>
+            {proBenefits.map((benefit) => (
+              <div className={styles.proBenefit} key={benefit.title}>
+                <strong>
+                  <span aria-hidden="true">∞</span>
+                  {benefit.title}
+                </strong>
+                <small>{benefit.description}</small>
+              </div>
+            ))}
+          </div>
         </section>
 
-        <section className={styles.newPractice} aria-labelledby="new-practice-title">
+        <section className={styles.subscriberWelcome} aria-labelledby="subscriber-title">
+          <div className={styles.subscriberWelcomeCopy}>
+            <p>
+              太好了！<span aria-hidden="true">🎉</span>
+            </p>
+            <h2 id="subscriber-title">欢迎回来 {name}</h2>
+            <small>今天也一起大胆开口说英语吧！</small>
+          </div>
+          <SubscriberStarBuddy />
+        </section>
+
+        <section
+          className={styles.subscriberRecommended}
+          aria-labelledby="subscriber-recommended-title"
+        >
+          <div className={styles.subscriberRibbon}>
+            <StarterStarIcon />
+            推荐开始
+          </div>
+          <div className={styles.subscriberRecommendedBody}>
+            <div className={styles.subscriberRecommendedCopy}>
+              <h2 id="subscriber-recommended-title">AI 引导表达</h2>
+              <span className={styles.subscriberTitleUnderline} aria-hidden="true" />
+              <p>
+                不知道说什么？
+                <br />
+                AI 带你聊，轻松开口说英语。
+              </p>
+            </div>
+            <div className={styles.subscriberRobotArt} aria-hidden="true">
+              <span className={styles.subscriberSpeechBubble}>
+                <i />
+                <i />
+                <i />
+              </span>
+              <SubscriberRobot />
+            </div>
+            <Link
+              className={styles.subscriberPrimaryCta}
+              href="/ai-guided-expression/step-1"
+            >
+              <span className={styles.subscriberCtaIcon}>
+                <PracticeIcon type="mic" />
+              </span>
+              开始练习
+              <span className={styles.subscriberCtaChevron}>
+                <ChevronIcon />
+              </span>
+            </Link>
+          </div>
+        </section>
+
+        <section className={styles.subscriberOther} aria-labelledby="other-title">
           <div className={styles.sectionHeading}>
-            <h2 id="new-practice-title">开始新的练习</h2>
-            <p>选择你想要的练习方式</p>
+            <h2 id="other-title">选择其他学习方式</h2>
           </div>
 
           <div className={styles.practiceStack}>
-            {practiceCards.map((card) => (
+            {subscriberPracticeCards.map((card) => (
               <Link
                 key={card.href}
                 className={styles.practiceCard}
@@ -746,10 +817,7 @@ export default function StartPageClient({
           </span>
           <span className={styles.challengeCopy}>
             <strong>每日挑战</strong>
-            <small>
-              {challengeRewardText}{" "}
-              <span className={styles.badgeReward}>{BEGINNER_BADGE_LABEL}</span>
-            </small>
+            <small>完成 {challengeGoal} 句表达练习，解锁专属勋章！</small>
           </span>
           <span className={styles.challengeCount}>
             {challengeCompleted}/{challengeGoal}

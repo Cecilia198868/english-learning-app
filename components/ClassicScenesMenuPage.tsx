@@ -130,6 +130,15 @@ function ArrowRight() {
   );
 }
 
+function LockIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="6.5" y="10.5" width="11" height="9" rx="2" />
+      <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14v2.5" />
+    </svg>
+  );
+}
+
 function CardIcon({ icon }: { icon: SceneCardIcon }) {
   if (icon === "ai") {
     return <span className={styles.aiLetters}>AI</span>;
@@ -227,7 +236,11 @@ function HeroVisual() {
   );
 }
 
-export default function ClassicScenesMenuPage() {
+export default function ClassicScenesMenuPage({
+  isGuest = false,
+}: {
+  isGuest?: boolean;
+}) {
   const router = useRouter();
   const openHome = () => router.push("/start");
   const openCard = (card: SceneCard) => {
@@ -271,7 +284,8 @@ export default function ClassicScenesMenuPage() {
         </section>
 
         <section className={styles.cardGrid} aria-label="经典场景分类">
-          {sceneCards.map((card) => {
+          {sceneCards.map((card, index) => {
+            const isLocked = isGuest && index > 0;
             const tileStyle = {
               "--card-accent": card.accent,
               "--icon-bg": card.iconBackground,
@@ -281,15 +295,32 @@ export default function ClassicScenesMenuPage() {
               <button
                 key={card.id}
                 type="button"
-                className={
-                  card.meta
-                    ? styles.sceneCard
-                    : `${styles.sceneCard} ${styles.shortCard}`
-                }
+                className={[
+                  styles.sceneCard,
+                  card.meta ? "" : styles.shortCard,
+                  isLocked ? styles.lockedCard : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
                 style={tileStyle}
-                onClick={() => openCard(card)}
-                aria-label={card.href ? `进入${card.title}` : `${card.title}，课程整理中`}
+                onClick={() => {
+                  if (!isLocked) openCard(card);
+                }}
+                disabled={isLocked}
+                aria-label={
+                  isLocked
+                    ? `${card.title}，游客没有权限`
+                    : card.href
+                      ? `进入${card.title}`
+                      : `${card.title}，课程整理中`
+                }
               >
+                {isLocked ? (
+                  <span className={styles.lockBadge}>
+                    <LockIcon />
+                    游客无权限
+                  </span>
+                ) : null}
                 {card.badge ? <span className={styles.badge}>{card.badge}</span> : null}
                 <span className={styles.iconTile} aria-hidden="true">
                   <CardIcon icon={card.icon} />

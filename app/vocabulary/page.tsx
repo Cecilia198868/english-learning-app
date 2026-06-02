@@ -4,7 +4,6 @@ import type { CSSProperties } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ExpressionLearningLimitModal from "@/components/ExpressionLearningLimitModal";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
-import PlayIcon from "@/components/PlayIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import {
   FREE_EXPRESSION_LEARNING_LIMIT,
@@ -27,17 +26,6 @@ import {
 } from "@/lib/vocabulary";
 import styles from "./VocabularyPage.module.css";
 
-type SessionResponse = {
-  user?: {
-    email?: string | null;
-    image?: string | null;
-    name?: string | null;
-    photoURL?: string | null;
-    photoUrl?: string | null;
-    picture?: string | null;
-  } | null;
-};
-
 type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
 
 type AccountSubscriptionResponse = {
@@ -47,9 +35,7 @@ type AccountSubscriptionResponse = {
 
 type LibrarySortMode = "alphabetical" | "newest" | "oldest";
 type LibrarySortDirection = "asc" | "desc";
-type LibraryViewMode = "list" | "compact";
-
-const accountAvatarStoragePrefix = "speakflow-account-avatar";
+type LibraryStatusFilter = "all" | "learning" | "mastered" | "review" | "shadow";
 
 const EXPRESSION_MEANING_FALLBACKS: Record<string, string> = {
   "set up": "设立；开设；安排",
@@ -57,20 +43,6 @@ const EXPRESSION_MEANING_FALLBACKS: Record<string, string> = {
   "bring along": "随身带上",
   "lush and verdant": "生机盎然",
 };
-
-function getAccountAvatarStorageKey(identifier: string) {
-  return `${accountAvatarStoragePrefix}:${identifier || "local-user"}`;
-}
-
-function getSessionAvatar(user?: SessionResponse["user"]) {
-  return (
-    user?.image ||
-    user?.photoURL ||
-    user?.photoUrl ||
-    user?.picture ||
-    ""
-  );
-}
 
 function normalizeSubscriptionStatus(
   subscriptionStatus?: SubscriptionStatus | null,
@@ -118,6 +90,169 @@ function formatStatPercent(count: number, total: number) {
   if (!total) return "0%";
 
   return `${Math.round((count / total) * 1000) / 10}%`;
+}
+
+function addDaysToDateKey(dateKey: string, days: number) {
+  const [year, month, day] = dateKey.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  date.setDate(date.getDate() + days);
+
+  return getDateKey(date);
+}
+
+function formatMonthDay(dateKey: string) {
+  const [, month = "00", day = "00"] = dateKey.split("-");
+  return `${month}/${day}`;
+}
+
+function getIsoTime(value?: string | null) {
+  if (!value) return 0;
+
+  const time = new Date(value).getTime();
+  return Number.isFinite(time) ? time : 0;
+}
+
+function getExpressionLastActivityTime(word: VocabularyWord) {
+  return (
+    getIsoTime(word.lastStudiedAt) ||
+    getIsoTime(word.firstStudiedAt) ||
+    getVocabularyCreatedTime(word)
+  );
+}
+
+function hasExpressionStudyActivity(word: VocabularyWord) {
+  return Boolean(
+    word.firstStudiedAt ||
+      word.lastStudiedAt ||
+      word.status !== "new" ||
+      word.playCount > 0 ||
+      word.shadowCount > 0 ||
+      word.masteredCount > 0 ||
+      word.correctCount > 0 ||
+      word.studiedDates.length > 0
+  );
+}
+
+function getExpressionKindLabel(word: VocabularyWord | null) {
+  if (!word) return "新表达";
+
+  const label = word.partOfSpeech.trim();
+  if (!label) return "新表达";
+
+  if (label === "word") return "单词";
+  if (label === "phrase") return "短语";
+  if (label === "sentence") return "句子";
+
+  return label;
+}
+
+function getExpressionStatusLabel(word: VocabularyWord, todayKey: string) {
+  if (word.status === "mastered") return "已掌握";
+  if (word.nextReviewAt !== null && word.nextReviewAt <= todayKey) return "待复习";
+  if (hasExpressionStudyActivity(word)) return "学习中";
+
+  return "新表达";
+}
+
+function getExpressionStatusTone(word: VocabularyWord, todayKey: string) {
+  if (word.status === "mastered") return "mastered";
+  if (word.nextReviewAt !== null && word.nextReviewAt <= todayKey) return "review";
+  if (hasExpressionStudyActivity(word)) return "learning";
+
+  return "new";
+}
+
+function matchesLibraryStatusFilter(
+  word: VocabularyWord,
+  filter: LibraryStatusFilter,
+  todayKey: string
+) {
+  if (filter === "all") return true;
+  if (filter === "learning") {
+    return word.status === "learning" || word.status === "familiar";
+  }
+  if (filter === "mastered") return word.status === "mastered";
+  if (filter === "review") {
+    return word.nextReviewAt !== null && word.nextReviewAt <= todayKey;
+  }
+
+  return word.shadowCount > 0;
+}
+
+function getLibrarySortShortLabel(
+  sortMode: LibrarySortMode,
+  sortDirection: LibrarySortDirection
+) {
+  if (sortMode === "newest") return "收藏时间";
+  if (sortMode === "oldest") return "最早收藏";
+
+  return sortDirection === "asc" ? "A-Z" : "Z-A";
+}
+
+function formatRelativeTimeFromNow(time: number) {
+  if (!time) return "刚刚";
+
+  const diff = Math.max(0, Date.now() - time);
+  const minute = 60 * 1000;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+
+  if (diff < minute) return "刚刚";
+  if (diff < hour) return `${Math.floor(diff / minute)} 分钟前`;
+  if (diff < day) return `${Math.floor(diff / hour)} 小时前`;
+
+  return `${Math.floor(diff / day)} 天前`;
+}
+
+function getCombinedStudiedDates(words: VocabularyWord[]) {
+  return Array.from(
+    new Set(words.flatMap((word) => word.studiedDates))
+  ).sort();
+}
+
+function getCombinedStudyStreakDays(words: VocabularyWord[], todayKey: string) {
+  const studiedDateSet = new Set(getCombinedStudiedDates(words));
+  let cursor = todayKey;
+
+  if (!studiedDateSet.has(cursor)) {
+    const yesterdayKey = addDaysToDateKey(todayKey, -1);
+    if (!studiedDateSet.has(yesterdayKey)) return 0;
+    cursor = yesterdayKey;
+  }
+
+  let streakDays = 0;
+  while (studiedDateSet.has(cursor)) {
+    streakDays += 1;
+    cursor = addDaysToDateKey(cursor, -1);
+  }
+
+  return streakDays;
+}
+
+function createLearningHistory(words: VocabularyWord[], todayKey: string) {
+  const days = Array.from({ length: 7 }, (_, index) =>
+    addDaysToDateKey(todayKey, index - 6)
+  );
+  const maxValue = Math.max(
+    1,
+    ...days.map((dateKey) =>
+      words.filter((word) => word.studiedDates.includes(dateKey)).length
+    )
+  );
+
+  return days.map((dateKey, index) => {
+    const value = words.filter((word) => word.studiedDates.includes(dateKey)).length;
+    const x = days.length === 1 ? 0 : (index / (days.length - 1)) * 100;
+    const y = 92 - (value / maxValue) * 74;
+
+    return {
+      dateKey,
+      label: formatMonthDay(dateKey),
+      value,
+      x,
+      y,
+    };
+  });
 }
 
 function getVocabularyUpdatePayload(
@@ -333,6 +468,49 @@ function RecentStatIcon() {
   );
 }
 
+function ChartStatIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 38 38">
+      <path d="M8 30h24" />
+      <path d="M11 26V15M19 26V8M27 26V19" />
+    </svg>
+  );
+}
+
+function CalendarStatIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 38 38">
+      <rect width="24" height="23" x="7" y="9" rx="4" />
+      <path d="M12 6v6M26 6v6M7 16h24M13 22h3M18 22h3M23 22h3M13 27h3M18 27h3" />
+    </svg>
+  );
+}
+
+function MicIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 40 40">
+      <rect width="12" height="22" x="14" y="5" rx="6" />
+      <path d="M9 18a11 11 0 0 0 22 0M20 29v7M14 36h12" />
+    </svg>
+  );
+}
+
+function FireStatIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 38 38">
+      <path d="M20.3 4.8c.9 5.6-2.8 7.8-5.5 10.8-2.1 2.4-3.2 5-2.6 8.2 1 5.1 5.2 8.6 10.1 8.6 5.8 0 10.4-4.5 10.4-10.5 0-4.8-2.8-8.3-6.4-11.7-.4 3-1.9 4.7-4.4 5.6.8-4.5-.3-8.2-1.6-11Z" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 32 32">
+      <path d="M8 8 24 24M24 8 8 24" />
+    </svg>
+  );
+}
+
 function MoreIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 32 32">
@@ -347,14 +525,6 @@ function ChevronDownIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24">
       <path d="m7 9 5 5 5-5" />
-    </svg>
-  );
-}
-
-function SortArrowsIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 32 32">
-      <path d="M11 6v20M11 26l-4-4M11 26l4-4M21 26V6M21 6l-4 4M21 6l4 4" />
     </svg>
   );
 }
@@ -617,25 +787,12 @@ function getLibraryTag(word: VocabularyWord) {
   return { label: word.partOfSpeech || "表达", tone: "purple" };
 }
 
-function getLibrarySortLabel(
-  sortMode: LibrarySortMode,
-  sortDirection: LibrarySortDirection
-) {
-  if (sortMode === "newest") return "最近收藏";
-  if (sortMode === "oldest") return "最早收藏";
-  return sortDirection === "asc" ? "按字母排序（A-Z）" : "按字母排序（Z-A）";
-}
-
 export default function VocabularyPage() {
   const [words, setWords] = useState<VocabularyWord[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showExpressionLibrary, setShowExpressionLibrary] = useState(false);
   const [showExpressionLimitModal, setShowExpressionLimitModal] =
     useState(false);
-  const [accountName, setAccountName] = useState("");
-  const [accountEmail, setAccountEmail] = useState("");
-  const [accountImage, setAccountImage] = useState("");
-  const [accountImageFailed, setAccountImageFailed] = useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
     useState<SubscriptionStatus>("free");
   const [hasLoadedAccountSubscription, setHasLoadedAccountSubscription] =
@@ -648,16 +805,18 @@ export default function VocabularyPage() {
     useState(0);
   const [librarySearchQuery, setLibrarySearchQuery] = useState("");
   const [librarySortMode, setLibrarySortMode] =
-    useState<LibrarySortMode>("alphabetical");
+    useState<LibrarySortMode>("newest");
   const [librarySortDirection, setLibrarySortDirection] =
     useState<LibrarySortDirection>("asc");
-  const [libraryViewMode, setLibraryViewMode] =
-    useState<LibraryViewMode>("list");
+  const [libraryStatusFilter, setLibraryStatusFilter] =
+    useState<LibraryStatusFilter>("all");
   const [showLibraryFilterMenu, setShowLibraryFilterMenu] = useState(false);
   const [showLibrarySortMenu, setShowLibrarySortMenu] = useState(false);
   const [openLibraryActionFor, setOpenLibraryActionFor] = useState("");
   const [pendingDeleteExpression, setPendingDeleteExpression] =
     useState<VocabularyWord | null>(null);
+  const [showLearningResultsModal, setShowLearningResultsModal] =
+    useState(false);
 
   const refreshExpressionLearningUsageCount = useCallback(() => {
     setExpressionLearningUsageCount(getExpressionLearningUsageCount());
@@ -730,42 +889,6 @@ export default function VocabularyPage() {
   useEffect(() => {
     let cancelled = false;
 
-    async function loadAccountSession() {
-      try {
-        const response = await fetch("/api/auth/session", { cache: "no-store" });
-        const session = (await response.json()) as SessionResponse;
-        if (cancelled) return;
-
-        const nextName = session.user?.name || "";
-        const nextEmail = session.user?.email || session.user?.name || "";
-        const savedAvatar = window.localStorage.getItem(
-          getAccountAvatarStorageKey(nextEmail || nextName)
-        );
-
-        setAccountName(nextName);
-        setAccountEmail(nextEmail);
-        setAccountImage(savedAvatar || getSessionAvatar(session.user));
-        setAccountImageFailed(false);
-      } catch {
-        if (!cancelled) {
-          setAccountName("");
-          setAccountEmail("");
-          setAccountImage("");
-          setAccountImageFailed(false);
-        }
-      }
-    }
-
-    void loadAccountSession();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
-
     async function loadAccountSubscription() {
       try {
         const response = await fetch(createAccountSubscriptionUrl(), {
@@ -814,6 +937,7 @@ export default function VocabularyPage() {
   const displayedMeaningText = displayedExpression
     ? getExpressionNativeMeaning(displayedExpression)
     : "";
+  const displayedExpressionKindLabel = getExpressionKindLabel(displayedExpression);
   const speechText = useMemo(() => {
     if (!displayedExpression) return "";
 
@@ -828,7 +952,6 @@ export default function VocabularyPage() {
     !displayedExampleZhText;
   const todayKey = useMemo(() => getDateKey(), []);
   const totalExpressionCount = words.length;
-  const currentExpressionNumber = displayedExpression ? currentIndex + 1 : 0;
   const learningStats = useMemo(() => {
     const masteredCount = words.filter(
       (word) => word.status === "mastered"
@@ -853,21 +976,73 @@ export default function VocabularyPage() {
   const masteredExpressionCount = learningStats.masteredCount;
   const learningExpressionCount = learningStats.learningCount;
   const reviewExpressionCount = learningStats.reviewCount;
-  const progressPercent = learningStats.progress;
+  const studiedExpressionCount = words.filter(hasExpressionStudyActivity).length;
+  const studiedExpressionPercent = totalExpressionCount
+    ? Math.round((studiedExpressionCount / totalExpressionCount) * 100)
+    : 0;
   const progressStyle = {
-    "--sf-vocabulary-progress": `${Math.max(progressPercent, displayedExpression ? 3 : 0)}%`,
+    "--sf-vocabulary-progress": `${Math.max(studiedExpressionPercent, displayedExpression ? 3 : 0)}%`,
   } as CSSProperties;
   const hasPrevious = currentIndex > 0;
   const hasNext = currentIndex < words.length - 1;
-  const accountAvatarLabel = (accountName || accountEmail || "SF")
-    .slice(0, 2)
-    .toUpperCase();
   const isAccountPro = hasProAccess(accountSubscriptionStatus);
   const remainingDailyFreeCount = Math.max(
     0,
     FREE_EXPRESSION_LEARNING_LIMIT - expressionLearningUsageCount
   );
   const recentlyAddedCount = words.filter(isRecentlyAdded).length;
+  const shadowExpressionCount = words.filter((word) => word.shadowCount > 0).length;
+  const combinedStudiedDates = useMemo(() => getCombinedStudiedDates(words), [words]);
+  const combinedStudyStreakDays = useMemo(
+    () => getCombinedStudyStreakDays(words, todayKey),
+    [todayKey, words]
+  );
+  const totalShadowCount = words.reduce(
+    (total, word) => total + Math.max(0, word.shadowCount),
+    0
+  );
+  const recentSevenDayKeys = useMemo(
+    () =>
+      new Set(
+        Array.from({ length: 7 }, (_, index) =>
+          addDaysToDateKey(todayKey, index - 6)
+        )
+      ),
+    [todayKey]
+  );
+  const weeklyShadowCount = words
+    .filter((word) => word.studiedDates.some((dateKey) => recentSevenDayKeys.has(dateKey)))
+    .reduce((total, word) => total + Math.max(0, word.shadowCount), 0);
+  const learningHistory = useMemo(
+    () => createLearningHistory(words, todayKey),
+    [todayKey, words]
+  );
+  const learningHistoryPoints = learningHistory
+    .map((point) => `${point.x.toFixed(2)},${point.y.toFixed(2)}`)
+    .join(" ");
+  const learningHistoryAreaPoints = `0,96 ${learningHistoryPoints} 100,96`;
+  const highlightedHistoryPoint =
+    learningHistory.reduce(
+      (bestPoint, point) => (point.value >= bestPoint.value ? point : bestPoint),
+      learningHistory[0]
+    ) || {
+      dateKey: todayKey,
+      label: formatMonthDay(todayKey),
+      value: 0,
+      x: 0,
+      y: 92,
+    };
+  const highlightedHistoryStyle = {
+    "--sf-history-highlight-x": `${highlightedHistoryPoint.x}%`,
+    "--sf-history-highlight-y": `${highlightedHistoryPoint.y}%`,
+  } as CSSProperties;
+  const recentLearningItems = words
+    .filter(hasExpressionStudyActivity)
+    .sort(
+      (a, b) =>
+        getExpressionLastActivityTime(b) - getExpressionLastActivityTime(a)
+    )
+    .slice(0, 3);
   const normalizedLibrarySearchQuery = librarySearchQuery.trim().toLowerCase();
   const sortedLibraryWords = useMemo(() => {
     const nextWords = [...words];
@@ -888,12 +1063,16 @@ export default function VocabularyPage() {
     return nextWords;
   }, [librarySortDirection, librarySortMode, words]);
   const filteredLibraryWords = useMemo(() => {
-    if (!normalizedLibrarySearchQuery) return sortedLibraryWords;
+    const statusMatchedWords = sortedLibraryWords.filter((word) =>
+      matchesLibraryStatusFilter(word, libraryStatusFilter, todayKey)
+    );
 
-    return sortedLibraryWords.filter((word) =>
+    if (!normalizedLibrarySearchQuery) return statusMatchedWords;
+
+    return statusMatchedWords.filter((word) =>
       getLibrarySearchText(word).includes(normalizedLibrarySearchQuery)
     );
-  }, [normalizedLibrarySearchQuery, sortedLibraryWords]);
+  }, [libraryStatusFilter, normalizedLibrarySearchQuery, sortedLibraryWords, todayKey]);
   const librarySearchSuggestions = normalizedLibrarySearchQuery
     ? filteredLibraryWords.slice(0, 5)
     : [];
@@ -1023,15 +1202,10 @@ export default function VocabularyPage() {
     };
   }, [displayedExampleText, displayedExpression]);
 
-  function openAccountFromVocabulary() {
-    setShowExpressionLibrary(false);
-    setShowExpressionLimitModal(false);
-    navigateTo("/account");
-  }
-
   function openHomeFromVocabulary() {
     setShowExpressionLibrary(false);
     setShowExpressionLimitModal(false);
+    setShowLearningResultsModal(false);
     navigateTo("/start");
   }
 
@@ -1069,6 +1243,7 @@ export default function VocabularyPage() {
     if (options.closeLibrary) {
       setShowExpressionLibrary(false);
     }
+    setShowLearningResultsModal(false);
   }
 
   const persistExpressionProgress = useCallback((expression: VocabularyWord) => {
@@ -1142,10 +1317,6 @@ export default function VocabularyPage() {
     recordCurrentExpressionAction("shadow");
   }
 
-  function markCurrentExpressionMastered() {
-    recordCurrentExpressionAction("mastered");
-  }
-
   function removeExpressionFromLibrary(
     expression: VocabularyWord,
     options: { keepLibraryOpen?: boolean } = {}
@@ -1196,12 +1367,6 @@ export default function VocabularyPage() {
     setShowLibrarySortMenu(false);
   }
 
-  function toggleLibrarySortDirection() {
-    const nextDirection = librarySortDirection === "asc" ? "desc" : "asc";
-    setLibrarySortDirection(nextDirection);
-    setLibrarySortMode("alphabetical");
-  }
-
   function confirmDeleteExpression() {
     if (!pendingDeleteExpression) return;
 
@@ -1213,6 +1378,20 @@ export default function VocabularyPage() {
   }
 
   if (showExpressionLibrary) {
+    const libraryFilterTabs = [
+      { count: totalExpressionCount, filter: "all" as const, label: "全部" },
+      { count: learningExpressionCount, filter: "learning" as const, label: "学习中" },
+      { count: masteredExpressionCount, filter: "mastered" as const, label: "已掌握" },
+      { count: reviewExpressionCount, filter: "review" as const, label: "待复习" },
+    ];
+    const libraryBottomTabs = [
+      { count: totalExpressionCount, filter: "all" as const, icon: <ViewModeIcon />, label: "全部表达" },
+      { count: learningExpressionCount, filter: "learning" as const, icon: <BookStatIcon />, label: "学习中" },
+      { count: shadowExpressionCount, filter: "shadow" as const, icon: <MicIcon />, label: "跟读" },
+      { count: reviewExpressionCount, filter: "review" as const, icon: <FireStatIcon />, label: "待复习" },
+      { count: masteredExpressionCount, filter: "mastered" as const, icon: <BookmarkStatIcon />, label: "已掌握" },
+    ];
+
     return (
       <main className={`${styles.mount} sf-expression-library-page`}>
         <section className="sf-expression-library-phone" aria-label="表达库页面">
@@ -1234,25 +1413,7 @@ export default function VocabularyPage() {
               </span>
             </div>
 
-            <button
-              type="button"
-              aria-label="打开账户界面"
-              className="sf-expression-library-avatar"
-              onClick={openAccountFromVocabulary}
-            >
-              {accountImage && !accountImageFailed ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={accountImage}
-                  alt={accountEmail || accountName || "账户头像"}
-                  draggable={false}
-                  onError={() => setAccountImageFailed(true)}
-                />
-              ) : (
-                <span>{accountAvatarLabel}</span>
-              )}
-              <i />
-            </button>
+            <span aria-hidden="true" />
           </header>
 
           <section className="sf-expression-library-hero">
@@ -1261,7 +1422,7 @@ export default function VocabularyPage() {
             </div>
             <div className="sf-expression-library-title-copy">
               <h1>我的表达库</h1>
-              <p>共收藏 {totalExpressionCount} 个表达</p>
+              <p>已收藏 {totalExpressionCount} 个表达</p>
             </div>
             <div className="sf-expression-library-hero-art">
               <LibraryBoxIllustration />
@@ -1271,32 +1432,42 @@ export default function VocabularyPage() {
           <section className="sf-expression-library-stats" aria-label="表达库统计">
             <div className="sf-expression-library-stat is-purple">
               <span>
+                <BookStatIcon />
+              </span>
+              <p>学习中</p>
+              <b>
+                <strong>{learningExpressionCount}</strong>
+                <em>个</em>
+              </b>
+            </div>
+            <div className="sf-expression-library-stat is-green">
+              <span>
                 <BookmarkStatIcon />
               </span>
               <p>已掌握</p>
               <b>
                 <strong>{masteredExpressionCount}</strong>
-                <em>个表达</em>
+                <em>个</em>
+              </b>
+            </div>
+            <div className="sf-expression-library-stat is-orange">
+              <span>
+                <FireStatIcon />
+              </span>
+              <p>待复习</p>
+              <b>
+                <strong>{reviewExpressionCount}</strong>
+                <em>个</em>
               </b>
             </div>
             <div className="sf-expression-library-stat is-blue">
-              <span>
-                <BookStatIcon />
-              </span>
-              <p>正在学习</p>
-              <b>
-                <strong>{learningExpressionCount}</strong>
-                <em>个表达</em>
-              </b>
-            </div>
-            <div className="sf-expression-library-stat is-green">
               <span>
                 <RecentStatIcon />
               </span>
               <p>最近新增</p>
               <b>
                 <strong>{recentlyAddedCount}</strong>
-                <em>个表达</em>
+                <em>个</em>
               </b>
             </div>
           </section>
@@ -1343,6 +1514,27 @@ export default function VocabularyPage() {
 
             {showLibraryFilterMenu ? (
               <div className="sf-expression-library-filter-menu">
+                {libraryFilterTabs.map((tab) => (
+                  <button
+                    key={`filter-menu-${tab.filter}`}
+                    type="button"
+                    onClick={() => {
+                      setLibraryStatusFilter(tab.filter);
+                      setShowLibraryFilterMenu(false);
+                    }}
+                  >
+                    {tab.label} {tab.count}
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLibraryStatusFilter("shadow");
+                    setShowLibraryFilterMenu(false);
+                  }}
+                >
+                  已跟读 {shadowExpressionCount}
+                </button>
                 <button type="button" onClick={() => applyLibrarySort("alphabetical", "asc")}>
                   按字母排序
                 </button>
@@ -1359,18 +1551,54 @@ export default function VocabularyPage() {
             ) : null}
           </section>
 
-          <section
-            className={
-              libraryViewMode === "compact"
-                ? "sf-expression-library-list is-compact"
-                : "sf-expression-library-list"
-            }
-            aria-label="已收藏表达"
-          >
+          <section className="sf-expression-library-filter-tabs" aria-label="表达状态筛选">
+            {libraryFilterTabs.map((tab) => (
+              <button
+                key={tab.filter}
+                type="button"
+                className={libraryStatusFilter === tab.filter ? "is-active" : ""}
+                onClick={() => setLibraryStatusFilter(tab.filter)}
+              >
+                {tab.label} <strong>{tab.count}</strong>
+              </button>
+            ))}
+
+            <div className="sf-expression-library-sort-select">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowLibrarySortMenu((current) => !current);
+                  setShowLibraryFilterMenu(false);
+                }}
+              >
+                {getLibrarySortShortLabel(librarySortMode, librarySortDirection)}
+                <ChevronDownIcon />
+              </button>
+              {showLibrarySortMenu ? (
+                <div>
+                  <button type="button" onClick={() => applyLibrarySort("newest")}>
+                    收藏时间
+                  </button>
+                  <button type="button" onClick={() => applyLibrarySort("oldest")}>
+                    最早收藏
+                  </button>
+                  <button type="button" onClick={() => applyLibrarySort("alphabetical", "asc")}>
+                    A-Z
+                  </button>
+                  <button type="button" onClick={() => applyLibrarySort("alphabetical", "desc")}>
+                    Z-A
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          </section>
+
+          <section className="sf-expression-library-list" aria-label="已收藏表达">
             {filteredLibraryWords.length ? (
               filteredLibraryWords.map((word) => {
                 const tag = getLibraryTag(word);
                 const isMenuOpen = openLibraryActionFor === word.word;
+                const statusTone = getExpressionStatusTone(word, todayKey);
 
                 return (
                   <article
@@ -1412,6 +1640,10 @@ export default function VocabularyPage() {
                         </span>
                       </span>
                     </div>
+
+                    <span className={`sf-expression-library-item-status is-${statusTone}`}>
+                      {getExpressionStatusLabel(word, todayKey)}
+                    </span>
 
                     <div className="sf-expression-library-item-actions">
                       <button
@@ -1462,56 +1694,25 @@ export default function VocabularyPage() {
           </section>
 
           <footer className="sf-expression-library-bottom-bar">
-            <button
-              type="button"
-              className="sf-expression-library-sort-toggle"
-              onClick={toggleLibrarySortDirection}
-            >
-              <span>排序方式</span>
-              <SortArrowsIcon />
-            </button>
-
-            <div className="sf-expression-library-sort-select">
+            {libraryBottomTabs.map((tab) => (
               <button
+                key={`bottom-${tab.filter}`}
                 type="button"
+                aria-label={`${tab.label}，共 ${tab.count} 个`}
+                className={
+                  libraryStatusFilter === tab.filter
+                    ? "sf-expression-library-bottom-tab is-active"
+                    : "sf-expression-library-bottom-tab"
+                }
                 onClick={() => {
-                  setShowLibrarySortMenu((current) => !current);
-                  setShowLibraryFilterMenu(false);
+                  setLibraryStatusFilter(tab.filter);
+                  setOpenLibraryActionFor("");
                 }}
               >
-                {getLibrarySortLabel(librarySortMode, librarySortDirection)}
-                <ChevronDownIcon />
+                <span>{tab.icon}</span>
+                <strong>{tab.label}</strong>
               </button>
-              {showLibrarySortMenu ? (
-                <div>
-                  <button type="button" onClick={() => applyLibrarySort("alphabetical", "asc")}>
-                    按字母排序
-                  </button>
-                  <button type="button" onClick={() => applyLibrarySort("alphabetical", "desc")}>
-                    按字母倒序
-                  </button>
-                  <button type="button" onClick={() => applyLibrarySort("newest")}>
-                    最近收藏
-                  </button>
-                  <button type="button" onClick={() => applyLibrarySort("oldest")}>
-                    最早收藏
-                  </button>
-                </div>
-              ) : null}
-            </div>
-
-            <button
-              type="button"
-              aria-label="切换列表显示方式"
-              className="sf-expression-library-view-toggle"
-              onClick={() =>
-                setLibraryViewMode((current) =>
-                  current === "list" ? "compact" : "list"
-                )
-              }
-            >
-              <ViewModeIcon />
-            </button>
+            ))}
           </footer>
 
           {pendingDeleteExpression ? (
@@ -1578,11 +1779,24 @@ export default function VocabularyPage() {
           </button>
 
           <section className="sf-vocabulary-learning-title">
-            <SparkleIcon />
-            <h1>学习新表达</h1>
-            <p>
-              已掌握 <strong>{masteredExpressionCount}</strong> 个表达
-            </p>
+            <span className="sf-vocabulary-title-icon">
+              <SparkleIcon />
+            </span>
+            <div>
+              <h1>学习新表达</h1>
+              <p>
+                已掌握 <strong>{masteredExpressionCount}</strong> 个表达
+              </p>
+            </div>
+            <button
+              type="button"
+              className="sf-vocabulary-results-button"
+              onClick={() => setShowLearningResultsModal(true)}
+            >
+              <ChartStatIcon />
+              <span>学习成果</span>
+              <ArrowRightIcon />
+            </button>
           </section>
 
           {displayedExpression ? (
@@ -1591,10 +1805,13 @@ export default function VocabularyPage() {
                 <div className="sf-vocabulary-card-copy">
                   <span className="sf-vocabulary-saved-pill">
                     <StarIcon />
-                    已收藏
+                    新表达
                   </span>
                   <div className="sf-vocabulary-word-line">
                     <h2>{displayedExpressionText}</h2>
+                  </div>
+                  <div className="sf-vocabulary-expression-meta">
+                    <span>{displayedExpressionKindLabel}</span>
                     <button
                       type="button"
                       aria-label={`播放表达 ${displayedExpressionText}`}
@@ -1604,7 +1821,6 @@ export default function VocabularyPage() {
                       <SpeakerIcon />
                     </button>
                   </div>
-                  <i className="sf-vocabulary-card-rule" />
                   <div className="sf-vocabulary-label">
                     <MeaningIcon />
                     <span>中文含义</span>
@@ -1686,17 +1902,16 @@ export default function VocabularyPage() {
           >
             <div className="sf-vocabulary-progress-copy">
               <h2>我的学习进度</h2>
-              <p>
-                总表达数 <strong>{totalExpressionCount}</strong> 个
-              </p>
+              <div className="sf-vocabulary-progress-summary">
+                <span>
+                  总表达数 <strong>{totalExpressionCount}</strong> 个
+                </span>
+                <span>
+                  已学习 <strong>{studiedExpressionCount}</strong> / {totalExpressionCount} 个 ({studiedExpressionPercent}%)
+                </span>
+              </div>
               <div className="sf-vocabulary-progress-bar" aria-hidden="true">
                 <i />
-              </div>
-              <div className="sf-vocabulary-progress-meta">
-                <span>
-                  第 <strong>{currentExpressionNumber}</strong> / {totalExpressionCount} 个
-                </span>
-                <b>{progressPercent}%</b>
               </div>
             </div>
 
@@ -1728,14 +1943,8 @@ export default function VocabularyPage() {
             </div>
 
             <p className="sf-vocabulary-progress-note">
-              达到掌握标准的表达会自动归入「已掌握」
-              <button
-                type="button"
-                disabled={!displayedExpression || displayedExpression.status === "mastered"}
-                onClick={markCurrentExpressionMastered}
-              >
-                {displayedExpression?.status === "mastered" ? "已达标" : "我已掌握"}
-              </button>
+              <LightbulbIcon />
+              小贴士：点击麦克风开始跟读，熟练后可以效果更佳哦！
             </p>
           </section>
         </div>
@@ -1744,13 +1953,13 @@ export default function VocabularyPage() {
           <nav className="sf-vocabulary-learning-actions" aria-label="学习控制">
             <button
               type="button"
-              aria-label="上一个表达"
+              aria-label="上一句"
               className="sf-vocabulary-nav-action"
               disabled={!hasPrevious}
               onClick={() => openExpressionAt(Math.max(currentIndex - 1, 0))}
             >
               <ArrowLeftIcon />
-              <span>上一个</span>
+              <span>上一句</span>
             </button>
 
             <button
@@ -1760,42 +1969,41 @@ export default function VocabularyPage() {
               disabled={!speechText}
               onClick={() => shadowCurrentExpression(1)}
             >
-              <PlayIcon />
+              <MicIcon />
               <span>跟读</span>
             </button>
 
             <button
               type="button"
-              aria-label="慢速播放"
-              className="sf-vocabulary-slow-action"
-              disabled={!speechText}
-              onClick={() =>
-                playCurrentExpressionText(speechText || displayedExpressionText, 0.5)
-              }
-            >
-              <strong>0.5x</strong>
-              <span>慢速</span>
-            </button>
-
-            <button
-              type="button"
-              aria-label="下一个表达"
+              aria-label="下一句"
               className="sf-vocabulary-nav-action"
               disabled={!hasNext}
               onClick={() =>
                 openExpressionAt(Math.min(currentIndex + 1, words.length - 1))
               }
             >
-              <span>下一个</span>
+              <span>下一句</span>
               <ArrowRightIcon />
             </button>
           </nav>
 
           <p className="sf-vocabulary-tip">
-            <LightbulbIcon />
-            小贴士：点击发音按钮听标准发音，跟读练习效果更佳哦！
+            点击麦克风开始跟读
             {!isAccountPro && remainingDailyFreeCount === 0 ? " 今日免费学习次数已用完。" : ""}
           </p>
+          <button
+            type="button"
+            aria-label="0.5 倍速播放"
+            className="sf-vocabulary-slow-action"
+            disabled={!speechText}
+            onClick={() =>
+              playCurrentExpressionText(speechText || displayedExpressionText, 0.5)
+            }
+          >
+            <span>速度:</span>
+            <strong>0.5x</strong>
+            <ChevronDownIcon />
+          </button>
         </footer>
 
         {showExpressionLibrary ? (
@@ -1863,6 +2071,187 @@ export default function VocabularyPage() {
           onRegister={openRegisterFromExpressionLimit}
           onUnlockPro={openProFromExpressionLimit}
         />
+      ) : null}
+
+      {showLearningResultsModal ? (
+        <div className="sf-vocabulary-results-backdrop" role="presentation">
+          <section
+            className="sf-vocabulary-results-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sf-vocabulary-results-title"
+          >
+            <header className="sf-vocabulary-results-header">
+              <div>
+                <span className="sf-vocabulary-results-title-icon">
+                  <ChartStatIcon />
+                </span>
+                <h2 id="sf-vocabulary-results-title">学习成果</h2>
+                <p>
+                  <SparkleIcon />
+                  坚持学习，让地道表达成为你的习惯！
+                </p>
+              </div>
+              <button
+                type="button"
+                aria-label="关闭学习成果"
+                className="sf-vocabulary-results-close"
+                onClick={() => setShowLearningResultsModal(false)}
+              >
+                <CloseIcon />
+              </button>
+            </header>
+
+            <section className="sf-vocabulary-results-stat-grid" aria-label="学习成果统计">
+              <article className="sf-vocabulary-results-stat is-purple">
+                <span>
+                  <BookmarkStatIcon />
+                </span>
+                <strong>{totalExpressionCount}</strong>
+                <p>累计收藏</p>
+                <em>个表达</em>
+              </article>
+              <article className="sf-vocabulary-results-stat is-green">
+                <span>
+                  <BookStatIcon />
+                </span>
+                <strong>{recentlyAddedCount}</strong>
+                <p>本周新增</p>
+                <em>个表达</em>
+              </article>
+              <article className="sf-vocabulary-results-stat is-orange">
+                <span>
+                  <MicIcon />
+                </span>
+                <strong>{weeklyShadowCount}</strong>
+                <p>本周跟读</p>
+                <em>次</em>
+              </article>
+              <article className="sf-vocabulary-results-stat is-blue">
+                <span>
+                  <CalendarStatIcon />
+                </span>
+                <strong>{combinedStudyStreakDays}</strong>
+                <p>连续学习</p>
+                <em>天</em>
+              </article>
+              <article className="sf-vocabulary-results-stat is-purple">
+                <span>
+                  <StarIcon />
+                </span>
+                <strong>{combinedStudiedDates.length}</strong>
+                <p>累计学习</p>
+                <em>天</em>
+              </article>
+              <article className="sf-vocabulary-results-stat is-pink">
+                <span>
+                  <FireStatIcon />
+                </span>
+                <strong>{totalShadowCount}</strong>
+                <p>累计跟读</p>
+                <em>次</em>
+              </article>
+            </section>
+
+            <section className="sf-vocabulary-results-chart-card" aria-label="近七天学习历程">
+              <div className="sf-vocabulary-results-section-title">
+                <h3>学习历程</h3>
+                <button type="button">
+                  近7天
+                  <ChevronDownIcon />
+                </button>
+              </div>
+              <div
+                className="sf-vocabulary-results-chart"
+                style={highlightedHistoryStyle}
+              >
+                <div className="sf-vocabulary-results-chart-y" aria-hidden="true">
+                  <span>60</span>
+                  <span>50</span>
+                  <span>40</span>
+                  <span>30</span>
+                  <span>20</span>
+                  <span>10</span>
+                  <span>0</span>
+                </div>
+                <div className="sf-vocabulary-results-chart-plot">
+                  <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <polygon points={learningHistoryAreaPoints} />
+                    <polyline points={learningHistoryPoints} />
+                    {learningHistory.map((point) => (
+                      <circle
+                        key={point.dateKey}
+                        cx={point.x}
+                        cy={point.y}
+                        r={point.dateKey === highlightedHistoryPoint.dateKey ? 2.1 : 1.5}
+                      />
+                    ))}
+                  </svg>
+                  <div className="sf-vocabulary-results-chart-tooltip">
+                    <span>{highlightedHistoryPoint.label}</span>
+                    <strong>学习表达：{highlightedHistoryPoint.value} 个</strong>
+                  </div>
+                </div>
+                <div className="sf-vocabulary-results-chart-x">
+                  {learningHistory.map((point) => (
+                    <span key={point.dateKey}>{point.label}</span>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section className="sf-vocabulary-results-recent-card" aria-label="最近学习">
+              <div className="sf-vocabulary-results-section-title">
+                <h3>最近学习</h3>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowLearningResultsModal(false);
+                    setShowExpressionLibrary(true);
+                  }}
+                >
+                  查看全部
+                  <ArrowRightIcon />
+                </button>
+              </div>
+              <div className="sf-vocabulary-results-recent-list">
+                {recentLearningItems.length ? (
+                  recentLearningItems.map((word) => {
+                    const statusTone = getExpressionStatusTone(word, todayKey);
+                    const activityTime = getExpressionLastActivityTime(word);
+
+                    return (
+                      <button
+                        type="button"
+                        key={`recent-${word.word}-${word.createdAt}`}
+                        onClick={() => openLibraryExpression(word)}
+                      >
+                        <span className="sf-vocabulary-results-recent-icon">
+                          <BookStatIcon />
+                        </span>
+                        <strong>{word.word}</strong>
+                        <span className={`sf-vocabulary-results-recent-status is-${statusTone}`}>
+                          {getExpressionStatusLabel(word, todayKey)}
+                        </span>
+                        <time>{formatRelativeTimeFromNow(activityTime)}</time>
+                        <ArrowRightIcon />
+                      </button>
+                    );
+                  })
+                ) : (
+                  <p className="sf-vocabulary-results-empty">
+                    还没有学习记录。开始跟读后，这里会显示最近学习的表达。
+                  </p>
+                )}
+              </div>
+            </section>
+
+            <p className="sf-vocabulary-results-tip">
+              <LightbulbIcon />
+              小贴士：每天坚持一点点，你的表达能力会越来越棒！
+            </p>
+          </section>
+        </div>
       ) : null}
     </main>
   );

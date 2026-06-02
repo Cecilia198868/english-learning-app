@@ -1,10 +1,11 @@
 ﻿"use client";
 
-import type { KeyboardEvent } from "react";
+import type { CSSProperties, KeyboardEvent } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import AccountAvatarButton from "@/components/AccountAvatarButton";
+import ClassicRoleAvatarIcon from "@/components/ClassicRoleAvatarIcon";
 import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
 import FreeUsageMeter from "@/components/FreeUsageMeter";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
@@ -15,6 +16,11 @@ import {
   featuredLessonRecords,
   getFeaturedLessonById,
 } from "@/data/featuredCourses";
+import {
+  getClassicLessonRoleConfig,
+  type ClassicSceneRoleIcon,
+} from "@/data/classicSceneRoles";
+import { financeGovernmentSections } from "@/data/financeGovernmentSections";
 import { getPrebuiltClassicExpressionSet } from "@/data/prebuiltClassicExpressions";
 import {
   addVocabularyWord,
@@ -41,6 +47,8 @@ import styles from "./ClassicStudyPage.module.css";
 
 type Lesson = {
   id: string;
+  roleIcon?: ClassicSceneRoleIcon;
+  roleLabel?: string;
   title: string;
   txt_content: string;
   created_at?: string;
@@ -52,6 +60,7 @@ type LocalLessonData = {
 };
 
 type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
+type AccountAccessKind = "checking" | "guest" | "signed-in";
 
 type AccountSubscriptionResponse = {
   cancelAtPeriodEnd?: boolean | null;
@@ -86,6 +95,8 @@ const DB_NAME = "english-learning-app-db";
 const DB_VERSION = 1;
 const AUDIO_STORE_NAME = "audios";
 const LAST_STUDY_PROGRESS_KEY = "lastStudyProgress";
+const GUEST_CLASSIC_PREVIEW_LESSON_ID = "bank_open_new_account_zh";
+const GUEST_CLASSIC_SENTENCE_LIMIT = 5;
 const bankFinanceLessonTitleOrder = [
   "新开银行账户",
   "银行事务口语课",
@@ -108,6 +119,50 @@ const bankFinanceLessonTitleOrder = [
   "退休储蓄与养老金计划",
   "关闭银行账户",
 ] as const;
+
+function isClassicSceneLessonId(lessonId: string) {
+  return (
+    lessonId.startsWith("bank_") ||
+    lessonId.startsWith("government_") ||
+    lessonId.startsWith("driver_")
+  );
+}
+
+function limitPairsForAccountAccess(
+  lessonId: string,
+  pairs: SentencePair[],
+  accountAccessKind: AccountAccessKind
+) {
+  if (accountAccessKind !== "guest" || !isClassicSceneLessonId(lessonId)) {
+    return pairs;
+  }
+
+  if (lessonId !== GUEST_CLASSIC_PREVIEW_LESSON_ID) {
+    return [];
+  }
+
+  return pairs.slice(0, GUEST_CLASSIC_SENTENCE_LIMIT);
+}
+
+function getClassicStudyNavigation(lessonId: string) {
+  const financeSection = Object.values(financeGovernmentSections).find((section) =>
+    section.lessons.some((item) => item.id === lessonId)
+  );
+
+  if (financeSection) {
+    return {
+      categoryHref: "/classic-scenes/finance-government",
+      categoryLabel: "金融与行政事务",
+      courseMenuHref: `/classic-scenes/finance-government/${financeSection.id}`,
+    };
+  }
+
+  return {
+    categoryHref: "/classic-scenes",
+    categoryLabel: "经典场景口语练习",
+    courseMenuHref: "/classic-scenes",
+  };
+}
 const expressionVariantLabels: Array<{
   key: ExpressionVariantKey;
   label: string;
@@ -318,19 +373,6 @@ function createFallbackExpressionVariants(standardEnglish: string) {
   }));
 }
 
-function getClassicTopicRole(lessonId: string, title: string) {
-  const source = `${lessonId} ${title}`.toLowerCase();
-
-  if (source.includes("bank") || title.includes("银行")) return "银行职员";
-  if (source.includes("driver") || title.includes("驾照")) return "办事人员";
-  if (source.includes("government") || title.includes("政府")) return "窗口工作人员";
-  if (source.includes("health") || title.includes("医疗")) return "接待人员";
-  if (source.includes("restaurant") || title.includes("餐")) return "服务员";
-  if (source.includes("hotel") || title.includes("住宿")) return "前台人员";
-
-  return "场景角色";
-}
-
 function BrandBubbleIcon() {
   return (
     <svg aria-hidden="true" focusable="false" viewBox="0 0 52 52">
@@ -352,6 +394,23 @@ function ArrowRightIcon() {
   return (
     <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
       <path d="m13 8 8 8-8 8M4 16h16" />
+    </svg>
+  );
+}
+
+function SwitchCourseIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
+      <rect x="6" y="7" width="20" height="20" rx="4" />
+      <path d="M16 11v12M10 17h12" />
+    </svg>
+  );
+}
+
+function ChevronDownIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }
@@ -407,22 +466,6 @@ function TopicIcon({ lessonId, title }: { lessonId: string; title: string }) {
           <path d="M18 23h.1M24 23h.1M30 23h.1" />
         </>
       )}
-    </svg>
-  );
-}
-
-function SpeakerAvatarIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 72 72">
-      <circle cx="36" cy="36" r="33" fill="#f3eadc" />
-      <path d="M20 61c3-11 9-17 16-17s13 6 16 17" fill="#5d7f54" />
-      <path d="M24 25c2-10 9-16 18-14 9 2 13 10 10 20-2-7-7-10-14-9-7 1-11 2-14 3Z" fill="#6f5335" />
-      <circle cx="35" cy="31" r="16" fill="#ffe6cf" />
-      <path d="M25 31c2-5 7-8 15-8 5 0 9 2 12 6-2-11-10-17-20-14-8 2-12 8-12 17 2 0 3 0 5-1Z" fill="#7a5a38" />
-      <circle cx="30" cy="33" r="1.8" fill="#3d3025" />
-      <circle cx="41" cy="33" r="1.8" fill="#3d3025" />
-      <path d="M31 41c3 2 6 2 9 0" fill="none" stroke="#3d3025" strokeLinecap="round" strokeWidth="2" />
-      <path d="M28 48h16l-8 8-8-8Z" fill="#fffaf2" />
     </svg>
   );
 }
@@ -600,6 +643,8 @@ export default function StudyPage() {
   const [showFollowReadModal, setShowFollowReadModal] = useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
     useState<SubscriptionStatus>("free");
+  const [accountAccessKind, setAccountAccessKind] =
+    useState<AccountAccessKind>("checking");
   const [freePracticeUsageCount, setFreePracticeUsageCount] = useState(0);
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -732,6 +777,14 @@ export default function StudyPage() {
   }
 
   const loadLesson = useCallback(() => {
+    if (isClassicSceneLessonId(lessonId) && accountAccessKind === "checking") {
+      setMessage("正在加载课程");
+      setLesson(null);
+      setPairs([]);
+      setHasLoadedLesson(false);
+      return;
+    }
+
     setHasLoadedLesson(false);
     const data = loadLessonsData();
     setLocalLessonSequence(data.lessons || []);
@@ -756,7 +809,11 @@ export default function StudyPage() {
       setLesson(featuredLesson);
       setLessonTitle(featuredLesson.title);
 
-      const featuredPairs = parseTrainingContent(featuredLesson.txt_content || "");
+      const featuredPairs = limitPairsForAccountAccess(
+        lessonId,
+        parseTrainingContent(featuredLesson.txt_content || ""),
+        accountAccessKind
+      );
       setPairs(featuredPairs);
       setCurrentIndex(0);
       currentIndexRef.current = 0;
@@ -765,6 +822,16 @@ export default function StudyPage() {
       setLiveTranscript("");
       setExpressionVariants([]);
       setSelectedExpressionIndex(0);
+      setMessage(
+        accountAccessKind === "guest" &&
+          isClassicSceneLessonId(lessonId) &&
+          featuredPairs.length === 0
+          ? "游客只能体验第一课的 5 句内容"
+          : accountAccessKind === "guest" &&
+              lessonId === GUEST_CLASSIC_PREVIEW_LESSON_ID
+            ? "游客可体验前 5 句"
+            : ""
+      );
       setHasLoadedLesson(true);
       return;
     }
@@ -772,7 +839,11 @@ export default function StudyPage() {
     setLesson(found);
     setLessonTitle(found.title || "未命名课程");
 
-    const parsedPairs = parseTrainingContent(found.txt_content || "");
+    const parsedPairs = limitPairsForAccountAccess(
+      lessonId,
+      parseTrainingContent(found.txt_content || ""),
+      accountAccessKind
+    );
     setPairs(parsedPairs);
 
     const savedIndex = localStorage.getItem(progressKey);
@@ -796,7 +867,7 @@ export default function StudyPage() {
     setExpressionVariants([]);
     setSelectedExpressionIndex(0);
     setHasLoadedLesson(true);
-  }, [lessonId, progressKey]);
+  }, [accountAccessKind, lessonId, progressKey]);
 
   function saveProgress(index: number) {
     localStorage.setItem(progressKey, String(index));
@@ -1194,12 +1265,25 @@ export default function StudyPage() {
           cache: "no-store",
         });
 
-        if (!response.ok) return;
+        if (response.status === 401) {
+          if (!cancelled) {
+            setAccountAccessKind("guest");
+          }
+          return;
+        }
+
+        if (!response.ok) {
+          if (!cancelled) {
+            setAccountAccessKind("signed-in");
+          }
+          return;
+        }
 
         const data = (await response.json()) as AccountSubscriptionResponse;
 
         if (cancelled) return;
 
+        setAccountAccessKind("signed-in");
         const nextSubscriptionStatus = normalizeSubscriptionStatus(
           data.subscriptionStatus,
           data.cancelAtPeriodEnd
@@ -1210,7 +1294,9 @@ export default function StudyPage() {
           setShowFreePracticeLimitModal(false);
         }
       } catch {
-        // Keep the existing free-user behavior if the subscription check fails.
+        if (!cancelled) {
+          setAccountAccessKind("signed-in");
+        }
       }
     }
 
@@ -1609,6 +1695,10 @@ export default function StudyPage() {
         cache: "no-store",
       });
 
+      if (response.status === 401) {
+        setAccountAccessKind("guest");
+      }
+
       if (response.ok) {
         const data = (await response.json()) as AccountSubscriptionResponse;
         const nextSubscriptionStatus = normalizeSubscriptionStatus(
@@ -1616,6 +1706,7 @@ export default function StudyPage() {
           data.cancelAtPeriodEnd
         );
 
+        setAccountAccessKind("signed-in");
         setAccountSubscriptionStatus(nextSubscriptionStatus);
 
         if (hasProAccess(nextSubscriptionStatus)) {
@@ -1769,15 +1860,43 @@ export default function StudyPage() {
   const lessonSequenceIndex = lessonSequence.findIndex(
     (record) => record.id === lessonId
   );
+  const disableGuestClassicNeighborLessons =
+    accountAccessKind === "guest" && isClassicSceneLessonId(lessonId);
   const previousLesson =
-    lessonSequenceIndex > 0 ? lessonSequence[lessonSequenceIndex - 1] : null;
+    !disableGuestClassicNeighborLessons && lessonSequenceIndex > 0
+      ? lessonSequence[lessonSequenceIndex - 1]
+      : null;
   const nextLesson =
-    lessonSequenceIndex >= 0 && lessonSequenceIndex < lessonSequence.length - 1
+    !disableGuestClassicNeighborLessons &&
+    lessonSequenceIndex >= 0 &&
+    lessonSequenceIndex < lessonSequence.length - 1
       ? lessonSequence[lessonSequenceIndex + 1]
       : null;
   const sentenceProgressText = hasLoadedLesson
     ? `第 ${pairs.length ? currentIndex + 1 : 0} / ${pairs.length} 句`
     : "";
+  const sentenceProgressPercent =
+    hasLoadedLesson && pairs.length
+      ? Math.min(
+          100,
+          Math.max(1, Math.round(((currentIndex + 1) / pairs.length) * 100))
+        )
+      : 0;
+  const sentenceProgressStyle = {
+    "--classic-progress": `${sentenceProgressPercent}%`,
+  } as CSSProperties;
+  const classicStudyNavigation = useMemo(
+    () => getClassicStudyNavigation(lessonId),
+    [lessonId]
+  );
+  const classicSceneRoleConfig = useMemo(
+    () =>
+      getClassicLessonRoleConfig(lessonId, {
+        roleIcon: lesson?.roleIcon,
+        roleLabel: lesson?.roleLabel,
+      }),
+    [lesson?.roleIcon, lesson?.roleLabel, lessonId]
+  );
   const showStudyPrompt = hasLoadedLesson && !spokenDisplay && !showEnglish;
   const showStudyListeningPrompt = hasLoadedLesson && isListening;
   const showStudyVoiceOnlyPrompt = showStudyPrompt || showStudyListeningPrompt;
@@ -1955,20 +2074,25 @@ export default function StudyPage() {
   }
 
   if (showStudyVoiceOnlyPrompt) {
-    const speakerRole = getClassicTopicRole(lessonId, courseTitle);
     const displayedChinese = currentPair.chinese || "没有内容";
 
     return (
       <main className={styles.classicShell}>
-        <section className={styles.classicPhone} aria-labelledby="classic-study-title">
-          <header className={styles.classicTopbar}>
+        <section
+          className={`${styles.classicPhone} ${styles.studyPhone}`}
+          aria-labelledby="classic-study-title"
+        >
+          <header className={`${styles.classicTopbar} ${styles.studyTopbar}`}>
             <button
               type="button"
-              aria-label="回到首页"
-              className={styles.menuButton}
+              aria-label="回到学习首页"
+              className={styles.homeShortcut}
               onClick={handleClassicHomeClick}
             >
-              <HomeMenuIcon label={null} />
+              <span className={styles.homeIconBox}>
+                <HomeMenuIcon label={null} />
+              </span>
+              <span>学习首页</span>
             </button>
 
             <div className={styles.brand} aria-label="SpeakFlow Voice Practice">
@@ -1983,61 +2107,52 @@ export default function StudyPage() {
 
             <button
               type="button"
-              aria-label="进入账户界面"
-              className={styles.avatarButton}
-              onClick={() => router.push("/account")}
+              aria-label="切换课程"
+              className={styles.switchCourseButton}
+              onClick={() => router.push(classicStudyNavigation.courseMenuHref)}
             >
-              <Image
-                src="/default-avatar.png"
-                alt=""
-                width={68}
-                height={68}
-                className={styles.avatarImage}
-                priority
-              />
-              <span aria-hidden="true" className={styles.avatarDot} />
+              <SwitchCourseIcon />
+              <span>切换课程</span>
+              <ChevronDownIcon />
             </button>
           </header>
 
-          <section className={styles.topicBar} aria-label="当前话题">
-            <button
-              type="button"
-              aria-label="上一个话题"
-              className={`${styles.topicArrow} ${styles.topicArrowLeft}`}
-              onClick={() => previousLesson && openNeighborLesson(previousLesson)}
-              disabled={!previousLesson}
-            >
-              <ArrowLeftIcon />
-            </button>
-
+          <section className={`${styles.topicBar} ${styles.studyTopicBar}`} aria-label="当前话题">
             <span className={styles.topicIcon}>
               <TopicIcon lessonId={lessonId} title={courseTitle} />
             </span>
 
             <div className={styles.topicCopy}>
+              <button
+                type="button"
+                className={styles.categoryPill}
+                onClick={() => router.push(classicStudyNavigation.categoryHref)}
+              >
+                {classicStudyNavigation.categoryLabel}
+              </button>
               <h1 id="classic-study-title" className={styles.topicTitle}>
                 {courseTitle}
               </h1>
               <p className={styles.topicProgress}>{sentenceProgressText}</p>
+              <div className={styles.progressRow} style={sentenceProgressStyle}>
+                <span className={styles.progressTrack} aria-hidden="true">
+                  <span />
+                </span>
+                <span className={styles.progressPercent}>
+                  {sentenceProgressPercent}% 完成
+                </span>
+              </div>
             </div>
-
-            <button
-              type="button"
-              aria-label="下一个话题"
-              className={`${styles.topicArrow} ${styles.topicArrowRight}`}
-              onClick={() => nextLesson && openNeighborLesson(nextLesson)}
-              disabled={!nextLesson}
-            >
-              <ArrowRightIcon />
-            </button>
           </section>
 
           <section className={styles.dialogCard} aria-label="中文提示">
             <div className={styles.speakerLine}>
               <span className={styles.speakerAvatar}>
-                <SpeakerAvatarIcon />
+                <ClassicRoleAvatarIcon roleIcon={classicSceneRoleConfig.roleIcon} />
               </span>
-              <span className={styles.roleBadge}>{speakerRole}</span>
+              <span className={styles.roleBadge}>
+                {classicSceneRoleConfig.roleLabel}
+              </span>
             </div>
 
             <div className={styles.speechBubble}>
@@ -2045,9 +2160,11 @@ export default function StudyPage() {
                 “
               </span>
               <p className={styles.chinesePrompt}>{displayedChinese}</p>
-              {isListening ? (
-                <p className={styles.recordingPrompt}>正在录制您说的英文</p>
-              ) : null}
+              <p className={styles.bubbleSubtitle}>
+                {isListening
+                  ? "正在录制您说的英文"
+                  : "（ 看着中文，尝试说出英文 ）"}
+              </p>
               <span aria-hidden="true" className={styles.quoteEnd}>
                 ”
               </span>
@@ -2061,9 +2178,13 @@ export default function StudyPage() {
               <span className={styles.bankChairTwo} />
             </div>
 
-            <p className={styles.promptHint}>
+            <button
+              type="button"
+              className={styles.promptHint}
+              onClick={handleEnglishPracticeAction}
+            >
               看着中文，尝试说出英文
-            </p>
+            </button>
           </section>
 
           <section className={styles.methodCard} aria-label="练习方法">
@@ -2163,6 +2284,7 @@ export default function StudyPage() {
 
         {showFreePracticeLimitModal ? (
           <FreePracticeLimitModal
+            isSignedIn={accountAccessKind === "signed-in"}
             onDismiss={() => setShowFreePracticeLimitModal(false)}
             onLogin={openLoginFromFreePracticeLimit}
             onRegister={openRegisterFromFreePracticeLimit}
@@ -2181,17 +2303,20 @@ export default function StudyPage() {
     return (
       <main className={styles.classicShell}>
         <section
-          className={`${styles.classicPhone} ${styles.resultPhone}`}
+          className={`${styles.classicPhone} ${styles.resultPhone} ${styles.studyPhone}`}
           aria-labelledby="classic-result-title"
         >
-          <header className={styles.classicTopbar}>
+          <header className={`${styles.classicTopbar} ${styles.studyTopbar}`}>
             <button
               type="button"
-              aria-label="回到首页"
-              className={styles.menuButton}
+              aria-label="回到学习首页"
+              className={styles.homeShortcut}
               onClick={handleClassicHomeClick}
             >
-              <HomeMenuIcon label={null} />
+              <span className={styles.homeIconBox}>
+                <HomeMenuIcon label={null} />
+              </span>
+              <span>学习首页</span>
             </button>
 
             <div className={styles.brand} aria-label="SpeakFlow Voice Practice">
@@ -2206,53 +2331,42 @@ export default function StudyPage() {
 
             <button
               type="button"
-              aria-label="进入账户界面"
-              className={styles.avatarButton}
-              onClick={() => router.push("/account")}
+              aria-label="切换课程"
+              className={styles.switchCourseButton}
+              onClick={() => router.push(classicStudyNavigation.courseMenuHref)}
             >
-              <Image
-                src="/default-avatar.png"
-                alt=""
-                width={68}
-                height={68}
-                className={styles.avatarImage}
-                priority
-              />
-              <span aria-hidden="true" className={styles.avatarDot} />
+              <SwitchCourseIcon />
+              <span>切换课程</span>
+              <ChevronDownIcon />
             </button>
           </header>
 
-          <section className={`${styles.topicBar} ${styles.resultTopicBar}`} aria-label="当前话题">
-            <button
-              type="button"
-              aria-label="上一个话题"
-              className={`${styles.topicArrow} ${styles.topicArrowLeft}`}
-              onClick={() => previousLesson && openNeighborLesson(previousLesson)}
-              disabled={!previousLesson}
-            >
-              <ArrowLeftIcon />
-            </button>
-
+          <section className={`${styles.topicBar} ${styles.studyTopicBar}`} aria-label="当前话题">
             <span className={styles.topicIcon}>
               <TopicIcon lessonId={lessonId} title={courseTitle} />
             </span>
 
             <div className={styles.topicCopy}>
+              <button
+                type="button"
+                className={styles.categoryPill}
+                onClick={() => router.push(classicStudyNavigation.categoryHref)}
+              >
+                {classicStudyNavigation.categoryLabel}
+              </button>
               <h1 id="classic-result-title" className={styles.topicTitle}>
                 {courseTitle}
               </h1>
               <p className={styles.topicProgress}>{sentenceProgressText}</p>
+              <div className={styles.progressRow} style={sentenceProgressStyle}>
+                <span className={styles.progressTrack} aria-hidden="true">
+                  <span />
+                </span>
+                <span className={styles.progressPercent}>
+                  {sentenceProgressPercent}% 完成
+                </span>
+              </div>
             </div>
-
-            <button
-              type="button"
-              aria-label="下一个话题"
-              className={`${styles.topicArrow} ${styles.topicArrowRight}`}
-              onClick={() => nextLesson && openNeighborLesson(nextLesson)}
-              disabled={!nextLesson}
-            >
-              <ArrowRightIcon />
-            </button>
           </section>
 
           <p className={styles.resultHint}>
@@ -2445,6 +2559,7 @@ export default function StudyPage() {
 
         {showFreePracticeLimitModal ? (
           <FreePracticeLimitModal
+            isSignedIn={accountAccessKind === "signed-in"}
             onDismiss={() => setShowFreePracticeLimitModal(false)}
             onLogin={openLoginFromFreePracticeLimit}
             onRegister={openRegisterFromFreePracticeLimit}
@@ -2946,6 +3061,7 @@ export default function StudyPage() {
 
         {showFreePracticeLimitModal ? (
           <FreePracticeLimitModal
+            isSignedIn={accountAccessKind === "signed-in"}
             onDismiss={() => setShowFreePracticeLimitModal(false)}
             onLogin={openLoginFromFreePracticeLimit}
             onRegister={openRegisterFromFreePracticeLimit}

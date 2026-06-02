@@ -3,6 +3,11 @@ import {
   serializeTrainingItems,
   type TrainingItem,
 } from "@/lib/training";
+import {
+  getClassicLessonRoleConfig,
+  type ClassicSceneRoleConfig,
+  type ClassicSceneRoleIcon,
+} from "@/data/classicSceneRoles";
 
 export type FeaturedCourseTranslationKey = "zh" | "es" | "ja" | "ko" | "fr";
 export type FeaturedCourseType = "scene" | "level";
@@ -40,6 +45,8 @@ export type FeaturedCourse = {
 
 export type FeaturedLessonRecord = {
   id: string;
+  roleIcon: ClassicSceneRoleIcon;
+  roleLabel: string;
   title: string;
   txt_content: string;
   created_at: string;
@@ -62,10 +69,15 @@ function createSentence(
 function createTrainingLesson(
   id: string,
   title: string,
-  items: TrainingItem[]
+  items: TrainingItem[],
+  roleConfig?: Partial<ClassicSceneRoleConfig>
 ): FeaturedLessonRecord {
+  const resolvedRoleConfig = getClassicLessonRoleConfig(id, roleConfig);
+
   return {
     id,
+    roleIcon: resolvedRoleConfig.roleIcon,
+    roleLabel: resolvedRoleConfig.roleLabel,
     title,
     txt_content: serializeTrainingItems(items, { preserveOriginalItems: true }),
     created_at: "2026-05-09T00:00:00.000Z",

@@ -2645,3 +2645,746 @@
 .resultScrollArea::-webkit-scrollbar {
   display: none;
 }
+
+.resultPhone.studyPhone {
+  padding: calc(14px + env(safe-area-inset-top)) 18px 22px;
+}
+
+.resultPhone .studyTopbar {
+  display: flex;
+  min-height: 92px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.resultPhone .studyTopbar,
+.resultPhone .studyTopicBar,
+.resultPhone .resultHint,
+.resultPhone .followCard {
+  flex: 0 0 auto;
+}
+
+.studyPhone {
+  width: min(100%, 430px);
+  min-height: 100dvh;
+  padding: calc(14px + env(safe-area-inset-top)) 18px 22px;
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 50% -6%, rgba(255, 255, 255, 0.92), transparent 34%),
+    radial-gradient(circle at 14% 22%, rgba(235, 244, 226, 0.58), transparent 28%),
+    radial-gradient(circle at 94% 68%, rgba(225, 238, 214, 0.46), transparent 28%),
+    linear-gradient(180deg, #fffdf7 0%, #fffdf8 48%, #fbf7ed 100%);
+  box-shadow: none;
+}
+
+.studyTopbar {
+  position: relative;
+  display: flex;
+  min-height: 92px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.homeShortcut {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  border: 0;
+  background: transparent;
+  color: #133f1d;
+  font-size: 0.9rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.homeIconBox {
+  display: grid;
+  width: 66px;
+  height: 66px;
+  place-items: center;
+  border: 1px solid rgba(35, 70, 32, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #111111;
+  box-shadow:
+    0 15px 30px rgba(58, 82, 45, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.homeIconBox svg {
+  width: 1.78rem;
+  height: 1.78rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.homeIconBox :global(.sf-home-menu-icon) {
+  font-size: 2.05rem;
+}
+
+.switchCourseButton {
+  position: absolute;
+  right: 0;
+  top: 3px;
+  display: inline-flex;
+  min-height: 56px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(35, 70, 32, 0.11);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #143f1e;
+  padding: 0 15px;
+  font-size: 0.96rem;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow:
+    0 13px 26px rgba(58, 82, 45, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.switchCourseButton svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.switchCourseButton svg:last-child {
+  width: 18px;
+  height: 18px;
+  stroke-width: 3.2;
+}
+
+.studyPhone .brand {
+  gap: 10px;
+  color: #174521;
+  padding-top: 2px;
+}
+
+.studyPhone .brandIcon {
+  width: 45px;
+  height: 45px;
+  color: #4f8a58;
+}
+
+.studyPhone .brandTitle {
+  color: #174521;
+  font-size: clamp(1.58rem, 7vw, 1.9rem);
+  font-weight: 900;
+  line-height: 0.98;
+}
+
+.studyPhone .brandSubtitle {
+  margin-top: 7px;
+  color: #557c4f;
+  font-size: clamp(0.68rem, 3vw, 0.84rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.studyTopicBar {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: end;
+  justify-content: stretch;
+  column-gap: 18px;
+  min-height: auto;
+  padding: 20px 18px 12px;
+}
+
+.studyTopicBar .topicIcon {
+  width: 86px;
+  height: 86px;
+  color: #6fa06d;
+}
+
+.studyTopicBar .topicIcon svg {
+  width: 86px;
+  height: 86px;
+  stroke-width: 2.8;
+}
+
+.studyTopicBar .topicCopy {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.categoryPill {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 34px;
+  align-items: center;
+  border: 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.9), transparent 42%),
+    #e6eee0;
+  color: #6d8a69;
+  padding: 0 16px;
+  font-size: 0.96rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.studyTopicBar .topicTitle {
+  max-width: none;
+  color: #143f1e;
+  font-size: clamp(1.95rem, 8.4vw, 2.42rem);
+  font-weight: 900;
+  line-height: 1.12;
+  white-space: normal;
+}
+
+.studyTopicBar .topicProgress {
+  margin: 0;
+  color: #51784d;
+  font-size: clamp(1.15rem, 5vw, 1.42rem);
+  font-weight: 650;
+  line-height: 1;
+}
+
+.progressRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.progressTrack {
+  display: block;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dde8d7;
+}
+
+.progressTrack span {
+  display: block;
+  width: var(--classic-progress, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #80a875, #5f945b);
+}
+
+.progressPercent {
+  color: #1b5a27;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.studyPhone .dialogCard {
+  min-height: 282px;
+  margin: 16px 6px 0;
+  padding: 29px 24px 26px;
+  border-color: rgba(126, 159, 102, 0.18);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 77% 76%, rgba(143, 169, 116, 0.16), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(255, 253, 248, 0.94));
+  box-shadow:
+    0 17px 38px rgba(58, 82, 45, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.97);
+}
+
+.studyPhone .speakerLine {
+  gap: 17px;
+}
+
+.studyPhone .speakerAvatar {
+  width: 70px;
+  height: 70px;
+  background: #f5efe2;
+}
+
+.studyPhone .speakerAvatar svg {
+  width: 70px;
+  height: 70px;
+}
+
+.studyPhone .roleBadge {
+  min-height: 50px;
+  border-radius: 999px;
+  background: #edf4e7;
+  padding: 0 26px;
+  color: #1e5a2a;
+  font-size: 1.18rem;
+  font-weight: 900;
+}
+
+.studyPhone .speechBubble {
+  min-height: 139px;
+  margin-top: 24px;
+  justify-items: center;
+  gap: 14px;
+  padding: 32px 38px 27px;
+  border-color: rgba(126, 159, 102, 0.58);
+  border-radius: 23px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(226, 236, 213, 0.34), transparent 30%),
+    rgba(255, 254, 250, 0.96);
+}
+
+.studyPhone .speechBubble::after {
+  left: 32px;
+  bottom: -19px;
+  width: 30px;
+  height: 30px;
+  border-color: rgba(126, 159, 102, 0.58);
+}
+
+.studyPhone .quoteStart,
+.studyPhone .quoteEnd {
+  color: rgba(232, 149, 73, 0.68);
+  font-size: 4rem;
+}
+
+.studyPhone .quoteStart {
+  left: 38px;
+  top: 22px;
+}
+
+.studyPhone .quoteEnd {
+  right: 36px;
+  bottom: 17px;
+}
+
+.studyPhone .chinesePrompt {
+  color: #143f1e;
+  font-size: clamp(1.58rem, 6.9vw, 2rem);
+  font-weight: 900 !important;
+  line-height: 1.22;
+  text-align: center;
+}
+
+.bubbleSubtitle {
+  margin: 0;
+  color: rgba(32, 45, 30, 0.68);
+  font-size: clamp(0.96rem, 4vw, 1.15rem);
+  font-weight: 760 !important;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.studyPhone .sceneIllustration {
+  right: 20px;
+  bottom: 12px;
+  width: 180px;
+  height: 74px;
+  opacity: 0.38;
+}
+
+.studyPhone .promptHint {
+  left: 30px;
+  bottom: 25px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #dd6630;
+  font-size: 1.06rem;
+  font-weight: 900 !important;
+}
+
+.studyPhone .promptHint::before {
+  width: 0.94rem;
+  height: 0.94rem;
+  border-width: 2px;
+}
+
+.studyPhone .methodCard {
+  min-height: 126px;
+  margin: 16px 6px 0;
+  padding: 14px 20px 17px;
+  border-color: rgba(126, 159, 102, 0.16);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 15px 32px rgba(58, 82, 45, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.studyPhone .methodTitle {
+  color: #1f5a2a;
+}
+
+.studyPhone .methodTitle strong {
+  font-size: 1.12rem;
+}
+
+.studyPhone .methodSteps {
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.studyPhone .methodStep {
+  grid-template-columns: 50px minmax(0, 1fr);
+  column-gap: 8px;
+}
+
+.studyPhone .methodIcon {
+  width: 50px;
+  height: 50px;
+  background: #edf5e8;
+  color: #5f8f5d;
+}
+
+.studyPhone .methodIcon svg {
+  width: 30px;
+  height: 30px;
+  stroke-width: 3;
+}
+
+.studyPhone .stepNumber {
+  width: 24px;
+  height: 24px;
+  transform: translate(32px, -19px);
+  background: #5c8a50;
+  font-size: 0.82rem;
+}
+
+.studyPhone .stepCopy strong {
+  color: #143f1e;
+  font-size: 0.94rem;
+  line-height: 1.08;
+}
+
+.studyPhone .stepCopy small {
+  margin-top: 7px;
+  color: #486d45;
+  font-size: 0.76rem;
+  line-height: 1.18;
+}
+
+.studyPhone .methodArrow {
+  color: #d98f45;
+  font-size: 1.34rem;
+}
+
+.studyPhone .practiceControls {
+  grid-template-columns: minmax(0, 1fr) 112px minmax(0, 1fr);
+  gap: 28px;
+  margin: 64px 10px 0;
+}
+
+.studyPhone .sentenceButton {
+  min-height: 58px;
+  gap: 12px;
+  border-color: rgba(126, 159, 102, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0 20px;
+  color: #2f6238;
+  box-shadow:
+    0 13px 25px rgba(58, 82, 45, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.studyPhone .sentenceButton svg {
+  width: 25px;
+  height: 25px;
+  stroke-width: 3.2;
+}
+
+.studyPhone .sentenceButton span {
+  color: #2f6238;
+  font-size: 1.08rem;
+  font-weight: 900;
+}
+
+.studyPhone .micButton {
+  width: 112px;
+  height: 112px;
+  border-width: 8px;
+  background:
+    radial-gradient(circle at 34% 23%, rgba(255, 255, 255, 0.28), transparent 28%),
+    linear-gradient(145deg, #7fa978, #3f7a49);
+  box-shadow:
+    0 18px 36px rgba(47, 98, 56, 0.27),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25);
+}
+
+.studyPhone .micButton svg {
+  width: 58px;
+  height: 58px;
+  stroke-width: 6.8;
+}
+
+.studyPhone .micPulseOne {
+  inset: -18px;
+}
+
+.studyPhone .micPulseTwo {
+  inset: -33px;
+}
+
+.studyPhone .micHint {
+  min-height: 30px;
+  margin: 16px 18px 0;
+  color: #2f6238;
+  font-size: 1.06rem;
+  font-weight: 900 !important;
+}
+
+.studyPhone .tipCard {
+  grid-template-columns: 40px minmax(0, 1fr) 82px;
+  min-height: 92px;
+  margin: 22px 6px 0;
+  padding: 16px 14px 16px 17px;
+  border-color: rgba(126, 159, 102, 0.24);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 92% 50%, rgba(226, 236, 213, 0.52), transparent 30%),
+    rgba(255, 254, 249, 0.94);
+}
+
+.studyPhone .tipIcon {
+  width: 36px;
+  height: 36px;
+  background: #5f8f5d;
+  font-size: 1.25rem;
+}
+
+.studyPhone .tipCopy {
+  gap: 8px;
+}
+
+.studyPhone .tipCopy strong {
+  color: #2f6238;
+  font-size: 1.28rem;
+}
+
+.studyPhone .tipCopy small {
+  color: #244521;
+  font-size: 0.98rem;
+  font-weight: 720;
+  line-height: 1.42;
+}
+
+.studyPhone .tipArt {
+  width: 72px;
+  height: 62px;
+}
+
+.studyPhone .tipArt::before {
+  width: 41px;
+  height: 54px;
+}
+
+.studyPhone .tipArt::after {
+  width: 38px;
+  height: 29px;
+}
+
+@media (max-width: 374px) {
+  .studyPhone {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .studyTopbar {
+    min-height: 86px;
+  }
+
+  .homeIconBox {
+    width: 58px;
+    height: 58px;
+    border-radius: 21px;
+  }
+
+  .homeShortcut {
+    font-size: 0.82rem;
+  }
+
+  .switchCourseButton {
+    min-height: 50px;
+    gap: 6px;
+    padding: 0 11px;
+    font-size: 0.86rem;
+  }
+
+  .switchCourseButton svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .studyPhone .brand {
+    gap: 7px;
+  }
+
+  .studyPhone .brandIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .studyPhone .brandTitle {
+    font-size: 1.42rem;
+  }
+
+  .studyPhone .brandSubtitle {
+    font-size: 0.6rem;
+  }
+
+  .studyTopicBar {
+    grid-template-columns: 70px minmax(0, 1fr);
+    column-gap: 14px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .studyTopicBar .topicIcon,
+  .studyTopicBar .topicIcon svg {
+    width: 70px;
+    height: 70px;
+  }
+
+  .categoryPill {
+    min-height: 30px;
+    padding: 0 12px;
+    font-size: 0.82rem;
+  }
+
+  .studyTopicBar .topicTitle {
+    font-size: 1.7rem;
+  }
+
+  .studyTopicBar .topicProgress {
+    font-size: 1.05rem;
+  }
+
+  .progressRow {
+    gap: 9px;
+  }
+
+  .progressPercent {
+    font-size: 0.78rem;
+  }
+
+  .studyPhone .dialogCard,
+  .studyPhone .methodCard,
+  .studyPhone .tipCard {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .studyPhone .dialogCard {
+    min-height: 264px;
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .studyPhone .speakerAvatar,
+  .studyPhone .speakerAvatar svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .studyPhone .roleBadge {
+    min-height: 42px;
+    padding: 0 20px;
+    font-size: 1rem;
+  }
+
+  .studyPhone .speechBubble {
+    min-height: 126px;
+    padding-right: 25px;
+    padding-left: 25px;
+  }
+
+  .studyPhone .chinesePrompt {
+    font-size: 1.38rem;
+  }
+
+  .studyPhone .methodCard {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .studyPhone .methodStep {
+    grid-template-columns: 38px minmax(0, 1fr);
+    column-gap: 5px;
+  }
+
+  .studyPhone .methodIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .studyPhone .methodIcon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .studyPhone .stepNumber {
+    transform: translate(24px, -16px);
+  }
+
+  .studyPhone .stepCopy strong {
+    font-size: 0.78rem;
+  }
+
+  .studyPhone .stepCopy small {
+    font-size: 0.64rem;
+  }
+
+  .studyPhone .practiceControls {
+    grid-template-columns: minmax(0, 1fr) 96px minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 52px;
+  }
+
+  .studyPhone .sentenceButton {
+    min-height: 52px;
+    padding: 0 14px;
+  }
+
+  .studyPhone .sentenceButton span {
+    font-size: 0.92rem;
+  }
+
+  .studyPhone .micButton {
+    width: 96px;
+    height: 96px;
+  }
+
+  .studyPhone .micButton svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  .studyPhone .tipCard {
+    grid-template-columns: 36px minmax(0, 1fr) 66px;
+  }
+
+  .studyPhone .tipCopy strong {
+    font-size: 1.1rem;
+  }
+
+  .studyPhone .tipCopy small {
+    font-size: 0.82rem;
+  }
+}
