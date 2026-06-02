@@ -97,29 +97,6 @@ const AUDIO_STORE_NAME = "audios";
 const LAST_STUDY_PROGRESS_KEY = "lastStudyProgress";
 const GUEST_CLASSIC_PREVIEW_LESSON_ID = "bank_open_new_account_zh";
 const GUEST_CLASSIC_SENTENCE_LIMIT = 5;
-const bankFinanceLessonTitleOrder = [
-  "新开银行账户",
-  "银行事务口语课",
-  "使用 ATM 机和自我服务",
-  "网上银行与手机App操作",
-  "存款和取款",
-  "货币兑换与国际汇款",
-  "国际电汇与海外付款",
-  "设立储蓄和定期存款账户",
-  "信用卡申请与审批流程",
-  "信用卡挂失口语课",
-  "信用卡报告欺诈收费口语课",
-  "银行费用查询与争议解决",
-  "银行客服电话口语课",
-  "申请个人贷款",
-  "房屋抵押贷款咨询",
-  "银行保险箱",
-  "银行提供的保险产品",
-  "投资产品与财富管理",
-  "退休储蓄与养老金计划",
-  "关闭银行账户",
-] as const;
-
 function isClassicSceneLessonId(lessonId: string) {
   return (
     lessonId.startsWith("bank_") ||
@@ -144,16 +121,42 @@ function limitPairsForAccountAccess(
   return pairs.slice(0, GUEST_CLASSIC_SENTENCE_LIMIT);
 }
 
-function getClassicStudyNavigation(lessonId: string) {
-  const financeSection = Object.values(financeGovernmentSections).find((section) =>
+function getClassicFinanceSectionForLesson(lessonId: string) {
+  return Object.values(financeGovernmentSections).find((section) =>
     section.lessons.some((item) => item.id === lessonId)
   );
+}
+
+function getClassicSectionLessonSequence(lessonId: string) {
+  const financeSection = getClassicFinanceSectionForLesson(lessonId);
+
+  if (!financeSection) return null;
+
+  return financeSection.lessons.reduce<Array<{ id: string; title: string }>>(
+    (sequence, item) => {
+      if (typeof item.id !== "string" || item.id.length === 0) {
+        return sequence;
+      }
+
+      sequence.push({
+        id: item.id,
+        title: item.title,
+      });
+
+      return sequence;
+    },
+    []
+  );
+}
+
+function getClassicStudyNavigation(lessonId: string) {
+  const financeSection = getClassicFinanceSectionForLesson(lessonId);
 
   if (financeSection) {
     return {
-      categoryHref: "/classic-scenes/finance-government",
-      categoryLabel: "金融与行政事务",
-      courseMenuHref: `/classic-scenes/finance-government/${financeSection.id}`,
+      categoryHref: `/classic-scenes/finance-government/${financeSection.id}`,
+      categoryLabel: financeSection.title,
+      courseMenuHref: "/classic-scenes",
     };
   }
 
@@ -394,23 +397,6 @@ function ArrowRightIcon() {
   return (
     <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
       <path d="m13 8 8 8-8 8M4 16h16" />
-    </svg>
-  );
-}
-
-function SwitchCourseIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
-      <rect x="6" y="7" width="20" height="20" rx="4" />
-      <path d="M16 11v12M10 17h12" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-      <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }
@@ -1812,21 +1798,13 @@ export default function StudyPage() {
       return localLessonSequence.filter((record) => record.id === lessonId);
     }
 
-    if (localLessonSequence.some((record) => record.id === lessonId)) {
-      return localLessonSequence;
+    const classicSectionLessonSequence = getClassicSectionLessonSequence(lessonId);
+    if (classicSectionLessonSequence) {
+      return classicSectionLessonSequence;
     }
 
-    const lessonsByTitle = new Map(
-      featuredLessonRecords.map((record) => [record.title, record])
-    );
-    const bankFinanceLessons = bankFinanceLessonTitleOrder
-      .map((title) => lessonsByTitle.get(title))
-      .filter((record): record is (typeof featuredLessonRecords)[number] =>
-        Boolean(record)
-      );
-
-    if (bankFinanceLessons.some((record) => record.id === lessonId)) {
-      return bankFinanceLessons;
+    if (localLessonSequence.some((record) => record.id === lessonId)) {
+      return localLessonSequence;
     }
 
     if (lessonId.startsWith("government_")) {
@@ -2102,9 +2080,7 @@ export default function StudyPage() {
               className={styles.switchCourseButton}
               onClick={() => router.push(classicStudyNavigation.courseMenuHref)}
             >
-              <SwitchCourseIcon />
               <span>切换课程</span>
-              <ChevronDownIcon />
             </button>
           </header>
 
@@ -2121,9 +2097,45 @@ export default function StudyPage() {
               >
                 {classicStudyNavigation.categoryLabel}
               </button>
-              <h1 id="classic-study-title" className={styles.topicTitle}>
-                {courseTitle}
-              </h1>
+              <div className={styles.topicTitleRow}>
+                <button
+                  type="button"
+                  className={styles.lessonArrowButton}
+                  onClick={() => {
+                    if (previousLesson) {
+                      openNeighborLesson(previousLesson);
+                    }
+                  }}
+                  disabled={!previousLesson}
+                  aria-label={
+                    previousLesson
+                      ? `上一课：${previousLesson.title}`
+                      : "已经是同级第一课"
+                  }
+                >
+                  <ArrowLeftIcon />
+                </button>
+                <h1 id="classic-study-title" className={styles.topicTitle}>
+                  {courseTitle}
+                </h1>
+                <button
+                  type="button"
+                  className={styles.lessonArrowButton}
+                  onClick={() => {
+                    if (nextLesson) {
+                      openNeighborLesson(nextLesson);
+                    }
+                  }}
+                  disabled={!nextLesson}
+                  aria-label={
+                    nextLesson
+                      ? `下一课：${nextLesson.title}`
+                      : "已经是同级最后一课"
+                  }
+                >
+                  <ArrowRightIcon />
+                </button>
+              </div>
               <p className={styles.topicProgress}>{sentenceProgressText}</p>
               <div className={styles.progressRow} style={sentenceProgressStyle}>
                 <span className={styles.progressTrack} aria-hidden="true">
@@ -2325,9 +2337,7 @@ export default function StudyPage() {
               className={styles.switchCourseButton}
               onClick={() => router.push(classicStudyNavigation.courseMenuHref)}
             >
-              <SwitchCourseIcon />
               <span>切换课程</span>
-              <ChevronDownIcon />
             </button>
           </header>
 
@@ -2344,9 +2354,45 @@ export default function StudyPage() {
               >
                 {classicStudyNavigation.categoryLabel}
               </button>
-              <h1 id="classic-result-title" className={styles.topicTitle}>
-                {courseTitle}
-              </h1>
+              <div className={styles.topicTitleRow}>
+                <button
+                  type="button"
+                  className={styles.lessonArrowButton}
+                  onClick={() => {
+                    if (previousLesson) {
+                      openNeighborLesson(previousLesson);
+                    }
+                  }}
+                  disabled={!previousLesson}
+                  aria-label={
+                    previousLesson
+                      ? `上一课：${previousLesson.title}`
+                      : "已经是同级第一课"
+                  }
+                >
+                  <ArrowLeftIcon />
+                </button>
+                <h1 id="classic-result-title" className={styles.topicTitle}>
+                  {courseTitle}
+                </h1>
+                <button
+                  type="button"
+                  className={styles.lessonArrowButton}
+                  onClick={() => {
+                    if (nextLesson) {
+                      openNeighborLesson(nextLesson);
+                    }
+                  }}
+                  disabled={!nextLesson}
+                  aria-label={
+                    nextLesson
+                      ? `下一课：${nextLesson.title}`
+                      : "已经是同级最后一课"
+                  }
+                >
+                  <ArrowRightIcon />
+                </button>
+              </div>
               <p className={styles.topicProgress}>{sentenceProgressText}</p>
               <div className={styles.progressRow} style={sentenceProgressStyle}>
                 <span className={styles.progressTrack} aria-hidden="true">

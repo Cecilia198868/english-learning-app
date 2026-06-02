@@ -2808,23 +2808,23 @@
 
 .studyTopicBar {
   display: grid;
-  grid-template-columns: 112px minmax(0, 1fr);
+  grid-template-columns: 98px minmax(0, 1fr);
   align-items: center;
   justify-content: stretch;
-  column-gap: 16px;
+  column-gap: 14px;
   min-height: auto;
   padding: 16px 18px 10px;
 }
 
 .studyTopicBar .topicIcon {
-  width: 104px;
-  height: 104px;
+  width: 96px;
+  height: 96px;
   color: #6fa06d;
 }
 
 .studyTopicBar .topicIcon svg {
-  width: 104px;
-  height: 104px;
+  width: 96px;
+  height: 96px;
   stroke-width: 2.8;
 }
 
@@ -2856,10 +2856,53 @@
 .studyTopicBar .topicTitle {
   max-width: none;
   color: #143f1e;
-  font-size: clamp(2rem, 8vw, 2.35rem);
+  font-size: clamp(1.85rem, 7.4vw, 2.16rem);
   font-weight: 900;
   line-height: 1.08;
   white-space: normal;
+}
+
+.studyPhone .topicTitleRow {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 26px;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.studyPhone .topicTitleRow .topicTitle {
+  min-width: 0;
+}
+
+.studyPhone .lessonArrowButton {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid rgba(126, 159, 102, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #1b5a27;
+  box-shadow:
+    0 7px 14px rgba(58, 82, 45, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.studyPhone .lessonArrowButton svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.2;
+}
+
+.studyPhone .lessonArrowButton:disabled {
+  cursor: default;
+  opacity: 0.28;
+  box-shadow: none;
 }
 
 .studyTopicBar .topicProgress {
@@ -3258,6 +3301,36 @@
     font-size: 0.58rem;
   }
 
+  .studyTopicBar {
+    grid-template-columns: 88px minmax(0, 1fr);
+    column-gap: 12px;
+  }
+
+  .studyTopicBar .topicIcon,
+  .studyTopicBar .topicIcon svg {
+    width: 88px;
+    height: 88px;
+  }
+
+  .studyTopicBar .topicTitle {
+    font-size: 1.85rem;
+  }
+
+  .studyPhone .topicTitleRow {
+    grid-template-columns: 24px minmax(0, 1fr) 24px;
+    gap: 3px;
+  }
+
+  .studyPhone .lessonArrowButton {
+    width: 24px;
+    height: 24px;
+  }
+
+  .studyPhone .lessonArrowButton svg {
+    width: 17px;
+    height: 17px;
+  }
+
   .studyPhone .methodSteps {
     grid-template-columns: minmax(0, 1fr) 12px minmax(0, 1fr) 12px minmax(0, 1.22fr);
     gap: 3px;
@@ -3505,6 +3578,7 @@
 :global(html[data-app-theme]) .methodCard,
 :global(html[data-app-theme]) .tipCard,
 :global(html[data-app-theme]) .sentenceButton,
+:global(html[data-app-theme]) .lessonArrowButton,
 :global(html[data-app-theme]) .resultHint,
 :global(html[data-app-theme]) .userExpressionCard,
 :global(html[data-app-theme]) .userExpressionBubble,
@@ -3600,6 +3674,7 @@
 :global(html[data-app-theme]) .homeShortcut,
 :global(html[data-app-theme]) .switchCourseButton,
 :global(html[data-app-theme]) .sentenceButton,
+:global(html[data-app-theme]) .lessonArrowButton,
 :global(html[data-app-theme]) .variantSpeaker,
 :global(html[data-app-theme]) .slowReadButton {
   color: var(--icon-color);
