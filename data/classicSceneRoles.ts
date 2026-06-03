@@ -55,6 +55,11 @@ const serviceStaffRoleConfig: ClassicSceneRoleConfig = {
   roleLabel: "客服人员",
 };
 
+const restaurantServerRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "restaurant-server",
+  roleLabel: "餐厅服务员",
+};
+
 export const classicLessonRoleConfigs: Record<string, ClassicSceneRoleConfig> = {
   bank_open_new_account_zh: bankStaffRoleConfig,
   bank_deposit_withdrawal_zh: bankStaffRoleConfig,
@@ -86,6 +91,10 @@ const classicLessonRolePrefixConfigs: Array<{
   {
     prefix: "shopping_",
     roleConfig: shoppingClerkRoleConfig,
+  },
+  {
+    prefix: "restaurant_",
+    roleConfig: restaurantServerRoleConfig,
   },
 ];
 

@@ -22,6 +22,7 @@ import {
 } from "@/data/classicSceneRoles";
 import { financeGovernmentSections } from "@/data/financeGovernmentSections";
 import { getPrebuiltClassicExpressionSet } from "@/data/prebuiltClassicExpressions";
+import { restaurantSceneSectionMenus } from "@/data/restaurantSceneSectionMenus";
 import { shoppingSceneSectionMenus } from "@/data/shoppingSceneSectionMenus";
 import {
   addVocabularyWord,
@@ -103,6 +104,7 @@ function isClassicSceneLessonId(lessonId: string) {
     lessonId.startsWith("bank_") ||
     lessonId.startsWith("government_") ||
     lessonId.startsWith("driver_") ||
+    lessonId.startsWith("restaurant_") ||
     lessonId.startsWith("shopping_")
   );
 }
@@ -135,10 +137,17 @@ function getClassicShoppingSectionForLesson(lessonId: string) {
   );
 }
 
+function getClassicRestaurantSectionForLesson(lessonId: string) {
+  return Object.values(restaurantSceneSectionMenus).find((section) =>
+    section.lessons.some((item) => item.id === lessonId)
+  );
+}
+
 function getClassicSectionLessonSequence(lessonId: string) {
   const financeSection = getClassicFinanceSectionForLesson(lessonId);
   const shoppingSection = getClassicShoppingSectionForLesson(lessonId);
-  const section = financeSection || shoppingSection;
+  const restaurantSection = getClassicRestaurantSectionForLesson(lessonId);
+  const section = financeSection || shoppingSection || restaurantSection;
 
   if (!section) return null;
 
@@ -162,6 +171,7 @@ function getClassicSectionLessonSequence(lessonId: string) {
 function getClassicStudyNavigation(lessonId: string) {
   const financeSection = getClassicFinanceSectionForLesson(lessonId);
   const shoppingSection = getClassicShoppingSectionForLesson(lessonId);
+  const restaurantSection = getClassicRestaurantSectionForLesson(lessonId);
 
   if (financeSection) {
     return {
@@ -175,6 +185,14 @@ function getClassicStudyNavigation(lessonId: string) {
     return {
       categoryHref: `/classic-scenes/shopping-consumption/${shoppingSection.id}`,
       categoryLabel: shoppingSection.title,
+      courseMenuHref: "/classic-scenes",
+    };
+  }
+
+  if (restaurantSection) {
+    return {
+      categoryHref: `/classic-scenes/restaurant-takeout/${restaurantSection.id}`,
+      categoryLabel: restaurantSection.title,
       courseMenuHref: "/classic-scenes",
     };
   }
