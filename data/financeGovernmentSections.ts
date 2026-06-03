@@ -1,3 +1,5 @@
+import { taxGovernmentCourseDefinitions } from "./taxGovernmentCourses";
+
 export type FinanceGovernmentSectionId =
   | "bank-finance"
   | "identity-immigration"
@@ -610,37 +612,15 @@ const insuranceTrafficSafetyLessons = buildLessons([
 ]);
 
 const taxGovernmentFormLessons = buildLessons([
-  {
-    title: "了解美国联邦所得税与州所得税基本规则",
-    icon: "tax",
-    accent: pink,
-    tile: palePink,
-  },
-  {
-    id: "government_apply_itin_zh",
-    title: "新移民如何申请ITIN（个人纳税识别号码）",
-    icon: "tax",
-    accent: gold,
-    tile: paleGold,
-  },
-  {
-    title: "第一次报税需要准备哪些文件",
-    icon: "clipboard",
-    accent: pink,
-    tile: palePink,
-  },
-  {
-    title: "区分W-2工薪收入与1099独立承包人收入",
-    icon: "document",
-    accent: pink,
-    tile: palePink,
-  },
-  {
-    title: "申报联邦所得税表格（Form 1040）",
-    icon: "document",
-    accent: pink,
-    tile: palePink,
-  },
+  ...taxGovernmentCourseDefinitions.map(
+    ({ accent, icon, id, tile, title }) => ({
+      accent,
+      icon,
+      id,
+      tile,
+      title,
+    })
+  ),
   {
     title: "申请退税及追踪退税状态",
     icon: "check",

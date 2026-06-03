@@ -20,10 +20,14 @@ import {
   getClassicLessonRoleConfig,
   type ClassicSceneRoleIcon,
 } from "@/data/classicSceneRoles";
+import { educationSceneSectionMenus } from "@/data/educationSceneSectionMenus";
 import { financeGovernmentSections } from "@/data/financeGovernmentSections";
+import { healthSceneSectionMenus } from "@/data/healthSceneSectionMenus";
 import { getPrebuiltClassicExpressionSet } from "@/data/prebuiltClassicExpressions";
 import { restaurantSceneSectionMenus } from "@/data/restaurantSceneSectionMenus";
+import { serviceSceneSectionMenus } from "@/data/serviceSceneSectionMenus";
 import { shoppingSceneSectionMenus } from "@/data/shoppingSceneSectionMenus";
+import { transportationSceneSectionMenus } from "@/data/transportationSceneSectionMenus";
 import {
   addVocabularyWord,
   flushVocabularyCloudSync,
@@ -105,6 +109,11 @@ function isClassicSceneLessonId(lessonId: string) {
     lessonId.startsWith("government_") ||
     lessonId.startsWith("driver_") ||
     lessonId.startsWith("restaurant_") ||
+    lessonId.startsWith("service_") ||
+    lessonId.startsWith("health_") ||
+    lessonId.startsWith("tax_") ||
+    lessonId.startsWith("transport_") ||
+    lessonId.startsWith("education_") ||
     lessonId.startsWith("shopping_")
   );
 }
@@ -143,11 +152,46 @@ function getClassicRestaurantSectionForLesson(lessonId: string) {
   );
 }
 
+function getClassicServiceSectionForLesson(lessonId: string) {
+  return Object.values(serviceSceneSectionMenus).find((section) =>
+    section.lessons.some((item) => item.id === lessonId)
+  );
+}
+
+function getClassicHealthSectionForLesson(lessonId: string) {
+  return Object.values(healthSceneSectionMenus).find((section) =>
+    section.lessons.some((item) => item.id === lessonId)
+  );
+}
+
+function getClassicTransportationSectionForLesson(lessonId: string) {
+  return Object.values(transportationSceneSectionMenus).find((section) =>
+    section.lessons.some((item) => item.id === lessonId)
+  );
+}
+
+function getClassicEducationSectionForLesson(lessonId: string) {
+  return Object.values(educationSceneSectionMenus).find((section) =>
+    section.lessons.some((item) => item.id === lessonId)
+  );
+}
+
 function getClassicSectionLessonSequence(lessonId: string) {
   const financeSection = getClassicFinanceSectionForLesson(lessonId);
   const shoppingSection = getClassicShoppingSectionForLesson(lessonId);
   const restaurantSection = getClassicRestaurantSectionForLesson(lessonId);
-  const section = financeSection || shoppingSection || restaurantSection;
+  const serviceSection = getClassicServiceSectionForLesson(lessonId);
+  const healthSection = getClassicHealthSectionForLesson(lessonId);
+  const transportationSection = getClassicTransportationSectionForLesson(lessonId);
+  const educationSection = getClassicEducationSectionForLesson(lessonId);
+  const section =
+    financeSection ||
+    shoppingSection ||
+    restaurantSection ||
+    serviceSection ||
+    healthSection ||
+    transportationSection ||
+    educationSection;
 
   if (!section) return null;
 
@@ -172,6 +216,10 @@ function getClassicStudyNavigation(lessonId: string) {
   const financeSection = getClassicFinanceSectionForLesson(lessonId);
   const shoppingSection = getClassicShoppingSectionForLesson(lessonId);
   const restaurantSection = getClassicRestaurantSectionForLesson(lessonId);
+  const serviceSection = getClassicServiceSectionForLesson(lessonId);
+  const healthSection = getClassicHealthSectionForLesson(lessonId);
+  const transportationSection = getClassicTransportationSectionForLesson(lessonId);
+  const educationSection = getClassicEducationSectionForLesson(lessonId);
 
   if (financeSection) {
     return {
@@ -193,6 +241,38 @@ function getClassicStudyNavigation(lessonId: string) {
     return {
       categoryHref: `/classic-scenes/restaurant-takeout/${restaurantSection.id}`,
       categoryLabel: restaurantSection.title,
+      courseMenuHref: "/classic-scenes",
+    };
+  }
+
+  if (serviceSection) {
+    return {
+      categoryHref: `/classic-scenes/service-repair/${serviceSection.id}`,
+      categoryLabel: serviceSection.title,
+      courseMenuHref: "/classic-scenes",
+    };
+  }
+
+  if (healthSection) {
+    return {
+      categoryHref: `/classic-scenes/health-medical/${healthSection.id}`,
+      categoryLabel: healthSection.title,
+      courseMenuHref: "/classic-scenes",
+    };
+  }
+
+  if (transportationSection) {
+    return {
+      categoryHref: `/classic-scenes/transportation-travel/${transportationSection.id}`,
+      categoryLabel: transportationSection.title,
+      courseMenuHref: "/classic-scenes",
+    };
+  }
+
+  if (educationSection) {
+    return {
+      categoryHref: `/classic-scenes/education-work-social/${educationSection.id}`,
+      categoryLabel: educationSection.title,
       courseMenuHref: "/classic-scenes",
     };
   }
@@ -1853,6 +1933,18 @@ export default function StudyPage() {
     if (lessonId.startsWith("driver_")) {
       return featuredLessonRecords.filter((record) =>
         record.id.startsWith("driver_")
+      );
+    }
+
+    if (lessonId.startsWith("tax_")) {
+      return featuredLessonRecords.filter((record) =>
+        record.id.startsWith("tax_")
+      );
+    }
+
+    if (lessonId.startsWith("transport_")) {
+      return featuredLessonRecords.filter((record) =>
+        record.id.startsWith("transport_")
       );
     }
 

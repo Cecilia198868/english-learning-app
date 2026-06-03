@@ -8,8 +8,13 @@ import {
   type ClassicSceneRoleConfig,
   type ClassicSceneRoleIcon,
 } from "@/data/classicSceneRoles";
+import { educationSceneCourseDefinitions } from "@/data/educationSceneCourses";
+import { healthSceneCourseDefinitions } from "@/data/healthSceneCourses";
 import { restaurantSceneCourseDefinitions } from "@/data/restaurantSceneCourses";
+import { serviceSceneCourseDefinitions } from "@/data/serviceSceneCourses";
 import { shoppingSceneCourseDefinitions } from "@/data/shoppingSceneCourses";
+import { taxGovernmentCourseDefinitions } from "@/data/taxGovernmentCourses";
+import { transportationSceneCourseDefinitions } from "@/data/transportationSceneCourses";
 
 export type FeaturedCourseTranslationKey = "zh" | "es" | "ja" | "ko" | "fr";
 export type FeaturedCourseType = "scene" | "level";
@@ -1735,11 +1740,66 @@ const restaurantFeaturedLessonRecords: FeaturedLessonRecord[] =
     )
   );
 
+const serviceFeaturedLessonRecords: FeaturedLessonRecord[] =
+  serviceSceneCourseDefinitions.map((lesson) =>
+    createTrainingLesson(
+      lesson.id,
+      lesson.title,
+      lesson.items,
+      lesson.roleConfig
+    )
+  );
+
+const healthFeaturedLessonRecords: FeaturedLessonRecord[] =
+  healthSceneCourseDefinitions.map((lesson) =>
+    createTrainingLesson(
+      lesson.id,
+      lesson.title,
+      lesson.items,
+      lesson.roleConfig
+    )
+  );
+
+const taxGovernmentFeaturedLessonRecords: FeaturedLessonRecord[] =
+  taxGovernmentCourseDefinitions.map((lesson) =>
+    createTrainingLesson(
+      lesson.id,
+      lesson.title,
+      lesson.items,
+      lesson.roleConfig
+    )
+  );
+
+const transportationFeaturedLessonRecords: FeaturedLessonRecord[] =
+  transportationSceneCourseDefinitions.map((lesson) =>
+    createTrainingLesson(
+      lesson.id,
+      lesson.title,
+      lesson.items,
+      lesson.roleConfig
+    )
+  );
+
+const educationFeaturedLessonRecords: FeaturedLessonRecord[] =
+  educationSceneCourseDefinitions.map((lesson) =>
+    createTrainingLesson(
+      lesson.id,
+      lesson.title,
+      lesson.items,
+      lesson.roleConfig
+    )
+  );
+
 export const featuredLessonRecords: FeaturedLessonRecord[] = [
   ...governmentFeaturedLessonRecords,
   ...driverLicenseFeaturedLessonRecords,
   ...shoppingFeaturedLessonRecords,
   ...restaurantFeaturedLessonRecords,
+  ...serviceFeaturedLessonRecords,
+  ...healthFeaturedLessonRecords,
+  ...taxGovernmentFeaturedLessonRecords,
+  ...transportationFeaturedLessonRecords,
+  ...educationFeaturedLessonRecords,
   createTrainingLesson("bank_deposit_withdrawal_zh", "存款和取款", [
     { zh: "我想往我的账户里存一些钱。", en: "I'd like to deposit some money into my account." },
     { zh: "我想存 500 美元现金和这张支票。", en: "I want to deposit $500 in cash and this check." },

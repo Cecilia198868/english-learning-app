@@ -55,9 +55,34 @@ const serviceStaffRoleConfig: ClassicSceneRoleConfig = {
   roleLabel: "客服人员",
 };
 
+const repairConsultantRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "front-desk",
+  roleLabel: "维修顾问",
+};
+
+const healthDoctorRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "doctor",
+  roleLabel: "医生",
+};
+
+const taxStaffRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "government-staff",
+  roleLabel: "税务工作人员",
+};
+
+const transportationDriverRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "driver",
+  roleLabel: "司机",
+};
+
 const restaurantServerRoleConfig: ClassicSceneRoleConfig = {
   roleIcon: "restaurant-server",
   roleLabel: "餐厅服务员",
+};
+
+const educationHrRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "hr",
+  roleLabel: "招聘人员",
 };
 
 export const classicLessonRoleConfigs: Record<string, ClassicSceneRoleConfig> = {
@@ -95,6 +120,26 @@ const classicLessonRolePrefixConfigs: Array<{
   {
     prefix: "restaurant_",
     roleConfig: restaurantServerRoleConfig,
+  },
+  {
+    prefix: "service_",
+    roleConfig: repairConsultantRoleConfig,
+  },
+  {
+    prefix: "health_",
+    roleConfig: healthDoctorRoleConfig,
+  },
+  {
+    prefix: "tax_",
+    roleConfig: taxStaffRoleConfig,
+  },
+  {
+    prefix: "transport_",
+    roleConfig: transportationDriverRoleConfig,
+  },
+  {
+    prefix: "education_",
+    roleConfig: educationHrRoleConfig,
   },
 ];
 
