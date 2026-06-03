@@ -264,11 +264,11 @@ function LessonRow({ lesson }: { lesson: ClassicSceneSectionLesson }) {
   } as CSSProperties;
 
   return (
-    <button
+    <Link
       aria-label={`进入${lesson.title}`}
       className={styles.lessonRow}
+      href={`/study/${lesson.id}`}
       style={style}
-      type="button"
     >
       <span className={styles.iconTile}>
         <ShoppingSceneIcon type={lesson.icon} />
@@ -285,7 +285,7 @@ function LessonRow({ lesson }: { lesson: ClassicSceneSectionLesson }) {
       <span className={styles.chevron}>
         <ChevronIcon />
       </span>
-    </button>
+    </Link>
   );
 }
 

@@ -22,6 +22,7 @@ import {
 } from "@/data/classicSceneRoles";
 import { financeGovernmentSections } from "@/data/financeGovernmentSections";
 import { getPrebuiltClassicExpressionSet } from "@/data/prebuiltClassicExpressions";
+import { shoppingSceneSectionMenus } from "@/data/shoppingSceneSectionMenus";
 import {
   addVocabularyWord,
   flushVocabularyCloudSync,
@@ -101,7 +102,8 @@ function isClassicSceneLessonId(lessonId: string) {
   return (
     lessonId.startsWith("bank_") ||
     lessonId.startsWith("government_") ||
-    lessonId.startsWith("driver_")
+    lessonId.startsWith("driver_") ||
+    lessonId.startsWith("shopping_")
   );
 }
 
@@ -127,12 +129,20 @@ function getClassicFinanceSectionForLesson(lessonId: string) {
   );
 }
 
+function getClassicShoppingSectionForLesson(lessonId: string) {
+  return Object.values(shoppingSceneSectionMenus).find((section) =>
+    section.lessons.some((item) => item.id === lessonId)
+  );
+}
+
 function getClassicSectionLessonSequence(lessonId: string) {
   const financeSection = getClassicFinanceSectionForLesson(lessonId);
+  const shoppingSection = getClassicShoppingSectionForLesson(lessonId);
+  const section = financeSection || shoppingSection;
 
-  if (!financeSection) return null;
+  if (!section) return null;
 
-  return financeSection.lessons.reduce<Array<{ id: string; title: string }>>(
+  return section.lessons.reduce<Array<{ id: string; title: string }>>(
     (sequence, item) => {
       if (typeof item.id !== "string" || item.id.length === 0) {
         return sequence;
@@ -151,11 +161,20 @@ function getClassicSectionLessonSequence(lessonId: string) {
 
 function getClassicStudyNavigation(lessonId: string) {
   const financeSection = getClassicFinanceSectionForLesson(lessonId);
+  const shoppingSection = getClassicShoppingSectionForLesson(lessonId);
 
   if (financeSection) {
     return {
       categoryHref: `/classic-scenes/finance-government/${financeSection.id}`,
       categoryLabel: financeSection.title,
+      courseMenuHref: "/classic-scenes",
+    };
+  }
+
+  if (shoppingSection) {
+    return {
+      categoryHref: `/classic-scenes/shopping-consumption/${shoppingSection.id}`,
+      categoryLabel: shoppingSection.title,
       courseMenuHref: "/classic-scenes",
     };
   }

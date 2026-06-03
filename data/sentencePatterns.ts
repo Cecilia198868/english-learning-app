@@ -1592,62 +1592,801 @@ const basicSectionsWithPracticeCourses: SentencePatternSection[] = basicSections
   })),
 }));
 
-function createPlaceholderSection(
-  range: string,
-  title: string,
-  englishTitle: string,
-  start: number,
-  samplePatterns: string[]
-): SentencePatternSection {
-  const samples = samplePatterns.map((text, index) => ({
-    id: start + index,
-    text,
-  }));
-  const rest = Array.from({ length: 15 - samples.length }, (_, index) => ({
-    id: start + samples.length + index,
-    text: `句型 ${start + samples.length + index} 将在下一步补充学习内容。`,
-  })).filter((item) => item.id <= 100);
+const intermediateSections: SentencePatternSection[] = [
+  {
+    englishTitle: "Advanced Needs & Requests",
+    id: "advanced-needs-requests",
+    range: "1-15",
+    title: "高级需求与请求",
+    patterns: [
+      { id: 1, text: "What I’m really looking for is + 名词/从句." },
+      { id: 2, text: "If it’s not too much trouble, could you + 动词?" },
+      { id: 3, text: "I would appreciate it if + 从句." },
+      { id: 4, text: "I was wondering if you could + 动词." },
+      { id: 5, text: "All I ask is that + 从句（虚拟）." },
+      { id: 6, text: "It would mean a lot to me if + 从句." },
+      { id: 7, text: "I need something that + 定语从句." },
+      { id: 8, text: "Would it be possible for you to + 动词?" },
+      { id: 9, text: "I’m hoping that + 从句." },
+      { id: 10, text: "The only thing missing is + 名词/从句." },
+      { id: 11, text: "I’d be grateful if you would + 动词." },
+      { id: 12, text: "What I expect from this is + 从句." },
+      { id: 13, text: "Should you have time, please + 动词." },
+      { id: 14, text: "I’m in need of something which + 定语从句." },
+      { id: 15, text: "Had it not been for + 名词, I wouldn’t + 虚拟." },
+    ],
+  },
+  {
+    englishTitle: "Nuanced Opinions & Persuasion",
+    id: "nuanced-opinions-persuasion",
+    range: "16-30",
+    title: "深度观点与说服",
+    patterns: [
+      { id: 16, text: "From where I stand, it seems that + 从句." },
+      { id: 17, text: "I’m convinced that + 从句." },
+      { id: 18, text: "Not only is + 主语 + 形容词, but also + 从句." },
+      { id: 19, text: "Were I in your position, I would + 虚拟." },
+      { id: 20, text: "The way I see it, + 从句." },
+      { id: 21, text: "It’s worth noting that + 从句." },
+      { id: 22, text: "I can’t help but think that + 从句." },
+      { id: 23, text: "Had I realized + 从句, I would have + 过去分词." },
+      { id: 24, text: "To put it another way, + 从句." },
+      { id: 25, text: "There’s no doubt in my mind that + 从句." },
+      { id: 26, text: "On the one hand... On the other hand..." },
+      { id: 27, text: "It strikes me that + 从句." },
+      { id: 28, text: "Should the situation arise, + 从句." },
+      { id: 29, text: "I’m of the opinion that + 从句." },
+      { id: 30, text: "What concerns me most is + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Deep Emotions & Reflections",
+    id: "deep-emotions-reflections",
+    range: "31-45",
+    title: "复杂情感与反思",
+    patterns: [
+      { id: 31, text: "I find it + 形容词 + to + 动词 when + 从句." },
+      { id: 32, text: "It breaks my heart that + 从句." },
+      { id: 33, text: "Never have I felt so + 形容词 + as + 从句." },
+      { id: 34, text: "The more I + 动词, the more + 从句." },
+      { id: 35, text: "I’m torn between + A and B." },
+      { id: 36, text: "Having + 过去分词, I now realize + 从句." },
+      { id: 37, text: "It’s beyond me why + 从句." },
+      { id: 38, text: "I can’t thank you enough for + 动名词." },
+      { id: 39, text: "Were it not for + 名词, + 从句." },
+      { id: 40, text: "This has left me feeling + 情感 + that + 从句." },
+      { id: 41, text: "I’ve come to terms with + 名词/从句." },
+      { id: 42, text: "What surprises me most is + 从句." },
+      { id: 43, text: "I’m overwhelmed by + 名词." },
+      { id: 44, text: "Little did I know that + 从句." },
+      { id: 45, text: "It occurred to me that + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Detailed Past Narratives",
+    id: "detailed-past-narratives",
+    range: "46-60",
+    title: "详细过去叙述",
+    patterns: [
+      { id: 46, text: "By the time + 从句, I had already + 过去完成时." },
+      { id: 47, text: "If only I had + 过去分词." },
+      { id: 48, text: "That was the moment when + 从句." },
+      { id: 49, text: "Having been + 过去分词, I + 过去式." },
+      { id: 50, text: "No sooner had I + 过去分词 than + 从句." },
+      { id: 51, text: "I still remember how + 从句." },
+      { id: 52, text: "Looking back on + 名词, I + 过去式." },
+      { id: 53, text: "It wasn’t until + 从句 that + 从句." },
+      { id: 54, text: "I wish I hadn’t + 过去分词." },
+      { id: 55, text: "Rarely have I + 过去分词 + such + 名词." },
+      { id: 56, text: "What I went through was + 从句." },
+      { id: 57, text: "After all that had happened, + 从句." },
+      { id: 58, text: "I used to think + 从句, but now + 从句." },
+      { id: 59, text: "The experience taught me that + 从句." },
+      { id: 60, text: "Had it not been for that, + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Future Plans & Hypotheticals",
+    id: "future-plans-hypotheticals",
+    range: "61-75",
+    title: "未来计划与假设",
+    patterns: [
+      { id: 61, text: "Provided that + 从句, I will + 动词." },
+      { id: 62, text: "I’m planning on + 动名词 + unless + 从句." },
+      { id: 63, text: "Should everything go well, + 从句." },
+      { id: 64, text: "I intend to + 动词 + so that + 从句." },
+      { id: 65, text: "In the event that + 从句, I would + 虚拟." },
+      { id: 66, text: "My aim is to + 动词 + while + 从句." },
+      { id: 67, text: "I’m considering + 动名词 + in case + 从句." },
+      { id: 68, text: "As long as + 从句, there’s no reason why + 从句." },
+      { id: 69, text: "I look forward to + 动名词 + when + 从句." },
+      { id: 70, text: "Were I to + 动词, + 从句." },
+      { id: 71, text: "By this time next year, I will have + 完成时." },
+      { id: 72, text: "I’m determined to + 动词 + no matter what." },
+      { id: 73, text: "If only + 从句, everything would + 虚拟." },
+      { id: 74, text: "I’m set to + 动词 + provided + 从句." },
+      { id: 75, text: "The sooner + 从句, the better + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Problem-Solving & Advice",
+    id: "problem-solving-advice",
+    range: "76-90",
+    title: "问题解决与建议",
+    patterns: [
+      { id: 76, text: "The key to solving this is + 从句." },
+      { id: 77, text: "You might want to consider + 动名词." },
+      { id: 78, text: "How would you feel if + 从句?" },
+      { id: 79, text: "One way to deal with it is to + 动词." },
+      { id: 80, text: "Supposing that + 从句, what would you do?" },
+      { id: 81, text: "It’s essential that + 从句（虚拟）." },
+      { id: 82, text: "I recommend that + 从句." },
+      { id: 83, text: "The issue stems from + 名词/从句." },
+      { id: 84, text: "Had you + 过去分词, this wouldn’t have happened." },
+      { id: 85, text: "Why not try + 动名词?" },
+      { id: 86, text: "There’s a chance that + 从句 if + 从句." },
+      { id: 87, text: "To avoid + 动名词, it’s best to + 动词." },
+      { id: 88, text: "I suggest you + 动词 + before + 从句." },
+      { id: 89, text: "What if we were to + 动词?" },
+      { id: 90, text: "The reason behind this is likely that + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Comparison, Social & Closing",
+    id: "comparison-social-closing",
+    range: "91-100",
+    title: "比较、社交与总结",
+    patterns: [
+      { id: 91, text: "Compared with + 名词, + 从句 is far more + 形容词." },
+      { id: 92, text: "Not until + 从句 did I realize + 从句." },
+      { id: 93, text: "I couldn’t agree with you more that + 从句." },
+      { id: 94, text: "It’s high time that + 从句（虚拟）." },
+      { id: 95, text: "On top of that, + 从句." },
+      { id: 96, text: "I must admit that + 从句." },
+      { id: 97, text: "Let’s touch base + 时间/方式." },
+      { id: 98, text: "It has been a pleasure + 动名词 with you." },
+      { id: 99, text: "Should you need anything else, + 从句." },
+      { id: 100, text: "All in all, what matters most is + 从句." },
+    ],
+  },
+];
 
-  return {
-    englishTitle,
-    id: englishTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
-    range,
-    title,
-    patterns: [...samples, ...rest],
-  };
+function withoutFirstPerson(value: string) {
+  return value.replace(/^I /, "");
 }
 
-const intermediateSections: SentencePatternSection[] = [
-  createPlaceholderSection("1-15", "高级需求与请求", "Advanced Needs & Requests", 1, [
-    "What I’m really looking for is + 名词/从句.",
-    "If it’s not too much trouble, could you + 动词?",
-    "I would appreciate it if + 从句.",
-    "I was wondering if you could + 动词.",
-    "All I ask is that + 从句（虚拟）.",
-  ]),
-  createPlaceholderSection("16-30", "深度观点与说服", "Nuanced Opinions & Persuasion", 16, []),
-  createPlaceholderSection("31-45", "复杂情感与反思", "Deep Emotions & Reflections", 31, []),
-  createPlaceholderSection("46-60", "详细过去叙述", "Detailed Past Narratives", 46, []),
-  createPlaceholderSection("61-75", "未来计划与假设", "Future Plans & Hypotheticals", 61, []),
-  createPlaceholderSection("76-90", "问题解决与建议", "Problem-Solving & Advice", 76, []),
-  createPlaceholderSection("91-100", "比较、社交与总结", "Comparison, Social & Closing", 91, []),
-];
+function renderIntermediatePracticeDraft(
+  patternId: number,
+  topic: BasicPracticeTopic
+): BasicPracticeDraft {
+  switch (patternId) {
+    case 1:
+      return makeDraft(`我真正想找的是${topic.zhNoun}。`, `What I’m really looking for is ${topic.noun}.`);
+    case 2:
+      return makeDraft(`如果不太麻烦，你能帮我${topic.zhAction}吗？`, `If it’s not too much trouble, could you ${topic.action}?`);
+    case 3:
+      return makeDraft(`如果你能帮我${topic.zhAction}，我会很感激。`, `I would appreciate it if you could help me ${topic.action}.`);
+    case 4:
+      return makeDraft(`我想问一下，你能不能${topic.zhAction}。`, `I was wondering if you could ${topic.action}.`);
+    case 5:
+      return makeDraft(`我唯一请求的是我们能${topic.zhAction}。`, `All I ask is that we ${topic.action}.`);
+    case 6:
+      return makeDraft(`如果你能帮我${topic.zhAction}，这对我意义很大。`, `It would mean a lot to me if you could help me ${topic.action}.`);
+    case 7:
+      return makeDraft(`我需要一些能帮助我${topic.zhAction}的东西。`, `I need something that helps me ${topic.action}.`);
+    case 8:
+      return makeDraft(`你是否有可能帮我${topic.zhAction}？`, `Would it be possible for you to help me ${topic.action}?`);
+    case 9:
+      return makeDraft(`我希望${topic.zhClause}。`, `I’m hoping that ${topic.clause}.`);
+    case 10:
+      return makeDraft(`唯一缺少的是${topic.zhNoun}。`, `The only thing missing is ${topic.noun}.`);
+    case 11:
+      return makeDraft(`如果你愿意帮我${topic.zhAction}，我会很感激。`, `I’d be grateful if you would help me ${topic.action}.`);
+    case 12:
+      return makeDraft(`我对此的期待是${topic.zhResult}。`, `What I expect from this is that ${topic.result}.`);
+    case 13:
+      return makeDraft(`如果你有时间，请帮我${topic.zhAction}。`, `Should you have time, please help me ${topic.action}.`);
+    case 14:
+      return makeDraft(`我需要一些可以帮助我${topic.zhAction}的东西。`, `I’m in need of something which can help me ${topic.action}.`);
+    case 15:
+      return makeDraft(`如果没有你的支持，我就没办法${topic.zhAction}。`, `Had it not been for your support, I wouldn’t have been able to ${topic.action}.`);
+    case 16:
+      return makeDraft(`从我的立场来看，似乎${topic.zhClause}。`, `From where I stand, it seems that ${topic.clause}.`);
+    case 17:
+      return makeDraft(`我确信${topic.zhClause}。`, `I’m convinced that ${topic.clause}.`);
+    case 18:
+      return makeDraft(`${topic.zhGerund}不仅重要，而且${topic.zhBenefit}。`, `Not only is ${topic.gerund} important, but it also ${topic.benefit}.`);
+    case 19:
+      return makeDraft(`如果我是你，我会${topic.zhAction}。`, `Were I in your position, I would ${topic.action}.`);
+    case 20:
+      return makeDraft(`在我看来，${topic.zhClause}。`, `The way I see it, ${topic.clause}.`);
+    case 21:
+      return makeDraft(`值得注意的是，${topic.zhClause}。`, `It’s worth noting that ${topic.clause}.`);
+    case 22:
+      return makeDraft(`我忍不住觉得${topic.zhClause}。`, `I can’t help but think that ${topic.clause}.`);
+    case 23:
+      return makeDraft(`如果我早意识到${topic.zhProblem}，我本可以更早${topic.zhAction}。`, `Had I realized ${topic.problem}, I would have tried to ${topic.action} sooner.`);
+    case 24:
+      return makeDraft(`换句话说，${topic.zhClause}。`, `To put it another way, ${topic.clause}.`);
+    case 25:
+      return makeDraft(`我毫不怀疑${topic.zhClause}。`, `There’s no doubt in my mind that ${topic.clause}.`);
+    case 26:
+      return makeDraft(`一方面，${topic.zhOptionA}有帮助；另一方面，${topic.zhOptionB}会造成问题。`, `On the one hand, ${topic.optionA} helps; on the other hand, ${topic.optionB} creates problems.`);
+    case 27:
+      return makeDraft(`我突然觉得${topic.zhClause}。`, `It strikes me that ${topic.clause}.`);
+    case 28:
+      return makeDraft(`如果出现这种情况，我会${topic.zhAction}。`, `Should the situation arise, I will ${topic.action}.`);
+    case 29:
+      return makeDraft(`我的看法是${topic.zhClause}。`, `I’m of the opinion that ${topic.clause}.`);
+    case 30:
+      return makeDraft(`我最担心的是${topic.zhProblem}。`, `What concerns me most is that ${topic.problem}.`);
+    case 31:
+      return makeDraft(`当${topic.zhWhenClause}，我发现${topic.zhAction}很有挑战。`, `I find it challenging to ${topic.action} when ${topic.whenClause}.`);
+    case 32:
+      return makeDraft(`想到${topic.zhProblem}，我很难过。`, `It breaks my heart that ${topic.problem}.`);
+    case 33:
+      return makeDraft(`我从未像${topic.zhWhenClause}时那样感到如此${topic.zhEmotion}。`, `Never have I felt so ${topic.emotion} as when ${topic.whenClause}.`);
+    case 34:
+      return makeDraft(`${topic.zhMoreFirst}，${topic.zhMoreSecond}。`, `The more I ${withoutFirstPerson(topic.moreFirst)}, the more ${topic.moreSecond}.`);
+    case 35:
+      return makeDraft(`我在${topic.zhOptionA}和${topic.zhOptionB}之间很纠结。`, `I’m torn between ${topic.optionA} and ${topic.optionB}.`);
+    case 36:
+      return makeDraft(`经历过${topic.zhDifficultNoun}后，我现在意识到${topic.zhClause}。`, `Having gone through ${topic.difficultNoun}, I now realize that ${topic.clause}.`);
+    case 37:
+      return makeDraft(`我不明白为什么${topic.zhProblem}。`, `It’s beyond me why ${topic.problem}.`);
+    case 38:
+      return makeDraft(`你帮我${topic.zhAction}，我真的感激不尽。`, `I can’t thank you enough for helping me ${topic.action}.`);
+    case 39:
+      return makeDraft(`如果不是因为你的支持，我就无法${topic.zhAction}。`, `Were it not for your support, I couldn’t ${topic.action}.`);
+    case 40:
+      return makeDraft(`这让我感到${topic.zhEmotion}，因为${topic.zhProblem}。`, `This has left me feeling ${topic.emotion} that ${topic.problem}.`);
+    case 41:
+      return makeDraft(`我已经接受了${topic.zhDifficultNoun}。`, `I’ve come to terms with ${topic.difficultNoun}.`);
+    case 42:
+      return makeDraft(`最让我惊讶的是${topic.zhClause}。`, `What surprises me most is that ${topic.clause}.`);
+    case 43:
+      return makeDraft(`我被${topic.zhDifficultNoun}压得喘不过气。`, `I’m overwhelmed by ${topic.difficultNoun}.`);
+    case 44:
+      return makeDraft(`我当时完全不知道${topic.zhClause}。`, `Little did I know that ${topic.clause}.`);
+    case 45:
+      return makeDraft(`我突然想到${topic.zhClause}。`, `It occurred to me that ${topic.clause}.`);
+    case 46:
+      return makeDraft(`到${topic.zhWhenClause}的时候，我已经${topic.zhPastParticiple}。`, `By the time ${topic.whenClause}, I had already ${topic.pastParticiple}.`);
+    case 47:
+      return makeDraft(`要是我早一点${topic.zhPastParticiple}就好了。`, `If only I had ${topic.pastParticiple} earlier.`);
+    case 48:
+      return makeDraft(`那就是我意识到${topic.zhClause}的时刻。`, `That was the moment when I realized ${topic.clause}.`);
+    case 49:
+      return makeDraft(`经历过${topic.zhDifficultNoun}之后，我${topic.zhPastSimple}。`, `Having been through ${topic.difficultNoun}, I ${topic.pastSimple}.`);
+    case 50:
+      return makeDraft(`我刚${topic.zhPastParticiple}，就意识到${topic.zhProblem}。`, `No sooner had I ${topic.pastParticiple} than I realized ${topic.problem}.`);
+    case 51:
+      return makeDraft(`我仍然记得${topic.zhClause}。`, `I still remember how ${topic.clause}.`);
+    case 52:
+      return makeDraft(`回头看${topic.zhDifficultNoun}，我${topic.zhPastSimple}。`, `Looking back on ${topic.difficultNoun}, I ${topic.pastSimple}.`);
+    case 53:
+      return makeDraft(`直到${topic.zhWhenClause}，我才意识到${topic.zhClause}。`, `It wasn’t until ${topic.whenClause} that I realized ${topic.clause}.`);
+    case 54:
+      return makeDraft(`我真希望自己没有等这么久才${topic.zhAction}。`, `I wish I hadn’t waited so long to ${topic.action}.`);
+    case 55:
+      return makeDraft(`我很少遇到像${topic.zhDifficultNoun}这样的事。`, `Rarely have I faced such a difficult situation as ${topic.difficultNoun}.`);
+    case 56:
+      return makeDraft(`我经历的是${topic.zhDifficultNoun}。`, `What I went through was ${topic.difficultNoun}.`);
+    case 57:
+      return makeDraft(`经历了这一切之后，我意识到${topic.zhClause}。`, `After all that had happened, I realized that ${topic.clause}.`);
+    case 58:
+      return makeDraft(`我过去以为${topic.zhOptionB}更好，但现在我觉得${topic.zhOptionA}更好。`, `I used to think ${topic.optionB} was better, but now I believe ${topic.optionA} works better.`);
+    case 59:
+      return makeDraft(`这段经历让我明白${topic.zhClause}。`, `The experience taught me that ${topic.clause}.`);
+    case 60:
+      return makeDraft(`如果不是那样，我就不会意识到${topic.zhClause}。`, `Had it not been for that, I wouldn’t have realized that ${topic.clause}.`);
+    case 61:
+      return makeDraft(`只要${topic.zhClause}，我就会${topic.zhAction}。`, `Provided that ${topic.clause}, I will ${topic.action}.`);
+    case 62:
+      return makeDraft(`我计划${topic.zhGerund}，除非${topic.zhProblem}。`, `I’m planning on ${topic.gerund} unless ${topic.problem}.`);
+    case 63:
+      return makeDraft(`如果一切顺利，我会${topic.zhAction}。`, `Should everything go well, I will ${topic.action}.`);
+    case 64:
+      return makeDraft(`我打算${topic.zhAction}，这样${topic.zhResult}。`, `I intend to ${topic.action} so that ${topic.result}.`);
+    case 65:
+      return makeDraft(`如果${topic.zhProblem}，我会${topic.zhAction}。`, `In the event that ${topic.problem}, I would ${topic.action}.`);
+    case 66:
+      return makeDraft(`我的目标是在${topic.zhGerund}的同时${topic.zhAction}。`, `My aim is to ${topic.action} while ${topic.gerund}.`);
+    case 67:
+      return makeDraft(`我正在考虑${topic.zhGerund}，以防${topic.zhProblem}。`, `I’m considering ${topic.gerund} in case ${topic.problem}.`);
+    case 68:
+      return makeDraft(`只要${topic.zhClause}，就没有理由不能${topic.zhAction}。`, `As long as ${topic.clause}, there’s no reason why I can’t ${topic.action}.`);
+    case 69:
+      return makeDraft(`当${topic.zhWhenClause}时，我期待${topic.zhGerund}。`, `I look forward to ${topic.gerund} when ${topic.whenClause}.`);
+    case 70:
+      return makeDraft(`如果我要${topic.zhAction}，我会先做好计划。`, `Were I to ${topic.action}, I would make a plan first.`);
+    case 71:
+      return makeDraft(`到明年这个时候，我会已经${topic.zhPastParticiple}。`, `By this time next year, I will have ${topic.pastParticiple}.`);
+    case 72:
+      return makeDraft(`无论如何，我都决心${topic.zhAction}。`, `I’m determined to ${topic.action} no matter what.`);
+    case 73:
+      return makeDraft(`要是${topic.zhProblem}能解决，一切都会更容易。`, `If only ${topic.problem} were solved, everything would feel easier.`);
+    case 74:
+      return makeDraft(`只要${topic.zhClause}，我就准备好${topic.zhAction}。`, `I’m set to ${topic.action} provided that ${topic.clause}.`);
+    case 75:
+      return makeDraft(`我越早${topic.zhAction}，结果就越好。`, `The sooner I ${topic.action}, the better the result will be.`);
+    case 76:
+      return makeDraft(`解决这个问题的关键是我们要${topic.zhAction}。`, `The key to solving this is that we need to ${topic.action}.`);
+    case 77:
+      return makeDraft(`你可以考虑${topic.zhGerund}。`, `You might want to consider ${topic.gerund}.`);
+    case 78:
+      return makeDraft(`如果${topic.zhClause}，你会怎么想？`, `How would you feel if ${topic.clause}?`);
+    case 79:
+      return makeDraft(`处理这件事的一种方式是${topic.zhAction}。`, `One way to deal with it is to ${topic.action}.`);
+    case 80:
+      return makeDraft(`假设${topic.zhProblem}，你会怎么做？`, `Supposing that ${topic.problem}, what would you do?`);
+    case 81:
+      return makeDraft(`我们必须${topic.zhAction}，这很重要。`, `It’s essential that we ${topic.action}.`);
+    case 82:
+      return makeDraft(`我建议你${topic.zhAction}。`, `I recommend that you ${topic.action}.`);
+    case 83:
+      return makeDraft(`这个问题源于${topic.zhDifficultNoun}。`, `The issue stems from ${topic.difficultNoun}.`);
+    case 84:
+      return makeDraft(`如果你早点行动，这件事就不会发生。`, `Had you acted sooner, this wouldn’t have happened.`);
+    case 85:
+      return makeDraft(`为什么不试试${topic.zhGerund}呢？`, `Why not try ${topic.gerund}?`);
+    case 86:
+      return makeDraft(`如果${topic.zhClause}，就有可能${topic.zhResult}。`, `There’s a chance that ${topic.result} if ${topic.clause}.`);
+    case 87:
+      return makeDraft(`为了避免${topic.zhDifficultNoun}，最好${topic.zhAction}。`, `To avoid ${topic.difficultNoun}, it’s best to ${topic.action}.`);
+    case 88:
+      return makeDraft(`我建议你在${topic.zhWhenClause}之前${topic.zhAction}。`, `I suggest you ${topic.action} before ${topic.whenClause}.`);
+    case 89:
+      return makeDraft(`如果我们${topic.zhAction}会怎么样？`, `What if we were to ${topic.action}?`);
+    case 90:
+      return makeDraft(`这背后的原因很可能是${topic.zhReason}。`, `The reason behind this is likely that ${topic.reason}.`);
+    case 91:
+      return makeDraft(`和${topic.zhOptionB}相比，${topic.zhOptionA}要有效得多。`, `Compared with ${topic.optionB}, ${topic.optionA} is far more effective.`);
+    case 92:
+      return makeDraft(`直到${topic.zhWhenClause}，我才意识到${topic.zhClause}。`, `Not until ${topic.whenClause} did I realize that ${topic.clause}.`);
+    case 93:
+      return makeDraft(`我完全同意${topic.zhClause}。`, `I couldn’t agree with you more that ${topic.clause}.`);
+    case 94:
+      return makeDraft(`我们早该抽时间${topic.zhAction}了。`, `It’s high time that we made time to ${topic.action}.`);
+    case 95:
+      return makeDraft(`除此之外，${topic.zhClause}。`, `On top of that, ${topic.clause}.`);
+    case 96:
+      return makeDraft(`我必须承认${topic.zhClause}。`, `I must admit that ${topic.clause}.`);
+    case 97:
+      return makeDraft(`我们这周晚些时候通过${topic.zhMethod}联系一下吧。`, `Let’s touch base later this week by ${topic.method}.`);
+    case 98:
+      return makeDraft(`很高兴和你一起${topic.zhGerund}。`, `It has been a pleasure ${topic.gerund} with you.`);
+    case 99:
+      return makeDraft(`如果你还需要其他东西，我会帮你${topic.zhAction}。`, `Should you need anything else, I’ll help you ${topic.action}.`);
+    case 100:
+      return makeDraft(`总而言之，最重要的是${topic.zhClause}。`, `All in all, what matters most is that ${topic.clause}.`);
+    default:
+      return makeDraft(`请表达：${topic.zhClause}。`, topic.simple);
+  }
+}
+
+function createIntermediatePracticeCourse(patternId: number): SentencePatternPractice[] {
+  return basicPracticeTopics.map((topic, index) => {
+    const draft = renderIntermediatePracticeDraft(patternId, topic);
+
+    return {
+      chinese: draft.chinese,
+      id: index + 1,
+      idiomatic: draft.targetEnglish,
+      natural: draft.targetEnglish,
+      recommended: draft.targetEnglish,
+      simple: topic.simple,
+      targetEnglish: draft.targetEnglish,
+    };
+  });
+}
+
+const intermediateSectionsWithPracticeCourses: SentencePatternSection[] = intermediateSections.map((section) => ({
+  ...section,
+  patterns: section.patterns.map((pattern) => ({
+    ...pattern,
+    practices:
+      pattern.practices?.length === basicPracticeTopics.length
+        ? pattern.practices
+        : createIntermediatePracticeCourse(pattern.id),
+  })),
+}));
 
 const advancedSections: SentencePatternSection[] = [
-  createPlaceholderSection("1-15", "极致需求与委婉请求", "Sophisticated Needs & Polite Requests", 1, [
-    "Were it not for the fact that + 从句, I would + 虚拟.",
-    "I would be most grateful if you could possibly + 动词.",
-    "Should the need arise for + 名词, I would + 虚拟.",
-    "Little did I expect that + 从句 would + 虚拟.",
-    "It is imperative that + 从句（虚拟语气）.",
-  ]),
-  createPlaceholderSection("16-30", "精妙观点与深度说服", "Nuanced Opinions & Persuasion", 16, []),
-  createPlaceholderSection("31-45", "深刻情感与内心独白", "Profound Emotions & Introspection", 31, []),
-  createPlaceholderSection("46-60", "复杂过去叙述与反思", "Complex Past Narratives & Reflections", 46, []),
-  createPlaceholderSection("61-75", "高级未来计划与假设", "Advanced Future Plans & Hypotheticals", 61, []),
-  createPlaceholderSection("76-90", "棘手问题解决与高阶建议", "Intricate Problem-Solving & Advice", 76, []),
-  createPlaceholderSection("91-100", "顶级比较、社交与哲理总结", "Elite Comparison, Social & Closing", 91, []),
+  {
+    englishTitle: "Sophisticated Needs & Polite Requests",
+    id: "sophisticated-needs-polite-requests",
+    range: "1-15",
+    title: "极致需求与委婉请求",
+    patterns: [
+      { id: 1, text: "Were it not for the fact that + 从句, I would + 虚拟." },
+      { id: 2, text: "I would be most grateful if you could possibly + 动词." },
+      { id: 3, text: "Should the need arise for + 名词, I would + 虚拟." },
+      { id: 4, text: "Little did I expect that + 从句 would + 虚拟." },
+      { id: 5, text: "It is imperative that + 从句（虚拟语气）." },
+      { id: 6, text: "What I seek above all else is + 从句." },
+      { id: 7, text: "Had circumstances permitted, I would have + 过去分词." },
+      { id: 8, text: "I can scarcely imagine how + 从句 without + 名词." },
+      { id: 9, text: "Might I venture to suggest that + 从句?" },
+      { id: 10, text: "The extent to which + 从句 is such that + 从句." },
+      { id: 11, text: "In the unlikely event that + 从句, I shall + 动词." },
+      { id: 12, text: "Nothing would please me more than + 动名词/从句." },
+      { id: 13, text: "I find myself compelled to + 动词 owing to + 从句." },
+      { id: 14, text: "Should you see fit to + 动词, it would + 虚拟." },
+      { id: 15, text: "At no point have I desired anything more than + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Nuanced Opinions & Persuasion",
+    id: "advanced-nuanced-opinions-persuasion",
+    range: "16-30",
+    title: "精妙观点与深度说服",
+    patterns: [
+      { id: 16, text: "Not for a moment do I doubt that + 从句." },
+      { id: 17, text: "It stands to reason that + 从句, given that + 从句." },
+      { id: 18, text: "Were one to consider + 名词, one would + 虚拟." },
+      { id: 19, text: "The crux of the matter lies in the fact that + 从句." },
+      { id: 20, text: "So profound is + 名词 that + 从句." },
+      { id: 21, text: "I am inclined to believe that + 从句, notwithstanding + 名词." },
+      { id: 22, text: "Rarely, if ever, has + 从句 been + 过去分词." },
+      { id: 23, text: "To assert that + 从句 would be an understatement." },
+      { id: 24, text: "It is not without reason that + 从句." },
+      { id: 25, text: "The irony is that + 从句, even as + 从句." },
+      { id: 26, text: "Had it occurred to me earlier that + 从句, + 虚拟." },
+      { id: 27, text: "On no account should + 从句 be + 过去分词." },
+      { id: 28, text: "Such is the nature of + 名词 that + 从句." },
+      { id: 29, text: "I venture to say that + 从句 borders on + 名词." },
+      { id: 30, text: "Far from being + 形容词, + 从句 is in fact + 形容词." },
+    ],
+  },
+  {
+    englishTitle: "Profound Emotions & Introspection",
+    id: "profound-emotions-introspection",
+    range: "31-45",
+    title: "深刻情感与内心独白",
+    patterns: [
+      { id: 31, text: "Never before have I been so + 形容词 as when + 从句." },
+      { id: 32, text: "It pains me to admit that + 从句, yet + 从句." },
+      { id: 33, text: "Having long since + 过去分词, I now + 动词." },
+      { id: 34, text: "The depth of my + 情感 defies + 名词." },
+      { id: 35, text: "Only when + 从句 did I come to + 动词." },
+      { id: 36, text: "I cannot but feel that + 从句 in light of + 名词." },
+      { id: 37, text: "So overwhelmed am I by + 名词 that + 从句." },
+      { id: 38, text: "Were my heart not so + 形容词, + 从句." },
+      { id: 39, text: "It dawns on me now that + 从句, long after + 从句." },
+      { id: 40, text: "No words can adequately convey how + 从句." },
+      { id: 41, text: "Having grappled with + 名词, I have come to + 动词." },
+      { id: 42, text: "The realization that + 从句 has left me + 情感." },
+      { id: 43, text: "Little by little, I have grown to + 动词." },
+      { id: 44, text: "Such has been my experience with + 名词 that + 从句." },
+      { id: 45, text: "I am at a loss to explain why + 从句, save that + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Complex Past Narratives & Reflections",
+    id: "complex-past-narratives-reflections",
+    range: "46-60",
+    title: "复杂过去叙述与反思",
+    patterns: [
+      { id: 46, text: "No sooner had + 从句 than + 从句." },
+      { id: 47, text: "It was only after + 动名词 that I + 过去式." },
+      { id: 48, text: "Had I but known + 从句, I should never have + 过去分词." },
+      { id: 49, text: "Scarcely had I + 过去分词 when + 从句." },
+      { id: 50, text: "Looking back, it seems as though + 从句." },
+      { id: 51, text: "The memory of + 动名词 still lingers, reminding me that + 从句." },
+      { id: 52, text: "Not until much later did I realize + 从句." },
+      { id: 53, text: "I had hardly + 过去分词 before + 从句." },
+      { id: 54, text: "What with + 名词 and + 名词, + 从句." },
+      { id: 55, text: "In retrospect, + 从句 proved to be + 形容词." },
+      { id: 56, text: "Never had I imagined that + 从句 would lead to + 从句." },
+      { id: 57, text: "By the time + 从句, it had already become apparent that + 从句." },
+      { id: 58, text: "The events that transpired left me + 情感 + to + 动词." },
+      { id: 59, text: "Were it possible to turn back time, + 从句." },
+      { id: 60, text: "Such were the circumstances under which + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Advanced Future Plans & Hypotheticals",
+    id: "advanced-future-plans-hypotheticals",
+    range: "61-75",
+    title: "高级未来计划与假设",
+    patterns: [
+      { id: 61, text: "Provided that + 从句 holds true, I shall + 动词." },
+      { id: 62, text: "Come what may, I am resolved to + 动词." },
+      { id: 63, text: "By the time + 从句, I will have long since + 完成时." },
+      { id: 64, text: "Were the opportunity to present itself, + 从句." },
+      { id: 65, text: "In anticipation of + 名词, I intend to + 动词." },
+      { id: 66, text: "Should matters unfold as + 从句, + 从句." },
+      { id: 67, text: "I am poised to + 动词 the moment + 从句." },
+      { id: 68, text: "Far into the future, + 从句 is bound to + 动词." },
+      { id: 69, text: "Assuming + 从句, there is every likelihood that + 从句." },
+      { id: 70, text: "The day will come when + 从句." },
+      { id: 71, text: "No matter how + 形容词 + 从句, I will + 动词." },
+      { id: 72, text: "It is my fervent hope that + 从句 will + 动词." },
+      { id: 73, text: "Once + 从句 has been + 过去分词, + 从句." },
+      { id: 74, text: "I foresee a time when + 从句." },
+      { id: 75, text: "Should fortune favor + 名词, + 从句." },
+    ],
+  },
+  {
+    englishTitle: "Intricate Problem-Solving & Advice",
+    id: "intricate-problem-solving-advice",
+    range: "76-90",
+    title: "棘手问题解决与高阶建议",
+    patterns: [
+      { id: 76, text: "The underlying issue is one wherein + 从句." },
+      { id: 77, text: "Might I propose that we + 虚拟语气?" },
+      { id: 78, text: "In order that + 从句, it is crucial to + 动词." },
+      { id: 79, text: "The dilemma we face is how best to + 动词 given that + 从句." },
+      { id: 80, text: "Were we to + 动词, the consequences would + 虚拟." },
+      { id: 81, text: "One cannot overemphasize the importance of + 动名词." },
+      { id: 82, text: "To mitigate + 名词, one must first + 动词." },
+      { id: 83, text: "It behooves us to + 动词 lest + 从句." },
+      { id: 84, text: "The question remains as to whether + 从句." },
+      { id: 85, text: "Supposing + 从句 were true, how then + 从句?" },
+      { id: 86, text: "Therein lies the challenge of + 动名词." },
+      { id: 87, text: "I would counsel + 动名词 before + 从句." },
+      { id: 88, text: "The ramifications of + 动名词 are such that + 从句." },
+      { id: 89, text: "How one approaches + 名词 determines + 从句." },
+      { id: 90, text: "It is high time we + 虚拟语气." },
+    ],
+  },
+  {
+    englishTitle: "Elite Comparison, Social & Closing",
+    id: "elite-comparison-social-closing",
+    range: "91-100",
+    title: "顶级比较、社交与哲理总结",
+    patterns: [
+      { id: 91, text: "Far superior to + 名词 is + 从句 in that + 从句." },
+      { id: 92, text: "Not a single + 名词 exists without + 从句." },
+      { id: 93, text: "So much so that + 从句." },
+      { id: 94, text: "It is with + 情感 that I + 动词." },
+      { id: 95, text: "All things considered, + 从句 pales in comparison to + 从句." },
+      { id: 96, text: "On reflection, one might argue that + 从句." },
+      { id: 97, text: "Let us not forget that + 从句, however + 形容词." },
+      { id: 98, text: "It has been an absolute privilege + 动名词 with you." },
+      { id: 99, text: "Should our paths cross again, + 从句." },
+      { id: 100, text: "At the end of the day, what truly defines us is + 从句." },
+    ],
+  },
 ];
+
+function renderAdvancedPracticeDraft(
+  patternId: number,
+  topic: BasicPracticeTopic
+): BasicPracticeDraft {
+  switch (patternId) {
+    case 1:
+      return makeDraft(`如果不是因为${topic.zhProblem}，我就会${topic.zhAction}。`, `Were it not for the fact that ${topic.problem}, I would ${topic.action}.`);
+    case 2:
+      return makeDraft(`如果你能尽可能帮我${topic.zhAction}，我将不胜感激。`, `I would be most grateful if you could possibly help me ${topic.action}.`);
+    case 3:
+      return makeDraft(`如果需要${topic.zhNoun}，我会${topic.zhAction}。`, `Should the need arise for ${topic.noun}, I would ${topic.action}.`);
+    case 4:
+      return makeDraft(`我几乎没想到${topic.zhProblem}会让我重新考虑计划。`, `Little did I expect that ${topic.problem} would make me rethink my plan.`);
+    case 5:
+      return makeDraft(`我们必须${topic.zhAction}，这一点很重要。`, `It is imperative that we ${topic.action}.`);
+    case 6:
+      return makeDraft(`我最想要的是${topic.zhClause}。`, `What I seek above all else is that ${topic.clause}.`);
+    case 7:
+      return makeDraft(`如果情况允许，我早就${topic.zhPastParticiple}了。`, `Had circumstances permitted, I would have ${topic.pastParticiple}.`);
+    case 8:
+      return makeDraft(`没有${topic.zhNoun}，我几乎无法想象怎样${topic.zhAction}。`, `I can scarcely imagine how I could ${topic.action} without ${topic.noun}.`);
+    case 9:
+      return makeDraft(`我能否冒昧建议我们${topic.zhAction}？`, `Might I venture to suggest that we ${topic.action}?`);
+    case 10:
+      return makeDraft(`${topic.zhProblem}的程度如此之深，以至于${topic.zhResult}。`, `The extent to which ${topic.problem} is such that ${topic.result}.`);
+    case 11:
+      return makeDraft(`万一${topic.zhProblem}，我会${topic.zhAction}。`, `In the unlikely event that ${topic.problem}, I shall ${topic.action}.`);
+    case 12:
+      return makeDraft(`没有什么比${topic.zhGerund}更让我高兴。`, `Nothing would please me more than ${topic.gerund}.`);
+    case 13:
+      return makeDraft(`由于${topic.zhReason}，我不得不${topic.zhAction}。`, `I find myself compelled to ${topic.action} owing to the fact that ${topic.reason}.`);
+    case 14:
+      return makeDraft(`如果你认为适合帮我${topic.zhAction}，那将意义重大。`, `Should you see fit to help me ${topic.action}, it would mean a great deal.`);
+    case 15:
+      return makeDraft(`我从未比现在更渴望${topic.zhClause}。`, `At no point have I desired anything more than that ${topic.clause}.`);
+    case 16:
+      return makeDraft(`我毫不怀疑${topic.zhClause}。`, `Not for a moment do I doubt that ${topic.clause}.`);
+    case 17:
+      return makeDraft(`考虑到${topic.zhReason}，${topic.zhClause}是合情合理的。`, `It stands to reason that ${topic.clause}, given that ${topic.reason}.`);
+    case 18:
+      return makeDraft(`如果考虑${topic.zhNoun}，人们就会更早${topic.zhAction}。`, `Were one to consider ${topic.noun}, one would ${topic.action} sooner.`);
+    case 19:
+      return makeDraft(`问题的关键在于${topic.zhProblem}。`, `The crux of the matter lies in the fact that ${topic.problem}.`);
+    case 20:
+      return makeDraft(`${topic.zhDifficultNoun}影响如此深远，以至于${topic.zhResult}。`, `So profound is ${topic.difficultNoun} that ${topic.result}.`);
+    case 21:
+      return makeDraft(`尽管有${topic.zhDifficultNoun}，我还是倾向于相信${topic.zhClause}。`, `I am inclined to believe that ${topic.clause}, notwithstanding ${topic.difficultNoun}.`);
+    case 22:
+      return makeDraft(`像${topic.zhClause}这样的情况很少被认真讨论。`, `Rarely, if ever, has a situation where ${topic.clause} been discussed seriously.`);
+    case 23:
+      return makeDraft(`说${topic.zhClause}都算轻描淡写了。`, `To assert that ${topic.clause} would be an understatement.`);
+    case 24:
+      return makeDraft(`${topic.zhClause}并非没有原因。`, `It is not without reason that ${topic.clause}.`);
+    case 25:
+      return makeDraft(`讽刺的是，${topic.zhProblem}，即使${topic.zhClause}。`, `The irony is that ${topic.problem}, even as ${topic.clause}.`);
+    case 26:
+      return makeDraft(`如果我早想到${topic.zhProblem}，我就会更快${topic.zhAction}。`, `Had it occurred to me earlier that ${topic.problem}, I would have tried to ${topic.action} sooner.`);
+    case 27:
+      return makeDraft(`绝不应该忽视${topic.zhProblem}。`, `On no account should the fact that ${topic.problem} be ignored.`);
+    case 28:
+      return makeDraft(`${topic.zhDifficultNoun}的本质就是如此，因此${topic.zhResult}。`, `Such is the nature of ${topic.difficultNoun} that ${topic.result}.`);
+    case 29:
+      return makeDraft(`我敢说${topic.zhProblem}近乎不负责任。`, `I venture to say that ${topic.problem} borders on irresponsibility.`);
+    case 30:
+      return makeDraft(`${topic.zhOptionA}并非简单，而实际上是明智的。`, `Far from being simple, ${topic.optionA} is in fact wise.`);
+    case 31:
+      return makeDraft(`我从未像${topic.zhWhenClause}时那样如此${topic.zhEmotion}。`, `Never before have I been so ${topic.emotion} as when ${topic.whenClause}.`);
+    case 32:
+      return makeDraft(`我痛心地承认${topic.zhProblem}，但${topic.zhClause}。`, `It pains me to admit that ${topic.problem}, yet ${topic.clause}.`);
+    case 33:
+      return makeDraft(`早已经历过${topic.zhDifficultNoun}后，我现在选择${topic.zhAction}。`, `Having long since endured ${topic.difficultNoun}, I now choose to ${topic.action}.`);
+    case 34:
+      return makeDraft(`我内心的${topic.zhEmotion}深到难以言表。`, `The depth of my ${topic.emotion} defies easy description.`);
+    case 35:
+      return makeDraft(`只有当${topic.zhWhenClause}，我才开始明白要${topic.zhAction}。`, `Only when ${topic.whenClause} did I come to understand the need to ${topic.action}.`);
+    case 36:
+      return makeDraft(`鉴于${topic.zhDifficultNoun}，我不禁觉得${topic.zhClause}。`, `I cannot but feel that ${topic.clause} in light of ${topic.difficultNoun}.`);
+    case 37:
+      return makeDraft(`${topic.zhDifficultNoun}让我如此不堪重负，以至于${topic.zhResult}。`, `So overwhelmed am I by ${topic.difficultNoun} that ${topic.result}.`);
+    case 38:
+      return makeDraft(`如果我的心没有这么${topic.zhEmotion}，我会${topic.zhAction}。`, `Were my heart not so ${topic.emotion}, I would ${topic.action}.`);
+    case 39:
+      return makeDraft(`很久之后我才明白${topic.zhClause}。`, `It dawns on me now that ${topic.clause}, long after ${topic.whenClause}.`);
+    case 40:
+      return makeDraft(`没有语言能充分表达${topic.zhClause}让我多么${topic.zhEmotion}。`, `No words can adequately convey how ${topic.clause} leaves me feeling ${topic.emotion}.`);
+    case 41:
+      return makeDraft(`在努力应对${topic.zhDifficultNoun}后，我终于学会${topic.zhAction}。`, `Having grappled with ${topic.difficultNoun}, I have come to ${topic.action}.`);
+    case 42:
+      return makeDraft(`意识到${topic.zhClause}让我感到${topic.zhEmotion}。`, `The realization that ${topic.clause} has left me ${topic.emotion}.`);
+    case 43:
+      return makeDraft(`渐渐地，我已经习惯${topic.zhGerund}。`, `Little by little, I have grown to accept ${topic.gerund}.`);
+    case 44:
+      return makeDraft(`我对${topic.zhDifficultNoun}的经历就是如此，以至于${topic.zhClause}。`, `Such has been my experience with ${topic.difficultNoun} that ${topic.clause}.`);
+    case 45:
+      return makeDraft(`我无法解释为什么${topic.zhProblem}，只能说${topic.zhReason}。`, `I am at a loss to explain why ${topic.problem}, save that ${topic.reason}.`);
+    case 46:
+      return makeDraft(`我刚意识到${topic.zhProblem}，就明白${topic.zhClause}。`, `No sooner had I realized that ${topic.problem} than I understood that ${topic.clause}.`);
+    case 47:
+      return makeDraft(`只有在${topic.zhGerund}之后，我才${topic.zhPastSimple}。`, `It was only after ${topic.gerund} that I ${topic.pastSimple}.`);
+    case 48:
+      return makeDraft(`要是我早知道${topic.zhProblem}，我绝不会等这么久才${topic.zhAction}。`, `Had I but known that ${topic.problem}, I should never have waited so long to ${topic.action}.`);
+    case 49:
+      return makeDraft(`我刚${topic.zhPastParticiple}，${topic.zhProblem}就出现了。`, `Scarcely had I ${topic.pastParticiple} when ${topic.problem}.`);
+    case 50:
+      return makeDraft(`回头看，似乎${topic.zhClause}。`, `Looking back, it seems as though ${topic.clause}.`);
+    case 51:
+      return makeDraft(`${topic.zhGerund}的记忆仍在，提醒我${topic.zhClause}。`, `The memory of ${topic.gerund} still lingers, reminding me that ${topic.clause}.`);
+    case 52:
+      return makeDraft(`很久以后我才意识到${topic.zhClause}。`, `Not until much later did I realize that ${topic.clause}.`);
+    case 53:
+      return makeDraft(`我刚刚${topic.zhPastParticiple}，就发现${topic.zhProblem}。`, `I had hardly ${topic.pastParticiple} before I discovered that ${topic.problem}.`);
+    case 54:
+      return makeDraft(`由于${topic.zhDifficultNoun}和${topic.zhProblem}，我不得不${topic.zhAction}。`, `What with ${topic.difficultNoun} and the fact that ${topic.problem}, I had to ${topic.action}.`);
+    case 55:
+      return makeDraft(`回想起来，${topic.zhGerund}证明是明智的。`, `In retrospect, ${topic.gerund} proved to be wise.`);
+    case 56:
+      return makeDraft(`我从未想过${topic.zhClause}会导致${topic.zhResult}。`, `Never had I imagined that ${topic.clause} would lead to the fact that ${topic.result}.`);
+    case 57:
+      return makeDraft(`到${topic.zhWhenClause}的时候，${topic.zhClause}已经很明显。`, `By the time ${topic.whenClause}, it had already become apparent that ${topic.clause}.`);
+    case 58:
+      return makeDraft(`发生的这些事让我感到${topic.zhEmotion}，并想要${topic.zhAction}。`, `The events that transpired left me ${topic.emotion} to ${topic.action}.`);
+    case 59:
+      return makeDraft(`如果可以让时间倒流，我会更早${topic.zhAction}。`, `Were it possible to turn back time, I would ${topic.action} sooner.`);
+    case 60:
+      return makeDraft(`这就是我不得不${topic.zhAction}的情况。`, `Such were the circumstances under which I had to ${topic.action}.`);
+    case 61:
+      return makeDraft(`只要${topic.zhClause}成立，我就会${topic.zhAction}。`, `Provided that ${topic.clause} holds true, I shall ${topic.action}.`);
+    case 62:
+      return makeDraft(`无论发生什么，我都决心${topic.zhAction}。`, `Come what may, I am resolved to ${topic.action}.`);
+    case 63:
+      return makeDraft(`到${topic.zhWhenClause}的时候，我早就已经${topic.zhPastParticiple}。`, `By the time ${topic.whenClause}, I will have long since ${topic.pastParticiple}.`);
+    case 64:
+      return makeDraft(`如果机会出现，我会${topic.zhAction}。`, `Were the opportunity to present itself, I would ${topic.action}.`);
+    case 65:
+      return makeDraft(`为了预备${topic.zhDifficultNoun}，我打算${topic.zhAction}。`, `In anticipation of ${topic.difficultNoun}, I intend to ${topic.action}.`);
+    case 66:
+      return makeDraft(`如果事情按${topic.zhClause}发展，我会${topic.zhAction}。`, `Should matters unfold as ${topic.clause}, I will ${topic.action}.`);
+    case 67:
+      return makeDraft(`一旦${topic.zhWhenClause}，我就准备好${topic.zhAction}。`, `I am poised to ${topic.action} the moment ${topic.whenClause}.`);
+    case 68:
+      return makeDraft(`在遥远的未来，${topic.zhClause}必然会影响我们的选择。`, `Far into the future, the fact that ${topic.clause} is bound to shape our choices.`);
+    case 69:
+      return makeDraft(`假设${topic.zhClause}，很可能${topic.zhResult}。`, `Assuming ${topic.clause}, there is every likelihood that ${topic.result}.`);
+    case 70:
+      return makeDraft(`总有一天，${topic.zhClause}。`, `The day will come when ${topic.clause}.`);
+    case 71:
+      return makeDraft(`无论${topic.zhDifficultNoun}多么困难，我都会${topic.zhAction}。`, `No matter how difficult ${topic.difficultNoun} becomes, I will ${topic.action}.`);
+    case 72:
+      return makeDraft(`我真诚希望${topic.zhClause}能帮助我们${topic.zhAction}。`, `It is my fervent hope that ${topic.clause} will help us ${topic.action}.`);
+    case 73:
+      return makeDraft(`一旦${topic.zhProblem}被解决，我就会${topic.zhAction}。`, `Once the issue that ${topic.problem} has been resolved, I will ${topic.action}.`);
+    case 74:
+      return makeDraft(`我预见到有一天${topic.zhClause}。`, `I foresee a time when ${topic.clause}.`);
+    case 75:
+      return makeDraft(`如果运气眷顾${topic.zhNoun}，我会${topic.zhAction}。`, `Should fortune favor ${topic.noun}, I will ${topic.action}.`);
+    case 76:
+      return makeDraft(`根本问题在于${topic.zhProblem}。`, `The underlying issue is one wherein ${topic.problem}.`);
+    case 77:
+      return makeDraft(`我能否建议我们${topic.zhAction}？`, `Might I propose that we ${topic.action}?`);
+    case 78:
+      return makeDraft(`为了让${topic.zhClause}成为现实，${topic.zhAction}至关重要。`, `In order that ${topic.clause}, it is crucial to ${topic.action}.`);
+    case 79:
+      return makeDraft(`我们面临的困境是，既然${topic.zhProblem}，怎样最好地${topic.zhAction}。`, `The dilemma we face is how best to ${topic.action} given that ${topic.problem}.`);
+    case 80:
+      return makeDraft(`如果我们${topic.zhAction}，结果会更容易控制。`, `Were we to ${topic.action}, the consequences would be easier to manage.`);
+    case 81:
+      return makeDraft(`${topic.zhGerund}的重要性再怎么强调都不为过。`, `One cannot overemphasize the importance of ${topic.gerund}.`);
+    case 82:
+      return makeDraft(`为了缓解${topic.zhDifficultNoun}，一个人必须先${topic.zhAction}。`, `To mitigate ${topic.difficultNoun}, one must first ${topic.action}.`);
+    case 83:
+      return makeDraft(`我们理应${topic.zhAction}，以免${topic.zhProblem}。`, `It behooves us to ${topic.action} lest ${topic.problem}.`);
+    case 84:
+      return makeDraft(`问题仍然是是否${topic.zhClause}。`, `The question remains as to whether ${topic.clause}.`);
+    case 85:
+      return makeDraft(`假设${topic.zhProblem}是真的，那么我们该如何${topic.zhAction}？`, `Supposing ${topic.problem} were true, how then should we ${topic.action}?`);
+    case 86:
+      return makeDraft(`${topic.zhGerund}的挑战就在这里。`, `Therein lies the challenge of ${topic.gerund}.`);
+    case 87:
+      return makeDraft(`我建议先${topic.zhGerund}，然后再${topic.zhAction}。`, `I would counsel ${topic.gerund} before trying to ${topic.action}.`);
+    case 88:
+      return makeDraft(`${topic.zhGerund}的影响如此之大，以至于${topic.zhResult}。`, `The ramifications of ${topic.gerund} are such that ${topic.result}.`);
+    case 89:
+      return makeDraft(`一个人处理${topic.zhDifficultNoun}的方式决定了${topic.zhResult}。`, `How one approaches ${topic.difficultNoun} determines whether ${topic.result}.`);
+    case 90:
+      return makeDraft(`我们早该${topic.zhAction}了。`, `It is high time we ${topic.action}.`);
+    case 91:
+      return makeDraft(`远优于${topic.zhOptionB}的是${topic.zhOptionA}，因为${topic.zhResult}。`, `Far superior to ${topic.optionB} is ${topic.optionA} in that ${topic.result}.`);
+    case 92:
+      return makeDraft(`没有任何${topic.zhNoun}能脱离${topic.zhClause}而存在。`, `Not a single ${topic.noun} exists without the fact that ${topic.clause}.`);
+    case 93:
+      return makeDraft(`情况严重到${topic.zhResult}。`, `So much so that ${topic.result}.`);
+    case 94:
+      return makeDraft(`我是怀着${topic.zhEmotion}的心情决定${topic.zhAction}。`, `It is with ${topic.emotion} that I choose to ${topic.action}.`);
+    case 95:
+      return makeDraft(`综合来看，${topic.zhOptionB}比不上${topic.zhOptionA}。`, `All things considered, ${topic.optionB} pales in comparison to ${topic.optionA}.`);
+    case 96:
+      return makeDraft(`反思之后，人们也许会认为${topic.zhClause}。`, `On reflection, one might argue that ${topic.clause}.`);
+    case 97:
+      return makeDraft(`别忘了${topic.zhClause}，无论情况多么困难。`, `Let us not forget that ${topic.clause}, however difficult things may become.`);
+    case 98:
+      return makeDraft(`能和你一起${topic.zhGerund}是莫大的荣幸。`, `It has been an absolute privilege ${topic.gerund} with you.`);
+    case 99:
+      return makeDraft(`如果我们再次相遇，我希望我们能${topic.zhAction}。`, `Should our paths cross again, I hope we can ${topic.action}.`);
+    case 100:
+      return makeDraft(`归根结底，真正定义我们的是${topic.zhClause}。`, `At the end of the day, what truly defines us is that ${topic.clause}.`);
+    default:
+      return makeDraft(`请表达：${topic.zhClause}。`, topic.simple);
+  }
+}
+
+function createAdvancedPracticeCourse(patternId: number): SentencePatternPractice[] {
+  return basicPracticeTopics.map((topic, index) => {
+    const draft = renderAdvancedPracticeDraft(patternId, topic);
+
+    return {
+      chinese: draft.chinese,
+      id: index + 1,
+      idiomatic: draft.targetEnglish,
+      natural: draft.targetEnglish,
+      recommended: draft.targetEnglish,
+      simple: topic.simple,
+      targetEnglish: draft.targetEnglish,
+    };
+  });
+}
+
+const advancedSectionsWithPracticeCourses: SentencePatternSection[] = advancedSections.map((section) => ({
+  ...section,
+  patterns: section.patterns.map((pattern) => ({
+    ...pattern,
+    practices:
+      pattern.practices?.length === basicPracticeTopics.length
+        ? pattern.practices
+        : createAdvancedPracticeCourse(pattern.id),
+  })),
+}));
 
 export const sentencePatternLevels: SentencePatternLevel[] = [
   {
@@ -1684,7 +2423,7 @@ export const sentencePatternLevels: SentencePatternLevel[] = [
       "每天选 10 个模板，替换成更复杂的真实生活内容，大声练习并尝试连成段落。",
     tone: "purple",
     totalPatterns: 100,
-    sections: intermediateSections,
+    sections: intermediateSectionsWithPracticeCourses,
   },
   {
     id: "advanced",
@@ -1702,7 +2441,7 @@ export const sentencePatternLevels: SentencePatternLevel[] = [
       "每天精选 5-10 个模板，用生活中最复杂的情境进行替换练习，大声朗读并扩展成完整段落。",
     tone: "orange",
     totalPatterns: 100,
-    sections: advancedSections,
+    sections: advancedSectionsWithPracticeCourses,
   },
 ];
 

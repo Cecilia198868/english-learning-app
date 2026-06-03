@@ -108,6 +108,7 @@
   cursor: pointer;
   font: inherit;
   text-align: left;
+  text-decoration: none;
 }
 
 .lessonRow:last-child {

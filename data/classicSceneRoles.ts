@@ -35,6 +35,26 @@ const bankStaffRoleConfig: ClassicSceneRoleConfig = {
   roleLabel: "银行职员",
 };
 
+const shoppingClerkRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "store-clerk",
+  roleLabel: "店员",
+};
+
+const cashierRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "cashier",
+  roleLabel: "收银员",
+};
+
+const afterSaleClerkRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "store-clerk",
+  roleLabel: "售后店员",
+};
+
+const serviceStaffRoleConfig: ClassicSceneRoleConfig = {
+  roleIcon: "front-desk",
+  roleLabel: "客服人员",
+};
+
 export const classicLessonRoleConfigs: Record<string, ClassicSceneRoleConfig> = {
   bank_open_new_account_zh: bankStaffRoleConfig,
   bank_deposit_withdrawal_zh: bankStaffRoleConfig,
@@ -50,6 +70,22 @@ const classicLessonRolePrefixConfigs: Array<{
   {
     prefix: "bank_",
     roleConfig: bankStaffRoleConfig,
+  },
+  {
+    prefix: "shopping_payment_",
+    roleConfig: cashierRoleConfig,
+  },
+  {
+    prefix: "shopping_return_",
+    roleConfig: afterSaleClerkRoleConfig,
+  },
+  {
+    prefix: "shopping_bill_",
+    roleConfig: serviceStaffRoleConfig,
+  },
+  {
+    prefix: "shopping_",
+    roleConfig: shoppingClerkRoleConfig,
   },
 ];
 
