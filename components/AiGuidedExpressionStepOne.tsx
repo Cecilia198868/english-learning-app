@@ -387,9 +387,51 @@ export default function AiGuidedExpressionStepOne({
           box-sizing: border-box;
         }
 
+        .sf-speak-page:has(.sf-ai-guide-start-page) {
+          background:
+            radial-gradient(circle at 16% 4%, rgba(220, 239, 255, 0.86), transparent 30%),
+            radial-gradient(circle at 92% 0%, rgba(235, 229, 255, 0.88), transparent 28%),
+            linear-gradient(180deg, #eef8ff 0%, #f9fcff 48%, #edf5ff 100%) !important;
+        }
+
+        .sf-speak-page:has(.sf-ai-guide-start-page) > div {
+          width: 100vw !important;
+          max-width: none !important;
+          min-height: 100dvh !important;
+          align-items: stretch !important;
+          justify-content: center !important;
+          padding: 0 !important;
+        }
+
+        .sf-speak-page:has(.sf-ai-guide-start-page) .sf-speak-phone {
+          width: min(100vw, 430px) !important;
+          max-width: 430px !important;
+          height: 100dvh !important;
+          min-height: 100dvh !important;
+          border: 0 !important;
+          border-radius: 0 !important;
+          background:
+            radial-gradient(circle at 50% 34%, rgba(255, 255, 255, 0.76), transparent 34%),
+            radial-gradient(circle at 82% 36%, rgba(230, 238, 255, 0.68), transparent 35%),
+            linear-gradient(180deg, #eef8ff 0%, #f9fcff 44%, #edf5ff 100%) !important;
+          box-shadow: none !important;
+        }
+
+        .sf-speak-page:has(.sf-ai-guide-start-page) .sf-speak-phone::before,
+        .sf-speak-page:has(.sf-ai-guide-start-page) .sf-speak-phone::after,
+        .sf-speak-page:has(.sf-ai-guide-start-page) .sf-speak-phone > .pointer-events-none {
+          display: none !important;
+        }
+
+        .sf-speak-page:has(.sf-ai-guide-start-page) .sf-speak-phone > .absolute:has(.sf-ai-guide-start-page) {
+          z-index: 200 !important;
+          overflow: hidden !important;
+        }
+
         .sf-ai-guide-start-page {
-          width: 100vw;
-          min-height: 100dvh;
+          width: 100%;
+          height: 100%;
+          min-height: 100%;
           display: flex;
           align-items: stretch;
           justify-content: flex-start;
@@ -409,16 +451,16 @@ export default function AiGuidedExpressionStepOne({
         }
 
         .sf-ai-guide-start-phone {
-          width: min(100%, 24.375rem);
+          width: 100%;
           max-width: 100%;
-          min-height: 100dvh;
+          min-height: 100%;
           margin: 0;
         }
 
         .sf-ai-guide-start-frame {
           position: relative;
           isolation: isolate;
-          min-height: 100dvh;
+          min-height: 100%;
           overflow-x: hidden;
           padding: calc(env(safe-area-inset-top, 0px) + 1.2rem) clamp(1.3rem, 5vw, 1.9rem)
             calc(env(safe-area-inset-bottom, 0px) + 1.5rem);
@@ -1520,13 +1562,13 @@ export default function AiGuidedExpressionStepOne({
           }
 
           .sf-ai-guide-start-phone {
-            width: min(100%, 32rem);
-            max-width: 32rem;
+            width: 100%;
+            max-width: 100%;
             margin: 0 auto;
           }
 
           .sf-ai-guide-start-frame {
-            min-height: min(100dvh, 64rem);
+            min-height: 100%;
             padding-top: calc(env(safe-area-inset-top, 0px) + 1.55rem);
           }
 
