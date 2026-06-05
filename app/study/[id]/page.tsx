@@ -113,7 +113,7 @@ const GUEST_FULL_CLASSIC_LESSON_IDS = new Set([
   "tax_form_1040_filing_zh",
 ]);
 const GUEST_CLASSIC_SENTENCE_LIMIT = 5;
-const CLASSIC_RECORDING_SILENCE_DELAY_MS = 4800;
+const CLASSIC_RECORDING_SILENCE_DELAY_MS = 2000;
 function isClassicSceneLessonId(lessonId: string) {
   return (
     lessonId.startsWith("bank_") ||
@@ -556,6 +556,8 @@ function normalizeSpeechRate(rate: number) {
   return Math.min(Math.max(rate, 0.5), 1.15);
 }
 
+const SLOW_READ_RATE = 0.5;
+
 function createFallbackExpressionVariants(standardEnglish: string) {
   return expressionVariantLabels.map(({ key, label }) => ({
     key,
@@ -585,14 +587,6 @@ function ArrowRightIcon() {
   return (
     <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32">
       <path d="m13 8 8 8-8 8M4 16h16" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-      <path d="m7 9 5 5 5-5" />
     </svg>
   );
 }
@@ -760,16 +754,6 @@ function ResultVariantIcon({ variantKey }: { variantKey: ExpressionVariantKey })
   );
 }
 
-function ResultBookIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 52 52">
-      <path d="M8 12h16c3 0 5 2 5 5v27c0-3-2-5-5-5H8V12Z" />
-      <path d="M44 12H28c-3 0-5 2-5 5v27c0-3 2-5 5-5h16V12Z" />
-      <path d="M14 19h8M14 25h8M30 19h8M30 25h8" />
-    </svg>
-  );
-}
-
 function getResultVariantNote(variantKey: ExpressionVariantKey) {
   if (variantKey === "standard") return "最自然、最常用的表达";
   if (variantKey === "idiomatic") return "更符合母语者习惯";
@@ -837,7 +821,6 @@ export default function StudyPage() {
   const [isClipPlaying, setIsClipPlaying] = useState(false);
   const [isSequencePlaying, setIsSequencePlaying] = useState(false);
   const [sourcePlaybackRate, setSourcePlaybackRate] = useState(1);
-  const [followReadRate, setFollowReadRate] = useState(0.5);
 
   const [prepSeconds, setPrepSeconds] = useState(2);
   const [gapSeconds, setGapSeconds] = useState(1);
@@ -1229,14 +1212,6 @@ export default function StudyPage() {
   ) {
     setSelectedExpressionIndex(variantIndex);
     speakEnglish(variant.text, rate);
-  }
-
-  function cycleFollowReadRate() {
-    setFollowReadRate((currentRate) => {
-      if (currentRate < 0.75) return 0.75;
-      if (currentRate < 1) return 1;
-      return 0.5;
-    });
   }
 
   function moveToSentence(index: number) {
@@ -2288,7 +2263,6 @@ export default function StudyPage() {
             >
               <span className={styles.homeIconBox}>
                 <HomeMenuIcon label={null} showHint={false} />
-                <span className={styles.homeShortcutText}>学习首页</span>
               </span>
             </button>
 
@@ -2535,7 +2509,7 @@ export default function StudyPage() {
 
           <p className={styles.micHint}>
             {isListening
-              ? "正在录音，系统会等你说完后进入下一页"
+              ? "正在录音，停顿 2 秒后会自动进入下一页"
               : message || "点击麦克风开始练习"}
           </p>
 
@@ -2584,7 +2558,6 @@ export default function StudyPage() {
             >
               <span className={styles.homeIconBox}>
                 <HomeMenuIcon label={null} showHint={false} />
-                <span className={styles.homeShortcutText}>学习首页</span>
               </span>
             </button>
 
@@ -2810,33 +2783,6 @@ export default function StudyPage() {
           </div>
 
           <section className={styles.followCard} aria-label="跟读练习">
-            <div className={styles.followTop}>
-              <button
-                type="button"
-                className={styles.followReadButton}
-                onClick={() => speakEnglish(selectedReadText, 1)}
-                aria-label="播放指定句子的朗读"
-              >
-                <span className={styles.followBookIcon}>
-                  <ResultBookIcon />
-                </span>
-                <span>
-                  <strong>跟读练习</strong>
-                  <small>听标准发音，跟读练习更地道</small>
-                </span>
-              </button>
-
-              <button
-                type="button"
-                className={styles.slowReadButton}
-                onClick={() => speakEnglish(selectedReadText, followReadRate)}
-                aria-label="播放指定句子的慢速朗读"
-              >
-                <HeadphonesIcon />
-                <span>慢速朗读</span>
-              </button>
-            </div>
-
             <div className={styles.followControls}>
               <button
                 type="button"
@@ -2849,27 +2795,15 @@ export default function StudyPage() {
                 <span>上一句</span>
               </button>
 
-              <div className={styles.followMicWrap}>
-                <button
-                  type="button"
-                  onClick={() => setShowFollowReadModal(true)}
-                  className={styles.followMicButton}
-                  aria-label="打开跟读录音弹窗"
-                >
-                  <span className={styles.micPulseOne} />
-                  <span className={styles.micPulseTwo} />
-                  <BigMicIcon />
-                </button>
-                <button
-                  type="button"
-                  className={styles.followSpeedButton}
-                  onClick={cycleFollowReadRate}
-                  aria-label={`切换跟读速度，当前 ${followReadRate}x`}
-                >
-                  <span>速度：{followReadRate}x</span>
-                  <ChevronDownIcon />
-                </button>
-              </div>
+              <button
+                type="button"
+                className={styles.slowReadButton}
+                onClick={() => speakEnglish(selectedReadText, SLOW_READ_RATE)}
+                aria-label="播放指定句子的慢速朗读"
+              >
+                <HeadphonesIcon />
+                <span>慢速朗读</span>
+              </button>
 
               <button
                 type="button"
@@ -3236,7 +3170,7 @@ export default function StudyPage() {
                 <button
                   type="button"
                   aria-label="慢速朗读"
-                  onClick={() => speakEnglish(selectedExpression.text, 0.5)}
+                  onClick={() => speakEnglish(selectedExpression.text, SLOW_READ_RATE)}
                   className="sf-study-action-text sf-study-slow-button mr-auto flex h-10 min-w-[4rem] items-center justify-center rounded-[15px] px-1 text-[0.76rem] font-extrabold text-[#201833] transition hover:bg-white/30"
                 >
                   慢速朗读

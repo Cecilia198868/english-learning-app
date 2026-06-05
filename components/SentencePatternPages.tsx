@@ -61,7 +61,7 @@ type PatternToneStyle = CSSProperties & {
   "--pattern-glow": string;
 };
 
-const FINISH_AFTER_SILENCE_MS = 4200;
+const FINISH_AFTER_SILENCE_MS = 2000;
 const RESTART_AFTER_NO_SPEECH_MS = 240;
 
 function sessionKey(levelId: string, patternId: number, practiceId: number) {
@@ -436,13 +436,16 @@ function usePracticeId(max: number) {
   return Math.min(Math.max(Math.floor(practiceParam), 1), Math.max(max, 1));
 }
 
-function speak(text: string) {
+const NORMAL_READ_RATE = 0.92;
+const SLOW_READ_RATE = 0.5;
+
+function speak(text: string, rate = NORMAL_READ_RATE) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
 
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "en-US";
-  utterance.rate = 0.92;
+  utterance.rate = rate;
   window.speechSynthesis.speak(utterance);
 }
 
@@ -642,9 +645,9 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
         <section className={styles.recordCard}>
           <p>
             <StatIcon type="mic" />
-            {isRecording ? "正在录音，说完后会自动进入下一步" : "点击麦克风，开始录制你的英文表达"}
+            {isRecording ? "正在录音，停顿 2 秒后会自动进入下一步" : "点击麦克风，开始录制你的英文表达"}
           </p>
-          <small>慢慢想，系统会在你说完后自动进入下一页</small>
+          <small>慢慢想，停顿 2 秒后会自动进入下一页</small>
           <button
             type="button"
             className={styles.bigMic}
@@ -828,7 +831,7 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
             <strong>跟读练习</strong>
             <p>听标准发音，跟读练习更地道</p>
           </div>
-          <button type="button" onClick={() => speak(practice.recommended)}>
+          <button type="button" onClick={() => speak(practice.recommended, SLOW_READ_RATE)}>
             <StatIcon type="headphones" />
             慢速朗读
           </button>

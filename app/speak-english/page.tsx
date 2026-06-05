@@ -2972,6 +2972,8 @@ function normalizeSpeechRate(rate: number) {
   return Math.min(Math.max(rate, 0.5), 1.15);
 }
 
+const SLOW_READ_RATE = 0.5;
+
 function MenuGlyph({
   level,
   className = "",
@@ -7040,7 +7042,7 @@ function SpeakEnglishClient() {
               onSelectExpression={setSelectedExpressionIndex}
               onFollowPractice={openAiGuidedStepFourForRetry}
               onSlowPlayback={() =>
-                readReferenceResultVariant(selectedExpressionIndex, 0.5)
+                readReferenceResultVariant(selectedExpressionIndex, SLOW_READ_RATE)
               }
               renderExpressionText={(text) => renderReferenceResultText(text)}
               renderUserExpressionText={(text) => renderReferenceResultText(text)}
@@ -7229,7 +7231,7 @@ function SpeakEnglishClient() {
               <button
                 type="button"
                 aria-label="Slow playback"
-                onClick={() => readReferenceResultVariant(0, 0.5)}
+                onClick={() => readReferenceResultVariant(0, SLOW_READ_RATE)}
                 className="absolute bottom-[6.7%] right-[10.3%] z-[92] h-[7.8%] w-[16.5%] rounded-[20px] border-0 bg-transparent"
               />
               <div className="absolute inset-0 z-[99] pointer-events-none">
@@ -7490,7 +7492,7 @@ function SpeakEnglishClient() {
                 <button
                   type="button"
                   aria-label="0.5x 倍速"
-                  onClick={() => readReferenceResultVariant(0, 0.5)}
+                  onClick={() => readReferenceResultVariant(0, SLOW_READ_RATE)}
                   className="pointer-events-auto absolute bottom-[2.8%] right-[8.7%] h-[6.2%] w-[20%] rounded-[18px] border-0 bg-transparent"
                 />
                 <div className="pointer-events-auto absolute inset-0 z-[130] overflow-hidden">
@@ -7630,7 +7632,7 @@ function SpeakEnglishClient() {
                   <button
                     type="button"
                     aria-label="0.5x 倍速"
-                    onClick={() => readReferenceResultVariant(0, 0.5)}
+                    onClick={() => readReferenceResultVariant(0, SLOW_READ_RATE)}
                     className="absolute bottom-[2.8%] right-[8.7%] h-[6.2%] w-[20%] rounded-[18px] border-0 bg-transparent"
                   />
                 </div>
@@ -8053,7 +8055,7 @@ function SpeakEnglishClient() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => readReferenceResultVariant(0, 0.5)}
+                    onClick={() => readReferenceResultVariant(0, SLOW_READ_RATE)}
                     className="absolute right-[7%] top-[42%] flex h-[52%] -translate-y-1/2 items-center justify-center gap-1.5 rounded-[16px] bg-white/86 px-4 text-[clamp(0.78rem,2.55vw,0.94rem)] font-black text-[#0b3c9f] shadow-[0_10px_22px_rgba(64,112,190,0.08)]"
                   >
                     <svg
@@ -8221,7 +8223,7 @@ function SpeakEnglishClient() {
                   <button
                     type="button"
                     aria-label="0.5x 倍速"
-                    onClick={() => readReferenceResultVariant(0, 0.5)}
+                    onClick={() => readReferenceResultVariant(0, SLOW_READ_RATE)}
                     className="pointer-events-auto absolute bottom-[2.5%] right-[8.2%] z-[420] h-[6.5%] w-[20.8%] rounded-[18px] border-0 bg-transparent"
                   />
                 </div>
@@ -8509,7 +8511,7 @@ function SpeakEnglishClient() {
             <FreeStudyPageFiveBottomBar
               onFollowPractice={() => readSelectedReferenceResult(1)}
               onNextChinese={openFreeStudyStepTwoForNextChinese}
-              onSlowPlayback={() => readSelectedReferenceResult(0.5)}
+              onSlowPlayback={() => readSelectedReferenceResult(SLOW_READ_RATE)}
             />
           ) : null}
 
@@ -10905,7 +10907,7 @@ function SpeakEnglishClient() {
               <button
                 type="button"
                 aria-label="慢速朗读"
-                onClick={() => readStandardEnglish(0.5)}
+                onClick={() => readStandardEnglish(SLOW_READ_RATE)}
                 disabled={isFreeConversationMode && isLoadingFreeConversation}
                 className="mr-auto flex h-10 min-w-[4.65rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-3 text-[0.88rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] transition disabled:opacity-50 min-[390px]:h-11 min-[390px]:min-w-[5.35rem] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[0.95rem]"
               >

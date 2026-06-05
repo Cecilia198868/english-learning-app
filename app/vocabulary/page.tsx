@@ -37,6 +37,8 @@ type LibrarySortMode = "alphabetical" | "newest" | "oldest";
 type LibrarySortDirection = "asc" | "desc";
 type LibraryStatusFilter = "all" | "learning" | "mastered" | "review" | "shadow";
 
+const SLOW_READ_RATE = 0.5;
+
 const EXPRESSION_MEANING_FALLBACKS: Record<string, string> = {
   "set up": "设立；开设；安排",
   "open a bank account": "开设银行账户",
@@ -1949,7 +1951,10 @@ export default function VocabularyPage() {
               className="sf-vocabulary-slow-action"
               disabled={!speechText}
               onClick={() =>
-                playCurrentExpressionText(speechText || displayedExpressionText, 0.5)
+                playCurrentExpressionText(
+                  speechText || displayedExpressionText,
+                  SLOW_READ_RATE
+                )
               }
             >
               <strong>0.5x</strong>
