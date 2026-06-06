@@ -6,6 +6,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import styles from "./AccountPageClient.module.css";
+import { playSpeakFlowTts, stopSpeakFlowTts } from "@/lib/speakFlowTtsClient";
+import {
+  SPEAKFLOW_DEFAULT_VOICE_ID,
+  SPEAKFLOW_VOICES,
+  getSavedSpeakFlowVoiceId,
+  saveSpeakFlowVoiceId,
+  type SpeakFlowVoiceId,
+} from "@/lib/voiceSettings";
 
 type AccountPageClientProps = {
   initialPanel?: string;
@@ -207,8 +215,6 @@ const helpSections = [
   },
 ];
 
-const selectedVoiceStorageKey = "speakflow-selected-voice-uri";
-
 function isDisplayFontSize(value: string | null): value is DisplayFontSize {
   return value === "small" || value === "standard" || value === "large";
 }
@@ -219,19 +225,6 @@ function isTextSizePanel(value: string) {
 
 function isAccountPanelId(value: string): value is AccountPanelId {
   return value in accountPanelTitles;
-}
-
-function isEnglishVoice(voice: SpeechSynthesisVoice) {
-  return voice.lang.toLowerCase().startsWith("en");
-}
-
-function pickPreferredEnglishVoice(voices: SpeechSynthesisVoice[]) {
-  return (
-    voices.find((voice) => /samantha|ava|alloy|jenny|aria/i.test(voice.name)) ||
-    voices.find((voice) => voice.lang.toLowerCase() === "en-us") ||
-    voices[0] ||
-    null
-  );
 }
 
 function formatRelativeNotificationTime(value: string) {
@@ -669,8 +662,9 @@ export default function AccountPageClient({
   const [referralNotice, setReferralNotice] = useState("");
   const [referralState, setReferralState] =
     useState<ReferralAccountState | null>(null);
-  const [selectedVoiceURI, setSelectedVoiceURI] = useState("");
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoiceId, setSelectedVoiceId] =
+    useState<SpeakFlowVoiceId>(SPEAKFLOW_DEFAULT_VOICE_ID);
+  const [voicePreferenceLoaded, setVoicePreferenceLoaded] = useState(false);
   const subscriptionCopy = useMemo(
     () => getSubscriptionCopy(subscription),
     [subscription]
@@ -827,40 +821,23 @@ export default function AccountPageClient({
   }, [activePanel, notifications]);
 
   useEffect(() => {
-    if (activePanel !== "voice" || typeof window === "undefined") return;
+    setSelectedVoiceId(getSavedSpeakFlowVoiceId());
+    setVoicePreferenceLoaded(true);
+  }, []);
 
-    function loadVoices() {
-      if (!window.speechSynthesis) return;
-
-      const englishVoices = window.speechSynthesis
-        .getVoices()
-        .filter(isEnglishVoice)
-        .sort((a, b) => a.name.localeCompare(b.name));
-      setVoices(englishVoices);
-      setSelectedVoiceURI((current) => {
-        const saved = window.localStorage.getItem(selectedVoiceStorageKey);
-        const preferred = pickPreferredEnglishVoice(englishVoices);
-        const nextValue = current || saved || preferred?.voiceURI || "";
-        return englishVoices.some((voice) => voice.voiceURI === nextValue)
-          ? nextValue
-          : preferred?.voiceURI || "";
-      });
-    }
-
-    loadVoices();
-    window.speechSynthesis?.addEventListener("voiceschanged", loadVoices);
+  useEffect(() => {
+    if (activePanel !== "voice") return;
 
     return () => {
-      window.speechSynthesis?.removeEventListener("voiceschanged", loadVoices);
-      window.speechSynthesis?.cancel();
+      stopSpeakFlowTts();
     };
   }, [activePanel]);
 
   useEffect(() => {
-    if (!selectedVoiceURI || typeof window === "undefined") return;
+    if (!voicePreferenceLoaded) return;
 
-    window.localStorage.setItem(selectedVoiceStorageKey, selectedVoiceURI);
-  }, [selectedVoiceURI]);
+    saveSpeakFlowVoiceId(selectedVoiceId);
+  }, [selectedVoiceId, voicePreferenceLoaded]);
 
   function closeProSuccessModal() {
     setIsProSuccessDismissed(true);
@@ -967,17 +944,12 @@ export default function AccountPageClient({
     }
   }
 
-  function previewVoice(voice: SpeechSynthesisVoice) {
-    if (typeof window === "undefined" || !window.speechSynthesis) return;
-
-    const utterance = new SpeechSynthesisUtterance(
-      "Hello, this is the SpeakFlow practice voice."
-    );
-    utterance.lang = voice.lang || "en-US";
-    utterance.rate = 0.92;
-    utterance.voice = voice;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+  function previewVoice(voiceId: SpeakFlowVoiceId) {
+    void playSpeakFlowTts({
+      rate: 0.92,
+      text: "Hello, this is the SpeakFlow practice voice.",
+      voiceId,
+    });
   }
 
   function requestAccountDeletion() {
@@ -1292,33 +1264,35 @@ export default function AccountPageClient({
           </section>
 
           <div className={styles.optionStack}>
-            {voices.length ? (
-              voices.map((voice) => (
+            {SPEAKFLOW_VOICES.map((voice) => (
                 <button
                   type="button"
                   className={styles.choiceRow}
-                  data-selected={selectedVoiceURI === voice.voiceURI}
-                  key={voice.voiceURI}
+                  data-selected={selectedVoiceId === voice.id}
+                  key={voice.id}
                   onClick={() => {
-                    setSelectedVoiceURI(voice.voiceURI);
-                    previewVoice(voice);
+                    setSelectedVoiceId(voice.id);
+                    previewVoice(voice.id);
                   }}
                 >
                   <span className={styles.choiceDot}>
-                    {selectedVoiceURI === voice.voiceURI ? <CheckIcon /> : null}
+                    {selectedVoiceId === voice.id ? <CheckIcon /> : null}
                   </span>
                   <span>
                     <strong>{voice.name}</strong>
-                    <small>{voice.lang}</small>
+                    <small>
+                      {voice.gender} · {voice.tone}
+                    </small>
                   </span>
+                  <em>{voice.description}</em>
                 </button>
-              ))
-            ) : (
+            ))}
+            {SPEAKFLOW_VOICES.length === 0 ? (
               <section className={styles.panelCard}>
                 <h3>没有读取到可用英文声音</h3>
                 <p>请检查浏览器或系统的语音服务，稍后重新进入这个页面。</p>
               </section>
-            )}
+            ) : null}
           </div>
         </div>
       ) : secondaryPanel === "interfaceLanguage" ? (

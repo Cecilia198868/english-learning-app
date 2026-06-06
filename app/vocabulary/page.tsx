@@ -24,6 +24,13 @@ import {
   updateVocabularyWord,
   type VocabularyWord,
 } from "@/lib/vocabulary";
+import { playSpeakFlowTts, stopSpeakFlowTts } from "@/lib/speakFlowTtsClient";
+import {
+  SPEAKFLOW_DEFAULT_VOICE_ID,
+  getSavedSpeakFlowVoiceId,
+  saveSpeakFlowVoiceId,
+  type SpeakFlowVoiceId,
+} from "@/lib/voiceSettings";
 import styles from "./VocabularyPage.module.css";
 
 type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
@@ -273,7 +280,7 @@ function getVocabularyUpdatePayload(
 
 function cancelSpeech() {
   if (typeof window === "undefined") return;
-  window.speechSynthesis.cancel();
+  stopSpeakFlowTts();
 }
 
 function navigateTo(target: string, options: { replace?: boolean } = {}) {
@@ -741,6 +748,9 @@ export default function VocabularyPage() {
     useState<VocabularyWord | null>(null);
   const [showLearningResultsModal, setShowLearningResultsModal] =
     useState(false);
+  const [selectedVoiceId, setSelectedVoiceId] =
+    useState<SpeakFlowVoiceId>(SPEAKFLOW_DEFAULT_VOICE_ID);
+  const [voicePreferenceLoaded, setVoicePreferenceLoaded] = useState(false);
 
   const refreshExpressionLearningUsageCount = useCallback(() => {
     setExpressionLearningUsageCount(getExpressionLearningUsageCount());
@@ -749,6 +759,17 @@ export default function VocabularyPage() {
   useEffect(() => {
     refreshExpressionLearningUsageCount();
   }, [refreshExpressionLearningUsageCount]);
+
+  useEffect(() => {
+    setSelectedVoiceId(getSavedSpeakFlowVoiceId());
+    setVoicePreferenceLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!voicePreferenceLoaded) return;
+
+    saveSpeakFlowVoiceId(selectedVoiceId);
+  }, [selectedVoiceId, voicePreferenceLoaded]);
 
   useEffect(() => {
     const loadTimer = window.setTimeout(() => {
@@ -1220,11 +1241,11 @@ export default function VocabularyPage() {
     const normalizedText = text.trim();
     if (!normalizedText || typeof window === "undefined") return;
 
-    const utterance = new SpeechSynthesisUtterance(normalizedText);
-    utterance.lang = "en-US";
-    utterance.rate = rate;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    void playSpeakFlowTts({
+      rate,
+      text: normalizedText,
+      voiceId: selectedVoiceId,
+    });
   }
 
   function playCurrentExpressionText(text: string, rate = 1) {

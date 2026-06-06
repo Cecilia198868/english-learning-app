@@ -29,6 +29,14 @@ import {
   tokenizeEnglishSentence,
   updateVocabularyWord,
 } from "@/lib/vocabulary";
+import { playSpeakFlowTts, stopSpeakFlowTts } from "@/lib/speakFlowTtsClient";
+import {
+  SPEAKFLOW_DEFAULT_VOICE_ID,
+  SPEAKFLOW_VOICES,
+  getSavedSpeakFlowVoiceId,
+  saveSpeakFlowVoiceId,
+  type SpeakFlowVoiceId,
+} from "@/lib/voiceSettings";
 import { featuredLessonRecords } from "@/data/featuredCourses";
 import {
   createFallbackHighlightedExpressions,
@@ -285,7 +293,6 @@ type HelpCenterSection = {
 const accountAvatarStoragePrefix = "speakflow-account-avatar";
 const fontSizePreferenceStorageKey = "speakflow-font-size-preference";
 const freeStudyRouteStateStorageKey = "speakflow-free-study-route-state";
-const selectedVoiceStorageKey = "speakflow-selected-voice-uri";
 const speechSilenceDelayMs = 2000;
 const englishSpeechSilenceDelayMs = 2000;
 const speechNoInputTimeoutMs = 12000;
@@ -2955,31 +2962,6 @@ function createFallbackExpressionVariants(standardEnglish: string) {
   }));
 }
 
-const distortedVoiceNamePattern =
-  /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|fred|good news|hysterical|jester|organ|princess|superstar|trinoids|whisper|zarvox/i;
-
-function isEnglishVoice(voice: SpeechSynthesisVoice) {
-  return voice.lang.toLowerCase().startsWith("en");
-}
-
-function isStableSpeechVoice(voice: SpeechSynthesisVoice) {
-  return isEnglishVoice(voice) && !distortedVoiceNamePattern.test(voice.name);
-}
-
-function pickPreferredEnglishVoice(voices: SpeechSynthesisVoice[]) {
-  const candidates = voices.filter(isStableSpeechVoice);
-
-  return (
-    candidates.find((voice) => /samantha/i.test(voice.name)) ||
-    candidates.find((voice) => /google us english/i.test(voice.name)) ||
-    candidates.find((voice) => /microsoft.*(jenny|aria|zira|guy|david)/i.test(voice.name)) ||
-    candidates.find((voice) => /english.*united states|en-US/i.test(`${voice.name} ${voice.lang}`)) ||
-    candidates.find((voice) => voice.localService) ||
-    candidates[0] ||
-    null
-  );
-}
-
 function normalizeSpeechRate(rate: number) {
   return Math.min(Math.max(rate, 0.5), 1.15);
 }
@@ -3218,10 +3200,9 @@ function SpeakEnglishClient() {
   const [selectedClassicCourseSectionId, setSelectedClassicCourseSectionId] =
     useState("");
   const [classicCourseSearchQuery, setClassicCourseSearchQuery] = useState("");
-  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>(
-    []
-  );
-  const [selectedVoiceURI, setSelectedVoiceURI] = useState("");
+  const [selectedVoiceId, setSelectedVoiceId] =
+    useState<SpeakFlowVoiceId>(SPEAKFLOW_DEFAULT_VOICE_ID);
+  const [voicePreferenceLoaded, setVoicePreferenceLoaded] = useState(false);
   const [showEmojiPanel, setShowEmojiPanel] = useState(false);
   const [showPreviewKeyboard, setShowPreviewKeyboard] = useState(true);
   const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
@@ -3686,58 +3667,15 @@ function SpeakEnglishClient() {
   }, [renderedInputValue]);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !window.speechSynthesis) return;
-
-    function loadVoices() {
-      const voices = window.speechSynthesis.getVoices();
-      const englishVoices = voices.filter(isEnglishVoice);
-      const sortedVoices = (englishVoices.length ? englishVoices : voices).sort(
-        (a, b) => a.name.localeCompare(b.name)
-      );
-      const preferredVoice = pickPreferredEnglishVoice(sortedVoices);
-
-      setAvailableVoices(sortedVoices);
-      setSelectedVoiceURI((current) => {
-        const savedVoiceURI = window.localStorage.getItem(selectedVoiceStorageKey);
-
-        if (
-          current &&
-          sortedVoices.some(
-            (voice) =>
-              voice.voiceURI === current && !distortedVoiceNamePattern.test(voice.name)
-          )
-        ) {
-          return current;
-        }
-
-        if (
-          savedVoiceURI &&
-          sortedVoices.some(
-            (voice) =>
-              voice.voiceURI === savedVoiceURI &&
-              !distortedVoiceNamePattern.test(voice.name)
-          )
-        ) {
-          return savedVoiceURI;
-        }
-
-        return preferredVoice?.voiceURI || "";
-      });
-    }
-
-    loadVoices();
-    window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
-
-    return () => {
-      window.speechSynthesis.removeEventListener("voiceschanged", loadVoices);
-    };
+    setSelectedVoiceId(getSavedSpeakFlowVoiceId());
+    setVoicePreferenceLoaded(true);
   }, []);
 
   useEffect(() => {
-    if (!selectedVoiceURI || typeof window === "undefined") return;
+    if (!voicePreferenceLoaded) return;
 
-    window.localStorage.setItem(selectedVoiceStorageKey, selectedVoiceURI);
-  }, [selectedVoiceURI]);
+    saveSpeakFlowVoiceId(selectedVoiceId);
+  }, [selectedVoiceId, voicePreferenceLoaded]);
 
   useEffect(() => {
     let cancelled = false;
@@ -5861,20 +5799,11 @@ function SpeakEnglishClient() {
   function speakEnglishText(text: string, rate: number) {
     if (!text || typeof window === "undefined") return;
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-US";
-    utterance.rate = normalizeSpeechRate(rate);
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    const selectedVoice = availableVoices.find(
-      (voice) =>
-        voice.voiceURI === selectedVoiceURI && isStableSpeechVoice(voice)
-    );
-    utterance.voice =
-      selectedVoice || pickPreferredEnglishVoice(availableVoices) || null;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    void playSpeakFlowTts({
+      rate: normalizeSpeechRate(rate),
+      text,
+      voiceId: selectedVoiceId,
+    });
   }
 
   function readStandardEnglish(rate: number) {
@@ -5922,7 +5851,7 @@ function SpeakEnglishClient() {
     const phrase = getSelectedReferenceResultText().trim();
     if (!phrase) return;
 
-    window.speechSynthesis?.cancel();
+    stopSpeakFlowTts();
     const result = addVocabularyWord(phrase, nativeSpeech);
 
     if (!result.ok) {
@@ -6001,20 +5930,14 @@ function SpeakEnglishClient() {
     );
   }
 
-  function previewVoice(voice: SpeechSynthesisVoice) {
+  function previewVoice(voiceId: SpeakFlowVoiceId) {
     if (typeof window === "undefined") return;
 
-    const utterance = new SpeechSynthesisUtterance(
-      "This is your SpeakFlow voice."
-    );
-    utterance.lang = voice.lang || "en-US";
-    utterance.voice = voice;
-    utterance.rate = 1;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    void playSpeakFlowTts({
+      rate: 1,
+      text: "This is your SpeakFlow voice.",
+      voiceId,
+    });
   }
 
   function handleExpressionClick(
@@ -6024,7 +5947,7 @@ function SpeakEnglishClient() {
     const phrase = expression.phrase.trim();
     if (!phrase) return;
 
-    window.speechSynthesis?.cancel();
+    stopSpeakFlowTts();
     setVocabularyNotice("");
     setPendingExpression({
       phrase,
@@ -6038,7 +5961,7 @@ function SpeakEnglishClient() {
     const phrase = word.trim();
     if (!phrase) return;
 
-    window.speechSynthesis?.cancel();
+    stopSpeakFlowTts();
     setVocabularyNotice("");
     setPendingExpression({
       phrase,
@@ -9699,24 +9622,23 @@ function SpeakEnglishClient() {
                     </div>
 
                     <div className="mt-4 grid gap-2">
-                      {availableVoices.length ? (
-                        availableVoices.map((voice) => (
+                      {SPEAKFLOW_VOICES.map((voice) => (
                           <button
-                            key={voice.voiceURI}
+                            key={voice.id}
                             type="button"
                             onClick={() => {
-                              setSelectedVoiceURI(voice.voiceURI);
-                              previewVoice(voice);
+                              setSelectedVoiceId(voice.id);
+                              previewVoice(voice.id);
                             }}
                             className={`flex min-h-[4.4rem] w-full items-center gap-3 rounded-[20px] px-4 py-3 text-left transition ${
-                              selectedVoiceURI === voice.voiceURI
+                              selectedVoiceId === voice.id
                                 ? "border-2 border-[#8b67ff] bg-white/86 shadow-[0_18px_44px_rgba(126,92,255,0.14)]"
                                 : "border border-[#e8e2ff] bg-white/66 shadow-[0_12px_30px_rgba(84,72,146,0.08)]"
                             }`}
                           >
                             <span
                               className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-[0.9rem] font-extrabold ${
-                                selectedVoiceURI === voice.voiceURI
+                                selectedVoiceId === voice.id
                                   ? "bg-[linear-gradient(135deg,#7a5cff_0%,#c85cff_100%)] text-white"
                                   : "border-2 border-[#c7bddf] text-transparent"
                               }`}
@@ -9728,16 +9650,19 @@ function SpeakEnglishClient() {
                                 {voice.name}
                               </span>
                               <span className="mt-1 block text-[0.82rem] font-bold text-[#7f7896]">
-                                {voice.lang}
+                                {voice.gender} · {voice.tone}
+                              </span>
+                              <span className="mt-1 inline-flex rounded-full bg-[#f0ebff] px-2.5 py-1 text-[0.72rem] font-extrabold text-[#7460e8]">
+                                {voice.description}
                               </span>
                             </span>
                           </button>
-                        ))
-                      ) : (
+                      ))}
+                      {SPEAKFLOW_VOICES.length === 0 ? (
                         <p className="rounded-[20px] bg-white/72 px-4 py-5 text-center text-[1rem] font-bold text-[#7f7896] ring-1 ring-white/85">
                           {language === "en" ? "Loading voices..." : "正在加载声音…"}
                         </p>
-                      )}
+                      ) : null}
                     </div>
                   </section>
                 ) : accountPanelView === "account" ? (
