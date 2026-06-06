@@ -5391,3 +5391,1327 @@
     color: var(--text-secondary);
   }
 }
+
+.classicPhone.studyPhone.studyPhoneIdle,
+.classicPhone.studyPhone.studyPhoneRecording {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding: calc(8px + env(safe-area-inset-top)) 0 0;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255, 255, 255, 0.98), transparent 34%),
+    radial-gradient(circle at 22% 38%, rgba(242, 247, 233, 0.62), transparent 28%),
+    linear-gradient(180deg, #fffefa 0%, #fffdf8 48%, #fbf8f0 100%);
+  color: #183d20;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .studyTopbar,
+.classicPhone.studyPhone.studyPhoneRecording .studyTopbar {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) 76px;
+  min-height: 96px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px 8px;
+  border: 1px solid rgba(50, 68, 41, 0.1);
+  border-radius: 0 0 12px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    0 9px 24px rgba(78, 70, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .homeIconBox,
+.classicPhone.studyPhone.studyPhoneRecording .homeIconBox {
+  width: 64px;
+  min-height: 64px;
+  border-radius: 999px;
+  color: #2b6a32;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .homeIconBox svg,
+.classicPhone.studyPhone.studyPhoneRecording .homeIconBox svg {
+  width: 28px;
+  height: 28px;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .brand,
+.classicPhone.studyPhone.studyPhoneRecording .brand {
+  gap: 9px;
+  padding-top: 0;
+  color: #193f20;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .brandIcon,
+.classicPhone.studyPhone.studyPhoneRecording .brandIcon {
+  width: 46px;
+  height: 46px;
+  color: #4a8a55;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .brandTitle,
+.classicPhone.studyPhone.studyPhoneRecording .brandTitle {
+  color: #17391f;
+  font-size: clamp(1.7rem, 7vw, 2rem);
+  letter-spacing: 0;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .brandSubtitle,
+.classicPhone.studyPhone.studyPhoneRecording .brandSubtitle {
+  margin-top: 5px;
+  color: #65845f;
+  font-size: clamp(0.66rem, 2.7vw, 0.78rem);
+  letter-spacing: 0.16em;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .switchCourseButton,
+.classicPhone.studyPhone.studyPhoneRecording .switchCourseButton {
+  width: 64px;
+  min-height: 64px;
+  border-radius: 999px;
+  color: #0f1532;
+  padding: 0;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .studyTopicBar,
+.classicPhone.studyPhone.studyPhoneRecording .studyTopicBar {
+  grid-template-columns: 72px minmax(0, auto);
+  justify-content: center;
+  column-gap: 14px;
+  padding: 14px 16px 4px;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .studyTopicBar .topicIcon,
+.classicPhone.studyPhone.studyPhoneIdle .studyTopicBar .topicIcon svg,
+.classicPhone.studyPhone.studyPhoneRecording .studyTopicBar .topicIcon,
+.classicPhone.studyPhone.studyPhoneRecording .studyTopicBar .topicIcon svg {
+  width: 70px;
+  height: 70px;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .categorySwitchRow,
+.classicPhone.studyPhone.studyPhoneRecording .categorySwitchRow {
+  display: none;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .topicTitleRow,
+.classicPhone.studyPhone.studyPhoneRecording .topicTitleRow {
+  display: grid;
+  grid-template-columns: minmax(0, auto) 30px;
+  justify-content: start;
+  gap: 7px;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .topicTitle,
+.classicPhone.studyPhone.studyPhoneRecording .topicTitle {
+  color: #17391f;
+  font-size: clamp(1.52rem, 6.4vw, 1.86rem);
+  line-height: 1.04;
+  white-space: nowrap;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .lessonArrowButton:first-of-type,
+.classicPhone.studyPhone.studyPhoneRecording .lessonArrowButton:first-of-type {
+  display: none;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .lessonArrowButton:last-of-type,
+.classicPhone.studyPhone.studyPhoneRecording .lessonArrowButton:last-of-type {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  color: #d58b45;
+  box-shadow: none;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .topicProgress,
+.classicPhone.studyPhone.studyPhoneRecording .topicProgress {
+  color: #2e5f30;
+  font-size: clamp(1.02rem, 4vw, 1.16rem);
+  font-weight: 800;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .progressRow,
+.classicPhone.studyPhone.studyPhoneRecording .progressRow {
+  grid-template-columns: minmax(0, 122px) auto;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .progressTrack,
+.classicPhone.studyPhone.studyPhoneRecording .progressTrack {
+  height: 7px;
+  background: #dbe3d3;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .progressTrack span,
+.classicPhone.studyPhone.studyPhoneRecording .progressTrack span {
+  background: #b8bdf7;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .dialogCard,
+.classicPhone.studyPhone.studyPhoneRecording .dialogCard {
+  display: flex;
+  min-height: calc(100dvh - 204px);
+  flex-direction: column;
+  margin: 5px 0 0;
+  padding: 26px 28px calc(18px + env(safe-area-inset-bottom));
+  border-color: rgba(52, 77, 43, 0.11);
+  border-radius: 24px 24px 0 0;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(243, 248, 235, 0.56), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 253, 0.97));
+  box-shadow:
+    0 -4px 20px rgba(67, 80, 49, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+}
+
+.classicPhone.studyPhone.studyPhoneIdle > .practiceControls,
+.classicPhone.studyPhone.studyPhoneRecording > .practiceControls,
+.classicPhone.studyPhone.studyPhoneIdle > .micHint,
+.classicPhone.studyPhone.studyPhoneRecording > .micHint,
+.classicPhone.studyPhone.studyPhoneIdle > .methodCard,
+.classicPhone.studyPhone.studyPhoneRecording > .methodCard,
+.classicPhone.studyPhone.studyPhoneIdle > .tipCard,
+.classicPhone.studyPhone.studyPhoneRecording > .tipCard {
+  display: none;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .speakerLine,
+.classicPhone.studyPhone.studyPhoneRecording .speakerLine {
+  gap: 14px;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .speakerAvatar,
+.classicPhone.studyPhone.studyPhoneIdle .speakerAvatar svg,
+.classicPhone.studyPhone.studyPhoneRecording .speakerAvatar,
+.classicPhone.studyPhone.studyPhoneRecording .speakerAvatar svg {
+  width: 70px;
+  height: 70px;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .roleBadge,
+.classicPhone.studyPhone.studyPhoneRecording .roleBadge {
+  min-height: 42px;
+  padding: 0 20px;
+  border: 1px solid rgba(72, 115, 67, 0.1);
+  color: #2b7136;
+  font-size: 1.08rem;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .speechBubble,
+.classicPhone.studyPhone.studyPhoneRecording .speechBubble {
+  display: grid;
+  min-height: 194px;
+  margin-top: 22px;
+  place-items: center;
+  padding: 34px 32px;
+  border-color: rgba(55, 83, 45, 0.1);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(224, 236, 211, 0.44), transparent 30%),
+    linear-gradient(180deg, #fffef8, #fbfcf6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98);
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .speechBubble::after,
+.classicPhone.studyPhone.studyPhoneRecording .speechBubble::after,
+.classicPhone.studyPhone.studyPhoneIdle .sceneIllustration,
+.classicPhone.studyPhone.studyPhoneRecording .sceneIllustration,
+.classicPhone.studyPhone.studyPhoneIdle .promptHint,
+.classicPhone.studyPhone.studyPhoneRecording .promptHint,
+.classicPhone.studyPhone.studyPhoneIdle .quoteEnd,
+.classicPhone.studyPhone.studyPhoneRecording .quoteEnd,
+.classicPhone.studyPhone.studyPhoneIdle .bubbleSubtitle,
+.classicPhone.studyPhone.studyPhoneRecording .bubbleSubtitle {
+  display: none;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .quoteStart,
+.classicPhone.studyPhone.studyPhoneRecording .quoteStart {
+  left: 28px;
+  top: 12px;
+  color: rgba(109, 151, 89, 0.18);
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .chinesePrompt,
+.classicPhone.studyPhone.studyPhoneRecording .chinesePrompt {
+  color: #194321;
+  font-size: clamp(2rem, 7.5vw, 2.36rem);
+  font-weight: 900 !important;
+  line-height: 1.18;
+  text-align: center;
+}
+
+.recordingArea {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 214px;
+  margin-top: 30px;
+}
+
+.classicPhone.studyPhone.studyPhoneIdle .recordingArea {
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea {
+  justify-content: end;
+  min-height: 286px;
+  margin-top: 22px;
+}
+
+.recordingArea .practiceControls {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0;
+}
+
+.recordingArea .micButton {
+  width: 120px;
+  height: 120px;
+  border: 9px solid rgba(238, 243, 230, 0.96);
+  background:
+    radial-gradient(circle at 36% 22%, rgba(255, 255, 255, 0.28), transparent 28%),
+    linear-gradient(145deg, #78a879 0%, #3f7849 100%);
+  color: #ffffff;
+  box-shadow:
+    0 18px 40px rgba(64, 106, 66, 0.26),
+    0 0 0 18px rgba(234, 240, 226, 0.66),
+    inset 0 2px 0 rgba(255, 255, 255, 0.26);
+}
+
+.recordingArea .micButton svg {
+  width: 58px;
+  height: 58px;
+  stroke-width: 6.6;
+}
+
+.recordingArea .micPulseOne {
+  inset: -18px;
+  border-color: rgba(89, 128, 73, 0.1);
+}
+
+.recordingArea .micPulseTwo {
+  inset: -34px;
+  border-color: rgba(89, 128, 73, 0.08);
+}
+
+.recordingArea .sentenceButton,
+.recordingWave {
+  display: none;
+}
+
+.recordingArea .micHint {
+  display: flex;
+  min-height: 28px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 18px 0 0;
+  color: #2f6f38;
+  font-size: clamp(1.06rem, 4.5vw, 1.2rem);
+  font-weight: 900 !important;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.recordingArea .micHint strong {
+  color: #1e5b29;
+  font-size: clamp(1.18rem, 5vw, 1.36rem);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.recordingArea .micHint span {
+  color: rgba(35, 45, 35, 0.58);
+  font-size: clamp(0.9rem, 3.7vw, 1.02rem);
+  font-weight: 800;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .practiceControls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 126px minmax(0, 1fr);
+  grid-template-areas:
+    ". mic ."
+    "prev . next";
+  row-gap: 34px;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .micButton {
+  grid-area: mic;
+  justify-self: center;
+  width: 126px;
+  height: 126px;
+  box-shadow:
+    0 18px 42px rgba(64, 106, 66, 0.3),
+    0 0 0 18px rgba(234, 240, 226, 0.62),
+    0 0 0 39px rgba(234, 240, 226, 0.42),
+    inset 0 2px 0 rgba(255, 255, 255, 0.26);
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .sentenceButton {
+  display: inline-flex;
+  width: min(100%, 156px);
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid rgba(116, 139, 99, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #3f7948;
+  padding: 0 18px;
+  box-shadow:
+    0 13px 26px rgba(64, 82, 48, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .sentenceButton:first-child {
+  grid-area: prev;
+  justify-self: start;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .sentenceButton:last-child {
+  grid-area: next;
+  justify-self: end;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .sentenceButton span {
+  color: inherit;
+  font-size: 1.12rem;
+  font-weight: 900;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .sentenceButton svg {
+  width: 25px;
+  height: 25px;
+  stroke-width: 3.3;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingWave {
+  position: absolute;
+  top: 25px;
+  z-index: 0;
+  display: inline-flex;
+  width: 116px;
+  height: 76px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  pointer-events: none;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingWaveLeft {
+  right: calc(50% + 74px);
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingWaveRight {
+  left: calc(50% + 74px);
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingWave i {
+  display: block;
+  width: 8px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(160, 190, 128, 0.22), rgba(118, 162, 91, 0.76));
+  animation: classicRecordingWave 1.15s ease-in-out infinite;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingWave i:nth-child(1),
+.classicPhone.studyPhone.studyPhoneRecording .recordingWave i:nth-child(5) {
+  height: 34px;
+  opacity: 0.42;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingWave i:nth-child(2),
+.classicPhone.studyPhone.studyPhoneRecording .recordingWave i:nth-child(4) {
+  height: 54px;
+  animation-delay: 0.12s;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingWave i:nth-child(3) {
+  height: 72px;
+  animation-delay: 0.24s;
+}
+
+.recordingSentenceNav {
+  display: none;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .practiceControls {
+  display: flex;
+  min-height: 126px;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingArea .practiceControls .sentenceButton {
+  display: none;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingSentenceNav {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin-top: 30px;
+}
+
+.classicPhone.studyPhone.studyPhoneRecording .recordingSentenceNav .sentenceButton {
+  display: inline-flex;
+  min-width: 0;
+  flex: 1 1 0;
+}
+
+@keyframes classicRecordingWave {
+  0%,
+  100% {
+    transform: scaleY(0.72);
+    opacity: 0.48;
+  }
+
+  50% {
+    transform: scaleY(1);
+    opacity: 0.95;
+  }
+}
+
+@media (max-width: 410px) {
+  .classicPhone.studyPhone.studyPhoneIdle .studyTopbar,
+  .classicPhone.studyPhone.studyPhoneRecording .studyTopbar {
+    grid-template-columns: 54px minmax(0, 1fr) 54px;
+    min-height: 86px;
+    gap: 5px;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .homeIconBox,
+  .classicPhone.studyPhone.studyPhoneRecording .homeIconBox,
+  .classicPhone.studyPhone.studyPhoneIdle .switchCourseButton,
+  .classicPhone.studyPhone.studyPhoneRecording .switchCourseButton {
+    width: 50px;
+    min-height: 50px;
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .brandIcon,
+  .classicPhone.studyPhone.studyPhoneRecording .brandIcon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .brand,
+  .classicPhone.studyPhone.studyPhoneRecording .brand {
+    gap: 6px;
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .brandTitle,
+  .classicPhone.studyPhone.studyPhoneRecording .brandTitle {
+    font-size: clamp(1.26rem, 5.8vw, 1.46rem);
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .brandSubtitle,
+  .classicPhone.studyPhone.studyPhoneRecording .brandSubtitle {
+    margin-top: 3px;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .switchCourseButton,
+  .classicPhone.studyPhone.studyPhoneRecording .switchCourseButton {
+    font-size: 1.45rem;
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar,
+  .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar {
+    grid-template-columns: 58px minmax(0, auto);
+    column-gap: 10px;
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar .topicIcon,
+  .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar .topicIcon svg,
+  .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar .topicIcon,
+  .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar .topicIcon svg {
+    width: 56px;
+    height: 56px;
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .dialogCard,
+  .classicPhone.studyPhone.studyPhoneRecording .dialogCard {
+    min-height: calc(100dvh - 176px);
+    padding: 22px 18px calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .classicPhone.studyPhone.studyPhoneIdle .speechBubble,
+  .classicPhone.studyPhone.studyPhoneRecording .speechBubble {
+    min-height: 176px;
+    padding-right: 22px;
+    padding-left: 22px;
+  }
+
+  .classicPhone.studyPhone.studyPhoneRecording .recordingArea .sentenceButton {
+    width: 138px;
+    min-height: 54px;
+    padding: 0 12px;
+  }
+
+  .classicPhone.studyPhone.studyPhoneRecording .recordingWaveLeft {
+    right: calc(50% + 66px);
+  }
+
+  .classicPhone.studyPhone.studyPhoneRecording .recordingWaveRight {
+    left: calc(50% + 66px);
+  }
+}
+
+/* Updated classic-scene result header. */
+.classicPhone.resultPhone.studyPhone {
+  width: 100%;
+  max-width: 430px;
+  padding: calc(8px + env(safe-area-inset-top)) 14px calc(6px + env(safe-area-inset-bottom));
+}
+
+.classicPhone.resultPhone.studyPhone .studyTopbar {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr) 78px;
+  min-height: 104px;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -2px;
+  padding: 0 16px;
+  border: 1px solid rgba(55, 70, 44, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 10px 24px rgba(70, 76, 53, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.classicPhone.resultPhone.studyPhone .homeShortcut {
+  justify-self: start;
+}
+
+.classicPhone.resultPhone.studyPhone .homeIconBox,
+.classicPhone.resultPhone.studyPhone .switchCourseButton {
+  width: 68px;
+  min-height: 68px;
+  place-items: center;
+  border: 1px solid rgba(35, 70, 32, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #163f21;
+  padding: 0;
+  box-shadow:
+    0 13px 28px rgba(58, 82, 45, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.classicPhone.resultPhone.studyPhone .homeIconBox svg {
+  width: 31px;
+  height: 31px;
+  stroke-width: 3.2;
+}
+
+.classicPhone.resultPhone.studyPhone .switchCourseButton {
+  justify-self: end;
+  color: #11142f;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.classicPhone.resultPhone.studyPhone .brand {
+  gap: 12px;
+  justify-content: center;
+  padding-top: 0;
+}
+
+.classicPhone.resultPhone.studyPhone .brandIcon {
+  width: 48px;
+  height: 48px;
+  color: #4b8150;
+}
+
+.classicPhone.resultPhone.studyPhone .brandTitle {
+  color: #17371f;
+  font-size: clamp(1.82rem, 7.8vw, 2.24rem);
+  font-weight: 900;
+  line-height: 0.98;
+}
+
+.classicPhone.resultPhone.studyPhone .brandSubtitle {
+  margin-top: 6px;
+  color: #66805f;
+  font-size: clamp(0.76rem, 3.1vw, 0.94rem);
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  line-height: 1;
+}
+
+.classicPhone.resultPhone.studyPhone .studyTopicBar {
+  display: grid;
+  grid-template-columns: 82px minmax(0, auto);
+  justify-content: center;
+  column-gap: 18px;
+  min-height: 168px;
+  margin: 0 -14px;
+  padding: 22px 28px 18px;
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.9), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 252, 0.92), rgba(248, 250, 241, 0.78));
+  box-shadow: none;
+}
+
+.classicPhone.resultPhone.studyPhone .studyTopicBar .topicIcon,
+.classicPhone.resultPhone.studyPhone .studyTopicBar .topicIcon svg {
+  width: 80px;
+  height: 80px;
+}
+
+.classicPhone.resultPhone.studyPhone .studyTopicBar .topicIcon {
+  color: #91ad86;
+}
+
+.classicPhone.resultPhone.studyPhone .categorySwitchRow {
+  display: none;
+}
+
+.classicPhone.resultPhone.studyPhone .topicTitleRow {
+  display: grid;
+  grid-template-columns: minmax(0, auto) 36px;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+
+.classicPhone.resultPhone.studyPhone .lessonArrowButton:first-of-type {
+  display: none;
+}
+
+.classicPhone.resultPhone.studyPhone .lessonArrowButton:last-of-type {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: transparent;
+  color: #d89251;
+  box-shadow: none;
+}
+
+.classicPhone.resultPhone.studyPhone .lessonArrowButton:last-of-type svg {
+  width: 29px;
+  height: 29px;
+  stroke-width: 3.4;
+}
+
+.classicPhone.resultPhone.studyPhone .studyTopicBar .topicTitle {
+  color: #16371e;
+  font-size: clamp(1.72rem, 7.2vw, 2.06rem);
+  line-height: 1.08;
+  white-space: nowrap;
+}
+
+.classicPhone.resultPhone.studyPhone .studyTopicBar .topicProgress {
+  color: #315b30;
+  font-size: clamp(1rem, 4.2vw, 1.18rem);
+  font-weight: 760;
+}
+
+.classicPhone.resultPhone.studyPhone .progressRow {
+  grid-template-columns: minmax(0, 174px) auto;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.classicPhone.resultPhone.studyPhone .progressTrack {
+  height: 8px;
+  background: #dce4d5;
+}
+
+.classicPhone.resultPhone.studyPhone .progressTrack span {
+  background: #c8cbf3;
+}
+
+.classicPhone.resultPhone.studyPhone .progressPercent {
+  color: #207331;
+  font-size: clamp(0.88rem, 3.6vw, 1rem);
+  font-weight: 900;
+}
+
+.classicHelpBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(23, 31, 24, 0.36);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+}
+
+.classicHelpDialog {
+  width: min(100%, 380px);
+  border: 1px solid rgba(112, 145, 96, 0.18);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(226, 238, 214, 0.7), transparent 30%),
+    linear-gradient(180deg, #ffffff, #fffdf8);
+  padding: 22px;
+  color: #16371e;
+  box-shadow:
+    0 26px 80px rgba(31, 46, 31, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.classicHelpHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.classicHelpHeader p {
+  margin: 0 0 5px;
+  color: #6a8a61;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.classicHelpHeader h2 {
+  margin: 0;
+  color: #16371e;
+  font-size: 1.7rem;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.classicHelpClose {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(83, 116, 71, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  color: #182319;
+  font-size: 1.7rem;
+  font-weight: 500;
+  line-height: 1;
+  box-shadow: 0 10px 22px rgba(58, 82, 45, 0.1);
+}
+
+.classicHelpSteps {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.classicHelpSteps article {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: center;
+  border: 1px solid rgba(112, 145, 96, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
+  padding: 12px;
+}
+
+.classicHelpSteps strong {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 999px;
+  background: #edf4e7;
+  color: #4d834f;
+  font-size: 1.08rem;
+  font-weight: 900;
+}
+
+.classicHelpSteps span {
+  color: #16371e;
+  font-size: 1.04rem;
+  font-weight: 900;
+}
+
+.classicHelpSteps small {
+  grid-column: 2;
+  color: #60745b;
+  font-size: 0.82rem;
+  font-weight: 720;
+  line-height: 1.45;
+}
+
+.classicHelpTip {
+  margin-top: 14px;
+  border-radius: 18px;
+  background: #f3f7ed;
+  padding: 14px 16px;
+}
+
+.classicHelpTip strong {
+  color: #285f2f;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.classicHelpTip p {
+  margin: 6px 0 0;
+  color: #536b4c;
+  font-size: 0.88rem;
+  font-weight: 760;
+  line-height: 1.5;
+}
+
+.classicHelpMenuButton {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 16px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7ca56f, #3f7a49);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+  box-shadow: 0 14px 28px rgba(63, 122, 73, 0.22);
+}
+
+@media (max-width: 410px) {
+  .classicPhone.resultPhone.studyPhone .studyTopbar {
+    grid-template-columns: 58px minmax(0, 1fr) 58px;
+    min-height: 88px;
+    gap: 6px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .classicPhone.resultPhone.studyPhone .homeIconBox,
+  .classicPhone.resultPhone.studyPhone .switchCourseButton {
+    width: 52px;
+    min-height: 52px;
+  }
+
+  .classicPhone.resultPhone.studyPhone .brand {
+    gap: 7px;
+  }
+
+  .classicPhone.resultPhone.studyPhone .brandIcon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .classicPhone.resultPhone.studyPhone .brandTitle {
+    font-size: clamp(1.35rem, 6.2vw, 1.58rem);
+  }
+
+  .classicPhone.resultPhone.studyPhone .brandSubtitle {
+    margin-top: 4px;
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+  }
+
+  .classicPhone.resultPhone.studyPhone .switchCourseButton {
+    font-size: 1.48rem;
+  }
+
+  .classicPhone.resultPhone.studyPhone .studyTopicBar {
+    grid-template-columns: 66px minmax(0, auto);
+    min-height: 136px;
+    column-gap: 12px;
+    padding-top: 18px;
+    padding-bottom: 14px;
+  }
+
+  .classicPhone.resultPhone.studyPhone .studyTopicBar .topicIcon,
+  .classicPhone.resultPhone.studyPhone .studyTopicBar .topicIcon svg {
+    width: 64px;
+    height: 64px;
+  }
+
+  .classicPhone.resultPhone.studyPhone .studyTopicBar .topicTitle {
+    font-size: clamp(1.38rem, 6.4vw, 1.62rem);
+  }
+
+  .classicPhone.resultPhone.studyPhone .progressRow {
+    grid-template-columns: minmax(0, 118px) auto;
+    gap: 10px;
+  }
+}
+
+.classicHelpBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 26px;
+  background: rgba(20, 23, 20, 0.52);
+  backdrop-filter: blur(10px);
+}
+
+.classicHelpDialog {
+  position: relative;
+  width: min(86vw, 760px);
+  max-height: calc(100dvh - 52px);
+  overflow-y: auto;
+  border: 1px solid rgba(72, 94, 64, 0.14);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(246, 250, 241, 0.96), transparent 30%),
+    radial-gradient(circle at 86% 72%, rgba(247, 250, 241, 0.76), transparent 32%),
+    linear-gradient(180deg, #ffffff 0%, #fffdf8 100%);
+  padding: 38px 48px 40px;
+  color: #1b241a;
+  box-shadow:
+    0 28px 80px rgba(17, 22, 17, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+}
+
+.classicHelpHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  text-align: center;
+}
+
+.classicHelpHeader h2 {
+  margin: 0;
+  color: #326837;
+  font-size: clamp(1.74rem, 3.2vw, 2.1rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.classicHelpClose {
+  position: absolute;
+  top: -12px;
+  right: -18px;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(28, 31, 27, 0.58);
+  font-size: 2.55rem;
+  font-weight: 360;
+  line-height: 1;
+  box-shadow: none;
+}
+
+.classicHelpSubtitle {
+  margin: 24px 0 0;
+  color: rgba(45, 47, 42, 0.72);
+  font-size: clamp(1rem, 2.3vw, 1.16rem);
+  font-weight: 620;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.classicHelpDivider {
+  margin: 24px 0 30px;
+  border-top: 2px dashed rgba(68, 76, 64, 0.18);
+}
+
+.classicHelpTimeline {
+  position: relative;
+  display: grid;
+  gap: 26px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.classicHelpTimeline::before {
+  content: "";
+  position: absolute;
+  top: 54px;
+  bottom: 54px;
+  left: 35px;
+  border-left: 2px dashed rgba(67, 89, 61, 0.16);
+}
+
+.classicHelpStep {
+  position: relative;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  column-gap: 26px;
+  align-items: start;
+}
+
+.classicHelpStepIcon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 70px;
+  height: 70px;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f0f5ea 0%, #e7efe2 100%);
+  color: #3d6d3d;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.classicHelpStepIcon svg {
+  width: 34px;
+  height: 34px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.2;
+}
+
+.classicHelpStepCopy {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.classicHelpStepTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.classicHelpStepTitleRow strong {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #6f8d63 0%, #477347 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1;
+  box-shadow: 0 4px 10px rgba(58, 98, 55, 0.18);
+}
+
+.classicHelpStepTitleRow h3 {
+  margin: 0;
+  color: #1d211c;
+  font-size: clamp(1.08rem, 2.5vw, 1.32rem);
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.classicHelpStepCopy > p {
+  margin: 10px 0 0;
+  color: rgba(42, 45, 41, 0.72);
+  font-size: clamp(0.92rem, 2vw, 1.02rem);
+  font-weight: 560;
+  line-height: 1.62;
+}
+
+.classicHelpStepHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-top: 12px !important;
+  border-radius: 10px;
+  background: rgba(235, 241, 228, 0.96);
+  padding: 7px 14px;
+  color: #356235 !important;
+  font-size: clamp(0.84rem, 1.8vw, 0.96rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+
+.classicHelpStepHint svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.2;
+}
+
+.classicHelpTip {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.94), transparent 32%),
+    linear-gradient(135deg, rgba(244, 249, 238, 0.95), rgba(250, 252, 246, 0.94));
+  padding: 22px 28px;
+}
+
+.classicHelpTipIcon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: #3f733e;
+}
+
+.classicHelpTipIcon svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.1;
+}
+
+.classicHelpTip strong {
+  color: #316b36;
+  font-size: 1.18rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.classicHelpTip ul {
+  margin: 10px 0 0;
+  padding-left: 19px;
+  color: #345b34;
+  font-size: clamp(0.92rem, 2vw, 1.02rem);
+  font-weight: 680;
+  line-height: 1.78;
+}
+
+.classicHelpMenuButton {
+  display: block;
+  width: min(100%, 372px);
+  min-height: 64px;
+  margin: 34px auto 0;
+  border: 1px solid rgba(46, 86, 44, 0.18);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6c925f 0%, #3f7544 100%);
+  color: #ffffff;
+  font-size: clamp(1.35rem, 2.8vw, 1.62rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  box-shadow:
+    0 16px 28px rgba(54, 102, 55, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+@media (max-width: 640px) {
+  .classicHelpBackdrop {
+    align-items: center;
+    padding: 18px;
+  }
+
+  .classicHelpDialog {
+    width: min(100%, 430px);
+    max-height: calc(100dvh - 36px);
+    border-radius: 26px;
+    padding: 28px 24px 30px;
+  }
+
+  .classicHelpClose {
+    top: -10px;
+    right: -10px;
+    width: 44px;
+    height: 44px;
+    font-size: 2.2rem;
+  }
+
+  .classicHelpSubtitle {
+    margin-top: 16px;
+  }
+
+  .classicHelpDivider {
+    margin: 18px 0 24px;
+  }
+
+  .classicHelpTimeline {
+    gap: 22px;
+  }
+
+  .classicHelpTimeline::before {
+    left: 28px;
+  }
+
+  .classicHelpStep {
+    grid-template-columns: 60px minmax(0, 1fr);
+    column-gap: 16px;
+  }
+
+  .classicHelpStepIcon {
+    width: 58px;
+    height: 58px;
+  }
+
+  .classicHelpStepIcon svg {
+    width: 29px;
+    height: 29px;
+  }
+
+  .classicHelpStepTitleRow {
+    gap: 10px;
+  }
+
+  .classicHelpStepTitleRow strong {
+    width: 27px;
+    height: 27px;
+    font-size: 0.9rem;
+  }
+
+  .classicHelpStepHint {
+    display: flex;
+    width: 100%;
+  }
+
+  .classicHelpTip {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 26px;
+    padding: 18px 18px;
+  }
+
+  .classicHelpMenuButton {
+    min-height: 58px;
+    margin-top: 26px;
+  }
+}
+
+@media (max-width: 380px) {
+  .classicHelpDialog {
+    padding: 24px 18px 26px;
+  }
+
+  .classicHelpStep {
+    grid-template-columns: 52px minmax(0, 1fr);
+    column-gap: 12px;
+  }
+
+  .classicHelpTimeline::before {
+    left: 25px;
+  }
+
+  .classicHelpStepIcon {
+    width: 52px;
+    height: 52px;
+  }
+}

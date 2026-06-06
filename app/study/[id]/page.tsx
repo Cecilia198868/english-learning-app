@@ -8,7 +8,6 @@ import AccountAvatarButton from "@/components/AccountAvatarButton";
 import ClassicRoleAvatarIcon from "@/components/ClassicRoleAvatarIcon";
 import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
 import FreeUsageMeter from "@/components/FreeUsageMeter";
-import HomeMenuIcon from "@/components/HomeMenuIcon";
 import PlayIcon from "@/components/PlayIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
@@ -50,7 +49,6 @@ import {
   recordFreePracticeCompletion,
 } from "@/lib/freePracticeLimit";
 import { createLoginUrl, subscriptionCallbackUrl } from "@/lib/loginRedirect";
-import ClassicStudyLoadingShell from "./ClassicStudyLoadingShell";
 import styles from "./ClassicStudyPage.module.css";
 
 type Lesson = {
@@ -717,6 +715,35 @@ function HeadphonesIcon() {
   );
 }
 
+type ClassicHelpStepIconType = "eye" | "mic" | "stop" | "feedback" | "next";
+
+function ClassicHelpStepIcon({ type }: { type: ClassicHelpStepIconType }) {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      {type === "eye" ? (
+        <>
+          <path d="M6 24s6.5-10 18-10 18 10 18 10-6.5 10-18 10S6 24 6 24Z" />
+          <circle cx="24" cy="24" r="5.5" />
+        </>
+      ) : type === "mic" ? (
+        <>
+          <rect x="18" y="7" width="12" height="23" rx="6" />
+          <path d="M12 23c0 7.4 5 12.5 12 12.5S36 30.4 36 23M24 35.5V42M17 42h14" />
+        </>
+      ) : type === "stop" ? (
+        <rect x="16" y="16" width="16" height="16" rx="3.5" />
+      ) : type === "feedback" ? (
+        <>
+          <rect x="14" y="11" width="20" height="27" rx="4" />
+          <path d="M19 9h10v7H19zM20 25l3 3 6-8M20 33h8" />
+        </>
+      ) : (
+        <path d="M10 24h26M26 14l10 10-10 10" />
+      )}
+    </svg>
+  );
+}
+
 function ResultVariantIcon({ variantKey }: { variantKey: ExpressionVariantKey }) {
   if (variantKey === "idiomatic") {
     return (
@@ -807,6 +834,7 @@ export default function StudyPage() {
   const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
     useState(false);
   const [showFollowReadModal, setShowFollowReadModal] = useState(false);
+  const [isClassicHelpOpen, setIsClassicHelpOpen] = useState(false);
   const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
     useState<SubscriptionStatus>("free");
   const [accountAccessKind, setAccountAccessKind] =
@@ -834,6 +862,10 @@ export default function StudyPage() {
     ? (`course:${lessonId}` as const)
     : "classic";
   const isAccountPro = hasProAccess(accountSubscriptionStatus);
+  const shouldRenderFreePracticeLimitModal =
+    showFreePracticeLimitModal &&
+    !isAccountPro &&
+    accountAccessKind !== "checking";
 
   const autoPlayRef = useRef(false);
   const currentIndexRef = useRef(0);
@@ -1720,18 +1752,6 @@ export default function StudyPage() {
     router.replace("/menu");
   }
 
-  function handleClassicHomeClick() {
-    stopAutoPlay();
-
-    if (typeof window !== "undefined") {
-      window.speechSynthesis?.cancel();
-      window.location.assign("/start");
-      return;
-    }
-
-    router.replace("/start");
-  }
-
   function openRenameCourseDialog() {
     setRenameCourseTitle(getDisplayCourseFileName(courseTitle));
     setShowCourseFileMenu(false);
@@ -2056,6 +2076,143 @@ export default function StudyPage() {
     () => getClassicStudyNavigation(lessonId),
     [lessonId]
   );
+  function handleClassicBackToCategory() {
+    stopAutoPlay();
+    stopSequencePlayback();
+
+    if (typeof window !== "undefined") {
+      window.speechSynthesis?.cancel();
+    }
+
+    router.push(classicStudyNavigation.categoryHref);
+  }
+
+  function renderClassicHelpModal() {
+    if (!isClassicHelpOpen) return null;
+
+    const helpSteps: Array<{
+      body: string;
+      hint?: string;
+      icon: ClassicHelpStepIconType;
+      number: number;
+      title: string;
+    }> = [
+      {
+        body: "阅读对话中的中文句子，理解当前情境和意思。",
+        icon: "eye",
+        number: 1,
+        title: "看中文，理解场景",
+      },
+      {
+        body: "点击麦克风图标开始录音，看着中文用英语回答。",
+        hint: "录音时请清晰、大声地说完整句子。",
+        icon: "mic",
+        number: 2,
+        title: "点击麦克风，说英文",
+      },
+      {
+        body: "说完后再次点击麦克风，系统将自动分析你的发音和表达。",
+        icon: "stop",
+        number: 3,
+        title: "再次点击，结束录音",
+      },
+      {
+        body: "查看你的录音、推荐表达和更地道说法，学习更自然的表达方式。",
+        icon: "feedback",
+        number: 4,
+        title: "查看反馈，学习提升",
+      },
+      {
+        body: "点击“下一句”，进入下一个对话，逐步积累，提升口语能力。",
+        icon: "next",
+        number: 5,
+        title: "进入下一句，持续练习",
+      },
+    ];
+
+    return (
+      <div
+        className={styles.classicHelpBackdrop}
+        role="presentation"
+        onMouseDown={() => setIsClassicHelpOpen(false)}
+      >
+        <section
+          className={styles.classicHelpDialog}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="classic-help-title"
+          onMouseDown={(event) => event.stopPropagation()}
+        >
+          <header className={styles.classicHelpHeader}>
+            <h2 id="classic-help-title">经典场景口语练习使用说明</h2>
+            <button
+              type="button"
+              className={styles.classicHelpClose}
+              aria-label="关闭帮助"
+              onClick={() => setIsClassicHelpOpen(false)}
+            >
+              ×
+            </button>
+          </header>
+
+          <p className={styles.classicHelpSubtitle}>
+            在真实场景中练习口语，跟着对话一步步提升表达能力。
+          </p>
+
+          <div className={styles.classicHelpDivider} aria-hidden="true" />
+
+          <ol className={styles.classicHelpTimeline}>
+            {helpSteps.map((step) => (
+              <li className={styles.classicHelpStep} key={step.number}>
+                <span className={styles.classicHelpStepIcon}>
+                  <ClassicHelpStepIcon type={step.icon} />
+                </span>
+                <div className={styles.classicHelpStepCopy}>
+                  <div className={styles.classicHelpStepTitleRow}>
+                    <strong>{step.number}</strong>
+                    <h3>{step.title}</h3>
+                  </div>
+                  <p>{step.body}</p>
+                  {step.hint ? (
+                    <p className={styles.classicHelpStepHint}>
+                      <SpeakerIcon />
+                      <span>{step.hint}</span>
+                    </p>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div className={styles.classicHelpTip}>
+            <span className={styles.classicHelpTipIcon} aria-hidden="true">
+              <svg viewBox="0 0 48 48">
+                <path d="M16 20c0-6 4.8-11 12-11s12 5 12 11c0 4.5-2.4 7.5-5.4 10.1-2 1.7-2.6 3.2-2.6 5H20c0-3.8-.7-5.1-2.6-6.9C14.8 25.6 16 23.1 16 20Z" />
+                <path d="M21 40h10M22 45h8M12 20h-4M40 20h4M15 9l-3-3M37 9l3-3" />
+              </svg>
+            </span>
+            <div>
+              <strong>小贴士</strong>
+              <ul>
+                <li>尽量用自己的话表达，不要背诵。</li>
+                <li>录音环境安静，效果更好。</li>
+                <li>坚持练习，每天进步一点点！</li>
+              </ul>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className={styles.classicHelpMenuButton}
+            onClick={() => setIsClassicHelpOpen(false)}
+          >
+            我知道了
+          </button>
+        </section>
+      </div>
+    );
+  }
+
   const classicSceneRoleConfig = useMemo(
     () =>
       getClassicLessonRoleConfig(lessonId, {
@@ -2242,7 +2399,7 @@ export default function StudyPage() {
   }
 
   if (isClassicSceneLessonId(lessonId) && !hasLoadedLesson) {
-    return <ClassicStudyLoadingShell />;
+    return <main aria-hidden="true" className="sf-route-loading" />;
   }
 
   if (showStudyVoiceOnlyPrompt) {
@@ -2251,18 +2408,20 @@ export default function StudyPage() {
     return (
       <main className={styles.classicShell}>
         <section
-          className={`${styles.classicPhone} ${styles.studyPhone}`}
+          className={`${styles.classicPhone} ${styles.studyPhone} ${
+            isListening ? styles.studyPhoneRecording : styles.studyPhoneIdle
+          }`}
           aria-labelledby="classic-study-title"
         >
           <header className={`${styles.classicTopbar} ${styles.studyTopbar}`}>
             <button
               type="button"
-              aria-label="回到学习首页"
+              aria-label="返回三级菜单"
               className={styles.homeShortcut}
-              onClick={handleClassicHomeClick}
+              onClick={handleClassicBackToCategory}
             >
               <span className={styles.homeIconBox}>
-                <HomeMenuIcon label={null} showHint={false} />
+                <ArrowLeftIcon />
               </span>
             </button>
 
@@ -2278,11 +2437,11 @@ export default function StudyPage() {
 
             <button
               type="button"
-              aria-label="切换课程"
+              aria-label="经典场景帮助"
               className={styles.switchCourseButton}
-              onClick={() => router.push(classicStudyNavigation.courseMenuHref)}
+              onClick={() => setIsClassicHelpOpen(true)}
             >
-              <span>切换课程</span>
+              <span>?</span>
             </button>
           </header>
 
@@ -2421,6 +2580,100 @@ export default function StudyPage() {
               <span className={styles.bankChairTwo} />
             </div>
 
+            <div className={styles.recordingArea}>
+              <section className={styles.practiceControls} aria-label="句子练习控制">
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                  className={styles.sentenceButton}
+                  aria-label="上一句"
+                >
+                  <ArrowLeftIcon />
+                  <span>上一句</span>
+                </button>
+
+                <span
+                  className={`${styles.recordingWave} ${styles.recordingWaveLeft}`}
+                  aria-hidden="true"
+                >
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </span>
+
+                <button
+                  type="button"
+                  onClick={handleEnglishPracticeAction}
+                  className={`${styles.micButton} ${isListening ? styles.micButtonActive : ""}`}
+                  aria-label={isListening ? "停止录音" : "点击麦克风开始练习"}
+                >
+                  <span className={styles.micPulseOne} />
+                  <span className={styles.micPulseTwo} />
+                  <BigMicIcon />
+                </button>
+
+                <span
+                  className={`${styles.recordingWave} ${styles.recordingWaveRight}`}
+                  aria-hidden="true"
+                >
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </span>
+
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={currentIndex >= pairs.length - 1}
+                  className={styles.sentenceButton}
+                  aria-label="下一句"
+                >
+                  <span>下一句</span>
+                  <ArrowRightIcon />
+                </button>
+              </section>
+
+              <p className={styles.micHint}>
+                {isListening ? (
+                  <>
+                    <strong>正在听你说英语...</strong>
+                    <span>再次点击麦克风结束录音</span>
+                  </>
+                ) : (
+                  "看着中文说英文"
+                )}
+              </p>
+
+              <div className={styles.recordingSentenceNav} aria-label="句子切换">
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                  className={styles.sentenceButton}
+                  aria-label="上一句"
+                >
+                  <ArrowLeftIcon />
+                  <span>上一句</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={currentIndex >= pairs.length - 1}
+                  className={styles.sentenceButton}
+                  aria-label="下一句"
+                >
+                  <span>下一句</span>
+                  <ArrowRightIcon />
+                </button>
+              </div>
+            </div>
+
             <button
               type="button"
               className={styles.promptHint}
@@ -2525,7 +2778,9 @@ export default function StudyPage() {
           </aside>
         </section>
 
-        {showFreePracticeLimitModal ? (
+        {renderClassicHelpModal()}
+
+        {shouldRenderFreePracticeLimitModal ? (
           <FreePracticeLimitModal
             isSignedIn={accountAccessKind === "signed-in"}
             onDismiss={() => setShowFreePracticeLimitModal(false)}
@@ -2552,12 +2807,12 @@ export default function StudyPage() {
           <header className={`${styles.classicTopbar} ${styles.studyTopbar}`}>
             <button
               type="button"
-              aria-label="回到学习首页"
+              aria-label="返回三级菜单"
               className={styles.homeShortcut}
-              onClick={handleClassicHomeClick}
+              onClick={handleClassicBackToCategory}
             >
               <span className={styles.homeIconBox}>
-                <HomeMenuIcon label={null} showHint={false} />
+                <ArrowLeftIcon />
               </span>
             </button>
 
@@ -2573,11 +2828,11 @@ export default function StudyPage() {
 
             <button
               type="button"
-              aria-label="切换课程"
+              aria-label="经典场景帮助"
               className={styles.switchCourseButton}
-              onClick={() => router.push(classicStudyNavigation.courseMenuHref)}
+              onClick={() => setIsClassicHelpOpen(true)}
             >
-              <span>切换课程</span>
+              <span>?</span>
             </button>
           </header>
 
@@ -2819,6 +3074,8 @@ export default function StudyPage() {
           </section>
         </section>
 
+        {renderClassicHelpModal()}
+
         {showFollowReadModal ? (
           <div className={styles.followModalBackdrop} role="presentation">
             <section
@@ -2840,7 +3097,7 @@ export default function StudyPage() {
           </div>
         ) : null}
 
-        {showFreePracticeLimitModal ? (
+        {shouldRenderFreePracticeLimitModal ? (
           <FreePracticeLimitModal
             isSignedIn={accountAccessKind === "signed-in"}
             onDismiss={() => setShowFreePracticeLimitModal(false)}
@@ -3342,7 +3599,7 @@ export default function StudyPage() {
           ) : null}
         </section>
 
-        {showFreePracticeLimitModal ? (
+        {shouldRenderFreePracticeLimitModal ? (
           <FreePracticeLimitModal
             isSignedIn={accountAccessKind === "signed-in"}
             onDismiss={() => setShowFreePracticeLimitModal(false)}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import FreeStudyHelpModal from "@/components/FreeStudyHelpModal";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 
@@ -47,11 +48,22 @@ const helpSteps = [
   },
 ] as const;
 
+void helpSteps;
+
 function MicGlyph() {
   return (
     <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
       <path d="M24 29a8 8 0 0 0 8-8v-8a8 8 0 0 0-16 0v8a8 8 0 0 0 8 8Z" />
       <path d="M11 22a13 13 0 0 0 26 0M24 35v8M18 43h12" />
+    </svg>
+  );
+}
+
+function SparklesGlyph() {
+  return (
+    <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+      <path d="M18.5 6.2 22 15l8.8 3.5L22 22l-3.5 8.8L15 22l-8.8-3.5L15 15l3.5-8.8Z" />
+      <path d="m29.5 5.8 1.5 3.7 3.7 1.5-3.7 1.5-1.5 3.7-1.5-3.7-3.7-1.5L28 9.5l1.5-3.7Z" />
     </svg>
   );
 }
@@ -83,56 +95,12 @@ function LightGlyph() {
   );
 }
 
-function EditGlyph() {
-  return (
-    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-      <path d="M11 37h8L36 20a4.3 4.3 0 0 0-6-6L13 31l-2 6Z" />
-      <path d="m27 17 4 4M10 41h28" />
-    </svg>
-  );
-}
-
-function SpeakGlyph() {
-  return (
-    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-      <path d="M19 10c-5 3-7 8-7 14s2.2 10.5 7 14" />
-      <path d="M24 17c4 2 6 4.5 6 7s-2 5-6 7M34 14c5 4 7.5 7.5 7.5 10S39 30 34 34" />
-    </svg>
-  );
-}
-
-function ListenGlyph() {
-  return (
-    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-      <path d="M11 25v-3a13 13 0 0 1 26 0v3" />
-      <rect x="7" y="23" width="10" height="15" rx="5" />
-      <rect x="31" y="23" width="10" height="15" rx="5" />
-      <path d="M20 13h8M19 36l5-4 5 4" />
-    </svg>
-  );
-}
-
 function WaveGlyph() {
   return (
     <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
       <path d="M9 21v6M16 14v20M23 10v28M30 14v20M37 21v6" />
     </svg>
   );
-}
-
-function CloseGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M5 5 19 19M19 5 5 19" />
-    </svg>
-  );
-}
-
-function HelpStepIcon({ icon }: { icon: (typeof helpSteps)[number]["icon"] }) {
-  if (icon === "edit") return <EditGlyph />;
-  if (icon === "speak") return <SpeakGlyph />;
-  if (icon === "listen") return <ListenGlyph />;
-  return <MicGlyph />;
 }
 
 function FlowIcon({ icon }: { icon: (typeof flowSteps)[number]["icon"] }) {
@@ -175,10 +143,51 @@ export default function FreeStudyPageOne({
           box-sizing: border-box;
         }
 
+        .sf-speak-page:has(.sf-free-start-page) {
+          min-height: 100dvh;
+          overflow: hidden;
+          background:
+            radial-gradient(circle at 50% 42%, rgba(255,255,255,.86), transparent 34%),
+            linear-gradient(180deg, #f2e9ff 0%, #fbf8ff 50%, #f3eaff 100%);
+        }
+
+        .sf-speak-page:has(.sf-free-start-page) > div {
+          width: 100%;
+          max-width: none;
+          min-height: 100dvh;
+          padding: 0;
+        }
+
+        .sf-speak-page:has(.sf-free-start-page) .sf-speak-phone {
+          width: min(100vw, 430px);
+          max-width: 100vw;
+          height: 100dvh;
+          min-height: 100dvh;
+          max-height: none;
+          overflow: hidden;
+          border: 0;
+          border-radius: 0;
+          background: transparent;
+          box-shadow: none;
+        }
+
+        .sf-speak-page:has(.sf-free-start-page) .sf-speak-phone::before,
+        .sf-speak-page:has(.sf-free-start-page) .sf-speak-phone::after,
+        .sf-speak-page:has(.sf-free-start-page) .sf-speak-phone > .pointer-events-none {
+          display: none;
+        }
+
+        .sf-speak-page:has(.sf-free-start-page) .sf-speak-phone > .absolute:has(.sf-free-start-page) {
+          z-index: 120;
+        }
+
         .sf-free-start-page {
           position: absolute;
           inset: 0;
           z-index: 90;
+          width: 100%;
+          height: 100%;
+          min-height: 100%;
           overflow-y: auto;
           overflow-x: hidden;
           color: #101342;
@@ -513,23 +522,48 @@ export default function FreeStudyPageOne({
           display: none;
         }
 
-        .sf-free-start-primary {
+        .sf-free-start-instruction {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 1rem;
-          width: 100%;
-          min-height: 4.65rem;
-          margin-top: clamp(2.3rem, 5dvh, 3.5rem);
-          border: 1px solid rgba(255,255,255,.7);
+          gap: .78rem;
+          width: min(100%, 22.2rem);
+          min-height: 3.22rem;
+          margin: clamp(2.05rem, 4.6dvh, 3.2rem) auto 0;
+          border: 1px solid rgba(255,255,255,.76);
           border-radius: 999px;
-          background: linear-gradient(90deg, #dca2ff 0%, #9b60ef 52%, #7654f1 100%);
-          color: white;
-          box-shadow: 0 20px 38px rgba(136,82,239,.28), inset 0 1px 0 rgba(255,255,255,.55);
-          font-size: clamp(1.6rem, 7.4vw, 2.24rem);
-          font-weight: 950;
+          background: rgba(255,255,255,.42);
+          color: rgba(39,42,91,.68);
+          box-shadow: 0 12px 26px rgba(114,82,180,.08), inset 0 1px 0 rgba(255,255,255,.86);
+          font-size: clamp(1rem, 4.2vw, 1.28rem);
+          font-weight: 750;
           letter-spacing: 0;
           cursor: pointer;
+        }
+
+        .sf-free-start-page.is-recording .sf-free-start-instruction {
+          color: rgba(62,55,119,.72);
+        }
+
+        .sf-free-start-instruction-icon {
+          display: grid;
+          width: 2.2rem;
+          height: 2.2rem;
+          flex: 0 0 auto;
+          place-items: center;
+          border-radius: 50%;
+          background: rgba(229,209,255,.72);
+          color: #9a62ef;
+        }
+
+        .sf-free-start-instruction-icon svg {
+          width: 1.35rem;
+          height: 1.35rem;
+          fill: currentColor;
+          stroke: currentColor;
+          stroke-width: 2.8;
+          stroke-linecap: round;
+          stroke-linejoin: round;
         }
 
         .sf-free-start-note {
@@ -944,13 +978,6 @@ export default function FreeStudyPageOne({
           </section>
 
           <section className="sf-free-start-mic-area">
-            <span className="sf-free-start-tip-bubble">
-              点这里，说中文
-              <svg viewBox="0 0 112 88" aria-hidden="true" focusable="false">
-                <path d="M96 8C84 43 60 61 24 63" />
-                <path d="M35 47 20 64l20 12" />
-              </svg>
-            </span>
             <span className="sf-free-start-wave-bars" aria-hidden="true">
               <span className="sf-free-start-wave-group">
                 {[24, 48, 64, 46, 28].map((height) => (
@@ -976,10 +1003,12 @@ export default function FreeStudyPageOne({
           <button
             type="button"
             onClick={onMicrophoneClick}
-            className="sf-free-start-primary"
+            className="sf-free-start-instruction"
           >
-            <span aria-hidden="true">🎤</span>
-            {isRecording ? "点击麦克风结束录音" : "点我说中文"}
+            <span className="sf-free-start-instruction-icon" aria-hidden="true">
+              {isRecording ? <MicGlyph /> : <SparklesGlyph />}
+            </span>
+            {isRecording ? "再次点击上方麦克风，结束录音" : "请点击上方麦克风开始说中文"}
           </button>
 
           <p className="sf-free-start-note">
@@ -1017,97 +1046,10 @@ export default function FreeStudyPageOne({
       </div>
 
       {isHelpOpen ? (
-        <div
-          className="sf-free-help-backdrop"
-          role="dialog"
-          aria-modal="true"
-          aria-label="自由学习帮助"
-          onClick={() => setIsHelpOpen(false)}
-        >
-          <section
-            className="sf-free-help-modal"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <header className="sf-free-help-head">
-              <button
-                type="button"
-                aria-label={menuLabel}
-                onClick={onMenuClick}
-                className="sf-free-start-home"
-              >
-                <HomeMenuIcon label={null} showHint={false} />
-              </button>
-
-              <div className="sf-free-start-brand" aria-label="SpeakFlow AI Voice Practice">
-                <span className="sf-free-start-logo" aria-hidden="true">
-                  <SpeakFlowBrandMark />
-                </span>
-                <span className="sf-free-start-brand-copy">
-                  <span className="sf-free-start-brand-title">SpeakFlow</span>
-                  <span className="sf-free-start-brand-subtitle">AI VOICE PRACTICE</span>
-                </span>
-              </div>
-
-              <button
-                type="button"
-                aria-label="关闭帮助"
-                onClick={() => setIsHelpOpen(false)}
-                className="sf-free-start-help-close"
-              >
-                <CloseGlyph />
-              </button>
-            </header>
-
-            <h2>自由学习怎么练？</h2>
-            <p className="sf-free-help-intro">
-              想说什么就说什么，AI 会帮你一步步变成自然英语。
-            </p>
-
-            <div className="sf-free-help-step-list">
-              {helpSteps.map((step, index) => (
-                <article className="sf-free-help-step" key={step.title}>
-                  <span className="sf-free-help-step-icon">
-                    <HelpStepIcon icon={step.icon} />
-                  </span>
-                  <span>
-                    <span className="sf-free-help-step-number">{index + 1}</span>
-                    <h3>{step.title}</h3>
-                    <p>{step.body}</p>
-                  </span>
-                  <span className="sf-free-help-chevron" aria-hidden="true">
-                    ›
-                  </span>
-                </article>
-              ))}
-            </div>
-
-            <section className="sf-free-help-card">
-              <strong>自由学习和 AI 引导表达有什么不同？</strong>
-              <ul>
-                <li>自由学习：你自己决定想说什么</li>
-                <li>没有固定下一句，更适合随时练习</li>
-                <li>更像真实表达训练</li>
-              </ul>
-            </section>
-
-            <section className="sf-free-help-card">
-              <strong>小提示</strong>
-              <ul>
-                <li>先自然表达，不要一开始就追求完美。</li>
-                <li>中文越清楚，AI 给出的建议通常越准确。</li>
-                <li>遇到喜欢的表达，记得收藏到新表达。</li>
-              </ul>
-            </section>
-
-            <button
-              type="button"
-              className="sf-free-help-ok"
-              onClick={() => setIsHelpOpen(false)}
-            >
-              我知道了，开始自由学习
-            </button>
-          </section>
-        </div>
+        <FreeStudyHelpModal
+          onClose={() => setIsHelpOpen(false)}
+          onMenuClick={onMenuClick}
+        />
       ) : null}
     </section>
   );

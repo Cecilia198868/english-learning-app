@@ -1,6 +1,8 @@
 "use client";
 
-import type { ReactNode } from "react";
+import Image from "next/image";
+import { useState, type ReactNode } from "react";
+import AiGuidedExpressionHelpModal from "@/components/AiGuidedExpressionHelpModal";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 
@@ -258,6 +260,12 @@ export default function AiGuidedExpressionStepFive({
   renderExpressionText: renderInteractiveExpressionText,
   renderUserExpressionText,
 }: AiGuidedExpressionStepFiveProps) {
+  void headerAddon;
+  void accountLabel;
+  void onAccountClick;
+
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+
   const displayEnglish = userEnglishText.trim() || "I'm practicing this sentence.";
   const displayNextChinese =
     nextChineseText.trim() || (isLoadingNextChinese ? COPY.loadingNext : COPY.nextFallback);
@@ -270,6 +278,40 @@ export default function AiGuidedExpressionStepFive({
         .sf-ai-guided-step-five,
         .sf-ai-guided-step-five * {
           box-sizing: border-box;
+        }
+
+        .sf-speak-page:has(.sf-ai-guided-step-five) {
+          background:
+            radial-gradient(circle at 18% 4%, rgba(222, 244, 255, 0.9), transparent 30%),
+            radial-gradient(circle at 90% 2%, rgba(235, 229, 255, 0.82), transparent 29%),
+            linear-gradient(180deg, #eef8ff 0%, #f8fbff 48%, #edf5ff 100%) !important;
+        }
+
+        .sf-speak-page:has(.sf-ai-guided-step-five) > div {
+          width: 100vw !important;
+          max-width: none !important;
+          min-height: 100dvh !important;
+          align-items: stretch !important;
+          justify-content: center !important;
+          padding: 0 !important;
+        }
+
+        .sf-speak-page:has(.sf-ai-guided-step-five) .sf-speak-phone {
+          width: min(100vw, 430px) !important;
+          max-width: 430px !important;
+          height: 100dvh !important;
+          min-height: 100dvh !important;
+          border: 0 !important;
+          border-radius: 0 !important;
+          background: transparent !important;
+          overflow: hidden !important;
+          box-shadow: none !important;
+        }
+
+        .sf-speak-page:has(.sf-ai-guided-step-five) .sf-speak-phone::before,
+        .sf-speak-page:has(.sf-ai-guided-step-five) .sf-speak-phone::after,
+        .sf-speak-page:has(.sf-ai-guided-step-five) .sf-speak-phone > .pointer-events-none {
+          display: none !important;
         }
 
         .sf-ai-guided-step-five {
@@ -285,33 +327,36 @@ export default function AiGuidedExpressionStepFive({
             radial-gradient(circle at 82% 42%, rgba(235, 231, 255, 0.72), transparent 35%),
             linear-gradient(180deg, #eef8ff 0%, #f8fbff 48%, #f3f8ff 100%);
           font-family: var(--sf-font-zh, "PingFang SC", "Microsoft YaHei", sans-serif);
+          -webkit-font-smoothing: antialiased;
         }
 
         .sf-ai-guided-step-five-frame {
           display: flex;
-          width: 100%;
+          width: min(100%, 430px);
           height: 100%;
           min-height: 100%;
+          margin: 0 auto;
           flex-direction: column;
           overflow: hidden;
-          padding: calc(env(safe-area-inset-top, 0px) + 1.12rem) clamp(1.05rem, 4vw, 1.55rem)
-            calc(env(safe-area-inset-bottom, 0px) + 0.9rem);
+          padding: calc(env(safe-area-inset-top, 0px) + clamp(0.72rem, 2.6dvh, 1.08rem))
+            clamp(0.92rem, 4.6vw, 1.24rem)
+            calc(env(safe-area-inset-bottom, 0px) + 0.8rem);
         }
 
         .sf-ai-guided-step-five-header {
           display: grid;
-          grid-template-columns: 3rem minmax(0, 1fr) 3rem;
+          grid-template-columns: clamp(2.45rem, 11vw, 3rem) minmax(0, 1fr) clamp(2.45rem, 11vw, 3rem);
           align-items: center;
-          gap: 0.6rem;
-          min-height: 4.55rem;
+          gap: clamp(0.5rem, 2.2vw, 0.7rem);
+          min-height: clamp(3.15rem, 14vw, 4.1rem);
           flex: 0 0 auto;
         }
 
         .sf-ai-guided-step-five-menu,
         .sf-ai-guided-step-five-help-button {
           display: grid;
-          width: 3rem;
-          height: 3rem;
+          width: clamp(2.45rem, 11vw, 3rem);
+          height: clamp(2.45rem, 11vw, 3rem);
           place-items: center;
           border: 0;
           border-radius: 999px;
@@ -347,8 +392,8 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-menu .sf-home-menu-icon,
         .sf-ai-guided-step-five-menu .sf-home-menu-icon svg {
-          width: 1.95rem;
-          height: 1.95rem;
+          width: 58%;
+          height: 58%;
         }
 
         .sf-ai-guided-step-five-menu .sf-home-menu-icon svg {
@@ -371,13 +416,13 @@ export default function AiGuidedExpressionStepFive({
           min-width: 0;
           align-items: center;
           justify-content: center;
-          gap: clamp(0.65rem, 2.4vw, 0.9rem);
+          gap: clamp(0.38rem, 1.8vw, 0.54rem);
         }
 
         .sf-ai-guided-step-five-logo {
           display: grid;
-          width: 3.1rem;
-          height: 3.1rem;
+          width: clamp(1.9rem, 8.8vw, 2.35rem);
+          height: clamp(1.9rem, 8.8vw, 2.35rem);
           flex: 0 0 auto;
           place-items: center;
           border-radius: 999px;
@@ -396,19 +441,21 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-brand-title {
           color: #08133f;
-          font-size: 1.95rem;
-          font-weight: 950;
+          font-size: clamp(1.12rem, 5vw, 1.48rem);
+          font-weight: 1000;
           letter-spacing: 0;
           line-height: 0.94;
+          white-space: nowrap;
         }
 
         .sf-ai-guided-step-five-brand-subtitle {
-          margin-top: 0.32rem;
+          margin-top: 0.2rem;
           color: #0f66ff !important;
-          font-size: 0.72rem;
-          font-weight: 800;
-          letter-spacing: 0.08em;
+          font-size: clamp(0.42rem, 2vw, 0.58rem);
+          font-weight: 900;
+          letter-spacing: 0.16em;
           line-height: 1;
+          white-space: nowrap;
         }
 
         .sf-ai-guided-step-five-scroll {
@@ -416,7 +463,7 @@ export default function AiGuidedExpressionStepFive({
           min-height: 0;
           overflow-x: hidden;
           overflow-y: auto;
-          padding: 1.1rem 0 1.25rem;
+          padding: clamp(0.85rem, 3.2dvh, 1.12rem) 0 1.25rem;
           scrollbar-width: none;
         }
 
@@ -443,8 +490,9 @@ export default function AiGuidedExpressionStepFive({
           grid-template-columns: minmax(0, 1fr) auto;
           gap: 0.75rem;
           align-items: center;
-          border-radius: 1.25rem;
-          padding: 1.25rem 1.15rem 1.45rem;
+          min-height: clamp(9.4rem, 24dvh, 12rem);
+          border-radius: clamp(1rem, 5vw, 1.35rem);
+          padding: clamp(1.05rem, 4.2vw, 1.35rem) clamp(1.05rem, 4.8vw, 1.35rem) clamp(1.2rem, 5vw, 1.55rem);
         }
 
         .sf-ai-guided-step-five-card-heading {
@@ -453,7 +501,7 @@ export default function AiGuidedExpressionStepFive({
           align-items: center;
           gap: 0.6rem;
           color: #0568ff;
-          font-size: 1.02rem;
+          font-size: clamp(0.84rem, 3.8vw, 1.02rem);
           font-weight: 900;
           line-height: 1.1;
         }
@@ -475,7 +523,7 @@ export default function AiGuidedExpressionStepFive({
           min-width: 0;
           margin: 0;
           color: #07113f;
-          font-size: clamp(3rem, 13vw, 5rem);
+          font-size: clamp(2.55rem, 12.2vw, 4.65rem);
           font-weight: 950;
           letter-spacing: 0;
           line-height: 0.98;
@@ -487,13 +535,13 @@ export default function AiGuidedExpressionStepFive({
           align-items: center;
           justify-content: center;
           gap: 0.45rem;
-          min-width: 6.4rem;
-          min-height: 3.2rem;
+          min-width: clamp(5.6rem, 24vw, 6.75rem);
+          min-height: clamp(2.55rem, 11vw, 3.15rem);
           border: 0;
           border-radius: 1rem;
           background: rgba(255, 255, 255, 0.88);
           color: #075fff;
-          font-size: 1rem;
+          font-size: clamp(0.82rem, 3.6vw, 1rem);
           font-weight: 850;
           box-shadow:
             0 14px 28px rgba(67, 101, 176, 0.14),
@@ -515,10 +563,10 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-next-card {
           position: relative;
-          min-height: 13.6rem;
-          margin-top: 1rem;
-          border-radius: 1.25rem;
-          padding: 1.25rem 1.05rem 1.15rem;
+          min-height: clamp(13.1rem, 31dvh, 15.4rem);
+          margin-top: clamp(0.86rem, 3.2dvh, 1.08rem);
+          border-radius: clamp(1rem, 5vw, 1.35rem);
+          padding: clamp(1.05rem, 4.2vw, 1.35rem) clamp(1rem, 4.5vw, 1.28rem) clamp(1rem, 4vw, 1.18rem);
           overflow: hidden;
         }
 
@@ -528,7 +576,7 @@ export default function AiGuidedExpressionStepFive({
           gap: 0.55rem;
           margin: 0;
           color: #0d66ff;
-          font-size: 1.08rem;
+          font-size: clamp(0.9rem, 4vw, 1.08rem);
           font-weight: 900;
           letter-spacing: 0;
           line-height: 1.16;
@@ -543,10 +591,10 @@ export default function AiGuidedExpressionStepFive({
         .sf-ai-guided-step-five-next-text {
           position: relative;
           z-index: 1;
-          width: min(100%, 15rem);
-          margin: 1.15rem 0 0;
+          width: min(68%, 15.4rem);
+          margin: clamp(1.05rem, 4.2vw, 1.32rem) 0 0;
           color: #07113f;
-          font-size: clamp(2rem, 9.2vw, 3.15rem);
+          font-size: clamp(1.92rem, 8.9vw, 3rem);
           font-weight: 950;
           letter-spacing: 0;
           line-height: 1.22;
@@ -555,72 +603,24 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-next-robot {
           position: absolute;
-          right: 1.1rem;
-          top: 3.5rem;
-          width: 5.55rem;
-          height: 5.55rem;
-          border-radius: 2rem;
-          background: linear-gradient(180deg, #ffffff 0%, #ecf5ff 70%, #9bc4ff 100%);
-          box-shadow:
-            0 16px 34px rgba(28, 95, 216, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.96);
+          right: clamp(0.72rem, 4vw, 1.1rem);
+          top: clamp(3rem, 11vw, 3.65rem);
+          width: clamp(5rem, 25vw, 6.55rem);
+          height: clamp(5rem, 25vw, 6.55rem);
+          filter: drop-shadow(0 1rem 1.4rem rgba(46, 103, 211, 0.18));
         }
 
-        .sf-ai-guided-step-five-next-robot::before {
-          content: "";
-          position: absolute;
-          left: 50%;
-          top: -1.2rem;
-          width: 0.22rem;
-          height: 1.35rem;
-          border-radius: 999px;
-          background: linear-gradient(180deg, #2f75ff, #80b4ff);
-          transform: translateX(-50%);
-          box-shadow: 0 -0.25rem 0 0.18rem #2f75ff;
-        }
-
-        .sf-ai-guided-step-five-robot-face {
-          position: absolute;
-          inset: 0.85rem 0.75rem 1.35rem;
-          border-radius: 1.05rem;
-          background: #07113f;
-        }
-
-        .sf-ai-guided-step-five-robot-face::before,
-        .sf-ai-guided-step-five-robot-face::after {
-          content: "";
-          position: absolute;
-          top: 1.12rem;
-          width: 0.72rem;
-          height: 0.72rem;
-          border-radius: 999px;
-          background: #22d4e5;
-        }
-
-        .sf-ai-guided-step-five-robot-face::before {
-          left: 1.05rem;
-        }
-
-        .sf-ai-guided-step-five-robot-face::after {
-          right: 1.05rem;
-        }
-
-        .sf-ai-guided-step-five-robot-face span {
-          position: absolute;
-          left: 50%;
-          bottom: 0.76rem;
-          width: 1.2rem;
-          height: 0.54rem;
-          border-bottom: 0.18rem solid #24d4e5;
-          border-radius: 0 0 999px 999px;
-          transform: translateX(-50%);
+        .sf-ai-guided-step-five-next-robot img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
 
         .sf-ai-guided-step-five-next-actions {
           display: grid;
           grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-          gap: 0.8rem;
-          margin-top: 1.25rem;
+          gap: clamp(0.64rem, 3vw, 0.84rem);
+          margin-top: clamp(1.18rem, 4.8vw, 1.48rem);
         }
 
         .sf-ai-guided-step-five-use-next,
@@ -629,10 +629,10 @@ export default function AiGuidedExpressionStepFive({
           align-items: center;
           justify-content: center;
           gap: 0.55rem;
-          min-height: 3.45rem;
+          min-height: clamp(2.86rem, 12.5vw, 3.55rem);
           border: 0;
           border-radius: 1rem;
-          font-size: 1.04rem;
+          font-size: clamp(0.9rem, 4vw, 1.05rem);
           font-weight: 900;
           cursor: pointer;
         }
@@ -658,7 +658,7 @@ export default function AiGuidedExpressionStepFive({
         }
 
         .sf-ai-guided-step-five-records {
-          margin-top: 1.05rem;
+          margin-top: clamp(0.98rem, 3.6dvh, 1.22rem);
         }
 
         .sf-ai-guided-step-five-records > h2 {
@@ -668,7 +668,7 @@ export default function AiGuidedExpressionStepFive({
           gap: 0.58rem;
           margin: 0 0 0.7rem;
           color: #176cff;
-          font-size: 1.08rem;
+          font-size: clamp(0.92rem, 4vw, 1.08rem);
           font-weight: 900;
           letter-spacing: 0;
           line-height: 1.1;
@@ -688,17 +688,17 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-record-list {
           display: grid;
-          gap: 0.64rem;
+          gap: clamp(0.55rem, 2.4vw, 0.68rem);
         }
 
         .sf-ai-guided-step-five-record-card {
           display: grid;
-          grid-template-columns: 3.6rem minmax(0, 1fr) auto;
+          grid-template-columns: clamp(3.1rem, 14vw, 3.7rem) minmax(0, 1fr) auto;
           align-items: center;
-          gap: 0.7rem;
-          min-height: 5.7rem;
-          border-radius: 1rem;
-          padding: 0.9rem 0.72rem 0.9rem 0.85rem;
+          gap: clamp(0.58rem, 2.7vw, 0.78rem);
+          min-height: clamp(5.2rem, 19vw, 6.1rem);
+          border-radius: clamp(0.9rem, 4vw, 1.05rem);
+          padding: clamp(0.72rem, 3.2vw, 0.92rem) clamp(0.55rem, 2.8vw, 0.72rem) clamp(0.72rem, 3.2vw, 0.92rem) clamp(0.7rem, 3.4vw, 0.9rem);
           cursor: pointer;
         }
 
@@ -711,8 +711,8 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-record-icon {
           display: grid;
-          width: 3.25rem;
-          height: 3.25rem;
+          width: clamp(2.75rem, 12.4vw, 3.35rem);
+          height: clamp(2.75rem, 12.4vw, 3.35rem);
           place-items: center;
           border-radius: 999px;
           color: #fff;
@@ -796,7 +796,7 @@ export default function AiGuidedExpressionStepFive({
         .sf-ai-guided-step-five-record-text {
           margin: 0;
           color: #07113f;
-          font-size: clamp(1.55rem, 6.4vw, 2.35rem);
+          font-size: clamp(1.18rem, 5.35vw, 1.85rem);
           font-weight: 900;
           letter-spacing: 0;
           line-height: 1.14;
@@ -809,21 +809,21 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-record-actions {
           display: grid;
-          grid-template-columns: 2.78rem 3.12rem;
-          gap: 0.45rem;
+          grid-template-columns: clamp(2.24rem, 10vw, 2.7rem) clamp(2.52rem, 11.2vw, 3rem);
+          gap: clamp(0.32rem, 1.6vw, 0.45rem);
           align-items: center;
         }
 
         .sf-ai-guided-step-five-play,
         .sf-ai-guided-step-five-slow-button {
           display: grid;
-          height: 2.78rem;
+          height: clamp(2.24rem, 10vw, 2.7rem);
           place-items: center;
           border: 0;
           border-radius: 999px;
           background: rgba(255, 255, 255, 0.94);
           color: #075fff;
-          font-size: 0.98rem;
+          font-size: clamp(0.74rem, 3.5vw, 0.94rem);
           font-weight: 850;
           box-shadow:
             0 12px 24px rgba(67, 101, 176, 0.13),
@@ -832,7 +832,7 @@ export default function AiGuidedExpressionStepFive({
         }
 
         .sf-ai-guided-step-five-play {
-          width: 2.78rem;
+          width: clamp(2.24rem, 10vw, 2.7rem);
         }
 
         .sf-ai-guided-step-five-play svg {
@@ -841,7 +841,7 @@ export default function AiGuidedExpressionStepFive({
         }
 
         .sf-ai-guided-step-five-slow-button {
-          width: 3.12rem;
+          width: clamp(2.52rem, 11.2vw, 3rem);
         }
 
         .sf-ai-guided-step-five-more {
@@ -860,32 +860,75 @@ export default function AiGuidedExpressionStepFive({
           height: 1.05rem;
         }
 
+        @media (max-height: 740px) {
+          .sf-ai-guided-step-five-frame {
+            padding-top: calc(env(safe-area-inset-top, 0px) + 0.58rem);
+            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.62rem);
+          }
+
+          .sf-ai-guided-step-five-header {
+            min-height: 3.05rem;
+          }
+
+          .sf-ai-guided-step-five-scroll {
+            padding-top: 0.62rem;
+          }
+
+          .sf-ai-guided-step-five-user-card {
+            min-height: 8.35rem;
+            padding-top: 0.92rem;
+            padding-bottom: 1rem;
+          }
+
+          .sf-ai-guided-step-five-user-text {
+            font-size: clamp(2.25rem, 10.6vw, 3.65rem);
+          }
+
+          .sf-ai-guided-step-five-next-card {
+            min-height: 11.7rem;
+            margin-top: 0.72rem;
+            padding-top: 0.92rem;
+          }
+
+          .sf-ai-guided-step-five-next-text {
+            font-size: clamp(1.64rem, 7.6vw, 2.45rem);
+          }
+
+          .sf-ai-guided-step-five-next-actions {
+            margin-top: 1rem;
+          }
+
+          .sf-ai-guided-step-five-record-card {
+            min-height: 4.65rem;
+          }
+        }
+
         @media (max-width: 480px) {
           .sf-ai-guided-step-five-frame {
             padding-inline: 0.95rem;
           }
 
           .sf-ai-guided-step-five-header {
-            grid-template-columns: 2.8rem minmax(0, 1fr) 2.8rem;
+            grid-template-columns: 2.65rem minmax(0, 1fr) 2.65rem;
           }
 
           .sf-ai-guided-step-five-menu,
           .sf-ai-guided-step-five-help-button {
-            width: 2.8rem;
-            height: 2.8rem;
+            width: 2.65rem;
+            height: 2.65rem;
           }
 
           .sf-ai-guided-step-five-logo {
-            width: 2.75rem;
-            height: 2.75rem;
+            width: 2.15rem;
+            height: 2.15rem;
           }
 
           .sf-ai-guided-step-five-brand-title {
-            font-size: 1.72rem;
+            font-size: 1.36rem;
           }
 
           .sf-ai-guided-step-five-brand-subtitle {
-            font-size: 0.66rem;
+            font-size: 0.52rem;
           }
 
           .sf-ai-guided-step-five-user-card {
@@ -893,7 +936,7 @@ export default function AiGuidedExpressionStepFive({
           }
 
           .sf-ai-guided-step-five-user-text {
-            font-size: clamp(2.65rem, 12vw, 4.2rem);
+            font-size: clamp(2.4rem, 11.6vw, 4rem);
           }
 
           .sf-ai-guided-step-five-retry {
@@ -902,14 +945,14 @@ export default function AiGuidedExpressionStepFive({
           }
 
           .sf-ai-guided-step-five-next-text {
-            width: min(100%, 13.3rem);
-            font-size: clamp(1.82rem, 8.6vw, 2.65rem);
+            width: min(67%, 13.3rem);
+            font-size: clamp(1.78rem, 8.3vw, 2.55rem);
           }
 
           .sf-ai-guided-step-five-next-robot {
-            right: 0.88rem;
-            width: 4.9rem;
-            height: 4.9rem;
+            right: 0.72rem;
+            width: 5.45rem;
+            height: 5.45rem;
           }
 
           .sf-ai-guided-step-five-use-next,
@@ -918,37 +961,20 @@ export default function AiGuidedExpressionStepFive({
           }
 
           .sf-ai-guided-step-five-record-card {
-            grid-template-columns: 3.2rem minmax(0, 1fr) auto;
+            grid-template-columns: 3rem minmax(0, 1fr) auto;
             gap: 0.62rem;
             padding-inline: 0.72rem 0.55rem;
           }
 
           .sf-ai-guided-step-five-record-icon {
-            width: 2.95rem;
-            height: 2.95rem;
+            width: 2.8rem;
+            height: 2.8rem;
           }
 
           .sf-ai-guided-step-five-record-text {
-            font-size: clamp(1.42rem, 5.7vw, 2rem);
+            font-size: clamp(1.12rem, 5.2vw, 1.7rem);
           }
 
-          .sf-ai-guided-step-five-record-actions {
-            grid-template-columns: 2.55rem 2.85rem;
-            gap: 0.35rem;
-          }
-
-          .sf-ai-guided-step-five-play,
-          .sf-ai-guided-step-five-slow-button {
-            height: 2.55rem;
-          }
-
-          .sf-ai-guided-step-five-play {
-            width: 2.55rem;
-          }
-
-          .sf-ai-guided-step-five-slow-button {
-            width: 2.85rem;
-          }
         }
       `}</style>
 
@@ -980,8 +1006,10 @@ export default function AiGuidedExpressionStepFive({
 
           <button
             type="button"
-            aria-label={accountLabel}
-            onClick={onAccountClick}
+            aria-label="查看帮助"
+            aria-haspopup="dialog"
+            aria-expanded={isHelpOpen}
+            onClick={() => setIsHelpOpen(true)}
             className="sf-ai-guided-step-five-help-button"
           >
             ?
@@ -1016,9 +1044,14 @@ export default function AiGuidedExpressionStepFive({
 
           <section className="sf-ai-guided-step-five-next-card">
             <div className="sf-ai-guided-step-five-next-robot" aria-hidden="true">
-              <span className="sf-ai-guided-step-five-robot-face">
-                <span />
-              </span>
+              <Image
+                src="/images/starter-robot-standard.png"
+                alt=""
+                width={320}
+                height={320}
+                sizes="112px"
+                priority={false}
+              />
             </div>
             <h2>
               <SparklesGlyph />
@@ -1124,6 +1157,11 @@ export default function AiGuidedExpressionStepFive({
           </section>
         </main>
       </div>
+
+      <AiGuidedExpressionHelpModal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+      />
     </section>
   );
 }

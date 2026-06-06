@@ -68,6 +68,24 @@ function sessionKey(levelId: string, patternId: number, practiceId: number) {
   return `sentence-pattern:${levelId}:${patternId}:${practiceId}:transcript`;
 }
 
+function readSavedTranscript(
+  levelId: string,
+  patternId: number,
+  practiceId: number
+) {
+  if (typeof window === "undefined") return "";
+
+  try {
+    return (
+      window.sessionStorage
+        .getItem(sessionKey(levelId, patternId, practiceId))
+        ?.trim() || ""
+    );
+  } catch {
+    return "";
+  }
+}
+
 function getToneStyle(tone: SentencePatternTone): PatternToneStyle {
   const toneMap = {
     green: {
@@ -147,11 +165,25 @@ function ChatBubbleArt({ levelId }: { levelId: SentencePatternLevel["id"] }) {
   );
 }
 
-function BrandHeader() {
+function BrandHeader({
+  backHref = "/start",
+  backIcon = "home",
+  backLabel = "回到学习首页",
+  onHelpClick,
+}: {
+  backHref?: string;
+  backIcon?: "arrow" | "home";
+  backLabel?: string;
+  onHelpClick?: () => void;
+}) {
   return (
     <header className={styles.brandHeader}>
-      <Link href="/start" className={styles.homeButton} aria-label="回到学习首页">
-        <HomeMenuIcon label={null} showHint={false} />
+      <Link
+        href={backHref}
+        className={`${styles.homeButton} ${backIcon === "arrow" ? styles.backArrowButton : ""}`}
+        aria-label={backLabel}
+      >
+        {backIcon === "arrow" ? <ChevronIcon direction="left" /> : <HomeMenuIcon label={null} showHint={false} />}
       </Link>
       <Link href="/start" className={styles.brand} aria-label="SpeakFlow 学习首页">
         <SpeakFlowBrandMark className={styles.brandMark} />
@@ -160,17 +192,30 @@ function BrandHeader() {
           <small>VOICE PRACTICE</small>
         </span>
       </Link>
-      <Link href="/sentence-patterns" className={styles.switchButton}>
-        切换课程
-      </Link>
+      {onHelpClick ? (
+        <button
+          type="button"
+          className={`${styles.switchButton} ${styles.helpButton}`}
+          aria-label="句型学习帮助"
+          onClick={onHelpClick}
+        >
+          ?
+        </button>
+      ) : (
+        <Link href="/sentence-patterns" className={styles.switchButton}>
+          切换课程
+        </Link>
+      )}
     </header>
   );
 }
 
-function ChevronIcon({ direction = "right" }: { direction?: "down" | "right" | "up" }) {
+function ChevronIcon({ direction = "right" }: { direction?: "down" | "left" | "right" | "up" }) {
   const path =
     direction === "down"
       ? "m8 10 4 4 4-4"
+      : direction === "left"
+        ? "m15 5-7 7 7 7"
       : direction === "up"
         ? "m8 14 4-4 4 4"
         : "m10 7 5 5-5 5";
@@ -185,7 +230,17 @@ function ChevronIcon({ direction = "right" }: { direction?: "down" | "right" | "
 function StatIcon({
   type,
 }: {
-  type: "book" | "bulb" | "chat" | "file" | "headphones" | "mic" | "star";
+  type:
+    | "book"
+    | "bulb"
+    | "chat"
+    | "file"
+    | "headphones"
+    | "mic"
+    | "quote"
+    | "speaker"
+    | "star"
+    | "target";
 }) {
   if (type === "bulb") {
     return (
@@ -233,11 +288,129 @@ function StatIcon({
       </svg>
     );
   }
+  if (type === "quote") {
+    return (
+      <svg viewBox="0 0 28 28" aria-hidden="true">
+        <path d="M11 8c-3.2 1.6-5 4-5 7.2 0 2.7 1.8 4.8 4.2 4.8 2 0 3.5-1.4 3.5-3.4 0-1.9-1.4-3.2-3.3-3.2-.5 0-.9.1-1.3.2.4-1.6 1.5-2.9 3.2-4l-1.3-1.6ZM22 8c-3.2 1.6-5 4-5 7.2 0 2.7 1.8 4.8 4.2 4.8 2 0 3.5-1.4 3.5-3.4 0-1.9-1.4-3.2-3.3-3.2-.5 0-.9.1-1.3.2.4-1.6 1.5-2.9 3.2-4L22 8Z" />
+      </svg>
+    );
+  }
+  if (type === "speaker") {
+    return (
+      <svg viewBox="0 0 28 28" aria-hidden="true">
+        <path d="M4.5 11h5l8-6v18l-8-6h-5v-6Z" />
+        <path d="M20.5 10.5c1.2 1.2 1.9 2.7 1.9 4.5s-.7 3.3-1.9 4.5M23 7.8c2.1 2 3.1 4.4 3.1 7.2S25.1 20.2 23 22.2" />
+      </svg>
+    );
+  }
+  if (type === "target") {
+    return (
+      <svg viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="13" cy="15" r="8" />
+        <circle cx="13" cy="15" r="4" />
+        <path d="M13 15 24 4M18 4h6v6" />
+      </svg>
+    );
+  }
   return (
     <svg viewBox="0 0 28 28" aria-hidden="true">
       <path d="M5 9c0-4 3.8-7 9-7s9 3 9 7-3.8 7-9 7c-1.1 0-2.2-.1-3.2-.4L6 19v-5.7A6.2 6.2 0 0 1 5 9Z" />
       <path d="M10 9h.1M14 9h.1M18 9h.1" />
     </svg>
+  );
+}
+
+function SentencePatternHelpModal({ onClose }: { onClose: () => void }) {
+  const steps = [
+    {
+      icon: "quote",
+      title: "理解句型",
+      text: "先看句型结构和中文意思，理解在什么场景下使用。",
+    },
+    {
+      icon: "mic",
+      title: "点击麦克风，录音练习",
+      text: "看着中文提示，用英语说出句子，系统会录音并识别你的表达。",
+    },
+    {
+      icon: "speaker",
+      title: "查看反馈与推荐表达",
+      text: "录音结束后，查看你的表达、推荐表达和更地道的表达方式。",
+    },
+    {
+      icon: "star",
+      title: "收藏与复习",
+      text: "收藏重点句型，方便后续复习，加深记忆，灵活运用。",
+    },
+    {
+      icon: "target",
+      title: "持续练习，提升口语",
+      text: "每天坚持练习，积累100个高频句型，让表达更自然、自信！",
+    },
+  ] as const;
+
+  return (
+    <div className={styles.patternHelpBackdrop} role="presentation" onMouseDown={onClose}>
+      <section
+        className={styles.patternHelpDialog}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sentence-pattern-help-title"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          className={styles.patternHelpClose}
+          aria-label="关闭帮助"
+          onClick={onClose}
+        >
+          ×
+        </button>
+
+        <header className={styles.patternHelpHeader}>
+          <h2 id="sentence-pattern-help-title">100句句型学习指引</h2>
+          <p>跟着步骤练习，高效掌握实用句型</p>
+        </header>
+
+        <div className={styles.patternHelpSteps}>
+          {steps.map((step, index) => (
+            <article className={styles.patternHelpStep} key={step.title}>
+              <span className={styles.patternHelpStepIcon}>
+                <StatIcon type={step.icon} />
+              </span>
+              {index < steps.length - 1 ? (
+                <span className={styles.patternHelpStepArrow} aria-hidden="true">
+                  <ChevronIcon direction="down" />
+                </span>
+              ) : null}
+              <div className={styles.patternHelpStepCopy}>
+                <div className={styles.patternHelpStepTitle}>
+                  <span className={styles.patternHelpStepNumber}>{index + 1}</span>
+                  <strong>{step.title}</strong>
+                </div>
+                <p>{step.text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className={styles.patternHelpTip}>
+          <div className={styles.patternHelpTipTitle}>
+            <StatIcon type="bulb" />
+            <strong>小贴士</strong>
+          </div>
+          <ul>
+            <li>大胆开口，说错也没关系，练习是进步的关键！</li>
+            <li>多听推荐表达，学习更地道的表达方式。</li>
+            <li>重复练习，巩固记忆，让句型脱口而出！</li>
+          </ul>
+        </div>
+
+        <button type="button" className={styles.patternHelpConfirm} onClick={onClose}>
+          我知道了
+        </button>
+      </section>
+    </div>
   );
 }
 
@@ -455,6 +628,7 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
   const practiceId = usePracticeId(practiceCount);
   const { practice } = getPractice(level, patternId, practiceId);
   const [isRecording, setIsRecording] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const transcriptRef = useRef("");
   const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const finishAfterSilenceTimerRef = useRef<number | null>(null);
@@ -593,7 +767,12 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
   return (
     <main className={styles.studyPage} style={getToneStyle(level.tone)}>
       <section className={styles.studyPhone}>
-        <BrandHeader />
+        <BrandHeader
+          backHref={`/sentence-patterns/${level.id}`}
+          backIcon="arrow"
+          backLabel="返回100个句型二级菜单"
+          onHelpClick={() => setIsHelpOpen(true)}
+        />
 
         <Link href={`/sentence-patterns/${level.id}`} className={styles.courseCrumb}>
           <span>
@@ -679,6 +858,8 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
           <p>大胆开口，不用担心语法错误，先表达出来才是进步的第一步！</p>
         </div>
       </section>
+
+      {isHelpOpen ? <SentencePatternHelpModal onClose={() => setIsHelpOpen(false)} /> : null}
     </main>
   );
 }
@@ -690,7 +871,10 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
     ? Math.max(1, Math.floor(practiceParam))
     : 1;
   const { pattern, practice, practiceCount } = getPractice(level, patternId, practiceId);
-  const [userExpression, setUserExpression] = useState(practice.targetEnglish);
+  const userExpression =
+    readSavedTranscript(level.id, patternId, practiceId) ||
+    practice.targetEnglish;
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const nextPractice = practiceId >= practiceCount ? practiceId : practiceId + 1;
   const previousPractice = practiceId <= 1 ? practiceId : practiceId - 1;
   const progress = Math.round((practiceId / practiceCount) * 100);
@@ -700,19 +884,6 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
   const nextPatternHref = nextPattern
     ? `/sentence-patterns/${level.id}/${nextPattern.id}`
     : `/sentence-patterns/${level.id}/${patternId}`;
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      try {
-        const saved = window.sessionStorage.getItem(
-          sessionKey(level.id, patternId, practiceId)
-        );
-        if (saved?.trim()) setUserExpression(saved.trim());
-      } catch {}
-    }, 0);
-
-    return () => window.clearTimeout(timer);
-  }, [level.id, patternId, practiceId]);
 
   const variants = [
     {
@@ -744,7 +915,12 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
   return (
     <main className={styles.studyPage} style={getToneStyle(level.tone)}>
       <section className={styles.studyPhone}>
-        <BrandHeader />
+        <BrandHeader
+          backHref={`/sentence-patterns/${level.id}`}
+          backIcon="arrow"
+          backLabel="返回100个句型二级菜单"
+          onHelpClick={() => setIsHelpOpen(true)}
+        />
 
         <Link href={`/sentence-patterns/${level.id}`} className={styles.courseCrumb}>
           <span>
@@ -823,41 +999,33 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
           ))}
         </section>
 
-        <section className={styles.followCard}>
-          <div className={styles.followCopy}>
-            <span className={styles.followIcon}>
-              <StatIcon type="book" />
-            </span>
-            <strong>跟读练习</strong>
-            <p>听标准发音，跟读练习更地道</p>
-          </div>
-          <button type="button" onClick={() => speak(practice.recommended, SLOW_READ_RATE)}>
-            <StatIcon type="headphones" />
-            慢速朗读
-          </button>
+        <section className={styles.followCard} aria-label="句型练习底部操作栏">
           <Link
             href={`/sentence-patterns/${level.id}/${patternId}?practice=${previousPractice}`}
             className={styles.prevButton}
           >
-            ← 上一句
+            <ChevronIcon direction="left" />
+            <span>上一句</span>
           </Link>
           <button
             type="button"
-            className={styles.bigMic}
-            onClick={() => speak(practice.recommended)}
-            aria-label="点击跟读"
+            className={styles.slowReadButton}
+            onClick={() => speak(practice.recommended, SLOW_READ_RATE)}
           >
-            <StatIcon type="mic" />
+            <StatIcon type="headphones" />
+            <span>慢速朗读</span>
           </button>
           <Link
             href={`/sentence-patterns/${level.id}/${patternId}?practice=${nextPractice}`}
             className={styles.skipButton}
           >
-            下一句 →
+            <span>下一句</span>
+            <ChevronIcon />
           </Link>
-          <small>点击跟读</small>
         </section>
       </section>
+
+      {isHelpOpen ? <SentencePatternHelpModal onClose={() => setIsHelpOpen(false)} /> : null}
     </main>
   );
 }

@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import FreeStudyHelpModal from "@/components/FreeStudyHelpModal";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 
@@ -88,14 +89,6 @@ function WaveGlyph() {
   );
 }
 
-function CloseGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M5 5 19 19M19 5 5 19" />
-    </svg>
-  );
-}
-
 export default function FreeStudyPageThree({
   chineseText,
   headerAddon,
@@ -164,10 +157,52 @@ export default function FreeStudyPageThree({
           box-sizing: border-box;
         }
 
+        .sf-speak-page:has(.sf-free-confirm-page) {
+          min-height: 100dvh;
+          overflow: hidden;
+          background:
+            radial-gradient(circle at 50% 12%, rgba(246,232,255,.92), transparent 38%),
+            radial-gradient(circle at 78% 78%, rgba(230,217,255,.72), transparent 36%),
+            linear-gradient(180deg, #f5ecff 0%, #fbf8ff 45%, #f4eaff 100%);
+        }
+
+        .sf-speak-page:has(.sf-free-confirm-page) > div {
+          width: 100%;
+          max-width: none;
+          min-height: 100dvh;
+          padding: 0;
+        }
+
+        .sf-speak-page:has(.sf-free-confirm-page) .sf-speak-phone {
+          width: min(100vw, 430px);
+          max-width: 100vw;
+          height: 100dvh;
+          min-height: 100dvh;
+          max-height: none;
+          overflow: hidden;
+          border: 0;
+          border-radius: 0;
+          background: transparent;
+          box-shadow: none;
+        }
+
+        .sf-speak-page:has(.sf-free-confirm-page) .sf-speak-phone::before,
+        .sf-speak-page:has(.sf-free-confirm-page) .sf-speak-phone::after,
+        .sf-speak-page:has(.sf-free-confirm-page) .sf-speak-phone > .pointer-events-none {
+          display: none;
+        }
+
+        .sf-speak-page:has(.sf-free-confirm-page) .sf-speak-phone > .absolute:has(.sf-free-confirm-page) {
+          z-index: 120;
+        }
+
         .sf-free-confirm-page {
           position: absolute;
           inset: 0;
           z-index: 90;
+          width: 100%;
+          height: 100%;
+          min-height: 100%;
           overflow-y: auto;
           overflow-x: hidden;
           color: #101342;
@@ -180,16 +215,16 @@ export default function FreeStudyPageThree({
 
         .sf-free-confirm-frame {
           min-height: 100%;
-          padding: calc(env(safe-area-inset-top, 0px) + 1.45rem) clamp(1.4rem, 5vw, 1.85rem)
-            calc(env(safe-area-inset-bottom, 0px) + 1.35rem);
+          padding: calc(env(safe-area-inset-top, 0px) + 1.55rem) clamp(1.35rem, 5vw, 1.75rem)
+            calc(env(safe-area-inset-bottom, 0px) + 1.45rem);
         }
 
         .sf-free-confirm-header {
           display: grid;
-          grid-template-columns: 3.55rem minmax(0, 1fr) 3.55rem;
+          grid-template-columns: 3.45rem minmax(0, 1fr) 3.45rem;
           align-items: center;
-          gap: .72rem;
-          margin-bottom: clamp(2.3rem, 6dvh, 3.65rem);
+          gap: .66rem;
+          margin-bottom: clamp(2.1rem, 5.3dvh, 3.25rem);
         }
 
         .sf-free-confirm-home,
@@ -207,8 +242,8 @@ export default function FreeStudyPageThree({
 
         .sf-free-confirm-home,
         .sf-free-confirm-help {
-          width: 3.55rem;
-          height: 3.55rem;
+          width: 3.45rem;
+          height: 3.45rem;
         }
 
         .sf-free-confirm-home .sf-home-menu-icon,
@@ -234,15 +269,15 @@ export default function FreeStudyPageThree({
         }
 
         .sf-free-confirm-logo {
-          width: 3.28rem;
-          height: 3.28rem;
+          width: 3rem;
+          height: 3rem;
           display: grid;
           place-items: center;
         }
 
         .sf-free-confirm-logo svg {
-          width: 3.2rem;
-          height: 3.2rem;
+          width: 3rem;
+          height: 3rem;
         }
 
         .sf-free-confirm-brand-copy {
@@ -253,10 +288,11 @@ export default function FreeStudyPageThree({
 
         .sf-free-confirm-brand-title {
           color: #0b1244;
-          font-size: clamp(2rem, 8.5vw, 2.75rem);
+          font-size: clamp(1.95rem, 7.8vw, 2.55rem);
           font-weight: 950;
           line-height: .94;
           letter-spacing: 0;
+          white-space: nowrap;
         }
 
         .sf-free-confirm-brand-subtitle {
@@ -272,9 +308,9 @@ export default function FreeStudyPageThree({
           display: flex;
           align-items: center;
           gap: .78rem;
-          margin: 0 0 1.25rem;
+          margin: 0 0 1.15rem;
           color: #101342;
-          font-size: clamp(1.9rem, 7.6vw, 2.68rem);
+          font-size: clamp(1.9rem, 7.2vw, 2.45rem);
           font-weight: 950;
           line-height: 1.08;
           letter-spacing: 0;
@@ -291,15 +327,15 @@ export default function FreeStudyPageThree({
           border: 1px solid rgba(157,111,233,.12);
           border-radius: 1.9rem;
           background: rgba(255,255,255,.82);
-          min-height: clamp(13.5rem, 31dvh, 18.4rem);
-          padding: clamp(1.2rem, 4.8vw, 1.9rem);
+          min-height: clamp(13.8rem, 28.5dvh, 16.6rem);
+          padding: clamp(1.25rem, 4.7vw, 1.85rem);
           box-shadow: 0 18px 40px rgba(110,74,180,.1), inset 0 1px 0 rgba(255,255,255,.96);
         }
 
         .sf-free-confirm-card-head {
           display: flex;
           justify-content: flex-end;
-          margin-bottom: clamp(1.2rem, 4dvh, 2.2rem);
+          margin-bottom: clamp(1.45rem, 3.5dvh, 2.05rem);
         }
 
         .sf-free-confirm-edit {
@@ -309,7 +345,7 @@ export default function FreeStudyPageThree({
           border: 0;
           background: transparent;
           color: #8a54ee;
-          font-size: 1.12rem;
+          font-size: clamp(1.05rem, 4.1vw, 1.22rem);
           font-weight: 900;
           cursor: pointer;
         }
@@ -334,16 +370,16 @@ export default function FreeStudyPageThree({
         .sf-free-confirm-textarea {
           display: block;
           width: 100%;
-          max-height: 9.6rem;
+          max-height: 10.2rem;
           resize: none;
           border: 0;
           outline: 0;
           background: transparent;
           color: #101342;
           font: inherit;
-          font-size: clamp(2.2rem, 8.2vw, 3.05rem);
+          font-size: clamp(2.18rem, 8vw, 2.85rem);
           font-weight: 900;
-          line-height: 1.5;
+          line-height: 1.46;
           letter-spacing: 0;
         }
 
@@ -352,7 +388,7 @@ export default function FreeStudyPageThree({
           align-items: center;
           justify-content: center;
           gap: .72rem;
-          margin: 1rem 0 1.1rem;
+          margin: .95rem 0 1rem;
           color: rgba(48,48,93,.72);
           font-size: clamp(.96rem, 3.8vw, 1.2rem);
           font-weight: 650;
@@ -373,20 +409,20 @@ export default function FreeStudyPageThree({
 
         .sf-free-confirm-actions {
           display: grid;
-          grid-template-columns: minmax(0, .9fr) minmax(0, 1.35fr);
-          gap: .85rem;
-          margin-bottom: 1.15rem;
+          grid-template-columns: minmax(0, .9fr) minmax(0, 1.42fr);
+          gap: .88rem;
+          margin-bottom: 1.05rem;
         }
 
         .sf-free-confirm-retry,
         .sf-free-confirm-button {
           display: flex;
-          min-height: 4.2rem;
+          min-height: 3.95rem;
           align-items: center;
           justify-content: center;
-          gap: .72rem;
-          border-radius: 1.35rem;
-          font-size: clamp(1rem, 4vw, 1.28rem);
+          gap: .66rem;
+          border-radius: 1.32rem;
+          font-size: clamp(.98rem, 3.75vw, 1.22rem);
           font-weight: 900;
           cursor: pointer;
         }
@@ -415,7 +451,7 @@ export default function FreeStudyPageThree({
 
         .sf-free-record-divider {
           height: 1px;
-          margin: 0 0 1.25rem;
+          margin: 0 0 1.1rem;
           background-image: linear-gradient(90deg, transparent 0, transparent 2%, rgba(161,117,238,.34) 2%, rgba(161,117,238,.34) 4%, transparent 4%, transparent 7%);
           background-size: 1.4rem 1px;
         }
@@ -424,7 +460,7 @@ export default function FreeStudyPageThree({
           border: 1px solid rgba(157,111,233,.13);
           border-radius: 1.65rem;
           background: rgba(255,255,255,.72);
-          padding: 1.25rem 1.1rem;
+          padding: 1.15rem 1rem 1.1rem;
           text-align: center;
           box-shadow: 0 18px 42px rgba(111,78,182,.1), inset 0 1px 0 rgba(255,255,255,.95);
         }
@@ -437,10 +473,10 @@ export default function FreeStudyPageThree({
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: .72rem;
+          gap: .66rem;
           margin: 0;
           color: #8a54ee;
-          font-size: clamp(1.35rem, 5.6vw, 1.95rem);
+          font-size: clamp(1.32rem, 5.3vw, 1.82rem);
           font-weight: 950;
           line-height: 1.14;
         }
@@ -455,17 +491,17 @@ export default function FreeStudyPageThree({
         }
 
         .sf-free-record-panel > p {
-          margin: .42rem 0 0;
+          margin: .38rem 0 0;
           color: rgba(41,43,86,.72);
-          font-size: clamp(.96rem, 3.8vw, 1.18rem);
+          font-size: clamp(.94rem, 3.7vw, 1.12rem);
           font-weight: 650;
         }
 
         .sf-free-record-status {
           display: none;
-          margin-top: .85rem;
+          margin-top: .72rem;
           color: #8a54ee;
-          font-size: 1.18rem;
+          font-size: clamp(1.02rem, 4.3vw, 1.22rem);
           font-weight: 900;
         }
 
@@ -478,8 +514,8 @@ export default function FreeStudyPageThree({
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: clamp(1rem, 6vw, 2.1rem);
-          margin: 1.1rem 0 .95rem;
+          gap: clamp(.85rem, 5.6vw, 1.95rem);
+          margin: .95rem 0 .82rem;
         }
 
         .sf-free-record-wave {
@@ -498,7 +534,7 @@ export default function FreeStudyPageThree({
 
         .sf-free-record-mic {
           display: grid;
-          width: clamp(5.7rem, 24vw, 7.2rem);
+          width: clamp(5.35rem, 22vw, 6.7rem);
           aspect-ratio: 1;
           place-items: center;
           border: .55rem solid rgba(255,255,255,.82);
@@ -527,24 +563,24 @@ export default function FreeStudyPageThree({
           align-items: center;
           justify-content: center;
           gap: .55rem;
-          width: min(100%, 16rem);
-          min-height: 3.05rem;
+          width: min(100%, 16.4rem);
+          min-height: 2.9rem;
           border: 1px solid #9b63ef;
           border-radius: 999px;
           background: rgba(255,255,255,.74);
           color: #8353ef;
-          font-size: 1.05rem;
+          font-size: clamp(.96rem, 3.7vw, 1.06rem);
           font-weight: 850;
           cursor: pointer;
         }
 
         .sf-free-record-tip {
-          margin: 1.05rem auto 0;
+          margin: .9rem auto 0;
           border-radius: 1rem;
           background: rgba(240,232,255,.78);
-          padding: .9rem 1rem;
+          padding: .82rem .95rem;
           color: rgba(76,62,125,.72);
-          font-size: 1rem;
+          font-size: clamp(.92rem, 3.55vw, 1rem);
           font-weight: 650;
         }
 
@@ -776,34 +812,10 @@ export default function FreeStudyPageThree({
       </div>
 
       {isHelpOpen ? (
-        <div
-          className="sf-free-confirm-help-backdrop"
-          role="dialog"
-          aria-modal="true"
-          aria-label="自由学习帮助"
-          onClick={() => setIsHelpOpen(false)}
-        >
-          <section
-            className="sf-free-confirm-help-modal"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <header>
-              <h2>自由学习怎么练？</h2>
-              <button
-                type="button"
-                aria-label="关闭帮助"
-                onClick={() => setIsHelpOpen(false)}
-                className="sf-free-confirm-help-close"
-              >
-                <CloseGlyph />
-              </button>
-            </header>
-            <p>
-              先确认识别出的中文，再看着中文大胆说英文。说完以后，
-              SpeakFlow 会给你更自然、更地道、更简单和更口语的表达。
-            </p>
-          </section>
-        </div>
+        <FreeStudyHelpModal
+          onClose={() => setIsHelpOpen(false)}
+          onMenuClick={onMenuClick}
+        />
       ) : null}
     </section>
   );

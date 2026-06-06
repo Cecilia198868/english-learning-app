@@ -1,5 +1,3 @@
-import ClassicStudyLoadingShell from "./ClassicStudyLoadingShell";
-
 export default function Loading() {
-  return <ClassicStudyLoadingShell />;
+  return <main aria-hidden="true" className="sf-route-loading" />;
 }

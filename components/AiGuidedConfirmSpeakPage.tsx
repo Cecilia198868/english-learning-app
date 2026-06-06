@@ -1,7 +1,8 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
+import AiGuidedExpressionHelpModal from "@/components/AiGuidedExpressionHelpModal";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 
@@ -27,9 +28,9 @@ function getChineseCharacterCount(value: string) {
 
 function getChineseTextSize(value: string) {
   const count = getChineseCharacterCount(value);
-  if (count <= 16) return 1.42;
-  if (count <= 32) return 1.22;
-  if (count <= 52) return 1.05;
+  if (count <= 10) return 1.28;
+  if (count <= 22) return 1.18;
+  if (count <= 42) return 1.04;
   return 0.94;
 }
 
@@ -60,19 +61,54 @@ function RefreshGlyph() {
   );
 }
 
-function WaveGlyph() {
-  return (
-    <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-      <path d="M8 19v2M13 15v10M18 10v20M23 14v12M28 8v24M33 16v8" />
-    </svg>
-  );
-}
-
 function CheckGlyph() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path d="m5 12 5 5L20 7" />
     </svg>
+  );
+}
+
+function ShieldGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3 19 6v5.2c0 4.6-2.9 7.9-7 9.8-4.1-1.9-7-5.2-7-9.8V6l7-3Z" />
+      <path d="m8.5 12 2.2 2.2 4.8-5" />
+    </svg>
+  );
+}
+
+function SparkleGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 2.6 14.9 9l6.5 3-6.5 3-2.9 6.4L9.1 15l-6.5-3 6.5-3L12 2.6Z" />
+      <path d="m19 2.5.9 2.1 2.1.9-2.1.9L19 8.5l-.9-2.1-2.1-.9 2.1-.9.9-2.1Z" />
+    </svg>
+  );
+}
+
+function WaveIcon() {
+  return (
+    <span className="sf-ai-confirm-speak-title-wave" aria-hidden="true">
+      <span />
+      <span />
+      <span />
+      <span />
+      <span />
+    </span>
+  );
+}
+
+function WaveBars({ side }: { side: "left" | "right" }) {
+  return (
+    <span
+      className={`sf-ai-confirm-speak-wave-bars sf-ai-confirm-speak-wave-bars-${side}`}
+      aria-hidden="true"
+    >
+      {Array.from({ length: 7 }).map((_, index) => (
+        <span key={`${side}-${index}`} />
+      ))}
+    </span>
   );
 }
 
@@ -88,6 +124,7 @@ export default function AiGuidedConfirmSpeakPage({
   onStopEnglishRecording,
 }: AiGuidedConfirmSpeakPageProps) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const isRecordingEnglish = viewState === "recordingEnglish";
   const displayChineseText = chineseText.trim() || emptyChineseText;
   const chineseTextSize = getChineseTextSize(displayChineseText);
@@ -119,7 +156,7 @@ export default function AiGuidedConfirmSpeakPage({
   }
 
   function handleStartEnglishRecording() {
-    if (!chineseText.trim()) return;
+    if (!chineseText.trim() || isRecordingEnglish) return;
     onStartEnglishRecording();
   }
 
@@ -128,9 +165,7 @@ export default function AiGuidedConfirmSpeakPage({
       className={`sf-ai-confirm-speak-page ${
         isRecordingEnglish ? "is-recording-english" : "is-confirm-chinese"
       }`}
-      aria-label={
-        isRecordingEnglish ? "看着中文说英文" : "确认识别出的中文"
-      }
+      aria-label={isRecordingEnglish ? "看着中文说英文" : "确认识别出的中文"}
     >
       <style>{`
         .sf-ai-confirm-speak-page,
@@ -144,61 +179,79 @@ export default function AiGuidedConfirmSpeakPage({
           min-height: 100%;
           overflow-x: hidden;
           overflow-y: auto;
-          color: #08143f;
+          color: #080d33;
           background:
-            radial-gradient(circle at 18% 16%, rgba(219, 242, 255, 0.82), transparent 35%),
-            radial-gradient(circle at 82% 45%, rgba(237, 231, 255, 0.7), transparent 34%),
-            linear-gradient(180deg, #eef8ff 0%, #f8fbff 48%, #f4f8ff 100%);
+            radial-gradient(circle at 14% 12%, rgba(224, 244, 255, 0.82), transparent 32%),
+            radial-gradient(circle at 86% 40%, rgba(236, 229, 255, 0.7), transparent 34%),
+            linear-gradient(180deg, #eff9ff 0%, #fbfdff 47%, #f4f6ff 100%);
           font-family: var(--sf-font-zh, "PingFang SC", "Microsoft YaHei", sans-serif);
+          -webkit-font-smoothing: antialiased;
         }
 
         .sf-ai-confirm-speak-frame {
           position: relative;
           isolation: isolate;
-          width: 100%;
+          width: min(100%, 430px);
           min-height: 100%;
-          padding: calc(env(safe-area-inset-top, 0px) + 1.2rem) clamp(1.15rem, 5vw, 1.55rem)
-            calc(env(safe-area-inset-bottom, 0px) + 1.35rem);
+          margin: 0 auto;
+          padding: calc(env(safe-area-inset-top, 0px) + clamp(0.66rem, 2.5dvh, 1rem))
+            clamp(0.88rem, 4.5vw, 1.2rem)
+            calc(env(safe-area-inset-bottom, 0px) + 0.86rem);
           overflow: hidden;
         }
 
         .sf-ai-confirm-speak-frame::before {
           content: "";
           position: absolute;
-          inset: 0;
-          z-index: -2;
-          background:
-            radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.92), transparent 34%),
-            radial-gradient(circle at 50% 67%, rgba(141, 189, 255, 0.18), transparent 43%);
+          inset: 3.4rem -4rem auto;
+          z-index: -1;
+          height: 13rem;
+          border: 1px solid rgba(255, 255, 255, 0.68);
+          border-bottom: 0;
+          border-radius: 999px 999px 0 0;
+          opacity: 0.54;
         }
 
         .sf-ai-confirm-speak-header {
           display: grid;
-          grid-template-columns: 3rem minmax(0, 1fr) 3rem;
+          grid-template-columns: clamp(2.2rem, 10vw, 2.7rem) minmax(0, 1fr) clamp(2.2rem, 10vw, 2.7rem);
           align-items: center;
-          gap: 0.6rem;
-          min-height: 4.55rem;
+          gap: clamp(0.42rem, 2vw, 0.62rem);
+          min-height: clamp(2.5rem, 10.8vw, 3.15rem);
+        }
+
+        .sf-ai-confirm-speak-home,
+        .sf-ai-confirm-speak-help,
+        .sf-ai-confirm-speak-retry-button,
+        .sf-ai-confirm-speak-confirm-button,
+        .sf-ai-confirm-speak-mic,
+        .sf-ai-confirm-speak-stop-button {
+          border: 0;
+          padding: 0;
+          font: inherit;
+          cursor: pointer;
+          appearance: none;
+          -webkit-tap-highlight-color: transparent;
         }
 
         .sf-ai-confirm-speak-home,
         .sf-ai-confirm-speak-help {
           display: grid;
-          width: 3rem;
-          height: 3rem;
+          width: clamp(2.2rem, 10vw, 2.7rem);
+          height: clamp(2.2rem, 10vw, 2.7rem);
           place-items: center;
-          border: 0;
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.82);
-          color: #11162f;
+          background: rgba(255, 255, 255, 0.86);
+          color: #07103a;
           box-shadow:
-            0 14px 28px rgba(67, 101, 176, 0.14),
-            inset 0 1px 0 rgba(255, 255, 255, 0.95);
-          cursor: pointer;
-          transition: transform 160ms ease, box-shadow 160ms ease;
+            0 0.7rem 1.4rem rgba(72, 92, 149, 0.13),
+            inset 0 0 0 1px rgba(218, 226, 246, 0.78);
+          transition: transform 150ms ease;
         }
 
         .sf-ai-confirm-speak-home:active,
         .sf-ai-confirm-speak-help:active,
+        .sf-ai-confirm-speak-edit:active,
         .sf-ai-confirm-speak-retry-button:active,
         .sf-ai-confirm-speak-confirm-button:active,
         .sf-ai-confirm-speak-mic:active,
@@ -213,14 +266,14 @@ export default function AiGuidedConfirmSpeakPage({
         .sf-ai-confirm-speak-confirm-button:focus-visible,
         .sf-ai-confirm-speak-mic:focus-visible,
         .sf-ai-confirm-speak-stop-button:focus-visible {
-          outline: 3px solid rgba(61, 115, 255, 0.36);
-          outline-offset: 4px;
+          outline: 3px solid rgba(132, 88, 255, 0.34);
+          outline-offset: 3px;
         }
 
         .sf-ai-confirm-speak-home .sf-home-menu-icon,
         .sf-ai-confirm-speak-home .sf-home-menu-icon svg {
-          width: 1.95rem;
-          height: 1.95rem;
+          width: 58%;
+          height: 58%;
         }
 
         .sf-ai-confirm-speak-home .sf-home-menu-icon svg {
@@ -228,141 +281,163 @@ export default function AiGuidedConfirmSpeakPage({
           stroke: currentColor;
           stroke-linecap: round;
           stroke-linejoin: round;
-          stroke-width: 2.8;
+          stroke-width: 2.85;
         }
 
         .sf-ai-confirm-speak-help {
           justify-self: end;
-          font-size: 1.42rem;
-          font-weight: 900;
+          font-size: clamp(1rem, 4.8vw, 1.35rem);
+          font-weight: 950;
           line-height: 1;
         }
 
         .sf-ai-confirm-speak-brand {
-          display: flex;
           min-width: 0;
+          display: flex;
           align-items: center;
           justify-content: center;
-          gap: clamp(0.65rem, 2.4vw, 0.9rem);
+          gap: clamp(0.32rem, 1.7vw, 0.48rem);
         }
 
         .sf-ai-confirm-speak-logo {
           display: grid;
-          width: 3.1rem;
-          height: 3.1rem;
+          width: clamp(1.55rem, 7.6vw, 2rem);
+          height: clamp(1.55rem, 7.6vw, 2rem);
           flex: 0 0 auto;
           place-items: center;
-          border-radius: 1.18rem;
+          border-radius: 0.62rem;
           background: rgba(255, 255, 255, 0.92);
-          box-shadow: 0 18px 34px rgba(91, 118, 201, 0.15);
+          box-shadow: inset 0 0 0 1px rgba(224, 218, 255, 0.72);
         }
 
         .sf-ai-confirm-speak-logo-mark {
-          width: 72%;
-          height: 72%;
+          width: 78%;
+          height: 78%;
         }
 
         .sf-ai-confirm-speak-brand-copy {
-          display: flex;
           min-width: 0;
+          display: flex;
           flex-direction: column;
+          align-items: flex-start;
+          line-height: 1;
         }
 
         .sf-ai-confirm-speak-brand-title {
-          color: #08133f;
-          font-size: 1.95rem;
-          font-weight: 950;
+          max-width: 100%;
+          color: #07103a;
+          font-size: clamp(0.98rem, 4.35vw, 1.28rem);
+          font-weight: 1000;
           letter-spacing: 0;
-          line-height: 0.94;
+          line-height: 0.95;
+          white-space: nowrap;
         }
 
         .sf-ai-confirm-speak-brand-subtitle {
-          margin-top: 0.32rem;
-          color: #3473f4 !important;
-          font-size: 0.72rem;
-          font-weight: 760;
-          letter-spacing: 0;
+          margin-top: 0.18rem;
+          color: #4e62ff !important;
+          font-size: clamp(0.38rem, 1.85vw, 0.54rem);
+          font-weight: 900;
+          letter-spacing: 0.16em;
           line-height: 1;
+          white-space: nowrap;
+        }
+
+        .sf-ai-confirm-speak-addon {
+          margin-top: 0.36rem;
         }
 
         .sf-ai-confirm-speak-content {
           display: flex;
           flex-direction: column;
-          min-height: calc(100% - 6rem);
-          padding-top: clamp(1.6rem, 5dvh, 2.7rem);
+          min-height: calc(100dvh - 5.1rem);
+          padding-top: clamp(0.78rem, 3.4dvh, 1.25rem);
         }
 
         .sf-ai-confirm-speak-title {
           margin: 0;
-          color: #08133f;
-          font-size: clamp(1.9rem, 9vw, 2.65rem);
+          display: flex;
+          align-items: center;
+          gap: 0.42rem;
+          color: #07103a;
+          font-size: clamp(1.12rem, 5.2vw, 1.36rem);
           font-weight: 950;
           letter-spacing: 0;
-          line-height: 1.08;
-          text-align: center;
-          text-shadow: 0 18px 44px rgba(52, 109, 255, 0.12);
+          line-height: 1.12;
+          text-align: left;
+        }
+
+        .sf-ai-confirm-speak-title svg {
+          width: 1.22rem;
+          height: 1.22rem;
+          fill: #875cff;
+          flex: 0 0 auto;
+          filter: drop-shadow(0 0.32rem 0.6rem rgba(142, 98, 255, 0.18));
         }
 
         .sf-ai-confirm-speak-chinese-card {
           position: relative;
-          margin-top: 1.05rem;
-          border: 1px solid rgba(201, 218, 255, 0.92);
-          border-radius: 1.35rem;
-          background:
-            radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.95), transparent 44%),
-            linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 252, 255, 0.86));
+          margin-top: clamp(0.65rem, 2.8dvh, 0.95rem);
+          min-height: clamp(7.1rem, 28dvh, 9.2rem);
+          border: 1px solid rgba(214, 224, 247, 0.9);
+          border-radius: clamp(0.9rem, 4vw, 1.15rem);
+          background: rgba(255, 255, 255, 0.78);
           box-shadow:
-            0 24px 56px rgba(67, 101, 176, 0.13),
+            0 1rem 2.4rem rgba(81, 96, 156, 0.11),
             inset 0 1px 0 rgba(255, 255, 255, 0.96);
-          padding: 1rem;
+          padding: clamp(0.75rem, 3.2vw, 0.96rem);
+          backdrop-filter: blur(16px);
         }
 
         .sf-ai-confirm-speak-card-head {
           display: flex;
           align-items: center;
           justify-content: flex-end;
+          min-height: 1.35rem;
         }
 
         .sf-ai-confirm-speak-edit {
           display: inline-flex;
           align-items: center;
-          gap: 0.36rem;
+          gap: 0.28rem;
           border: 0;
           border-radius: 999px;
-          background: rgba(232, 240, 255, 0.82);
-          color: #2f6fff;
-          padding: 0.42rem 0.7rem;
-          font-size: 0.82rem;
-          font-weight: 820;
+          background: rgba(239, 243, 255, 0.84);
+          color: #754dff;
+          padding: 0.25rem 0.5rem;
+          font-size: clamp(0.58rem, 2.65vw, 0.7rem);
+          font-weight: 900;
+          line-height: 1;
           cursor: pointer;
         }
 
         .sf-ai-confirm-speak-edit svg {
-          width: 1rem;
-          height: 1rem;
+          width: 0.8rem;
+          height: 0.8rem;
           fill: none;
           stroke: currentColor;
           stroke-linecap: round;
           stroke-linejoin: round;
-          stroke-width: 2.1;
+          stroke-width: 2.25;
         }
 
         .sf-ai-confirm-speak-textarea {
           width: 100%;
-          min-height: 7.6rem;
-          max-height: 12rem;
-          margin-top: 0.66rem;
+          min-height: clamp(4.8rem, 16dvh, 6.2rem);
+          max-height: clamp(6.3rem, 22dvh, 8rem);
+          margin-top: 0.34rem;
           border: 0;
           background: transparent;
-          color: #08133f;
+          color: #070d34;
           resize: none;
-          text-align: center;
+          text-align: left;
           font: inherit;
           font-size: var(--sf-ai-confirm-speak-chinese-size);
-          font-weight: 850;
+          font-weight: 920;
           letter-spacing: 0;
-          line-height: 1.35;
+          line-height: 1.55;
           outline: none;
+          padding: 0.18rem clamp(0.38rem, 2.8vw, 1.15rem);
         }
 
         .sf-ai-confirm-speak-textarea::placeholder {
@@ -370,80 +445,118 @@ export default function AiGuidedConfirmSpeakPage({
         }
 
         .sf-ai-confirm-speak-card-note {
-          margin: 0.55rem 0 0;
-          color: rgba(58, 70, 113, 0.68);
-          font-size: 0.84rem;
-          font-weight: 560;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.42rem;
+          margin: clamp(0.46rem, 2dvh, 0.68rem) 0 0;
+          color: rgba(61, 67, 110, 0.64);
+          font-size: clamp(0.61rem, 2.8vw, 0.73rem);
+          font-weight: 720;
           line-height: 1.35;
           text-align: center;
         }
 
+        .sf-ai-confirm-speak-card-note svg {
+          width: 1.02rem;
+          height: 1.02rem;
+          flex: 0 0 auto;
+          fill: url(#sf-ai-confirm-shield-gradient);
+          stroke: #ffffff;
+          stroke-width: 1.8;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          filter: drop-shadow(0 0.35rem 0.72rem rgba(118, 90, 255, 0.22));
+        }
+
         .sf-ai-confirm-speak-actions {
           display: grid;
-          grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-          gap: 0.72rem;
-          margin-top: 1rem;
+          grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.22fr);
+          gap: clamp(0.48rem, 2.4vw, 0.72rem);
+          margin-top: clamp(0.62rem, 2.7dvh, 0.82rem);
         }
 
         .sf-ai-confirm-speak-retry-button,
-        .sf-ai-confirm-speak-confirm-button,
-        .sf-ai-confirm-speak-stop-button {
+        .sf-ai-confirm-speak-confirm-button {
+          min-width: 0;
+          min-height: clamp(2.58rem, 10.5vw, 3.05rem);
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 0.45rem;
-          min-height: 3.35rem;
-          border: 0;
-          border-radius: 1rem;
-          font-weight: 850;
+          gap: 0.38rem;
+          border-radius: 0.86rem;
+          font-weight: 920;
           letter-spacing: 0;
-          cursor: pointer;
-          box-shadow: 0 15px 30px rgba(67, 101, 176, 0.13);
+          line-height: 1.16;
+          box-shadow:
+            0 0.82rem 1.7rem rgba(76, 92, 151, 0.11),
+            inset 0 1px 0 rgba(255, 255, 255, 0.92);
+          transition: opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease;
         }
 
         .sf-ai-confirm-speak-retry-button {
           background: rgba(255, 255, 255, 0.84);
-          color: #30517d;
-          font-size: 0.94rem;
+          color: #08103a;
+          font-size: clamp(0.73rem, 3.35vw, 0.88rem);
         }
 
         .sf-ai-confirm-speak-confirm-button {
-          background: linear-gradient(135deg, #43b8ff 0%, #1f66ff 100%);
+          background: linear-gradient(135deg, #c686ff 0%, #7a54ff 100%);
           color: #fff !important;
-          font-size: 0.9rem;
-          line-height: 1.18;
-          padding-inline: 0.62rem;
+          font-size: clamp(0.64rem, 2.9vw, 0.78rem);
+          padding-inline: 0.48rem;
+          text-align: center;
+          box-shadow:
+            0 0.9rem 1.9rem rgba(124, 86, 255, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.52);
         }
 
-        .sf-ai-confirm-speak-confirm-button:disabled {
-          cursor: not-allowed;
-          opacity: 0.58;
+        .sf-ai-confirm-speak-confirm-button:disabled,
+        .sf-ai-confirm-speak-confirm-button.is-recording-disabled {
+          cursor: default;
+          color: rgba(123, 96, 190, 0.56) !important;
+          background: rgba(255, 255, 255, 0.54);
+          box-shadow: inset 0 0 0 1px rgba(193, 169, 255, 0.58);
         }
 
         .sf-ai-confirm-speak-retry-button svg,
-        .sf-ai-confirm-speak-confirm-button svg,
-        .sf-ai-confirm-speak-stop-button svg {
-          width: 1.1rem;
-          height: 1.1rem;
+        .sf-ai-confirm-speak-confirm-button svg {
+          width: clamp(0.96rem, 4.2vw, 1.14rem);
+          height: clamp(0.96rem, 4.2vw, 1.14rem);
           fill: none;
           stroke: currentColor;
           stroke-linecap: round;
           stroke-linejoin: round;
-          stroke-width: 2.35;
+          stroke-width: 2.45;
+          flex: 0 0 auto;
+        }
+
+        .sf-ai-confirm-speak-divider {
+          margin: clamp(0.7rem, 3.2dvh, 0.96rem) 0 clamp(0.55rem, 2.5dvh, 0.78rem);
+          border-top: 2px dashed rgba(185, 162, 245, 0.42);
         }
 
         .sf-ai-confirm-speak-record-panel {
           position: relative;
-          margin-top: 1.1rem;
-          border: 1px solid rgba(207, 222, 252, 0.88);
-          border-radius: 1.4rem;
-          background: rgba(255, 255, 255, 0.76);
+          border: 1px solid rgba(217, 224, 247, 0.9);
+          border-radius: clamp(0.95rem, 4.6vw, 1.28rem);
+          background: rgba(255, 255, 255, 0.74);
           box-shadow:
-            0 20px 46px rgba(67, 101, 176, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.94);
-          padding: 1.05rem 1rem 1.1rem;
+            0 1.05rem 2.35rem rgba(86, 99, 153, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.96);
+          padding: clamp(0.78rem, 3.3vw, 0.98rem) clamp(0.7rem, 3.4vw, 1rem);
           text-align: center;
+          overflow: hidden;
           transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+        }
+
+        .sf-ai-confirm-speak-record-panel::before {
+          content: "";
+          position: absolute;
+          inset: auto 8% -25% 8%;
+          height: 8rem;
+          background: radial-gradient(circle, rgba(169, 133, 255, 0.13), transparent 67%);
+          pointer-events: none;
         }
 
         .sf-ai-confirm-speak-record-panel-idle {
@@ -452,109 +565,115 @@ export default function AiGuidedConfirmSpeakPage({
 
         .sf-ai-confirm-speak-record-panel-active {
           opacity: 1;
-          transform: translateY(-0.15rem);
           box-shadow:
-            0 26px 58px rgba(44, 63, 181, 0.18),
-            inset 0 1px 0 rgba(255, 255, 255, 0.96);
-        }
-
-        .sf-ai-confirm-speak-record-kicker {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.42rem;
-          margin: 0;
-          color: #286bff;
-          font-size: 0.86rem;
-          font-weight: 820;
-          line-height: 1.2;
-        }
-
-        .sf-ai-confirm-speak-record-kicker svg {
-          width: 1rem;
-          height: 1rem;
-          fill: none;
-          stroke: currentColor;
-          stroke-linecap: round;
-          stroke-width: 2.4;
+            0 1.22rem 2.8rem rgba(114, 91, 214, 0.16),
+            inset 0 1px 0 rgba(255, 255, 255, 0.98);
         }
 
         .sf-ai-confirm-speak-record-title {
-          margin: 0.45rem 0 0;
-          color: #08133f;
-          font-size: 1.48rem;
+          position: relative;
+          z-index: 1;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.45rem;
+          color: #8b61ff;
+          font-size: clamp(0.9rem, 4.1vw, 1.08rem);
           font-weight: 950;
-          line-height: 1.12;
+          line-height: 1.18;
+        }
+
+        .sf-ai-confirm-speak-record-title > svg {
+          width: 1rem;
+          height: 1rem;
+          fill: currentColor;
+          flex: 0 0 auto;
+        }
+
+        .sf-ai-confirm-speak-record-panel-idle .sf-ai-confirm-speak-record-title {
+          color: rgba(70, 69, 107, 0.66);
+          font-size: clamp(0.88rem, 3.9vw, 1.02rem);
+          line-height: 1.3;
         }
 
         .sf-ai-confirm-speak-record-copy {
-          margin: 0.4rem 0 0;
-          color: rgba(54, 68, 110, 0.7);
-          font-size: 0.92rem;
-          font-weight: 560;
+          position: relative;
+          z-index: 1;
+          margin: 0.28rem 0 0;
+          color: rgba(54, 62, 106, 0.68);
+          font-size: clamp(0.62rem, 2.85vw, 0.74rem);
+          font-weight: 720;
           line-height: 1.32;
         }
 
-        .sf-ai-confirm-speak-record-status {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.44rem;
-          margin: 0.72rem 0 0;
-          color: #265dff;
-          font-size: 0.96rem;
-          font-weight: 850;
-          line-height: 1.2;
+        .sf-ai-confirm-speak-listening-copy {
+          position: relative;
+          z-index: 1;
+          margin: 0.48rem 0 0;
+          color: #9a61ff;
+          font-size: clamp(0.76rem, 3.35vw, 0.9rem);
+          font-weight: 900;
+          line-height: 1.15;
         }
 
-        .sf-ai-confirm-speak-wave-mini {
+        .sf-ai-confirm-speak-title-wave {
           display: inline-flex;
           align-items: center;
-          gap: 0.14rem;
-          height: 1.2rem;
+          gap: 0.1rem;
+          height: 1rem;
+          color: #b080ff;
         }
 
-        .sf-ai-confirm-speak-wave-mini span {
-          display: block;
-          width: 0.18rem;
+        .sf-ai-confirm-speak-title-wave span {
+          width: 0.12rem;
           border-radius: 999px;
           background: currentColor;
-          animation: sf-ai-confirm-speak-wave 1.08s ease-in-out infinite;
+          animation: sf-ai-confirm-speak-wave 860ms ease-in-out infinite;
         }
 
-        .sf-ai-confirm-speak-wave-mini span:nth-child(2) {
-          animation-delay: 100ms;
-        }
+        .sf-ai-confirm-speak-title-wave span:nth-child(1),
+        .sf-ai-confirm-speak-title-wave span:nth-child(5) { height: 0.38rem; }
+        .sf-ai-confirm-speak-title-wave span:nth-child(2),
+        .sf-ai-confirm-speak-title-wave span:nth-child(4) { height: 0.72rem; animation-delay: 90ms; }
+        .sf-ai-confirm-speak-title-wave span:nth-child(3) { height: 1rem; animation-delay: 180ms; }
 
-        .sf-ai-confirm-speak-wave-mini span:nth-child(3) {
-          animation-delay: 200ms;
+        .sf-ai-confirm-speak-mic-area {
+          position: relative;
+          z-index: 1;
+          min-height: clamp(5.35rem, 22vw, 6.35rem);
+          margin-top: clamp(0.55rem, 2.4vw, 0.76rem);
+          display: grid;
+          place-items: center;
         }
 
         .sf-ai-confirm-speak-mic-wrap {
           position: relative;
           display: grid;
-          width: min(56vw, 12.5rem);
+          width: clamp(4.4rem, 19vw, 5.3rem);
           aspect-ratio: 1;
           place-items: center;
-          margin: 0.95rem auto 0;
         }
 
         .sf-ai-confirm-speak-mic-wrap::before,
         .sf-ai-confirm-speak-mic-wrap::after {
           content: "";
           position: absolute;
-          inset: -0.52rem;
+          inset: -0.44rem;
           border-radius: 999px;
-          background: radial-gradient(circle, rgba(95, 105, 255, 0.16), transparent 66%);
+          background: rgba(170, 133, 255, 0.1);
+          pointer-events: none;
         }
 
         .sf-ai-confirm-speak-mic-wrap::after {
-          inset: -1.2rem;
-          border: 1px solid rgba(98, 116, 255, 0.13);
+          inset: -0.92rem;
+          border: 1px solid rgba(162, 139, 255, 0.14);
           background: transparent;
         }
 
         .sf-ai-confirm-speak-record-panel-active .sf-ai-confirm-speak-mic-wrap::before {
           animation: sf-ai-confirm-speak-pulse 1.75s ease-in-out infinite;
+          background: rgba(170, 103, 255, 0.16);
         }
 
         .sf-ai-confirm-speak-record-panel-active .sf-ai-confirm-speak-mic-wrap::after {
@@ -568,196 +687,261 @@ export default function AiGuidedConfirmSpeakPage({
           width: 100%;
           height: 100%;
           place-items: center;
-          border: 0;
           border-radius: 999px;
-          background: linear-gradient(135deg, #d9e9ff 0%, #edf4ff 100%);
-          color: rgba(64, 100, 170, 0.46);
-          cursor: pointer;
+          background: linear-gradient(135deg, #f3f6ff 0%, #e4e8ff 100%);
+          color: rgba(118, 123, 151, 0.54);
           box-shadow:
-            0 16px 40px rgba(67, 101, 176, 0.12),
-            inset 0 1px 0 rgba(255, 255, 255, 0.96);
+            0 0.74rem 1.6rem rgba(96, 105, 158, 0.1),
+            inset 0 0 0 0.28rem rgba(255, 255, 255, 0.78);
         }
 
         .sf-ai-confirm-speak-mic-active {
-          background: linear-gradient(135deg, #6d4cff 0%, #3157ff 55%, #111a8f 100%);
-          color: #fff;
+          background:
+            radial-gradient(circle at 33% 22%, rgba(255, 255, 255, 0.52), transparent 18%),
+            linear-gradient(135deg, #b56cff 0%, #744dff 52%, #3042e6 100%);
+          color: #ffffff;
           box-shadow:
-            0 24px 54px rgba(47, 70, 214, 0.38),
-            inset 0 1px 0 rgba(255, 255, 255, 0.34);
+            0 1rem 2.2rem rgba(101, 70, 226, 0.32),
+            inset 0 0 0 0.3rem rgba(255, 255, 255, 0.88);
         }
 
         .sf-ai-confirm-speak-mic svg {
-          width: 44%;
-          height: 44%;
+          width: 48%;
+          height: 48%;
           fill: none;
           stroke: currentColor;
           stroke-linecap: round;
           stroke-linejoin: round;
-          stroke-width: 3.4;
+          stroke-width: 3.75;
         }
 
-        .sf-ai-confirm-speak-record-wave {
+        .sf-ai-confirm-speak-wave-bars {
           position: absolute;
           top: 50%;
-          width: 3.5rem;
-          height: 4.8rem;
+          width: clamp(3rem, 14vw, 3.85rem);
+          height: clamp(2.7rem, 12vw, 3.45rem);
           transform: translateY(-50%);
-          opacity: 0.2;
-          color: #567cff;
-          background:
-            linear-gradient(90deg, transparent 0 8%, currentColor 8% 13%, transparent 13% 21%, currentColor 21% 29%, transparent 29% 38%, currentColor 38% 45%, transparent 45% 56%, currentColor 56% 63%, transparent 63% 74%, currentColor 74% 80%, transparent 80% 100%);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: rgba(159, 188, 255, 0.42);
+          pointer-events: none;
+        }
+
+        .sf-ai-confirm-speak-wave-bars-left {
+          right: calc(50% + clamp(2.85rem, 13vw, 3.6rem));
+        }
+
+        .sf-ai-confirm-speak-wave-bars-right {
+          left: calc(50% + clamp(2.85rem, 13vw, 3.6rem));
+        }
+
+        .sf-ai-confirm-speak-wave-bars span {
+          width: 0.14rem;
           border-radius: 999px;
-          filter: blur(0.2px);
+          background: currentColor;
+          animation: sf-ai-confirm-speak-wave 1.1s ease-in-out infinite;
         }
 
-        .sf-ai-confirm-speak-record-panel-active .sf-ai-confirm-speak-record-wave {
-          opacity: 0.33;
-          animation: sf-ai-confirm-speak-wave-float 1.7s ease-in-out infinite;
+        .sf-ai-confirm-speak-wave-bars span:nth-child(1),
+        .sf-ai-confirm-speak-wave-bars span:nth-child(7) { height: 24%; }
+        .sf-ai-confirm-speak-wave-bars span:nth-child(2),
+        .sf-ai-confirm-speak-wave-bars span:nth-child(6) { height: 48%; animation-delay: 100ms; }
+        .sf-ai-confirm-speak-wave-bars span:nth-child(3),
+        .sf-ai-confirm-speak-wave-bars span:nth-child(5) { height: 72%; animation-delay: 200ms; }
+        .sf-ai-confirm-speak-wave-bars span:nth-child(4) { height: 100%; animation-delay: 300ms; }
+
+        .sf-ai-confirm-speak-record-panel-active .sf-ai-confirm-speak-wave-bars {
+          color: rgba(145, 97, 255, 0.58);
         }
 
-        .sf-ai-confirm-speak-record-wave-left {
-          right: calc(50% + min(28vw, 6.25rem));
-        }
-
-        .sf-ai-confirm-speak-record-wave-right {
-          left: calc(50% + min(28vw, 6.25rem));
+        .sf-ai-confirm-speak-record-panel-idle .sf-ai-confirm-speak-wave-bars span,
+        .sf-ai-confirm-speak-record-panel-idle .sf-ai-confirm-speak-title-wave span {
+          animation: none;
         }
 
         .sf-ai-confirm-speak-stop-button {
-          width: min(100%, 18.5rem);
-          min-height: 3.55rem;
-          margin-top: 0.95rem;
-          background: linear-gradient(135deg, #35b8ff 0%, #245dff 100%);
-          color: #fff !important;
-          font-size: 1.02rem;
+          position: relative;
+          z-index: 1;
+          width: min(100%, 13rem);
+          min-height: clamp(2rem, 8.5vw, 2.34rem);
+          margin-top: clamp(0.42rem, 1.9vw, 0.62rem);
+          border: 1px solid rgba(155, 104, 255, 0.76);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.68);
+          color: #8a54ff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.34rem;
+          font-size: clamp(0.66rem, 3vw, 0.78rem);
+          font-weight: 900;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .sf-ai-confirm-speak-stop-button.is-idle {
+          color: rgba(120, 106, 156, 0.52);
+          border-color: rgba(174, 153, 222, 0.42);
+          cursor: default;
+        }
+
+        .sf-ai-confirm-speak-stop-button svg {
+          width: 0.96rem;
+          height: 0.96rem;
+          fill: none;
+          stroke: currentColor;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-width: 3;
         }
 
         .sf-ai-confirm-speak-tip {
-          margin: 0.72rem 0 0;
-          color: rgba(42, 54, 91, 0.68);
-          font-size: 0.85rem;
-          font-weight: 560;
-          line-height: 1.35;
+          position: relative;
+          z-index: 1;
+          width: min(100%, 17.6rem);
+          margin: clamp(0.48rem, 2vw, 0.62rem) auto 0;
+          border-radius: 999px;
+          background: rgba(237, 238, 255, 0.72);
+          color: rgba(85, 72, 132, 0.72);
+          padding: 0.45rem 0.7rem;
+          font-size: clamp(0.6rem, 2.65vw, 0.72rem);
+          font-weight: 760;
+          line-height: 1.2;
+        }
+
+        .sf-ai-confirm-speak-tip svg {
+          display: inline-block;
+          width: 0.76rem;
+          height: 0.76rem;
+          margin-right: 0.24rem;
+          fill: #a36eff;
+          vertical-align: -0.1rem;
+        }
+
+        .sf-ai-confirm-speak-hidden-gradient {
+          position: absolute;
+          width: 0;
+          height: 0;
+          pointer-events: none;
+        }
+
+        html[data-app-theme] body .sf-ai-confirm-speak-page .sf-ai-confirm-speak-confirm-button:not(:disabled):not(.is-recording-disabled),
+        html[data-app-theme] body .sf-ai-confirm-speak-page .sf-ai-confirm-speak-confirm-button:not(:disabled):not(.is-recording-disabled) * {
+          color: #ffffff !important;
         }
 
         @keyframes sf-ai-confirm-speak-wave {
-          0%,
-          100% {
-            transform: scaleY(0.56);
-            opacity: 0.6;
+          0%, 100% {
+            transform: scaleY(0.58);
+            opacity: 0.68;
           }
-
           50% {
-            transform: scaleY(1.12);
+            transform: scaleY(1);
             opacity: 1;
           }
         }
 
         @keyframes sf-ai-confirm-speak-pulse {
-          0%,
-          100% {
+          0%, 100% {
             transform: scale(0.96);
             opacity: 0.62;
           }
-
           50% {
-            transform: scale(1.06);
+            transform: scale(1.08);
             opacity: 1;
           }
         }
 
-        @keyframes sf-ai-confirm-speak-wave-float {
-          0%,
-          100% {
-            transform: translateY(-50%) scaleY(0.86);
-          }
-
-          50% {
-            transform: translateY(-50%) scaleY(1.08);
-          }
-        }
-
-        @media (max-width: 480px) {
+        @media (max-height: 720px) {
           .sf-ai-confirm-speak-frame {
-            padding-inline: 1.05rem;
-          }
-
-          .sf-ai-confirm-speak-header {
-            grid-template-columns: 2.8rem minmax(0, 1fr) 2.8rem;
-          }
-
-          .sf-ai-confirm-speak-home,
-          .sf-ai-confirm-speak-help {
-            width: 2.8rem;
-            height: 2.8rem;
-          }
-
-          .sf-ai-confirm-speak-logo {
-            width: 2.8rem;
-            height: 2.8rem;
-            border-radius: 0.95rem;
-          }
-
-          .sf-ai-confirm-speak-brand-title {
-            font-size: 1.72rem;
-          }
-
-          .sf-ai-confirm-speak-brand-subtitle {
-            font-size: 0.68rem;
+            padding-top: calc(env(safe-area-inset-top, 0px) + 0.54rem);
+            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.64rem);
           }
 
           .sf-ai-confirm-speak-content {
-            padding-top: 1.45rem;
-          }
-
-          .sf-ai-confirm-speak-textarea {
-            min-height: 6.6rem;
-          }
-
-          .sf-ai-confirm-speak-actions {
-            gap: 0.58rem;
-          }
-
-          .sf-ai-confirm-speak-retry-button {
-            font-size: 0.86rem;
-          }
-
-          .sf-ai-confirm-speak-confirm-button {
-            font-size: 0.82rem;
-          }
-
-          .sf-ai-confirm-speak-record-title {
-            font-size: 1.34rem;
-          }
-        }
-
-        @media (max-height: 760px) {
-          .sf-ai-confirm-speak-content {
-            padding-top: 1.05rem;
+            padding-top: 0.58rem;
           }
 
           .sf-ai-confirm-speak-chinese-card {
-            margin-top: 0.75rem;
+            min-height: 6.45rem;
+            margin-top: 0.54rem;
+            padding-top: 0.62rem;
+            padding-bottom: 0.62rem;
           }
 
           .sf-ai-confirm-speak-textarea {
-            min-height: 5.8rem;
+            min-height: 4.05rem;
+            max-height: 5.15rem;
+            line-height: 1.42;
+          }
+
+          .sf-ai-confirm-speak-card-note {
+            margin-top: 0.38rem;
           }
 
           .sf-ai-confirm-speak-actions {
-            margin-top: 0.76rem;
+            margin-top: 0.5rem;
+          }
+
+          .sf-ai-confirm-speak-divider {
+            margin-top: 0.58rem;
+            margin-bottom: 0.48rem;
           }
 
           .sf-ai-confirm-speak-record-panel {
-            margin-top: 0.82rem;
-            padding-block: 0.82rem 0.9rem;
+            padding-top: 0.66rem;
+            padding-bottom: 0.72rem;
+          }
+
+          .sf-ai-confirm-speak-mic-area {
+            min-height: 4.85rem;
+            margin-top: 0.38rem;
           }
 
           .sf-ai-confirm-speak-mic-wrap {
-            width: min(48vw, 10.2rem);
+            width: 4.1rem;
+          }
+
+          .sf-ai-confirm-speak-tip {
+            margin-top: 0.42rem;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .sf-ai-confirm-speak-frame {
+            padding-inline: 0.72rem;
+          }
+
+          .sf-ai-confirm-speak-brand-title {
+            font-size: 0.92rem;
+          }
+
+          .sf-ai-confirm-speak-brand-subtitle {
+            font-size: 0.35rem;
+          }
+
+          .sf-ai-confirm-speak-actions {
+            gap: 0.4rem;
+          }
+
+          .sf-ai-confirm-speak-retry-button {
+            font-size: 0.68rem;
+          }
+
+          .sf-ai-confirm-speak-confirm-button {
+            font-size: 0.6rem;
           }
         }
       `}</style>
+
+      <svg className="sf-ai-confirm-speak-hidden-gradient" aria-hidden="true">
+        <defs>
+          <linearGradient id="sf-ai-confirm-shield-gradient" x1="0" x2="1">
+            <stop offset="0" stopColor="#b083ff" />
+            <stop offset="1" stopColor="#6b4bff" />
+          </linearGradient>
+        </defs>
+      </svg>
 
       <div className="sf-ai-confirm-speak-frame">
         <header className="sf-ai-confirm-speak-header">
@@ -789,15 +973,23 @@ export default function AiGuidedConfirmSpeakPage({
             type="button"
             aria-label="查看帮助"
             className="sf-ai-confirm-speak-help"
+            aria-haspopup="dialog"
+            aria-expanded={isHelpOpen}
+            onClick={() => setIsHelpOpen(true)}
           >
             ?
           </button>
         </header>
 
-        {headerAddon}
+        {headerAddon ? (
+          <div className="sf-ai-confirm-speak-addon">{headerAddon}</div>
+        ) : null}
 
         <main className="sf-ai-confirm-speak-content">
-          <h1 className="sf-ai-confirm-speak-title">你想表达的是：</h1>
+          <h1 className="sf-ai-confirm-speak-title">
+            <SparkleGlyph />
+            <span>你想表达的是：</span>
+          </h1>
 
           <section className="sf-ai-confirm-speak-chinese-card">
             <div className="sf-ai-confirm-speak-card-head">
@@ -812,39 +1004,43 @@ export default function AiGuidedConfirmSpeakPage({
             </div>
             <textarea
               ref={textareaRef}
-              aria-label="识别出的中文，可编辑"
+              aria-label="识别出的中文，可以编辑"
               className="sf-ai-confirm-speak-textarea"
               placeholder={emptyChineseText}
               style={chineseTextStyle}
               value={chineseText}
               onChange={(event) => onEditChinese(event.target.value)}
             />
-            <p className="sf-ai-confirm-speak-card-note">
-              这是我们听到的内容，你可以修改后再确认
-            </p>
           </section>
 
-          {!isRecordingEnglish ? (
-            <section className="sf-ai-confirm-speak-actions">
-              <button
-                type="button"
-                className="sf-ai-confirm-speak-retry-button"
-                onClick={onRetryChinese}
-              >
-                <RefreshGlyph />
-                <span>重新说中文</span>
-              </button>
-              <button
-                type="button"
-                className="sf-ai-confirm-speak-confirm-button"
-                onClick={handleStartEnglishRecording}
-                disabled={!chineseText.trim()}
-              >
-                <CheckGlyph />
-                <span>确认，点击麦克风说英文</span>
-              </button>
-            </section>
-          ) : null}
+          <p className="sf-ai-confirm-speak-card-note">
+            <ShieldGlyph />
+            <span>这是我们听到的内容，你可以修改后再确认</span>
+          </p>
+
+          <section className="sf-ai-confirm-speak-actions">
+            <button
+              type="button"
+              className="sf-ai-confirm-speak-retry-button"
+              onClick={onRetryChinese}
+            >
+              <RefreshGlyph />
+              <span>重新说中文</span>
+            </button>
+            <button
+              type="button"
+              className={`sf-ai-confirm-speak-confirm-button ${
+                isRecordingEnglish ? "is-recording-disabled" : ""
+              }`}
+              onClick={handleStartEnglishRecording}
+              disabled={!chineseText.trim() || isRecordingEnglish}
+            >
+              <CheckGlyph />
+              <span>确认，点击麦克风说英文</span>
+            </button>
+          </section>
+
+          <div className="sf-ai-confirm-speak-divider" />
 
           <section
             className={`sf-ai-confirm-speak-record-panel ${
@@ -860,21 +1056,23 @@ export default function AiGuidedConfirmSpeakPage({
           >
             {isRecordingEnglish ? (
               <>
-                <p className="sf-ai-confirm-speak-record-kicker">
-                  <WaveGlyph />
-                  <span>正在听你说...</span>
-                </p>
                 <h2 className="sf-ai-confirm-speak-record-title">
-                  看着中文，说英文
+                  <WaveIcon />
+                  <span>看着中文，说英文</span>
+                  <WaveIcon />
                 </h2>
                 <p className="sf-ai-confirm-speak-record-copy">
                   可以不完美，大胆说出来
+                </p>
+                <p className="sf-ai-confirm-speak-listening-copy">
+                  正在听你说...
                 </p>
               </>
             ) : (
               <>
                 <h2 className="sf-ai-confirm-speak-record-title">
-                  确认后，就可以看着中文说英文
+                  <SparkleGlyph />
+                  <span>确认后，就可以看着中文说英文</span>
                 </h2>
                 <p className="sf-ai-confirm-speak-record-copy">
                   下方麦克风会在确认后亮起
@@ -882,62 +1080,60 @@ export default function AiGuidedConfirmSpeakPage({
               </>
             )}
 
-            <div className="sf-ai-confirm-speak-mic-wrap">
-              <span
-                aria-hidden="true"
-                className="sf-ai-confirm-speak-record-wave sf-ai-confirm-speak-record-wave-left"
-              />
-              <button
-                type="button"
-                aria-label={
-                  isRecordingEnglish
-                    ? "点击麦克风结束录音"
-                    : "确认后可开始英文录音"
-                }
-                className={`sf-ai-confirm-speak-mic ${
-                  isRecordingEnglish ? "sf-ai-confirm-speak-mic-active" : ""
-                }`}
-                onClick={
-                  isRecordingEnglish ? onStopEnglishRecording : undefined
-                }
-              >
-                <MicGlyph />
-              </button>
-              <span
-                aria-hidden="true"
-                className="sf-ai-confirm-speak-record-wave sf-ai-confirm-speak-record-wave-right"
-              />
-            </div>
-
-            {isRecordingEnglish ? (
-              <>
-                <p className="sf-ai-confirm-speak-record-status">
-                  <span
-                    aria-hidden="true"
-                    className="sf-ai-confirm-speak-wave-mini"
-                  >
-                    <span style={{ height: "0.55rem" }} />
-                    <span style={{ height: "1rem" }} />
-                    <span style={{ height: "0.72rem" }} />
-                  </span>
-                  <span>正在听你说...</span>
-                </p>
+            <div className="sf-ai-confirm-speak-mic-area">
+              <WaveBars side="left" />
+              <div className="sf-ai-confirm-speak-mic-wrap">
                 <button
                   type="button"
-                  className="sf-ai-confirm-speak-stop-button"
-                  onClick={onStopEnglishRecording}
+                  aria-label={
+                    isRecordingEnglish
+                      ? "点击麦克风结束录音"
+                      : "确认后可开始英文录音"
+                  }
+                  className={`sf-ai-confirm-speak-mic ${
+                    isRecordingEnglish ? "sf-ai-confirm-speak-mic-active" : ""
+                  }`}
+                  onClick={
+                    isRecordingEnglish ? onStopEnglishRecording : undefined
+                  }
+                  disabled={!isRecordingEnglish}
                 >
                   <MicGlyph />
-                  <span>点击麦克风结束录音</span>
                 </button>
-                <p className="sf-ai-confirm-speak-tip">
-                  说完后，AI 会给你更自然的英文表达
-                </p>
-              </>
+              </div>
+              <WaveBars side="right" />
+            </div>
+
+            <button
+              type="button"
+              className={`sf-ai-confirm-speak-stop-button ${
+                isRecordingEnglish ? "" : "is-idle"
+              }`}
+              onClick={isRecordingEnglish ? onStopEnglishRecording : undefined}
+              disabled={!isRecordingEnglish}
+            >
+              <MicGlyph />
+              <span>
+                {isRecordingEnglish
+                  ? "点击麦克风结束录音"
+                  : "点击麦克风开始说英文"}
+              </span>
+            </button>
+
+            {isRecordingEnglish ? (
+              <p className="sf-ai-confirm-speak-tip">
+                <SparkleGlyph />
+                <span>说完后，AI 会给你更自然的英文表达</span>
+              </p>
             ) : null}
           </section>
         </main>
       </div>
+
+      <AiGuidedExpressionHelpModal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+      />
     </section>
   );
 }
