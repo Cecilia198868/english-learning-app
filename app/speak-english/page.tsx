@@ -4589,6 +4589,7 @@ function SpeakEnglishClient() {
     setPrimingPracticeStage("english");
     setPracticeStage("english");
     setNativeSpeech(suggestion);
+    setMessage(suggestion);
     setIsNativeSpeechConfirmed(true);
     resetAuthoritativeEnglish();
     setHasNativeSpeech(true);
@@ -4809,16 +4810,21 @@ function SpeakEnglishClient() {
     }, 0);
   }
 
-  function saveFreeStudyRouteState(nextUserEnglishText = message) {
+  function saveFreeStudyRouteState(
+    nextUserEnglishText = message,
+    options: { nativeSpeech?: string } = {}
+  ) {
     if (typeof window === "undefined") return;
 
     const savedNativeSpeech =
       readFreeStudyRouteState()?.nativeSpeech?.trim() || "";
+    const nextNativeSpeech =
+      options.nativeSpeech?.trim() || nativeSpeech.trim() || savedNativeSpeech;
 
     window.sessionStorage.setItem(
       freeStudyRouteStateStorageKey,
       JSON.stringify({
-        nativeSpeech: nativeSpeech.trim() || savedNativeSpeech,
+        nativeSpeech: nextNativeSpeech,
         userEnglishText: nextUserEnglishText.trim(),
       } satisfies FreeStudyRouteState)
     );
@@ -4949,7 +4955,7 @@ function SpeakEnglishClient() {
     if (!suggestedSpeech || isLoadingGuidedFollowup) return;
 
     aiGuidedFollowPracticePendingRef.current = true;
-    saveFreeStudyRouteState("");
+    saveFreeStudyRouteState("", { nativeSpeech: suggestedSpeech });
     handledStepRouteRef.current = `/ai-guided-expression/step-4:${suggestedSpeech}`;
     router.push("/ai-guided-expression/step-4");
     startAiGuidedStepFourEnglishRound(suggestedSpeech);
