@@ -14,6 +14,11 @@ import type {
   SentencePatternSection,
   SentencePatternTone,
 } from "@/data/sentencePatterns";
+import { playPreRecordedAudio, stopPreRecordedAudio } from "@/lib/preRecordedAudioClient";
+import {
+  getSentencePatternAudioUrl,
+  type SentencePatternAudioVariantKey,
+} from "@/lib/preRecordedCourseAudio";
 import styles from "./SentencePatternPages.module.css";
 
 type StudyProps = {
@@ -642,6 +647,7 @@ const SLOW_READ_RATE = 0.5;
 function speak(text: string, rate = NORMAL_READ_RATE) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
 
+  stopPreRecordedAudio();
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "en-US";
@@ -931,30 +937,52 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
 
   const variants = [
     {
+      audioKey: "recommended",
       icon: "star",
       label: "推荐表达",
       text: practice.recommended,
       tone: "featured",
     },
     {
+      audioKey: "idiomatic",
       icon: "utensils",
       label: "更地道",
       text: practice.idiomatic,
       tone: "orange",
     },
     {
+      audioKey: "simple",
       icon: "car",
       label: "更简单",
       text: practice.simple,
       tone: "blue",
     },
     {
+      audioKey: "natural",
       icon: "plusChat",
       label: "更自然",
       text: practice.natural,
       tone: "green",
     },
   ] as const;
+
+  function playPatternAudio(
+    variantKey: SentencePatternAudioVariantKey,
+    text: string,
+    rate = NORMAL_READ_RATE
+  ) {
+    playPreRecordedAudio({
+      fallback: () => speak(text, rate),
+      playbackRate: rate,
+      url: getSentencePatternAudioUrl(level.id, patternId, practiceId, variantKey),
+    });
+  }
+
+  useEffect(() => {
+    return () => {
+      stopPreRecordedAudio();
+    };
+  }, []);
 
   return (
     <main className={styles.studyPage} style={getToneStyle(level.tone)}>
@@ -1036,7 +1064,11 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
                   />
                 </p>
               </div>
-              <button type="button" onClick={() => speak(variant.text)} aria-label={`播放${variant.label}`}>
+              <button
+                type="button"
+                onClick={() => playPatternAudio(variant.audioKey, variant.text)}
+                aria-label={`播放${variant.label}`}
+              >
                 <StatIcon type="speaker" />
               </button>
             </article>
@@ -1054,7 +1086,7 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
           <button
             type="button"
             className={styles.slowReadButton}
-            onClick={() => speak(practice.recommended, SLOW_READ_RATE)}
+            onClick={() => playPatternAudio("recommended", practice.recommended, SLOW_READ_RATE)}
           >
             <StatIcon type="headphones" />
             <span>慢速朗读</span>

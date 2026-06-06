@@ -11,6 +11,11 @@ import FreeUsageMeter from "@/components/FreeUsageMeter";
 import PlayIcon from "@/components/PlayIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
+import { playPreRecordedAudio, stopPreRecordedAudio } from "@/lib/preRecordedAudioClient";
+import {
+  getClassicSceneAudioUrl,
+  type ClassicSceneAudioVariantKey,
+} from "@/lib/preRecordedCourseAudio";
 import {
   featuredLessonRecords,
   getFeaturedLessonById,
@@ -961,6 +966,7 @@ export default function StudyPage() {
     setIsAutoPlaying(false);
     isSequencePlayingRef.current = false;
     setIsSequencePlaying(false);
+    stopPreRecordedAudio();
     window.speechSynthesis.cancel();
     clearSequenceTimer();
     stopClipPlayback(resetClip);
@@ -1211,12 +1217,28 @@ export default function StudyPage() {
     );
   }
 
-  function speakEnglish(text: string, rate = 1, onEnd?: () => void) {
+  function speakEnglish(
+    text: string,
+    rate = 1,
+    onEnd?: () => void,
+    preRecordedAudioUrl?: string | null
+  ) {
     if (!text) {
       if (onEnd) onEnd();
       return;
     }
 
+    if (preRecordedAudioUrl) {
+      playPreRecordedAudio({
+        fallback: () => speakEnglish(text, rate, onEnd),
+        onEnd,
+        playbackRate: normalizeSpeechRate(rate),
+        url: preRecordedAudioUrl,
+      });
+      return;
+    }
+
+    stopPreRecordedAudio();
     window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
@@ -1237,13 +1259,26 @@ export default function StudyPage() {
     window.speechSynthesis.speak(utterance);
   }
 
+  function getClassicCourseAudioUrl(
+    sentenceIndex = currentIndex,
+    variantKey: ClassicSceneAudioVariantKey = "line"
+  ) {
+    if (!isClassicSceneLessonId(lessonId) || isMyCourseLesson) return null;
+    return getClassicSceneAudioUrl(lessonId, sentenceIndex, variantKey);
+  }
+
   function readExpressionVariant(
     variant: ExpressionVariant,
     variantIndex: number,
     rate = 1
   ) {
     setSelectedExpressionIndex(variantIndex);
-    speakEnglish(variant.text, rate);
+    speakEnglish(
+      variant.text,
+      rate,
+      undefined,
+      getClassicCourseAudioUrl(currentIndex, variant.key)
+    );
   }
 
   function moveToSentence(index: number) {
@@ -1408,13 +1443,18 @@ export default function StudyPage() {
 
     setIsClipPlaying(false);
     setMessage("自动播放中");
-    speakEnglish(pair.english || "", 1, () => {
-      if (!autoPlayRef.current || !isSequencePlayingRef.current) return;
-      const nextIndex = index + 1;
-      queueNextAutoSentence(nextIndex, (targetIndex) => {
-        void playAutoSentenceAtIndex(targetIndex);
-      });
-    });
+    speakEnglish(
+      pair.english || "",
+      1,
+      () => {
+        if (!autoPlayRef.current || !isSequencePlayingRef.current) return;
+        const nextIndex = index + 1;
+        queueNextAutoSentence(nextIndex, (targetIndex) => {
+          void playAutoSentenceAtIndex(targetIndex);
+        });
+      },
+      getClassicCourseAudioUrl(index)
+    );
   }
 
   async function startAutoPlay() {
@@ -1574,6 +1614,7 @@ export default function StudyPage() {
     return () => {
       window.speechSynthesis.onvoiceschanged = null;
       window.speechSynthesis.cancel();
+      stopPreRecordedAudio();
       clearAutoTimer();
       isSequencePlayingRef.current = false;
       clearSequenceTimer();
@@ -3053,7 +3094,14 @@ export default function StudyPage() {
               <button
                 type="button"
                 className={styles.slowReadButton}
-                onClick={() => speakEnglish(selectedReadText, SLOW_READ_RATE)}
+                onClick={() =>
+                  speakEnglish(
+                    selectedReadText,
+                    SLOW_READ_RATE,
+                    undefined,
+                    getClassicCourseAudioUrl(currentIndex, selectedExpression.key)
+                  )
+                }
                 aria-label="播放指定句子的慢速朗读"
               >
                 <HeadphonesIcon />
@@ -3385,7 +3433,14 @@ export default function StudyPage() {
                 <button
                   type="button"
                   aria-label="播放朗读"
-                  onClick={() => speakEnglish(selectedExpression.text, 1)}
+                  onClick={() =>
+                    speakEnglish(
+                      selectedExpression.text,
+                      1,
+                      undefined,
+                      getClassicCourseAudioUrl(currentIndex, selectedExpression.key)
+                    )
+                  }
                   className="sf-study-action-text sf-study-read-button ml-auto flex h-10 min-w-[2.9rem] items-center justify-center rounded-[15px] px-1 text-[0.82rem] font-extrabold text-[#201833] transition hover:bg-white/30"
                 >
                   朗读
@@ -3427,7 +3482,14 @@ export default function StudyPage() {
                 <button
                   type="button"
                   aria-label="慢速朗读"
-                  onClick={() => speakEnglish(selectedExpression.text, SLOW_READ_RATE)}
+                  onClick={() =>
+                    speakEnglish(
+                      selectedExpression.text,
+                      SLOW_READ_RATE,
+                      undefined,
+                      getClassicCourseAudioUrl(currentIndex, selectedExpression.key)
+                    )
+                  }
                   className="sf-study-action-text sf-study-slow-button mr-auto flex h-10 min-w-[4rem] items-center justify-center rounded-[15px] px-1 text-[0.76rem] font-extrabold text-[#201833] transition hover:bg-white/30"
                 >
                   慢速朗读
@@ -3464,7 +3526,14 @@ export default function StudyPage() {
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
-                  onClick={() => speakEnglish(currentPair.english, 1)}
+                  onClick={() =>
+                    speakEnglish(
+                      currentPair.english,
+                      1,
+                      undefined,
+                      getClassicCourseAudioUrl(currentIndex)
+                    )
+                  }
                   className="rounded-[14px] bg-[#f7f4ff] px-3 py-2 text-sm font-bold"
                 >
                   朗读英文
