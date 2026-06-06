@@ -135,19 +135,6 @@ function hasExpressionStudyActivity(word: VocabularyWord) {
   );
 }
 
-function getExpressionKindLabel(word: VocabularyWord | null) {
-  if (!word) return "新表达";
-
-  const label = word.partOfSpeech.trim();
-  if (!label) return "新表达";
-
-  if (label === "word") return "单词";
-  if (label === "phrase") return "短语";
-  if (label === "sentence") return "句子";
-
-  return label;
-}
-
 function getExpressionStatusLabel(word: VocabularyWord, todayKey: string) {
   if (word.status === "mastered") return "已掌握";
   if (word.nextReviewAt !== null && word.nextReviewAt <= todayKey) return "待复习";
@@ -671,62 +658,6 @@ function WordIllustration() {
   );
 }
 
-function ExampleIllustration() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 250 210">
-      <defs>
-        <linearGradient id="vocabChatBubble" x1="163" x2="231" y1="15" y2="82">
-          <stop stopColor="#b9a7ff" />
-          <stop offset="1" stopColor="#6f5ce7" />
-        </linearGradient>
-        <linearGradient id="vocabNotebook" x1="80" x2="183" y1="93" y2="185">
-          <stop stopColor="#ffffff" />
-          <stop offset="1" stopColor="#eeeaff" />
-        </linearGradient>
-      </defs>
-      <circle cx="147" cy="123" r="81" fill="#ece9ff" />
-      <path
-        d="M178 20h34c24 0 44 18 44 41s-20 41-44 41h-5l-2 19-23-24c-19-7-32-20-32-36 0-23 20-41 44-41Z"
-        fill="url(#vocabChatBubble)"
-      />
-      <circle cx="187" cy="59" r="5" fill="#fff" opacity=".92" />
-      <circle cx="207" cy="59" r="5" fill="#fff" opacity=".92" />
-      <circle cx="227" cy="59" r="5" fill="#fff" opacity=".92" />
-      <path
-        d="M65 85c2-12 13-20 25-18l87 16c12 2 20 13 18 25l-13 72c-2 12-13 20-25 18l-87-16c-12-2-20-13-18-25l13-72Z"
-        fill="#8176df"
-      />
-      <path
-        d="M57 78c2-12 13-20 25-18l87 16c12 2 20 13 18 25l-13 72c-2 12-13 20-25 18l-87-16c-12-2-20-13-18-25l13-72Z"
-        fill="url(#vocabNotebook)"
-      />
-      <path
-        d="M83 102c23 4 47 9 70 13M78 126c19 4 39 7 58 11M74 150c30 5 60 11 91 16"
-        fill="none"
-        stroke="#d9d6ee"
-        strokeLinecap="round"
-        strokeWidth="6"
-      />
-      <path
-        d="M90 62c1-9 10-15 19-13 9 1 15 10 13 19M119 67c1-9 10-15 19-13 9 1 15 10 13 19M148 72c1-9 10-15 19-13 9 1 15 10 13 19"
-        fill="none"
-        stroke="#59518f"
-        strokeLinecap="round"
-        strokeWidth="8"
-      />
-      <path
-        d="m190 159 38 20 17-58c2-8-2-16-10-18s-16 2-19 10l-26 46Z"
-        fill="#7165d9"
-      />
-      <path d="m213 117 26 8" stroke="#c9c2ff" strokeLinecap="round" strokeWidth="8" />
-      <path
-        d="m48 169 2.8 7.4 7.4 2.8-7.4 2.8-2.8 7.4-2.8-7.4-7.4-2.8 7.4-2.8 2.8-7.4Zm214-30 2 5.4 5.4 2-5.4 2-2 5.4-2-5.4-5.4-2 5.4-2 2-5.4Z"
-        fill="#a494ff"
-      />
-    </svg>
-  );
-}
-
 function HighlightedExample({ sentence }: { sentence: string }) {
   return <InteractiveExpressionText sourceSentence={sentence} text={sentence} />;
 }
@@ -922,7 +853,6 @@ export default function VocabularyPage() {
   const displayedMeaningText = displayedExpression
     ? getExpressionNativeMeaning(displayedExpression)
     : "";
-  const displayedExpressionKindLabel = getExpressionKindLabel(displayedExpression);
   const speechText = useMemo(() => {
     if (!displayedExpression) return "";
 
@@ -968,9 +898,14 @@ export default function VocabularyPage() {
   const progressStyle = {
     "--sf-vocabulary-progress": `${Math.max(studiedExpressionPercent, displayedExpression ? 3 : 0)}%`,
   } as CSSProperties;
+  const currentExpressionPosition = displayedExpression ? currentIndex + 1 : 0;
   const hasPrevious = currentIndex > 0;
   const hasNext = currentIndex < words.length - 1;
   const isAccountPro = hasProAccess(accountSubscriptionStatus);
+  const shouldRenderExpressionLimitModal =
+    showExpressionLimitModal &&
+    hasLoadedAccountSubscription &&
+    !isAccountPro;
   const remainingDailyFreeCount = Math.max(
     0,
     FREE_EXPRESSION_LEARNING_LIMIT - expressionLearningUsageCount
@@ -1757,7 +1692,6 @@ export default function VocabularyPage() {
           >
             <ChartStatIcon />
             <span>学习成果</span>
-            <ArrowRightIcon />
           </button>
         </header>
 
@@ -1777,25 +1711,37 @@ export default function VocabularyPage() {
           {displayedExpression ? (
             <>
               <section className="sf-vocabulary-study-card sf-vocabulary-word-card">
+                <div className="sf-vocabulary-card-actions" aria-label="表达播放控制">
+                  <button
+                    type="button"
+                    aria-label={`播放表达 ${displayedExpressionText}`}
+                    className="sf-vocabulary-audio-button sf-vocabulary-card-audio-button"
+                    onClick={() => playCurrentExpressionText(displayedExpressionText)}
+                  >
+                    <SpeakerIcon />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={`0.5x 慢速播放表达 ${displayedExpressionText}`}
+                    className="sf-vocabulary-card-slow-button"
+                    onClick={() =>
+                      playCurrentExpressionText(displayedExpressionText, SLOW_READ_RATE)
+                    }
+                    disabled={!displayedExpressionText}
+                  >
+                    <strong>0.5x</strong>
+                    <span>慢速</span>
+                  </button>
+                </div>
                 <div className="sf-vocabulary-card-copy">
                   <span className="sf-vocabulary-saved-pill">
                     <StarIcon />
-                    新表达
+                    已收藏
                   </span>
                   <div className="sf-vocabulary-word-line">
                     <h2>{displayedExpressionText}</h2>
-                    <button
-                      type="button"
-                      aria-label={`播放表达 ${displayedExpressionText}`}
-                      className="sf-vocabulary-audio-button"
-                      onClick={() => playCurrentExpressionText(displayedExpressionText)}
-                    >
-                      <SpeakerIcon />
-                    </button>
                   </div>
-                  <div className="sf-vocabulary-expression-meta">
-                    <span>{displayedExpressionKindLabel}</span>
-                  </div>
+                  <i className="sf-vocabulary-word-accent" aria-hidden="true" />
                   <div className="sf-vocabulary-label">
                     <MeaningIcon />
                     <span>中文含义</span>
@@ -1808,6 +1754,36 @@ export default function VocabularyPage() {
               </section>
 
               <section className="sf-vocabulary-study-card sf-vocabulary-example-card">
+                <div className="sf-vocabulary-card-actions" aria-label="例句播放控制">
+                  <button
+                    type="button"
+                    aria-label="播放例句"
+                    className="sf-vocabulary-audio-button sf-vocabulary-card-audio-button"
+                    onClick={() =>
+                      playCurrentExpressionText(
+                        displayedExampleText || displayedExpressionText
+                      )
+                    }
+                    disabled={!displayedExampleText && !displayedExpressionText}
+                  >
+                    <SpeakerIcon />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="0.5x 慢速播放例句"
+                    className="sf-vocabulary-card-slow-button"
+                    onClick={() =>
+                      playCurrentExpressionText(
+                        displayedExampleText || displayedExpressionText,
+                        SLOW_READ_RATE
+                      )
+                    }
+                    disabled={!displayedExampleText && !displayedExpressionText}
+                  >
+                    <strong>0.5x</strong>
+                    <span>慢速</span>
+                  </button>
+                </div>
                 <div className="sf-vocabulary-card-copy">
                   <span className="sf-vocabulary-example-pill">
                     <QuoteIcon />
@@ -1821,19 +1797,6 @@ export default function VocabularyPage() {
                         "这个表达还没有例句。"
                       )}
                     </h2>
-                    <button
-                      type="button"
-                      aria-label="播放例句"
-                      className="sf-vocabulary-audio-button"
-                      onClick={() =>
-                        playCurrentExpressionText(
-                          displayedExampleText || displayedExpressionText
-                        )
-                      }
-                      disabled={!displayedExampleText && !displayedExpressionText}
-                    >
-                      <SpeakerIcon />
-                    </button>
                   </div>
                   <i className="sf-vocabulary-card-rule" />
                   <div className="sf-vocabulary-label">
@@ -1845,10 +1808,7 @@ export default function VocabularyPage() {
                       (isExampleTranslationLoading
                         ? "中文例句生成中..."
                         : "翻译待补充")}
-                  </p>
-                </div>
-                <div className="sf-vocabulary-card-art">
-                  <ExampleIllustration />
+                    </p>
                 </div>
               </section>
             </>
@@ -1878,12 +1838,15 @@ export default function VocabularyPage() {
                 <span>
                   总表达数 <strong>{totalExpressionCount}</strong> 个
                 </span>
-                <span>
-                  已学习 <strong>{studiedExpressionCount}</strong> / {totalExpressionCount} 个 ({studiedExpressionPercent}%)
-                </span>
               </div>
               <div className="sf-vocabulary-progress-bar" aria-hidden="true">
                 <i />
+              </div>
+              <div className="sf-vocabulary-progress-position">
+                <span>
+                  第 <strong>{currentExpressionPosition}</strong> / {totalExpressionCount} 个
+                </span>
+                <strong>{learningStats.progress}%</strong>
               </div>
             </div>
 
@@ -1914,10 +1877,16 @@ export default function VocabularyPage() {
               </article>
             </div>
 
-            <p className="sf-vocabulary-progress-note">
-              <LightbulbIcon />
-              小贴士：点击麦克风开始跟读，熟练后可以效果更佳哦！
-            </p>
+            <div className="sf-vocabulary-progress-master-row">
+              <p>达到掌握标准的表达会自动归入「已掌握」</p>
+              <button
+                type="button"
+                onClick={() => recordCurrentExpressionAction("mastered")}
+                disabled={!displayedExpression}
+              >
+                我已掌握
+              </button>
+            </div>
           </section>
         </div>
 
@@ -2040,7 +2009,7 @@ export default function VocabularyPage() {
         ) : null}
       </section>
 
-      {showExpressionLimitModal ? (
+      {shouldRenderExpressionLimitModal ? (
         <ExpressionLearningLimitModal
           onDismiss={() => setShowExpressionLimitModal(false)}
           onLogin={openLoginFromExpressionLimit}
