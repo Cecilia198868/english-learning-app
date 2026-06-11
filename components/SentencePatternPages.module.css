@@ -3785,6 +3785,7 @@
 .overviewHeader ~ .levelStack .levelTitleRow strong {
   font-size: 1.25rem !important;
   line-height: 1.04 !important;
+  white-space: nowrap !important;
 }
 
 .overviewHeader ~ .levelStack .levelSubtitle {
@@ -3806,8 +3807,8 @@
 .overviewHeader ~ .levelStack .levelArt {
   top: 3.35rem !important;
   right: 0.25rem !important;
-  width: 37.5% !important;
-  max-width: 8.85rem !important;
+  width: 31.9% !important;
+  max-width: 7.5rem !important;
 }
 
 .overviewHeader ~ .levelStack .cardChevron {
@@ -3836,7 +3837,7 @@
   }
 
   .overviewHeader ~ .levelStack .levelArt {
-    width: 36.5% !important;
-    max-width: 8rem !important;
+    width: 31% !important;
+    max-width: 6.8rem !important;
   }
 }
