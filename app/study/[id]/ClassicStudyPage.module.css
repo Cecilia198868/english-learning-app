@@ -9062,3 +9062,81 @@
 .classicPhone.resultPhone.studyPhone .variantText {
   max-width: 100% !important;
 }
+
+/* Final header lock: match the subscribed learning home header. */
+.classicTopbar,
+.studyTopbar,
+.resultPhone .classicTopbar {
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column, 4.375rem)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column, 4.375rem) !important;
+  align-items: center !important;
+  gap: var(--sf-learning-header-gap, 0.5rem) !important;
+  width: 100% !important;
+  height: var(--sf-learning-header-height, 3.625rem) !important;
+  min-height: var(--sf-learning-header-height, 3.625rem) !important;
+  max-height: var(--sf-learning-header-height, 3.625rem) !important;
+  padding: 0 0.65rem !important;
+}
+
+.classicTopbar .menuButton,
+.classicTopbar .avatarButton,
+.studyTopbar .menuButton,
+.studyTopbar .avatarButton {
+  display: grid !important;
+  place-items: center !important;
+  width: var(--sf-learning-header-control, 3.375rem) !important;
+  min-width: var(--sf-learning-header-control, 3.375rem) !important;
+  height: var(--sf-learning-header-control, 3.375rem) !important;
+  min-height: var(--sf-learning-header-control, 3.375rem) !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+
+.classicTopbar .menuButton svg,
+.classicTopbar .avatarButton svg,
+.studyTopbar .menuButton svg,
+.studyTopbar .avatarButton svg {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+.classicTopbar .brand,
+.studyTopbar .brand {
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+.classicTopbar .brandIcon,
+.studyTopbar .brandIcon {
+  width: var(--sf-learning-header-logo, 3.125rem) !important;
+  min-width: var(--sf-learning-header-logo, 3.125rem) !important;
+  height: var(--sf-learning-header-logo, 3.125rem) !important;
+}
+
+.classicTopbar .brandTitle,
+.studyTopbar .brandTitle {
+  font-size: var(--sf-learning-header-title, 1.88rem) !important;
+  line-height: 0.96 !important;
+  letter-spacing: 0 !important;
+}
+
+.classicTopbar .brandSubtitle,
+.studyTopbar .brandSubtitle {
+  margin-top: 0.22rem !important;
+  font-size: var(--sf-learning-header-subtitle, 0.72rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.16em !important;
+}
+
+/* First-row top lock: match the subscribed learning home safe area. */
+.classicPhone,
+.studyPhone,
+.resultPhone.studyPhone {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}

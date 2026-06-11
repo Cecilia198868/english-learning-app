@@ -8280,3 +8280,73 @@
     font-size: 1.5rem !important;
   }
 }
+
+/* Final header lock: match the subscribed learning home header. */
+:global(.sf-vocabulary-learning-header) {
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column, 4.375rem)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column, 4.375rem) !important;
+  align-items: center !important;
+  gap: var(--sf-learning-header-gap, 0.5rem) !important;
+  width: 100% !important;
+  height: var(--sf-learning-header-height, 3.625rem) !important;
+  min-height: var(--sf-learning-header-height, 3.625rem) !important;
+  max-height: var(--sf-learning-header-height, 3.625rem) !important;
+  padding: 0 0.65rem !important;
+}
+
+:global(.sf-vocabulary-menu-button),
+:global(.sf-vocabulary-avatar-button),
+:global(.sf-vocabulary-header-spacer),
+:global(.sf-vocabulary-header-back-button) {
+  display: grid !important;
+  place-items: center !important;
+  width: var(--sf-learning-header-control, 3.375rem) !important;
+  min-width: var(--sf-learning-header-control, 3.375rem) !important;
+  height: var(--sf-learning-header-control, 3.375rem) !important;
+  min-height: var(--sf-learning-header-control, 3.375rem) !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+
+:global(.sf-vocabulary-menu-button svg),
+:global(.sf-vocabulary-avatar-button svg),
+:global(.sf-vocabulary-header-spacer svg),
+:global(.sf-vocabulary-header-back-button svg) {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+:global(.sf-vocabulary-brand) {
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+:global(.sf-vocabulary-brand-mark) {
+  width: var(--sf-learning-header-logo, 3.125rem) !important;
+  min-width: var(--sf-learning-header-logo, 3.125rem) !important;
+  height: var(--sf-learning-header-logo, 3.125rem) !important;
+}
+
+:global(.sf-vocabulary-brand strong) {
+  font-size: var(--sf-learning-header-title, 1.88rem) !important;
+  line-height: 0.96 !important;
+  letter-spacing: 0 !important;
+}
+
+:global(.sf-vocabulary-brand small) {
+  margin-top: 0.22rem !important;
+  font-size: var(--sf-learning-header-subtitle, 0.72rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.16em !important;
+}
+
+/* First-row top lock: match the subscribed learning home safe area. */
+.phone {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}

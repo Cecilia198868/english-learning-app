@@ -24,6 +24,11 @@
   text-align: center;
 }
 
+/* First-row top lock: match the subscribed learning home safe area. */
+.phone {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}
+
 .phone::before,
 .phone::after {
   position: absolute;

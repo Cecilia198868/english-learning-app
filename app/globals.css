@@ -19181,17 +19181,31 @@ html[data-app-theme] body :where(img) {
 /* Unified learning header scale. Content may differ by course, but the
    container, side controls, brand mark, and brand typography stay consistent. */
 :root {
-  --sf-learning-header-height: 4.75rem;
-  --sf-learning-header-side: 3.25rem;
-  --sf-learning-header-logo: 2.4rem;
-  --sf-learning-header-title: clamp(1.28rem, 5vw, 1.55rem);
-  --sf-learning-header-subtitle: clamp(0.48rem, 1.7vw, 0.62rem);
-  --sf-learning-header-gap: 0.62rem;
+  --sf-learning-header-height: 3.625rem;
+  --sf-learning-header-column: 4.375rem;
+  --sf-learning-header-control: 3.375rem;
+  --sf-learning-header-side: var(--sf-learning-header-control);
+  --sf-learning-header-logo: 3.125rem;
+  --sf-learning-header-title: 1.88rem;
+  --sf-learning-header-subtitle: 0.72rem;
+  --sf-learning-header-gap: 0.5rem;
+  --sf-learning-header-safe-top: max(10px, calc(env(safe-area-inset-top, 0px) + 6px));
+}
+
+@media (max-width: 389px) {
+  :root {
+    --sf-learning-header-column: 3.875rem;
+    --sf-learning-header-control: 3rem;
+    --sf-learning-header-logo: 2.75rem;
+    --sf-learning-header-title: 1.56rem;
+    --sf-learning-header-subtitle: 0.62rem;
+  }
 }
 
 body :where(
   .sf-free-study-header-card,
   .sf-free-start-header,
+  .sf-free-study-page-one-header,
   .sf-free-study-page-two-header,
   .sf-free-confirm-header,
   .sf-free-study-page-four-header,
@@ -19210,9 +19224,9 @@ body :where(
   max-height: var(--sf-learning-header-height) !important;
   display: grid !important;
   grid-template-columns:
-    var(--sf-learning-header-side)
+    var(--sf-learning-header-column)
     minmax(0, 1fr)
-    var(--sf-learning-header-side) !important;
+    var(--sf-learning-header-column) !important;
   align-items: center !important;
   gap: var(--sf-learning-header-gap) !important;
   padding: 0 0.65rem !important;
@@ -19221,14 +19235,14 @@ body :where(
 body :where(.sf-free-study-page-two-header) {
   left: clamp(0.85rem, 3.4vw, 1.15rem) !important;
   right: clamp(0.85rem, 3.4vw, 1.15rem) !important;
-  top: calc(env(safe-area-inset-top, 0px) + 0.85rem) !important;
+  top: var(--sf-learning-header-safe-top) !important;
   width: auto !important;
 }
 
 body :where(.sf-ai-guided-step-four-header) {
   left: 1rem !important;
   right: 1rem !important;
-  top: calc(env(safe-area-inset-top, 0px) + 0.85rem) !important;
+  top: var(--sf-learning-header-safe-top) !important;
   width: auto !important;
 }
 
@@ -19424,6 +19438,79 @@ body :where(
   .sf-ai-guided-step-four-brand-subtitle,
   .sf-ai-guided-step-five-brand-subtitle
 ) {
+  margin-top: 0.22rem !important;
+  font-size: var(--sf-learning-header-subtitle) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.16em !important;
+}
+
+/* Global menu first-row lock: match the subscribed learning home header. */
+body :where(.sf-menu-page-frame) {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}
+
+body :where(.sf-menu-page-header) {
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column) !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: var(--sf-learning-header-height) !important;
+  min-height: var(--sf-learning-header-height) !important;
+  max-height: var(--sf-learning-header-height) !important;
+  gap: var(--sf-learning-header-gap) !important;
+  padding: 0 0.65rem !important;
+}
+
+body :where(.sf-menu-page-menu-button, .sf-menu-page-avatar-button) {
+  display: grid !important;
+  place-items: center !important;
+  width: var(--sf-learning-header-control) !important;
+  min-width: var(--sf-learning-header-control) !important;
+  height: var(--sf-learning-header-control) !important;
+  min-height: var(--sf-learning-header-control) !important;
+  aspect-ratio: 1 !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  line-height: 1 !important;
+}
+
+body :where(.sf-menu-page-menu-button svg, .sf-menu-page-avatar-button svg) {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+body :where(.sf-menu-page-logo) {
+  width: var(--sf-learning-header-logo) !important;
+  min-width: var(--sf-learning-header-logo) !important;
+  height: var(--sf-learning-header-logo) !important;
+}
+
+body :where(.sf-menu-page-logo-mark) {
+  width: calc(var(--sf-learning-header-logo) * 0.82) !important;
+  height: calc(var(--sf-learning-header-logo) * 0.82) !important;
+}
+
+body :where(.sf-menu-page-brand) {
+  display: grid !important;
+  grid-template-columns: var(--sf-learning-header-logo) minmax(0, max-content) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+body :where(.sf-menu-page-brand-title) {
+  font-size: var(--sf-learning-header-title) !important;
+  line-height: 0.96 !important;
+  letter-spacing: 0 !important;
+}
+
+body :where(.sf-menu-page-brand-subtitle) {
   margin-top: 0.22rem !important;
   font-size: var(--sf-learning-header-subtitle) !important;
   line-height: 1 !important;
@@ -20074,4 +20161,219 @@ body .sf-ai-guided-step-five-more svg {
     right: 0.52rem !important;
     grid-template-columns: 2.25rem 2.55rem !important;
   }
+}
+
+/* Final learning header lock. Every learning surface must reserve the same
+   first-row height as the subscribed learning home header. */
+body :where(
+  .sf-free-study-header-card,
+  .sf-free-start-header,
+  .sf-free-study-page-one-header,
+  .sf-free-study-page-two-header,
+  .sf-free-confirm-header,
+  .sf-free-study-page-four-header,
+  .sf-free-result-header,
+  .sf-ai-guide-start-header,
+  .sf-ai-confirm-speak-header,
+  .sf-ai-guided-step-one-header,
+  .sf-ai-guided-step-two-header,
+  .sf-ai-guided-step-four-header,
+  .sf-ai-guided-step-five-header,
+  .sf-vocabulary-learning-header
+) {
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column) !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: var(--sf-learning-header-height) !important;
+  min-height: var(--sf-learning-header-height) !important;
+  max-height: var(--sf-learning-header-height) !important;
+  gap: var(--sf-learning-header-gap) !important;
+  padding: 0 0.65rem !important;
+}
+
+body :where(
+  .sf-free-study-page-two-header,
+  .sf-ai-guided-step-four-header
+) {
+  top: var(--sf-learning-header-safe-top) !important;
+}
+
+body :where(
+  .sf-free-start-frame,
+  .sf-free-study-page-two-frame,
+  .sf-free-confirm-frame,
+  .sf-free-study-page-four-frame,
+  .sf-free-result-frame,
+  .sf-ai-guide-start-shell,
+  .sf-ai-confirm-speak-frame,
+  .sf-ai-guided-step-four-frame,
+  .sf-ai-guided-step-five-frame
+) {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}
+
+body :where(
+  .sf-free-study-header-menu-button,
+  .sf-free-study-header-avatar-button,
+  .sf-free-start-home,
+  .sf-free-start-help,
+  .sf-free-study-page-two-menu,
+  .sf-free-study-page-two-avatar-button,
+  .sf-free-confirm-home,
+  .sf-free-confirm-help,
+  .sf-free-study-page-four-menu,
+  .sf-free-study-page-four-avatar-button,
+  .sf-free-result-home,
+  .sf-free-result-help,
+  .sf-ai-guide-start-home-button,
+  .sf-ai-guide-start-help-button,
+  .sf-ai-confirm-speak-home,
+  .sf-ai-confirm-speak-help,
+  .sf-ai-guided-step-one-menu,
+  .sf-ai-guided-step-one-avatar-button,
+  .sf-ai-guided-step-two-menu,
+  .sf-ai-guided-step-two-avatar-button,
+  .sf-ai-guided-step-four-menu,
+  .sf-ai-guided-step-four-avatar-button,
+  .sf-ai-guided-step-five-menu,
+  .sf-ai-guided-step-five-avatar-button,
+  .sf-ai-guided-step-five-help-button,
+  .sf-vocabulary-menu-button,
+  .sf-vocabulary-avatar-button,
+  .sf-vocabulary-header-spacer,
+  .sf-vocabulary-header-back-button
+) {
+  display: grid !important;
+  place-items: center !important;
+  width: var(--sf-learning-header-control) !important;
+  min-width: var(--sf-learning-header-control) !important;
+  height: var(--sf-learning-header-control) !important;
+  min-height: var(--sf-learning-header-control) !important;
+  aspect-ratio: 1 !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  line-height: 1 !important;
+}
+
+body :where(
+  .sf-free-study-header-menu-button svg,
+  .sf-free-study-header-avatar-button svg,
+  .sf-free-start-home svg,
+  .sf-free-start-help svg,
+  .sf-free-study-page-two-menu svg,
+  .sf-free-study-page-two-avatar-button svg,
+  .sf-free-confirm-home svg,
+  .sf-free-confirm-help svg,
+  .sf-free-study-page-four-menu svg,
+  .sf-free-study-page-four-avatar-button svg,
+  .sf-free-result-home svg,
+  .sf-free-result-help svg,
+  .sf-ai-guide-start-home-button svg,
+  .sf-ai-guide-start-help-button svg,
+  .sf-ai-confirm-speak-home svg,
+  .sf-ai-confirm-speak-help svg,
+  .sf-ai-guided-step-one-menu svg,
+  .sf-ai-guided-step-one-avatar-button svg,
+  .sf-ai-guided-step-two-menu svg,
+  .sf-ai-guided-step-two-avatar-button svg,
+  .sf-ai-guided-step-four-menu svg,
+  .sf-ai-guided-step-four-avatar-button svg,
+  .sf-ai-guided-step-five-menu svg,
+  .sf-ai-guided-step-five-avatar-button svg,
+  .sf-ai-guided-step-five-help-button svg,
+  .sf-vocabulary-menu-button svg,
+  .sf-vocabulary-avatar-button svg,
+  .sf-vocabulary-header-spacer svg,
+  .sf-vocabulary-header-back-button svg
+) {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+body :where(
+  .sf-free-study-header-logo,
+  .sf-free-start-logo,
+  .sf-free-study-page-two-logo,
+  .sf-free-confirm-logo,
+  .sf-free-study-page-four-logo,
+  .sf-free-result-logo,
+  .sf-ai-guide-start-logo,
+  .sf-ai-confirm-speak-logo,
+  .sf-ai-guided-step-one-logo,
+  .sf-ai-guided-step-two-logo,
+  .sf-ai-guided-step-four-logo,
+  .sf-ai-guided-step-five-logo,
+  .sf-vocabulary-brand-mark
+) {
+  width: var(--sf-learning-header-logo) !important;
+  min-width: var(--sf-learning-header-logo) !important;
+  height: var(--sf-learning-header-logo) !important;
+}
+
+body :where(
+  .sf-free-study-header-brand,
+  .sf-free-start-brand,
+  .sf-free-study-page-two-brand,
+  .sf-free-confirm-brand,
+  .sf-free-study-page-four-brand,
+  .sf-free-result-brand,
+  .sf-ai-guide-start-brand,
+  .sf-ai-confirm-speak-brand,
+  .sf-ai-guided-step-one-brand,
+  .sf-ai-guided-step-two-brand,
+  .sf-ai-guided-step-four-brand,
+  .sf-ai-guided-step-five-brand,
+  .sf-vocabulary-brand
+) {
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+body :where(
+  .sf-free-study-header-title,
+  .sf-free-start-brand-title,
+  .sf-free-study-page-two-brand-title,
+  .sf-free-confirm-brand-title,
+  .sf-free-study-page-four-brand-title,
+  .sf-free-result-brand-title,
+  .sf-ai-guide-start-brand-title,
+  .sf-ai-confirm-speak-brand-title,
+  .sf-ai-guided-step-one-brand-title,
+  .sf-ai-guided-step-two-brand-title,
+  .sf-ai-guided-step-four-brand-title,
+  .sf-ai-guided-step-five-brand-title,
+  .sf-vocabulary-brand strong
+) {
+  font-size: var(--sf-learning-header-title) !important;
+  line-height: 0.96 !important;
+  letter-spacing: 0 !important;
+}
+
+body :where(
+  .sf-free-study-header-subtitle,
+  .sf-free-start-brand-subtitle,
+  .sf-free-study-page-two-brand-subtitle,
+  .sf-free-confirm-brand-subtitle,
+  .sf-free-study-page-four-brand-subtitle,
+  .sf-free-result-brand-subtitle,
+  .sf-ai-guide-start-brand-subtitle,
+  .sf-ai-confirm-speak-brand-subtitle,
+  .sf-ai-guided-step-one-brand-subtitle,
+  .sf-ai-guided-step-two-brand-subtitle,
+  .sf-ai-guided-step-four-brand-subtitle,
+  .sf-ai-guided-step-five-brand-subtitle,
+  .sf-vocabulary-brand small
+) {
+  margin-top: 0.22rem !important;
+  font-size: var(--sf-learning-header-subtitle) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.16em !important;
 }

@@ -22,6 +22,11 @@
   overflow: hidden;
 }
 
+/* First-row top lock: match the subscribed learning home safe area. */
+.phone {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}
+
 .hero {
   position: relative;
   min-height: 17.65rem;

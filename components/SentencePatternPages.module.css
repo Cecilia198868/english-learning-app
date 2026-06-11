@@ -3550,3 +3550,136 @@
     min-width: 94px;
   }
 }
+
+/* Final header lock: match the subscribed learning home header. */
+.brandHeader,
+.studyPhone:has(.studyCard) .brandHeader,
+.studyPhone:has(.resultIntro) .brandHeader {
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column, 4.375rem)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column, 4.375rem) !important;
+  align-items: center !important;
+  gap: var(--sf-learning-header-gap, 0.5rem) !important;
+  width: 100% !important;
+  height: var(--sf-learning-header-height, 3.625rem) !important;
+  min-height: var(--sf-learning-header-height, 3.625rem) !important;
+  max-height: var(--sf-learning-header-height, 3.625rem) !important;
+  padding: 0 0.65rem !important;
+}
+
+.brandHeader .homeButton,
+.brandHeader .helpButton,
+.brandHeader .backArrowButton,
+.brandHeader .switchButton {
+  display: grid !important;
+  place-items: center !important;
+  width: var(--sf-learning-header-control, 3.375rem) !important;
+  min-width: var(--sf-learning-header-control, 3.375rem) !important;
+  height: var(--sf-learning-header-control, 3.375rem) !important;
+  min-height: var(--sf-learning-header-control, 3.375rem) !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+
+.brandHeader .homeButton svg,
+.brandHeader .helpButton svg,
+.brandHeader .backArrowButton svg,
+.brandHeader .switchButton svg {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+.brand {
+  display: grid !important;
+  grid-template-columns: var(--sf-learning-header-logo, 3.125rem) minmax(0, max-content) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+.brandMark {
+  width: var(--sf-learning-header-logo, 3.125rem) !important;
+  min-width: var(--sf-learning-header-logo, 3.125rem) !important;
+  height: var(--sf-learning-header-logo, 3.125rem) !important;
+}
+
+.brand strong {
+  font-size: var(--sf-learning-header-title, 1.88rem) !important;
+  line-height: 0.96 !important;
+  letter-spacing: 0 !important;
+}
+
+.brand small {
+  margin-top: 0.22rem !important;
+  font-size: var(--sf-learning-header-subtitle, 0.72rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.16em !important;
+}
+
+/* First-row top lock: match the subscribed learning home safe area. */
+.phone,
+.studyPhone {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}
+
+/* Sentence-pattern menu first-row lock: match the subscribed learning home header. */
+.overviewHeader,
+.levelHeader {
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column) !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: var(--sf-learning-header-height) !important;
+  min-height: var(--sf-learning-header-height) !important;
+  max-height: var(--sf-learning-header-height) !important;
+  gap: var(--sf-learning-header-gap) !important;
+  padding: 0 0.65rem !important;
+}
+
+.overviewHeader .roundBack,
+.levelHeader .roundBack {
+  display: grid !important;
+  place-items: center !important;
+  width: var(--sf-learning-header-control) !important;
+  min-width: var(--sf-learning-header-control) !important;
+  height: var(--sf-learning-header-control) !important;
+  min-height: var(--sf-learning-header-control) !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+
+.overviewHeader > div,
+.levelHeader .levelHeading {
+  grid-column: 2 !important;
+  min-width: 0 !important;
+  justify-self: center !important;
+  align-self: center !important;
+}
+
+.overviewHeader .roundBack svg,
+.levelHeader .roundBack svg {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+.overviewHeader h1,
+.levelHeader h1 {
+  align-self: center !important;
+  margin: 0 !important;
+  font-size: var(--sf-learning-header-title) !important;
+  line-height: 0.96 !important;
+}
+
+.overviewHeader p,
+.levelHeader p {
+  margin: 0 !important;
+  font-size: var(--sf-learning-header-subtitle) !important;
+  line-height: 1 !important;
+}

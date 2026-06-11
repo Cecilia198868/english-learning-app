@@ -1092,3 +1092,62 @@
   opacity: 0.72;
   filter: brightness(0.82) saturate(0.82);
 }
+
+/* Final header lock: match the subscribed learning home header. */
+.header {
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column, 4.375rem)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column, 4.375rem) !important;
+  align-items: center !important;
+  column-gap: var(--sf-learning-header-gap, 0.5rem) !important;
+  width: 100% !important;
+  min-height: var(--sf-learning-header-height, 3.625rem) !important;
+  height: var(--sf-learning-header-height, 3.625rem) !important;
+  max-height: var(--sf-learning-header-height, 3.625rem) !important;
+  padding: 0 0.65rem !important;
+}
+
+.menuButton {
+  width: var(--sf-learning-header-control, 3.375rem) !important;
+  min-width: var(--sf-learning-header-control, 3.375rem) !important;
+  height: var(--sf-learning-header-control, 3.375rem) !important;
+  min-height: var(--sf-learning-header-control, 3.375rem) !important;
+}
+
+.menuButton svg {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+.brand {
+  justify-content: center !important;
+  gap: 0.5rem !important;
+}
+
+.brandMark,
+.brandMark svg {
+  width: var(--sf-learning-header-logo, 3.125rem) !important;
+  height: var(--sf-learning-header-logo, 3.125rem) !important;
+}
+
+.brandText {
+  gap: 0.22rem !important;
+}
+
+.brandText strong {
+  font-size: var(--sf-learning-header-title, 1.88rem) !important;
+  line-height: 0.96 !important;
+}
+
+.brandText span {
+  font-size: var(--sf-learning-header-subtitle, 0.72rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.16em !important;
+}
+
+/* First-row top lock: match the subscribed learning home safe area. */
+.phone {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}

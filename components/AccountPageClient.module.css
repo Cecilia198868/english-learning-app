@@ -26,6 +26,11 @@
   overflow-x: hidden;
 }
 
+/* First-row top lock: match the subscribed learning home safe area. */
+.phone {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}
+
 .profile {
   display: grid;
   grid-template-columns: clamp(78px, 24vw, 98px) minmax(0, 1fr);
@@ -1955,4 +1960,51 @@
 .feedbackSubmitAction:disabled {
   color: #ffffff !important;
   font-weight: 950 !important;
+}
+
+/* Settings subpages first-row lock: match the subscribed learning home header. */
+.settingsHeader {
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column) !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: var(--sf-learning-header-height) !important;
+  min-height: var(--sf-learning-header-height) !important;
+  max-height: var(--sf-learning-header-height) !important;
+  gap: var(--sf-learning-header-gap) !important;
+  padding: 0 0.65rem !important;
+}
+
+.settingsBack {
+  display: grid !important;
+  place-items: center !important;
+  width: var(--sf-learning-header-control) !important;
+  min-width: var(--sf-learning-header-control) !important;
+  height: var(--sf-learning-header-control) !important;
+  min-height: var(--sf-learning-header-control) !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+
+.settingsBack svg {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+.settingsTitle {
+  align-content: center !important;
+  min-width: 0 !important;
+}
+
+.settingsTitle p {
+  font-size: var(--sf-learning-header-subtitle) !important;
+  line-height: 1 !important;
+}
+
+.settingsTitle h1 {
+  font-size: var(--sf-learning-header-title) !important;
+  line-height: 0.96 !important;
 }

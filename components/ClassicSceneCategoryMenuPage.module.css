@@ -881,3 +881,48 @@
   opacity: 0.72;
   filter: brightness(0.82) saturate(0.82);
 }
+
+/* Final header lock: match the subscribed learning home header. */
+.topbar {
+  display: grid !important;
+  grid-template-columns:
+    var(--sf-learning-header-column, 4.375rem)
+    minmax(0, 1fr)
+    var(--sf-learning-header-column, 4.375rem) !important;
+  align-items: center !important;
+  column-gap: var(--sf-learning-header-gap, 0.5rem) !important;
+  width: 100% !important;
+  height: var(--sf-learning-header-height, 3.625rem) !important;
+  min-height: var(--sf-learning-header-height, 3.625rem) !important;
+  max-height: var(--sf-learning-header-height, 3.625rem) !important;
+  padding: 0 0.65rem !important;
+}
+
+.homeButton,
+.topBackLink {
+  display: grid !important;
+  place-items: center !important;
+  width: var(--sf-learning-header-control, 3.375rem) !important;
+  min-width: var(--sf-learning-header-control, 3.375rem) !important;
+  height: var(--sf-learning-header-control, 3.375rem) !important;
+  min-height: var(--sf-learning-header-control, 3.375rem) !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  line-height: 1 !important;
+}
+
+.topBackLink {
+  gap: 0 !important;
+  font-size: 0 !important;
+}
+
+.homeButton svg,
+.topBackLink svg {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+/* First-row top lock: match the subscribed learning home safe area. */
+.panel {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}

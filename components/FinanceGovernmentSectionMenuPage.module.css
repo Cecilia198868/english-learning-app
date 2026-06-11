@@ -351,3 +351,51 @@
 :global(html[data-app-theme]) .chevron {
   color: var(--accent-green);
 }
+
+/* Final first-row lock: match the subscribed learning home header height. */
+.header,
+:global(html[data-app-theme]) .header {
+  display: grid !important;
+  align-items: center !important;
+  justify-items: center !important;
+  width: 100% !important;
+  min-height: var(--sf-learning-header-height, 3.625rem) !important;
+  height: var(--sf-learning-header-height, 3.625rem) !important;
+  max-height: var(--sf-learning-header-height, 3.625rem) !important;
+}
+
+.backButton,
+:global(html[data-app-theme]) .backButton {
+  top: 50% !important;
+  width: var(--sf-learning-header-control, 3.375rem) !important;
+  min-width: var(--sf-learning-header-control, 3.375rem) !important;
+  height: var(--sf-learning-header-control, 3.375rem) !important;
+  min-height: var(--sf-learning-header-control, 3.375rem) !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  transform: translateY(-50%) !important;
+}
+
+.backButton svg,
+:global(html[data-app-theme]) .backButton svg {
+  width: 1.55rem !important;
+  height: 1.55rem !important;
+}
+
+.backButton span,
+:global(html[data-app-theme]) .backButton span {
+  display: none !important;
+}
+
+.title,
+:global(html[data-app-theme]) .title {
+  max-width: calc(100% - 9rem) !important;
+  margin: 0 !important;
+  line-height: 1.1 !important;
+}
+
+/* First-row top lock: match the subscribed learning home safe area. */
+.phone,
+:global(html[data-app-theme]) .phone {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+}
