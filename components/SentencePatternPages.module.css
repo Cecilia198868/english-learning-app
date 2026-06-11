@@ -3862,3 +3862,48 @@
     max-width: 6.8rem !important;
   }
 }
+
+/* Sentence pattern level list: compact title row requested for category pages. */
+.levelHeader {
+  height: 5rem !important;
+  min-height: 5rem !important;
+  max-height: 5rem !important;
+  margin-bottom: 0.5rem !important;
+  padding: 0 0.2rem !important;
+}
+
+.levelHeader .levelHeading {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, max-content) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  justify-items: center !important;
+  column-gap: 0.35rem !important;
+  row-gap: 0.25rem !important;
+  max-width: min(74vw, 22rem) !important;
+}
+
+.levelHeader .levelHeading > svg {
+  width: 1.35rem !important;
+  height: 1.35rem !important;
+}
+
+.levelHeader h1 {
+  max-width: 100% !important;
+  font-size: clamp(2rem, 7vw, 2.5rem) !important;
+  font-weight: 800 !important;
+  line-height: 0.95 !important;
+  white-space: nowrap !important;
+}
+
+.levelHeader p {
+  grid-column: 1 / -1 !important;
+  max-width: min(70vw, 22rem) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.12 !important;
+  font-weight: 700 !important;
+}
+
+.levelHeader + .statsBar {
+  margin-top: 0 !important;
+}
