@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, KeyboardEvent, MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -68,6 +68,31 @@ type PatternToneStyle = CSSProperties & {
 
 const FINISH_AFTER_SILENCE_MS = 2000;
 const RESTART_AFTER_NO_SPEECH_MS = 240;
+
+function isInteractiveCardTarget(
+  target: EventTarget | null,
+  currentTarget: HTMLElement
+) {
+  if (!(target instanceof HTMLElement)) return false;
+
+  const interactiveTarget = target.closest(
+    "button, a, input, select, textarea, [role='button']"
+  );
+  return Boolean(interactiveTarget && interactiveTarget !== currentTarget);
+}
+
+function playFromCardClick(event: MouseEvent<HTMLElement>, play: () => void) {
+  if (isInteractiveCardTarget(event.target, event.currentTarget)) return;
+  play();
+}
+
+function playFromCardKey(event: KeyboardEvent<HTMLElement>, play: () => void) {
+  if (isInteractiveCardTarget(event.target, event.currentTarget)) return;
+  if (event.key !== "Enter" && event.key !== " ") return;
+
+  event.preventDefault();
+  play();
+}
 
 function sessionKey(levelId: string, patternId: number, practiceId: number) {
   return `sentence-pattern:${levelId}:${patternId}:${practiceId}:transcript`;
@@ -1029,7 +1054,14 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
         </section>
 
         <section className={styles.expressionStack}>
-          <div className={styles.userExpression}>
+          <div
+            aria-label="播放你的表达"
+            className={styles.userExpression}
+            onClick={(event) => playFromCardClick(event, () => speak(userExpression))}
+            onKeyDown={(event) => playFromCardKey(event, () => speak(userExpression))}
+            role="button"
+            tabIndex={0}
+          >
             <span className={styles.expressionLabel}>
               <StatIcon type="mic" />
               你的表达
@@ -1048,9 +1080,18 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
 
           {variants.map((variant) => (
             <article
+              aria-label={`播放${variant.label}`}
               className={styles.variantCard}
               data-tone={variant.tone}
               key={variant.label}
+              onClick={(event) =>
+                playFromCardClick(event, () => playPatternAudio(variant.audioKey, variant.text))
+              }
+              onKeyDown={(event) =>
+                playFromCardKey(event, () => playPatternAudio(variant.audioKey, variant.text))
+              }
+              role="button"
+              tabIndex={0}
             >
               <span className={styles.variantIcon}>
                 <StatIcon type={variant.icon} />
