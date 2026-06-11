@@ -1054,26 +1054,28 @@ export default function AiGuidedExpressionStepFive({
 
         <main className="sf-ai-guided-step-five-scroll">
           <section className="sf-ai-guided-step-five-user-card">
-            <div className="sf-ai-guided-step-five-card-heading">
-              <span>{COPY.userExpression}</span>
-              <span className="sf-ai-guided-step-five-mini-wave" aria-hidden="true">
-                <WaveGlyph />
-              </span>
+            <div className="sf-ai-guided-step-five-user-card-head">
+              <div className="sf-ai-guided-step-five-card-heading">
+                <span>{COPY.userExpression}</span>
+                <span className="sf-ai-guided-step-five-mini-wave" aria-hidden="true">
+                  <WaveGlyph />
+                </span>
+              </div>
+              <button
+                type="button"
+                aria-label={COPY.retryAria}
+                onClick={onRetryEnglish}
+                className="sf-ai-guided-step-five-retry"
+              >
+                <RefreshGlyph />
+                <span>{COPY.retry}</span>
+              </button>
             </div>
             <p lang="en" className="sf-ai-guided-step-five-user-text">
               {renderUserExpressionText
                 ? renderUserExpressionText(displayEnglish)
                 : displayEnglish}
             </p>
-            <button
-              type="button"
-              aria-label={COPY.retryAria}
-              onClick={onRetryEnglish}
-              className="sf-ai-guided-step-five-retry"
-            >
-              <RefreshGlyph />
-              <span>{COPY.retry}</span>
-            </button>
           </section>
 
           <section className="sf-ai-guided-step-five-next-card">
