@@ -9017,3 +9017,48 @@
     height: 2.85rem !important;
   }
 }
+
+/* Classic-scene result screen: keep playback controls in the card header so sentence text can use full width. */
+.classicPhone.resultPhone.studyPhone .userExpressionCard {
+  position: relative !important;
+}
+
+.classicPhone.resultPhone.studyPhone .userExpressionBubble {
+  grid-template-columns: minmax(0, 1fr) !important;
+  padding-right: 1.35rem !important;
+}
+
+.classicPhone.resultPhone.studyPhone .userExpressionSpeaker {
+  position: absolute !important;
+  top: -3.45rem !important;
+  right: 1.3rem !important;
+  z-index: 6 !important;
+}
+
+.classicPhone.resultPhone.studyPhone .expressionCard {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.classicPhone.resultPhone.studyPhone .expressionSelectArea {
+  padding-right: 4.25rem !important;
+}
+
+.classicPhone.resultPhone.studyPhone .expressionCardFeatured .expressionSelectArea {
+  padding-right: 4.55rem !important;
+}
+
+.classicPhone.resultPhone.studyPhone .variantSpeaker {
+  position: absolute !important;
+  top: 0.88rem !important;
+  right: 0.92rem !important;
+  z-index: 6 !important;
+}
+
+.classicPhone.resultPhone.studyPhone .expressionCardFeatured .variantSpeaker {
+  top: 1rem !important;
+  right: 1.18rem !important;
+}
+
+.classicPhone.resultPhone.studyPhone .variantText {
+  max-width: 100% !important;
+}
