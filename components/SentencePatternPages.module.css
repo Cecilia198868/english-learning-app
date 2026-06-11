@@ -3752,3 +3752,91 @@
   padding: 0.24rem !important;
   border-radius: 0.48rem !important;
 }
+
+.overviewHeader ~ .levelStack {
+  gap: 0.78rem !important;
+}
+
+.overviewHeader ~ .levelStack .levelCard {
+  height: 11rem !important;
+  min-height: 11rem !important;
+  border-radius: 1.55rem !important;
+}
+
+.overviewHeader ~ .levelStack .levelBadge {
+  top: 1rem !important;
+  left: 1rem !important;
+  border-radius: 0.82rem !important;
+  padding: 0.45rem 0.72rem !important;
+  font-size: 0.84rem !important;
+}
+
+.overviewHeader ~ .levelStack .levelTitleRow {
+  top: 3.72rem !important;
+  left: 1rem !important;
+  gap: 0.46rem !important;
+}
+
+.overviewHeader ~ .levelStack .levelTitleRow svg {
+  width: 1.58rem !important;
+  height: 1.58rem !important;
+}
+
+.overviewHeader ~ .levelStack .levelTitleRow strong {
+  font-size: 1.25rem !important;
+  line-height: 1.04 !important;
+}
+
+.overviewHeader ~ .levelStack .levelSubtitle {
+  top: 6.25rem !important;
+  left: 1rem !important;
+  width: min(58%, 13rem) !important;
+  font-size: 0.82rem !important;
+  line-height: 1.25 !important;
+}
+
+.overviewHeader ~ .levelStack .levelCount {
+  left: 1rem !important;
+  bottom: 0.64rem !important;
+  border-radius: 0.82rem !important;
+  padding: 0.46rem 0.78rem !important;
+  font-size: 0.8rem !important;
+}
+
+.overviewHeader ~ .levelStack .levelArt {
+  top: 3.35rem !important;
+  right: 0.25rem !important;
+  width: 37.5% !important;
+  max-width: 8.85rem !important;
+}
+
+.overviewHeader ~ .levelStack .cardChevron {
+  top: 1.25rem !important;
+  right: 1.18rem !important;
+}
+
+.overviewHeader ~ .levelStack .cardChevron svg {
+  width: 1.18rem !important;
+  height: 1.18rem !important;
+}
+
+@media (max-width: 380px) {
+  .overviewHeader ~ .levelStack .levelCard {
+    height: 10.6rem !important;
+    min-height: 10.6rem !important;
+  }
+
+  .overviewHeader ~ .levelStack .levelTitleRow strong {
+    font-size: 1.12rem !important;
+  }
+
+  .overviewHeader ~ .levelStack .levelSubtitle {
+    top: 5.95rem !important;
+    font-size: 0.76rem !important;
+  }
+
+  .overviewHeader ~ .levelStack .levelArt {
+    width: 36.5% !important;
+    max-width: 8rem !important;
+  }
+}
