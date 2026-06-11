@@ -847,15 +847,23 @@ export default function FreeStudyPageFiveTop({
         }
 
         .sf-free-result-user-card {
+          display: block !important;
+          position: relative !important;
           min-height: 6.8rem !important;
-          padding: 1.05rem 1rem !important;
+          padding: 1.05rem 1rem 1.18rem !important;
           border-radius: 1.38rem !important;
+        }
+
+        .sf-free-result-user-title {
+          margin: 0;
+          padding-right: clamp(7.4rem, 34vw, 8.9rem);
         }
 
         .sf-free-result-user-text {
           display: inline-block !important;
           width: auto !important;
-          max-width: min(100%, 18.2rem) !important;
+          max-width: 100% !important;
+          margin-top: 1.05rem !important;
           padding: .14rem .38rem .2rem !important;
           border-radius: .5rem !important;
           background: linear-gradient(180deg, rgba(255,238,148,.78), rgba(255,222,91,.68)) !important;
@@ -874,10 +882,17 @@ export default function FreeStudyPageFiveTop({
         }
 
         .sf-free-result-retry {
+          position: absolute !important;
+          top: .78rem !important;
+          right: .82rem !important;
           min-height: 2.45rem !important;
           padding: 0 .88rem !important;
           border-width: 1px !important;
+          border-color: rgba(122,104,255,.42) !important;
+          background: rgba(255,255,255,.86) !important;
+          color: #1260f3 !important;
           font-size: .9rem !important;
+          box-shadow: 0 10px 22px rgba(84,93,160,.1), inset 0 1px 0 rgba(255,255,255,.98) !important;
         }
 
         .sf-free-result-section-title {
@@ -891,10 +906,11 @@ export default function FreeStudyPageFiveTop({
         }
 
         .sf-free-result-expression-card {
+          display: block !important;
+          position: relative !important;
           min-height: 5.05rem !important;
-          grid-template-columns: minmax(0, 1fr) auto !important;
           overflow: hidden !important;
-          padding: .86rem .9rem .86rem 1.05rem !important;
+          padding: .86rem 1.05rem .94rem !important;
           border: 1px solid rgba(139,116,240,.1) !important;
           border-radius: 1.15rem !important;
           box-shadow: 0 10px 20px rgba(79,86,130,.08), inset 0 1px 0 rgba(255,255,255,.96) !important;
@@ -907,6 +923,7 @@ export default function FreeStudyPageFiveTop({
         .sf-free-result-badge {
           align-self: start !important;
           width: fit-content !important;
+          max-width: calc(100% - 7.05rem) !important;
           border-radius: .55rem !important;
         }
 
@@ -931,12 +948,18 @@ export default function FreeStudyPageFiveTop({
         }
 
         .sf-free-result-expression-text {
+          max-width: 100% !important;
+          margin-top: .82rem !important;
           font-size: clamp(1.2rem, 5.2vw, 1.55rem) !important;
           line-height: 1.2 !important;
         }
 
         .sf-free-result-actions {
+          position: absolute !important;
+          top: .66rem !important;
+          right: .78rem !important;
           gap: .5rem !important;
+          z-index: 2 !important;
         }
 
         .sf-free-result-play {
@@ -972,20 +995,27 @@ export default function FreeStudyPageFiveTop({
           }
 
           .sf-free-result-user-card {
-            grid-template-columns: 1fr;
+            display: block !important;
           }
 
           .sf-free-result-retry {
-            justify-self: start;
+            top: .72rem !important;
+            right: .72rem !important;
+            min-height: 2.28rem !important;
+            padding: 0 .7rem !important;
+            font-size: .82rem !important;
           }
 
           .sf-free-result-expression-card {
-            grid-template-columns: minmax(0, 1fr) auto;
-            padding-left: 2.82rem;
+            display: block !important;
+            padding-left: .92rem !important;
+            padding-right: .92rem !important;
           }
 
           .sf-free-result-actions {
-            grid-column: auto;
+            top: .62rem !important;
+            right: .62rem !important;
+            gap: .36rem !important;
           }
         }
       `}</style>
