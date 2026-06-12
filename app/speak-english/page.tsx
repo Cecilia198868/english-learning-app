@@ -7230,27 +7230,15 @@ function SpeakEnglishClient() {
               isLoadingNextChinese={isLoadingGuidedFollowup}
               expressions={referenceResultVariantTexts}
               selectedExpressionIndex={selectedExpressionIndex}
-              headerAddon={
-                shouldShowGuestAiProgress ? (
-                  <GuestAiPracticeProgress used={freePracticeUsageCount} />
-                ) : undefined
-              }
+              hasProEntitlement={isAccountPro}
               menuLabel="回到学习首页"
               onMenuClick={openLoggedInHomePage}
-              accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
-              avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
-              avatarAlt={accountEmail || accountName || "user"}
-              onAvatarError={() => setAccountImageFailed(true)}
               onRetryEnglish={openAiGuidedStepFourForRetry}
               onUseNextChinese={startAiGuidedSuggestedRound}
               onChangeNextChinese={requestAnotherGuidedFollowup}
               onPlayExpression={readReferenceResultVariant}
               onSelectExpression={setSelectedExpressionIndex}
-              onFollowPractice={openAiGuidedStepFourForRetry}
-              onSlowPlayback={() =>
-                readReferenceResultVariant(selectedExpressionIndex, SLOW_READ_RATE)
-              }
               renderExpressionText={(text) => renderReferenceResultText(text)}
               renderUserExpressionText={(text) => renderReferenceResultText(text)}
             />

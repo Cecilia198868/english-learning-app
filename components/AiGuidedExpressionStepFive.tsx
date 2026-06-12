@@ -2,8 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import AiGuidedExpressionHelpModal from "@/components/AiGuidedExpressionHelpModal";
-import HomeMenuIcon from "@/components/HomeMenuIcon";
-import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
+import { FREE_PRACTICE_DAILY_LIMIT } from "@/lib/freePracticeLimit";
 
 type AiGuidedExpressionStepFiveProps = {
   userEnglishText: string;
@@ -11,21 +10,15 @@ type AiGuidedExpressionStepFiveProps = {
   isLoadingNextChinese?: boolean;
   expressions: string[];
   selectedExpressionIndex: number;
-  avatarSrc?: string;
-  avatarAlt?: string;
-  headerAddon?: ReactNode;
-  accountLabel?: string;
+  hasProEntitlement?: boolean;
   menuLabel?: string;
   onMenuClick: () => void;
   onRetryEnglish: () => void;
   onUseNextChinese: () => void;
   onChangeNextChinese: () => void;
   onAccountClick: () => void;
-  onAvatarError?: () => void;
   onPlayExpression: (index: number, rate?: number) => void;
   onSelectExpression: (index: number) => void;
-  onFollowPractice: () => void;
-  onSlowPlayback: () => void;
   renderExpressionText?: (
     text: string,
     index: number,
@@ -34,8 +27,38 @@ type AiGuidedExpressionStepFiveProps = {
   renderUserExpressionText?: (text: string) => ReactNode;
 };
 
+type AiGuidedProgressStepId =
+  | "native"
+  | "english"
+  | "suggestions"
+  | "follow";
+
+type AiGuidedProgressStepStatus = "active" | "completed" | "locked";
+
+type AiGuidedProgressSnapshot = {
+  challenge?: {
+    completed?: number;
+    goal?: number;
+    percent?: number;
+  };
+  dailyGoal?: number;
+  level?: number;
+  steps?: Partial<
+    Record<
+      AiGuidedProgressStepId,
+      {
+        id?: AiGuidedProgressStepId;
+        label?: string;
+        status?: AiGuidedProgressStepStatus;
+      }
+    >
+  >;
+  streakDays?: number;
+  todayCompleted?: number;
+  totalCompleted?: number;
+};
+
 const COPY = {
-  accountLabel: "打开账户界面",
   change: "换一句",
   changeAria: "换一句新的中文建议",
   loadingNext: "正在为你准备下一句...",
@@ -52,6 +75,22 @@ const COPY = {
   useNextAria: "用这句中文进入第四页练习",
   userExpression: "你的表达",
 } as const;
+
+const progressStepOrder: Array<{
+  id: AiGuidedProgressStepId;
+  fallbackLabel: string;
+}> = [
+  { id: "native", fallbackLabel: "说中文" },
+  { id: "english", fallbackLabel: "试着说英文" },
+  { id: "suggestions", fallbackLabel: "AI 给你表达" },
+  { id: "follow", fallbackLabel: "继续下一句" },
+];
+
+const progressStatusCopy: Record<AiGuidedProgressStepStatus, string> = {
+  active: "进行中",
+  completed: "已完成",
+  locked: "待练习",
+};
 
 const expressionMeta = [
   {
@@ -197,6 +236,59 @@ function ChatGlyph() {
   );
 }
 
+function BottomHomeIcon() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient
+          id="sf-ai-step-five-bottom-home-gradient"
+          x1="9"
+          x2="39"
+          y1="39"
+          y2="8"
+        >
+          <stop offset="0" stopColor="#5e79ff" />
+          <stop offset="1" stopColor="#914cff" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M8 21.6 24 8l16 13.6v16.2a4 4 0 0 1-4 4h-7.7V29.3h-8.6v12.5H12a4 4 0 0 1-4-4V21.6Z"
+        fill="url(#sf-ai-step-five-bottom-home-gradient)"
+      />
+    </svg>
+  );
+}
+
+function BottomProgressIcon() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <path d="M12 34V21" />
+      <path d="M20 34V12" />
+      <path d="M28 34V17" />
+      <path d="M36 34V9" />
+    </svg>
+  );
+}
+
+function BottomHelpIcon() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <path d="M24 7.5c-9.4 0-17 6.4-17 14.3 0 4.7 2.7 8.9 6.9 11.5l-1.5 7.2 7.2-4.8c1.4.3 2.9.5 4.4.5 9.4 0 17-6.4 17-14.4S33.4 7.5 24 7.5Z" />
+      <path d="M19.2 18.8a5.1 5.1 0 0 1 9.8 2.1c0 3.8-5 4.1-5 7.2" />
+      <path d="M24 34.2h.1" />
+    </svg>
+  );
+}
+
+function BottomAccountIcon() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <circle cx="24" cy="15.2" r="7.1" />
+      <path d="M11.8 40c1.5-8 6-12 12.2-12s10.7 4 12.2 12" />
+    </svg>
+  );
+}
+
 function ChevronDownGlyph() {
   return (
     <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
@@ -285,8 +377,7 @@ export default function AiGuidedExpressionStepFive({
   isLoadingNextChinese = false,
   expressions,
   selectedExpressionIndex,
-  headerAddon,
-  accountLabel = COPY.accountLabel,
+  hasProEntitlement = false,
   menuLabel = COPY.menuLabel,
   onMenuClick,
   onRetryEnglish,
@@ -298,11 +389,12 @@ export default function AiGuidedExpressionStepFive({
   renderExpressionText: renderInteractiveExpressionText,
   renderUserExpressionText,
 }: AiGuidedExpressionStepFiveProps) {
-  void headerAddon;
-  void accountLabel;
-  void onAccountClick;
-
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isProgressOpen, setIsProgressOpen] = useState(false);
+  const [isProgressLoading, setIsProgressLoading] = useState(false);
+  const [progressError, setProgressError] = useState("");
+  const [progressSnapshot, setProgressSnapshot] =
+    useState<AiGuidedProgressSnapshot | null>(null);
 
   const displayEnglish =
     formatUserExpressionDisplay(userEnglishText) || "I'm practicing this sentence.";
@@ -310,6 +402,47 @@ export default function AiGuidedExpressionStepFive({
     nextChineseText.trim() || (isLoadingNextChinese ? COPY.loadingNext : COPY.nextFallback);
   const safeExpressions =
     expressions.length > 0 ? expressions : ["That's why I'm looking for a better job."];
+
+  useEffect(() => {
+    if (!isProgressOpen) return;
+
+    let isActive = true;
+
+    async function loadProgress() {
+      setIsProgressLoading(true);
+      setProgressError("");
+
+      try {
+        const response = await fetch("/api/ai-guided-expression/progress", {
+          cache: "no-store",
+          credentials: "same-origin",
+        });
+
+        if (!response.ok) {
+          throw new Error("Progress request failed");
+        }
+
+        const snapshot = (await response.json()) as AiGuidedProgressSnapshot;
+        if (isActive) {
+          setProgressSnapshot(snapshot);
+        }
+      } catch {
+        if (isActive) {
+          setProgressError("学习进度暂时没有同步成功，请稍后再试。");
+        }
+      } finally {
+        if (isActive) {
+          setIsProgressLoading(false);
+        }
+      }
+    }
+
+    void loadProgress();
+
+    return () => {
+      isActive = false;
+    };
+  }, [isProgressOpen]);
 
   useEffect(() => {
     const resetScroll = () => {
@@ -334,8 +467,29 @@ export default function AiGuidedExpressionStepFive({
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
+  function openProgress() {
+    setIsProgressLoading(true);
+    setIsProgressOpen(true);
+  }
+
+  const todayCompleted = progressSnapshot?.todayCompleted ?? 0;
+  const dailyGoal = progressSnapshot?.dailyGoal ?? FREE_PRACTICE_DAILY_LIMIT;
+  const streakDays = progressSnapshot?.streakDays ?? 0;
+  const totalCompleted = progressSnapshot?.totalCompleted ?? 0;
+  const challengeCompleted = progressSnapshot?.challenge?.completed ?? 0;
+  const challengeGoal = progressSnapshot?.challenge?.goal ?? dailyGoal;
+  const challengePercent = Math.max(
+    0,
+    Math.min(100, Math.round(progressSnapshot?.challenge?.percent ?? 0))
+  );
+
   return (
-    <section className="sf-ai-guided-step-five" aria-label={COPY.pageLabel}>
+    <section
+      className={`sf-ai-guided-step-five ${isHelpOpen ? "is-help-open" : ""} ${
+        isProgressOpen ? "is-progress-open" : ""
+      }`}
+      aria-label={COPY.pageLabel}
+    >
       <style>{`
         .sf-ai-guided-step-five,
         .sf-ai-guided-step-five * {
@@ -397,6 +551,8 @@ export default function AiGuidedExpressionStepFive({
         }
 
         .sf-ai-guided-step-five-frame {
+          position: relative;
+          isolation: isolate;
           display: flex;
           width: min(100%, 430px);
           height: 100%;
@@ -406,7 +562,7 @@ export default function AiGuidedExpressionStepFive({
           overflow: hidden;
           padding: calc(env(safe-area-inset-top, 0px) + clamp(0.42rem, 1.4dvh, 0.74rem))
             clamp(0.92rem, 4.6vw, 1.24rem)
-            calc(env(safe-area-inset-bottom, 0px) + 0.8rem);
+            calc(env(safe-area-inset-bottom, 0px) + 6.15rem);
         }
 
         .sf-ai-guided-step-five-header {
@@ -441,7 +597,8 @@ export default function AiGuidedExpressionStepFive({
         .sf-ai-guided-step-five-use-next:active,
         .sf-ai-guided-step-five-change:active,
         .sf-ai-guided-step-five-play:active,
-        .sf-ai-guided-step-five-slow-button:active {
+        .sf-ai-guided-step-five-slow-button:active,
+        .sf-ai-guided-step-five-bottom-button:active {
           transform: scale(0.97);
         }
 
@@ -451,7 +608,9 @@ export default function AiGuidedExpressionStepFive({
         .sf-ai-guided-step-five-use-next:focus-visible,
         .sf-ai-guided-step-five-change:focus-visible,
         .sf-ai-guided-step-five-play:focus-visible,
-        .sf-ai-guided-step-five-slow-button:focus-visible {
+        .sf-ai-guided-step-five-slow-button:focus-visible,
+        .sf-ai-guided-step-five-bottom-button:focus-visible,
+        .sf-ai-guided-step-five-progress-close:focus-visible {
           outline: 3px solid rgba(61, 115, 255, 0.36);
           outline-offset: 4px;
         }
@@ -530,7 +689,7 @@ export default function AiGuidedExpressionStepFive({
           min-height: 0;
           overflow-x: hidden;
           overflow-y: auto;
-          padding: clamp(0.56rem, 2dvh, 0.84rem) 0 1.05rem;
+          padding: clamp(0.22rem, 1.1dvh, 0.5rem) 0 1.05rem;
           scrollbar-width: none;
         }
 
@@ -764,12 +923,12 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-record-card {
           display: grid;
-          grid-template-columns: clamp(3.1rem, 14vw, 3.7rem) minmax(0, 1fr) auto;
-          align-items: center;
+          grid-template-columns: clamp(3.1rem, 14vw, 3.7rem) minmax(0, 1fr);
+          align-items: start;
           gap: clamp(0.58rem, 2.7vw, 0.78rem);
-          min-height: clamp(5rem, 18.2vw, 5.8rem);
+          min-height: clamp(6.1rem, 22vw, 7.2rem);
           border-radius: clamp(0.9rem, 4vw, 1.05rem);
-          padding: clamp(0.66rem, 2.9vw, 0.84rem) clamp(0.55rem, 2.8vw, 0.72rem) clamp(0.66rem, 2.9vw, 0.84rem) clamp(0.7rem, 3.4vw, 0.9rem);
+          padding: clamp(0.66rem, 2.9vw, 0.84rem) clamp(0.72rem, 3vw, 0.9rem) clamp(0.78rem, 3.2vw, 0.98rem) clamp(0.7rem, 3.4vw, 0.9rem);
           cursor: pointer;
         }
 
@@ -839,12 +998,23 @@ export default function AiGuidedExpressionStepFive({
         }
 
         .sf-ai-guided-step-five-record-copy {
+          display: grid;
+          gap: clamp(0.2rem, 1vw, 0.36rem);
           min-width: 0;
+        }
+
+        .sf-ai-guided-step-five-record-toolbar {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          align-items: center;
+          gap: clamp(0.42rem, 2vw, 0.58rem);
+          min-height: clamp(2.24rem, 10vw, 2.7rem);
         }
 
         .sf-ai-guided-step-five-record-badge {
           display: inline-flex;
-          margin: 0 0 0.25rem;
+          width: fit-content;
+          margin: 0;
           border-radius: 999px;
           background: rgba(47, 112, 255, 0.12);
           color: #0f66ff;
@@ -931,10 +1101,311 @@ export default function AiGuidedExpressionStepFive({
           height: 1.05rem;
         }
 
+        .sf-ai-guided-step-five-bottom-nav {
+          position: fixed;
+          z-index: 56;
+          left: 50%;
+          bottom: max(0.7rem, env(safe-area-inset-bottom, 0px));
+          width: min(calc(100% - 1.55rem), 398px);
+          min-height: clamp(3.95rem, 17vw, 4.7rem);
+          padding: clamp(0.38rem, 1.7vw, 0.52rem) clamp(0.82rem, 4.2vw, 1.18rem);
+          border: 1px solid rgba(220, 227, 247, 0.92);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.9);
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          align-items: center;
+          gap: clamp(0.18rem, 1vw, 0.42rem);
+          box-shadow:
+            0 1.05rem 2.4rem rgba(94, 112, 172, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.98);
+          transform: translateX(-50%);
+          backdrop-filter: blur(18px);
+        }
+
+        .sf-ai-guided-step-five-bottom-button {
+          position: relative;
+          width: 100%;
+          height: clamp(2.55rem, 11.5vw, 3.12rem);
+          border: 0;
+          border-radius: 999px;
+          padding: 0;
+          display: grid;
+          place-items: center;
+          color: #8b8eaf;
+          background: transparent;
+          appearance: none;
+          cursor: pointer;
+          transition: color 160ms ease, transform 160ms ease;
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .sf-ai-guided-step-five-bottom-button svg {
+          width: clamp(1.62rem, 7.2vw, 2.05rem);
+          height: clamp(1.62rem, 7.2vw, 2.05rem);
+          fill: none;
+          stroke: currentColor;
+          stroke-width: 3.1;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          vector-effect: non-scaling-stroke;
+        }
+
+        .sf-ai-guided-step-five-bottom-button.is-active svg {
+          width: clamp(1.72rem, 7.8vw, 2.16rem);
+          height: clamp(1.72rem, 7.8vw, 2.16rem);
+          stroke: none;
+        }
+
+        .sf-ai-guided-step-five-bottom-pro {
+          position: absolute;
+          right: clamp(0.34rem, 1.8vw, 0.52rem);
+          bottom: clamp(0.18rem, 0.9vw, 0.28rem);
+          padding: 0.06rem 0.18rem 0.05rem;
+          border-radius: 0.26rem;
+          background: rgba(9, 14, 54, 0.9);
+          color: #ffffff;
+          font-size: 0.44rem;
+          font-weight: 950;
+          line-height: 1;
+          letter-spacing: 0;
+          box-shadow: 0 0.18rem 0.36rem rgba(9, 14, 54, 0.16);
+        }
+
+        .sf-ai-guided-step-five-progress-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 60;
+          padding: max(1rem, env(safe-area-inset-top, 0px)) 1rem max(1rem, env(safe-area-inset-bottom, 0px));
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(14, 19, 46, 0.28);
+          backdrop-filter: blur(14px);
+        }
+
+        .sf-ai-guided-step-five-progress-modal {
+          width: min(100%, 24rem);
+          max-height: min(84dvh, 40rem);
+          overflow-y: auto;
+          border: 1px solid rgba(220, 228, 250, 0.94);
+          border-radius: 1.45rem;
+          background:
+            radial-gradient(circle at 88% 6%, rgba(222, 207, 255, 0.62), transparent 8rem),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 252, 255, 0.97));
+          padding: 1.08rem;
+          box-shadow:
+            0 1.8rem 4.2rem rgba(25, 32, 74, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.96);
+        }
+
+        .sf-ai-guided-step-five-progress-head {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        .sf-ai-guided-step-five-progress-kicker {
+          margin: 0 0 0.26rem;
+          color: #765cff;
+          font-size: 0.78rem;
+          font-weight: 900;
+          line-height: 1;
+        }
+
+        .sf-ai-guided-step-five-progress-head h2 {
+          margin: 0;
+          color: #07103d;
+          font-size: 1.42rem;
+          font-weight: 950;
+          line-height: 1.14;
+        }
+
+        .sf-ai-guided-step-five-progress-close {
+          width: 2.35rem;
+          height: 2.35rem;
+          border: 0;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.82);
+          color: #12183e;
+          display: grid;
+          place-items: center;
+          box-shadow: inset 0 0 0 1px rgba(211, 221, 244, 0.9);
+          cursor: pointer;
+        }
+
+        .sf-ai-guided-step-five-progress-close svg {
+          width: 1.06rem;
+          height: 1.06rem;
+          fill: none;
+          stroke: currentColor;
+          stroke-width: 2.7;
+          stroke-linecap: round;
+        }
+
+        .sf-ai-guided-step-five-progress-loading,
+        .sf-ai-guided-step-five-progress-error {
+          margin-top: 1rem;
+          min-height: 7rem;
+          border-radius: 1rem;
+          display: grid;
+          place-items: center;
+          color: #687197;
+          background: rgba(255, 255, 255, 0.72);
+          font-size: 0.9rem;
+          font-weight: 820;
+          text-align: center;
+        }
+
+        .sf-ai-guided-step-five-progress-error {
+          color: #9b3351;
+          background: rgba(255, 242, 247, 0.82);
+        }
+
+        .sf-ai-guided-step-five-progress-grid {
+          margin-top: 1rem;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 0.55rem;
+        }
+
+        .sf-ai-guided-step-five-progress-stat,
+        .sf-ai-guided-step-five-progress-card,
+        .sf-ai-guided-step-five-progress-step {
+          border: 1px solid rgba(222, 228, 247, 0.9);
+          background: rgba(255, 255, 255, 0.76);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94);
+        }
+
+        .sf-ai-guided-step-five-progress-stat {
+          min-height: 4.35rem;
+          border-radius: 1rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.18rem;
+          text-align: center;
+        }
+
+        .sf-ai-guided-step-five-progress-stat span {
+          color: #07103d;
+          font-size: 1.46rem;
+          font-weight: 1000;
+          line-height: 1;
+        }
+
+        .sf-ai-guided-step-five-progress-stat small {
+          color: #6a7197;
+          font-size: 0.66rem;
+          font-weight: 780;
+          line-height: 1.16;
+        }
+
+        .sf-ai-guided-step-five-progress-card {
+          margin-top: 0.7rem;
+          border-radius: 1.06rem;
+          padding: 0.88rem;
+        }
+
+        .sf-ai-guided-step-five-progress-card-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+          color: #07103d;
+          font-size: 0.9rem;
+          font-weight: 900;
+        }
+
+        .sf-ai-guided-step-five-progress-card-head strong {
+          color: #765cff;
+          font-size: 1rem;
+        }
+
+        .sf-ai-guided-step-five-progress-track {
+          margin-top: 0.65rem;
+          height: 0.6rem;
+          border-radius: 999px;
+          background: rgba(230, 225, 255, 0.95);
+          overflow: hidden;
+        }
+
+        .sf-ai-guided-step-five-progress-track span {
+          display: block;
+          height: 100%;
+          border-radius: inherit;
+          background: linear-gradient(90deg, #845cff, #3f82ff);
+        }
+
+        .sf-ai-guided-step-five-progress-card p {
+          margin: 0.42rem 0 0;
+          color: #6a7197;
+          font-size: 0.72rem;
+          font-weight: 760;
+        }
+
+        .sf-ai-guided-step-five-progress-steps {
+          margin-top: 0.75rem;
+          display: grid;
+          gap: 0.48rem;
+        }
+
+        .sf-ai-guided-step-five-progress-step {
+          min-height: 3.55rem;
+          border-radius: 0.95rem;
+          padding: 0.62rem 0.72rem;
+          display: grid;
+          grid-template-columns: 2rem minmax(0, 1fr);
+          align-items: center;
+          gap: 0.64rem;
+        }
+
+        .sf-ai-guided-step-five-progress-step-index {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 999px;
+          display: grid;
+          place-items: center;
+          color: #ffffff;
+          background: #a8abc4;
+          font-size: 0.86rem;
+          font-weight: 950;
+        }
+
+        .sf-ai-guided-step-five-progress-step.is-completed .sf-ai-guided-step-five-progress-step-index {
+          background: linear-gradient(135deg, #6b76ff, #8d5cff);
+        }
+
+        .sf-ai-guided-step-five-progress-step.is-active .sf-ai-guided-step-five-progress-step-index {
+          background: linear-gradient(135deg, #3f8cff, #7b63ff);
+        }
+
+        .sf-ai-guided-step-five-progress-step-copy {
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.16rem;
+        }
+
+        .sf-ai-guided-step-five-progress-step-copy strong {
+          color: #07103d;
+          font-size: 0.9rem;
+          font-weight: 900;
+          line-height: 1.18;
+        }
+
+        .sf-ai-guided-step-five-progress-step-copy small {
+          color: #6d7398;
+          font-size: 0.72rem;
+          font-weight: 780;
+        }
+
         @media (max-height: 740px) {
           .sf-ai-guided-step-five-frame {
             padding-top: calc(env(safe-area-inset-top, 0px) + 0.34rem);
-            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.62rem);
+            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 5.75rem);
           }
 
           .sf-ai-guided-step-five-header {
@@ -942,7 +1413,7 @@ export default function AiGuidedExpressionStepFive({
           }
 
           .sf-ai-guided-step-five-scroll {
-            padding-top: 0.46rem;
+            padding-top: 0.18rem;
           }
 
           .sf-ai-guided-step-five-user-card {
@@ -970,7 +1441,7 @@ export default function AiGuidedExpressionStepFive({
           }
 
           .sf-ai-guided-step-five-record-card {
-            min-height: 4.65rem;
+            min-height: 5.9rem;
           }
         }
 
@@ -1034,9 +1505,9 @@ export default function AiGuidedExpressionStepFive({
           }
 
           .sf-ai-guided-step-five-record-card {
-            grid-template-columns: 3rem minmax(0, 1fr) auto;
+            grid-template-columns: 3rem minmax(0, 1fr);
             gap: 0.62rem;
-            padding-inline: 0.72rem 0.55rem;
+            padding-inline: 0.72rem;
           }
 
           .sf-ai-guided-step-five-record-icon {
@@ -1052,45 +1523,6 @@ export default function AiGuidedExpressionStepFive({
       `}</style>
 
       <div className="sf-ai-guided-step-five-frame">
-        <header className="sf-ai-guided-step-five-header">
-          <button
-            type="button"
-            aria-label={menuLabel}
-            onClick={onMenuClick}
-            className="sf-ai-guided-step-five-menu"
-          >
-            <HomeMenuIcon label={null} showHint={false} />
-          </button>
-
-          <div
-            className="sf-ai-guided-step-five-brand"
-            aria-label="SpeakFlow AI Voice Practice"
-          >
-            <span className="sf-ai-guided-step-five-logo">
-              <SpeakFlowBrandMark className="sf-ai-guided-step-five-logo-mark" />
-            </span>
-            <span className="sf-ai-guided-step-five-brand-copy">
-              <span className="sf-ai-guided-step-five-brand-title">SpeakFlow</span>
-              <span className="sf-ai-guided-step-five-brand-subtitle">
-                AI VOICE PRACTICE
-              </span>
-            </span>
-          </div>
-
-          <button
-            type="button"
-            aria-label="查看帮助"
-            aria-haspopup="dialog"
-            aria-expanded={isHelpOpen}
-            onClick={() => setIsHelpOpen(true)}
-            className="sf-ai-guided-step-five-help-button"
-          >
-            ?
-          </button>
-        </header>
-
-        {headerAddon}
-
         <main className="sf-ai-guided-step-five-scroll">
           <section className="sf-ai-guided-step-five-user-card">
             <div className="sf-ai-guided-step-five-user-card-head">
@@ -1176,40 +1608,42 @@ export default function AiGuidedExpressionStepFive({
                       <ExpressionIcon name={meta.icon} />
                     </div>
                     <div className="sf-ai-guided-step-five-record-copy">
-                      <p className={`sf-ai-guided-step-five-record-badge is-${meta.tone}`}>
-                        {meta.badge}
-                      </p>
+                      <div className="sf-ai-guided-step-five-record-toolbar">
+                        <p className={`sf-ai-guided-step-five-record-badge is-${meta.tone}`}>
+                          {meta.badge}
+                        </p>
+                        <div className="sf-ai-guided-step-five-record-actions">
+                          <button
+                            type="button"
+                            aria-label={`${COPY.playAria} ${index + 1}`}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              onSelectExpression(index);
+                              onPlayExpression(index, 1);
+                            }}
+                            className="sf-ai-guided-step-five-play"
+                          >
+                            <PlayGlyph />
+                          </button>
+                          <button
+                            type="button"
+                            aria-label={`以 0.75 倍速播放第 ${index + 1} 条表达`}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              onSelectExpression(index);
+                              onPlayExpression(index, 0.75);
+                            }}
+                            className="sf-ai-guided-step-five-slow-button"
+                          >
+                            0.75x
+                          </button>
+                        </div>
+                      </div>
                       <p lang="en" className="sf-ai-guided-step-five-record-text">
                         {renderInteractiveExpressionText
                           ? renderInteractiveExpressionText(text, index, meta.tone)
                           : renderExpressionText(text, meta.tone)}
                       </p>
-                    </div>
-                    <div className="sf-ai-guided-step-five-record-actions">
-                      <button
-                        type="button"
-                        aria-label={`${COPY.playAria} ${index + 1}`}
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          onSelectExpression(index);
-                          onPlayExpression(index, 1);
-                        }}
-                        className="sf-ai-guided-step-five-play"
-                      >
-                        <PlayGlyph />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`以 0.75 倍速播放第 ${index + 1} 条表达`}
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          onSelectExpression(index);
-                          onPlayExpression(index, 0.75);
-                        }}
-                        className="sf-ai-guided-step-five-slow-button"
-                      >
-                        0.75x
-                      </button>
                     </div>
                   </article>
                 );
@@ -1223,10 +1657,147 @@ export default function AiGuidedExpressionStepFive({
         </main>
       </div>
 
+      <nav className="sf-ai-guided-step-five-bottom-nav" aria-label="学习导航">
+        <button
+          type="button"
+          className="sf-ai-guided-step-five-bottom-button is-active"
+          onClick={onMenuClick}
+          aria-label={menuLabel}
+        >
+          <BottomHomeIcon />
+        </button>
+        <button
+          type="button"
+          className="sf-ai-guided-step-five-bottom-button"
+          onClick={openProgress}
+          aria-label="查看学习进度"
+          aria-haspopup="dialog"
+          aria-expanded={isProgressOpen}
+        >
+          <BottomProgressIcon />
+        </button>
+        <button
+          type="button"
+          className="sf-ai-guided-step-five-bottom-button"
+          onClick={() => setIsHelpOpen(true)}
+          aria-label="打开使用帮助"
+          aria-haspopup="dialog"
+          aria-expanded={isHelpOpen}
+        >
+          <BottomHelpIcon />
+        </button>
+        <button
+          type="button"
+          className="sf-ai-guided-step-five-bottom-button"
+          onClick={onAccountClick}
+          aria-label="打开账户"
+        >
+          <BottomAccountIcon />
+          {hasProEntitlement ? (
+            <span className="sf-ai-guided-step-five-bottom-pro">PRO</span>
+          ) : null}
+        </button>
+      </nav>
+
       <AiGuidedExpressionHelpModal
         isOpen={isHelpOpen}
         onClose={() => setIsHelpOpen(false)}
       />
+
+      {isProgressOpen ? (
+        <div
+          className="sf-ai-guided-step-five-progress-backdrop"
+          role="presentation"
+          onClick={() => setIsProgressOpen(false)}
+        >
+          <section
+            className="sf-ai-guided-step-five-progress-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sf-ai-guided-step-five-progress-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="sf-ai-guided-step-five-progress-head">
+              <div>
+                <p className="sf-ai-guided-step-five-progress-kicker">学习进度</p>
+                <h2 id="sf-ai-guided-step-five-progress-title">AI 引导表达</h2>
+              </div>
+              <button
+                type="button"
+                className="sf-ai-guided-step-five-progress-close"
+                onClick={() => setIsProgressOpen(false)}
+                aria-label="关闭学习进度"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+              </button>
+            </div>
+
+            {progressError ? (
+              <div className="sf-ai-guided-step-five-progress-error">
+                {progressError}
+              </div>
+            ) : isProgressLoading || !progressSnapshot ? (
+              <div className="sf-ai-guided-step-five-progress-loading">
+                正在同步学习进度...
+              </div>
+            ) : (
+              <>
+                <div className="sf-ai-guided-step-five-progress-grid">
+                  <div className="sf-ai-guided-step-five-progress-stat">
+                    <span>{todayCompleted}</span>
+                    <small>今日完成 / {dailyGoal}</small>
+                  </div>
+                  <div className="sf-ai-guided-step-five-progress-stat">
+                    <span>{streakDays}</span>
+                    <small>连续天数</small>
+                  </div>
+                  <div className="sf-ai-guided-step-five-progress-stat">
+                    <span>{totalCompleted}</span>
+                    <small>累计完成</small>
+                  </div>
+                </div>
+
+                <div className="sf-ai-guided-step-five-progress-card">
+                  <div className="sf-ai-guided-step-five-progress-card-head">
+                    <span>今日挑战</span>
+                    <strong>
+                      {challengeCompleted}/{challengeGoal}
+                    </strong>
+                  </div>
+                  <div className="sf-ai-guided-step-five-progress-track">
+                    <span style={{ width: `${challengePercent}%` }} />
+                  </div>
+                  <p>{challengePercent}% 已完成</p>
+                </div>
+
+                <div className="sf-ai-guided-step-five-progress-steps">
+                  {progressStepOrder.map((item, index) => {
+                    const step = progressSnapshot?.steps?.[item.id];
+                    const status = step?.status ?? "locked";
+
+                    return (
+                      <div
+                        className={`sf-ai-guided-step-five-progress-step is-${status}`}
+                        key={item.id}
+                      >
+                        <span className="sf-ai-guided-step-five-progress-step-index">
+                          {index + 1}
+                        </span>
+                        <span className="sf-ai-guided-step-five-progress-step-copy">
+                          <strong>{step?.label ?? item.fallbackLabel}</strong>
+                          <small>{progressStatusCopy[status]}</small>
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </section>
+        </div>
+      ) : null}
     </section>
   );
 }
