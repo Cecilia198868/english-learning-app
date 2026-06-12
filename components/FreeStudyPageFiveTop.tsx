@@ -1007,6 +1007,127 @@ export default function FreeStudyPageFiveTop({
             gap: .36rem !important;
           }
         }
+
+        .sf-free-result-ai-card {
+          grid-template-columns: clamp(3.35rem, 14vw, 3.85rem) minmax(0, 1fr) auto !important;
+          min-height: clamp(5.15rem, 18dvh, 5.85rem) !important;
+          align-items: center !important;
+          gap: clamp(.58rem, 2.5vw, .78rem) !important;
+          padding: .86rem .94rem !important;
+          border-radius: 1.35rem !important;
+        }
+
+        .sf-free-result-ai-icon {
+          width: clamp(3.18rem, 13.4vw, 3.68rem) !important;
+          height: clamp(3.18rem, 13.4vw, 3.68rem) !important;
+        }
+
+        .sf-free-result-ai-icon svg {
+          width: 2.05rem !important;
+          height: 2.05rem !important;
+        }
+
+        .sf-free-result-ai-copy {
+          display: grid;
+          min-width: 0;
+          gap: .2rem;
+        }
+
+        .sf-free-result-ai-copy strong {
+          font-size: clamp(1.22rem, 4.85vw, 1.5rem) !important;
+          line-height: 1.08 !important;
+          white-space: nowrap !important;
+        }
+
+        .sf-free-result-ai-copy span {
+          margin-top: 0 !important;
+          font-size: clamp(1.12rem, 4.65vw, 1.38rem) !important;
+          line-height: 1.06 !important;
+          white-space: nowrap !important;
+        }
+
+        .sf-free-result-change {
+          min-width: clamp(5.35rem, 22vw, 6.2rem) !important;
+          min-height: clamp(2.58rem, 10.7vw, 3rem) !important;
+          padding: 0 .78rem !important;
+          border-radius: 999px !important;
+          font-size: clamp(.82rem, 3.3vw, .96rem) !important;
+          white-space: nowrap !important;
+        }
+
+        .sf-free-result-user-card {
+          min-height: clamp(8.1rem, 25dvh, 10.4rem) !important;
+        }
+
+        .sf-free-result-user-text {
+          display: block !important;
+          width: 100% !important;
+          margin-top: .78rem !important;
+          padding: 0 !important;
+          background: transparent !important;
+          font-size: clamp(1.48rem, 6.2vw, 2.02rem) !important;
+          line-height: 1.36 !important;
+        }
+
+        .sf-free-result-user-highlight {
+          display: inline !important;
+          padding: .08rem .34rem .13rem !important;
+          border-radius: .48rem !important;
+          background: linear-gradient(180deg, rgba(255, 241, 155, .82), rgba(255, 225, 87, .72)) !important;
+          box-decoration-break: clone;
+          -webkit-box-decoration-break: clone;
+        }
+
+        .sf-free-result-section-title {
+          margin-top: .72rem !important;
+        }
+
+        .sf-free-result-expression-card {
+          min-height: clamp(6.45rem, 20.5dvh, 8.6rem) !important;
+          padding: .86rem .98rem .98rem !important;
+        }
+
+        .sf-free-result-expression-text {
+          margin-top: .72rem !important;
+          padding-right: 0 !important;
+          font-size: clamp(1.12rem, 4.85vw, 1.42rem) !important;
+          line-height: 1.34 !important;
+          text-wrap: normal !important;
+          overflow-wrap: normal !important;
+          word-break: normal !important;
+        }
+
+        .sf-free-result-play {
+          width: clamp(2.72rem, 11vw, 3.05rem) !important;
+          height: clamp(2.72rem, 11vw, 3.05rem) !important;
+        }
+
+        .sf-free-result-slow {
+          min-width: clamp(3.02rem, 12.6vw, 3.45rem) !important;
+          height: clamp(2.58rem, 10.8vw, 2.95rem) !important;
+          color: #1260f3 !important;
+        }
+
+        @media (max-width: 360px) {
+          .sf-free-result-ai-card {
+            grid-template-columns: 3.1rem minmax(0, 1fr) auto !important;
+            gap: .48rem !important;
+          }
+
+          .sf-free-result-ai-copy strong {
+            font-size: 1.08rem !important;
+          }
+
+          .sf-free-result-ai-copy span {
+            font-size: 1rem !important;
+          }
+
+          .sf-free-result-change {
+            min-width: 4.85rem !important;
+            padding-inline: .58rem !important;
+            font-size: .78rem !important;
+          }
+        }
       `}</style>
 
       <div className="sf-free-result-frame">
