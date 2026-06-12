@@ -93,9 +93,14 @@ export default function FreeStudyPageThree({
   onAccountClick,
   onMenuClick,
 }: FreeStudyPageThreeProps) {
+  const pageRef = useRef<HTMLElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const isRecordingEnglish = viewState === "recordingEnglish";
   const canConfirm = Boolean(chineseText.trim()) && !isRecordingEnglish;
+
+  useLayoutEffect(() => {
+    pageRef.current?.scrollTo({ top: 0, left: 0 });
+  }, [viewState]);
 
   useLayoutEffect(() => {
     const textarea = textareaRef.current;
@@ -127,6 +132,7 @@ export default function FreeStudyPageThree({
 
   return (
     <section
+      ref={pageRef}
       className={`sf-free-confirm-page ${
         isRecordingEnglish ? "is-recording-english" : "is-confirming"
       }`}
@@ -835,6 +841,156 @@ export default function FreeStudyPageThree({
             font-size: .82rem;
           }
         }
+
+        .sf-free-confirm-frame {
+          padding-top: calc(env(safe-area-inset-top, 0px) + clamp(1.05rem, 3.8dvh, 1.55rem)) !important;
+          padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6.3rem) !important;
+        }
+
+        .sf-free-confirm-frame > main {
+          display: grid;
+          gap: clamp(.62rem, 1.7dvh, .86rem);
+        }
+
+        .sf-free-confirm-title {
+          margin: 0 !important;
+          padding-left: clamp(1.1rem, 5vw, 1.72rem) !important;
+          font-size: clamp(1.42rem, 5.6vw, 1.76rem) !important;
+        }
+
+        .sf-free-confirm-title svg {
+          width: 1.42rem !important;
+          height: 1.42rem !important;
+        }
+
+        .sf-free-confirm-card {
+          min-height: clamp(12.15rem, 27dvh, 14.55rem) !important;
+          padding: .82rem 1.1rem 1rem !important;
+        }
+
+        .sf-free-confirm-card-head {
+          margin-bottom: .26rem !important;
+        }
+
+        .sf-free-confirm-textarea {
+          min-height: clamp(8.2rem, 18.4dvh, 10.7rem) !important;
+          max-height: clamp(9.4rem, 22dvh, 12rem) !important;
+          padding: .72rem .88rem !important;
+          font-size: clamp(1.74rem, 7.45vw, 2.36rem) !important;
+          line-height: 1.34 !important;
+        }
+
+        .sf-free-confirm-note {
+          margin: .06rem 0 0 !important;
+          font-size: clamp(.78rem, 3.1vw, .92rem) !important;
+        }
+
+        .sf-free-confirm-actions {
+          gap: .86rem !important;
+          margin: 0 !important;
+        }
+
+        .sf-free-confirm-retry,
+        .sf-free-confirm-button {
+          min-height: clamp(3.18rem, 7.4dvh, 3.58rem) !important;
+          border-radius: 1.18rem !important;
+          font-size: clamp(.84rem, 3.25vw, 1rem) !important;
+        }
+
+        .sf-free-record-divider {
+          margin: .02rem 0 .02rem !important;
+        }
+
+        .sf-free-record-panel {
+          min-height: clamp(12rem, 25.2dvh, 14.2rem) !important;
+          overflow: hidden;
+          padding: .86rem .9rem .96rem !important;
+        }
+
+        .sf-free-record-panel h2 {
+          flex-wrap: nowrap;
+          gap: .42rem !important;
+          font-size: clamp(1.14rem, 4.7vw, 1.46rem) !important;
+          white-space: nowrap;
+        }
+
+        .sf-free-record-panel h2 span {
+          white-space: nowrap;
+        }
+
+        .sf-free-record-panel h2 svg {
+          width: 1.28rem !important;
+          height: 1.28rem !important;
+          flex: 0 0 auto;
+        }
+
+        .sf-free-record-panel > p {
+          margin-top: .22rem !important;
+        }
+
+        .sf-free-record-status {
+          margin-top: .42rem !important;
+        }
+
+        .sf-free-record-mic-row {
+          margin: .5rem 0 .54rem !important;
+          gap: clamp(.7rem, 4.2vw, 1.35rem) !important;
+        }
+
+        .sf-free-record-mic {
+          width: clamp(4.18rem, 17.2vw, 5rem) !important;
+        }
+
+        .sf-free-record-stop {
+          width: min(100%, 15.7rem) !important;
+          min-height: 2.38rem !important;
+          font-size: clamp(.82rem, 3.25vw, .96rem) !important;
+        }
+
+        .sf-free-record-stop svg {
+          width: 1.06rem !important;
+          height: 1.06rem !important;
+          flex: 0 0 auto;
+          fill: currentColor;
+          stroke: currentColor;
+        }
+
+        .sf-free-confirm-page.is-confirming .sf-free-record-panel {
+          min-height: clamp(12.2rem, 25.5dvh, 14.25rem) !important;
+        }
+
+        .sf-free-confirm-page.is-confirming .sf-free-record-panel h2 {
+          color: rgba(132, 101, 205, .62) !important;
+          font-size: clamp(.96rem, 3.9vw, 1.18rem) !important;
+          opacity: .52 !important;
+        }
+
+        .sf-free-confirm-page.is-confirming .sf-free-record-mic {
+          width: clamp(3.8rem, 15.4vw, 4.45rem) !important;
+        }
+
+        .sf-free-confirm-page.is-confirming .sf-free-record-stop {
+          width: min(100%, 15.5rem) !important;
+          min-height: 2.34rem !important;
+          color: rgba(132, 101, 205, .52) !important;
+        }
+
+        .sf-free-confirm-page.is-recording-english .sf-free-record-panel {
+          min-height: clamp(18rem, 38dvh, 21.4rem) !important;
+          padding-top: 1rem !important;
+        }
+
+        .sf-free-confirm-page.is-recording-english .sf-free-record-panel h2 {
+          color: #8a54ee !important;
+        }
+
+        .sf-free-confirm-page.is-recording-english .sf-free-record-mic {
+          width: clamp(4.9rem, 19.4vw, 5.72rem) !important;
+        }
+
+        .sf-free-confirm-page.is-recording-english .sf-free-record-tip {
+          margin-top: .58rem !important;
+        }
       `}</style>
 
       <div className="sf-free-confirm-frame">
@@ -900,11 +1056,18 @@ export default function FreeStudyPageThree({
 
           <section className="sf-free-record-panel" aria-live="polite">
             <h2>
-              <WaveGlyph />
-              {isRecordingEnglish
-                ? "看着中文，说英文"
-                : "确认后，就可以看着中文说英文"}
-              <WaveGlyph />
+              {isRecordingEnglish ? (
+                <>
+                  <WaveGlyph />
+                  <span>看着中文，说英文</span>
+                  <WaveGlyph />
+                </>
+              ) : (
+                <>
+                  <SparklesGlyph />
+                  <span>确认后，就可以看着中文说英文</span>
+                </>
+              )}
             </h2>
             {isRecordingEnglish ? <p>可以不完美，大胆说出来</p> : null}
             <span className="sf-free-record-status">正在听你说...</span>
