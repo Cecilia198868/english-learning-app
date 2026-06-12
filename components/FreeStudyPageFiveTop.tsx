@@ -1146,15 +1146,15 @@ export default function FreeStudyPageFiveTop({
                   </button>
                   <button
                     type="button"
-                    aria-label="0.5倍速播放这句表达"
+                    aria-label="0.75倍速播放这句表达"
                     onClick={(event) => {
                       event.stopPropagation();
                       onSelectExpression(index);
-                      onPlayExpression(index, 0.5);
+                      onPlayExpression(index, 0.75);
                     }}
                     className="sf-free-result-slow"
                   >
-                    0.5x
+                    0.75x
                   </button>
                 </span>
               </article>

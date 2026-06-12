@@ -8,17 +8,17 @@ import { useRouter, useSearchParams } from "next/navigation";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
 import InteractiveExpressionText from "@/components/InteractiveExpressionText";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
+import { playSpeakFlowTts, stopSpeakFlowTts } from "@/lib/speakFlowTtsClient";
+import {
+  SPEAKFLOW_DEFAULT_VOICE_ID,
+  SPEAKFLOW_VOICES,
+} from "@/lib/voiceSettings";
 import type {
   SentencePatternLevel,
   SentencePatternPractice,
   SentencePatternSection,
   SentencePatternTone,
 } from "@/data/sentencePatterns";
-import { playPreRecordedAudio, stopPreRecordedAudio } from "@/lib/preRecordedAudioClient";
-import {
-  getSentencePatternAudioUrl,
-  type SentencePatternAudioVariantKey,
-} from "@/lib/preRecordedCourseAudio";
 import styles from "./SentencePatternPages.module.css";
 
 type StudyProps = {
@@ -667,16 +667,15 @@ function usePracticeId(max: number) {
 
 const NORMAL_READ_RATE = 0.92;
 const SLOW_READ_RATE = 0.5;
+const SENTENCE_PATTERN_TTS_VOICE_ID =
+  SPEAKFLOW_VOICES[0]?.id || SPEAKFLOW_DEFAULT_VOICE_ID;
 
 function speak(text: string, rate = NORMAL_READ_RATE) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-
-  stopPreRecordedAudio();
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = rate;
-  window.speechSynthesis.speak(utterance);
+  void playSpeakFlowTts({
+    rate,
+    text,
+    voiceId: SENTENCE_PATTERN_TTS_VOICE_ID,
+  });
 }
 
 export function SentencePatternStudyPage({ level, patternId, section }: StudyProps) {
@@ -1043,21 +1042,13 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
     },
   ] as const;
 
-  function playPatternAudio(
-    variantKey: SentencePatternAudioVariantKey,
-    text: string,
-    rate = NORMAL_READ_RATE
-  ) {
-    playPreRecordedAudio({
-      fallback: () => speak(text, rate),
-      playbackRate: rate,
-      url: getSentencePatternAudioUrl(level.id, patternId, practiceId, variantKey),
-    });
+  function playPatternAudio(text: string, rate = NORMAL_READ_RATE) {
+    speak(text, rate);
   }
 
   useEffect(() => {
     return () => {
-      stopPreRecordedAudio();
+      stopSpeakFlowTts();
     };
   }, []);
 
@@ -1137,10 +1128,10 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
               data-tone={variant.tone}
               key={variant.label}
               onClick={(event) =>
-                playFromCardClick(event, () => playPatternAudio(variant.audioKey, variant.text))
+                playFromCardClick(event, () => playPatternAudio(variant.text))
               }
               onKeyDown={(event) =>
-                playFromCardKey(event, () => playPatternAudio(variant.audioKey, variant.text))
+                playFromCardKey(event, () => playPatternAudio(variant.text))
               }
               role="button"
               tabIndex={0}
@@ -1159,7 +1150,7 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
               </div>
               <button
                 type="button"
-                onClick={() => playPatternAudio(variant.audioKey, variant.text)}
+                onClick={() => playPatternAudio(variant.text)}
                 aria-label={`播放${variant.label}`}
               >
                 <StatIcon type="speaker" />
@@ -1179,7 +1170,7 @@ export function SentencePatternResultPage({ level, patternId, section }: StudyPr
           <button
             type="button"
             className={styles.slowReadButton}
-            onClick={() => playPatternAudio("recommended", practice.recommended, SLOW_READ_RATE)}
+            onClick={() => playPatternAudio(practice.recommended, SLOW_READ_RATE)}
           >
             <StatIcon type="headphones" />
             <span>慢速朗读</span>

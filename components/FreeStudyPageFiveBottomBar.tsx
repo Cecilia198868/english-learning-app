@@ -11,7 +11,7 @@ const COPY = {
   followAria: "\u6309\u5f53\u524d\u53e5\u5b50\u8ddf\u8bfb\u7ec3\u4e60",
   nextAria: "\u8fdb\u5165\u81ea\u7531\u5b66\u4e60\u7b2c\u4e8c\u9875\u5f00\u59cb\u65b0\u4e00\u8f6e",
   slow: "\u500d\u901f",
-  slowAria: "\u4ee5 0.5 \u500d\u901f\u64ad\u653e\u5f53\u524d\u53e5\u5b50",
+  slowAria: "\u4ee5 0.75 \u500d\u901f\u64ad\u653e\u5f53\u524d\u53e5\u5b50",
 } as const;
 
 function RefreshGlyph() {
@@ -97,7 +97,7 @@ export default function FreeStudyPageFiveBottomBar({
         >
           <span>
             <PlayGlyph />
-            0.5x
+            0.75x
           </span>
           <span>{COPY.slow}</span>
         </button>

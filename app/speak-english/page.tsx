@@ -2937,7 +2937,7 @@ function normalizeSpeechRate(rate: number) {
   return Math.min(Math.max(rate, 0.5), 1.15);
 }
 
-const SLOW_READ_RATE = 0.5;
+const SLOW_READ_RATE = 0.75;
 
 function MenuGlyph({
   level,
@@ -5067,8 +5067,35 @@ function SpeakEnglishClient() {
     }
   }
 
+  function finishBufferedEnglishRecognition() {
+    const finalTranscript = speechBufferRef.current.trim();
+
+    if (
+      activeRecognitionStageRef.current !== "english" ||
+      !shouldCommitSpeechRef.current ||
+      !finalTranscript
+    ) {
+      return false;
+    }
+
+    speechStopRequestedRef.current = true;
+
+    try {
+      recognitionRef.current?.stop();
+    } catch {
+      // The browser may already be stopping; the buffered transcript is enough.
+    }
+
+    finishRecognition(finalTranscript);
+    return true;
+  }
+
   function handlePrimaryPracticeAction() {
     if (isListening) {
+      if (finishBufferedEnglishRecognition()) {
+        return;
+      }
+
       stopRecognition({ forceUiReset: true });
       return;
     }
@@ -5279,6 +5306,10 @@ function SpeakEnglishClient() {
 
   function handleComposerPracticeAction() {
     if (isListening) {
+      if (finishBufferedEnglishRecognition()) {
+        return;
+      }
+
       stopRecognition({ forceUiReset: true });
       return;
     }
@@ -5378,6 +5409,32 @@ function SpeakEnglishClient() {
       setMessage("正在听你说话…");
     }
 
+    const finishAfterSpeechSilence = () => {
+      if (finishBufferedEnglishRecognition()) {
+        return;
+      }
+
+      stopRecognition();
+    };
+
+    const scheduleSpeechSilenceStop = (
+      delayMs = activeSpeechSilenceDelayMs
+    ) => {
+      clearSpeechSilenceTimer();
+      speechSilenceTimerRef.current = window.setTimeout(
+        finishAfterSpeechSilence,
+        delayMs
+      );
+    };
+
+    recognition.onspeechstart = () => {
+      clearSpeechSilenceTimer();
+    };
+
+    recognition.onspeechend = () => {
+      scheduleSpeechSilenceStop();
+    };
+
     recognition.onresult = (event) => {
       const previousTranscript = speechBufferRef.current.trim();
       const sessionTranscript = Array.from(event.results)
@@ -5400,10 +5457,7 @@ function SpeakEnglishClient() {
 
       if (sessionTranscript && transcript !== previousTranscript) {
         speechLastResultAtRef.current = Date.now();
-        clearSpeechSilenceTimer();
-        speechSilenceTimerRef.current = window.setTimeout(() => {
-          stopRecognition();
-        }, activeSpeechSilenceDelayMs);
+        scheduleSpeechSilenceStop();
       }
     };
 
@@ -5518,6 +5572,10 @@ function SpeakEnglishClient() {
   }
 
   function stopRecognition(options: { forceUiReset?: boolean } = {}) {
+    if (finishBufferedEnglishRecognition()) {
+      return;
+    }
+
     clearSpeechSilenceTimer();
     clearTimer(speechNoInputTimerRef);
     clearTimer(speechRestartTimerRef);
@@ -7639,7 +7697,7 @@ function SpeakEnglishClient() {
                 />
                 <button
                   type="button"
-                  aria-label="0.5x 倍速"
+                  aria-label="0.75x 倍速"
                   onClick={() => readReferenceResultVariant(0, SLOW_READ_RATE)}
                   className="pointer-events-auto absolute bottom-[2.8%] right-[8.7%] h-[6.2%] w-[20%] rounded-[18px] border-0 bg-transparent"
                 />
@@ -7779,7 +7837,7 @@ function SpeakEnglishClient() {
                   />
                   <button
                     type="button"
-                    aria-label="0.5x 倍速"
+                    aria-label="0.75x 倍速"
                     onClick={() => readReferenceResultVariant(0, SLOW_READ_RATE)}
                     className="absolute bottom-[2.8%] right-[8.7%] h-[6.2%] w-[20%] rounded-[18px] border-0 bg-transparent"
                   />
@@ -8214,7 +8272,7 @@ function SpeakEnglishClient() {
                     >
                       <path d="M8.2 5.6v12.8L18 12 8.2 5.6Z" />
                     </svg>
-                    <span>0.5x</span>
+                    <span>0.75x</span>
                     <span>倍速</span>
                   </button>
                   <p className="absolute inset-x-0 bottom-[7%] text-center text-[clamp(0.64rem,2vw,0.76rem)] font-bold text-[#7f8fb8]">
@@ -8370,7 +8428,7 @@ function SpeakEnglishClient() {
                   />
                   <button
                     type="button"
-                    aria-label="0.5x 倍速"
+                    aria-label="0.75x 倍速"
                     onClick={() => readReferenceResultVariant(0, SLOW_READ_RATE)}
                     className="pointer-events-auto absolute bottom-[2.5%] right-[8.2%] z-[420] h-[6.5%] w-[20.8%] rounded-[18px] border-0 bg-transparent"
                   />
@@ -11061,7 +11119,7 @@ function SpeakEnglishClient() {
                 className="mr-auto flex h-10 min-w-[4.65rem] items-center justify-center gap-1.5 rounded-[15px] bg-white/46 px-3 text-[0.88rem] font-extrabold text-[#201833] shadow-[inset_0_1px_0_rgba(255,255,255,0.68),0_9px_18px_rgba(84,72,146,0.1)] transition disabled:opacity-50 min-[390px]:h-11 min-[390px]:min-w-[5.35rem] min-[390px]:gap-2 min-[390px]:px-4 min-[390px]:text-[0.95rem]"
               >
                 <PlayIcon className="h-4 w-4 translate-x-[1px]" />
-                <span>0.5x</span>
+                <span>0.75x</span>
               </button>
             </div>
           ) : null}

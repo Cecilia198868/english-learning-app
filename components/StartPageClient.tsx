@@ -51,6 +51,15 @@ type PracticeCardIcon = "hundred" | "mic" | "bank" | "star";
 const LAST_STUDY_PROGRESS_KEY = "lastStudyProgress";
 const LESSONS_STORAGE_KEY = "english-app-lessons";
 const ACCOUNT_AVATAR_STORAGE_PREFIX = "speakflow-account-avatar";
+const NATIVE_SENSE_TRAINING_HREF = "/native-flow";
+
+const nativeSenseTrainingEntry = {
+  href: NATIVE_SENSE_TRAINING_HREF,
+  levelText: "初级 · 中级 · 高级",
+  metricText: "600+真实美语长句",
+  subtitle: "让英语像音乐一样流出来",
+  title: "地道语感训练",
+};
 
 const proBenefits = [
   {
@@ -431,6 +440,95 @@ function StarterStarIcon() {
   );
 }
 
+function HeadphonesIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
+      <path d="M10 28v-5c0-8.3 5.7-15 14-15s14 6.7 14 15v5" />
+      <path d="M10 28h6v12h-3a3 3 0 0 1-3-3v-9ZM38 28h-6v12h3a3 3 0 0 0 3-3v-9Z" />
+      <path d="M32 40c-2 2-4.8 3-8 3" />
+    </svg>
+  );
+}
+
+function PlayIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="M8 5v14l11-7L8 5Z" />
+    </svg>
+  );
+}
+
+function NativeSenseWaveArt() {
+  return (
+    <svg
+      aria-hidden="true"
+      className={styles.nativeSenseWave}
+      focusable="false"
+      viewBox="0 0 520 180"
+    >
+      <defs>
+        <linearGradient id="native-sense-wave-main" x1="66" x2="472" y1="120" y2="42">
+          <stop stopColor="#42f5ff" stopOpacity=".12" />
+          <stop offset=".45" stopColor="#13a5ff" stopOpacity=".62" />
+          <stop offset="1" stopColor="#4c74ff" stopOpacity=".14" />
+        </linearGradient>
+        <linearGradient id="native-sense-wave-soft" x1="84" x2="504" y1="146" y2="52">
+          <stop stopColor="#ffffff" stopOpacity="0" />
+          <stop offset=".5" stopColor="#70d8ff" stopOpacity=".32" />
+          <stop offset="1" stopColor="#7b5cff" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M20 118c52-42 102-42 150 0 45 39 84 39 119-2 44-52 96-63 157-32 24 12 42 15 54 9"
+        fill="none"
+        stroke="url(#native-sense-wave-main)"
+        strokeLinecap="round"
+        strokeWidth="34"
+      />
+      <path
+        d="M44 132c50-24 92-20 126 12 42 39 89 34 142-15 61-56 116-63 166-20"
+        fill="none"
+        stroke="url(#native-sense-wave-soft)"
+        strokeLinecap="round"
+        strokeWidth="10"
+      />
+      <path
+        d="M210 98c68-42 134-51 198-26 36 14 66 14 92 0"
+        fill="none"
+        stroke="#1ed4ff"
+        strokeLinecap="round"
+        strokeOpacity=".3"
+        strokeWidth="4"
+      />
+    </svg>
+  );
+}
+
+function NativeSenseTrainingCard() {
+  return (
+    <Link
+      className={styles.nativeSenseCard}
+      href={nativeSenseTrainingEntry.href}
+      aria-label="进入地道语感训练"
+    >
+      <NativeSenseWaveArt />
+      <span className={styles.nativeSenseIcon}>
+        <HeadphonesIcon />
+      </span>
+      <span className={styles.nativeSenseCopy}>
+        <strong>{nativeSenseTrainingEntry.title}</strong>
+        <small>{nativeSenseTrainingEntry.subtitle}</small>
+        <span>{nativeSenseTrainingEntry.levelText}</span>
+        <em>{nativeSenseTrainingEntry.metricText}</em>
+      </span>
+      <span className={styles.nativeSenseCta}>
+        开始训练
+        <PlayIcon />
+      </span>
+    </Link>
+  );
+}
+
 function StarterRobot() {
   return (
     <Image
@@ -635,6 +733,8 @@ export default function StartPageClient({
                 </Link>
               ))}
             </div>
+
+            <NativeSenseTrainingCard />
           </section>
 
           <footer className={styles.starterTrust}>
@@ -803,6 +903,8 @@ export default function StartPageClient({
               </Link>
             ))}
           </div>
+
+          <NativeSenseTrainingCard />
         </section>
 
         <section className={styles.resumeSection} aria-labelledby="resume-title">

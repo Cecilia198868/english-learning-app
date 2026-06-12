@@ -591,6 +591,7 @@
 .resumeCard:active,
 .challengeCard:active,
 .menuButton:active,
+.nativeSenseCard:active,
 .subscriberPrimaryCta:active {
   transform: translateY(1px);
 }
@@ -685,6 +686,134 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 3.2;
+}
+
+.nativeSenseCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 116px;
+  margin-top: 13px;
+  overflow: hidden;
+  border: 1px solid rgba(51, 130, 238, 0.46);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 86% 24%, rgba(33, 161, 255, 0.4), transparent 24%),
+    radial-gradient(circle at 10% 96%, rgba(92, 76, 255, 0.32), transparent 25%),
+    linear-gradient(135deg, #071a54 0%, #063b82 46%, #0759b9 100%);
+  color: #ffffff;
+  padding: 18px 19px;
+  text-decoration: none;
+  box-shadow:
+    0 18px 36px rgba(0, 63, 151, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  isolation: isolate;
+}
+
+.nativeSenseCard::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 74% 62%, rgba(50, 209, 255, 0.18), transparent 28%);
+  content: "";
+}
+
+.nativeSenseWave {
+  position: absolute;
+  top: 2px;
+  right: -30px;
+  z-index: -1;
+  width: 310px;
+  height: 118px;
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+.nativeSenseIcon {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #806bff, #554bff);
+  color: #ffffff;
+  box-shadow:
+    0 14px 30px rgba(88, 74, 255, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.nativeSenseIcon svg {
+  width: 33px;
+  height: 33px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.5;
+}
+
+.nativeSenseCopy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.nativeSenseCopy strong {
+  color: #ffffff;
+  font-size: 1.22rem;
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 1.08;
+  text-shadow: 0 8px 20px rgba(2, 10, 36, 0.18);
+}
+
+.nativeSenseCopy small,
+.nativeSenseCopy span,
+.nativeSenseCopy em {
+  color: rgba(255, 255, 255, 0.88);
+  font-style: normal;
+  font-size: 0.82rem;
+  font-weight: 780;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.nativeSenseCopy em {
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.nativeSenseCta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  min-width: 112px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #6f56ff;
+  font-size: 0.96rem;
+  font-weight: 920;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow:
+    0 12px 26px rgba(0, 28, 86, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.nativeSenseCta svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  stroke: none;
 }
 
 .resumeSection {

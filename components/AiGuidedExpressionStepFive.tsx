@@ -1200,15 +1200,15 @@ export default function AiGuidedExpressionStepFive({
                       </button>
                       <button
                         type="button"
-                        aria-label={`以 0.5 倍速播放第 ${index + 1} 条表达`}
+                        aria-label={`以 0.75 倍速播放第 ${index + 1} 条表达`}
                         onClick={(event) => {
                           event.stopPropagation();
                           onSelectExpression(index);
-                          onPlayExpression(index, 0.5);
+                          onPlayExpression(index, 0.75);
                         }}
                         className="sf-ai-guided-step-five-slow-button"
                       >
-                        0.5x
+                        0.75x
                       </button>
                     </div>
                   </article>
