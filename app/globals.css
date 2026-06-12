@@ -19444,6 +19444,520 @@ body :where(
   letter-spacing: 0.16em !important;
 }
 
+/* AI guided expression result final mobile corrections. This must stay after
+   the shared learning-header locks above. */
+body .sf-ai-guided-step-five-frame {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+  padding-inline: clamp(0.82rem, 3.8vw, 1.05rem) !important;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.7rem) !important;
+}
+
+body .sf-ai-guided-step-five-header {
+  margin-bottom: clamp(0.42rem, 1.8dvh, 0.62rem) !important;
+}
+
+body .sf-ai-guided-step-five-scroll {
+  padding: 0 0 0.85rem !important;
+}
+
+body .sf-ai-guided-step-five-user-card {
+  gap: clamp(0.42rem, 1.9vw, 0.58rem) !important;
+  min-height: clamp(5.55rem, 16.5dvh, 7.2rem) !important;
+  max-height: clamp(8.6rem, 23dvh, 10.8rem) !important;
+  padding:
+    clamp(0.8rem, 3.4vw, 0.96rem)
+    clamp(0.82rem, 3.8vw, 1rem)
+    clamp(0.9rem, 3.8vw, 1.08rem) !important;
+  overflow: hidden !important;
+}
+
+body .sf-ai-guided-step-five-user-card-head {
+  align-items: flex-start !important;
+  gap: clamp(0.5rem, 2.4vw, 0.76rem) !important;
+}
+
+body .sf-ai-guided-step-five-card-heading {
+  gap: 0.48rem !important;
+  font-size: clamp(0.88rem, 3.7vw, 1.02rem) !important;
+  line-height: 1.14 !important;
+}
+
+body .sf-ai-guided-step-five-mini-wave {
+  width: 1.26rem !important;
+  height: 1.26rem !important;
+}
+
+body .sf-ai-guided-step-five-retry {
+  min-width: clamp(5.25rem, 23vw, 6.25rem) !important;
+  min-height: clamp(2.26rem, 9.6vw, 2.62rem) !important;
+  gap: 0.36rem !important;
+  padding: 0 0.68rem !important;
+  border-radius: 0.82rem !important;
+  font-size: clamp(0.78rem, 3.3vw, 0.9rem) !important;
+}
+
+body .sf-ai-guided-step-five-retry svg {
+  width: 1.06rem !important;
+  height: 1.06rem !important;
+}
+
+body .sf-ai-guided-step-five-user-text {
+  max-height: clamp(4.55rem, 14.8dvh, 6.35rem) !important;
+  margin-top: 0.1rem !important;
+  font-size: clamp(1.2rem, 5.05vw, 1.48rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.22 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  text-wrap: wrap !important;
+  scrollbar-width: none !important;
+}
+
+body .sf-ai-guided-step-five-user-text::-webkit-scrollbar {
+  display: none !important;
+}
+
+body .sf-ai-guided-step-five-next-card {
+  min-height: auto !important;
+  margin-top: clamp(0.56rem, 2dvh, 0.72rem) !important;
+  padding:
+    clamp(0.82rem, 3.5vw, 1rem)
+    clamp(0.84rem, 3.8vw, 1.04rem)
+    clamp(0.88rem, 3.8vw, 1.08rem) !important;
+}
+
+body .sf-ai-guided-step-five-next-card h2 {
+  padding-right: 0 !important;
+  font-size: clamp(0.9rem, 3.8vw, 1.04rem) !important;
+  line-height: 1.16 !important;
+}
+
+body .sf-ai-guided-step-five-next-card h2 svg {
+  width: 1.16rem !important;
+  height: 1.16rem !important;
+}
+
+body .sf-ai-guided-step-five-next-robot {
+  display: none !important;
+}
+
+body .sf-ai-guided-step-five-next-text {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: clamp(0.72rem, 3vw, 0.92rem) !important;
+  padding-right: 0 !important;
+  font-size: clamp(1.24rem, 5.35vw, 1.58rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.3 !important;
+}
+
+body .sf-ai-guided-step-five-next-actions {
+  grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr) !important;
+  gap: clamp(0.58rem, 2.6vw, 0.76rem) !important;
+  margin-top: clamp(0.82rem, 3.3vw, 1rem) !important;
+}
+
+body .sf-ai-guided-step-five-use-next,
+body .sf-ai-guided-step-five-change {
+  min-height: clamp(2.5rem, 10.8vw, 3rem) !important;
+  gap: 0.42rem !important;
+  border-radius: 0.9rem !important;
+  font-size: clamp(0.82rem, 3.55vw, 0.96rem) !important;
+}
+
+body .sf-ai-guided-step-five-use-next svg,
+body .sf-ai-guided-step-five-change svg {
+  width: 1.1rem !important;
+  height: 1.1rem !important;
+}
+
+body .sf-ai-guided-step-five-records {
+  margin-top: clamp(0.7rem, 2.6dvh, 0.9rem) !important;
+}
+
+body .sf-ai-guided-step-five-records > h2 {
+  gap: 0.48rem !important;
+  margin-bottom: 0.55rem !important;
+  font-size: clamp(0.9rem, 3.8vw, 1.04rem) !important;
+}
+
+body .sf-ai-guided-step-five-records > h2 svg {
+  width: 1.14rem !important;
+  height: 1.14rem !important;
+}
+
+body .sf-ai-guided-step-five-record-list {
+  gap: clamp(0.48rem, 2.1vw, 0.62rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-card,
+body .sf-ai-guided-step-five-record-card.is-selected {
+  grid-template-columns:
+    clamp(2.58rem, 11vw, 3rem)
+    minmax(0, 1fr)
+    clamp(5.25rem, 23vw, 6rem) !important;
+  gap: clamp(0.46rem, 2vw, 0.62rem) !important;
+  min-height: clamp(4.6rem, 16vw, 5.25rem) !important;
+  padding:
+    clamp(0.58rem, 2.5vw, 0.74rem)
+    clamp(0.54rem, 2.4vw, 0.68rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-icon {
+  width: clamp(2.38rem, 10.4vw, 2.76rem) !important;
+  height: clamp(2.38rem, 10.4vw, 2.76rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-icon svg {
+  width: 1.38rem !important;
+  height: 1.38rem !important;
+}
+
+body .sf-ai-guided-step-five-bookmark {
+  width: 1.58rem !important;
+  height: 1.9rem !important;
+}
+
+body .sf-ai-guided-step-five-bookmark span {
+  width: 0.72rem !important;
+  height: 0.72rem !important;
+}
+
+body .sf-ai-guided-step-five-record-copy {
+  padding-right: 0 !important;
+}
+
+body .sf-ai-guided-step-five-record-badge {
+  margin-bottom: 0.24rem !important;
+  padding: 0.1rem 0.48rem !important;
+  font-size: 0.7rem !important;
+}
+
+body .sf-ai-guided-step-five-record-text {
+  padding-right: 0 !important;
+  font-size: clamp(1.12rem, 4.9vw, 1.42rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.18 !important;
+}
+
+body .sf-ai-guided-step-five-record-actions {
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: clamp(2.18rem, 9.4vw, 2.44rem) clamp(2.58rem, 11vw, 2.92rem) !important;
+  justify-content: end !important;
+  gap: clamp(0.28rem, 1.4vw, 0.38rem) !important;
+}
+
+body .sf-ai-guided-step-five-play,
+body .sf-ai-guided-step-five-slow-button {
+  height: clamp(2.18rem, 9.4vw, 2.44rem) !important;
+  font-size: clamp(0.72rem, 3.2vw, 0.88rem) !important;
+}
+
+body .sf-ai-guided-step-five-play {
+  width: clamp(2.18rem, 9.4vw, 2.44rem) !important;
+}
+
+body .sf-ai-guided-step-five-slow-button {
+  width: clamp(2.58rem, 11vw, 2.92rem) !important;
+}
+
+body .sf-ai-guided-step-five-play svg {
+  width: 1.04rem !important;
+  height: 1.04rem !important;
+}
+
+body .sf-ai-guided-step-five-more {
+  margin-top: 0.72rem !important;
+  font-size: 0.9rem !important;
+}
+
+@media (max-width: 380px) {
+  body .sf-ai-guided-step-five-frame {
+    padding-inline: 0.72rem !important;
+  }
+
+  body .sf-ai-guided-step-five-user-card {
+    max-height: clamp(8.2rem, 24dvh, 10.2rem) !important;
+  }
+
+  body .sf-ai-guided-step-five-user-text {
+    font-size: clamp(1.1rem, 4.9vw, 1.34rem) !important;
+  }
+
+  body .sf-ai-guided-step-five-next-text {
+    font-size: clamp(1.14rem, 5.25vw, 1.42rem) !important;
+  }
+
+  body .sf-ai-guided-step-five-record-card,
+  body .sf-ai-guided-step-five-record-card.is-selected {
+    grid-template-columns: 2.4rem minmax(0, 1fr) 5rem !important;
+    gap: 0.42rem !important;
+    padding-inline: 0.5rem !important;
+  }
+
+  body .sf-ai-guided-step-five-record-text {
+    font-size: clamp(1.02rem, 4.8vw, 1.26rem) !important;
+  }
+}
+
+/* AI guided expression result compact pass. Keep the shared learning header
+   height, then tighten only the result content below it. */
+body .sf-ai-guided-step-five-frame {
+  padding-top: var(--sf-learning-header-safe-top) !important;
+  padding-inline: clamp(0.82rem, 3.8vw, 1.05rem) !important;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.7rem) !important;
+}
+
+body .sf-ai-guided-step-five-header {
+  margin-bottom: clamp(0.42rem, 1.8dvh, 0.62rem) !important;
+}
+
+body .sf-ai-guided-step-five-scroll {
+  padding: 0 0 0.85rem !important;
+}
+
+body .sf-ai-guided-step-five-user-card {
+  gap: clamp(0.42rem, 1.9vw, 0.58rem) !important;
+  min-height: clamp(5.55rem, 16.5dvh, 7.2rem) !important;
+  max-height: clamp(8.6rem, 23dvh, 10.8rem) !important;
+  padding:
+    clamp(0.8rem, 3.4vw, 0.96rem)
+    clamp(0.82rem, 3.8vw, 1rem)
+    clamp(0.9rem, 3.8vw, 1.08rem) !important;
+  overflow: hidden !important;
+}
+
+body .sf-ai-guided-step-five-user-card-head {
+  align-items: flex-start !important;
+  gap: clamp(0.5rem, 2.4vw, 0.76rem) !important;
+}
+
+body .sf-ai-guided-step-five-card-heading {
+  gap: 0.48rem !important;
+  font-size: clamp(0.88rem, 3.7vw, 1.02rem) !important;
+  line-height: 1.14 !important;
+}
+
+body .sf-ai-guided-step-five-mini-wave {
+  width: 1.26rem !important;
+  height: 1.26rem !important;
+}
+
+body .sf-ai-guided-step-five-retry {
+  min-width: clamp(5.25rem, 23vw, 6.25rem) !important;
+  min-height: clamp(2.26rem, 9.6vw, 2.62rem) !important;
+  gap: 0.36rem !important;
+  padding: 0 0.68rem !important;
+  border-radius: 0.82rem !important;
+  font-size: clamp(0.78rem, 3.3vw, 0.9rem) !important;
+}
+
+body .sf-ai-guided-step-five-retry svg {
+  width: 1.06rem !important;
+  height: 1.06rem !important;
+}
+
+body .sf-ai-guided-step-five-user-text {
+  max-height: clamp(4.55rem, 14.8dvh, 6.35rem) !important;
+  margin-top: 0.1rem !important;
+  font-size: clamp(1.2rem, 5.05vw, 1.48rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.22 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  text-wrap: auto !important;
+  scrollbar-width: none !important;
+}
+
+body .sf-ai-guided-step-five-user-text::-webkit-scrollbar {
+  display: none !important;
+}
+
+body .sf-ai-guided-step-five-next-card {
+  min-height: auto !important;
+  margin-top: clamp(0.56rem, 2dvh, 0.72rem) !important;
+  padding:
+    clamp(0.82rem, 3.5vw, 1rem)
+    clamp(0.84rem, 3.8vw, 1.04rem)
+    clamp(0.88rem, 3.8vw, 1.08rem) !important;
+}
+
+body .sf-ai-guided-step-five-next-card h2 {
+  padding-right: 0 !important;
+  font-size: clamp(0.9rem, 3.8vw, 1.04rem) !important;
+  line-height: 1.16 !important;
+}
+
+body .sf-ai-guided-step-five-next-card h2 svg {
+  width: 1.16rem !important;
+  height: 1.16rem !important;
+}
+
+body .sf-ai-guided-step-five-next-robot {
+  display: none !important;
+}
+
+body .sf-ai-guided-step-five-next-text {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: clamp(0.72rem, 3vw, 0.92rem) !important;
+  padding-right: 0 !important;
+  font-size: clamp(1.24rem, 5.35vw, 1.58rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.3 !important;
+}
+
+body .sf-ai-guided-step-five-next-actions {
+  grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr) !important;
+  gap: clamp(0.58rem, 2.6vw, 0.76rem) !important;
+  margin-top: clamp(0.82rem, 3.3vw, 1rem) !important;
+}
+
+body .sf-ai-guided-step-five-use-next,
+body .sf-ai-guided-step-five-change {
+  min-height: clamp(2.5rem, 10.8vw, 3rem) !important;
+  gap: 0.42rem !important;
+  border-radius: 0.9rem !important;
+  font-size: clamp(0.82rem, 3.55vw, 0.96rem) !important;
+}
+
+body .sf-ai-guided-step-five-use-next svg,
+body .sf-ai-guided-step-five-change svg {
+  width: 1.1rem !important;
+  height: 1.1rem !important;
+}
+
+body .sf-ai-guided-step-five-records {
+  margin-top: clamp(0.7rem, 2.6dvh, 0.9rem) !important;
+}
+
+body .sf-ai-guided-step-five-records > h2 {
+  gap: 0.48rem !important;
+  margin-bottom: 0.55rem !important;
+  font-size: clamp(0.9rem, 3.8vw, 1.04rem) !important;
+}
+
+body .sf-ai-guided-step-five-records > h2 svg {
+  width: 1.14rem !important;
+  height: 1.14rem !important;
+}
+
+body .sf-ai-guided-step-five-record-list {
+  gap: clamp(0.48rem, 2.1vw, 0.62rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-card,
+body .sf-ai-guided-step-five-record-card.is-selected {
+  grid-template-columns:
+    clamp(2.58rem, 11vw, 3rem)
+    minmax(0, 1fr)
+    clamp(5.25rem, 23vw, 6rem) !important;
+  gap: clamp(0.46rem, 2vw, 0.62rem) !important;
+  min-height: clamp(4.6rem, 16vw, 5.25rem) !important;
+  padding:
+    clamp(0.58rem, 2.5vw, 0.74rem)
+    clamp(0.54rem, 2.4vw, 0.68rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-icon {
+  width: clamp(2.38rem, 10.4vw, 2.76rem) !important;
+  height: clamp(2.38rem, 10.4vw, 2.76rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-icon svg {
+  width: 1.38rem !important;
+  height: 1.38rem !important;
+}
+
+body .sf-ai-guided-step-five-bookmark {
+  width: 1.58rem !important;
+  height: 1.9rem !important;
+}
+
+body .sf-ai-guided-step-five-bookmark span {
+  width: 0.72rem !important;
+  height: 0.72rem !important;
+}
+
+body .sf-ai-guided-step-five-record-copy {
+  padding-right: 0 !important;
+}
+
+body .sf-ai-guided-step-five-record-badge {
+  margin-bottom: 0.24rem !important;
+  padding: 0.1rem 0.48rem !important;
+  font-size: 0.7rem !important;
+}
+
+body .sf-ai-guided-step-five-record-text {
+  padding-right: 0 !important;
+  font-size: clamp(1.12rem, 4.9vw, 1.42rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.18 !important;
+}
+
+body .sf-ai-guided-step-five-record-actions {
+  position: static !important;
+  display: grid !important;
+  grid-template-columns: clamp(2.18rem, 9.4vw, 2.44rem) clamp(2.58rem, 11vw, 2.92rem) !important;
+  justify-content: end !important;
+  gap: clamp(0.28rem, 1.4vw, 0.38rem) !important;
+}
+
+body .sf-ai-guided-step-five-play,
+body .sf-ai-guided-step-five-slow-button {
+  height: clamp(2.18rem, 9.4vw, 2.44rem) !important;
+  font-size: clamp(0.72rem, 3.2vw, 0.88rem) !important;
+}
+
+body .sf-ai-guided-step-five-play {
+  width: clamp(2.18rem, 9.4vw, 2.44rem) !important;
+}
+
+body .sf-ai-guided-step-five-slow-button {
+  width: clamp(2.58rem, 11vw, 2.92rem) !important;
+}
+
+body .sf-ai-guided-step-five-play svg {
+  width: 1.04rem !important;
+  height: 1.04rem !important;
+}
+
+body .sf-ai-guided-step-five-more {
+  margin-top: 0.72rem !important;
+  font-size: 0.9rem !important;
+}
+
+@media (max-width: 380px) {
+  body .sf-ai-guided-step-five-frame {
+    padding-inline: 0.72rem !important;
+  }
+
+  body .sf-ai-guided-step-five-user-card {
+    max-height: clamp(8.2rem, 24dvh, 10.2rem) !important;
+  }
+
+  body .sf-ai-guided-step-five-user-text {
+    font-size: clamp(1.1rem, 4.9vw, 1.34rem) !important;
+  }
+
+  body .sf-ai-guided-step-five-next-text {
+    font-size: clamp(1.14rem, 5.25vw, 1.42rem) !important;
+  }
+
+  body .sf-ai-guided-step-five-record-card,
+  body .sf-ai-guided-step-five-record-card.is-selected {
+    grid-template-columns: 2.4rem minmax(0, 1fr) 5rem !important;
+    gap: 0.42rem !important;
+    padding-inline: 0.5rem !important;
+  }
+
+  body .sf-ai-guided-step-five-record-text {
+    font-size: clamp(1.02rem, 4.8vw, 1.26rem) !important;
+  }
+}
+
 /* Global menu first-row lock: match the subscribed learning home header. */
 body :where(.sf-menu-page-frame) {
   padding-top: var(--sf-learning-header-safe-top) !important;
@@ -19604,7 +20118,7 @@ body .sf-ai-guided-step-five-header {
   inset: auto !important;
   z-index: 3 !important;
   flex: 0 0 auto !important;
-  margin: 0 0 clamp(0.72rem, 2.8dvh, 1rem) !important;
+  margin: 0 0 clamp(0.42rem, 1.8dvh, 0.62rem) !important;
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -19656,7 +20170,7 @@ body .sf-ai-guided-step-five-scroll {
   flex: 1 1 auto !important;
   min-height: 0 !important;
   width: 100% !important;
-  padding: 0 0 1.1rem !important;
+  padding: 0 0 0.85rem !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
   scrollbar-width: none !important;
@@ -19683,13 +20197,14 @@ body .sf-ai-guided-step-five-user-card {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) !important;
   align-items: stretch !important;
-  gap: clamp(0.74rem, 3vw, 0.96rem) !important;
-  min-height: clamp(9.8rem, 24dvh, 12.2rem) !important;
+  gap: clamp(0.42rem, 1.9vw, 0.58rem) !important;
+  min-height: clamp(5.55rem, 16.5dvh, 7.2rem) !important;
+  max-height: clamp(8.6rem, 23dvh, 10.8rem) !important;
   margin: 0 !important;
   padding:
-    clamp(1.05rem, 4.2vw, 1.35rem)
-    clamp(0.95rem, 4.4vw, 1.25rem)
-    clamp(1.18rem, 4.8vw, 1.5rem) !important;
+    clamp(0.8rem, 3.4vw, 0.96rem)
+    clamp(0.82rem, 3.8vw, 1rem)
+    clamp(0.9rem, 3.8vw, 1.08rem) !important;
   border-radius: clamp(1.05rem, 5vw, 1.38rem) !important;
 }
 
@@ -19697,17 +20212,17 @@ body .sf-ai-guided-step-five-user-card-head {
   display: flex !important;
   align-items: flex-start !important;
   justify-content: space-between !important;
-  gap: clamp(0.8rem, 3.5vw, 1.08rem) !important;
+  gap: clamp(0.5rem, 2.4vw, 0.76rem) !important;
   min-width: 0 !important;
 }
 
 body .sf-ai-guided-step-five-card-heading {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.56rem !important;
+  gap: 0.48rem !important;
   margin: 0 !important;
   color: #0866ff !important;
-  font-size: clamp(0.9rem, 3.9vw, 1.06rem) !important;
+  font-size: clamp(0.88rem, 3.7vw, 1.02rem) !important;
   font-weight: 900 !important;
   line-height: 1.1 !important;
   text-shadow: none !important;
@@ -19715,8 +20230,8 @@ body .sf-ai-guided-step-five-card-heading {
 
 body .sf-ai-guided-step-five-mini-wave {
   display: inline-grid !important;
-  width: 1.42rem !important;
-  height: 1.42rem !important;
+  width: 1.26rem !important;
+  height: 1.26rem !important;
   place-items: center !important;
   color: #0d66ff !important;
 }
@@ -19725,15 +20240,24 @@ body .sf-ai-guided-step-five-user-text {
   min-width: 0 !important;
   max-width: none !important;
   width: 100% !important;
-  margin: clamp(0.18rem, 1vw, 0.28rem) 0 0 !important;
+  max-height: clamp(4.55rem, 14.8dvh, 6.35rem) !important;
+  margin: 0.1rem 0 0 !important;
   color: #07113f !important;
-  font-size: clamp(2.65rem, 12vw, 4.6rem) !important;
-  font-weight: 950 !important;
+  font-size: clamp(1.2rem, 5.05vw, 1.48rem) !important;
+  font-weight: 900 !important;
   letter-spacing: 0 !important;
-  line-height: 0.98 !important;
+  line-height: 1.22 !important;
   text-shadow: none !important;
   word-break: normal !important;
   overflow-wrap: anywhere !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  text-wrap: wrap !important;
+  scrollbar-width: none !important;
+}
+
+body .sf-ai-guided-step-five-user-text::-webkit-scrollbar {
+  display: none !important;
 }
 
 body .sf-ai-guided-step-five-user-text :where(button, span),
@@ -19759,15 +20283,15 @@ body .sf-ai-guided-step-five-retry {
   align-items: center !important;
   justify-self: end !important;
   justify-content: center !important;
-  gap: 0.48rem !important;
-  min-width: clamp(5.9rem, 25vw, 7rem) !important;
-  min-height: clamp(2.7rem, 11.5vw, 3.15rem) !important;
-  padding: 0 0.9rem !important;
+  gap: 0.36rem !important;
+  min-width: clamp(5.25rem, 23vw, 6.25rem) !important;
+  min-height: clamp(2.26rem, 9.6vw, 2.62rem) !important;
+  padding: 0 0.68rem !important;
   border: 0 !important;
-  border-radius: 1rem !important;
+  border-radius: 0.82rem !important;
   background: rgba(255, 255, 255, 0.93) !important;
   color: #0866ff !important;
-  font-size: clamp(0.84rem, 3.7vw, 1rem) !important;
+  font-size: clamp(0.78rem, 3.3vw, 0.9rem) !important;
   font-weight: 850 !important;
   box-shadow:
     0 14px 28px rgba(67, 101, 176, 0.14),
@@ -19776,19 +20300,19 @@ body .sf-ai-guided-step-five-retry {
 }
 
 body .sf-ai-guided-step-five-retry svg {
-  width: 1.24rem !important;
-  height: 1.24rem !important;
+  width: 1.06rem !important;
+  height: 1.06rem !important;
 }
 
 body .sf-ai-guided-step-five-next-card {
   position: relative !important;
-  min-height: clamp(13.2rem, 31dvh, 15.5rem) !important;
-  margin-top: clamp(0.9rem, 3.3dvh, 1.08rem) !important;
+  min-height: auto !important;
+  margin-top: clamp(0.56rem, 2dvh, 0.72rem) !important;
   overflow: hidden !important;
   padding:
-    clamp(1.05rem, 4.2vw, 1.35rem)
-    clamp(1rem, 4.5vw, 1.28rem)
-    clamp(1rem, 4vw, 1.18rem) !important;
+    clamp(0.82rem, 3.5vw, 1rem)
+    clamp(0.84rem, 3.8vw, 1.04rem)
+    clamp(0.88rem, 3.8vw, 1.08rem) !important;
   border-radius: clamp(1.05rem, 5vw, 1.38rem) !important;
 }
 
@@ -19797,17 +20321,17 @@ body .sf-ai-guided-step-five-next-card h2 {
   align-items: center !important;
   gap: 0.55rem !important;
   margin: 0 !important;
-  padding-right: clamp(5.6rem, 28vw, 7rem) !important;
+  padding-right: 0 !important;
   color: #0d66ff !important;
-  font-size: clamp(0.95rem, 4.2vw, 1.1rem) !important;
+  font-size: clamp(0.9rem, 3.8vw, 1.04rem) !important;
   font-weight: 900 !important;
   line-height: 1.16 !important;
   text-shadow: none !important;
 }
 
 body .sf-ai-guided-step-five-next-card h2 svg {
-  width: 1.28rem !important;
-  height: 1.28rem !important;
+  width: 1.16rem !important;
+  height: 1.16rem !important;
 }
 
 body .sf-ai-guided-step-five-next-text {
@@ -19815,13 +20339,13 @@ body .sf-ai-guided-step-five-next-text {
   z-index: 1 !important;
   width: 100% !important;
   max-width: 100% !important;
-  margin: clamp(1.05rem, 4.2vw, 1.32rem) 0 0 !important;
-  padding-right: clamp(3.4rem, 19vw, 6.7rem) !important;
+  margin: clamp(0.72rem, 3vw, 0.92rem) 0 0 !important;
+  padding-right: 0 !important;
   color: #07113f !important;
-  font-size: clamp(1.95rem, 8.9vw, 3rem) !important;
-  font-weight: 950 !important;
+  font-size: clamp(1.24rem, 5.35vw, 1.58rem) !important;
+  font-weight: 900 !important;
   letter-spacing: 0 !important;
-  line-height: 1.22 !important;
+  line-height: 1.3 !important;
   text-shadow: none !important;
   word-break: normal !important;
   overflow-wrap: anywhere !important;
@@ -19831,7 +20355,7 @@ body .sf-ai-guided-step-five-next-robot {
   position: absolute !important;
   top: clamp(3rem, 11vw, 3.7rem) !important;
   right: clamp(0.72rem, 4vw, 1.1rem) !important;
-  display: block !important;
+  display: none !important;
   width: clamp(5rem, 25vw, 6.55rem) !important;
   height: clamp(5rem, 25vw, 6.55rem) !important;
   border-radius: 0 !important;
@@ -19847,21 +20371,21 @@ body .sf-ai-guided-step-five-next-robot img {
 
 body .sf-ai-guided-step-five-next-actions {
   display: grid !important;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) !important;
-  gap: clamp(0.64rem, 3vw, 0.84rem) !important;
-  margin-top: clamp(1.18rem, 4.8vw, 1.48rem) !important;
+  grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr) !important;
+  gap: clamp(0.58rem, 2.6vw, 0.76rem) !important;
+  margin-top: clamp(0.82rem, 3.3vw, 1rem) !important;
 }
 
 body .sf-ai-guided-step-five-use-next,
 body .sf-ai-guided-step-five-change {
   display: inline-flex !important;
-  min-height: clamp(2.85rem, 12.5vw, 3.55rem) !important;
+  min-height: clamp(2.5rem, 10.8vw, 3rem) !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 0.55rem !important;
+  gap: 0.42rem !important;
   border: 0 !important;
-  border-radius: 1rem !important;
-  font-size: clamp(0.9rem, 4vw, 1.05rem) !important;
+  border-radius: 0.9rem !important;
+  font-size: clamp(0.82rem, 3.55vw, 0.96rem) !important;
   font-weight: 900 !important;
   text-shadow: none !important;
 }
@@ -19882,22 +20406,22 @@ body .sf-ai-guided-step-five-change {
 
 body .sf-ai-guided-step-five-use-next svg,
 body .sf-ai-guided-step-five-change svg {
-  width: 1.25rem !important;
-  height: 1.25rem !important;
+  width: 1.1rem !important;
+  height: 1.1rem !important;
 }
 
 body .sf-ai-guided-step-five-records {
-  margin-top: clamp(1rem, 3.6dvh, 1.22rem) !important;
+  margin-top: clamp(0.7rem, 2.6dvh, 0.9rem) !important;
 }
 
 body .sf-ai-guided-step-five-records > h2 {
   display: grid !important;
   grid-template-columns: auto auto minmax(0, 1fr) !important;
   align-items: center !important;
-  gap: 0.58rem !important;
-  margin: 0 0 0.72rem !important;
+  gap: 0.48rem !important;
+  margin: 0 0 0.55rem !important;
   color: #176cff !important;
-  font-size: clamp(0.98rem, 4.2vw, 1.12rem) !important;
+  font-size: clamp(0.9rem, 3.8vw, 1.04rem) !important;
   font-weight: 900 !important;
   letter-spacing: 0 !important;
   line-height: 1.1 !important;
@@ -19912,33 +20436,34 @@ body .sf-ai-guided-step-five-records > h2::after {
 }
 
 body .sf-ai-guided-step-five-records > h2 svg {
-  width: 1.28rem !important;
-  height: 1.28rem !important;
+  width: 1.14rem !important;
+  height: 1.14rem !important;
 }
 
 body .sf-ai-guided-step-five-record-list {
   display: grid !important;
-  gap: clamp(0.58rem, 2.5vw, 0.72rem) !important;
+  gap: clamp(0.48rem, 2.1vw, 0.62rem) !important;
 }
 
 body .sf-ai-guided-step-five-record-card {
   position: relative !important;
   display: grid !important;
-  grid-template-columns: clamp(3.15rem, 14vw, 3.7rem) minmax(0, 1fr) !important;
+  grid-template-columns:
+    clamp(2.58rem, 11vw, 3rem)
+    minmax(0, 1fr)
+    clamp(5.25rem, 23vw, 6rem) !important;
   align-items: center !important;
-  gap: clamp(0.58rem, 2.7vw, 0.78rem) !important;
-  min-height: clamp(5.45rem, 20vw, 6.28rem) !important;
+  gap: clamp(0.46rem, 2vw, 0.62rem) !important;
+  min-height: clamp(4.6rem, 16vw, 5.25rem) !important;
   padding:
-    clamp(0.72rem, 3.2vw, 0.94rem)
-    clamp(0.56rem, 2.8vw, 0.76rem)
-    clamp(0.72rem, 3.2vw, 0.94rem)
-    clamp(0.7rem, 3.4vw, 0.92rem) !important;
+    clamp(0.58rem, 2.5vw, 0.74rem)
+    clamp(0.54rem, 2.4vw, 0.68rem) !important;
   border-radius: clamp(0.9rem, 4vw, 1.08rem) !important;
   cursor: pointer !important;
 }
 
 body .sf-ai-guided-step-five-record-card.is-selected {
-  min-height: clamp(5.45rem, 20vw, 6.28rem) !important;
+  min-height: clamp(4.6rem, 16vw, 5.25rem) !important;
   border-color: rgba(50, 106, 255, 0.52) !important;
   box-shadow:
     0 18px 38px rgba(43, 102, 255, 0.16),
@@ -19947,8 +20472,8 @@ body .sf-ai-guided-step-five-record-card.is-selected {
 
 body .sf-ai-guided-step-five-record-icon {
   display: grid !important;
-  width: clamp(2.8rem, 12.6vw, 3.35rem) !important;
-  height: clamp(2.8rem, 12.6vw, 3.35rem) !important;
+  width: clamp(2.38rem, 10.4vw, 2.76rem) !important;
+  height: clamp(2.38rem, 10.4vw, 2.76rem) !important;
   place-items: center !important;
   border-radius: 999px !important;
   color: #ffffff !important;
@@ -19968,15 +20493,15 @@ body .sf-ai-guided-step-five-record-icon.is-purple {
 }
 
 body .sf-ai-guided-step-five-record-icon svg {
-  width: 1.62rem !important;
-  height: 1.62rem !important;
+  width: 1.38rem !important;
+  height: 1.38rem !important;
 }
 
 body .sf-ai-guided-step-five-bookmark {
   position: relative !important;
   display: grid !important;
-  width: 1.85rem !important;
-  height: 2.15rem !important;
+  width: 1.58rem !important;
+  height: 1.9rem !important;
   place-items: center !important;
   border-radius: 0.22rem 0.22rem 0.12rem 0.12rem !important;
   background: currentColor !important;
@@ -19987,8 +20512,8 @@ body .sf-ai-guided-step-five-bookmark span {
   top: auto !important;
   left: auto !important;
   z-index: 1 !important;
-  width: 0.8rem !important;
-  height: 0.8rem !important;
+  width: 0.72rem !important;
+  height: 0.72rem !important;
 }
 
 body .sf-ai-guided-step-five-record-copy {
@@ -19998,12 +20523,12 @@ body .sf-ai-guided-step-five-record-copy {
 
 body .sf-ai-guided-step-five-record-badge {
   display: inline-flex !important;
-  margin: 0 0 0.32rem !important;
+  margin: 0 0 0.24rem !important;
   border-radius: 999px !important;
   background: rgba(47, 112, 255, 0.12) !important;
   color: #0f66ff !important;
-  padding: 0.12rem 0.52rem !important;
-  font-size: 0.74rem !important;
+  padding: 0.1rem 0.48rem !important;
+  font-size: 0.7rem !important;
   font-weight: 850 !important;
   line-height: 1.1 !important;
   text-shadow: none !important;
@@ -20023,38 +20548,36 @@ body .sf-ai-guided-step-five-record-text {
   margin: 0 !important;
   width: 100% !important;
   max-width: 100% !important;
-  padding-right: clamp(0.2rem, 1.2vw, 0.35rem) !important;
+  padding-right: 0 !important;
   color: #07113f !important;
-  font-size: clamp(1.18rem, 5.35vw, 1.82rem) !important;
+  font-size: clamp(1.12rem, 4.9vw, 1.42rem) !important;
   font-weight: 900 !important;
   letter-spacing: 0 !important;
-  line-height: 1.14 !important;
+  line-height: 1.18 !important;
   text-shadow: none !important;
   word-break: normal !important;
   overflow-wrap: anywhere !important;
 }
 
 body .sf-ai-guided-step-five-record-actions {
-  position: absolute !important;
-  top: clamp(0.64rem, 3vw, 0.82rem) !important;
-  right: clamp(0.56rem, 2.8vw, 0.76rem) !important;
+  position: static !important;
   display: grid !important;
-  grid-template-columns: clamp(2.24rem, 10vw, 2.7rem) clamp(2.52rem, 11.2vw, 3rem) !important;
+  grid-template-columns: clamp(2.18rem, 9.4vw, 2.44rem) clamp(2.58rem, 11vw, 2.92rem) !important;
   align-items: center !important;
   justify-content: end !important;
-  gap: clamp(0.32rem, 1.6vw, 0.45rem) !important;
+  gap: clamp(0.28rem, 1.4vw, 0.38rem) !important;
 }
 
 body .sf-ai-guided-step-five-play,
 body .sf-ai-guided-step-five-slow-button {
   display: grid !important;
-  height: clamp(2.24rem, 10vw, 2.7rem) !important;
+  height: clamp(2.18rem, 9.4vw, 2.44rem) !important;
   place-items: center !important;
   border: 0 !important;
   border-radius: 999px !important;
   background: rgba(255, 255, 255, 0.94) !important;
   color: #075fff !important;
-  font-size: clamp(0.74rem, 3.5vw, 0.94rem) !important;
+  font-size: clamp(0.72rem, 3.2vw, 0.88rem) !important;
   font-weight: 850 !important;
   box-shadow:
     0 12px 24px rgba(67, 101, 176, 0.13),
@@ -20062,16 +20585,16 @@ body .sf-ai-guided-step-five-slow-button {
 }
 
 body .sf-ai-guided-step-five-play {
-  width: clamp(2.24rem, 10vw, 2.7rem) !important;
+  width: clamp(2.18rem, 9.4vw, 2.44rem) !important;
 }
 
 body .sf-ai-guided-step-five-slow-button {
-  width: clamp(2.52rem, 11.2vw, 3rem) !important;
+  width: clamp(2.58rem, 11vw, 2.92rem) !important;
 }
 
 body .sf-ai-guided-step-five-play svg {
-  width: 1.2rem !important;
-  height: 1.2rem !important;
+  width: 1.04rem !important;
+  height: 1.04rem !important;
 }
 
 body .sf-ai-guided-step-five-more {
@@ -20079,9 +20602,9 @@ body .sf-ai-guided-step-five-more {
   align-items: center !important;
   justify-content: center !important;
   gap: 0.35rem !important;
-  margin: 1rem 0 0 !important;
+  margin: 0.72rem 0 0 !important;
   color: #176cff !important;
-  font-size: 1rem !important;
+  font-size: 0.9rem !important;
   font-weight: 780 !important;
   line-height: 1.3 !important;
   text-shadow: none !important;
@@ -20103,23 +20626,24 @@ body .sf-ai-guided-step-five-more svg {
   }
 
   body .sf-ai-guided-step-five-user-card {
-    min-height: 8.45rem !important;
-    padding-top: 0.92rem !important;
-    padding-bottom: 1rem !important;
+    min-height: 5.35rem !important;
+    max-height: 9.6rem !important;
+    padding-top: 0.76rem !important;
+    padding-bottom: 0.86rem !important;
   }
 
   body .sf-ai-guided-step-five-user-text {
-    font-size: clamp(2.25rem, 10.6vw, 3.65rem) !important;
+    font-size: clamp(1.08rem, 4.9vw, 1.34rem) !important;
   }
 
   body .sf-ai-guided-step-five-next-card {
-    min-height: 11.8rem !important;
-    margin-top: 0.72rem !important;
-    padding-top: 0.92rem !important;
+    min-height: auto !important;
+    margin-top: 0.54rem !important;
+    padding-top: 0.76rem !important;
   }
 
   body .sf-ai-guided-step-five-next-text {
-    font-size: clamp(1.64rem, 7.6vw, 2.45rem) !important;
+    font-size: clamp(1.12rem, 5.15vw, 1.4rem) !important;
   }
 
   body .sf-ai-guided-step-five-next-actions {
@@ -20147,18 +20671,16 @@ body .sf-ai-guided-step-five-more svg {
   body .sf-ai-guided-step-five-next-text {
     width: 100% !important;
     max-width: 100% !important;
-    padding-right: clamp(3rem, 18vw, 5.6rem) !important;
-    font-size: clamp(1.66rem, 8.1vw, 2.38rem) !important;
+    padding-right: 0 !important;
+    font-size: clamp(1.14rem, 5.25vw, 1.42rem) !important;
   }
 
   body .sf-ai-guided-step-five-record-card {
-    grid-template-columns: 2.8rem minmax(0, 1fr) !important;
-    gap: 0.52rem !important;
+    grid-template-columns: 2.4rem minmax(0, 1fr) 5rem !important;
+    gap: 0.42rem !important;
   }
 
   body .sf-ai-guided-step-five-record-actions {
-    top: 0.54rem !important;
-    right: 0.52rem !important;
     grid-template-columns: 2.25rem 2.55rem !important;
   }
 }

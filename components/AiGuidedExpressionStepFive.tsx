@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState, type ReactNode } from "react";
 import AiGuidedExpressionHelpModal from "@/components/AiGuidedExpressionHelpModal";
 import HomeMenuIcon from "@/components/HomeMenuIcon";
@@ -241,6 +240,45 @@ function renderExpressionText(text: string, tone: string) {
   );
 }
 
+function formatUserExpressionDisplay(text: string) {
+  let normalized = text
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/\bim\b/gi, "I'm")
+    .replace(/\bi\b/g, "I");
+
+  if (!normalized) return "";
+
+  normalized = normalized.replace(
+    /\s+(Do|Does|Did|Can|Could|Would|Will|Are|Is|Have|Has|Should|May|Might|Must)\b/g,
+    (match: string, starter: string, offset: number, fullText: string) => {
+      const previous = fullText.slice(0, offset).trim();
+      const previousWord = previous.split(/\s+/).at(-1) || "";
+
+      if (!previous || /[.!?]$/.test(previous)) return match;
+      if (/^(I|You|We|They|He|She|It)$/i.test(previousWord)) return match;
+
+      return `. ${starter}`;
+    }
+  );
+
+  normalized = normalized.replace(
+    /\b(Do you [^.!?]*?)\s+(please tell me|let me know)\b/gi,
+    (_match: string, question: string, closer: string) => `${question}? ${closer}`
+  );
+
+  normalized = normalized.replace(
+    /(^|[.!?]\s+)([a-z])/g,
+    (_match: string, prefix: string, letter: string) =>
+      `${prefix}${letter.toUpperCase()}`
+  );
+
+  if (!/[.!?]$/.test(normalized)) normalized += ".";
+
+  return normalized;
+}
+
 export default function AiGuidedExpressionStepFive({
   userEnglishText,
   nextChineseText,
@@ -266,7 +304,8 @@ export default function AiGuidedExpressionStepFive({
 
   const [isHelpOpen, setIsHelpOpen] = useState(false);
 
-  const displayEnglish = userEnglishText.trim() || "I'm practicing this sentence.";
+  const displayEnglish =
+    formatUserExpressionDisplay(userEnglishText) || "I'm practicing this sentence.";
   const displayNextChinese =
     nextChineseText.trim() || (isLoadingNextChinese ? COPY.loadingNext : COPY.nextFallback);
   const safeExpressions =
@@ -1079,16 +1118,6 @@ export default function AiGuidedExpressionStepFive({
           </section>
 
           <section className="sf-ai-guided-step-five-next-card">
-            <div className="sf-ai-guided-step-five-next-robot" aria-hidden="true">
-              <Image
-                src="/images/starter-robot-standard.png"
-                alt=""
-                width={320}
-                height={320}
-                sizes="112px"
-                priority={false}
-              />
-            </div>
             <h2>
               <SparklesGlyph />
               <span>{COPY.nextTitle}</span>
