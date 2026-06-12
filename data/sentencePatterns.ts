@@ -2399,7 +2399,7 @@ export const sentencePatternLevels: SentencePatternLevel[] = [
     icon: "sprout",
     menuTitle: "日常开口100句型",
     sectionSubtitle: "表达需求与愿望",
-    stats: ["100 个句型", "2000 个例句", "掌握日常开口必备句型"],
+    stats: ["100句型", "2000例句", "零基础必学"],
     subtitle: "最常用的英语开口句型，适合零基础和初学者",
     suggestion:
       "每天练习 5-10 个句型，大声替换真实内容，反复练习，让英语开口更自然！",
