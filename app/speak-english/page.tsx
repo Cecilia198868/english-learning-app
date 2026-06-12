@@ -8428,14 +8428,10 @@ function SpeakEnglishClient() {
 
           {showReferenceLanding ? (
             <FreeStudyPageOne
-              menuIcon="home"
+              hasProEntitlement={isAccountPro}
               menuLabel="回到首页"
               onMenuClick={openLoggedInHomePage}
-              accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
-              avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
-              avatarAlt={accountEmail || accountName || "user"}
-              onAvatarError={() => setAccountImageFailed(true)}
               onMicrophoneClick={handlePrimaryPracticeAction}
               recordingState="idle"
             />
@@ -8443,14 +8439,10 @@ function SpeakEnglishClient() {
 
           {showReferenceListening ? (
             <FreeStudyPageOne
-              menuIcon="home"
+              hasProEntitlement={isAccountPro}
               menuLabel="回到首页"
               onMenuClick={openLoggedInHomePage}
-              accountLabel={accountCopy.openAccountMenu}
               onAccountClick={openAccountPage}
-              avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
-              avatarAlt={accountEmail || accountName || "user"}
-              onAvatarError={() => setAccountImageFailed(true)}
               onMicrophoneClick={handlePrimaryPracticeAction}
               recordingState="recording"
             />
