@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
+import ClassicScenesBottomNav from "./ClassicScenesBottomNav";
 import styles from "./FinanceGovernmentMenuPage.module.css";
 
 type FinanceCardIcon =
@@ -107,16 +108,6 @@ const financeCards: FinanceCard[] = [
     iconBackground: "#eef7ef",
   },
 ];
-
-function BrandMarkIcon() {
-  return (
-    <svg viewBox="0 0 72 72" aria-hidden="true" focusable="false">
-      <path d="M35.5 9.5c14.8 0 26.7 11.2 26.7 25.3S50.3 60.2 35.5 60.2c-3.7 0-7.2-.7-10.3-2.1l-13.1 4.5 4.1-12.3a24.3 24.3 0 0 1-7.4-17.4C8.8 20.7 20.8 9.5 35.5 9.5Z" />
-      <path d="M24.8 32.4v7.2M31.8 26.8v18.4M38.8 30.4v11.2M45.8 34.2v3.6" />
-      <circle cx="51.2" cy="36" r="2.1" />
-    </svg>
-  );
-}
 
 function ArrowLeft() {
   return (
@@ -242,31 +233,17 @@ export default function FinanceGovernmentMenuPage({
   return (
     <main className={styles.pageShell}>
       <section className={styles.panel} aria-label="金融与行政事务二级菜单">
-        <header className={styles.header}>
+        <section className={styles.hero}>
           <button
-            className={styles.topBackLink}
+            className={styles.backLink}
             type="button"
             aria-label="返回经典场景一级菜单"
             onClick={goBack}
           >
             <ArrowLeft />
-            返回上一级
+            <span>返回上一级</span>
           </button>
 
-          <div className={styles.brand} aria-label="SpeakFlow Voice Practice">
-            <span className={styles.brandMark}>
-              <BrandMarkIcon />
-            </span>
-            <div className={styles.brandText}>
-              <strong>SpeakFlow</strong>
-              <span>VOICE PRACTICE</span>
-            </div>
-          </div>
-
-          <span aria-hidden="true" />
-        </header>
-
-        <section className={styles.hero}>
           <div className={styles.heroText}>
             <h1>金融与行政事务</h1>
             <p>银行、支付、税务、签证等场景</p>
@@ -318,6 +295,8 @@ export default function FinanceGovernmentMenuPage({
             );
           })}
         </section>
+
+        <ClassicScenesBottomNav />
       </section>
     </main>
   );

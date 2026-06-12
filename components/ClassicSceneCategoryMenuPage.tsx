@@ -7,6 +7,7 @@ import type {
   ClassicSceneCategoryMenu,
   ClassicSceneSubcategory,
 } from "@/data/classicSceneCategoryMenus";
+import ClassicScenesBottomNav from "./ClassicScenesBottomNav";
 import styles from "./ClassicSceneCategoryMenuPage.module.css";
 
 function ArrowLeftIcon() {
@@ -30,16 +31,6 @@ function BookIcon() {
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path d="M4 5.5c3-.4 5.7.2 8 2v12c-2.4-1.6-5.1-2.2-8-1.8V5.5Z" />
       <path d="M20 5.5c-3-.4-5.7.2-8 2v12c2.4-1.6 5.1-2.2 8-1.8V5.5Z" />
-    </svg>
-  );
-}
-
-function TipIcon() {
-  return (
-    <svg className={styles.iconSvg} viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-      <path d="M17 32c-3.6-2.5-5.5-6.3-5.5-10.5C11.5 14.6 17 9 24 9s12.5 5.6 12.5 12.5c0 4.2-1.9 8-5.5 10.5" />
-      <path d="M19 35h10M20 40h8M24 32v-8" />
-      <path d="M18 22h12" />
     </svg>
   );
 }
@@ -337,32 +328,18 @@ export default function ClassicSceneCategoryMenuPage({
   return (
     <main className={styles.pageShell} style={categoryStyle}>
       <section className={styles.panel} aria-labelledby="classic-category-title">
-        <header className={styles.topbar}>
+        <section className={styles.hero} aria-label={menu.title}>
           <Link
-            className={styles.topBackLink}
+            className={styles.heroBackLink}
             href="/classic-scenes"
             aria-label="返回经典场景一级菜单"
           >
             <ArrowLeftIcon />
-            返回上一级
+            <span>返回上一级</span>
           </Link>
 
-          <div className={styles.titleBlock}>
-            <h1 id="classic-category-title">{menu.title}</h1>
-            <p className={styles.subtitle}>
-              <span className={styles.subtitleIcon} aria-hidden="true">
-                <SceneIcon type={menu.heroIcon} />
-              </span>
-              {menu.subtitle}
-            </p>
-          </div>
-
-          <span aria-hidden="true" />
-        </header>
-
-        <section className={styles.hero} aria-label={menu.title}>
           <div className={styles.heroCopy}>
-            <h2>{menu.title}</h2>
+            <h2 id="classic-category-title">{menu.title}</h2>
             <p>{menu.description}</p>
           </div>
           <HeroVisual icon={menu.heroIcon} />
@@ -374,12 +351,7 @@ export default function ClassicSceneCategoryMenuPage({
           ))}
         </section>
 
-        <div className={styles.tip}>
-          <span className={styles.tipIcon} aria-hidden="true">
-            <TipIcon />
-          </span>
-          丰富的真实场景，帮你轻松开口说英语！
-        </div>
+        <ClassicScenesBottomNav />
       </section>
     </main>
   );

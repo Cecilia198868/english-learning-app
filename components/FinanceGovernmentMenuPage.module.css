@@ -1151,3 +1151,178 @@
 .phone {
   padding-top: var(--sf-learning-header-safe-top) !important;
 }
+
+/* Finance category standard: no top brand header, back control in hero, fixed bottom nav. */
+.panel,
+:global(html[data-app-theme]) .panel {
+  width: min(100%, 1024px) !important;
+  padding: 0 20px calc(env(safe-area-inset-bottom, 0px) + 130px) !important;
+  background:
+    radial-gradient(circle at 74% 8%, rgba(229, 236, 211, 0.3), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 252, 0.94), rgba(255, 253, 247, 0.98)) !important;
+}
+
+.hero,
+:global(html[data-app-theme]) .hero {
+  min-height: 338px !important;
+  margin-top: 0 !important;
+  border-radius: 0 0 24px 24px !important;
+}
+
+.backLink {
+  left: 56px !important;
+  top: 76px !important;
+  cursor: pointer;
+}
+
+.heroText {
+  width: min(59%, 590px) !important;
+  padding: 120px 28px 46px 44px !important;
+}
+
+.heroText h1 {
+  font-size: clamp(3.4rem, 6.6vw, 5.15rem) !important;
+}
+
+.heroText p {
+  margin-top: 28px !important;
+  font-size: clamp(1.32rem, 2.6vw, 1.72rem) !important;
+}
+
+.heroVisual {
+  right: 32px !important;
+  top: 0 !important;
+  width: 400px !important;
+  height: 320px !important;
+}
+
+.cardGrid {
+  gap: 18px !important;
+  padding-top: 28px !important;
+}
+
+.sceneCard,
+:global(html[data-app-theme]) .sceneCard {
+  grid-template-columns: 120px minmax(0, 1fr) 56px !important;
+  min-height: 224px !important;
+  padding: 26px 18px 24px 24px !important;
+  border-radius: 20px !important;
+}
+
+.iconTile {
+  width: 96px !important;
+  height: 96px !important;
+}
+
+.iconTile svg {
+  width: 58px !important;
+  height: 58px !important;
+}
+
+.cardCopy {
+  padding-left: 12px !important;
+}
+
+.cardCopy strong {
+  font-size: clamp(1.5rem, 2.8vw, 1.82rem) !important;
+}
+
+.cardCopy span {
+  font-size: clamp(1.02rem, 2vw, 1.18rem) !important;
+}
+
+.cardMeta {
+  font-size: 1.26rem !important;
+}
+
+.arrowCircle {
+  width: 56px !important;
+  height: 56px !important;
+}
+
+@media (max-width: 760px) {
+  .panel,
+  :global(html[data-app-theme]) .panel {
+    width: min(100%, 430px) !important;
+    padding: 0 14px calc(env(safe-area-inset-bottom, 0px) + 112px) !important;
+  }
+
+  .hero,
+  :global(html[data-app-theme]) .hero {
+    min-height: 195px !important;
+    border-radius: 0 0 19px 19px !important;
+  }
+
+  .backLink {
+    left: 22px !important;
+    top: 24px !important;
+    gap: 8px !important;
+    font-size: 0.94rem !important;
+  }
+
+  .heroText {
+    width: 64% !important;
+    padding: 64px 8px 24px 22px !important;
+  }
+
+  .heroText h1 {
+    font-size: clamp(1.52rem, 7vw, 2rem) !important;
+    white-space: normal !important;
+  }
+
+  .heroText p {
+    margin-top: 12px !important;
+    font-size: clamp(0.74rem, 3.1vw, 0.88rem) !important;
+  }
+
+  .heroVisual {
+    right: -2px !important;
+    top: 14px !important;
+    width: 158px !important;
+    height: 132px !important;
+  }
+
+  .cardGrid {
+    gap: 10px 9px !important;
+    padding-top: 16px !important;
+  }
+
+  .sceneCard,
+  :global(html[data-app-theme]) .sceneCard {
+    grid-template-columns: minmax(0, 1fr) 34px !important;
+    min-height: 164px !important;
+    padding: 13px 10px 12px 12px !important;
+    border-radius: 14px !important;
+  }
+
+  .iconTile {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .iconTile svg {
+    width: 29px !important;
+    height: 29px !important;
+  }
+
+  .cardCopy {
+    padding: 10px 16px 0 0 !important;
+  }
+
+  .cardCopy strong {
+    font-size: clamp(0.96rem, 4.5vw, 1.12rem) !important;
+  }
+
+  .cardCopy span {
+    font-size: clamp(0.7rem, 3.1vw, 0.8rem) !important;
+  }
+
+  .cardMeta {
+    font-size: clamp(0.79rem, 3.4vw, 0.9rem) !important;
+  }
+
+  .arrowCircle {
+    width: 34px !important;
+    height: 34px !important;
+  }
+}
