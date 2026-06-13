@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import styles from "./ClassicScenesMenuPage.module.css";
 
@@ -27,6 +28,16 @@ type SceneCard = {
   meta: string;
   title: string;
 };
+
+function FixedLayerPortal({
+  children,
+  target,
+}: {
+  children: ReactNode;
+  target: HTMLElement | null;
+}) {
+  return target ? createPortal(children, target) : <>{children}</>;
+}
 
 const sceneCards: SceneCard[] = [
   {
@@ -310,6 +321,8 @@ export default function ClassicScenesMenuPage({
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isProgressLoading, setIsProgressLoading] = useState(false);
   const [isProgressOpen, setIsProgressOpen] = useState(false);
+  const [bottomNavPortalRoot, setBottomNavPortalRoot] =
+    useState<HTMLElement | null>(null);
   const [progressError, setProgressError] = useState("");
   const [progressSnapshot, setProgressSnapshot] =
     useState<ClassicProgressSnapshot | null>(null);
@@ -326,6 +339,10 @@ export default function ClassicScenesMenuPage({
     setIsHelpOpen(false);
     setIsProgressOpen(false);
   };
+
+  useEffect(() => {
+    setBottomNavPortalRoot(document.body);
+  }, []);
 
   useEffect(() => {
     if (!isHelpOpen && !isProgressOpen) return;
@@ -467,40 +484,42 @@ export default function ClassicScenesMenuPage({
           })}
         </section>
 
-        <nav className={styles.bottomNav} aria-label="经典场景学习导航">
-          <button
-            className={`${styles.bottomNavButton} ${styles.bottomNavButtonActive}`}
-            type="button"
-            aria-label="回到学习首页"
-            onClick={openHome}
-          >
-            <ClassicHomeIcon />
-          </button>
-          <button
-            className={styles.bottomNavButton}
-            type="button"
-            aria-label="查看学习进度"
-            onClick={() => setIsProgressOpen(true)}
-          >
-            <ClassicProgressIcon />
-          </button>
-          <button
-            className={styles.bottomNavButton}
-            type="button"
-            aria-label="打开使用帮助"
-            onClick={() => setIsHelpOpen(true)}
-          >
-            <ClassicHelpIcon />
-          </button>
-          <button
-            className={styles.bottomNavButton}
-            type="button"
-            aria-label="打开账户界面"
-            onClick={openAccount}
-          >
-            <ClassicAccountIcon />
-          </button>
-        </nav>
+        <FixedLayerPortal target={bottomNavPortalRoot}>
+          <nav className={styles.bottomNav} aria-label="经典场景学习导航">
+            <button
+              className={`${styles.bottomNavButton} ${styles.bottomNavButtonActive}`}
+              type="button"
+              aria-label="回到学习首页"
+              onClick={openHome}
+            >
+              <ClassicHomeIcon />
+            </button>
+            <button
+              className={styles.bottomNavButton}
+              type="button"
+              aria-label="查看学习进度"
+              onClick={() => setIsProgressOpen(true)}
+            >
+              <ClassicProgressIcon />
+            </button>
+            <button
+              className={styles.bottomNavButton}
+              type="button"
+              aria-label="打开使用帮助"
+              onClick={() => setIsHelpOpen(true)}
+            >
+              <ClassicHelpIcon />
+            </button>
+            <button
+              className={styles.bottomNavButton}
+              type="button"
+              aria-label="打开账户界面"
+              onClick={openAccount}
+            >
+              <ClassicAccountIcon />
+            </button>
+          </nav>
+        </FixedLayerPortal>
       </section>
 
       {isProgressOpen ? (
