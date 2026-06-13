@@ -9411,3 +9411,210 @@
     padding: 0 0.38rem;
   }
 }
+
+/* Classic-scene first practice screen: rebuild the vertical rhythm from the reference. */
+.studyShellWithBottomNav {
+  --classic-study-bottom-space: calc(6rem + env(safe-area-inset-bottom, 0px));
+  min-height: auto !important;
+  padding-bottom: var(--classic-study-bottom-space) !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording {
+  min-height: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  padding-top: calc(0.55rem + env(safe-area-inset-top, 0px)) !important;
+  padding-bottom: var(--classic-study-bottom-space) !important;
+  overflow: visible !important;
+}
+
+.studyShellWithBottomNav .studyBackButton {
+  top: calc(0.74rem + env(safe-area-inset-top, 0px)) !important;
+  left: 1rem !important;
+  width: 2.45rem !important;
+  height: 2.45rem !important;
+  border-radius: 0.8rem !important;
+}
+
+.studyShellWithBottomNav .studyBackButton svg {
+  width: 1.42rem !important;
+  height: 1.42rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar {
+  width: min(100%, 19.4rem) !important;
+  min-height: 4.45rem !important;
+  grid-template-columns: 2.7rem minmax(0, max-content) !important;
+  column-gap: 0.62rem !important;
+  margin: 0 auto 0.38rem !important;
+  padding: 0.18rem 2.8rem 0.42rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar .topicIcon,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar .topicIcon svg,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar .topicIcon,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar .topicIcon svg {
+  width: 2.62rem !important;
+  height: 2.62rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .topicTitle,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .topicTitle {
+  max-width: min(12rem, 50vw) !important;
+  font-size: clamp(1.12rem, 4.85vw, 1.42rem) !important;
+  line-height: 1.02 !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .topicProgress,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .topicProgress {
+  margin-top: 0.08rem !important;
+  font-size: clamp(0.7rem, 2.9vw, 0.84rem) !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .progressRow,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .progressRow {
+  grid-template-columns: minmax(0, 7rem) auto !important;
+  gap: 0.58rem !important;
+  margin-top: 0.18rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .dialogCard,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .dialogCard {
+  display: grid !important;
+  min-height: 0 !important;
+  height: auto !important;
+  grid-template-rows: auto auto auto !important;
+  align-content: start !important;
+  margin: 0.32rem -14px 0 !important;
+  padding: 1.42rem 1.46rem calc(1.2rem + env(safe-area-inset-bottom, 0px)) !important;
+  overflow: visible !important;
+  border-radius: 1.62rem 1.62rem 0 0 !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .dialogCard {
+  padding-bottom: calc(1.45rem + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .speakerLine,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .speakerLine {
+  min-height: 3.2rem !important;
+  gap: 0.78rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .speakerAvatar,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .speakerAvatar svg,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .speakerAvatar,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .speakerAvatar svg {
+  width: 3.35rem !important;
+  height: 3.35rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .roleBadge,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .roleBadge {
+  min-height: 2.05rem !important;
+  padding: 0 1rem !important;
+  font-size: clamp(0.9rem, 3.6vw, 1.02rem) !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .speechBubble,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .speechBubble {
+  min-height: clamp(8.75rem, 21vh, 10.3rem) !important;
+  margin-top: 1.18rem !important;
+  padding: 1.48rem 1.35rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .chinesePrompt,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .chinesePrompt {
+  font-size: clamp(1.28rem, 5.1vw, 1.54rem) !important;
+  line-height: 1.18 !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .recordingArea,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .recordingArea {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  min-height: clamp(10.8rem, 25vh, 13.2rem) !important;
+  margin-top: clamp(2rem, 5.2vh, 3.05rem) !important;
+  padding-top: 0 !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .recordingArea {
+  min-height: clamp(14.4rem, 31vh, 16.6rem) !important;
+  margin-top: clamp(1.72rem, 4.4vh, 2.55rem) !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .recordingArea .micButton {
+  width: 5.25rem !important;
+  height: 5.25rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .recordingArea .micButton svg {
+  width: 2.6rem !important;
+  height: 2.6rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .recordingArea .micButton {
+  width: 6.2rem !important;
+  height: 6.2rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .recordingArea .micButton svg {
+  width: 3rem !important;
+  height: 3rem !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .recordingArea .micHint,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .recordingArea .micHint {
+  margin-top: 1.2rem !important;
+  font-size: clamp(0.95rem, 3.8vw, 1.1rem) !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .recordingSentenceNav {
+  position: static !important;
+  display: grid !important;
+  width: min(100%, 24rem) !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: clamp(4.5rem, 18vw, 6.6rem) !important;
+  margin: clamp(1.7rem, 4.2vh, 2.4rem) auto 0 !important;
+}
+
+@media (max-width: 390px) {
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle,
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+  }
+
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar,
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar {
+    width: min(100%, 18rem) !important;
+    min-height: 4.18rem !important;
+    grid-template-columns: 2.42rem minmax(0, max-content) !important;
+    padding-right: 2.55rem !important;
+    padding-left: 2.55rem !important;
+  }
+
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar .topicIcon,
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .studyTopicBar .topicIcon svg,
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar .topicIcon,
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .studyTopicBar .topicIcon svg {
+    width: 2.38rem !important;
+    height: 2.38rem !important;
+  }
+
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .dialogCard,
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .dialogCard {
+    margin-right: -10px !important;
+    margin-left: -10px !important;
+    padding-right: 1.14rem !important;
+    padding-left: 1.14rem !important;
+  }
+
+  .studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .recordingSentenceNav {
+    gap: clamp(3rem, 15vw, 4.2rem) !important;
+  }
+}
