@@ -822,15 +822,23 @@ export default function VocabularyPage() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.get("library") !== "1") return;
+    const shouldOpenLibrary = searchParams.get("library") === "1";
+    const shouldOpenResults = searchParams.get("results") === "1";
+    if (!shouldOpenLibrary && !shouldOpenResults) return;
 
     window.history.replaceState(null, "", "/vocabulary");
-    const openLibraryTimer = window.setTimeout(() => {
+    const openPanelTimer = window.setTimeout(() => {
+      if (shouldOpenResults) {
+        setShowExpressionLibrary(false);
+        setShowLearningResultsModal(true);
+        return;
+      }
+
       setShowExpressionLibrary(true);
     }, 0);
 
     return () => {
-      window.clearTimeout(openLibraryTimer);
+      window.clearTimeout(openPanelTimer);
     };
   }, []);
 

@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
-import HomeMenuIcon from "@/components/HomeMenuIcon";
-import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
+import { useEffect, useState } from "react";
 import { syncVocabularyWordsWithCloud } from "@/lib/vocabulary";
 import styles from "./NewExpressionsPage.module.css";
 
@@ -91,6 +89,54 @@ function TipIcon() {
     <svg aria-hidden="true" viewBox="0 0 44 44">
       <path d="M22 4.8c-7.1 0-12.8 5.5-12.8 12.3 0 4.1 2 7.3 5.2 9.7 1.6 1.2 2.5 3 2.5 5v.7h10.2v-.7c0-2 .9-3.8 2.5-5 3.2-2.4 5.2-5.6 5.2-9.7C34.8 10.3 29.1 4.8 22 4.8Z" />
       <path d="M16.8 36h10.4M18.8 40h6.4" />
+    </svg>
+  );
+}
+
+function BottomHomeIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 32 32">
+      <path
+        d="m5.2 15.2 10.7-9.1 10.9 9.1v11.2c0 1.1-.9 2-2 2h-5.6v-7.1h-6.4v7.1H7.2c-1.1 0-2-.9-2-2V15.2Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function BottomProgressIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 32 32">
+      <path d="M8.5 25V15.4" />
+      <path d="M15.9 25V7.4" />
+      <path d="M23.5 25V11.5" />
+    </svg>
+  );
+}
+
+function BottomHelpIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 32 32">
+      <path d="M16 5.2c-6 0-10.8 4.2-10.8 9.4 0 3 1.5 5.6 4 7.3l-.7 4.9 4.8-2.7c.9.2 1.8.3 2.7.3 6 0 10.8-4.2 10.8-9.8S22 5.2 16 5.2Z" />
+      <path d="M13.4 12.6a2.7 2.7 0 0 1 5.1 1.4c0 1.8-1.4 2.4-2.2 3.2-.5.5-.5.9-.5 1.3" />
+      <path d="M15.8 21.6h.1" />
+    </svg>
+  );
+}
+
+function BottomAccountIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 32 32">
+      <circle cx="16" cy="10.2" r="4.2" />
+      <path d="M8.2 26.3c.8-4 3.8-6.3 7.8-6.3s7 2.3 7.8 6.3" />
+    </svg>
+  );
+}
+
+function ModalCloseIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 32 32">
+      <path d="m9 9 14 14M23 9 9 23" />
     </svg>
   );
 }
@@ -207,7 +253,65 @@ function LibraryIllustration() {
   );
 }
 
+function NewExpressionHelpModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className={styles.helpBackdrop} role="presentation" onClick={onClose}>
+      <section
+        aria-labelledby="new-expression-help-title"
+        aria-modal="true"
+        className={styles.helpDialog}
+        role="dialog"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <header className={styles.helpHeader}>
+          <div>
+            <h2 id="new-expression-help-title">使用帮助</h2>
+            <p>用新表达积累地道说法，再通过表达库复习和跟读。</p>
+          </div>
+          <button type="button" aria-label="关闭使用帮助" className={styles.helpClose} onClick={onClose}>
+            <ModalCloseIcon />
+          </button>
+        </header>
+
+        <div className={styles.helpList}>
+          <article className={styles.helpItem}>
+            <span className={styles.helpItemIcon}>
+              <StarIcon />
+            </span>
+            <div>
+              <h3>新表达</h3>
+              <p>点击“去学习新表达”，学习精选高频表达，听地道发音，看场景化例句，再跟读练习。</p>
+            </div>
+          </article>
+          <article className={styles.helpItem}>
+            <span className={styles.helpItemIcon}>
+              <FolderIcon />
+            </span>
+            <div>
+              <h3>表达库</h3>
+              <p>收藏过的表达会进入“我的表达库”，可以查看全部、继续学习、复习巩固和分类管理。</p>
+            </div>
+          </article>
+          <article className={styles.helpItem}>
+            <span className={styles.helpItemIcon}>
+              <BottomProgressIcon />
+            </span>
+            <div>
+              <h3>学习新表达</h3>
+              <p>学习和跟读会自动记录到学习成果里，方便查看收藏、连续学习、跟读次数和最近学习内容。</p>
+            </div>
+          </article>
+        </div>
+
+        <p className={styles.helpTip}>小贴士：每天坚持一点点，地道表达会慢慢变成你的开口习惯。</p>
+      </section>
+    </div>
+  );
+}
+
 export default function NewExpressionsPage() {
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -229,28 +333,22 @@ export default function NewExpressionsPage() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isHelpOpen) return;
+
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsHelpOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [isHelpOpen]);
+
   return (
     <main className={styles.page}>
       <section className={styles.phone} aria-label="新表达菜单">
-        <header className={styles.header}>
-          <Link href="/start" aria-label="返回学习首页" className={styles.homeButton}>
-            <span className={styles.homeIconBox}>
-              <HomeMenuIcon label={null} showHint={false} />
-            </span>
-            <span>学习首页</span>
-          </Link>
-
-          <div className={styles.brand} aria-label="SpeakFlow AI Voice Practice">
-            <SpeakFlowBrandMark className={styles.brandLogo} />
-            <span>
-              <strong>SpeakFlow</strong>
-              <small>AI VOICE PRACTICE</small>
-            </span>
-          </div>
-
-          <span aria-hidden="true" />
-        </header>
-
         <section className={styles.hero} aria-labelledby="new-expressions-title">
           <span className={styles.heroIcon}>
             <BookHeaderIcon />
@@ -333,6 +431,34 @@ export default function NewExpressionsPage() {
             <p>坚持学习和复习，你会发现自己的表达越来越自然！</p>
           </div>
         </section>
+
+        <nav className={styles.bottomNav} aria-label="新表达底部导航">
+          <Link
+            href="/start"
+            className={`${styles.bottomNavButton} ${styles.bottomNavButtonActive}`}
+            aria-label="学习首页"
+          >
+            <BottomHomeIcon />
+          </Link>
+          <Link href="/vocabulary?results=1" className={styles.bottomNavButton} aria-label="学习成果">
+            <BottomProgressIcon />
+          </Link>
+          <button
+            type="button"
+            className={styles.bottomNavButton}
+            aria-label="新表达使用帮助"
+            aria-expanded={isHelpOpen}
+            aria-haspopup="dialog"
+            onClick={() => setIsHelpOpen(true)}
+          >
+            <BottomHelpIcon />
+          </button>
+          <Link href="/account" className={styles.bottomNavButton} aria-label="我的">
+            <BottomAccountIcon />
+          </Link>
+        </nav>
+
+        {isHelpOpen ? <NewExpressionHelpModal onClose={() => setIsHelpOpen(false)} /> : null}
       </section>
     </main>
   );
