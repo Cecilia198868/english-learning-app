@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import styles from "./ClassicScenesBottomNav.module.css";
 
@@ -25,6 +26,16 @@ type ClassicProgressApiPayload = ClassicProgressSnapshot & {
 type ClassicScenesBottomNavProps = {
   onHelpOpen?: () => void;
 };
+
+function FixedLayerPortal({
+  children,
+  target,
+}: {
+  children: ReactNode;
+  target: HTMLElement | null;
+}) {
+  return target ? createPortal(children, target) : <>{children}</>;
+}
 
 function normalizeProgressPayload(
   payload: ClassicProgressApiPayload,
@@ -81,6 +92,8 @@ export default function ClassicScenesBottomNav({
 }: ClassicScenesBottomNavProps = {}) {
   const router = useRouter();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [bottomNavPortalRoot, setBottomNavPortalRoot] =
+    useState<HTMLElement | null>(null);
   const [isProgressLoading, setIsProgressLoading] = useState(false);
   const [isProgressOpen, setIsProgressOpen] = useState(false);
   const [progressError, setProgressError] = useState("");
@@ -91,6 +104,10 @@ export default function ClassicScenesBottomNav({
     setIsHelpOpen(false);
     setIsProgressOpen(false);
   };
+
+  useEffect(() => {
+    setBottomNavPortalRoot(document.body);
+  }, []);
 
   useEffect(() => {
     if (!isHelpOpen && !isProgressOpen) return;
@@ -157,7 +174,8 @@ export default function ClassicScenesBottomNav({
   const totalCompleted = progressSnapshot?.totalCompleted ?? todayCompleted;
 
   return (
-    <>
+    <FixedLayerPortal target={bottomNavPortalRoot}>
+      <>
       <nav className={styles.bottomNav} aria-label="经典场景学习导航">
         <button
           className={`${styles.bottomNavButton} ${styles.bottomNavButtonActive}`}
@@ -274,6 +292,7 @@ export default function ClassicScenesBottomNav({
           </section>
         </div>
       ) : null}
-    </>
+      </>
+    </FixedLayerPortal>
   );
 }

@@ -1059,7 +1059,7 @@
 
   .heroBackLink {
     left: 22px;
-    top: 24px;
+    top: max(48px, calc(env(safe-area-inset-top, 0px) + 22px));
     gap: 8px;
     font-size: 0.94rem;
   }
@@ -1071,7 +1071,7 @@
 
   .heroCopy {
     width: 64% !important;
-    padding: 64px 8px 24px 22px !important;
+    padding: 82px 8px 24px 22px !important;
   }
 
   .heroCopy h2 {
