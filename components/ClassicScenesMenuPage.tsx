@@ -3,6 +3,10 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
+import {
+  classicSceneCategoryMenus,
+  type ClassicSceneCategoryId,
+} from "@/data/classicSceneCategoryMenus";
 import styles from "./ClassicScenesMenuPage.module.css";
 
 type SceneCardIcon =
@@ -24,7 +28,7 @@ type SceneCard = {
   href?: string;
   icon: SceneCardIcon;
   iconBackground: string;
-  id: string;
+  id: ClassicSceneCategoryId | "finance-government";
   meta: string;
   title: string;
 };
@@ -37,6 +41,17 @@ function FixedLayerPortal({
   target: HTMLElement | null;
 }) {
   return target ? createPortal(children, target) : <>{children}</>;
+}
+
+function formatCourseCount(count: number) {
+  return `${count} 个课程`;
+}
+
+function getCategoryCourseCount(categoryId: ClassicSceneCategoryId) {
+  return classicSceneCategoryMenus[categoryId].cards.reduce(
+    (total, card) => total + card.count,
+    0
+  );
 }
 
 const sceneCards: SceneCard[] = [
@@ -57,7 +72,7 @@ const sceneCards: SceneCard[] = [
     icon: "bag",
     iconBackground: "#fff1e8",
     id: "shopping-consumption",
-    meta: "课程整理中",
+    meta: formatCourseCount(getCategoryCourseCount("shopping-consumption")),
     title: "购物与消费",
   },
   {
@@ -67,7 +82,7 @@ const sceneCards: SceneCard[] = [
     icon: "utensils",
     iconBackground: "#fff0eb",
     id: "restaurant-takeout",
-    meta: "课程整理中",
+    meta: formatCourseCount(getCategoryCourseCount("restaurant-takeout")),
     title: "餐饮与外卖",
   },
   {
@@ -77,7 +92,7 @@ const sceneCards: SceneCard[] = [
     icon: "car",
     iconBackground: "#ecf6f4",
     id: "transportation-travel",
-    meta: "课程整理中",
+    meta: formatCourseCount(getCategoryCourseCount("transportation-travel")),
     title: "交通与出行",
   },
   {
@@ -87,7 +102,7 @@ const sceneCards: SceneCard[] = [
     icon: "home",
     iconBackground: "#f3f5e9",
     id: "housing-home",
-    meta: "课程整理中",
+    meta: formatCourseCount(getCategoryCourseCount("housing-home")),
     title: "住宿与家居",
   },
   {
@@ -97,7 +112,7 @@ const sceneCards: SceneCard[] = [
     icon: "shield",
     iconBackground: "#edf6ec",
     id: "health-medical",
-    meta: "课程整理中",
+    meta: formatCourseCount(getCategoryCourseCount("health-medical")),
     title: "健康与医疗",
   },
   {
@@ -107,7 +122,7 @@ const sceneCards: SceneCard[] = [
     icon: "wrench",
     iconBackground: "#fff6dd",
     id: "service-repair",
-    meta: "课程整理中",
+    meta: formatCourseCount(getCategoryCourseCount("service-repair")),
     title: "服务与维修",
   },
   {
@@ -117,7 +132,7 @@ const sceneCards: SceneCard[] = [
     icon: "graduation",
     iconBackground: "#f3eef1",
     id: "education-work-social",
-    meta: "课程整理中",
+    meta: formatCourseCount(getCategoryCourseCount("education-work-social")),
     title: "教育、工作与社交生活",
   },
 ];
