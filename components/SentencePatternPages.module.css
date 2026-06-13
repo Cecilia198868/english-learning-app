@@ -39,7 +39,18 @@
     calc(env(safe-area-inset-bottom, 0px) + 18px);
 }
 
-.overviewHeader,
+.overviewPhone {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 112px);
+}
+
+.overviewHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  padding-top: clamp(2.1rem, 7dvh, 3.2rem);
+  text-align: center;
+}
+
 .levelHeader {
   display: grid;
   grid-template-columns: 58px minmax(0, 1fr);
@@ -1450,6 +1461,191 @@
   box-shadow:
     0 16px 28px rgba(106, 78, 225, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.patternBottomNav {
+  position: fixed;
+  left: 50%;
+  bottom: max(0.7rem, env(safe-area-inset-bottom, 0px));
+  z-index: 120;
+  box-sizing: border-box;
+  display: grid;
+  width: min(calc(100% - 1.55rem), 398px);
+  min-height: clamp(3.95rem, 17vw, 4.7rem);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(0.18rem, 1vw, 0.42rem);
+  border: 1px solid rgba(220, 227, 247, 0.92);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: clamp(0.38rem, 1.7vw, 0.52rem) clamp(0.82rem, 4.2vw, 1.18rem);
+  box-shadow:
+    0 1.05rem 2.4rem rgba(94, 112, 172, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+  transform: translateX(-50%);
+  backdrop-filter: blur(18px);
+}
+
+.patternBottomButton {
+  display: grid;
+  width: 100%;
+  height: clamp(2.55rem, 11.5vw, 3.12rem);
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #8b8eaf;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.patternBottomButton:active {
+  transform: scale(0.97);
+}
+
+.patternBottomButton:focus-visible,
+.patternBottomModalClose:focus-visible {
+  outline: 3px solid rgba(132, 103, 255, 0.34);
+  outline-offset: 3px;
+}
+
+.patternBottomButton svg {
+  width: clamp(1.62rem, 7.2vw, 2.05rem);
+  height: clamp(1.62rem, 7.2vw, 2.05rem);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.1;
+  vector-effect: non-scaling-stroke;
+}
+
+.patternBottomButtonActive svg {
+  width: clamp(1.72rem, 7.8vw, 2.16rem);
+  height: clamp(1.72rem, 7.8vw, 2.16rem);
+  stroke: none;
+}
+
+.patternBottomModalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top, 0px)) 1rem max(1rem, env(safe-area-inset-bottom, 0px));
+  background: rgba(14, 19, 46, 0.28);
+  backdrop-filter: blur(14px);
+}
+
+.patternBottomModal {
+  position: relative;
+  width: min(100%, 24rem);
+  max-height: min(84dvh, 40rem);
+  overflow-y: auto;
+  border: 1px solid rgba(220, 228, 250, 0.94);
+  border-radius: 1.45rem;
+  background:
+    radial-gradient(circle at 88% 6%, rgba(222, 207, 255, 0.62), transparent 8rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 252, 255, 0.97));
+  color: #07103d;
+  padding: 1.08rem;
+  box-shadow:
+    0 1.8rem 4.2rem rgba(25, 32, 74, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.patternBottomModal h2 {
+  margin: 0;
+  color: #07103d;
+  font-size: 1.42rem;
+  font-weight: 950;
+  line-height: 1.14;
+}
+
+.patternBottomModal p {
+  margin: 0.46rem 2.75rem 0 0;
+  color: #6a7197;
+  font-size: 0.82rem;
+  font-weight: 760;
+  line-height: 1.48;
+}
+
+.patternBottomModalClose {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: #12183e;
+  box-shadow: inset 0 0 0 1px rgba(211, 221, 244, 0.9);
+  cursor: pointer;
+}
+
+.patternBottomModalClose svg {
+  width: 1.06rem;
+  height: 1.06rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2.7;
+}
+
+.patternBottomModalStatus {
+  display: grid;
+  min-height: 7rem;
+  place-items: center;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.72);
+  color: #687197;
+  font-size: 0.9rem;
+  font-weight: 820;
+  text-align: center;
+}
+
+.patternBottomProgressGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.patternBottomProgressGrid span {
+  display: flex;
+  min-height: 4.35rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.18rem;
+  border: 1px solid rgba(222, 228, 247, 0.9);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94);
+  text-align: center;
+}
+
+.patternBottomProgressGrid strong {
+  color: #07103d;
+  font-size: 1.46rem;
+  font-weight: 1000;
+  line-height: 1;
+}
+
+.patternBottomProgressGrid small {
+  color: #6a7197;
+  font-size: 0.66rem;
+  font-weight: 780;
+  line-height: 1.16;
 }
 
 @media (max-width: 640px) {

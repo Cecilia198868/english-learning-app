@@ -35,6 +35,24 @@ type PatternToneStyle = CSSProperties & {
   "--pattern-glow": string;
 };
 
+type SentencePatternProgressSnapshot = {
+  challenge?: {
+    completed?: number;
+    goal?: number;
+    percent?: number;
+  };
+  dailyGoal?: number;
+  streakDays?: number;
+  todayCompleted?: number;
+  totalCompleted?: number;
+};
+
+type SentencePatternProgressApiPayload = SentencePatternProgressSnapshot & {
+  data?: SentencePatternProgressSnapshot;
+  progress?: SentencePatternProgressSnapshot;
+  snapshot?: SentencePatternProgressSnapshot;
+};
+
 const FINISH_AFTER_SILENCE_MS = 2000;
 const RESTART_AFTER_NO_SPEECH_MS = 240;
 
@@ -226,6 +244,61 @@ function ChevronIcon({ direction = "right" }: { direction?: "down" | "left" | "r
   );
 }
 
+function SentencePatternBottomHomeIcon() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="sentence-pattern-bottom-home" x1="9" x2="39" y1="39" y2="8">
+          <stop offset="0" stopColor="#5e79ff" />
+          <stop offset="1" stopColor="#914cff" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M8 21.6 24 8l16 13.6v16.2a4 4 0 0 1-4 4h-7.7V29.3h-8.6v12.5H12a4 4 0 0 1-4-4V21.6Z"
+        fill="url(#sentence-pattern-bottom-home)"
+      />
+    </svg>
+  );
+}
+
+function SentencePatternBottomProgressIcon() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <path d="M12 34V21" />
+      <path d="M20 34V12" />
+      <path d="M28 34V17" />
+      <path d="M36 34V9" />
+    </svg>
+  );
+}
+
+function SentencePatternBottomHelpIcon() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <path d="M24 7.5c-9.4 0-17 6.4-17 14.3 0 4.7 2.7 8.9 6.9 11.5l-1.5 7.2 7.2-4.8c1.4.3 2.9.5 4.4.5 9.4 0 17-6.4 17-14.4S33.4 7.5 24 7.5Z" />
+      <path d="M19.2 18.8a5.1 5.1 0 0 1 9.8 2.1c0 3.8-5 4.1-5 7.2" />
+      <path d="M24 34.2h.1" />
+    </svg>
+  );
+}
+
+function SentencePatternBottomAccountIcon() {
+  return (
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <circle cx="24" cy="15.2" r="7.1" />
+      <path d="M11.8 40c1.5-8 6-12 12.2-12s10.7 4 12.2 12" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="m6 6 12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
 function StatIcon({
   type,
 }: {
@@ -346,6 +419,12 @@ function StatIcon({
   );
 }
 
+function normalizeSentencePatternProgress(
+  payload: SentencePatternProgressApiPayload,
+): SentencePatternProgressSnapshot {
+  return payload.progress ?? payload.snapshot ?? payload.data ?? payload;
+}
+
 function SentencePatternHelpModal({ onClose }: { onClose: () => void }) {
   const steps = [
     {
@@ -440,6 +519,177 @@ function SentencePatternHelpModal({ onClose }: { onClose: () => void }) {
   );
 }
 
+function SentencePatternBottomNav() {
+  const router = useRouter();
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isProgressLoading, setIsProgressLoading] = useState(false);
+  const [isProgressOpen, setIsProgressOpen] = useState(false);
+  const [progressError, setProgressError] = useState("");
+  const [progressSnapshot, setProgressSnapshot] =
+    useState<SentencePatternProgressSnapshot | null>(null);
+
+  const closeModals = () => {
+    setIsHelpOpen(false);
+    setIsProgressOpen(false);
+  };
+
+  useEffect(() => {
+    if (!isProgressOpen) return;
+
+    const controller = new AbortController();
+
+    async function loadProgress() {
+      setIsProgressLoading(true);
+      setProgressError("");
+
+      try {
+        const response = await fetch("/api/ai-guided-expression/progress", {
+          cache: "no-store",
+          credentials: "same-origin",
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to load progress");
+        }
+
+        const payload = (await response.json()) as SentencePatternProgressApiPayload;
+
+        if (!controller.signal.aborted) {
+          setProgressSnapshot(normalizeSentencePatternProgress(payload));
+        }
+      } catch {
+        if (!controller.signal.aborted) {
+          setProgressError("暂时无法读取后台学习进度，请稍后再试。");
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsProgressLoading(false);
+        }
+      }
+    }
+
+    void loadProgress();
+
+    return () => controller.abort();
+  }, [isProgressOpen]);
+
+  useEffect(() => {
+    if (!isHelpOpen && !isProgressOpen) return;
+
+    function handleKeyDown(event: globalThis.KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsHelpOpen(false);
+        setIsProgressOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isHelpOpen, isProgressOpen]);
+
+  const todayCompleted =
+    progressSnapshot?.todayCompleted ?? progressSnapshot?.challenge?.completed ?? 0;
+  const dailyGoal = progressSnapshot?.dailyGoal ?? progressSnapshot?.challenge?.goal ?? 5;
+  const challengePercent =
+    progressSnapshot?.challenge?.percent ??
+    Math.min(100, Math.round((todayCompleted / Math.max(dailyGoal, 1)) * 100));
+  const streakDays = progressSnapshot?.streakDays ?? 0;
+  const totalCompleted = progressSnapshot?.totalCompleted ?? todayCompleted;
+
+  return (
+    <>
+      <nav className={styles.patternBottomNav} aria-label="100句型学习导航">
+        <button
+          className={`${styles.patternBottomButton} ${styles.patternBottomButtonActive}`}
+          type="button"
+          aria-label="回到学习首页"
+          onClick={() => router.push("/start")}
+        >
+          <SentencePatternBottomHomeIcon />
+        </button>
+        <button
+          className={styles.patternBottomButton}
+          type="button"
+          aria-label="查看学习进度"
+          aria-haspopup="dialog"
+          aria-expanded={isProgressOpen}
+          onClick={() => setIsProgressOpen(true)}
+        >
+          <SentencePatternBottomProgressIcon />
+        </button>
+        <button
+          className={styles.patternBottomButton}
+          type="button"
+          aria-label="打开100句型学习帮助"
+          aria-haspopup="dialog"
+          aria-expanded={isHelpOpen}
+          onClick={() => setIsHelpOpen(true)}
+        >
+          <SentencePatternBottomHelpIcon />
+        </button>
+        <button
+          className={styles.patternBottomButton}
+          type="button"
+          aria-label="打开账户界面"
+          onClick={() => router.push("/account")}
+        >
+          <SentencePatternBottomAccountIcon />
+        </button>
+      </nav>
+
+      {isProgressOpen ? (
+        <div className={styles.patternBottomModalBackdrop} onClick={closeModals}>
+          <section
+            className={styles.patternBottomModal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sentence-pattern-progress-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              className={styles.patternBottomModalClose}
+              type="button"
+              aria-label="关闭学习进度"
+              onClick={closeModals}
+            >
+              <CloseIcon />
+            </button>
+            <h2 id="sentence-pattern-progress-title">学习进度</h2>
+            <p>进度会读取后台学习记录，和你的学习数据保持一致。</p>
+            {isProgressLoading ? (
+              <div className={styles.patternBottomModalStatus}>正在读取学习进度...</div>
+            ) : progressError ? (
+              <div className={styles.patternBottomModalStatus}>{progressError}</div>
+            ) : (
+              <div className={styles.patternBottomProgressGrid}>
+                <span>
+                  <strong>{todayCompleted}</strong>
+                  <small>今日完成</small>
+                </span>
+                <span>
+                  <strong>{challengePercent}%</strong>
+                  <small>今日目标</small>
+                </span>
+                <span>
+                  <strong>{streakDays}</strong>
+                  <small>连续天数</small>
+                </span>
+                <span>
+                  <strong>{totalCompleted}</strong>
+                  <small>累计练习</small>
+                </span>
+              </div>
+            )}
+          </section>
+        </div>
+      ) : null}
+
+      {isHelpOpen ? <SentencePatternHelpModal onClose={() => setIsHelpOpen(false)} /> : null}
+    </>
+  );
+}
+
 export function SentencePatternOverviewPage({
   levels,
 }: {
@@ -449,11 +699,8 @@ export function SentencePatternOverviewPage({
 
   return (
     <main className={styles.page}>
-      <section className={styles.phone}>
+      <section className={`${styles.phone} ${styles.overviewPhone}`}>
         <div className={styles.overviewHeader}>
-          <Link href="/start" className={styles.roundBack} aria-label="回到学习首页">
-            <HomeMenuIcon label={null} showHint={false} />
-          </Link>
           <div>
             <h1>100 个口语常用句型</h1>
             <p>掌握句型，开口更轻松</p>
@@ -499,6 +746,7 @@ export function SentencePatternOverviewPage({
           </span>
           <p>每个句型包含 20 个实用例句，跟读练习，加深记忆，建议按顺序学习，效果更佳！</p>
         </div>
+        <SentencePatternBottomNav />
       </section>
     </main>
   );
