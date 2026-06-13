@@ -1317,9 +1317,9 @@ export default function VocabularyPage() {
   }
 
   function openExpressionHelpFromVocabulary() {
-    setShowExpressionLibrary(false);
     setShowExpressionLimitModal(false);
     setShowLearningResultsModal(false);
+    setOpenLibraryActionFor("");
     setShowExpressionHelpModal(true);
   }
 
@@ -1837,6 +1837,46 @@ export default function VocabularyPage() {
             ))}
           </footer>
 
+          <nav
+            className="sf-vocabulary-app-bottom-nav sf-expression-library-app-bottom-nav"
+            aria-label="新表达底部导航"
+          >
+            <button
+              type="button"
+              className="sf-vocabulary-app-bottom-button is-active"
+              aria-label="学习首页"
+              onClick={openLearningHomeFromVocabulary}
+            >
+              <BottomHomeIcon />
+            </button>
+            <button
+              type="button"
+              className="sf-vocabulary-app-bottom-button"
+              aria-label="学习成果"
+              onClick={openLearningResultsFromVocabulary}
+            >
+              <ChartStatIcon />
+            </button>
+            <button
+              type="button"
+              className="sf-vocabulary-app-bottom-button"
+              aria-label="新表达使用帮助"
+              aria-expanded={showExpressionHelpModal}
+              aria-haspopup="dialog"
+              onClick={openExpressionHelpFromVocabulary}
+            >
+              <BottomHelpIcon />
+            </button>
+            <button
+              type="button"
+              className="sf-vocabulary-app-bottom-button"
+              aria-label="我的"
+              onClick={openAccountFromVocabulary}
+            >
+              <BottomAccountIcon />
+            </button>
+          </nav>
+
           {pendingDeleteExpression ? (
             <div className="sf-expression-library-delete-backdrop" role="presentation">
               <section
@@ -1860,6 +1900,12 @@ export default function VocabularyPage() {
                 </div>
               </section>
             </div>
+          ) : null}
+
+          {showExpressionHelpModal ? (
+            <ExpressionLearningHelpModal
+              onClose={() => setShowExpressionHelpModal(false)}
+            />
           ) : null}
         </section>
       </main>

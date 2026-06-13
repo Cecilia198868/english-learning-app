@@ -8702,3 +8702,256 @@
     min-height: 4.1rem;
   }
 }
+
+/* Final override: new-expression library uses no brand top bar and a fixed app nav. */
+:global(.sf-expression-library-phone) {
+  position: relative !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background:
+    radial-gradient(circle at 12% 3%, rgba(232, 226, 255, 0.78), transparent 34%),
+    radial-gradient(circle at 90% 6%, rgba(226, 237, 255, 0.68), transparent 30%),
+    linear-gradient(180deg, #fbfbff 0%, #f7f9ff 50%, #f3f6ff 100%) !important;
+}
+
+:global(.sf-expression-library-topbar) {
+  position: absolute !important;
+  z-index: 25 !important;
+  top: max(0.92rem, calc(env(safe-area-inset-top, 0px) + 0.72rem)) !important;
+  left: 0.9rem !important;
+  display: block !important;
+  width: auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+:global(.sf-expression-library-brand),
+:global(.sf-expression-library-topbar > span) {
+  display: none !important;
+}
+
+:global(.sf-expression-library-back) {
+  display: grid !important;
+  width: 3.55rem !important;
+  min-width: 3.55rem !important;
+  height: 3.55rem !important;
+  min-height: 3.55rem !important;
+  place-items: center !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  color: #100b57 !important;
+  box-shadow:
+    0 1rem 2.1rem rgba(85, 75, 152, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+}
+
+:global(.sf-expression-library-back svg) {
+  width: 1.72rem !important;
+  height: 1.72rem !important;
+}
+
+:global(.sf-expression-library-back path) {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  stroke-width: 3.5 !important;
+}
+
+:global(.sf-expression-library-hero) {
+  flex: 0 0 auto !important;
+  grid-template-columns: 3.8rem minmax(0, 1fr) 6.6rem !important;
+  min-height: 7.5rem !important;
+  align-items: center !important;
+  gap: 0.78rem !important;
+  padding:
+    max(2.65rem, calc(env(safe-area-inset-top, 0px) + 2.35rem))
+    1.45rem
+    0.8rem !important;
+}
+
+:global(.sf-expression-library-title-icon) {
+  width: 3.55rem !important;
+  height: 3.55rem !important;
+  border-radius: 999px !important;
+}
+
+:global(.sf-expression-library-title-icon svg) {
+  width: 1.86rem !important;
+  height: 1.86rem !important;
+}
+
+:global(.sf-expression-library-title-copy h1) {
+  font-size: clamp(1.72rem, 7.4vw, 2.08rem) !important;
+  font-weight: 950 !important;
+  line-height: 1.05 !important;
+}
+
+:global(.sf-expression-library-title-copy p) {
+  margin-top: 0.52rem !important;
+  color: #4f5b82 !important;
+  font-size: clamp(0.92rem, 3.7vw, 1.05rem) !important;
+  font-weight: 650 !important;
+}
+
+:global(.sf-expression-library-hero-art) {
+  width: 6.45rem !important;
+}
+
+:global(.sf-expression-library-stats) {
+  flex: 0 0 auto !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0.55rem !important;
+  padding: 0 1.35rem 0.9rem !important;
+}
+
+:global(.sf-expression-library-stat) {
+  min-height: 4.15rem !important;
+  grid-template-columns: 1.72rem minmax(0, 1fr) !important;
+  column-gap: 0.4rem !important;
+  border-radius: 0.92rem !important;
+  padding: 0.48rem 0.42rem !important;
+}
+
+:global(.sf-expression-library-stat > span) {
+  width: 1.62rem !important;
+  height: 1.62rem !important;
+  border-radius: 0.64rem !important;
+}
+
+:global(.sf-expression-library-stat svg) {
+  width: 1rem !important;
+  height: 1rem !important;
+}
+
+:global(.sf-expression-library-stat p) {
+  overflow: hidden !important;
+  font-size: 0.58rem !important;
+  text-overflow: ellipsis !important;
+}
+
+:global(.sf-expression-library-stat strong) {
+  font-size: 1.08rem !important;
+}
+
+:global(.sf-expression-library-search-row) {
+  flex: 0 0 auto !important;
+  grid-template-columns: minmax(0, 1fr) 4.1rem !important;
+  gap: 0.72rem !important;
+  padding: 0 1.35rem 0.72rem !important;
+}
+
+:global(.sf-expression-library-filter) {
+  width: 4.1rem !important;
+  height: 2.82rem !important;
+  border: 1px solid rgba(226, 229, 246, 0.96) !important;
+  border-radius: 999px !important;
+}
+
+:global(.sf-expression-library-filter-tabs) {
+  flex: 0 0 auto !important;
+  padding: 0 1.35rem 0.82rem !important;
+}
+
+:global(.sf-expression-library-list) {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  padding:
+    0 1.35rem
+    calc(6.35rem + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+:global(.sf-expression-library-bottom-bar) {
+  display: none !important;
+}
+
+:global(.sf-expression-library-app-bottom-nav) {
+  bottom: max(0.42rem, env(safe-area-inset-bottom, 0px)) !important;
+}
+
+@media (max-width: 390px) {
+  :global(.sf-expression-library-topbar) {
+    top: max(0.72rem, calc(env(safe-area-inset-top, 0px) + 0.56rem)) !important;
+    left: 0.68rem !important;
+  }
+
+  :global(.sf-expression-library-back) {
+    width: 3.08rem !important;
+    min-width: 3.08rem !important;
+    height: 3.08rem !important;
+    min-height: 3.08rem !important;
+  }
+
+  :global(.sf-expression-library-back svg) {
+    width: 1.48rem !important;
+    height: 1.48rem !important;
+  }
+
+  :global(.sf-expression-library-hero) {
+    grid-template-columns: 3.15rem minmax(0, 1fr) 5.4rem !important;
+    gap: 0.54rem !important;
+    min-height: 6.75rem !important;
+    padding:
+      max(2.25rem, calc(env(safe-area-inset-top, 0px) + 2rem))
+      0.9rem
+      0.62rem !important;
+  }
+
+  :global(.sf-expression-library-title-icon) {
+    width: 2.92rem !important;
+    height: 2.92rem !important;
+  }
+
+  :global(.sf-expression-library-title-copy h1) {
+    font-size: 1.55rem !important;
+  }
+
+  :global(.sf-expression-library-title-copy p) {
+    font-size: 0.86rem !important;
+  }
+
+  :global(.sf-expression-library-hero-art) {
+    width: 5.2rem !important;
+  }
+
+  :global(.sf-expression-library-stats) {
+    gap: 0.38rem !important;
+    padding-right: 0.82rem !important;
+    padding-left: 0.82rem !important;
+  }
+
+  :global(.sf-expression-library-stat) {
+    min-height: 3.76rem !important;
+    grid-template-columns: 1.35rem minmax(0, 1fr) !important;
+    column-gap: 0.3rem !important;
+    padding: 0.4rem 0.32rem !important;
+  }
+
+  :global(.sf-expression-library-stat > span) {
+    width: 1.32rem !important;
+    height: 1.32rem !important;
+  }
+
+  :global(.sf-expression-library-stat p) {
+    font-size: 0.5rem !important;
+  }
+
+  :global(.sf-expression-library-stat strong) {
+    font-size: 0.92rem !important;
+  }
+
+  :global(.sf-expression-library-search-row),
+  :global(.sf-expression-library-filter-tabs),
+  :global(.sf-expression-library-list) {
+    padding-right: 0.82rem !important;
+    padding-left: 0.82rem !important;
+  }
+}
