@@ -14,6 +14,7 @@ type PlaySpeakFlowTtsOptions = {
 
 const MAX_TTS_CACHE_ENTRIES = 32;
 const QUICK_FALLBACK_DELAY_MS = 1400;
+const GENERATED_TTS_SOURCE_RATE = 1;
 
 let currentAudio: HTMLAudioElement | null = null;
 let currentAudioUrl = "";
@@ -24,8 +25,8 @@ function normalizeRate(rate: number) {
   return Math.min(Math.max(rate, 0.5), 1.15);
 }
 
-function createTtsCacheKey(text: string, rate: number, voiceId: SpeakFlowVoiceId) {
-  return `${voiceId}\u0001${rate.toFixed(2)}\u0001${text}`;
+function createTtsCacheKey(text: string, voiceId: SpeakFlowVoiceId) {
+  return `${voiceId}\u0001${GENERATED_TTS_SOURCE_RATE.toFixed(2)}\u0001${text}`;
 }
 
 function rememberTtsBlob(key: string, request: Promise<Blob>) {
@@ -39,18 +40,14 @@ function rememberTtsBlob(key: string, request: Promise<Blob>) {
   ttsBlobCache.set(key, request);
 }
 
-function getSpeakFlowTtsBlob(
-  text: string,
-  rate: number,
-  voiceId: SpeakFlowVoiceId
-) {
-  const cacheKey = createTtsCacheKey(text, rate, voiceId);
+function getSpeakFlowTtsBlob(text: string, voiceId: SpeakFlowVoiceId) {
+  const cacheKey = createTtsCacheKey(text, voiceId);
   const cachedRequest = ttsBlobCache.get(cacheKey);
   if (cachedRequest) return cachedRequest;
 
   const request = fetch("/api/text-to-speech", {
     body: JSON.stringify({
-      rate,
+      rate: GENERATED_TTS_SOURCE_RATE,
       text,
       voice: voiceId,
     }),
@@ -93,22 +90,15 @@ export function stopSpeakFlowTts() {
   window.speechSynthesis?.cancel();
 }
 
-export function preloadSpeakFlowTts({
-  rate = 1,
-  text,
-  voiceId,
-}: PlaySpeakFlowTtsOptions) {
+export function preloadSpeakFlowTts({ text, voiceId }: PlaySpeakFlowTtsOptions) {
   const normalizedText = text.trim();
   if (!normalizedText || typeof window === "undefined") return;
 
   const selectedVoiceId = voiceId || getSavedSpeakFlowVoiceId();
-  const normalizedRate = normalizeRate(rate);
 
-  void getSpeakFlowTtsBlob(
-    normalizedText,
-    normalizedRate,
-    selectedVoiceId
-  ).catch(() => undefined);
+  void getSpeakFlowTtsBlob(normalizedText, selectedVoiceId).catch(
+    () => undefined
+  );
 }
 
 export function speakWithBrowserFallback({
@@ -170,11 +160,7 @@ export async function playSpeakFlowTts({
   }, QUICK_FALLBACK_DELAY_MS);
 
   try {
-    const audioBlob = await getSpeakFlowTtsBlob(
-      normalizedText,
-      normalizedRate,
-      selectedVoiceId
-    );
+    const audioBlob = await getSpeakFlowTtsBlob(normalizedText, selectedVoiceId);
 
     window.clearTimeout(fallbackTimer);
     if (playbackRequestId !== requestId || fallbackStarted) return;
@@ -182,7 +168,7 @@ export async function playSpeakFlowTts({
     currentAudioUrl = URL.createObjectURL(audioBlob);
     currentAudio = new Audio(currentAudioUrl);
     currentAudio.preload = "auto";
-    currentAudio.playbackRate = 1;
+    currentAudio.playbackRate = normalizedRate;
     currentAudio.addEventListener(
       "ended",
       () => {
