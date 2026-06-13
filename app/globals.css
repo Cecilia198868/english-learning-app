@@ -20899,3 +20899,71 @@ body :where(
   line-height: 1 !important;
   letter-spacing: 0.16em !important;
 }
+
+/* Absolute final guard for AI-guided result cards: text gets the available card width. */
+body .sf-ai-guided-step-five-record-card,
+body .sf-ai-guided-step-five-record-card.is-selected {
+  display: flex !important;
+  grid-template-columns: none !important;
+  align-items: center !important;
+  gap: clamp(0.6rem, 2.5vw, 0.78rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-icon {
+  position: relative !important;
+  inset: auto !important;
+  flex: 0 0 clamp(2.48rem, 10.6vw, 2.95rem) !important;
+  transform: none !important;
+}
+
+body .sf-ai-guided-step-five-record-copy {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body .sf-ai-guided-step-five-record-toolbar {
+  display: flex !important;
+  width: 100% !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: clamp(0.4rem, 1.8vw, 0.58rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-actions {
+  display: flex !important;
+  grid-template-columns: none !important;
+  flex: 0 0 clamp(4.6rem, 17vw, 5.25rem) !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: clamp(0.26rem, 1.3vw, 0.38rem) !important;
+}
+
+body .sf-ai-guided-step-five-record-text {
+  display: block !important;
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  text-align: left !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
+
+body .sf-ai-guided-step-five-record-text :where(button, span),
+body .sf-ai-guided-step-five-emphasis {
+  display: inline !important;
+  max-width: none !important;
+  text-align: left !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+}
