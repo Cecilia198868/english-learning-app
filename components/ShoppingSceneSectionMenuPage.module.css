@@ -19,7 +19,7 @@
   width: min(100%, 430px);
   min-height: 100dvh;
   margin: 0 auto;
-  padding: calc(54px + env(safe-area-inset-top)) 20px 28px;
+  padding: calc(54px + env(safe-area-inset-top)) 20px calc(env(safe-area-inset-bottom, 0px) + 118px);
   overflow-x: hidden;
 }
 

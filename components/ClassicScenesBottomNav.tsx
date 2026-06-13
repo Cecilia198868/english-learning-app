@@ -34,7 +34,7 @@ function FixedLayerPortal({
   children: ReactNode;
   target: HTMLElement | null;
 }) {
-  return target ? createPortal(children, target) : <>{children}</>;
+  return target ? createPortal(children, target) : null;
 }
 
 function normalizeProgressPayload(
