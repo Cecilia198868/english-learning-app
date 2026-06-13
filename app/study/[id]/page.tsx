@@ -2793,9 +2793,11 @@ export default function StudyPage() {
       selectedExpression?.text || resultVariants[0]?.text || currentPair.english || "";
 
     return (
-      <main className={`${styles.classicShell} ${styles.studyShellWithBottomNav}`}>
+      <main
+        className={`${styles.classicShell} ${styles.studyShellWithBottomNav} ${styles.classicResultShell}`}
+      >
         <section
-          className={`${styles.classicPhone} ${styles.resultPhone} ${styles.studyPhone}`}
+          className={`${styles.classicPhone} ${styles.resultPhone} ${styles.studyPhone} ${styles.classicResultPage}`}
           aria-labelledby="classic-result-title"
         >
           <button
