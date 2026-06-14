@@ -4,6 +4,9 @@ const devOrigins = ["192.168.88.8", "127.0.0.1", "localhost"];
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  outputFileTracingExcludes: {
+    "/api/admin/elevenlabs-course-audio": ["./public/**/*", "public/**/*"],
+  },
   ...(process.env.NODE_ENV === "production"
     ? {}
     : { allowedDevOrigins: devOrigins }),
