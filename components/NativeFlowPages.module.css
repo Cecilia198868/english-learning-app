@@ -1451,3 +1451,595 @@
     font-size: 0.86rem;
   }
 }
+
+/* Native Flow menu: rebuilt to match the compact reference layout. */
+.menuPhone {
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow-y: auto;
+  padding:
+    max(16px, calc(env(safe-area-inset-top, 0px) + 12px))
+    16px
+    96px;
+  scrollbar-width: none;
+}
+
+.menuPhone::-webkit-scrollbar {
+  display: none;
+}
+
+.menuPhone .menuHeader {
+  grid-template-columns: 52px minmax(0, 1fr) 52px;
+  gap: 8px;
+}
+
+.menuPhone .roundBack {
+  width: 52px;
+  height: 52px;
+  justify-self: start;
+}
+
+.menuHeaderSpacer {
+  display: block;
+  width: 52px;
+  height: 52px;
+}
+
+.menuPhone .menuBrand {
+  grid-template-columns: 44px minmax(0, max-content);
+  justify-self: center;
+  gap: 10px;
+}
+
+.menuPhone .menuBrand > span {
+  width: 44px;
+  height: 44px;
+  border-radius: 17px;
+}
+
+.menuPhone .menuBrand svg {
+  width: 29px;
+  height: 29px;
+}
+
+.menuPhone .menuBrand h1 {
+  font-size: 1.28rem;
+  line-height: 1.04;
+}
+
+.menuPhone .menuBrand p {
+  margin-top: 5px;
+  font-size: 0.72rem;
+  line-height: 1.18;
+}
+
+.menuPhone .menuHero {
+  display: grid;
+  grid-template-columns: minmax(0, 50%) minmax(0, 1fr);
+  min-height: 210px;
+  margin-top: 18px;
+  align-items: start;
+}
+
+.menuPhone .heroCopy {
+  z-index: 2;
+  width: 100%;
+  padding-top: 10px;
+}
+
+.menuPhone .heroCopy h2 {
+  font-size: clamp(1.5rem, 6.1vw, 1.78rem);
+  line-height: 1.26;
+}
+
+.menuPhone .heroCopy ul {
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.menuPhone .heroCopy li {
+  gap: 8px;
+  max-width: 174px;
+  font-size: clamp(0.72rem, 2.95vw, 0.8rem);
+  line-height: 1.18;
+}
+
+.menuPhone .heroCopy li svg {
+  width: 19px;
+  height: 19px;
+}
+
+.menuPhone .heroHeadphones {
+  top: 4px;
+  right: 0;
+  z-index: 1;
+  width: 210px;
+  height: 190px;
+}
+
+.menuPhone .levelSection {
+  margin-top: 0;
+}
+
+.menuPhone .levelSection > h2 {
+  margin-bottom: 11px;
+  font-size: 1.26rem;
+  line-height: 1.14;
+}
+
+.menuPhone .levelStack {
+  gap: 10px;
+}
+
+.menuPhone .levelCard {
+  grid-template-columns: 70px minmax(0, 1fr) 44px;
+  gap: 10px;
+  min-height: 108px;
+  border-radius: 18px;
+  padding: 9px 12px;
+}
+
+.menuPhone .levelArt {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+}
+
+.menuPhone .levelBadge {
+  min-height: 21px;
+  font-size: 0.69rem;
+  padding: 0 10px;
+}
+
+.menuPhone .levelCopy strong {
+  margin-top: 7px;
+  overflow: hidden;
+  font-size: clamp(0.98rem, 4vw, 1.16rem);
+  line-height: 1.08;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menuPhone .levelCopy strong span {
+  font-size: 0.76em;
+}
+
+.menuPhone .levelCopy small {
+  margin-top: 6px;
+  overflow: hidden;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menuPhone .levelMeta {
+  gap: 5px;
+  margin-top: 7px;
+  overflow: hidden;
+  font-size: 0.58rem;
+}
+
+.menuPhone .levelMeta i {
+  gap: 4px;
+}
+
+.menuPhone .levelMeta i + i {
+  padding-left: 5px;
+}
+
+.menuPhone .levelMeta svg {
+  width: 12px;
+  height: 12px;
+}
+
+.menuPhone .levelChevron {
+  width: 44px;
+  height: 44px;
+}
+
+.menuPhone .totalCard {
+  position: relative;
+  grid-template-columns: 46px minmax(0, 1fr) 62px;
+  gap: 9px;
+  min-height: 72px;
+  margin-top: 10px;
+  border-radius: 18px;
+  padding: 10px 13px;
+  overflow: hidden;
+}
+
+.menuPhone .totalCard::before {
+  position: absolute;
+  right: 18px;
+  bottom: 20px;
+  width: 72px;
+  height: 28px;
+  border-top: 3px solid rgba(103, 152, 255, 0.3);
+  border-right: 3px solid rgba(103, 152, 255, 0.3);
+  border-radius: 0 8px 0 0;
+  content: "";
+  transform: skewY(-24deg);
+}
+
+.menuPhone .totalCard::after {
+  position: absolute;
+  right: 22px;
+  bottom: 13px;
+  width: 68px;
+  height: 36px;
+  background:
+    linear-gradient(to top, rgba(89, 142, 255, 0.25) 0 22%, transparent 22%) 2px bottom / 10px 100% no-repeat,
+    linear-gradient(to top, rgba(89, 142, 255, 0.33) 0 42%, transparent 42%) 22px bottom / 10px 100% no-repeat,
+    linear-gradient(to top, rgba(89, 142, 255, 0.42) 0 64%, transparent 64%) 42px bottom / 10px 100% no-repeat,
+    linear-gradient(to right, rgba(89, 142, 255, 0.18), rgba(89, 142, 255, 0.18)) 0 bottom / 62px 2px no-repeat;
+  content: "";
+}
+
+.menuPhone .totalCard > span {
+  width: 44px;
+  height: 44px;
+}
+
+.menuPhone .totalCard > span svg {
+  width: 28px;
+  height: 28px;
+}
+
+.menuPhone .totalCard strong {
+  font-size: 0.94rem;
+  line-height: 1.16;
+}
+
+.menuPhone .totalCard p {
+  margin-top: 5px;
+  font-size: 0.72rem;
+  line-height: 1.22;
+}
+
+.menuPhone .totalCard > svg {
+  visibility: hidden;
+}
+
+.menuBottomNav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: min(100%, 430px);
+  min-height: calc(72px + env(safe-area-inset-bottom, 0px));
+  margin: 0 auto;
+  border: 1px solid rgba(223, 230, 247, 0.94);
+  border-bottom: 0;
+  border-radius: 24px 24px 0 0;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 -12px 34px rgba(69, 89, 148, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+  padding: 8px 24px calc(8px + env(safe-area-inset-bottom, 0px));
+}
+
+.menuBottomNav a {
+  display: grid;
+  min-height: 54px;
+  place-items: center;
+  color: #8789a8;
+  text-decoration: none;
+}
+
+.menuBottomNav a:first-child {
+  color: #745cff;
+}
+
+.menuBottomNav svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.8;
+}
+
+@media (max-width: 389px) {
+  .menuPhone {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .menuPhone .menuHero {
+    min-height: 204px;
+  }
+
+  .menuPhone .heroHeadphones {
+    right: -4px;
+    width: 202px;
+  }
+
+  .menuPhone .levelCard {
+    grid-template-columns: 66px minmax(0, 1fr) 42px;
+    min-height: 106px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .menuPhone .levelArt {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+/* Native Flow learning desk: fixed one-screen study layout. */
+.learnPhone {
+  display: flex;
+  height: 100dvh;
+  min-height: 100dvh;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0 0 calc(72px + env(safe-area-inset-bottom, 0px));
+  background:
+    radial-gradient(circle at 84% 20%, rgba(116, 138, 255, 0.16), transparent 30%),
+    linear-gradient(180deg, #f9fcff 0%, #f2f6ff 58%, #ffffff 100%);
+}
+
+.learnPhone .learnHeader {
+  display: grid;
+  flex: 0 0 98px;
+  grid-template-columns: 54px minmax(0, 1fr) 54px;
+  align-items: center;
+  gap: 8px;
+  padding:
+    max(14px, calc(env(safe-area-inset-top, 0px) + 10px))
+    16px
+    10px;
+}
+
+.learnPhone .roundBack {
+  width: 52px;
+  height: 52px;
+}
+
+.learnPhone .learnTitle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  min-width: 0;
+  gap: 0;
+  text-align: center;
+}
+
+.learnPhone .learnTitle > span {
+  display: none;
+}
+
+.learnPhone .learnTitle h1 {
+  margin: 0;
+  font-size: clamp(1.76rem, 7.5vw, 2.18rem);
+  line-height: 1.02;
+  white-space: nowrap;
+}
+
+.learnPhone .learnTitle p {
+  margin-top: 8px;
+  overflow: hidden;
+  color: #172452;
+  font-size: 0.86rem;
+  font-weight: 820;
+  line-height: 1.12;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.learnPhone .learnGhostButton {
+  visibility: hidden;
+}
+
+.learnPhone .learnBluePanel {
+  flex: 0 0 128px;
+  margin: 0;
+  background:
+    radial-gradient(circle at 86% 26%, rgba(71, 215, 242, 0.55), transparent 32%),
+    linear-gradient(135deg, #07146a 0%, #084895 54%, #36b7e6 100%);
+  padding: 32px 22px 34px;
+  color: #ffffff;
+}
+
+.learnPhone .learnProgress {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.learnPhone .learnProgress strong {
+  justify-self: center;
+  font-size: 1.06rem;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.learnPhone .learnProgress a {
+  min-height: 40px;
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.9rem;
+  padding: 0 14px;
+}
+
+.learnPhone .learnProgressTrack {
+  width: min(100%, 284px);
+  max-width: none;
+  height: 6px;
+  margin-top: 17px;
+}
+
+.learnPhone .sentenceCard {
+  display: block;
+  flex: 0 0 412px;
+  min-height: 0;
+  height: 412px;
+  margin: -30px 14px 0;
+  border-radius: 28px;
+  padding: 64px 14px 16px;
+  overflow: hidden;
+}
+
+.learnPhone .dailyCount {
+  top: 42px;
+  right: 24px;
+  font-size: 0.84rem;
+  font-weight: 820;
+  white-space: nowrap;
+}
+
+.learnPhone .dayPill {
+  min-height: 31px;
+  margin-bottom: 14px;
+  font-size: 0.92rem;
+  padding: 0 18px;
+}
+
+.learnPhone .paperCard {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  height: 286px;
+  overflow: hidden;
+  padding: 16px 18px 14px;
+}
+
+.learnPhone .sentenceTag,
+.learnPhone .translationTag {
+  min-height: 23px;
+  font-size: 0.66rem;
+  padding: 0 10px;
+}
+
+.learnPhone .paperCard h2 {
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin-top: 20px;
+  font-size: clamp(1.26rem, 5.15vw, 1.34rem);
+  line-height: 1.36;
+  letter-spacing: 0;
+  text-align: left;
+  text-wrap: normal;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+.learnPhone .paperCard hr {
+  margin: 16px 0 14px;
+}
+
+.learnPhone .paperCard p {
+  margin-top: 14px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.48;
+}
+
+.learnPhone .paperCard i {
+  width: 148px;
+  height: 6px;
+  margin-top: 14px;
+}
+
+.learnPhone .audioControls {
+  flex: 0 0 114px;
+  box-sizing: border-box;
+  height: 108px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 14px 0;
+  border-radius: 28px 28px 0 0;
+  padding: 10px 24px 8px;
+}
+
+.learnPhone .audioControls button {
+  gap: 4px;
+  font-size: 0.82rem;
+}
+
+.learnPhone .audioControls button > span {
+  width: 52px;
+  height: 52px;
+}
+
+.learnPhone .audioControls svg {
+  width: 27px;
+  height: 27px;
+}
+
+.learnPhone .audioControls small {
+  margin-top: -3px;
+  font-size: 0.78rem;
+}
+
+.learnPhone .learnBottomNav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+  grid-template-columns: 1fr 96px 1.18fr;
+  width: min(100%, 430px);
+  height: calc(72px + env(safe-area-inset-bottom, 0px));
+  min-height: calc(72px + env(safe-area-inset-bottom, 0px));
+  max-height: calc(72px + env(safe-area-inset-bottom, 0px));
+  margin: 0 auto;
+  border-bottom: 0;
+  border-radius: 22px 22px 0 0;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  transform: none;
+}
+
+.learnPhone .learnBottomNav a {
+  min-height: 54px;
+  font-size: 0.95rem;
+}
+
+.learnPhone .learnBottomNav a:nth-child(2) {
+  min-width: 88px;
+  font-size: 0.78rem;
+}
+
+.learnPhone .learnBottomNav a:last-child {
+  border-radius: 19px;
+}
+
+@media (max-width: 389px) {
+  .learnPhone .learnHeader {
+    grid-template-columns: 50px minmax(0, 1fr) 50px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .learnPhone .learnTitle h1 {
+    font-size: 1.92rem;
+  }
+
+  .learnPhone .sentenceCard {
+    margin-right: 12px;
+    margin-left: 12px;
+  }
+
+  .learnPhone .paperCard h2 {
+    font-size: 1.24rem;
+  }
+
+  .learnPhone .audioControls {
+    margin-right: 12px;
+    margin-left: 12px;
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}

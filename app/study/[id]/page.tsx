@@ -118,6 +118,7 @@ const GUEST_FULL_CLASSIC_LESSON_IDS = new Set([
 ]);
 const GUEST_CLASSIC_SENTENCE_LIMIT = 5;
 const CLASSIC_RECORDING_SILENCE_DELAY_MS = 2000;
+const HAS_CLASSIC_SCENE_PRE_RECORDED_AUDIO = false;
 function isClassicSceneLessonId(lessonId: string) {
   return (
     lessonId.startsWith("bank_") ||
@@ -1230,6 +1231,7 @@ export default function StudyPage() {
     sentenceIndex = currentIndex,
     variantKey: ClassicSceneAudioVariantKey = "line"
   ) {
+    if (!HAS_CLASSIC_SCENE_PRE_RECORDED_AUDIO) return null;
     if (!isClassicSceneLessonId(lessonId) || isMyCourseLesson) return null;
     return getClassicSceneAudioUrl(lessonId, sentenceIndex, variantKey);
   }
@@ -2884,17 +2886,9 @@ export default function StudyPage() {
                 <button
                   type="button"
                   className={styles.lessonArrowButton}
-                  onClick={() => {
-                    if (nextLesson) {
-                      openNeighborLesson(nextLesson);
-                    }
-                  }}
-                  disabled={!nextLesson}
-                  aria-label={
-                    nextLesson
-                      ? `下一课：${nextLesson.title}`
-                      : "已经是同级最后一课"
-                  }
+                  onClick={handleNext}
+                  disabled={currentIndex >= pairs.length - 1}
+                  aria-label="下一句"
                 >
                   <ArrowRightIcon />
                 </button>

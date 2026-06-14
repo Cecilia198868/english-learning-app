@@ -6,7 +6,6 @@ import ExpressionLearningLimitModal from "@/components/ExpressionLearningLimitMo
 import InteractiveExpressionText from "@/components/InteractiveExpressionText";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import {
-  FREE_EXPRESSION_LEARNING_LIMIT,
   canLearnExpression,
   getExpressionLearningId,
   getExpressionLearningUsageCount,
@@ -533,10 +532,12 @@ function MicIcon() {
   );
 }
 
-function FollowPlayIcon() {
+function HeadphonesIcon() {
   return (
-    <svg aria-hidden="true" className="sf-vocabulary-play-icon" viewBox="0 0 32 32">
-      <path d="M11.2 7.8v16.4c0 1.35 1.5 2.15 2.62 1.38l12.14-8.2c0.98-.66.98-2.1 0-2.76L13.82 6.42c-1.12-.77-2.62.03-2.62 1.38Z" />
+    <svg aria-hidden="true" viewBox="0 0 32 32">
+      <path d="M7.2 18.4v-3.2C7.2 10.3 11.1 6.4 16 6.4s8.8 3.9 8.8 8.8v3.2" />
+      <path d="M9.4 17.1h-1c-1.5 0-2.7 1.2-2.7 2.7v2.4c0 1.5 1.2 2.7 2.7 2.7h1.8v-7.8h-.8Z" />
+      <path d="M22.6 17.1h1c1.5 0 2.7 1.2 2.7 2.7v2.4c0 1.5-1.2 2.7-2.7 2.7h-1.8v-7.8h.8Z" />
     </svg>
   );
 }
@@ -838,8 +839,7 @@ export default function VocabularyPage() {
   const [hasSyncedVocabulary, setHasSyncedVocabulary] = useState(false);
   const [loadingExampleTranslationFor, setLoadingExampleTranslationFor] =
     useState("");
-  const [expressionLearningUsageCount, setExpressionLearningUsageCount] =
-    useState(0);
+  const [, setExpressionLearningUsageCount] = useState(0);
   const [librarySearchQuery, setLibrarySearchQuery] = useState("");
   const [librarySortMode, setLibrarySortMode] =
     useState<LibrarySortMode>("newest");
@@ -1077,10 +1077,6 @@ export default function VocabularyPage() {
     showExpressionLimitModal &&
     hasLoadedAccountSubscription &&
     !isAccountPro;
-  const remainingDailyFreeCount = Math.max(
-    0,
-    FREE_EXPRESSION_LEARNING_LIMIT - expressionLearningUsageCount
-  );
   const recentlyAddedCount = words.filter(isRecentlyAdded).length;
   const shadowExpressionCount = words.filter((word) => word.shadowCount > 0).length;
   const combinedStudiedDates = useMemo(() => getCombinedStudiedDates(words), [words]);
@@ -1432,11 +1428,6 @@ export default function VocabularyPage() {
   function playCurrentExpressionText(text: string, rate = 1) {
     speakText(text, rate);
     recordCurrentExpressionAction("play");
-  }
-
-  function shadowCurrentExpression(rate: number) {
-    speakText(speechText || displayedExpressionText, rate);
-    recordCurrentExpressionAction("shadow");
   }
 
   function removeExpressionFromLibrary(
@@ -2147,103 +2138,54 @@ export default function VocabularyPage() {
           </section>
         </div>
 
-        <nav className="sf-vocabulary-app-bottom-nav" aria-label="新表达底部导航">
+        <nav className="sf-vocabulary-app-bottom-nav" aria-label="新表达学习控制">
           <button
             type="button"
             className="sf-vocabulary-app-bottom-button is-active"
-            aria-label="学习首页"
+            aria-label="首页"
             onClick={openLearningHomeFromVocabulary}
           >
             <BottomHomeIcon />
+            <span>首页</span>
           </button>
           <button
             type="button"
             className="sf-vocabulary-app-bottom-button"
-            aria-label="学习成果"
-            onClick={openLearningResultsFromVocabulary}
+            aria-label="上一句"
+            disabled={!hasPrevious}
+            onClick={() => openExpressionAt(Math.max(currentIndex - 1, 0))}
           >
-            <ChartStatIcon />
+            <ArrowLeftIcon />
+            <span>上一句</span>
           </button>
           <button
             type="button"
             className="sf-vocabulary-app-bottom-button"
-            aria-label="新表达使用帮助"
-            aria-expanded={showExpressionHelpModal}
-            aria-haspopup="dialog"
-            onClick={openExpressionHelpFromVocabulary}
+            aria-label="慢速朗读"
+            disabled={!speechText && !displayedExpressionText}
+            onClick={() =>
+              playCurrentExpressionText(
+                speechText || displayedExpressionText,
+                SLOW_READ_RATE
+              )
+            }
           >
-            <BottomHelpIcon />
+            <HeadphonesIcon />
+            <span>慢速朗读</span>
           </button>
           <button
             type="button"
             className="sf-vocabulary-app-bottom-button"
-            aria-label="我的"
-            onClick={openAccountFromVocabulary}
+            aria-label="下一句"
+            disabled={!hasNext}
+            onClick={() =>
+              openExpressionAt(Math.min(currentIndex + 1, words.length - 1))
+            }
           >
-            <BottomAccountIcon />
+            <ArrowRightIcon />
+            <span>下一句</span>
           </button>
         </nav>
-
-        <footer className="sf-vocabulary-fixed-footer">
-          <nav className="sf-vocabulary-learning-actions" aria-label="学习控制">
-            <button
-              type="button"
-              aria-label="上一句"
-              className="sf-vocabulary-nav-action"
-              disabled={!hasPrevious}
-              onClick={() => openExpressionAt(Math.max(currentIndex - 1, 0))}
-            >
-              <ArrowLeftIcon />
-              <span>上一句</span>
-            </button>
-
-            <button
-              type="button"
-              aria-label="播放跟读"
-              className="sf-vocabulary-follow-action"
-              disabled={!speechText}
-              onClick={() => shadowCurrentExpression(1)}
-            >
-              <FollowPlayIcon />
-              <span>跟读</span>
-            </button>
-
-            <button
-              type="button"
-              aria-label="0.5x 慢速播放"
-              className="sf-vocabulary-slow-action"
-              disabled={!speechText}
-              onClick={() =>
-                playCurrentExpressionText(
-                  speechText || displayedExpressionText,
-                  SLOW_READ_RATE
-                )
-              }
-            >
-              <strong>0.5x</strong>
-              <span>慢速</span>
-            </button>
-
-            <button
-              type="button"
-              aria-label="下一句"
-              className="sf-vocabulary-nav-action"
-              disabled={!hasNext}
-              onClick={() =>
-                openExpressionAt(Math.min(currentIndex + 1, words.length - 1))
-              }
-            >
-              <span>下一句</span>
-              <ArrowRightIcon />
-            </button>
-          </nav>
-
-          <p className="sf-vocabulary-tip">
-            <LightbulbIcon />
-            点击麦克风开始跟读
-            {!isAccountPro && remainingDailyFreeCount === 0 ? " 今日免费学习次数已用完。" : ""}
-          </p>
-        </footer>
 
         {showExpressionLibrary ? (
           <section className="sf-vocabulary-library-panel" aria-label="表达库">

@@ -1,6 +1,11 @@
 import { NativeFlowRecordsPage } from "@/components/NativeFlowPages";
-import { nativeFlowProgressRows } from "@/data/nativeFlow/mockData";
+import { nativeFlowLevels, nativeFlowProgressRows } from "@/data/nativeFlow/courseData";
 
 export default function Page() {
-  return <NativeFlowRecordsPage progressRows={nativeFlowProgressRows} />;
+  return (
+    <NativeFlowRecordsPage
+      levels={nativeFlowLevels}
+      progressRows={nativeFlowProgressRows}
+    />
+  );
 }

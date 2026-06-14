@@ -114,11 +114,10 @@ export default function LoginPageClient({
 
   return (
     <main className={styles.page}>
-      <section className={styles.sheet} aria-label="登录 SpeakFlow">
-        <Link href="/" className={styles.backButton} aria-label="返回首页">
-          <BackMark />
-        </Link>
-        <span className={styles.handle} aria-hidden="true" />
+      <Link href="/" className={styles.backButton} aria-label="返回首页">
+        <BackMark />
+      </Link>
+      <section className={styles.card} aria-label="登录 SpeakFlow">
         <h1>欢迎使用 SpeakFlow <span aria-hidden="true">👋</span></h1>
         <p>选择一种继续方式</p>
 

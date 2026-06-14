@@ -1,13 +1,12 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
-import {
-  NATIVE_FLOW_DAILY_SENTENCES,
-  type NativeFlowLevel,
-  type NativeFlowProgressRow,
-  type NativeFlowSentence,
-  nativeFlowLevels,
-} from "@/data/nativeFlow/mockData";
+import type {
+  NativeFlowLevel,
+  NativeFlowProgressRow,
+  NativeFlowSentence,
+} from "@/data/nativeFlow/courseData";
 import styles from "./NativeFlowPages.module.css";
 
 function BackIcon() {
@@ -117,6 +116,32 @@ function HeadphonesIcon() {
   );
 }
 
+function HomeIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1v-8.5Z" />
+    </svg>
+  );
+}
+
+function HelpIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="M12 20c4.4 0 8-3.4 8-7.6S16.4 5 12 5s-8 3.4-8 7.4c0 1.8.7 3.4 1.9 4.7L5 21l4.2-1.8c.9.5 1.8.8 2.8.8Z" />
+      <path d="M9.8 10a2.4 2.4 0 0 1 4.5 1.2c0 1.8-2.3 1.8-2.3 3.4M12 17.4v.1" />
+    </svg>
+  );
+}
+
+function UserIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4.5 21c1.2-4.2 3.7-6.3 7.5-6.3s6.3 2.1 7.5 6.3" />
+    </svg>
+  );
+}
+
 function LevelArt({ tone }: { tone: NativeFlowLevel["tone"] }) {
   if (tone === "green") {
     return (
@@ -183,19 +208,46 @@ function HeroHeadphones() {
   );
 }
 
-function PageShell({ children, label }: { children: React.ReactNode; label: string }) {
+function PageShell({
+  children,
+  className = "",
+  label,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  label: string;
+}) {
   return (
     <main className={styles.page}>
-      <section className={styles.phone} aria-label={label}>
+      <section className={`${styles.phone} ${className}`} aria-label={label}>
         {children}
       </section>
     </main>
   );
 }
 
+function MenuBottomNav() {
+  return (
+    <nav className={styles.menuBottomNav} aria-label="地道语感训练底部导航">
+      <Link href="/start" aria-label="返回首页">
+        <HomeIcon />
+      </Link>
+      <Link href="/native-flow/records" aria-label="查看学习记录">
+        <MiniIcon type="chart" />
+      </Link>
+      <Link href="/native-flow" aria-label="查看帮助">
+        <HelpIcon />
+      </Link>
+      <Link href="/account" aria-label="打开账户">
+        <UserIcon />
+      </Link>
+    </nav>
+  );
+}
+
 export function NativeFlowMenuPage({ levels }: { levels: NativeFlowLevel[] }) {
   return (
-    <PageShell label="地道语感训练级别选择页">
+    <PageShell className={styles.menuPhone} label="地道语感训练级别选择页">
       <header className={styles.menuHeader}>
         <Link className={styles.roundBack} href="/start" aria-label="返回学习首页">
           <BackIcon />
@@ -209,10 +261,7 @@ export function NativeFlowMenuPage({ levels }: { levels: NativeFlowLevel[] }) {
             <p>让英语像音乐一样流出来</p>
           </div>
         </div>
-        <Link className={styles.recordButton} href="/native-flow/records">
-          <MiniIcon type="chart" />
-          学习记录
-        </Link>
+        <span className={styles.menuHeaderSpacer} aria-hidden="true" />
       </header>
 
       <section className={styles.menuHero}>
@@ -293,17 +342,20 @@ export function NativeFlowMenuPage({ levels }: { levels: NativeFlowLevel[] }) {
         </div>
         <MiniIcon type="chart" />
       </aside>
+      <MenuBottomNav />
     </PageShell>
   );
 }
 
-function getLevelById(levelId: string) {
-  return nativeFlowLevels.find((level) => level.id === levelId) || nativeFlowLevels[0];
+function getLevelById(levels: NativeFlowLevel[], levelId: string) {
+  return levels.find((level) => level.id === levelId) || levels[0];
 }
 
 export function NativeFlowRecordsPage({
+  levels,
   progressRows,
 }: {
+  levels: NativeFlowLevel[];
   progressRows: NativeFlowProgressRow[];
 }) {
   const calendarDays = [28, 29, 30, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1];
@@ -428,7 +480,7 @@ export function NativeFlowRecordsPage({
         </div>
         <div className={styles.progressRows}>
           {progressRows.map((row) => {
-            const level = getLevelById(row.levelId);
+            const level = getLevelById(levels, row.levelId);
 
             return (
               <Link
@@ -490,13 +542,31 @@ export function NativeFlowLearningPage({
   level: NativeFlowLevel;
   sentence: NativeFlowSentence;
 }) {
+  const audioRef = useRef<HTMLAudioElement>(null);
   const sentenceId = sentence.id;
   const previousId = Math.max(1, sentenceId - 1);
   const nextId = Math.min(level.totalSentences, sentenceId + 1);
   const progressPercent = Math.max(2, Math.round((sentenceId / level.totalSentences) * 100));
+  const playAudio = (playbackRate = 1) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.pause();
+    audio.playbackRate = playbackRate;
+    audio.currentTime = 0;
+    void audio.play().catch(() => undefined);
+  };
+
+  const repeatAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.currentTime = 0;
+    void audio.play().catch(() => undefined);
+  };
 
   return (
-    <PageShell label="地道语感训练学习界面">
+    <PageShell className={styles.learnPhone} label="地道语感训练学习界面">
       <header className={styles.learnHeader}>
         <Link className={styles.roundBack} href="/native-flow" aria-label="返回地道语感训练菜单">
           <BackIcon />
@@ -538,21 +608,27 @@ export function NativeFlowLearningPage({
         <div className={styles.paperCard}>
           <span className={styles.sentenceTag}>英文句子</span>
           <h2>{sentence.english}</h2>
-          <hr />
-          <span className={styles.translationTag}>中文翻译</span>
-          <p>{sentence.chinese}</p>
+          {sentence.chinese ? (
+            <>
+              <hr />
+              <span className={styles.translationTag}>中文翻译</span>
+              <p>{sentence.chinese}</p>
+            </>
+          ) : null}
           <i aria-hidden="true" />
         </div>
       </article>
 
+      <audio aria-hidden="true" preload="metadata" ref={audioRef} src={sentence.audioSrc} />
+
       <section className={styles.audioControls} aria-label="音频控制">
-        <button type="button">
+        <button type="button" onClick={() => playAudio()}>
           <span data-tone="purple">
             <MiniIcon type="wave" />
           </span>
           播放
         </button>
-        <button type="button">
+        <button type="button" onClick={() => playAudio(0.75)}>
           <span data-tone="blue">
             <svg aria-hidden="true" focusable="false" viewBox="0 0 48 48">
               <path d="M9 27c7 2 14-1 17-8 2 9 8 13 17 11-3 7-9 11-18 11S11 36 9 27Z" />
@@ -562,7 +638,7 @@ export function NativeFlowLearningPage({
           慢速播放
           <small>0.75x</small>
         </button>
-        <button type="button">
+        <button type="button" onClick={repeatAudio}>
           <span data-tone="white">
             <MiniIcon type="loop" />
           </span>
@@ -575,9 +651,9 @@ export function NativeFlowLearningPage({
           <ChevronIcon direction="left" />
           上一句
         </Link>
-        <Link href={`/native-flow/${level.id}/learn?sentence=${Math.min(level.totalSentences, sentence.day * NATIVE_FLOW_DAILY_SENTENCES)}`}>
+        <Link href={`/native-flow/${level.id}/learn?sentence=${Math.min(level.totalSentences, sentence.day * level.dailySentences)}`}>
           跳转
-          <small>{sentence.daySentence} / {NATIVE_FLOW_DAILY_SENTENCES}</small>
+          <small>{sentence.daySentence} / {level.dailySentences}</small>
           <ChevronIcon direction="up" />
         </Link>
         <Link href={`/native-flow/${level.id}/learn?sentence=${nextId}`}>

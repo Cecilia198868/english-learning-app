@@ -20918,11 +20918,12 @@ body .sf-ai-guided-step-five-record-icon {
 
 body .sf-ai-guided-step-five-record-copy {
   display: flex !important;
-  flex: 1 1 auto !important;
+  flex: 1 1 0% !important;
   flex-direction: column !important;
   min-width: 0 !important;
-  width: auto !important;
+  width: 100% !important;
   max-width: none !important;
+  align-self: stretch !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
@@ -20938,7 +20939,7 @@ body .sf-ai-guided-step-five-record-toolbar {
 body .sf-ai-guided-step-five-record-actions {
   display: flex !important;
   grid-template-columns: none !important;
-  flex: 0 0 clamp(4.6rem, 17vw, 5.25rem) !important;
+  flex: 0 0 auto !important;
   align-items: center !important;
   justify-content: flex-end !important;
   gap: clamp(0.26rem, 1.3vw, 0.38rem) !important;
@@ -20946,7 +20947,7 @@ body .sf-ai-guided-step-five-record-actions {
 
 body .sf-ai-guided-step-five-record-text {
   display: block !important;
-  flex: 0 1 auto !important;
+  flex: 1 1 auto !important;
   min-width: 0 !important;
   width: 100% !important;
   max-width: none !important;
@@ -20955,6 +20956,7 @@ body .sf-ai-guided-step-five-record-text {
   word-break: normal !important;
   overflow-wrap: normal !important;
   hyphens: none !important;
+  text-wrap: normal !important;
 }
 
 body .sf-ai-guided-step-five-record-text :where(button, span),

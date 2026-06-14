@@ -998,15 +998,20 @@ export default function AiGuidedExpressionStepFive({
         }
 
         .sf-ai-guided-step-five-record-copy {
-          display: grid;
+          display: flex;
+          flex: 1 1 0%;
+          flex-direction: column;
           gap: clamp(0.2rem, 1vw, 0.36rem);
           min-width: 0;
+          width: 100%;
+          max-width: none;
         }
 
         .sf-ai-guided-step-five-record-toolbar {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) auto;
+          display: flex;
+          width: 100%;
           align-items: center;
+          justify-content: space-between;
           gap: clamp(0.42rem, 2vw, 0.58rem);
           min-height: clamp(2.24rem, 10vw, 2.7rem);
         }
@@ -1014,6 +1019,7 @@ export default function AiGuidedExpressionStepFive({
         .sf-ai-guided-step-five-record-badge {
           display: inline-flex;
           width: fit-content;
+          max-width: 100%;
           margin: 0;
           border-radius: 999px;
           background: rgba(47, 112, 255, 0.12);
@@ -1035,6 +1041,11 @@ export default function AiGuidedExpressionStepFive({
         }
 
         .sf-ai-guided-step-five-record-text {
+          display: block;
+          flex: 1 1 auto;
+          min-width: 0;
+          width: 100%;
+          max-width: none;
           margin: 0;
           color: #07113f;
           font-size: clamp(1.18rem, 5.15vw, 1.76rem);
@@ -1051,10 +1062,11 @@ export default function AiGuidedExpressionStepFive({
         }
 
         .sf-ai-guided-step-five-record-actions {
-          display: grid;
-          grid-template-columns: clamp(2.24rem, 10vw, 2.7rem) clamp(2.52rem, 11.2vw, 3rem);
+          display: flex;
+          flex: 0 0 auto;
           gap: clamp(0.32rem, 1.6vw, 0.45rem);
           align-items: center;
+          justify-content: flex-end;
         }
 
         .sf-ai-guided-step-five-play,
@@ -1545,10 +1557,10 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-record-copy {
           display: flex;
-          flex: 1 1 auto;
+          flex: 1 1 0%;
           flex-direction: column;
           gap: clamp(0.2rem, 1vw, 0.34rem);
-          width: auto;
+          width: 100%;
           max-width: none;
           min-width: 0;
           padding-left: 0;
@@ -1571,7 +1583,7 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-record-actions {
           display: flex !important;
-          flex: 0 0 clamp(4.72rem, 17.5vw, 5.3rem);
+          flex: 0 0 auto;
           align-items: center;
           justify-content: flex-end;
           gap: clamp(0.28rem, 1.35vw, 0.38rem);
@@ -1580,7 +1592,7 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-record-text {
           display: block;
-          flex: 0 1 auto;
+          flex: 1 1 auto;
           min-width: 0;
           width: 100%;
           max-width: none;

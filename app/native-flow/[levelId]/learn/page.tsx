@@ -3,7 +3,7 @@ import { NativeFlowLearningPage } from "@/components/NativeFlowPages";
 import {
   getNativeFlowSentence,
   nativeFlowLevelIds,
-} from "@/data/nativeFlow/mockData";
+} from "@/data/nativeFlow/courseData";
 
 export function generateStaticParams() {
   return nativeFlowLevelIds.map((levelId) => ({ levelId }));

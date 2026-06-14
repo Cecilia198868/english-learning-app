@@ -816,6 +816,15 @@ export default function FreeStudyPageFiveTop({
           stroke-linejoin: round;
         }
 
+        .sf-free-result-continue span,
+        .sf-free-result-continue svg {
+          color: #ffffff;
+        }
+
+        .sf-free-result-continue span {
+          font-weight: 950;
+        }
+
         .sf-free-result-help-backdrop {
           position: fixed;
           inset: 0;

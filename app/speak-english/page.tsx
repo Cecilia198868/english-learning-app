@@ -275,6 +275,7 @@ const englishSpeechSilenceDelayMs = 2000;
 const speechNoInputTimeoutMs = 12000;
 const speechRestartAfterEarlyEndMs = 120;
 const speechStopFallbackMs = 900;
+const nativeFinalResultGraceMs = 1400;
 const speechMaxDurationMs = 45000;
 
 type FreeStudyRouteState = {
@@ -5458,6 +5459,16 @@ function SpeakEnglishClient() {
         speechLastResultAtRef.current = Date.now();
         scheduleSpeechSilenceStop();
       }
+
+      if (
+        nextPracticeStage === "native" &&
+        speechStopRequestedRef.current &&
+        shouldCommitSpeechRef.current &&
+        transcript
+      ) {
+        clearTimer(speechStopFallbackTimerRef);
+        finishRecognition(transcript);
+      }
     };
 
     recognition.onerror = (event) => {
@@ -5535,6 +5546,18 @@ function SpeakEnglishClient() {
             }, remainingSilenceMs);
           }
         }, speechRestartAfterEarlyEndMs);
+        return;
+      }
+
+      if (
+        shouldCommitSpeechRef.current &&
+        !transcript &&
+        shouldProtectEarlySpeechEnd
+      ) {
+        clearTimer(speechStopFallbackTimerRef);
+        speechStopFallbackTimerRef.current = window.setTimeout(() => {
+          finishRecognition();
+        }, nativeFinalResultGraceMs);
         return;
       }
 

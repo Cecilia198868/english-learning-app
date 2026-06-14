@@ -10150,3 +10150,943 @@
     padding-left: 0.34rem !important;
   }
 }
+
+/* Final classic-scene result rebuild: match the supplied standard mobile mockup. */
+.classicResultShell {
+  --classic-result-bottom-space: calc(110px + env(safe-area-inset-bottom, 0px));
+  min-height: 100dvh !important;
+  padding-bottom: var(--classic-result-bottom-space) !important;
+  filter: none !important;
+  transform: none !important;
+  perspective: none !important;
+  contain: none !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.98), transparent 30%),
+    linear-gradient(180deg, #fffef9 0%, #fbf8f1 100%) !important;
+}
+
+.classicResultShell .classicResultPage {
+  --classic-sage: #6e9164;
+  --classic-sage-dark: #204c28;
+  --classic-apricot: #e39a62;
+  --classic-teal: #6aa4b2;
+  --classic-ink: #17201a;
+  width: min(100%, 430px) !important;
+  min-height: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: calc(0.86rem + env(safe-area-inset-top, 0px)) 0
+    var(--classic-result-bottom-space) !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.98), transparent 35%),
+    linear-gradient(180deg, #fffef9 0%, #fbf8f1 100%) !important;
+  box-shadow: none !important;
+  color: var(--classic-ink) !important;
+}
+
+.classicResultShell .classicResultPage .studyBackButton {
+  position: absolute !important;
+  top: calc(1.42rem + env(safe-area-inset-top, 0px)) !important;
+  left: 1.22rem !important;
+  z-index: 40 !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  border: 1px solid rgba(111, 143, 109, 0.14) !important;
+  border-radius: 1rem !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: var(--classic-sage-dark) !important;
+  box-shadow:
+    0 0.9rem 1.8rem rgba(55, 72, 50, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+}
+
+.classicResultShell .classicResultPage .studyBackButton svg {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  stroke-width: 3 !important;
+}
+
+.classicResultShell .classicResultPage .studyTopicBar {
+  display: grid !important;
+  min-height: 8.65rem !important;
+  width: 100% !important;
+  grid-template-columns: 4.5rem minmax(0, 1fr) !important;
+  align-items: center !important;
+  column-gap: 0.95rem !important;
+  margin: 0 !important;
+  padding: 1.05rem 3.15rem 1.05rem 5.65rem !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.99), transparent 48%),
+    linear-gradient(180deg, rgba(255, 254, 249, 0.98), rgba(250, 249, 242, 0.68)) !important;
+  box-shadow: none !important;
+}
+
+.classicResultShell .classicResultPage .studyTopicBar .topicIcon,
+.classicResultShell .classicResultPage .studyTopicBar .topicIcon svg {
+  width: 4.25rem !important;
+  height: 4.25rem !important;
+}
+
+.classicResultShell .classicResultPage .studyTopicBar .topicIcon {
+  color: #91ad87 !important;
+  filter: drop-shadow(0 0.5rem 0.65rem rgba(49, 79, 45, 0.12)) !important;
+}
+
+.classicResultShell .classicResultPage .topicCopy {
+  display: grid !important;
+  min-width: 0 !important;
+  gap: 0.45rem !important;
+  justify-items: start !important;
+}
+
+.classicResultShell .classicResultPage .categorySwitchRow,
+.classicResultShell .classicResultPage .topicTitleRow .lessonArrowButton:first-child {
+  display: none !important;
+}
+
+.classicResultShell .classicResultPage .topicTitleRow {
+  display: grid !important;
+  width: 100% !important;
+  grid-template-columns: minmax(0, max-content) 2rem !important;
+  align-items: center !important;
+  justify-content: start !important;
+  gap: 0.48rem !important;
+}
+
+.classicResultShell .classicResultPage .topicTitle {
+  max-width: min(13.5rem, 54vw) !important;
+  color: var(--classic-sage-dark) !important;
+  font-size: clamp(1.55rem, 6.3vw, 2rem) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+.classicResultShell .classicResultPage .lessonArrowButton:last-child {
+  width: 2rem !important;
+  height: 2rem !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--classic-apricot) !important;
+  box-shadow: none !important;
+}
+
+.classicResultShell .classicResultPage .lessonArrowButton:last-child svg {
+  width: 1.92rem !important;
+  height: 1.92rem !important;
+  stroke-width: 3.4 !important;
+}
+
+.classicResultShell .classicResultPage .topicProgress {
+  margin: 0 !important;
+  color: #3e6037 !important;
+  font-size: clamp(1rem, 4.2vw, 1.2rem) !important;
+  font-weight: 820 !important;
+  line-height: 1 !important;
+}
+
+.classicResultShell .classicResultPage .progressRow {
+  width: min(100%, 13.2rem) !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 0.74rem !important;
+  margin-top: 0.05rem !important;
+}
+
+.classicResultShell .classicResultPage .progressTrack {
+  width: 100% !important;
+  height: 0.42rem !important;
+  background: rgba(112, 139, 108, 0.18) !important;
+}
+
+.classicResultShell .classicResultPage .progressTrack span {
+  background: linear-gradient(90deg, #9ba3e8, #d3daef) !important;
+}
+
+.classicResultShell .classicResultPage .progressPercent {
+  color: #2e7437 !important;
+  font-size: clamp(0.78rem, 3.1vw, 0.92rem) !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+
+.classicResultShell .classicResultPage .resultHint {
+  display: none !important;
+}
+
+.classicResultShell .classicResultPage .resultScrollArea {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 0 0.9rem var(--classic-result-bottom-space) !important;
+  scrollbar-width: auto !important;
+}
+
+.classicResultShell .classicResultPage .resultExpressionPanel {
+  display: grid !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  padding: 1.28rem 1.02rem 1.25rem !important;
+  border: 1px solid rgba(111, 143, 109, 0.13) !important;
+  border-radius: 1.28rem !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 254, 249, 0.98)) !important;
+  box-shadow:
+    0 0.8rem 1.75rem rgba(54, 72, 48, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionCard {
+  position: relative !important;
+  margin: 0 0 1.05rem !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionLabel {
+  display: flex !important;
+  min-height: 4rem !important;
+  align-items: center !important;
+  gap: 0.8rem !important;
+  margin: 0 0 1rem !important;
+  padding: 0.62rem 4.6rem 0.62rem 0.62rem !important;
+  border-radius: 0 !important;
+  background: rgba(239, 235, 255, 0.58) !important;
+  color: var(--classic-sage-dark) !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionIcon,
+.classicResultShell .classicResultPage .userExpressionIcon svg {
+  width: 3.1rem !important;
+  height: 3.1rem !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionLabel strong {
+  min-height: 2.15rem !important;
+  border-radius: 0.75rem !important;
+  background: #eff4ea !important;
+  padding: 0.38rem 1.04rem !important;
+  color: var(--classic-sage-dark) !important;
+  font-size: clamp(0.96rem, 3.8vw, 1.12rem) !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionBubble {
+  position: relative !important;
+  display: block !important;
+  min-height: 6.15rem !important;
+  margin: 0 0.18rem 0 1.5rem !important;
+  padding: 1.32rem 1.22rem !important;
+  border: 1px solid rgba(111, 143, 109, 0.24) !important;
+  border-radius: 1.05rem !important;
+  background:
+    radial-gradient(circle at 26% 0%, rgba(111, 143, 109, 0.07), transparent 44%),
+    #fffefa !important;
+  box-shadow:
+    0 0.55rem 1.1rem rgba(54, 72, 48, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionBubble::after {
+  left: 1.05rem !important;
+  bottom: -0.72rem !important;
+  border-color: rgba(111, 143, 109, 0.24) !important;
+  background: #fffefa !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionText {
+  display: block !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  color: #202620 !important;
+  font-size: clamp(1.1rem, 4.5vw, 1.34rem) !important;
+  font-weight: 520 !important;
+  line-height: 1.3 !important;
+  text-align: left !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionSpeaker {
+  position: absolute !important;
+  top: 0.95rem !important;
+  right: 1rem !important;
+  z-index: 4 !important;
+}
+
+.classicResultShell .classicResultPage .expressionList {
+  display: grid !important;
+  gap: 0.85rem !important;
+  margin: 0 !important;
+}
+
+.classicResultShell .classicResultPage .expressionCard {
+  --tone: #d2844e;
+  --tone-soft: #fff3e9;
+  --tone-pale: rgba(226, 154, 98, 0.08);
+  --tone-border: rgba(226, 154, 98, 0.25);
+  position: relative !important;
+  display: block !important;
+  min-height: 5.4rem !important;
+  overflow: visible !important;
+  border: 1px solid var(--tone-border) !important;
+  border-radius: 0.92rem !important;
+  background:
+    radial-gradient(circle at 12% 10%, var(--tone-pale), transparent 36%),
+    var(--tone-card-bg, rgba(255, 254, 250, 0.98)) !important;
+  box-shadow:
+    0 0.42rem 1rem rgba(54, 72, 48, 0.045),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
+}
+
+.classicResultShell .classicResultPage .expressionCardFeatured {
+  min-height: 7.65rem !important;
+  border-color: rgba(95, 134, 88, 0.52) !important;
+  background:
+    radial-gradient(circle at 18% 6%, rgba(111, 143, 109, 0.08), transparent 40%),
+    linear-gradient(180deg, #ffffff 0%, #fffefa 100%) !important;
+  box-shadow:
+    0 0.68rem 1.35rem rgba(54, 72, 48, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+}
+
+.classicResultShell .classicResultPage .expressionSelectArea {
+  display: grid !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  min-height: 5.4rem !important;
+  grid-template-columns: 3.5rem minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 0.78rem !important;
+  padding: 0.86rem 4.1rem 0.86rem 0.85rem !important;
+}
+
+.classicResultShell .classicResultPage .expressionCardFeatured .expressionSelectArea {
+  min-height: 7.65rem !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  align-items: center !important;
+  padding: 1.18rem 4.2rem 1rem 4.65rem !important;
+}
+
+.classicResultShell .classicResultPage .variantRibbon {
+  display: grid !important;
+  width: 3.12rem !important;
+  height: 3.12rem !important;
+  place-items: center !important;
+  border-radius: 999px !important;
+  background: color-mix(in srgb, var(--tone-soft) 86%, white) !important;
+  color: var(--tone) !important;
+  padding: 0 !important;
+  clip-path: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75) !important;
+}
+
+.classicResultShell .classicResultPage .expressionCardFeatured .variantRibbon {
+  position: absolute !important;
+  top: 0 !important;
+  left: 1.05rem !important;
+  width: 2.88rem !important;
+  height: 5.35rem !important;
+  border-radius: 0 0 0.34rem 0.34rem !important;
+  background: linear-gradient(180deg, #8ea783, #728f68) !important;
+  color: #ffffff !important;
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 76%, 0 88%) !important;
+}
+
+.classicResultShell .classicResultPage .variantCopy {
+  display: flex !important;
+  flex: 1 1 0% !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  gap: 0.38rem !important;
+  text-align: left !important;
+}
+
+.classicResultShell .classicResultPage .variantTitle {
+  color: var(--tone) !important;
+  font-size: clamp(0.95rem, 3.55vw, 1.08rem) !important;
+  font-weight: 850 !important;
+  line-height: 1.08 !important;
+}
+
+.classicResultShell .classicResultPage .variantText {
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  color: #1d231b !important;
+  font-size: clamp(1.08rem, 4.28vw, 1.28rem) !important;
+  font-weight: 520 !important;
+  line-height: 1.22 !important;
+  text-align: left !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.classicResultShell .classicResultPage .expressionCardFeatured .variantText {
+  font-size: clamp(1.18rem, 4.68vw, 1.42rem) !important;
+  font-weight: 760 !important;
+  line-height: 1.16 !important;
+}
+
+.classicResultShell .classicResultPage .variantNote {
+  display: inline-flex !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  min-height: 1.52rem !important;
+  align-items: center !important;
+  border-radius: 999px !important;
+  background: rgba(244, 241, 232, 0.96) !important;
+  padding: 0.34rem 0.8rem !important;
+  color: #66715c !important;
+  font-size: clamp(0.7rem, 2.8vw, 0.8rem) !important;
+  font-weight: 760 !important;
+  line-height: 1.1 !important;
+}
+
+.classicResultShell .classicResultPage .userExpressionSpeaker,
+.classicResultShell .classicResultPage .variantSpeaker {
+  display: grid !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  place-items: center !important;
+  border: 1px solid rgba(111, 143, 109, 0.12) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.97) !important;
+  color: var(--tone, var(--classic-sage)) !important;
+  box-shadow:
+    0 0.46rem 1.05rem rgba(54, 72, 48, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+}
+
+.classicResultShell .classicResultPage .variantSpeaker {
+  position: absolute !important;
+  top: 50% !important;
+  right: 0.92rem !important;
+  z-index: 4 !important;
+  transform: translateY(-50%) !important;
+}
+
+.classicResultShell .classicResultPage .expressionCardFeatured .variantSpeaker {
+  top: 50% !important;
+  right: 1rem !important;
+  border-color: rgba(232, 164, 109, 0.22) !important;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.34), transparent 36%),
+    linear-gradient(145deg, #f0b07f, var(--classic-apricot)) !important;
+  color: #ffffff !important;
+}
+
+.classicResultShell .classicResultPage .cornerStar {
+  display: none !important;
+}
+
+.classicResultShell .classicResultPage .toneRecommended {
+  --tone: #62855a;
+  --tone-soft: #eef5e9;
+  --tone-pale: rgba(126, 159, 102, 0.08);
+  --tone-border: rgba(95, 134, 88, 0.34);
+  --tone-card-bg: #fffefa;
+}
+
+.classicResultShell .classicResultPage .toneIdiomatic {
+  --tone: #d37c43;
+  --tone-soft: #fff1e6;
+  --tone-pale: rgba(227, 154, 98, 0.1);
+  --tone-border: rgba(227, 154, 98, 0.26);
+  --tone-card-bg: #fffaf5;
+}
+
+.classicResultShell .classicResultPage .toneSimple {
+  --tone: #669dac;
+  --tone-soft: #eef8f9;
+  --tone-pale: rgba(102, 157, 172, 0.08);
+  --tone-border: rgba(102, 157, 172, 0.25);
+  --tone-card-bg: #fbffff;
+}
+
+.classicResultShell .classicResultPage .toneNatural {
+  --tone: #6d8f64;
+  --tone-soft: #eef5e9;
+  --tone-pale: rgba(109, 143, 100, 0.08);
+  --tone-border: rgba(109, 143, 100, 0.25);
+  --tone-card-bg: #fffefa;
+}
+
+.classicResultShell .classicResultPage .variantText :where(button, span),
+.classicResultShell .classicResultPage .userExpressionText :where(button, span),
+.classicResultShell .classicResultPage .highlightedExpressionToken,
+.classicResultShell .classicResultPage .highlightedWordToken {
+  display: inline !important;
+  width: auto !important;
+  max-width: none !important;
+  text-align: left !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.classicResultShell .resultBottomNav {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 1000 !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  width: min(100%, 430px) !important;
+  max-width: 430px !important;
+  min-height: calc(4.9rem + env(safe-area-inset-bottom, 0px)) !important;
+  grid-template-columns: 3.8rem minmax(0, 1fr) minmax(6.9rem, 1.15fr) minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 0.34rem !important;
+  margin: 0 auto !important;
+  padding: 0.55rem 0.62rem calc(0.55rem + env(safe-area-inset-bottom)) !important;
+  padding-bottom: calc(0.55rem + env(safe-area-inset-bottom)) !important;
+  border: 1px solid rgba(104, 126, 86, 0.12) !important;
+  border-bottom: 0 !important;
+  border-radius: 1.45rem 1.45rem 0 0 !important;
+  background: rgba(255, 255, 255, 0.97) !important;
+  box-shadow:
+    0 -0.6rem 1.8rem rgba(55, 72, 50, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98) !important;
+  transform: none !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.classicResultShell .resultBottomButton {
+  display: inline-flex !important;
+  min-width: 0 !important;
+  height: 3.28rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.42rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: #4f7d48 !important;
+  padding: 0 0.5rem !important;
+  font-size: clamp(0.92rem, 3.7vw, 1.05rem) !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.classicResultShell .resultBottomButton svg {
+  width: 1.42rem !important;
+  height: 1.42rem !important;
+  flex: 0 0 auto !important;
+  stroke-width: 2.8 !important;
+}
+
+.classicResultShell .resultBottomHome {
+  padding: 0 !important;
+  color: #4f8f5b !important;
+}
+
+.classicResultShell .resultBottomHome svg {
+  width: 2.15rem !important;
+  height: 2.15rem !important;
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
+.classicResultShell .resultBottomSlow {
+  border-radius: 0.18rem !important;
+  background: linear-gradient(180deg, rgba(255, 246, 238, 0.98), rgba(255, 239, 224, 0.9)) !important;
+  color: #d88446 !important;
+}
+
+.classicResultShell .resultBottomNext {
+  color: #d88446 !important;
+}
+
+@media (max-width: 390px) {
+  .classicResultShell .classicResultPage .studyBackButton {
+    left: 1rem !important;
+    width: 2.65rem !important;
+    height: 2.65rem !important;
+  }
+
+  .classicResultShell .classicResultPage .studyTopicBar {
+    min-height: 7.95rem !important;
+    grid-template-columns: 3.9rem minmax(0, 1fr) !important;
+    column-gap: 0.78rem !important;
+    padding: 0.92rem 2.48rem 0.9rem 4.85rem !important;
+  }
+
+  .classicResultShell .classicResultPage .studyTopicBar .topicIcon,
+  .classicResultShell .classicResultPage .studyTopicBar .topicIcon svg {
+    width: 3.72rem !important;
+    height: 3.72rem !important;
+  }
+
+  .classicResultShell .classicResultPage .topicTitle {
+    max-width: min(12rem, 56vw) !important;
+    font-size: clamp(1.38rem, 6vw, 1.68rem) !important;
+  }
+
+  .classicResultShell .classicResultPage .progressRow {
+    width: min(100%, 11.3rem) !important;
+  }
+
+  .classicResultShell .classicResultPage .resultScrollArea {
+    padding-right: 0.72rem !important;
+    padding-left: 0.72rem !important;
+  }
+
+  .classicResultShell .classicResultPage .resultExpressionPanel {
+    padding-right: 0.78rem !important;
+    padding-left: 0.78rem !important;
+  }
+
+  .classicResultShell .classicResultPage .expressionSelectArea {
+    grid-template-columns: 3rem minmax(0, 1fr) !important;
+    gap: 0.62rem !important;
+    padding: 0.8rem 3.55rem 0.8rem 0.62rem !important;
+  }
+
+  .classicResultShell .classicResultPage .expressionCardFeatured .expressionSelectArea {
+    padding: 1.04rem 3.55rem 0.94rem 3.82rem !important;
+  }
+
+  .classicResultShell .classicResultPage .variantText {
+    font-size: clamp(1rem, 4.1vw, 1.16rem) !important;
+  }
+
+  .classicResultShell .classicResultPage .expressionCardFeatured .variantText {
+    font-size: clamp(1.1rem, 4.55vw, 1.3rem) !important;
+  }
+
+  .classicResultShell .classicResultPage .variantSpeaker,
+  .classicResultShell .classicResultPage .userExpressionSpeaker {
+    width: 2.72rem !important;
+    height: 2.72rem !important;
+  }
+
+  .classicResultShell .resultBottomNav {
+    width: min(100%, 390px) !important;
+    grid-template-columns: 3.25rem minmax(0, 1fr) minmax(6.05rem, 1.12fr) minmax(0, 1fr) !important;
+    gap: 0.22rem !important;
+    padding-right: 0.42rem !important;
+    padding-left: 0.42rem !important;
+  }
+
+  .classicResultShell .resultBottomButton {
+    gap: 0.28rem !important;
+    padding: 0 0.28rem !important;
+    font-size: clamp(0.82rem, 3.55vw, 0.96rem) !important;
+  }
+}
+
+/* Keep English lines long: icon and audio controls are fixed, text owns the rest. */
+.classicResultShell .classicResultPage .expressionSelectArea {
+  padding-right: 3.25rem !important;
+}
+
+.classicResultShell .classicResultPage .expressionCardFeatured .expressionSelectArea {
+  padding-right: 3.25rem !important;
+  padding-left: 4.35rem !important;
+}
+
+.classicResultShell .classicResultPage .variantSpeaker,
+.classicResultShell .classicResultPage .userExpressionSpeaker {
+  width: 2.62rem !important;
+  height: 2.62rem !important;
+}
+
+.classicResultShell .classicResultPage .variantSpeaker {
+  right: 0.5rem !important;
+}
+
+.classicResultShell .classicResultPage .expressionCardFeatured .variantSpeaker {
+  right: 0.54rem !important;
+}
+
+.classicResultShell .classicResultPage .variantText {
+  font-size: clamp(1rem, 3.85vw, 1.12rem) !important;
+  line-height: 1.2 !important;
+}
+
+.classicResultShell .classicResultPage .expressionCardFeatured .variantText {
+  font-size: clamp(1.03rem, 3.95vw, 1.16rem) !important;
+  line-height: 1.18 !important;
+}
+
+@media (max-width: 390px) {
+  .classicResultShell .classicResultPage .expressionSelectArea {
+    padding-right: 3rem !important;
+  }
+
+  .classicResultShell .classicResultPage .expressionCardFeatured .expressionSelectArea {
+    padding-right: 3rem !important;
+    padding-left: 3.68rem !important;
+  }
+}
+
+/* Override the older classic-phone rules that compressed result-card text. */
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCard {
+  display: block !important;
+  grid-template-columns: none !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionSelectArea {
+  box-sizing: border-box !important;
+  display: flex !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  grid-template-columns: none !important;
+  align-items: center !important;
+  gap: 0.6rem !important;
+  padding: 0.82rem 2.95rem 0.82rem 0.62rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .expressionSelectArea {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  padding: 1.02rem 2.85rem 0.95rem 3.55rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantRibbon {
+  flex: 0 0 2.55rem !important;
+  width: 2.55rem !important;
+  height: 2.55rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .variantRibbon {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 3rem !important;
+  height: 6.3rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantCopy {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex: 1 1 0% !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantText {
+  display: block !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  text-align: left !important;
+  font-size: clamp(0.98rem, 3.62vw, 1.07rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .variantText {
+  font-size: clamp(1rem, 3.7vw, 1.1rem) !important;
+  line-height: 1.18 !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantSpeaker,
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionSpeaker {
+  width: 2.48rem !important;
+  height: 2.48rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantSpeaker {
+  right: 0.42rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .variantSpeaker {
+  right: 0.46rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantText :where(button, span),
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .highlightedExpressionToken,
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .highlightedWordToken {
+  display: inline !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  text-align: left !important;
+}
+
+@media (max-width: 390px) {
+  .classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionSelectArea {
+    padding-right: 2.8rem !important;
+  }
+
+  .classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .expressionSelectArea {
+    padding-right: 2.72rem !important;
+    padding-left: 3.34rem !important;
+  }
+}
+
+/* Compact the result page to the reference rhythm while keeping text full-width. */
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .studyBackButton {
+  top: calc(1.12rem + env(safe-area-inset-top, 0px)) !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .studyTopicBar {
+  min-height: 7.7rem !important;
+  grid-template-columns: 3.65rem minmax(0, 1fr) !important;
+  column-gap: 0.58rem !important;
+  padding: 0.78rem 2.05rem 0.78rem 4.65rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .studyTopicBar .topicIcon,
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .studyTopicBar .topicIcon svg {
+  width: 3.65rem !important;
+  height: 3.65rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .topicTitle {
+  max-width: min(11.8rem, 58vw) !important;
+  font-size: clamp(1.42rem, 5.55vw, 1.64rem) !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .resultExpressionPanel {
+  padding: 1.02rem 0.95rem 0.96rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionCard {
+  margin-bottom: 0.72rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionLabel {
+  min-height: 3.35rem !important;
+  margin-bottom: 0.68rem !important;
+  padding: 0.48rem 4.2rem 0.48rem 0.56rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionIcon,
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionIcon svg {
+  width: 2.72rem !important;
+  height: 2.72rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionLabel strong {
+  min-height: 1.9rem !important;
+  padding: 0.3rem 0.9rem !important;
+  font-size: clamp(0.9rem, 3.45vw, 1rem) !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionBubble {
+  min-height: 5rem !important;
+  padding: 1.05rem 1.12rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionText {
+  font-size: clamp(1.04rem, 4.05vw, 1.18rem) !important;
+  line-height: 1.24 !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionList {
+  gap: 0.62rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCard {
+  min-height: 4.82rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured {
+  min-height: 6.42rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionSelectArea {
+  min-height: 4.82rem !important;
+  gap: 0.54rem !important;
+  padding: 0.5rem 2.72rem 0.5rem 0.58rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .expressionSelectArea {
+  min-height: 6.42rem !important;
+  padding: 0.82rem 2.68rem 0.74rem 3.38rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantRibbon {
+  flex-basis: 2.28rem !important;
+  width: 2.28rem !important;
+  height: 2.28rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .variantRibbon {
+  width: 2.72rem !important;
+  height: 5.55rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantCopy {
+  gap: 0.22rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantTitle {
+  font-size: clamp(0.84rem, 3.18vw, 0.96rem) !important;
+  line-height: 1 !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantText {
+  font-size: clamp(0.9rem, 3.36vw, 0.99rem) !important;
+  line-height: 1.12 !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .variantText {
+  font-size: clamp(0.96rem, 3.48vw, 1.04rem) !important;
+  line-height: 1.12 !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantNote {
+  min-height: 1.18rem !important;
+  padding: 0.18rem 0.58rem !important;
+  font-size: clamp(0.62rem, 2.45vw, 0.7rem) !important;
+  line-height: 1 !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantSpeaker,
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .userExpressionSpeaker {
+  width: 2.32rem !important;
+  height: 2.32rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .variantSpeaker {
+  right: 0.36rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .variantSpeaker {
+  right: 0.4rem !important;
+}
+
+.classicResultShell .resultBottomNav {
+  min-height: calc(4.32rem + env(safe-area-inset-bottom, 0px)) !important;
+  padding-top: 0.42rem !important;
+  padding-bottom: calc(0.42rem + env(safe-area-inset-bottom)) !important;
+}
+
+.classicResultShell .resultBottomButton {
+  height: 2.96rem !important;
+}
