@@ -328,6 +328,12 @@ function readFreeStudyRouteState(): FreeStudyRouteState | null {
   }
 }
 
+function clearFreeStudyRouteState() {
+  if (typeof window === "undefined") return;
+
+  window.sessionStorage.removeItem(freeStudyRouteStateStorageKey);
+}
+
 function createFreePracticeRoundId() {
   return `free:${Date.now()}:${Math.random().toString(36).slice(2)}`;
 }
@@ -4686,6 +4692,7 @@ function SpeakEnglishClient() {
   }
 
   function returnToFreeLearningHome() {
+    clearFreeStudyRouteState();
     setTrainingGroundMode("default");
     guidedConversationTurnsRef.current = [];
     prepareNextNativeRound();
@@ -5083,6 +5090,22 @@ function SpeakEnglishClient() {
 
   function openFreeStudyStepTwoForNextChinese() {
     startFreeStudyStepTwoChineseRound();
+  }
+
+  function openFreeStudyStepOneForNextChinese() {
+    if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
+      cancelRecognition();
+    }
+
+    clearFreeStudyRouteState();
+    handledStepRouteRef.current = "";
+
+    if (pathname !== "/free-study/step-1") {
+      router.push("/free-study/step-1");
+      return;
+    }
+
+    returnToFreeLearningHome();
   }
 
   function finishRecognition(finalTranscript = speechBufferRef.current.trim()) {
@@ -5530,6 +5553,10 @@ function SpeakEnglishClient() {
         : isStartingNextNativeRound
           ? "native"
           : practiceStage);
+    const isManualStopFreeStudyRecognition =
+      !isAiGuidedMode && (pathname?.startsWith("/free-study") ?? false);
+    const shouldAutoStopAfterSpeechSilence =
+      !isManualStopFreeStudyRecognition;
     const shouldCreateNewPracticeRound =
       isStartingGuidedSuggestedEnglishRound ||
       isStartingFreeConversationAnswerRound ||
@@ -5583,7 +5610,8 @@ function SpeakEnglishClient() {
     recognition.continuous = true;
     recognition.interimResults = true;
     const activeSpeechSilenceDelayMs = getSpeechSilenceDelay(nextPracticeStage);
-    const shouldProtectEarlySpeechEnd = nextPracticeStage === "native";
+    const shouldProtectEarlySpeechEnd =
+      nextPracticeStage === "native" && !isManualStopFreeStudyRecognition;
     setInputText("");
     setComposingPinyin("");
     setLiveTranscript("");
@@ -5605,6 +5633,8 @@ function SpeakEnglishClient() {
     const scheduleSpeechSilenceStop = (
       delayMs = activeSpeechSilenceDelayMs
     ) => {
+      if (!shouldAutoStopAfterSpeechSilence) return;
+
       clearSpeechSilenceTimer();
       speechSilenceTimerRef.current = window.setTimeout(() => {
         if (!isCurrentRecognitionSession()) return;
@@ -5649,7 +5679,9 @@ function SpeakEnglishClient() {
 
       if (sessionTranscript && transcript !== previousTranscript) {
         speechLastResultAtRef.current = Date.now();
-        scheduleSpeechSilenceStop();
+        if (shouldAutoStopAfterSpeechSilence) {
+          scheduleSpeechSilenceStop();
+        }
       }
 
       if (
@@ -5669,6 +5701,18 @@ function SpeakEnglishClient() {
       const transcript = speechBufferRef.current.trim();
       const errorName =
         "error" in event && typeof event.error === "string" ? event.error : "";
+
+      if (
+        isManualStopFreeStudyRecognition &&
+        !speechStopRequestedRef.current &&
+        errorName !== "not-allowed" &&
+        errorName !== "service-not-allowed"
+      ) {
+        if (transcript) {
+          speechRecognitionBaseTranscriptRef.current = transcript;
+        }
+        return;
+      }
 
       if (shouldCommitSpeechRef.current && transcript) {
         if (speechStopRequestedRef.current) {
@@ -5710,6 +5754,36 @@ function SpeakEnglishClient() {
       if (!isCurrentRecognitionSession()) return;
 
       const transcript = speechBufferRef.current.trim();
+
+      if (
+        isManualStopFreeStudyRecognition &&
+        shouldCommitSpeechRef.current &&
+        !speechStopRequestedRef.current
+      ) {
+        if (transcript) {
+          speechRecognitionBaseTranscriptRef.current = transcript;
+        }
+        clearTimer(speechRestartTimerRef);
+        speechRestartTimerRef.current = window.setTimeout(() => {
+          if (
+            !isCurrentRecognitionSession() ||
+            !shouldCommitSpeechRef.current ||
+            speechStopRequestedRef.current
+          ) {
+            return;
+          }
+
+          try {
+            recognition.start();
+          } catch {
+            recognitionRef.current = null;
+            setIsListening(false);
+            setPrimingPracticeStage(null);
+          }
+        }, speechRestartAfterEarlyEndMs);
+        return;
+      }
+
       const elapsedSinceSpeech = speechLastResultAtRef.current
         ? Date.now() - speechLastResultAtRef.current
         : activeSpeechSilenceDelayMs;
@@ -5771,6 +5845,10 @@ function SpeakEnglishClient() {
     try {
       recognition.start();
       isRecognitionStartingRef.current = false;
+      if (isManualStopFreeStudyRecognition) {
+        return;
+      }
+
       speechNoInputTimerRef.current = window.setTimeout(() => {
         if (!isCurrentRecognitionSession()) return;
         if (speechBufferRef.current.trim()) return;
@@ -8715,7 +8793,7 @@ function SpeakEnglishClient() {
                 onAvatarError={() => setAccountImageFailed(true)}
                 onAiGuidedPractice={openAiGuidedExpressionStepOne}
                 onRetryEnglish={openFreeStudyStepFourForRetry}
-                onContinueNext={openFreeStudyStepTwoForNextChinese}
+                onContinueNext={openFreeStudyStepOneForNextChinese}
                 onMenuClick={openLoggedInHomePage}
                 onAccountClick={openAccountPage}
                 onPlayExpression={readReferenceResultVariant}
