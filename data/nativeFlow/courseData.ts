@@ -81,7 +81,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
   "everyday": [
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "嘿，到目前为止，你过得怎么样？",
       "english": "Hey, how's your day been treating you so far?",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -91,7 +91,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我整个上午都在奔波，终于可以喘口气了。",
       "english": "I've been running around all morning and I'm finally catching my breath.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -101,7 +101,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "最近工作比较忙，不过还算顺利。",
       "english": "Things have been pretty busy lately, but I'm managing okay.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -111,7 +111,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "这周你做了什么让你忙碌的事情？",
       "english": "What have you been up to this week that kept you occupied?",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -121,7 +121,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我努力在工作和在家放松之间保持良好的平衡。",
       "english": "I'm trying to keep a good balance between work and just chilling at home.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -131,7 +131,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "感觉这几天的日子过得真快。",
       "english": "It feels like the days are flying by so quickly these days.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -141,7 +141,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我一直在想你，想知道你的一切进展如何。",
       "english": "I've been thinking about you and wondering how everything's going on your end.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -151,7 +151,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "生活是美好时光和一些小挑战的混合体，你知道吗？",
       "english": "Life's been a mix of good moments and some little challenges, you know?",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -161,7 +161,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我真的很期待周末能充电一下。",
       "english": "I'm really looking forward to the weekend to recharge a bit.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -171,7 +171,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "你上次提到的那件事最后结果怎么样了？",
       "english": "How did that thing you mentioned last time turn out in the end?",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -181,7 +181,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我一直在尝试更多地活在当下，而不是担心一切。",
       "english": "I've been trying to stay more present instead of worrying about everything.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -191,7 +191,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "今天的天气让我想坐在外面放松一下。",
       "english": "The weather today is making me want to just sit outside and relax.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -201,7 +201,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "在那些日子里，一切似乎都比预期要花更长的时间。",
       "english": "It's one of those days where everything seems to take a little longer than expected.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -211,7 +211,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我一直在和一些老朋友联系，这真的很好。",
       "english": "I've been catching up with some old friends which has been really nice.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -221,7 +221,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "有时我只需要一个安静的夜晚，没有任何计划。",
       "english": "Sometimes I just need a quiet evening with no plans at all.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -231,7 +231,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "您对目前的情况感觉如何？",
       "english": "How are you feeling about the way things are going right now?",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -241,7 +241,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我有点循规蹈矩，但总是乐于把事情搞混。",
       "english": "I'm sort of in a routine but always open to mixing things up a little.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -251,7 +251,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我们已经有一段时间没有谈论任何重要的事情了。",
       "english": "It’s been a while since we just talked about nothing important.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -261,7 +261,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "我很感激忙碌的一周中这些小小的平静时刻。",
       "english": "I'm grateful for these small moments of peace in a busy week.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -271,7 +271,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A1.mp3",
-      "chinese": "",
+      "chinese": "让我们更频繁地保持联系，因为我喜欢我们的谈话。",
       "english": "Let's keep in touch more often because I enjoy our conversations.",
       "sourceAudio": "初级/A1.mp3",
       "sourceDocument": "初级/A1.docx",
@@ -281,7 +281,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "我通常先喝一杯安静的咖啡开始新的一天。",
       "english": "I usually start my day with a quiet cup of coffee before anything else.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -291,7 +291,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "当我完成早晨的散步时，我已经感觉更加精力充沛。",
       "english": "By the time I finish my morning walk, I already feel more energized.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -301,7 +301,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "早上可能会有点匆忙，但如果可能的话，我会尽量让他们保持冷静。",
       "english": "Mornings can be a bit rushed but I try to keep them calm if possible.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -311,7 +311,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "我一直在调整我的日程安排，这样我下午就不会感到那么累了。",
       "english": "I’ve been adjusting my schedule so I don’t feel so tired in the afternoon.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -321,7 +321,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "首先把房子整理好有助于一天中剩下的时间更好地进行。",
       "english": "Getting the house organized first thing helps the rest of the day flow better.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -331,7 +331,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "我喜欢在准备时听一些音乐或播客。",
       "english": "I like listening to some music or a podcast while I get ready.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -341,7 +341,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "今天我花了一段时间才出发，因为我睡了一会儿。",
       "english": "It took me a while to get going today because I slept in a little.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -351,7 +351,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "我的日常工作包括在早餐前检查花园或植物。",
       "english": "My routine includes checking the garden or plants before breakfast.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -361,7 +361,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "我一直在努力起床后多喝水。",
       "english": "I’ve been making an effort to drink more water right after waking up.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -371,7 +371,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "即使在忙碌的日子里，我也会尝试在早上为自己留出十分钟的时间。",
       "english": "Even on busy days I try to find ten minutes just for myself in the morning.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -381,7 +381,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "当交通拥堵时，出门办事的时间总是感觉更长。",
       "english": "The drive to run errands always feels longer when traffic is heavy.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -391,7 +391,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "我一直在尝试不同的早餐选择，以使事情变得有趣。",
       "english": "I’ve been experimenting with different breakfast options to keep things interesting.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -401,7 +401,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "到了上午，我通常就很清楚这一天会是什么样子。",
       "english": "By mid-morning I usually have a good idea of what the day will look like.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -411,7 +411,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "早晨过得很顺利，没有任何意外，这真是太好了。",
       "english": "It’s nice when the morning goes smoothly without any surprises.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -421,7 +421,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "有时，我在喝第一杯咖啡时会反思我所感激的事情。",
       "english": "I sometimes reflect on what I’m thankful for while having my first coffee.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -431,7 +431,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "尽早开始洗衣服可以让一整天都更有效率。",
       "english": "Getting laundry started early makes the whole day feel more productive.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -441,7 +441,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "我一直试图避免首先过多地查看手机。",
       "english": "I’ve been trying to avoid checking my phone too much first thing.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -451,7 +451,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "早晨透过窗户的光线是我最喜欢的部分。",
       "english": "The light coming through the windows in the morning is my favorite part.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -461,7 +461,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "当我始终如一地坚持早晨的习惯时，我感觉会更好。",
       "english": "I feel better when I stick to my usual morning habits consistently.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -471,7 +471,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A2.mp3",
-      "chinese": "",
+      "chinese": "今天我计划在午餐前解决一些小任务。",
       "english": "Today I’m planning to tackle a few small tasks before lunch.",
       "sourceAudio": "初级/A2.mp3",
       "sourceDocument": "初级/A2.docx",
@@ -481,7 +481,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "今天阳光照在树上的样子真是太美了。",
       "english": "The way the sunlight is hitting the trees today is absolutely beautiful.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -491,7 +491,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "看来稍后会下雨，所以我应该带把雨伞。",
       "english": "It looks like it might rain later so I should probably bring an umbrella.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -501,7 +501,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "我喜欢晚上一场大雨后空气清新的感觉。",
       "english": "I love how the air feels fresh after a good rain in the evening.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -511,7 +511,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "这么热的天气让我想待在室内开着空调。",
       "english": "This heat is making me want to stay indoors with the AC on.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -521,7 +521,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "秋天的颜色开始显现，这让我感到怀旧。",
       "english": "The fall colors are starting to show and it’s making me feel nostalgic.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -531,7 +531,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "这是完美温和的日子之一，让您想出去散步。",
       "english": "It’s one of those perfect mild days that makes you want to go for a long walk.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -541,7 +541,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "今天的风比我想象的要大，把周围的一切都吹起来了。",
       "english": "The wind today is stronger than I expected and it’s blowing everything around.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -551,7 +551,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "随着季节的变化，我一直在享受更长的夜晚。",
       "english": "I’ve been enjoying the longer evenings as the season changes.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -561,7 +561,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "冬天即将来临，但我还没有准备好应对寒冷。",
       "english": "Winter is coming but I’m not quite ready for the cold yet.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -571,7 +571,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "天气预报不断变化，所以我不确定明天会发生什么。",
       "english": "The forecast keeps changing so I’m not sure what to expect tomorrow.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -581,7 +581,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "外面出奇的潮湿，让一切都感觉有点沉重。",
       "english": "It’s surprisingly humid outside which makes everything feel a bit heavier.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -591,7 +591,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "当天空晴朗明亮时，我总是感到更有动力。",
       "english": "I always feel more motivated when the sky is clear and bright.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -601,7 +601,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "昨晚的日落是我一段时间以来见过的最美丽的日落之一。",
       "english": "The sunset last night was one of the prettiest I’ve seen in a while.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -611,7 +611,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "最近下了很多雨，花园里的植物真的很茂盛。",
       "english": "We’ve had so much rain lately that the garden is really thriving.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -621,7 +621,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "在这样的天气里，你会喜欢待在室内喝一杯热饮。",
       "english": "It’s the kind of weather that makes you appreciate being inside with a warm drink.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -631,7 +631,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "我注意到今年的叶子比往年转得更快。",
       "english": "I noticed the leaves are turning faster this year than usual.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -641,7 +641,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "一夜之间气温骤降，感觉秋天来了。",
       "english": "The temperature dropped overnight and now it feels like autumn is here.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -651,7 +651,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "我希望暴风雨快点过去，不要造成太大的麻烦。",
       "english": "I hope the storm passes quickly without causing too much trouble.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -661,7 +661,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "这些阳光明媚的早晨非常适合在户外完成工作。",
       "english": "These sunny mornings are perfect for getting things done outside.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -671,7 +671,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A3.mp3",
-      "chinese": "",
+      "chinese": "今天下午雨停了之后，空气里的味道真好。",
       "english": "The air smells so good after the rain stopped this afternoon.",
       "sourceAudio": "初级/A3.mp3",
       "sourceDocument": "初级/A3.docx",
@@ -681,7 +681,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "我有点饿了，想着今天午餐吃什么好。",
       "english": "I’m getting a bit hungry and thinking about what sounds good for lunch today.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -691,7 +691,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "上次我们吃的那顿饭太令人满意了，我一直在想。",
       "english": "That meal we had last time was so satisfying I keep thinking about it.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -701,7 +701,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "最近我一直在尝试在家做更简单的健康饭菜。",
       "english": "I’ve been trying to cook more simple healthy meals at home lately.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -711,7 +711,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "如果您稍后有空的话，愿意和我一起吃点快餐吗？",
       "english": "Would you like to join me for a quick bite if you’re free later?",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -721,7 +721,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "这道菜的味道非常平衡且令人舒适。",
       "english": "The flavors in this dish are really well balanced and comforting.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -731,7 +731,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "我通常更喜欢清淡的晚餐，尤其是当一天很长的时候。",
       "english": "I usually prefer lighter dinners especially when the day has been long.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -741,7 +741,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "让我们试试大家都在谈论的市中心的新地方吧。",
       "english": "Let’s try that new place downtown that everyone’s been talking about.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -751,7 +751,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "我做了额外的，所以如果你以后想要的话还有剩菜。",
       "english": "I made extra so there are leftovers if you want some later.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -761,7 +761,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "天气好的时候，在户外露台上用餐感觉非常放松。",
       "english": "Eating outside on the patio feels so relaxing when the weather is nice.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -771,7 +771,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "我一直在尝试在我的常用食谱中添加更多蔬菜。",
       "english": "I’ve been experimenting with adding more vegetables to my usual recipes.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -781,7 +781,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "这杯咖啡恰到好处，可以很好地唤醒我。",
       "english": "This coffee is hitting the spot and waking me up nicely.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -791,7 +791,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "有时我只是想吃一些令人安慰的东西，比如汤或意大利面。",
       "english": "Sometimes I just crave something comforting like soup or pasta.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -801,7 +801,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "那家餐厅的份量很丰盛，我真的很欣赏。",
       "english": "The portions at that restaurant are generous which I really appreciate.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -811,7 +811,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "下次去买杂货时，我需要记得带上可重复使用的袋子。",
       "english": "I need to remember to bring my reusable bag next time I go shopping for groceries.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -821,7 +821,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "一起做饭可能是一种消磨时间的有趣方式。",
       "english": "Cooking together could be a fun way to spend some time.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -831,7 +831,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "我晚上喝更多的花草茶而不是咖啡。",
       "english": "I’ve been drinking more herbal tea in the evenings instead of coffee.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -841,7 +841,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "闻起来令人难以置信——你在那里做什么？",
       "english": "That smells incredible — what are you making over there?",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -851,7 +851,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "我尽量不在两餐之间吃太多零食，但有时很难。",
       "english": "I try not to snack too much between meals but sometimes it’s hard.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -861,7 +861,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "市场上的新鲜水果总是比商店买的味道好。",
       "english": "Fresh fruit from the market always tastes better than store-bought.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -871,7 +871,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A4.mp3",
-      "chinese": "",
+      "chinese": "我已经吃饱了，但那顿美味佳肴的每一口都是值得的。",
       "english": "I’m full but it was worth every bite of that delicious meal.",
       "sourceAudio": "初级/A4.mp3",
       "sourceDocument": "初级/A4.docx",
@@ -881,7 +881,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "我需要在商店变得太拥挤之前去买一些东西。",
       "english": "I need to pick up a few things at the store before it gets too crowded.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -891,7 +891,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "该商品正在促销，但我仍在犹豫是否真的需要它。",
       "english": "This item is on sale but I’m still debating if I really need it.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -901,7 +901,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "质量看起来不错，所以我觉得这次值这个价钱。",
       "english": "The quality seems good so I think it’s worth the price this time.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -911,7 +911,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "如果我回家后不太合适，我可能会退货。",
       "english": "I’ll probably return this if it doesn’t fit quite right when I get home.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -921,7 +921,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "跑腿总是比我计划的时间要长，但它必须完成。",
       "english": "Running errands always takes longer than I plan but it has to get done.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -931,7 +931,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "我在网上找到了更优惠的价格，但我也喜欢支持当地商店。",
       "english": "I found a better deal online but I like supporting local shops too.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -941,7 +941,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "当我每周出去采购杂货时，您需要什么东西吗？",
       "english": "Do you need anything while I’m out doing the weekly grocery run?",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -951,7 +951,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "我一直在尝试少买一些我真正会用到的东西。",
       "english": "I’ve been trying to buy less and only things that I’ll actually use.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -961,7 +961,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "今天结账队伍的移动速度出奇的快，这很好。",
       "english": "The checkout line was moving surprisingly fast today which was nice.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -971,7 +971,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "我把清单忘在家里了，所以我想记住我需要的一切。",
       "english": "I forgot my list at home so I’m trying to remember everything I need.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -981,7 +981,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "这将持续我们一段时间，所以我不必很快回来。",
       "english": "This will last us for a while so I don’t have to come back soon.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -991,7 +991,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "我正在寻找一些实用的、能随着时间的推移而持续存在的东西。",
       "english": "I’m looking for something practical that will hold up over time.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1001,7 +1001,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "价格又涨了，所以我可能会等待下一次促销。",
       "english": "The price went up again so I might wait for the next sale.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1011,7 +1011,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "我喜欢在做出大宗采购的最终决定之前比较各种选择。",
       "english": "I like comparing options before making a final decision on bigger purchases.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1021,7 +1021,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "拎着所有这些袋子提醒我我应该带上购物车。",
       "english": "Carrying all these bags reminds me I should have brought the cart.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1031,7 +1031,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "我会用卡付款，但如果更方便的话我也有一些现金。",
       "english": "I’ll pay with my card but I also have some cash if that’s easier.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1041,7 +1041,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "这些可重复使用的容器在整理物品时派上用场。",
       "english": "These reusable containers are coming in handy for organizing things.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1051,7 +1051,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "当我已经出去跑来跑去的时候，我需要去邮局。",
       "english": "I need to stop by the post office while I’m already out running around.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1061,7 +1061,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "今天从我的待办事项清单上划掉一些事情感觉很好。",
       "english": "It feels good to cross a few things off my to-do list today.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1071,7 +1071,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A5.mp3",
-      "chinese": "",
+      "chinese": "我试着更加注意我带进屋里的东西。",
       "english": "I’m trying to be more mindful about what I bring into the house.",
       "sourceAudio": "初级/A5.mp3",
       "sourceDocument": "初级/A5.docx",
@@ -1081,7 +1081,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我一直专注于一次完成一项任务，而不是同时处理多项任务。",
       "english": "I’ve been focusing on finishing one task at a time instead of multitasking.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1091,7 +1091,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "该项目正在进行中，但仍有一些细节需要处理。",
       "english": "The project is coming along but there are still a few details to handle.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1101,7 +1101,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我需要离开屏幕一段时间来清醒一下头脑。",
       "english": "I need to step away from the screen for a bit to clear my head.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1111,7 +1111,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "在家工作有其优点，但有时我会怀念办公室里的随意聊天。",
       "english": "Working from home has its advantages but I miss the casual office chats sometimes.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1121,7 +1121,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我学会了设定更好的界限，这样工作就不会取代一切。",
       "english": "I’ve learned to set better boundaries so work doesn’t take over everything.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1131,7 +1131,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "今天我感觉很有成效，这让一整天都过得更加顺利。",
       "english": "Today I feel productive and it’s making the whole day go smoother.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1141,7 +1141,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "让我们在本周晚些时候联系一下，看看情况如何。",
       "english": "Let’s touch base later this week to see where things stand.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1151,7 +1151,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我试图优先考虑真正重要的事情，而不是忙碌的工作。",
       "english": "I’m trying to prioritize what actually matters instead of busy work.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1161,7 +1161,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "会议进行得比我预期的要好，这让我松了一口气。",
       "english": "The meeting went better than I expected which was a relief.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1171,7 +1171,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我一直在思考如何改进我的工作流程。",
       "english": "I’ve been reflecting on how I can improve my workflow a little.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1181,7 +1181,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "短暂的休息可以帮助我长时间保持专注。",
       "english": "Taking short breaks helps me stay focused for longer periods.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1191,7 +1191,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我喜欢挑战，但之后我也需要时间放松。",
       "english": "I enjoy the challenge but I also need time to unwind after.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1201,7 +1201,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "至少目前我的收件箱终于得到了控制。",
       "english": "My inbox is finally under control for the moment at least.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1211,7 +1211,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我期待着结束这件事，以便我可以继续下一件事。",
       "english": "I’m looking forward to wrapping this up so I can move on to the next thing.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1221,7 +1221,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "平衡家庭时间与工作责任始终是一个学习过程。",
       "english": "Balancing family time with work responsibilities is always a learning process.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1231,7 +1231,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我在散步时想到了一个好主意，我想尝试实施。",
       "english": "I had a good idea during my walk that I want to try implementing.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1241,7 +1241,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "团队给予了我们很大的支持，这带来了很大的改变。",
       "english": "The team has been really supportive which makes a big difference.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1251,7 +1251,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "明天我需要安排一些不受打扰的集中时间。",
       "english": "I need to schedule some focused time without interruptions tomorrow.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1261,7 +1261,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "当你在坚持不懈的努力后看到进步时，你会感到很有成就感。",
       "english": "It feels rewarding when you see progress after consistent effort.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1271,7 +1271,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A6.mp3",
-      "chinese": "",
+      "chinese": "我很感激这种灵活性，让我能够在事情发生时处理它们。",
       "english": "I’m grateful for the flexibility that allows me to handle things as they come.",
       "sourceAudio": "初级/A6.mp3",
       "sourceDocument": "初级/A6.docx",
@@ -1281,7 +1281,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "与家人共度时光总是提醒我什么是最重要的。",
       "english": "Spending time with family always reminds me what’s most important.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1291,7 +1291,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "孩子们成长得太快，有时很难跟上。",
       "english": "The kids are growing up so fast it’s hard to keep up sometimes.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1301,7 +1301,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我和丈夫讨论了周末计划一些简单的事情。",
       "english": "I talked with my husband about planning something simple for the weekend.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1311,7 +1311,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "当我们大家坐在一起，没有任何干扰的时候，真是太好了。",
       "english": "It’s nice when we all sit down together without any distractions.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1321,7 +1321,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我一直在思考如何让家感觉更舒适。",
       "english": "I’ve been thinking about how to make home feel even more comfortable.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1331,7 +1331,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我儿子昨天打来电话，很高兴听到他的生活。",
       "english": "My son called yesterday and it was great hearing about his life.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1341,7 +1341,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我们正在努力创造更多传统，让我们更加亲近。",
       "english": "We’re trying to create more traditions that bring us closer.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1351,7 +1351,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "家庭聚餐不一定要花哨才有意义。",
       "english": "Family dinners don’t have to be fancy to be meaningful.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1361,7 +1361,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我很欣赏我的伴侣所做的那些经常被忽视的小事。",
       "english": "I appreciate the little things my partner does that often go unnoticed.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1371,7 +1371,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "当每个人都同时在家时，房子会感觉很热闹。",
       "english": "The house feels lively when everyone is home at the same time.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1381,7 +1381,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我想确保即使生活很忙碌也能保持联系。",
       "english": "I want to make sure I stay connected even when life gets busy.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1391,7 +1391,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "孙子们给家里带来了很多欢乐和活力。",
       "english": "Grandkids bring so much joy and energy into the home.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1401,7 +1401,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我们一直致力于更好地沟通日常事务。",
       "english": "We’ve been working on communicating better about everyday things.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1411,7 +1411,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "家是我在漫长的一天之后可以真正做自己的地方。",
       "english": "Home is where I can truly be myself after a long day.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1421,7 +1421,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我喜欢听他们的故事和对不同主题的看法。",
       "english": "I love hearing their stories and perspectives on different topics.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1431,7 +1431,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "有时候，只要安静地在一起就足够了。",
       "english": "Sometimes just being together quietly is enough.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1441,7 +1441,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我为我们的家庭多年来如何应对变化感到自豪。",
       "english": "I’m proud of how our family has navigated changes over the years.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1451,7 +1451,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "让我们尽快计划一次与亲密朋友或亲戚的低调聚会吧。",
       "english": "Let’s plan a low-key gathering with close friends or relatives soon.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1461,7 +1461,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "互相支持，度过风风雨雨才是最重要的。",
       "english": "Supporting each other through the ups and downs is what matters.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1471,7 +1471,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A7.mp3",
-      "chinese": "",
+      "chinese": "我很幸运能够拥有这种爱和稳定的基础。",
       "english": "I feel fortunate to have this foundation of love and stability.",
       "sourceAudio": "初级/A7.mp3",
       "sourceDocument": "初级/A7.docx",
@@ -1481,7 +1481,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "最近我对事情变得更加乐观，这很好。",
       "english": "I’ve been feeling more optimistic about things lately which is nice.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1491,7 +1491,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "有时候，一切都让人感到难以承受，但我知道一切都会过去。",
       "english": "There are days when everything feels overwhelming but I know it passes.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1501,7 +1501,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "我正在学习欣赏一路上的小胜利。",
       "english": "I’m learning to appreciate the small wins along the way.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1511,7 +1511,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "当我花点时间呼吸并重新调整我的想法时，这会有所帮助。",
       "english": "It helps when I take a moment to breathe and reset my thoughts.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1521,7 +1521,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "我对自己现在的处境感到满意，即使它并不完美。",
       "english": "I feel content with where I am right now even if it’s not perfect.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1531,7 +1531,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "有时我只需要说出来以获得一些清晰的信息。",
       "english": "Sometimes I just need to talk it out to gain some clarity.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1541,7 +1541,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "我一直专注于我能控制的事情，并放弃其余的。",
       "english": "I’ve been focusing on what I can control and letting go of the rest.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1551,7 +1551,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "感恩练习对我的情绪产生了真正的影响。",
       "english": "Gratitude practice has been making a real difference in my mood.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1561,7 +1561,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "我对自己设定的一些个人目标感到兴奋。",
       "english": "I’m excited about some personal goals I’ve set for myself.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1571,7 +1571,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "生活有挑战，但旅途中也有美丽。",
       "english": "Life has its challenges but there’s beauty in the journey too.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1581,7 +1581,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "昨晚我睡得很好，醒来时感觉神清气爽。",
       "english": "I slept really well last night and woke up feeling refreshed.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1591,7 +1591,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "只要我继续前进，休息几天也没关系。",
       "english": "It’s okay to have off days as long as I keep moving forward.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1601,7 +1601,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "我为自己能够冷静地处理这种情况感到自豪。",
       "english": "I’m proud of myself for handling that situation calmly.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1611,7 +1611,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "这些安静的反思时刻帮助我保持脚踏实地。",
       "english": "These quiet moments of reflection help me stay grounded.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1621,7 +1621,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "我相信事情最终都会有解决的办法。",
       "english": "I believe things have a way of working out in the end.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1631,7 +1631,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "当我坚持健康的习惯时，我的能量水平会更好。",
       "english": "My energy levels are better when I stay consistent with healthy habits.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1641,7 +1641,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "我对接下来发生的一切持开放态度，并努力保持灵活性。",
       "english": "I’m open to whatever comes next and trying to stay flexible.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1651,7 +1651,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "与亲人的联系总是让我精神振奋。",
       "english": "Feeling connected to loved ones always lifts my spirits.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1661,7 +1661,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "我经常在简单的日常乐趣中找到快乐。",
       "english": "I’ve been finding joy in simple everyday pleasures more often.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1671,7 +1671,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A8.mp3",
-      "chinese": "",
+      "chinese": "总的来说，我处于一个很好的位置，并对未来充满期待。",
       "english": "Overall I’m in a good place and looking forward to what’s ahead.",
       "sourceAudio": "初级/A8.mp3",
       "sourceDocument": "初级/A8.docx",
@@ -1681,7 +1681,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "我一直在尝试在晚上少用手机，这样我就能更好地放松下来。",
       "english": "I’ve been trying to use my phone less in the evenings so I can wind down better.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1691,7 +1691,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "这个应用程序对于跟踪我所有的小任务非常有帮助。",
       "english": "This app has been really helpful for keeping track of all my little tasks.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1701,7 +1701,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "今天互联网又很慢，这使得一切都花费了两倍的时间。",
       "english": "The internet was slow again today which made everything take twice as long.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1711,7 +1711,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "我终于更新了我的软件，现在一切都运行得更流畅了。",
       "english": "I finally updated my software and now everything runs a bit smoother.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1721,7 +1721,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "当技术真正节省时间而不是创造更多工作时，这真是太好了。",
       "english": "It’s nice when technology actually saves time instead of creating more work.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1731,7 +1731,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "我最近一直在探索我最喜欢的应用程序的一些新功能。",
       "english": "I’ve been exploring some new features on my favorite apps lately.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1741,7 +1741,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "有时我会怀念我们不经常查看通知的日子。",
       "english": "Sometimes I miss the days when we didn’t check notifications constantly.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1751,7 +1751,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "我的笔记本电脑又出现故障了，所以我需要找出问题所在。",
       "english": "My laptop is acting up again so I need to figure out what’s wrong.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1761,7 +1761,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "当我真正想要联系时，我更喜欢视频通话而不是短信。",
       "english": "I prefer video calls over texting when I really want to connect.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1771,7 +1771,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "该设备的电池续航时间比我预期的要长，这很棒。",
       "english": "The battery on this device lasts longer than I expected which is great.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1781,7 +1781,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "我一直在整理我的数字文件，以便更容易查找。",
       "english": "I’ve been organizing my digital files to make things easier to find.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1791,7 +1791,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "如今，我们适应新产品的速度之快令人惊讶。",
       "english": "It’s amazing how quickly we adapt to new gadgets these days.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1801,7 +1801,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "我需要在手机出现问题之前备份我的照片。",
       "english": "I need to back up my photos before something happens to my phone.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1811,7 +1811,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "远程工作和良好的视频质量改变了我的一切。",
       "english": "Working remotely with good video quality has changed everything for me.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1821,7 +1821,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "当打字感觉太慢时，我喜欢使用语音注释。",
       "english": "I like using voice notes when typing feels too slow.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1831,7 +1831,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "智能家居设备很方便，但有时会出现故障。",
       "english": "The smart home devices are convenient but sometimes they glitch out.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1841,7 +1841,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "我一直在学习一些小捷径，每天可以节省我几分钟的时间。",
       "english": "I’ve been learning little shortcuts that save me a few minutes each day.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1851,7 +1851,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "暂时拔掉插头，享受现实生活的感觉真好。",
       "english": "It feels good to unplug for a while and just enjoy real life.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1861,7 +1861,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "在我看来，这个新的更新大大改进了界面。",
       "english": "This new update improved the interface quite a bit in my opinion.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1871,7 +1871,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A9.mp3",
-      "chinese": "",
+      "chinese": "技术将我们联系在一起，但我仍然更看重面对面的对话。",
       "english": "Technology connects us but I still value face-to-face conversations more.",
       "sourceAudio": "初级/A9.mp3",
       "sourceDocument": "初级/A9.docx",
@@ -1881,7 +1881,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "我一直在考虑近期去附近的某个地方短途旅行。",
       "english": "I’ve been thinking about taking a short trip somewhere nearby soon.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1891,7 +1891,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "今天早上的交通比平时要少，这真是一个惊喜。",
       "english": "Traffic was lighter than usual this morning which was a pleasant surprise.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1901,7 +1901,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "在进行长途驾驶之前，我总是会仔细检查路线。",
       "english": "I always double-check the directions before heading out on a longer drive.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1911,7 +1911,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "如今，飞行需要提前做好很多计划。",
       "english": "Flying these days requires so much planning ahead of time.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1921,7 +1921,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "乘坐火车很放松，让我有时间看看窗外。",
       "english": "The train ride was relaxing and gave me time to just look out the window.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1931,7 +1931,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "当我想要灵活地停在任何地方时，我更喜欢自己开车。",
       "english": "I prefer driving myself when I want the flexibility to stop wherever.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1941,7 +1941,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "我们正在努力寻找一个好时机去州外探望家人。",
       "english": "We’re trying to find a good time to visit family out of state.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1951,7 +1951,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "轻装上阵可以减轻我旅行的压力。",
       "english": "Packing light makes traveling so much less stressful for me.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1961,7 +1961,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "GPS 带我走上了一条风景优美的路线，结果非常好。",
       "english": "The GPS took me on a scenic route which turned out really nice.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1971,7 +1971,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "我需要记得在周末之前把油箱加满。",
       "english": "I need to remember to fill up the gas tank before the weekend.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1981,7 +1981,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "步行探索新社区是我最喜欢的事情之一。",
       "english": "Exploring new neighborhoods on foot is one of my favorite things.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -1991,7 +1991,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "这里的公共交通很不错，但也可能难以预测。",
       "english": "Public transportation here is decent but it can be unpredictable.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2001,7 +2001,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "我一直在计划未来几个月的一些一日游。",
       "english": "I’ve been mapping out some day trips for the coming months.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2011,7 +2011,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "旅行让我想起回家是多么享受。",
       "english": "Traveling reminds me how much I enjoy coming back home.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2021,7 +2021,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "在我上次旅行期间，机场出奇地平静。",
       "english": "The airport was surprisingly calm during my last trip.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2031,7 +2031,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "我喜欢制定宽松的计划，但为自发的时刻留出空间。",
       "english": "I like having a loose plan but leaving room for spontaneous moments.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2041,7 +2041,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "伴随着美妙音乐的公路旅行总是让人感觉像是一场冒险。",
       "english": "Road trips with good music always feel like an adventure.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2051,7 +2051,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "我越来越擅长探索新的地方，而不必担心太多。",
       "english": "I’m getting better at navigating new places without too much worry.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2061,7 +2061,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "在抵达之前花时间研究一下当地景点是值得的。",
       "english": "It’s worth taking the time to research local spots before arriving.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2071,7 +2071,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A10.mp3",
-      "chinese": "",
+      "chinese": "每年这个时候，从高速公路上看到的景色绝对令人惊叹。",
       "english": "The view from the highway this time of year is absolutely stunning.",
       "sourceAudio": "初级/A10.mp3",
       "sourceDocument": "初级/A 10.docx",
@@ -2081,7 +2081,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "我一整天都在尝试多活动，而不是坐得太久。",
       "english": "I’ve been trying to move more throughout the day instead of sitting too long.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2091,7 +2091,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "持续的睡眠对我的感觉产生了明显的影响。",
       "english": "Getting consistent sleep has made a noticeable difference in how I feel.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2101,7 +2101,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "我喜欢以轻微的伸展运动来开始新的一天，以放松身心。",
       "english": "I like starting my day with some gentle stretching to loosen up.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2111,7 +2111,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "多吃天然食品有助于我的能量保持稳定。",
       "english": "Eating more whole foods has helped my energy stay steadier.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2121,7 +2121,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "有时我需要提醒自己休息一下并深呼吸。",
       "english": "Sometimes I need to remind myself to take breaks and breathe deeply.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2131,7 +2131,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "在大自然中行走总是比其他任何事情都更能让我头脑清醒。",
       "english": "Walking in nature always clears my mind better than anything else.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2141,7 +2141,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "我一直更加关注某些食物如何影响我的情绪。",
       "english": "I’ve been paying more attention to how certain foods affect my mood.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2151,7 +2151,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "全天保持水分是我每天的工作。",
       "english": "Staying hydrated throughout the day is something I work on daily.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2161,7 +2161,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "晚上的轻微运动可以帮助我从白天中放松下来。",
       "english": "Light exercise in the evening helps me unwind from the day.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2171,7 +2171,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "我尝试着眼于习惯的进步而不是完美。",
       "english": "I try to focus on progress rather than perfection with my habits.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2181,7 +2181,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "自从我开始更加注意姿势以来，我的背部感觉好多了。",
       "english": "My back feels better since I started being more mindful of posture.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2191,7 +2191,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "花时间培养兴趣爱好是照顾我的心理健康的一部分。",
       "english": "Taking time for hobbies is part of taking care of my mental health.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2201,7 +2201,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "我注意到，当我保持有规律的作息时间时，我会感觉更平静。",
       "english": "I’ve noticed I feel calmer when I keep a somewhat regular schedule.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2211,7 +2211,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "补充剂有其用处，但对我来说真正的食物才是第一位的。",
       "english": "Supplements have their place but real food comes first for me.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2221,7 +2221,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "我享受坚持健康生活习惯所带来的安静满足感。",
       "english": "I enjoy the quiet satisfaction of sticking to healthy routines.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2231,7 +2231,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "从长远来看，休息日与活跃日同样重要。",
       "english": "Rest days are just as important as active ones in the long run.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2241,7 +2241,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "我一直在尝试不同的方法来自然地管理压力。",
       "english": "I’ve been experimenting with different ways to manage stress naturally.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2251,7 +2251,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "感觉坚强和有能力激励我继续前进。",
       "english": "Feeling strong and capable motivates me to keep going.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2261,7 +2261,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "每天的小进步随着时间的推移累积起来会产生巨大的变化。",
       "english": "Small daily improvements add up to big changes over time.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2271,7 +2271,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A11.mp3",
-      "chinese": "",
+      "chinese": "我很感激我的身体支撑我度过了所有这些忙碌的日子。",
       "english": "I’m grateful my body carries me through all these busy days.",
       "sourceAudio": "初级/A11.mp3",
       "sourceDocument": "初级/A11.docx",
@@ -2281,7 +2281,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "我一直在审查我的开支，看看我在哪里可以更聪明一点。",
       "english": "I’ve been reviewing my expenses to see where I can be a bit smarter.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2291,7 +2291,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "当月底预算平衡时，感觉很好。",
       "english": "It feels good when the budget balances out at the end of the month.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2301,7 +2301,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "我正在为一些特别的东西存钱，但尽量不着急。",
       "english": "I’m saving up for something special but trying not to rush it.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2311,7 +2311,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "这次购买是值得的，因为它可以持续多年。",
       "english": "This purchase was worth it because it will last for years.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2321,7 +2321,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "我喜欢在购买更大的东西之前仔细比较各种选择。",
       "english": "I like comparing options carefully before spending on bigger things.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2331,7 +2331,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "意想不到的成本似乎总是在最糟糕的时候突然出现。",
       "english": "Unexpected costs always seem to pop up at the worst time.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2341,7 +2341,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "每周留出一点钱已经成为一个有用的习惯。",
       "english": "Setting aside a little each week has become a helpful habit.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2351,7 +2351,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "我正在努力在日常支出上做出更谨慎的选择。",
       "english": "I’m trying to make more mindful choices with daily spending.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2361,7 +2361,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "该账户的利率比我想象的要好。",
       "english": "The interest rate on that account is better than I realized.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2371,7 +2371,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "对我来说，拥有一些财务缓冲让​​内心平静很重要。",
       "english": "It’s important to me to have some financial cushion for peace of mind.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2381,7 +2381,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "我与丈夫讨论了未来的计划，以保持一致。",
       "english": "I discussed future plans with my husband to stay on the same page.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2391,7 +2391,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "在网上寻找优惠的价格需要时间，但这是有回报的。",
       "english": "Finding good deals online takes time but it pays off.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2401,7 +2401,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "在大多数购买中，我更喜欢质量而不是数量。",
       "english": "I prefer quality over quantity when it comes to most purchases.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2411,7 +2411,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "跟踪小额开支可以帮助我更好地了解我的模式。",
       "english": "Tracking small expenses helps me understand my patterns better.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2421,7 +2421,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "我们正在寻找优化长期节省的方法。",
       "english": "We’re looking into ways to optimize our long-term savings.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2431,7 +2431,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "当我对财务事务保持井井有条时，我会感觉更有掌控力。",
       "english": "I feel more in control when I stay organized with financial matters.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2441,7 +2441,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "有时在买东西之前等待一周会改变我的想法。",
       "english": "Sometimes waiting a week before buying something changes my mind.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2451,7 +2451,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "投资体验给我带来的快乐比物质更多。",
       "english": "Investing in experiences has brought me more joy than things.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2461,7 +2461,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "我最近更多地了解了税收和扣除的运作方式。",
       "english": "I’ve been learning more about how taxes and deductions work lately.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2471,7 +2471,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A12.mp3",
-      "chinese": "",
+      "chinese": "对财务目标保持耐心可以减轻旅途的压力。",
       "english": "Being patient with financial goals makes the journey less stressful.",
       "sourceAudio": "初级/A12.mp3",
       "sourceDocument": "初级/A12.docx",
@@ -2481,7 +2481,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "这个周末我花了一些时间重新整理厨柜。",
       "english": "I spent some time reorganizing the kitchen cabinets this weekend.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2491,7 +2491,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "现在我经常照料花园，现在看起来好多了。",
       "english": "The garden is looking better now that I’ve been tending to it regularly.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2501,7 +2501,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "房子周围总是有一些需要注意的维护工作。",
       "english": "There are always little maintenance tasks that need attention around the house.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2511,7 +2511,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "我喜欢保持生活空间整洁，因为它可以帮助我清晰思考。",
       "english": "I like keeping the living space tidy because it helps me think clearly.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2521,7 +2521,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "我们正在考虑一些小升级，让日常生活变得更轻松。",
       "english": "We’re thinking about small upgrades that would make daily life easier.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2531,7 +2531,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "待洗衣物似乎永远都堆不完，但我每天都会把它一点一点地处理掉。",
       "english": "The laundry pile never seems to end but I chip away at it daily.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2541,7 +2541,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "桌子上的鲜花总是照亮整个房间。",
       "english": "Fresh flowers on the table always brighten up the whole room.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2551,7 +2551,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "我一直在一次整理一个区域，以避免感到不知所措。",
       "english": "I’ve been decluttering one area at a time to avoid feeling overwhelmed.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2561,7 +2561,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "更多地在家做饭让厨房感觉更有活力。",
       "english": "Cooking at home more has made the kitchen feel more alive.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2571,7 +2571,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "当你看到结果时，照顾院子是令人满意的。",
       "english": "Taking care of the yard is satisfying when you see the results.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2581,7 +2581,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "有时我喜欢做家务的安静节奏。",
       "english": "I enjoy the quiet rhythm of doing household chores sometimes.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2591,7 +2591,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "我们在这个小问题变成大问题之前解决了它。",
       "english": "We fixed that small issue before it turned into something bigger.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2601,7 +2601,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "在房子里创造舒适的角落让它感觉更像家。",
       "english": "Creating cozy corners in the house makes it feel more like home.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2611,7 +2611,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "我一直在尝试不同的存储解决方案来保持物品井井有条。",
       "english": "I’ve been trying different storage solutions to keep things organized.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2621,7 +2621,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "当一切都就位时，房子会感到平静。",
       "english": "The house feels peaceful when everything is in its place.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2631,7 +2631,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "早晨的阳光透过窗户照射进来是我最喜欢的细节。",
       "english": "Morning sunlight coming through the windows is my favorite detail.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2641,7 +2641,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "我喜欢有备用物资，这样我就不会意外用完。",
       "english": "I like having backup supplies so I don’t run out unexpectedly.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2651,7 +2651,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "及时进行小修理可以避免以后的很多麻烦。",
       "english": "Small repairs done promptly save a lot of hassle later.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2661,7 +2661,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "全家人一起做家务真是太好了。",
       "english": "It’s nice when the whole family pitches in with home tasks.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2671,7 +2671,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A13.mp3",
-      "chinese": "",
+      "chinese": "家是我充电、感觉最舒服的地方。",
       "english": "Home is where I recharge and feel most comfortable.",
       "sourceAudio": "初级/A13.mp3",
       "sourceDocument": "初级/A13.docx",
@@ -2681,7 +2681,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "我在商店里遇到了一位老熟人，我们简单地聊了一下。",
       "english": "I ran into an old acquaintance at the store and we caught up briefly.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2691,7 +2691,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "最近更频繁地与朋友联系是有益的。",
       "english": "Reaching out to friends more often has been rewarding lately.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2701,7 +2701,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "有时，一条简单的文字可以让某人一整天都充满阳光。",
       "english": "Sometimes a simple text can brighten someone’s entire day.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2711,7 +2711,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "我喜欢超越表面主题的深入对话。",
       "english": "I enjoy deep conversations that go beyond surface level topics.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2721,7 +2721,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "找个日子我们应该和邻居一起计划一些休闲活动。",
       "english": "We should plan something casual with the neighbors one of these days.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2731,7 +2731,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "仔细倾听会让人们感到真正被倾听和重视。",
       "english": "Listening carefully makes people feel truly heard and valued.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2741,7 +2741,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "我更加有意识地培养亲密关系。",
       "english": "I’ve been more intentional about nurturing close relationships.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2751,7 +2751,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "群聊可能很有趣，但面对面的时间是不可替代的。",
       "english": "Group chats can be fun but in-person time is irreplaceable.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2761,7 +2761,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "一起吃饭总是会带来美好的故事和欢笑。",
       "english": "Sharing a meal together always leads to good stories and laughs.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2771,7 +2771,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "我很感谢那些来看看我过得怎么样的朋友。",
       "english": "I appreciate friends who check in just to see how I’m doing.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2781,7 +2781,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "只要尊重，有不同的意见是可以的。",
       "english": "It’s okay to have different opinions as long as respect is there.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2791,7 +2791,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "我学会了更加开放地分享我的真实感受。",
       "english": "I’ve learned to be more open about sharing how I really feel.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2801,7 +2801,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "维持联系需要付出努力，但这是值得的。",
       "english": "Maintaining connections takes effort but it’s worth it.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2811,7 +2811,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "一次简短的咖啡聚会可以提升一周的心情。",
       "english": "A quick coffee meetup can lift the mood for the whole week.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2821,7 +2821,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "我在所有互动中都重视诚实和友善。",
       "english": "I value honesty and kindness in all my interactions.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2831,7 +2831,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "有时，与好伙伴的沉默是最好的联系。",
       "english": "Sometimes silence with good company is the best kind of connection.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2841,7 +2841,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "我一直在联系已经有一段时间没有联系的家人。",
       "english": "I’ve been reaching out to family members I haven’t talked to in a while.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2851,7 +2851,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "支持的人让生活中的挑战变得更容易应对。",
       "english": "Supportive people make life’s challenges much more manageable.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2861,7 +2861,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "我喜欢听到让我思考的不同观点。",
       "english": "I enjoy hearing different perspectives that make me think.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2871,7 +2871,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A14.mp3",
-      "chinese": "",
+      "chinese": "真正的朋友会接受真实的你。",
       "english": "True friends accept you exactly as you are.",
       "sourceAudio": "初级/A14.mp3",
       "sourceDocument": "初级/A14.docx",
@@ -2881,7 +2881,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "我一直在思考我想要的未来几年是什么样子。",
       "english": "I’ve been reflecting on what I want my next few years to look like.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2891,7 +2891,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "学习新技能让生活变得有趣和充满挑战。",
       "english": "Learning new skills keeps life interesting and challenging.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2901,7 +2901,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "努力和休息之间的平衡是我不断调整的。",
       "english": "The balance between effort and rest is something I keep adjusting.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2911,7 +2911,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "我为自己取得的进步感到自豪，即使这是渐进的。",
       "english": "I feel proud of the progress I’ve made even if it’s gradual.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2921,7 +2921,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "设定现实的期望有助于避免不必要的失望。",
       "english": "Setting realistic expectations helps avoid unnecessary disappointment.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2931,7 +2931,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "我很享受完成一项艰巨的任务后的成就感。",
       "english": "I enjoy the sense of accomplishment after completing a tough task.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2941,7 +2941,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "从长远来看，持续的小改进更具可持续性。",
       "english": "Continuous small improvements are more sustainable long term.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2951,7 +2951,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "我一直更注重质量，而不是匆忙完成事情。",
       "english": "I’ve been focusing more on quality rather than rushing through things.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2961,7 +2961,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "其他人的反馈帮助我看到了盲点。",
       "english": "Feedback from others has helped me see blind spots.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2971,7 +2971,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "承担新的责任让我在很多方面都得到了锻炼。",
       "english": "Taking on new responsibilities has stretched me in good ways.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2981,7 +2981,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "我正在学习庆祝大大小小的胜利。",
       "english": "I’m learning to celebrate wins both big and small.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -2991,7 +2991,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "当工作与个人价值观相符时，会感觉更有意义。",
       "english": "Work feels more meaningful when it aligns with personal values.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3001,7 +3001,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "我已经养成了有效管理时间的更好习惯。",
       "english": "I’ve developed better habits for managing my time effectively.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3011,7 +3011,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "成长常常发生在我的舒适区之外。",
       "english": "Growth often happens outside of my comfort zone.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3021,7 +3021,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "我很欣赏从错误中得到的教训。",
       "english": "I appreciate the lessons that come from making mistakes.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3031,7 +3031,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "保持好奇心使我的思维保持活跃和投入。",
       "english": "Staying curious keeps my mind active and engaged.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3041,7 +3041,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "我一直在优先考虑那些能够推动事情向前发展的任务。",
       "english": "I’ve been prioritizing tasks that move the needle forward.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3051,7 +3051,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "个人发展是我喜欢的持续旅程。",
       "english": "Personal development is an ongoing journey I enjoy.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3061,7 +3061,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "随着时间的推移，我积累了经验，我感到更加自信。",
       "english": "I feel more confident as I gain experience over time.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3071,7 +3071,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A15.mp3",
-      "chinese": "",
+      "chinese": "旅程本身与到达目的地一样重要。",
       "english": "The journey itself matters as much as reaching the destination.",
       "sourceAudio": "初级/A15.mp3",
       "sourceDocument": "初级/A15.docx",
@@ -3081,7 +3081,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "我每天都记下三件好事来练习感恩。",
       "english": "I’ve been practicing gratitude by noting three good things each day.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3091,7 +3091,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "有时我会对简单的事情感到深深的满足。",
       "english": "There are moments when I feel deeply content with simple things.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3101,7 +3101,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "生活教会我更加充分地珍惜现在。",
       "english": "Life has taught me to appreciate the present more fully.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3111,7 +3111,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "我正在学着放弃那些我无法改变的事情。",
       "english": "I’m learning to let go of things I cannot change.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3121,7 +3121,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "感恩的感觉改变了我对充满挑战的日子的看法。",
       "english": "Feeling thankful changes my perspective on challenging days.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3131,7 +3131,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "我注意到，给予的善意会以意想不到的方式得到回报。",
       "english": "I’ve noticed that kindness given returns in unexpected ways.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3141,7 +3141,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "不加评判地承认我的感受很重要。",
       "english": "It’s important to acknowledge my feelings without judgment.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3151,7 +3151,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "我相信一切发生的原因我们可能无法立即看到。",
       "english": "I believe everything happens for reasons we may not see immediately.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3161,7 +3161,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "在日常生活中找到幽默可以减轻负担。",
       "english": "Finding humor in everyday situations lightens the load.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3171,7 +3171,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "我很感激我通过过去的经历所积累的力量。",
       "english": "I’m grateful for the strength I’ve built through past experiences.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3181,7 +3181,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "心灵的平静是最宝贵的财富之一。",
       "english": "Peace of mind is one of the greatest treasures.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3191,7 +3191,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "我尝试以开放的心态和心态对待每一天。",
       "english": "I try to approach each day with an open heart and mind.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3201,7 +3201,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "自我同情的小举动会产生很大的影响。",
       "english": "Small acts of self-compassion make a big difference.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3211,7 +3211,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "生活的美好往往出现在平凡的瞬间。",
       "english": "Life’s beauty often appears in the ordinary moments.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3221,7 +3221,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "我最近一直专注于真正给我带来快乐的事情。",
       "english": "I’ve been focusing on what truly brings me joy lately.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3231,7 +3231,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "韧性来自于面对困难时的耐心。",
       "english": "Resilience comes from facing difficulties with patience.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3241,7 +3241,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "我对未来的可能性充满希望。",
       "english": "I feel hopeful about the possibilities that lie ahead.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3251,7 +3251,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "与亲人在一起是值得的时光。",
       "english": "Being present with loved ones is time well spent.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3261,7 +3261,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "每一天都提供了选择积极态度的新机会。",
       "english": "Every day offers a fresh chance to choose positivity.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3271,7 +3271,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A16.mp3",
-      "chinese": "",
+      "chinese": "总的来说，我很感谢我所经历的人生这一章。",
       "english": "Overall, I’m thankful for this chapter of life I’m living.",
       "sourceAudio": "初级/A16.mp3",
       "sourceDocument": "初级/A16.docx",
@@ -3281,7 +3281,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "最近在做出任何重大决定之前，我一直在权衡利弊。",
       "english": "I’ve been weighing the pros and cons before making any bigger decisions lately.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3291,7 +3291,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "有时退后一天可以帮助我更清楚地了解情况。",
       "english": "Sometimes stepping back for a day helps me see the situation more clearly.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3301,7 +3301,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "我尝试倾听自己的直觉，同时也收集一些实用信息。",
       "english": "I try to listen to my gut feeling but also gather some practical information.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3311,7 +3311,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "这个选择结果比我最初预期的要好，这很好。",
       "english": "That choice turned out better than I initially expected which was nice.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3321,7 +3321,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "我正在学习对与我的优先事项不符的事情说不。",
       "english": "I’m learning to say no to things that don’t align with my priorities.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3331,7 +3331,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "当我做出决定并自信地坚持下去时，我会感到充满力量。",
       "english": "It feels empowering when I make a decision and stick with it confidently.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3341,7 +3341,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "我和我丈夫讨论了这些选择，以获得另一个视角。",
       "english": "I discussed the options with my husband to get another perspective.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3351,7 +3351,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "每天的小选择确实会累积起来并影响一周的进展。",
       "english": "Small daily choices really add up and shape how the week goes.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3361,7 +3361,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "我对如何花费时间和精力更加慎重。",
       "english": "I’ve been more deliberate about how I spend my time and energy.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3371,7 +3371,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "只要我能从中学到一些东西，改变我的想法就可以了。",
       "english": "Changing my mind is okay as long as I learn something from it.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3381,7 +3381,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "我更喜欢采取平衡的方法，而不是急于求成。",
       "english": "I prefer taking a balanced approach rather than rushing into things.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3391,7 +3391,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "这个决定适合我现在的生活。",
       "english": "This decision feels right for where I am in life right now.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3401,7 +3401,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "我喜欢制定备用计划，以防万一事情没有按预期进行。",
       "english": "I like having a backup plan just in case things don’t go as expected.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3411,7 +3411,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "反思过去的选择有助于我做出更好的选择。",
       "english": "Reflecting on past choices helps me make better ones moving forward.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3421,7 +3421,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "对我来说，考虑它如何影响我周围的人很重要。",
       "english": "It’s important to me to consider how it affects the people around me.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3431,7 +3431,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "我在处理这类事情上变得更加信任自己。",
       "english": "I’ve gotten better at trusting myself with these kinds of matters.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3441,7 +3441,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "有时，最简单的选择最终是最有效的。",
       "english": "Sometimes the simplest option ends up being the most effective.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3451,7 +3451,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "我关注的是支持长期和平与稳定的选择。",
       "english": "I’m focusing on choices that support long-term peace and stability.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3461,7 +3461,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "在做出承诺之前收集更多信息感觉是明智的。",
       "english": "Gathering a little more information before committing feels wise.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3471,7 +3471,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A17.mp3",
-      "chinese": "",
+      "chinese": "每一次选择都是一次向自己想要的生活靠拢的机会。",
       "english": "Every choice is a chance to move closer to the life I want.",
       "sourceAudio": "初级/A17.mp3",
       "sourceDocument": "初级/A17.docx",
@@ -3481,7 +3481,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "341. 我一直在思考如何让这个假期更加轻松。",
       "english": "341. I’ve been thinking about how we can make this holiday season more relaxed.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3491,7 +3491,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "342. 季节的变化总是给日常生活带来新鲜的感觉。",
       "english": "342. The changing seasons always bring a fresh feeling to daily life.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3501,7 +3501,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "343. 我喜欢我们作为一个家庭多年来建立的安静传统。",
       "english": "343. I enjoy the quiet traditions we’ve built over the years as a family.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3511,7 +3511,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "344. 秋天让我想烘烤并使房子充满温暖的气味。",
       "english": "344. Fall makes me want to bake and fill the house with warm smells.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3521,7 +3521,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "345. 我们尽量让庆祝活动简单而有意义。",
       "english": "345. We try to keep celebrations simple but meaningful.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3531,7 +3531,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "346. 节日彩灯亮起总是让我陷入沉思。",
       "english": "346. The holiday lights going up always put me in a reflective mood.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3541,7 +3541,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "347. 我喜欢观察花园随季节的变化。",
       "english": "347. I love watching how the garden changes with each season.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3551,7 +3551,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "348. 提前计划家庭聚会有助于一切顺利进行。",
       "english": "348. Planning ahead for family gatherings helps everything flow smoothly.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3561,7 +3561,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "349. 冬天的夜晚非常适合舒适的阅读或安静的交谈。",
       "english": "349. Winter evenings are perfect for cozy reading or quiet conversations.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3571,7 +3571,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "350.我一直在创造新的小仪式，为平凡的日子带来欢乐。",
       "english": "350. I’ve been creating new small rituals that bring joy to ordinary days.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3581,7 +3581,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "351. 季节的转换让我想起生活的自然节奏。",
       "english": "351. The transition between seasons reminds me of life’s natural rhythms.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3591,7 +3591,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "352. 我们通常保持最少的装饰，但仍然充满节日气氛。",
       "english": "352. We usually keep decorations minimal but still festive.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3601,7 +3601,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "353. 我很欣赏假期期间放慢脚步的时间。",
       "english": "353. I appreciate the time to slow down during holiday periods.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3611,7 +3611,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "354. 家传的食谱总是让我想起过去。",
       "english": "354. Family recipes passed down always connect me to the past.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3621,7 +3621,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "355. 每年春季大扫除感觉就像一个新的开始。",
       "english": "355. Spring cleaning the house feels like a fresh start every year.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3631,7 +3631,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "356.随着夏天的临近，我期待着更长的白天。",
       "english": "356. I look forward to the longer days as summer approaches.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3641,7 +3641,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "357. 这些季节性变化帮助我温和地重新调整我的日常生活。",
       "english": "357. These seasonal shifts help me reset my routines gently.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3651,7 +3651,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "358. 我一直在收集低调庆祝方式的想法。",
       "english": "358. I’ve been collecting ideas for low-key ways to celebrate.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3661,7 +3661,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "359. 当压力较小、存在较多时，假期会更美好。",
       "english": "359. Holidays are nicer when there’s less pressure and more presence.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3671,7 +3671,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A18.mp3",
-      "chinese": "",
+      "chinese": "360. 我对支撑我们家庭生活的传统感到感激。",
       "english": "360. I feel grateful for the traditions that anchor our family life.",
       "sourceAudio": "初级/A18.mp3",
       "sourceDocument": "初级/A18.docx",
@@ -3681,7 +3681,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "看到我的儿子们现在如何建立自己的生活很有趣。",
       "english": "It’s interesting to see how my sons are building their own lives now.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3691,7 +3691,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我只会在他们特别要求时才提供建议。",
       "english": "I try to offer advice only when they specifically ask for it.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3701,7 +3701,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "以自然的方式与他们保持联系对我来说意义重大。",
       "english": "Staying connected with them in natural ways means a lot to me.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3711,7 +3711,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我们一直在分享更多关于我们不同经历的故事。",
       "english": "We’ve been sharing more stories about our different experiences.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3721,7 +3721,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我为他们多年来培养的独立性感到自豪。",
       "english": "I’m proud of the independence they’ve developed over the years.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3731,7 +3731,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "家庭聊天有时涵盖从工作到日常琐事的所有内容。",
       "english": "Family chats sometimes cover everything from work to little daily things.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3741,7 +3741,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我喜欢听他们对我可能没有考虑过的话题的看法。",
       "english": "I love hearing their perspectives on topics I might not have considered.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3751,7 +3751,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "从远处支持他们，同时尊重他们的空间是一种平衡。",
       "english": "Supporting them from afar while respecting their space is a balance.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3761,7 +3761,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "当我们可以一起谈论旧的家庭回忆时，感觉很好。",
       "english": "It feels good when we can laugh together about old family memories.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3771,7 +3771,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我一直在反思我们的家庭角色是如何演变的。",
       "english": "I’ve been reflecting on how our family roles have evolved.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3781,7 +3781,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "定期打电话让我感觉融入了他们的日常生活。",
       "english": "Regular calls help me feel involved in their everyday worlds.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3791,7 +3791,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我很欣赏我与每个孩子之间独特的联系。",
       "english": "I appreciate the unique bond I have with each of my children.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3801,7 +3801,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我们都在学习如何应对家庭生活的这个新阶段。",
       "english": "We’re all learning to navigate this new stage of family life.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3811,7 +3811,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "即使从远处看，他们的成功也给我带来了安静的快乐。",
       "english": "Their successes bring me quiet joy even from a distance.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3821,7 +3821,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我尝试更多地倾听并在合适的时候分享我自己的故事。",
       "english": "I try to listen more and share my own stories when it fits.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3831,7 +3831,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "当我们互相给予恩典时，家庭关系就会加深。",
       "english": "Family relationships deepen when we give each other grace.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3841,7 +3841,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我注意到我们都通过不同的挑战成长了多少。",
       "english": "I’ve noticed how much we’ve all grown through different challenges.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3851,7 +3851,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "计划偶尔的访问让我们有一些期待。",
       "english": "Planning occasional visits gives us something to look forward to.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3861,7 +3861,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "我很感谢我们在他们年轻时建立的基础。",
       "english": "I’m grateful for the foundation we built when they were younger.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3871,7 +3871,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A19.mp3",
-      "chinese": "",
+      "chinese": "看着他们处理生活让我对未来充满希望。",
       "english": "Watching them handle life makes me feel hopeful for the future.",
       "sourceAudio": "初级/A19.mp3",
       "sourceDocument": "初级/A19.docx",
@@ -3881,7 +3881,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "通过闲聊，我对一些邻居有了更多的了解。",
       "english": "I’ve been getting to know some neighbors better through casual chats.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3891,7 +3891,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "我们当地的社区充满了友好和乐于助人的人们。",
       "english": "Our local community has a nice mix of friendly and helpful people.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3901,7 +3901,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "支持镇上的小企业让我感觉联系更加紧密。",
       "english": "Supporting small businesses in town makes me feel more connected.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3911,7 +3911,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "周末的农贸市场是我最喜欢的当地景点之一。",
       "english": "The farmers market on weekends is one of my favorite local spots.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3921,7 +3921,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "当邻居以简单的方式互相照顾时，真是太好了。",
       "english": "It’s nice when neighbors look out for each other in simple ways.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3931,7 +3931,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "我很享受生活在这个地区所带来的归属感。",
       "english": "I enjoy the sense of belonging that comes from living in this area.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3941,7 +3941,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "我们最近参加了一些社区活动。",
       "english": "We’ve been participating in a few community events lately.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3951,7 +3951,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "图书馆和公园是我们附近真正的瑰宝。",
       "english": "The library and parks are real gems in our neighborhood.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3961,7 +3961,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "遛狗时快速打个招呼可以让这一天充满阳光。",
       "english": "A quick hello while walking the dog can brighten the day.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3971,7 +3971,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "我欣赏我们镇上安静的生活节奏。",
       "english": "I appreciate the quiet rhythm of life in our part of town.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3981,7 +3981,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "帮助小型邻里项目将人们聚集在一起。",
       "english": "Helping with small neighborhood projects brings people together.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -3991,7 +3991,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "我从与长期居民的谈话中学到了很多东西。",
       "english": "I’ve learned a lot from conversations with longtime residents.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4001,7 +4001,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "保持区域清洁和热情是我们所有人的共同目标。",
       "english": "Keeping the area clean and welcoming is something we all share.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4011,7 +4011,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "当地新闻和更新帮助我随时了解正在发生的事情。",
       "english": "Local news and updates help me stay informed about what’s happening.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4021,7 +4021,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "为社区做出一些小贡献感觉很好。",
       "english": "It feels good to contribute in small ways to the community.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4031,7 +4031,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "与邻居的季节性聚会营造出温馨的氛围。",
       "english": "Seasonal gatherings with neighbors create a warm atmosphere.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4041,7 +4041,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "我珍视我们这里的宁静环境。",
       "english": "I value the peaceful environment we have here.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4051,7 +4051,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "探索附近的小径和景点会让事情变得有趣。",
       "english": "Exploring nearby trails and spots keeps things interesting.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4061,7 +4061,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "与我们周围的人建立友好的关系很重要。",
       "english": "Building friendly relationships with those around us matters.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4071,7 +4071,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A20.mp3",
-      "chinese": "",
+      "chinese": "我们的社区有自己的特色，我逐渐爱上了它。",
       "english": "Our community has its own special character that I’ve grown to love.",
       "sourceAudio": "初级/A20.mp3",
       "sourceDocument": "初级/A20.docx",
@@ -4081,7 +4081,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "我把更多的时间投入到能给我带来真正乐趣的活动上。",
       "english": "I’ve been dedicating more time to activities that bring me real enjoyment.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4091,7 +4091,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "晚上读书已经成为我最喜欢的放松方式之一。",
       "english": "Reading in the evening has become one of my favorite ways to unwind.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4101,7 +4101,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "我喜欢在周末尝试新食谱作为创意的出口。",
       "english": "I like trying new recipes as a creative outlet on weekends.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4111,7 +4111,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "园艺给我一种平静和成就感。",
       "english": "Gardening gives me a sense of calm and accomplishment.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4121,7 +4121,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "一边做家务一边听音乐或播客可以让时间过得很愉快。",
       "english": "Listening to music or podcasts while doing chores makes the time pass nicely.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4131,7 +4131,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "我养成了一些新的爱好，可以让我保持专注。",
       "english": "I’ve picked up a few new hobbies that keep my mind engaged.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4141,7 +4141,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "安静的反思或写日记的时间可以帮助我保持专注。",
       "english": "Quiet time for reflection or journaling helps me stay centered.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4151,7 +4151,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "房子周围的创意项目令人惊讶地令人满意。",
       "english": "Creative projects around the house are surprisingly satisfying.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4161,7 +4161,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "我喜欢散步，这样我可以观察自然并理清思绪。",
       "english": "I enjoy walks that let me observe nature and clear my thoughts.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4171,7 +4171,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "拥有自由的时间对于补充能量很重要。",
       "english": "Having unstructured time is important for recharging my energy.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4181,7 +4181,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "我一直在探索通过小工艺品表达自己的不同方式。",
       "english": "I’ve been exploring different ways to express myself through small crafts.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4191,7 +4191,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "休闲活动不一定要规模大才有意义。",
       "english": "Leisure activities don’t have to be big to be meaningful.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4201,7 +4201,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "与家人或朋友分享爱好增添了另一层乐趣。",
       "english": "Sharing hobbies with family or friends adds another layer of fun.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4211,7 +4211,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "即使在忙碌的日子里，我也会尽力保留一些私人时间。",
       "english": "I try to protect some personal time even on busier days.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4221,7 +4221,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "按照自己的节奏学习新东西感觉很有价值。",
       "english": "Learning something new at my own pace feels rewarding.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4231,7 +4231,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "这些休闲时刻有助于平衡生活中要求较高的部分。",
       "english": "These moments of leisure help balance out the more demanding parts of life.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4241,7 +4241,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "我欣赏简单的快乐，比如一杯好茶和一本书。",
       "english": "I appreciate simple pleasures like a good cup of tea and a book.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4251,7 +4251,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "多年来我的爱好不断发展，这很好。",
       "english": "My hobbies have evolved over the years and that’s perfectly fine.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4261,7 +4261,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "留出玩耍的空间可以让生活变得更轻松、更愉快。",
       "english": "Making space for playfulness keeps life lighter and more enjoyable.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4271,7 +4271,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A21.mp3",
-      "chinese": "",
+      "chinese": "个人兴趣是我的重要组成部分。",
       "english": "Personal interests are an important part of who I am.",
       "sourceAudio": "初级/A21.mp3",
       "sourceDocument": "初级/A21.docx",
@@ -4281,7 +4281,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "我一直在安排定期检查以保持健康状况。",
       "english": "I’ve been scheduling regular check-ups to stay on top of my health.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4291,7 +4291,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "医生建议了一些似乎可以控制的调整。",
       "english": "The doctor suggested some adjustments that seem manageable.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4301,7 +4301,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "当我清楚地表达自己的感受时，我会感觉更好。",
       "english": "I feel better when I communicate clearly about how I’ve been feeling.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4311,7 +4311,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "遵循建议的测试可以让您高枕无忧。",
       "english": "Following through with the recommended tests brought peace of mind.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4321,7 +4321,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "我学会了提问，直到完全理解建议。",
       "english": "I’ve learned to ask questions until I fully understand the advice.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4331,7 +4331,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "尽早处理小问题可以防止问题变得更大。",
       "english": "Managing minor issues early prevents them from becoming bigger.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4341,7 +4341,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "这次在诊所的等待时间比我预期的要短。",
       "english": "The wait at the clinic was shorter than I anticipated this time.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4351,7 +4351,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "我感谢医疗保健提供者花时间仔细倾听。",
       "english": "I appreciate healthcare providers who take time to listen carefully.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4361,7 +4361,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "在预约期间以简单的方式跟踪症状会有所帮助。",
       "english": "Tracking symptoms in a simple way helps during appointments.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4371,7 +4371,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "我已经将更多的预防习惯融入到我的日常生活中。",
       "english": "I’ve been incorporating more preventive habits into my routine.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4381,7 +4381,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "制定一个维持长期健康的计划是令人放心的。",
       "english": "It’s reassuring to have a plan for maintaining long-term wellness.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4391,7 +4391,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "有时身体会发出信号提醒我放慢速度。",
       "english": "Sometimes the body sends signals that remind me to slow down.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4401,7 +4401,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "我重视考虑整体生活方式和福祉的方法。",
       "english": "I value approaches that consider overall lifestyle and well-being.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4411,7 +4411,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "讨论家族健康史提供了有用的背景。",
       "english": "Discussing family health history provides useful context.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4421,7 +4421,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "当我在护理中发挥积极作用时，我会感到更有力量。",
       "english": "I feel more empowered when I take an active role in my care.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4431,7 +4431,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "后续预约证实情况正在改善。",
       "english": "The follow-up appointment confirmed that things are improving.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4441,7 +4441,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "持续不断的小变化支撑了我的能量水平。",
       "english": "Small consistent changes have supported my energy levels.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4451,7 +4451,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "我尝试以耐心和现实的态度处理健康问题。",
       "english": "I try to approach health matters with patience and realism.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4461,7 +4461,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "拥有良好的支持可以让您更轻松地处理医疗问题。",
       "english": "Having good support makes navigating medical stuff easier.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4471,7 +4471,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A22.mp3",
-      "chinese": "",
+      "chinese": "随时了解情况有助于我对自己的健康做出深思熟虑的决定。",
       "english": "Staying informed helps me make thoughtful decisions about my health.",
       "sourceAudio": "初级/A22.mp3",
       "sourceDocument": "初级/A22.docx",
@@ -4481,7 +4481,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我一直在提前思考我希望下一章是什么样子。",
       "english": "I’ve been thinking ahead about what I want the next chapter to look like.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4491,7 +4491,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "设定温和的目标可以让我保持动力而不感到压力。",
       "english": "Setting gentle goals keeps me motivated without feeling pressured.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4501,7 +4501,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我们讨论了一些关于房子和家庭的长期计划。",
       "english": "We discussed some long-term plans for the house and family.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4511,7 +4511,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我喜欢将更大的梦想分解成更小的可实现的步骤。",
       "english": "I like breaking bigger dreams into smaller achievable steps.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4521,7 +4521,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "近年来，退休规划变得更加现实。",
       "english": "Planning for retirement has become more real in recent years.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4531,7 +4531,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我专注于符合我的价值观和生活方式的目标。",
       "english": "I’m focusing on goals that align with my values and lifestyle.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4541,7 +4541,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "想象未来的积极可能性让人感到兴奋。",
       "english": "It feels exciting to imagine positive possibilities for the future.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4551,7 +4551,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "定期回顾进展有助于我保持正轨。",
       "english": "Reviewing progress periodically helps me stay on track.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4561,7 +4561,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我一直在探索可以提供更高稳定性的选项。",
       "english": "I’ve been exploring options that could provide more stability.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4571,7 +4571,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "灵活性是关键，因为生活往往有自己的时间安排。",
       "english": "Flexibility is key because life often has its own timing.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4581,7 +4581,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我想一路创造回忆和经历。",
       "english": "I want to create memories and experiences along the way.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4591,7 +4591,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "建立财务和情感安全仍然是首要任务。",
       "english": "Building financial and emotional security remains a priority.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4601,7 +4601,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我很欣赏随着情况变化而调整计划的自由。",
       "english": "I appreciate the freedom to adjust plans as circumstances change.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4611,7 +4611,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "想象一个和平的未来给了我安静的动力。",
       "english": "Visualizing a peaceful future gives me quiet motivation.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4621,7 +4621,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "与亲人分享梦想会让他们感觉更容易实现。",
       "english": "Sharing dreams with loved ones makes them feel more attainable.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4631,7 +4631,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我正在花时间来定义成功对我个人意味着什么。",
       "english": "I’m taking time to define what success means for me personally.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4641,7 +4641,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "为实现目标而采取的持续的小行动可以建立真正的动力。",
       "english": "Consistent small actions toward goals build real momentum.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4651,7 +4651,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "当我专注于我能影响的事情时，未来就会充满希望。",
       "english": "The future feels hopeful when I focus on what I can influence.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4661,7 +4661,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "我学会了平衡计划和享受当下。",
       "english": "I’ve learned to balance planning with enjoying the present.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4671,7 +4671,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A23.mp3",
-      "chinese": "",
+      "chinese": "这些反思帮助我更加清晰地前进。",
       "english": "These reflections help me move forward with greater clarity.",
       "sourceAudio": "初级/A23.mp3",
       "sourceDocument": "初级/A23.docx",
@@ -4681,7 +4681,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "我一直在努力更清晰、更冷静地表达我的想法。",
       "english": "I’ve been working on expressing my thoughts more clearly and calmly.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4691,7 +4691,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "真正不打断地倾听会让谈话变得更加丰富。",
       "english": "Really listening without interrupting makes conversations richer.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4701,7 +4701,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "误会时有发生，但通过交谈通常会有所帮助。",
       "english": "Misunderstandings happen but talking them through usually helps.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4711,7 +4711,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "我很欣赏人们分享他们的真实感受。",
       "english": "I appreciate when people share how they truly feel.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4721,7 +4721,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "随着时间的推移，开放的沟通加强了我们的家庭纽带。",
       "english": "Open communication has strengthened our family bonds over time.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4731,7 +4731,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "我尝试以好奇心而不是判断力来处理差异。",
       "english": "I try to approach differences with curiosity rather than judgment.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4741,7 +4741,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "在适当的时候一句善意的话语可以改变整个语气。",
       "english": "A kind word at the right moment can change the whole tone.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4751,7 +4751,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "我明白了给予他人无罪推定的价值。",
       "english": "I’ve learned the value of giving others the benefit of the doubt.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4761,7 +4761,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "定期检查表明我关心他们的福祉。",
       "english": "Checking in regularly shows that I care about their well-being.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4771,7 +4771,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "温和地提供诚实的反馈可以建立信任。",
       "english": "Honest feedback delivered gently builds trust.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4781,7 +4781,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "有时沉默可以为更好的理解提供空间。",
       "english": "Sometimes silence allows space for better understanding.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4791,7 +4791,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "我喜欢无需达成一致即可探索想法的对话。",
       "english": "I enjoy conversations that explore ideas without needing agreement.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4801,7 +4801,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "快速修复小裂痕可以防止它们扩大。",
       "english": "Repairing small rifts quickly prevents them from growing.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4811,7 +4811,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "我重视双方都感到被倾听和尊重的关系。",
       "english": "I value relationships where both people feel heard and respected.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4821,7 +4821,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "分享漏洞可以以有意义的方式加深联系。",
       "english": "Sharing vulnerabilities deepens connections in meaningful ways.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4831,7 +4831,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "我越来越善于识别何时需要停下来反思。",
       "english": "I’ve gotten better at recognizing when I need to pause and reflect.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4841,7 +4841,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "别人的鼓励话语帮助我度过了艰难的时期。",
       "english": "Encouraging words from others have carried me through tough times.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4851,7 +4851,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "相互支持和欣赏是牢固关系的基础。",
       "english": "Mutual support and appreciation are the foundation of strong ties.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4861,7 +4861,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "我相信良好的沟通是一种不断提高的技能。",
       "english": "I believe good communication is a skill that keeps improving.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4871,7 +4871,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A24.mp3",
-      "chinese": "",
+      "chinese": "培养人际关系可以带来人生最大的回报。",
       "english": "Nurturing relationships brings some of life’s greatest rewards.",
       "sourceAudio": "初级/A24.mp3",
       "sourceDocument": "初级/A24.docx",
@@ -4881,7 +4881,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "我开始意识到，当我不强迫时，很多事情都会变得更好。",
       "english": "I’ve come to realize that many things work out better when I don’t force them.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4891,7 +4891,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "回想起来，我所面临的挑战教会了我比我当时预想的更多的东西。",
       "english": "Looking back, the challenges I faced taught me more than I expected at the time.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4901,7 +4901,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "我尝试关注我所拥有的而不是我可能缺少的。",
       "english": "I try to focus on what I have rather than what I might be missing.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4911,7 +4911,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "生活总有办法通过日常经历向我展示什么才是真正重要的。",
       "english": "Life has a way of showing me what truly matters through everyday experiences.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4921,7 +4921,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "我学会了在过去不被注意的平凡时刻中发现美。",
       "english": "I’ve learned to find beauty in the ordinary moments that used to pass unnoticed.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4931,7 +4931,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "对自己和他人的耐心已成为我最宝贵的品质之一。",
       "english": "Patience with myself and others has become one of my most valuable traits.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4941,7 +4941,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "我很欣赏随着我们获得更多的生活经验，观点会发生怎样的转变。",
       "english": "I appreciate how perspectives shift as we gain more life experience.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4951,7 +4951,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "有时，最好的计划是随着时间的推移自然发展的计划。",
       "english": "Sometimes the best plans are the ones that evolve naturally over time.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4961,7 +4961,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "我一直在反思在不断变化的时代中保持适应能力的重要性。",
       "english": "I’ve been reflecting on the importance of staying adaptable in changing times.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4971,7 +4971,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "对小事的感激之情继续塑造我的整体看法。",
       "english": "Gratitude for the small things continues to shape my overall outlook.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4981,7 +4981,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "我相信善良不需要任何代价，但却会产生持久的积极涟漪。",
       "english": "I believe kindness costs nothing but creates lasting positive ripples.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -4991,7 +4991,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "令人欣慰的是，大多数困难最终都会过去。",
       "english": "It’s comforting to know that most difficulties eventually pass.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5001,7 +5001,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "随着年龄的增长，我对不确定性越来越适应。",
       "english": "I’ve grown more comfortable with uncertainty as I’ve gotten older.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5011,7 +5011,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "个人的成长往往是悄然发生的，没有剧烈的变化。",
       "english": "Personal growth often happens quietly without dramatic changes.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5021,7 +5021,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "我珍视倾听不同代人的声音所带来的智慧。",
       "english": "I value the wisdom that comes from listening to different generations.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5031,7 +5031,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "当我放慢脚步去注意细节时，生活会变得更加丰富。",
       "english": "Life feels richer when I slow down enough to notice the details.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5041,7 +5041,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "我努力将成功和挫折中的教训发扬光大。",
       "english": "I try to carry forward the lessons from both successes and setbacks.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5051,7 +5051,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "接受我无法控制的事情有一种安静的力量。",
       "english": "There’s quiet strength in accepting what I cannot control.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5061,7 +5061,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "当我的行为符合我的核心价值观时，我会感到更加平静。",
       "english": "I feel more at peace when I align my actions with my core values.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5071,7 +5071,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A25.mp3",
-      "chinese": "",
+      "chinese": "这些反思帮助我更轻松地驾驭每个新篇章。",
       "english": "These reflections help me navigate each new chapter with greater ease.",
       "sourceAudio": "初级/A25.mp3",
       "sourceDocument": "初级/A25.docx",
@@ -5081,7 +5081,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "我一直在寻找更好的系统来处理房子周围的小细节。",
       "english": "I’ve been figuring out better systems for handling the little details around the house.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5091,7 +5091,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "当出现问题时，我通常会在寻求帮助之前尝试自己修复它。",
       "english": "When something breaks, I usually try to fix it myself before calling for help.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5101,7 +5101,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "定期整理文书工作可以为我以后节省很多压力。",
       "english": "Organizing paperwork regularly saves me a lot of stress later on.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5111,7 +5111,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "我喜欢为每周任务制定一个简单的清单，以保持正常进行。",
       "english": "I like having a simple checklist for weekly tasks to stay on track.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5121,7 +5121,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "为日常问题找到创造性的解决方案会带来满足感。",
       "english": "Finding creative solutions to everyday problems brings a sense of satisfaction.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5131,7 +5131,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "我学会了一次解决一个问题，而不是一次解决所有问题。",
       "english": "I’ve learned to tackle one issue at a time instead of everything at once.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5141,7 +5141,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "最近，仔细检查细节避免了一些小错误。",
       "english": "Double-checking details has prevented several small mistakes recently.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5151,7 +5151,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "我更喜欢及时处理事情而不是让事情堆积起来。",
       "english": "I prefer handling things promptly rather than letting them pile up.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5161,7 +5161,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "向有经验的人寻求建议通常会提供有用的见解。",
       "english": "Asking for advice from someone experienced often provides useful insights.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5171,7 +5171,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "我一直在改善管理时间和责任的习惯。",
       "english": "I’ve been improving my habits for managing time and responsibilities.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5181,7 +5181,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "保持物资充足可以让日常生活更加顺利。",
       "english": "Keeping supplies well-stocked makes daily life run more smoothly.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5191,7 +5191,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "我尝试在潜在问题成为真正问题之前对其进行预测。",
       "english": "I try to anticipate potential issues before they become real problems.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5201,7 +5201,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "随着时间的推移，简单的工具和例程使许多任务变得更加容易。",
       "english": "Simple tools and routines have made many tasks much easier over time.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5211,7 +5211,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "当我解决了困扰我的事情时，我会感到很有成就感。",
       "english": "I feel accomplished when I resolve something that was bothering me.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5221,7 +5221,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "将较大的任务分解为较小的步骤使它们感觉易于管理。",
       "english": "Breaking larger tasks into smaller steps makes them feel manageable.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5231,7 +5231,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "我更擅长优先考虑需要立即关注的事情。",
       "english": "I’ve gotten better at prioritizing what needs immediate attention.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5241,7 +5241,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "保持冷静的态度可以帮助我更有效地解决问题。",
       "english": "Maintaining a calm approach helps me solve problems more effectively.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5251,7 +5251,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "我很高兴为常见情况准备好备份选项。",
       "english": "I appreciate having backup options ready for common situations.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5261,7 +5261,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "定期维护可以防止日后出现许多更令人头疼的问题。",
       "english": "Regular maintenance prevents many bigger headaches down the road.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5271,7 +5271,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A26.mp3",
-      "chinese": "",
+      "chinese": "这些实用的习惯有助于让日常生活更加平静。",
       "english": "These practical habits contribute to a more peaceful daily flow.",
       "sourceAudio": "初级/A26.mp3",
       "sourceDocument": "初级/A26.docx",
@@ -5281,7 +5281,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "我一直在更加关注自己的情绪，不让它们压垮我。",
       "english": "I’ve been paying closer attention to my emotions without letting them overwhelm me.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5291,7 +5291,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "深呼吸几次可以改变我对压力时刻的反应。",
       "english": "Taking a few deep breaths can change how I respond to stressful moments.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5301,7 +5301,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "我让自己感受发生的一切，然后轻轻地向前走。",
       "english": "I allow myself to feel whatever comes up and then gently move forward.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5311,7 +5311,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "寻找一些小方法来调整我的情绪已经成为一项重要的技能。",
       "english": "Finding small ways to reset my mood has become an important skill.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5321,7 +5321,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "我注意到，当我得到足够的休息和运动时，我的前景会有所改善。",
       "english": "I’ve noticed that my outlook improves when I get enough rest and movement.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5331,7 +5331,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "承认困难的感受而不是把它们推开是健康的。",
       "english": "It’s healthy to acknowledge difficult feelings rather than push them away.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5341,7 +5341,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "当我对自己严厉的时候，我会尝试练习自我同情。",
       "english": "I try to practice self-compassion on days when I’m harder on myself.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5351,7 +5351,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "与值得信赖的人分享感受通常会减轻情绪负担。",
       "english": "Sharing feelings with trusted people often lightens the emotional load.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5361,7 +5361,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "我了解到，快乐可以与生活中不可避免的挑战并存。",
       "english": "I’ve learned that joy can coexist with life’s inevitable challenges.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5371,7 +5371,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "保持内心平衡有助于我在别人面前表现得更好。",
       "english": "Maintaining inner balance helps me show up better for others.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5381,7 +5381,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "我享受处理更强烈的情绪后随之而来的平静。",
       "english": "I enjoy the calm that follows after processing stronger emotions.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5391,7 +5391,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "积极的自言自语逐渐取代了我一些旧的批评模式。",
       "english": "Positive self-talk has gradually replaced some of my old critical patterns.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5401,7 +5401,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "我相信情绪是值得深思熟虑的信号。",
       "english": "I believe emotions are signals worth listening to thoughtfully.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5411,7 +5411,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "为自己创造安静的时间有助于更好的情绪调节。",
       "english": "Creating quiet time for myself supports better emotional regulation.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5421,7 +5421,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "当我以诚实和善意面对感情时，我会感觉更坚强。",
       "english": "I feel stronger when I face feelings with honesty and kindness.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5431,7 +5431,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "欢笑和轻松的时刻是心灵的良药。",
       "english": "Laughter and light moments are powerful medicine for the heart.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5441,7 +5441,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "通过练习情绪意识，我变得更有韧性。",
       "english": "I’ve grown more resilient through practicing emotional awareness.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5451,7 +5451,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "接受我的全部感受会带来更大的自由。",
       "english": "Accepting my full range of feelings brings greater freedom.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5461,7 +5461,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "大多数日子我都会尝试通过记录一些进展顺利的事情来结束。",
       "english": "I try to end most days by noting something that went well.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5471,7 +5471,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A27.mp3",
-      "chinese": "",
+      "chinese": "这种内在的工作继续支持更加集中的生活。",
       "english": "This inner work continues to support a more centered life.",
       "sourceAudio": "初级/A27.mp3",
       "sourceDocument": "初级/A27.docx",
@@ -5481,7 +5481,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "我一直在考虑我想为家人留下什么样的遗产。",
       "english": "I’ve been considering what kind of legacy I want to leave for my family.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5491,7 +5491,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "思考未来有助于我今天做出更有意的选择。",
       "english": "Thinking about the future helps me make more intentional choices today.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5501,7 +5501,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "我希望我的孩子们记住我们共同建立的爱和稳定。",
       "english": "I want my children to remember the love and stability we built together.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5511,7 +5511,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "最终，创造有意义的记忆比物质更重要。",
       "english": "Creating meaningful memories matters more than material things in the end.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5521,7 +5521,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "我一直关注那些在未来几年对我们有利的习惯。",
       "english": "I’ve been focusing on habits that will benefit us in the coming years.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5531,7 +5531,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "传承价值观和故事感觉是一项重要的责任。",
       "english": "Passing down values and stories feels like an important responsibility.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5541,7 +5541,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "为后期阶段进行深思熟虑的计划让我安心。",
       "english": "Planning thoughtfully for later stages brings me peace of mind.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5551,7 +5551,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "我希望创造一个始终感到安全和温馨的家庭环境。",
       "english": "I hope to create a home environment that feels safe and welcoming always.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5561,7 +5561,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "现在，在人际关系上投入时间可以加强长期的联系。",
       "english": "Investing time in relationships now strengthens bonds for the long run.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5571,7 +5571,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "我相信，持续不断的小行动塑造了我们家庭的未来道路。",
       "english": "I believe small consistent actions shape our family’s future path.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5581,7 +5581,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "考虑代际影响可以鼓励做出更明智的决策。",
       "english": "Thinking about generational impact encourages wiser decisions.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5591,7 +5591,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "我想为下一代树立坚韧和善良的榜样。",
       "english": "I want to model resilience and kindness for the next generation.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5601,7 +5601,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "保护家族历史和传统将我们跨越时代联系在一起。",
       "english": "Preserving family history and traditions connects us across time.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5611,7 +5611,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "当我采取措施实现更大的稳定性和安全性时，我感觉很好。",
       "english": "I feel good when I take steps toward greater stability and security.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5621,7 +5621,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "遗产是通过日常的爱和存在而不是宏伟的举动来建立的。",
       "english": "Legacy is built through everyday love and presence more than grand gestures.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5631,7 +5631,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "我一直在探索如何长期保护最重要的东西。",
       "english": "I’ve been exploring ways to protect what matters most for the long term.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5641,7 +5641,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "反思我所学到的东西可以帮助我温和地指导他人。",
       "english": "Reflecting on what I’ve learned helps me guide others gently.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5651,7 +5651,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "平静的家庭生活是我能帮助创造的最伟大的礼物之一。",
       "english": "A peaceful home life is one of the greatest gifts I can help create.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5661,7 +5661,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "我很感激有机会在未来塑造积极的成果。",
       "english": "I’m grateful for the opportunity to shape positive outcomes ahead.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5671,7 +5671,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A28.mp3",
-      "chinese": "",
+      "chinese": "这些想法激励我每天都以更大的目标生活。",
       "english": "These thoughts motivate me to live with greater purpose each day.",
       "sourceAudio": "初级/A28.mp3",
       "sourceDocument": "初级/A28.docx",
@@ -5681,7 +5681,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "我一直有意识地努力更频繁地表达感激之情。",
       "english": "I’ve been making a conscious effort to express appreciation more often.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5691,7 +5691,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "简单地说声谢谢，就能让谈话双方都开心起来。",
       "english": "The simple act of saying thank you brightens both sides of the conversation.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5701,7 +5701,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "我对现在拥有的健康和机会感到幸运。",
       "english": "I feel fortunate for the health and opportunities I have right now.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5711,7 +5711,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "注意到每天的祝福已经积极地改变了我的观点。",
       "english": "Noticing everyday blessings has shifted my perspective positively.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5721,7 +5721,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "我很感激以安静的方式围绕着我的支持系统。",
       "english": "I’m grateful for the support system that surrounds me in quiet ways.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5731,7 +5731,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "欣赏大自然的美丽总是能让我精神振奋。",
       "english": "Appreciating nature’s beauty never fails to lift my spirits.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5741,7 +5741,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "我会像庆祝大胜利一样庆祝小胜利。",
       "english": "I try to celebrate small victories as much as the bigger ones.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5751,7 +5751,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "感恩练习已经成为我晚上例行公事的自然组成部分。",
       "english": "Gratitude practice has become a natural part of my evening routine.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5761,7 +5761,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "我重视那些持续出现在我生活中的人。",
       "english": "I value the people who show up consistently in my life.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5771,7 +5771,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "专注于进展顺利的事情有助于平衡暂时的困难。",
       "english": "Focusing on what’s going well helps balance out temporary difficulties.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5781,7 +5781,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "我感谢各种经历带来的成长。",
       "english": "I’m thankful for the growth that has come from all kinds of experiences.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5791,7 +5791,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "新鲜空气和愉快的交谈等简单的快乐意义重大。",
       "english": "Simple pleasures like fresh air and good conversations mean a lot.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5801,7 +5801,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "我很欣赏我自己和我所爱的人身上的韧性。",
       "english": "I appreciate the resilience I see in myself and my loved ones.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5811,7 +5811,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "定期表达感谢可以加强家庭和社会纽带。",
       "english": "Expressing thanks regularly strengthens family and social bonds.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5821,7 +5821,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "当我积极寻找它们时，我注意到了更多积极的时刻。",
       "english": "I’ve noticed more positive moments when I actively look for them.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5831,7 +5831,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "当我停下来充分欣赏当下时，生活会变得更加丰富。",
       "english": "Life feels richer when I pause to appreciate the present fully.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5841,7 +5841,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "我很感激年龄和经验所带来的智慧。",
       "english": "I’m grateful for the wisdom that age and experience have brought.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5851,7 +5851,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "陌生人或朋友的善意总是能让我恢复对人的信心。",
       "english": "Kindness from strangers or friends always restores my faith in people.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5861,7 +5861,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "这些感激之情激发了我对明天的乐观情绪。",
       "english": "These feelings of appreciation fuel my optimism for tomorrow.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5871,7 +5871,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A29.mp3",
-      "chinese": "",
+      "chinese": "总的来说，我对这次旅程怀有深深的感激之情。",
       "english": "Overall, I carry a deep sense of thankfulness for this journey.",
       "sourceAudio": "初级/A29.mp3",
       "sourceDocument": "初级/A29.docx",
@@ -5881,7 +5881,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我一直在反思自己在过去的几年里走了多远。",
       "english": "I’ve been reflecting on how far I’ve come in the past few years.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5891,7 +5891,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "每一天都提供了一个新的机会来选择我想要如何表现。",
       "english": "Each day offers a new opportunity to choose how I want to show up.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5901,7 +5901,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我对未来的可能性充满希望。",
       "english": "I feel hopeful about the possibilities that the future holds.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5911,7 +5911,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我已经准备好以开放的心态拥抱接下来发生的一切。",
       "english": "I’m ready to embrace whatever comes next with an open mind.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5921,7 +5921,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "生活继续以充满挑战和美丽的方式给我带来惊喜。",
       "english": "Life continues to surprise me in both challenging and beautiful ways.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5931,7 +5931,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "当我踏入新的篇章时，我会带着学到的教训。",
       "english": "I carry the lessons I’ve learned as I step into new chapters.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5941,7 +5941,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "知道我可以不断成长和适应，我感到很兴奋。",
       "english": "There’s excitement in knowing I can keep growing and adapting.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5951,7 +5951,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我致力于在日常生活中创造更多的和平与欢乐。",
       "english": "I’m committed to creating more peace and joy in daily life.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5961,7 +5961,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "展望未来，我看到了新的冒险和平静的满足的空间。",
       "english": "Looking ahead, I see room for new adventures and quiet contentment.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5971,7 +5971,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我相信最好的一切仍在以最完美的时机展现。",
       "english": "I believe the best is still unfolding in its own perfect timing.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5981,7 +5981,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "即使路径不明确，我也学会了相信这个过程。",
       "english": "I’ve learned to trust the process even when the path isn’t clear.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -5991,7 +5991,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "带着爱和意图前进感觉是正确的方法。",
       "english": "Moving forward with love and intention feels like the right approach.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6001,7 +6001,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我为自己一路走来所积累的力量和智慧感到自豪。",
       "english": "I’m proud of the strength and wisdom I’ve developed along the way.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6011,7 +6011,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "每个结局都为新的开始开辟了空间。",
       "english": "Every ending opens space for fresh beginnings.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6021,7 +6021,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我期待更多有意义的联系和经历。",
       "english": "I look forward to more meaningful connections and experiences.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6031,7 +6031,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我的心感到很满足，因为我知道我已经为家人尽力了。",
       "english": "My heart feels full knowing I’ve done my best for my family.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6041,7 +6041,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "希望和感恩共同构成了强大的基础。",
       "english": "Hope and gratitude together make a powerful foundation.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6051,7 +6051,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我很高兴看到未来会带来什么新章节。",
       "english": "I’m excited to see what new chapters will bring in the coming time.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6061,7 +6061,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "生活就是坚持和放手之间的美好平衡。",
       "english": "Life is a beautiful balance of holding on and letting go.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6071,7 +6071,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E5%88%9D%E7%BA%A7/A30.mp3",
-      "chinese": "",
+      "chinese": "我们将以开放的心态和稳健的步伐继续这一旅程。",
       "english": "Here’s to continuing this journey with an open heart and steady steps.",
       "sourceAudio": "初级/A30.mp3",
       "sourceDocument": "初级/A30.docx",
@@ -6083,7 +6083,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
   "natural": [
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "你知道，我最近一直注意到，当我放慢速度并注意那些我过去匆忙完成的小例行公事时，实际上会带来令人惊讶的平静。",
       "english": "You know, I've been noticing lately how the little routines I used to rush through actually bring a surprising amount of calm when I slow down and pay attention to them.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6093,7 +6093,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "有趣的是，生活以这种方式告诉你，几年前看起来真正重要的事情不再总是那么重要了。",
       "english": "It's kind of interesting how life has this way of teaching you that what seemed really important a few years ago doesn't always hold the same weight anymore.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6103,7 +6103,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，这么多年过去了，我终于能够更好地认识到自己什么时候把自己逼得太紧，需要退一步了。",
       "english": "I mean, after all these years, I'm finally getting better at recognizing when I'm pushing myself too hard and need to step back for a bit.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6113,7 +6113,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "我一直在思考的一件事是，我与成年孩子的对话现在比他们年轻时感觉更加平等和有价值。",
       "english": "One thing I've been thinking about is how the conversations I have with my adult kids now feel so much more equal and rewarding than when they were younger.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6123,7 +6123,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "有时我发现自己在反思每天早上照料的花园如何成为生活其他领域耐心和持续努力的安静隐喻。",
       "english": "Sometimes I find myself reflecting on how the garden I tend to every morning has become this quiet metaphor for patience and consistent effort in other areas of life.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6133,7 +6133,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "我逐渐认识到，每周有几个无组织的时间实际上可以帮助我对下一步想要什么产生更清晰的想法。",
       "english": "I've come to appreciate that having a few unstructured hours in the week actually helps me come up with clearer ideas about what I want next.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6143,7 +6143,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "你知道，有趣的是，在附近简单地散步就能改变我对当天早些时候困扰我的事情的整体看法。",
       "english": "You know, it's funny how a simple walk around the neighborhood can shift my whole perspective on whatever was bothering me earlier in the day.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6153,7 +6153,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直试图以更多的好奇心来对待日常决策，而不是像以前那样只是走走过场。",
       "english": "Lately I've been trying to approach everyday decisions with more curiosity instead of just going through the motions like I used to.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6163,7 +6163,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，我现在选择的书籍和播客是那些挑战我思维的书籍和播客，而不仅仅是娱乐我。",
       "english": "I sort of realized that the books and podcasts I choose these days are the ones that challenge my thinking rather than just entertain me.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6173,7 +6173,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "这是一个渐进的过程，但我越来越接受这样一个想法：并非每一天都必须非常高效才有价值。",
       "english": "It's been a gradual process, but I'm getting more comfortable with the idea that not every day has to be highly productive to be worthwhile.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6183,7 +6183,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "令我惊讶的是，当我放弃了需要立即解决所有问题的期望时，我感到轻松多了。",
       "english": "What surprises me is how much lighter I feel when I let go of the expectation that I need to have everything figured out right away.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6193,7 +6193,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "我一直更加关注某些食物和睡眠模式如何真正影响我整个星期的情绪和精力。",
       "english": "I've been paying more attention to the way certain foods and sleep patterns really affect my mood and energy throughout the week.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6203,7 +6203,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "在某种程度上，经历中年让我更看重深厚、有意义的联系，而不是忙碌的社交日程。",
       "english": "In a way, moving through midlife has made me value deep, meaningful connections over having a packed social calendar.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6213,7 +6213,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，回顾过去，我获得的一些最好的见解来自那些安静的夜晚，当时我只是坐着思考。",
       "english": "I mean, looking back, some of the best insights I've gained came from those quiet evenings when I just sat with my thoughts.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6223,7 +6223,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "注意到我现在处理问题的优雅程度是五年前所没有的，这让我感到很有力量。",
       "english": "It's kind of empowering to notice that I'm handling situations now with a level of grace that I didn't have even five years ago.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6233,7 +6233,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "你知道，我开始看到写小日记的价值，我可以在日记中记下一天结束时我感激的事情。",
       "english": "You know, I've started to see the value in keeping a small journal where I jot down things I'm grateful for at the end of the day.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6243,7 +6243,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉我在照顾家庭责任和为自己的兴趣腾出时间之间取得了更好的平衡。",
       "english": "Lately it feels like I'm striking a better balance between taking care of family responsibilities and carving out time for my own interests.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6253,7 +6253,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "我发现，当我以幽默感应对挑战时，他们往往很快就会失去一些压倒性的力量。",
       "english": "I find that when I approach challenges with a sense of humor, they tend to lose some of their overwhelming power pretty quickly.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6263,7 +6263,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "我对成功的看法已经从外在成就转变为内心的平静与稳定，这让我大开眼界。",
       "english": "It's been eye-opening to realize how much my perspective on success has evolved from external achievements to inner peace and stability.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6273,7 +6273,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B1.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这些日子里我的生活方式的微小变化让我的生活变得更加丰富和有意义。",
       "english": "Overall, these small shifts in how I move through the days have made life feel richer and more intentional.",
       "sourceAudio": "中级/B1.mp3",
       "sourceDocument": "中级/B1.docx",
@@ -6283,7 +6283,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "我一直在反思远程工作不仅改变了我的日程安排，而且改变了我对生产力和界限的思考方式。",
       "english": "I've been reflecting on how working remotely has changed not just my schedule but the whole way I think about productivity and boundaries.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6293,7 +6293,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "你知道，在同一领域工作多年后，我开始探索如何在不破坏我们已经建立的稳定性的情况下为我的工作带来更多创造力。",
       "english": "You know, after years in the same field, I'm starting to explore ways to bring more creativity into what I do without disrupting the stability we've built.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6303,7 +6303,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "有趣的是，当我将那些曾经给我带来压力的项目分解并委派我能做的事情时，现在感觉更容易管理。",
       "english": "It's interesting how the projects that used to stress me out now feel more manageable once I break them down and delegate what I can.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6313,7 +6313,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在尝试在早上头脑最清醒的时候安排专注的深度工作，这确实会产生影响。",
       "english": "Lately I've been trying to schedule focused deep work blocks in the morning when my mind is freshest, and it really makes a difference.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6323,7 +6323,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，我学到的一件事是，对某些机会说不可以让我更充分地对那些真正符合我价值观的机会说“是”。",
       "english": "I mean, one thing I've learned is that saying no to certain opportunities allows me to say yes more fully to the ones that truly align with my values.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6333,7 +6333,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "随着时间的推移，我不断调整工作贡献和全神贯注之间的平衡。",
       "english": "The balance between contributing at work and being fully present at home is something I continue to fine-tune as the years go by.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6343,7 +6343,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "我注意到白天短距离散步有助于清除精神混乱，并且通常可以为我正在做的事情找到更好的解决方案。",
       "english": "I've noticed that taking short walks during the day helps clear mental clutter and often leads to better solutions for whatever I'm working on.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6353,7 +6353,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "看到我随着时间的推移发展起来的技能现在如何帮助我以更自然的方式指导他人，我感到有点安心。",
       "english": "It's kind of reassuring to see how the skills I've developed over time are now helping me mentor others in a more natural way.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6363,7 +6363,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在思考我想通过我的工作留下什么遗产，而不仅仅是日常任务和截止日期。",
       "english": "You know, I've been thinking about what legacy I want to leave through my work, beyond just the daily tasks and deadlines.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6373,7 +6373,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "有时我会退后一步，欣赏家族企业所取得的进步，尤其是我们最近看到的收入增长。",
       "english": "Sometimes I step back and appreciate how far the family business has come, especially with the revenue growth we've seen recently.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6383,7 +6383,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "我发现在每周开始时为自己设定现实的期望可以防止我在一天结束时感到疲惫不堪。",
       "english": "I find that setting realistic expectations for myself at the beginning of each week prevents that end-of-day exhaustion I used to feel.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6393,7 +6393,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地以一种感觉真诚的方式建立人际网络，而不是强迫或纯粹的交易。",
       "english": "Lately, I've been more intentional about networking in ways that feel genuine rather than forced or purely transactional.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6403,7 +6403,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "令人惊讶的是，当你坚持不懈地表现并付出努力时，即使在你不喜欢的日子里，也能取得如此大的进步。",
       "english": "It's amazing how much progress can happen when you consistently show up and put in the effort even on the days you don't feel like it.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6413,7 +6413,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，过渡到我更多地考虑长期财务规划的阶段既带来了兴奋，也带来了一点紧张。",
       "english": "I mean, transitioning to this stage where I'm thinking more about long-term financial planning has brought both excitement and a bit of nervousness.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6423,7 +6423,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "在紧张的工作后，我一直在尝试不同的放松方式，这样我就不会把这种精神负担带入家庭时间。",
       "english": "I've been experimenting with different ways to unwind after intense work periods so I don't carry that mental load into family time.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6433,7 +6433,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "你知道，我最近收到的反馈鼓励我在职业场合更加相信自己的直觉。",
       "english": "You know, the feedback I've received lately has encouraged me to trust my instincts more in professional situations.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6443,7 +6443,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "当您意识到自己的经历可以让您比以前更有信心地应对复杂的情况时，这种感觉很好。",
       "english": "It's a good feeling when you realize your experience allows you to navigate complex situations with more confidence than before.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6453,7 +6453,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在优先考虑具有持久影响的任务，而不是仅仅检查永无止境的清单上的项目。",
       "english": "Lately I've been prioritizing tasks that have lasting impact rather than just checking off items on a never-ending list.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6463,7 +6463,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，持续学习，即使是很小的方式，也能在几十年里保持头脑敏锐和工作投入。",
       "english": "I sort of believe that continuous learning, even in small ways, keeps the mind sharp and the work engaging over the decades.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6473,7 +6473,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B2.mp3",
-      "chinese": "",
+      "chinese": "总体而言，更周到地整合工作和生活可以让双方都更加满意。",
       "english": "Overall, integrating work and life more thoughtfully has led to greater satisfaction on both sides.",
       "sourceAudio": "中级/B2.mp3",
       "sourceDocument": "中级/B2.docx",
@@ -6483,7 +6483,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "你知道，看着我的儿子们度过他们的职业生涯和生活，让我反思他们的道路与我们第一次来到美国时所走的道路有多么不同。",
       "english": "You know, watching my sons navigate their careers and lives has made me reflect on how different their path is from the one we took when we first came to the US.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6493,7 +6493,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "我一直在努力分享更多我自己经历的故事，以便他们了解我们一些家庭价值观背后的背景。",
       "english": "I've been making an effort to share more stories from my own experiences so they understand the context behind some of our family values.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6503,7 +6503,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "看到我与成年子女的关系如何演变为基于相互尊重的真正友谊，真是令人心旷神怡。",
       "english": "It's heartwarming to see how the relationships with my adult children have evolved into genuine friendships based on mutual respect.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6513,7 +6513,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在就长期计划进行更深入的对话，比如房子以及这对每个人未来的安全意味着什么。",
       "english": "Lately we've been having deeper conversations about long-term plans, like the house and what that means for everyone's future security.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6523,7 +6523,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在提供指导和给他们自己做出决定的空间之间找到适当的平衡是一个持续的学习过程。",
       "english": "I mean, finding the right balance between offering guidance and giving them space to make their own decisions is an ongoing learning process.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6533,7 +6533,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "给我带来快乐的一件事是，当我们大家聚在一起时，笑声自然流淌，没有任何压力让一切变得完美。",
       "english": "One thing that brings me joy is when we all get together and the laughter flows naturally without any pressure to make it perfect.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6543,7 +6543,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "我注意到我们所维持的小传统，即使是简单的传统，也有助于以有意义的方式加强代际间的联系。",
       "english": "I've noticed that small traditions we maintain, even simple ones, help strengthen the bond across generations in meaningful ways.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6553,7 +6553,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "你知道，有趣的是，经过这些年的风风雨雨，我对婚姻和伴侣关系的看法变得更加深刻。",
       "english": "You know, it's interesting how my perspective on marriage and partnership has deepened after all these years of ups and downs.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6563,7 +6563,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "我尝试仔细聆听他们对世界的看法，因为他们经常带来挑战我自己思维的新鲜见解。",
       "english": "I try to listen carefully to their views on the world because they often bring fresh insights that challenge my own thinking.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6573,7 +6573,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "有时我会反思我们早期做出的牺牲，并为我们为他们创造的稳定基础感到自豪。",
       "english": "Sometimes I reflect on the sacrifices we made early on and feel proud of the stable foundation we've created for them.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6583,7 +6583,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考如何传递有关财务和韧性的实用智慧，而不会让听起来像是在说教。",
       "english": "Lately I've been thinking about how to pass on practical wisdom about finances and resilience without sounding like I'm lecturing.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6593,7 +6593,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "见证他们建立独立性同时仍然重视与家庭根源的联系是一种美好的感觉。",
       "english": "It's kind of beautiful to witness them building their independence while still valuing the connection to family roots.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6603,7 +6603,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，当我们公开讨论中国传统和美国生活之间的文化差异时，它们就变得更加顺利。",
       "english": "I mean, navigating cultural differences between our Chinese heritage and American life has become smoother as we openly discuss them.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6613,7 +6613,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "我更加注意表达对我丈夫所做贡献的感激之情，尤其是在业务繁忙的阶段。",
       "english": "I've been more mindful about expressing appreciation for the ways my husband contributes, especially during this busy phase with the business.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6623,7 +6623,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "你知道，一旦孩子长大并且每个人都有自己忙碌的生活，家庭动态就会以如此有趣的方式发生变化。",
       "english": "You know, family dynamics shift in such interesting ways once the kids are grown and everyone has their own busy lives.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6633,7 +6633,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "我发现，策划低调的聚会可以让我们有自然的机会保持联系，而不会压垮任何人的日程安排。",
       "english": "I find that planning low-key get-togethers gives us natural opportunities to stay connected without overwhelming anyone's schedule.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6643,7 +6643,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "最近，围绕健康和福祉的对话变得更加协作，这对我们所有人来说都是支持。",
       "english": "Lately the conversations around health and well-being have become more collaborative, which feels supportive for all of us.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6653,7 +6653,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "令人欣慰的是，即使距离遥远，我们也可以通过定期有意义的检查来保持牢固的情感联系。",
       "english": "It's reassuring to know that even with distance, we can maintain strong emotional ties through regular meaningful check-ins.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6663,7 +6663,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，作为父母表现出脆弱性可以帮助他们更舒服地对我做同样的事情。",
       "english": "I sort of believe that showing vulnerability as a parent helps them feel more comfortable doing the same with me.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6673,7 +6673,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B3.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这些不断发展的家庭关系仍然是这个人生阶段最有价值的部分之一。",
       "english": "Overall, these evolving family connections continue to be one of the most rewarding parts of this life stage.",
       "sourceAudio": "中级/B3.mp3",
       "sourceDocument": "中级/B3.docx",
@@ -6683,7 +6683,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "你知道，我开始明白，真正的成长往往发生在那些我没有积极追求重大变化的安静时期。",
       "english": "You know, I've come to understand that real growth often happens in those quiet periods when I'm not actively chasing after big changes.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6693,7 +6693,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直致力于用更富有同情心的自言自语方式来取代旧的自我批评思想。",
       "english": "Lately I've been working on replacing old self-critical thoughts with more compassionate ways of talking to myself.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6703,7 +6703,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，接受“没有所有答案也没关系”的想法已经释放了很多精神能量，可以真正享受当下。",
       "english": "I mean, embracing the idea that it's okay not to have all the answers has freed up so much mental energy for actually enjoying the present.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6713,7 +6713,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "对我来说发生变化的一件事是优先考虑滋养我灵魂的经历，而不是简单地积累更多责任。",
       "english": "One thing that has shifted for me is prioritizing experiences that nourish my soul over simply accumulating more responsibilities.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6723,7 +6723,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "意识到我不再需要证明任何东西并且可以专注于感觉真实的事情，这有点解放。",
       "english": "It's kind of liberating to realize that I don't need to prove anything anymore and can focus on what feels authentic.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6733,7 +6733,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "我一直在探索不同的正念练习，这些练习可以帮助我在生活开始感到不知所措时保持脚踏实地。",
       "english": "I've been exploring different mindfulness practices that help me stay grounded when life starts feeling overwhelming.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6743,7 +6743,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "你知道，阅读更多有关心理学和人类行为的知识为我提供了更好的工具来了解自己和他人。",
       "english": "You know, reading more about psychology and human behavior has given me better tools for understanding both myself and others.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6753,7 +6753,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "最近，我发现自己以好奇心而不是沮丧来对待挫折，这改变了整个经历。",
       "english": "Lately I find myself approaching setbacks with curiosity rather than frustration, which changes the whole experience.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6763,7 +6763,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在这个阶段，英语变得更加流利的过程是令人难以置信的回报，同时也是令人谦卑的。",
       "english": "I mean, the journey of becoming more fluent in English at this stage has been incredibly rewarding and humbling at the same time.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6773,7 +6773,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "我注意到，当我把时间投入到创意领域时，我的整体幸福感会显着提高。",
       "english": "I've noticed that when I invest time in creative outlets, my overall sense of well-being improves noticeably.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6783,7 +6783,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "有趣的是，我对成功的定义已经扩展到包括情商和和平的关系。",
       "english": "It's interesting how my definition of success has expanded to include emotional intelligence and peaceful relationships.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6793,7 +6793,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "你知道，持续地表达感激之情训练了我的思维，即使在充满挑战的日子里也能发现积极的一面。",
       "english": "You know, practicing gratitude consistently has trained my mind to spot positive aspects even on challenging days.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6803,7 +6803,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，习惯上的持续微小改善会在数月和数年内产生重大转变。",
       "english": "I sort of believe that continuous small improvements in habits compound into significant transformations over months and years.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6813,7 +6813,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "最近，我对反馈更加开放，因为我认为它对我的个人发展来说是有价值的信息。",
       "english": "Lately I've been more open to feedback because I see it as valuable information for my personal evolution.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6823,7 +6823,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，放弃完美主义是我近年来最自由的认识之一。",
       "english": "I mean, letting go of perfectionism has been one of the most freeing realizations I've had in recent years.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6833,7 +6833,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "它让我认识到自己的韧性和在人生各个阶段所积累的力量。",
       "english": "It's empowering to recognize my own resilience and the strength I've built through navigating life's various phases.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6843,7 +6843,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "你知道，我开始将不适视为我正在踏入成长机会的信号，而不是需要避免的事情。",
       "english": "You know, I've started to view discomfort as a signal that I'm stepping into a growth opportunity rather than something to avoid.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6853,7 +6853,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "随着我获得更多的生活经验，我会不断完善野心和满足感之间的平衡。",
       "english": "The balance between ambition and contentment is something I continue to refine as I gain more life experience.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6863,7 +6863,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "我发现周围都是令人振奋的人自然会鼓励我成为更好的自己。",
       "english": "I find that surrounding myself with uplifting people naturally encourages me to become a better version of myself.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6873,7 +6873,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B4.mp3",
-      "chinese": "",
+      "chinese": "总体而言，这种持续的个人成长过程使生活充满乐趣并充满安静的发现。",
       "english": "Overall, this ongoing personal growth process keeps life engaging and full of quiet discoveries.",
       "sourceAudio": "中级/B4.mp3",
       "sourceDocument": "中级/B4.docx",
@@ -6883,7 +6883,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在密切关注不同类型的运动如何影响我的身体能量和思维清晰度。",
       "english": "You know, I've been paying closer attention to how different types of movement affect both my physical energy and mental clarity.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6893,7 +6893,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "最近，我在膳食中加入了更多的抗炎食物，并注意到我们每天的感觉都有所改善。",
       "english": "Lately I've incorporated more anti-inflammatory foods into our meals and noticed improvements in how we both feel day to day.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6903,7 +6903,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，获得高质量的睡眠已经变得不容谈判，因为它对我生活中的其他一切影响如此深远。",
       "english": "I mean, getting quality sleep has become non-negotiable because it impacts everything else in my life so profoundly.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6913,7 +6913,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "我学到的一件事是，坚持温和的锻炼比偶尔的剧烈锻炼更重要。",
       "english": "One thing I've learned is that consistency with gentle exercise matters more than occasional intense workouts.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6923,7 +6923,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "令人惊奇的是，水分和适当的营养可以在短短几天内改变我的情绪和注意力。",
       "english": "It's kind of amazing how hydration and proper nutrition can shift my mood and focus within just a few days.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6933,7 +6933,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在尝试呼吸技巧来帮助我更有效地管理当下的压力。",
       "english": "You know, I've been experimenting with breathwork techniques that help me manage stress more effectively in the moment.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6943,7 +6943,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "我尝试将健康视为一种整体实践，包括情感和社会健康，而不仅仅是身体健康。",
       "english": "I try to approach wellness as a holistic practice that includes emotional and social health, not just physical.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6953,7 +6953,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是预防性护理和养成可持续的习惯，而不是快速解决办法。",
       "english": "Lately the focus has been on preventive care and building sustainable habits rather than quick fixes.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6963,7 +6963,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，定期检查和与医生的公开对话让我对管理自己的健康更有信心。",
       "english": "I mean, regular check-ups and open conversations with doctors have given me greater confidence in managing my health.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6973,7 +6973,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "我注意到，在户外度过的时间，即使是在我们自己的院子里，也能显着提高我的整体幸福感。",
       "english": "I've noticed that time spent outdoors, even in our own yard, significantly boosts my overall sense of well-being.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6983,7 +6983,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "您知道，根据我的实际感受调整我的补充方案比遵循一般建议更有效。",
       "english": "You know, adjusting my supplement routine based on how I actually feel has been more effective than following generic advice.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -6993,7 +6993,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "令人欣慰的是，生活方式的微小调整可以随着时间的推移带来能量水平的显着改善。",
       "english": "It's reassuring to see how small lifestyle tweaks can lead to noticeable improvements in energy levels over time.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7003,7 +7003,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "我有点相信倾听身体的信号是我培养的最重要的技能之一。",
       "english": "I sort of believe that listening to my body's signals is one of the most important skills I've developed.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7013,7 +7013,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加关注屏幕时间及其对睡眠质量和精神休息的影响。",
       "english": "Lately I've been more mindful about screen time and its effects on both sleep quality and mental rest.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7023,7 +7023,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，找到不那么苦差事的快乐运动可以让维持活动变得更加可持续。",
       "english": "I mean, finding joyful movement that doesn't feel like a chore has made maintaining activity much more sustainable.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7033,7 +7033,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "你知道，肠道健康和情绪之间的联系是我一直在了解和实际应用的东西。",
       "english": "You know, the connection between gut health and mood is something I've been learning more about and applying practically.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7043,7 +7043,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "它让我能够掌控自己的健康之旅，而不是完全将其留给外部因素。",
       "english": "It's empowering to take ownership of my wellness journey rather than leaving it entirely to external factors.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7053,7 +7053,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "我一直与朋友和家人分享对我有用的方法，这创造了良好的支持性思想交流。",
       "english": "I've been sharing what works for me with friends and family, which creates a nice supportive exchange of ideas.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7063,7 +7063,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "最近，人们开始强调恢复和休息与活动和成就同样重要。",
       "english": "Lately the emphasis has been on recovery and rest as equally important as activity and achievement.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7073,7 +7073,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B5.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这些有意识的调整让我在日常生活中感觉更有活力和更有能力。",
       "english": "Overall, these mindful adjustments have helped me feel more vibrant and capable in daily life.",
       "sourceAudio": "中级/B5.mp3",
       "sourceDocument": "中级/B5.docx",
@@ -7083,7 +7083,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "您知道，我一直在深入了解我们的税务策略和退休计划，以确保我们处于有利位置。",
       "english": "You know, I've been diving deeper into understanding our tax strategies and retirement planning to make sure we're positioned well.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7093,7 +7093,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "最近，我们更加仔细地审查了我们的开支，以确定我们可以在不牺牲生活质量的情况下优化哪些领域。",
       "english": "Lately we've been reviewing our expenses more carefully to identify areas where we can optimize without sacrificing quality of life.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7103,7 +7103,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，当我们思考未来几十年时，构建多个安全流的想法变得更加重要。",
       "english": "I mean, the idea of building multiple streams of security has become more relevant as we think about the coming decades.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7113,7 +7113,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "让我感到平静的一件事是，即使在繁忙的年份，我们也一直坚持储蓄和投资。",
       "english": "One thing that gives me peace is knowing we've been consistent with saving and investing even during busier years.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7123,7 +7123,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "有趣的是，我对金钱的看法如何从眼前的需要转变为长期的家庭保护和灵活性。",
       "english": "It's interesting how my perspective on money has shifted from immediate needs to long-term family protection and flexibility.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7133,7 +7133,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "您知道，探索信托和遗产规划等选择令人大开眼界，而且令人惊讶地赋予力量。",
       "english": "You know, exploring options like trusts and estate planning has been eye-opening and surprisingly empowering.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7143,7 +7143,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "我尝试在做出财务决策时兼顾实用性和我们的价值观，尤其是在房屋和资产方面。",
       "english": "I try to make financial decisions with both practicality and our values in mind, especially regarding the house and assets.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7153,7 +7153,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "最近，我更多地了解了市场趋势以及它们在未来几年可能如何影响我们的个人状况。",
       "english": "Lately I've been learning more about market trends and how they might affect our personal situation in the years ahead.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7163,7 +7163,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，与我丈夫就这些问题进行公开对话以有意义的方式加强了我们的伙伴关系。",
       "english": "I mean, having open conversations with my husband about these matters has strengthened our partnership in meaningful ways.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7173,7 +7173,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "令人欣慰的是，随着时间的推移，我们通过严格的选择所取得的进展。",
       "english": "It's reassuring to see the progress we've made through disciplined choices over time.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7183,7 +7183,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "你知道，我专注于创建一个缓冲区，使我们能够以更少的压力处理意外事件。",
       "english": "You know, I'm focusing on creating a buffer that allows us to handle unexpected events with less stress.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7193,7 +7193,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "我一直认识到多元化的重要性，同时仍然保持事情足够简单以便于管理。",
       "english": "I've been appreciating the importance of diversifying while still keeping things straightforward enough to manage.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7203,7 +7203,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "最近的目标是在当前的享受与为未来的稳定做好深思熟虑的准备之间取得平衡。",
       "english": "Lately the goal has been balancing current enjoyment with thoughtful preparation for future stability.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7213,7 +7213,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，现阶段的金融知识为内心平静和慷慨提供了更多选择。",
       "english": "I sort of believe that financial literacy at this stage opens up more options for peace of mind and generosity.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7223,7 +7223,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "定期审查我们的计划并根据不断变化的情况和目标进行调整是很好的做法。",
       "english": "It's good to periodically review our plan and adjust based on changing circumstances and goals.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7233,7 +7233,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "您知道，以明智的方式支持慈善事业已成为我们考虑资源的一部分。",
       "english": "You know, supporting charitable causes in smart ways has become part of how we think about our resources.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7243,7 +7243,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，巧妙地向我们的儿子们传授这些原则感觉也是他们准备工作的重要组成部分。",
       "english": "I mean, teaching these principles subtly to our sons feels like an important part of their preparation too.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7253,7 +7253,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "最近，在花时间更好地理解这些主题后，我感觉更加自信了。",
       "english": "Lately I've felt more confident navigating these topics after dedicating time to understand them better.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7263,7 +7263,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "财务更加清晰的过程继续减少了我过去的潜在担忧。",
       "english": "The journey toward greater financial clarity continues to reduce underlying worries I used to carry.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7273,7 +7273,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B6.mp3",
-      "chinese": "",
+      "chinese": "总体而言，以正念和长远眼光对待金钱带来了实实在在的好处。",
       "english": "Overall, approaching money with mindfulness and long-term vision has brought tangible benefits.",
       "sourceAudio": "中级/B6.mp3",
       "sourceDocument": "中级/B6.docx",
@@ -7283,7 +7283,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在更加刻意地努力培养真正相互支持和丰富的友谊。",
       "english": "You know, I've been making more intentional efforts to nurture friendships that feel genuinely supportive and enriching.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7293,7 +7293,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "最近，我很享受与邻居进行更深入的对话，这些对话超越了闲聊，建立了真正的社区联系。",
       "english": "Lately I've enjoyed deeper conversations with neighbors that go beyond small talk and create real community ties.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7303,7 +7303,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，参加当地活动提醒我与我们居住的地方保持联系是多么有价值。",
       "english": "I mean, participating in local events has reminded me how valuable it is to feel connected to the place where we live.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7313,7 +7313,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "我注意到的一件事是，高质量的互动，即使频率不高，也比持续的忙碌更能滋养精神。",
       "english": "One thing I've noticed is that quality interactions, even if less frequent, nourish the spirit more than constant busyness.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7323,7 +7323,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "当偶然的邂逅变成有意义的交流，让整个星期都充满活力，真是太棒了。",
       "english": "It's kind of wonderful when casual encounters turn into meaningful exchanges that brighten the whole week.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7333,7 +7333,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在更频繁地与老朋友联系，并重新发现这些长期关系中的快乐。",
       "english": "You know, I've been reaching out to old friends more regularly and rediscovering the joy in those long-standing relationships.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7343,7 +7343,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "我努力成为那种不需要特定原因就来登记的人，只是为了表达我的关心。",
       "english": "I try to be the kind of person who checks in without needing a specific reason, just to show I care.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7353,7 +7353,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是建立一个包含来自不同背景和观点的人的网络。",
       "english": "Lately the focus has been on building a network that includes people from different backgrounds and perspectives.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7363,7 +7363,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，志愿服务或帮助小型社区项目会给我的周围圈子带来一种使命感。",
       "english": "I mean, volunteering or helping with small community projects brings a sense of purpose beyond my immediate circle.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7373,7 +7373,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "有趣的是，邻里的共同经历如何建立起纽带，支持每个人度过生活的起起落落。",
       "english": "It's interesting how shared experiences in the neighborhood create bonds that support everyone through life's ups and downs.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7383,7 +7383,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "你知道，我已经学会了设定温和的界限，同时仍然保持开放和慷慨的时间和精力。",
       "english": "You know, I've learned to set gentle boundaries while still remaining open and generous with my time and energy.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7393,7 +7393,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "最近，我开始欣赏独处充电与联系成长之间的平衡。",
       "english": "Lately I've appreciated the balance between solitude for recharging and connection for growth.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7403,7 +7403,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，真正的关系是通过持续的善意和存在的小行为建立的。",
       "english": "I sort of believe that authentic relationships are built through consistent small acts of kindness and presence.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7413,7 +7413,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "看到我们的家庭如何以简单的方式为更广泛的社区做出积极贡献，真是令人振奋。",
       "english": "It's heartening to see how our family can contribute positively to the broader community in simple ways.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7423,7 +7423,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在家举办低调聚会已成为我最喜欢的加强联系的方式之一。",
       "english": "I mean, hosting low-key gatherings at home has become one of my favorite ways to strengthen ties.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7433,7 +7433,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "你知道，积极倾听和提供鼓励往往比提供建议更能加深联系。",
       "english": "You know, listening actively and offering encouragement often deepens connections more than giving advice.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7443,7 +7443,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考社区在充满挑战的时期提供情感安全网的作用。",
       "english": "Lately I've been reflecting on the role of community in providing emotional safety nets during challenging times.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7453,7 +7453,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "我发现身边都是积极向上、注重成长的人，自然会提升我的生活方式。",
       "english": "I find that surrounding myself with positive, growth-oriented people naturally elevates my own approach to life.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7463,7 +7463,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "当你注意到社交圈中双向的相互支持时，你会感到很有意义。",
       "english": "It's rewarding when you notice the mutual support flowing both ways in your social circles.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7473,7 +7473,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B7.mp3",
-      "chinese": "",
+      "chinese": "总的来说，对这些联系的投资继续以我以前没有完全意识到的方式丰富日常生活。",
       "english": "Overall, investing in these connections continues to enrich daily life in ways I didn't fully appreciate before.",
       "sourceAudio": "中级/B7.mp3",
       "sourceDocument": "中级/B7.docx",
@@ -7483,7 +7483,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着时间的流逝，我对生活的不可预测性和其中的美丽有了更深的认识。",
       "english": "You know, as time passes, I've developed a deeper appreciation for the unpredictability of life and the beauty within it.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7493,7 +7493,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在想象一个令人满意的下一章会是什么样子，同时在细节上保持灵活性。",
       "english": "Lately I've been envisioning what a fulfilling next chapter might look like while staying flexible with the details.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7503,7 +7503,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，通过价值观和关系来关注遗产比物质积累更有意义。",
       "english": "I mean, focusing on legacy through values and relationships feels more meaningful than material accumulation.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7513,7 +7513,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "令人感到安慰的一件事是相信我们已经为接下来发生的事情奠定了坚实的基础。",
       "english": "One thing that brings comfort is trusting that we've laid a solid foundation for whatever comes next.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7523,7 +7523,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "想到这个人生阶段可以开启的新可能性是令人兴奋的。",
       "english": "It's kind of exciting to think about new possibilities that this stage of life can open up.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7533,7 +7533,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在培养对事情自然发生时间的耐心，而不是仓促的结果。",
       "english": "You know, I've been cultivating more patience with the natural timing of things instead of rushing outcomes.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7543,7 +7543,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "我尝试以深思熟虑的计划和开放的心态来迎接未来。",
       "english": "I try to approach the future with a blend of thoughtful planning and open-hearted acceptance.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7553,7 +7553,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是创造与我想要记住的生活相符的日常体验。",
       "english": "Lately the emphasis has been on creating daily experiences that align with the kind of life I want to remember.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7563,7 +7563,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在拥抱美国机遇的同时反思文化遗产为我塑造了独特的视角。",
       "english": "I mean, reflecting on cultural heritage while embracing American opportunities has shaped a unique perspective for me.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7573,7 +7573,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "令人欣慰的是，智慧是通过各种经历逐渐积累的。",
       "english": "It's reassuring to know that wisdom accumulates gradually through all kinds of experiences.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7583,7 +7583,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "你知道，我开始将挑战视为练习韧性和创造力的机会。",
       "english": "You know, I've started to see challenges as opportunities to practice resilience and creativity.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7593,7 +7593,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "最近，我在指导或支持他人中找到了乐趣，因为它给了我自己的旅程之外的目标。",
       "english": "Lately I find joy in mentoring or supporting others because it gives purpose beyond my own journey.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7603,7 +7603,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，无论年龄或阶段如何，保持好奇心都能让生活充满活力。",
       "english": "I sort of believe that maintaining curiosity keeps life vibrant no matter the age or stage.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7613,7 +7613,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡野心与满足是一门我仍在愉快地完善的艺术。",
       "english": "I mean, balancing ambition with contentment is an art I'm still happily refining.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7623,7 +7623,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "你知道，对我们作为一个家庭共同建立的一切的感激之情不断增强。",
       "english": "You know, the sense of gratitude for what we've built together as a family continues to grow stronger.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7633,7 +7633,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加用心地为后代记录故事和记忆。",
       "english": "Lately I've been more intentional about documenting stories and memories for future generations.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7643,7 +7643,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "意识到我在塑造自己的观点方面拥有比我有时记忆中更多的力量，这让我很有力量。",
       "english": "It's empowering to realize I have more agency in shaping my outlook than I sometimes remember.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7653,7 +7653,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "我努力在汲取过去的教训的同时，带着希望向前迈进。",
       "english": "I try to carry hope forward while honoring the lessons from the past.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7663,7 +7663,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "你知道，此时的生活就像一幅丰富的经历，值得细细品味。",
       "english": "You know, life at this point feels like a rich tapestry of experiences worth savoring.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7673,7 +7673,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B8.mp3",
-      "chinese": "",
+      "chinese": "总体而言，我正以更加清晰、平静和平静的兴奋迈向未来。",
       "english": "Overall, I'm stepping into the future with greater clarity, peace, and quiet excitement.",
       "sourceAudio": "中级/B8.mp3",
       "sourceDocument": "中级/B8.docx",
@@ -7683,7 +7683,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "你知道，生活在中国传统和美国生活之间给了我独特的视角，通过它我可以看到每种文化在日常实践中的优势和挑战。",
       "english": "You know, living between Chinese heritage and American life has given me this unique lens through which I see both the strengths and the challenges of each culture in daily practice.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7693,7 +7693,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "我最近一直在思考我们背景中对家庭责任的重视如何与美国人在抚养儿子时对个人独立的重视相结合。",
       "english": "I've been thinking lately about how the emphasis on family duty in our background blends with the American focus on individual independence in raising our sons.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7703,7 +7703,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，有趣的是注意到我们带来的某些传统多年来如何演变以适应这个新环境，同时仍然保留其核心意义。",
       "english": "I mean, it's interesting to notice how certain traditions we brought with us have evolved over the years to fit into this new environment while still keeping their core meaning.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7713,7 +7713,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "对我来说最突出的一件事是，这里的直接沟通方式如何帮助我在以前犹豫不决的情况下变得更加自信。",
       "english": "One thing that stands out to me is how the direct communication style here has helped me become more assertive in situations where I used to hold back.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7723,7 +7723,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "你知道，我开始欣赏我们所受的尊重长辈和鼓励家庭各代人之间公开对话之间的平衡。",
       "english": "You know, I've come to appreciate the balance between respecting elders as we were taught and encouraging open dialogue across generations in our household.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7733,7 +7733,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考移民不仅塑造机会，而且塑造家庭传承的平静韧性的方式。",
       "english": "Lately I've been reflecting on the ways immigration shapes not just opportunities but also the quiet resilience that gets passed down in families.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7743,7 +7743,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，围绕成功的文化期望已经不再是证明某些东西，而是更多地用我们自己的方式定义它。",
       "english": "I sort of realize that navigating cultural expectations around success has become less about proving something and more about defining it on our own terms.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7753,7 +7753,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "当我看到我对职业道德的看法如何将家庭纪律与美国专业领域所重视的创造力结合起来时，我有点大开眼界。",
       "english": "It's kind of eye-opening when I see how my perspective on work ethic combines the discipline from home with the creativity valued in American professional spaces.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7763,7 +7763,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，参加当地社区活动加深了我对归属感的理解，同时尊重我们的出身。",
       "english": "I mean, participating in local community events has deepened my understanding of what it means to belong while honoring where we came from.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7773,7 +7773,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "你知道，我更有意地分享我们早年在美国的故事，以便下一代了解全貌。",
       "english": "You know, I've been more intentional about sharing stories from our early years in the US so the next generation understands the full picture.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7783,7 +7783,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉我正在将两个世界最好的部分融入到一种在这个阶段感觉真实和可持续的生活方式中。",
       "english": "Lately it feels like I'm integrating the best parts of both worlds into a lifestyle that feels authentic and sustainable for this stage.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7793,7 +7793,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "我发现与这里的朋友进行小型文化交流往往会引发关于价值观和生活优先事项的更丰富的对话。",
       "english": "I find that small cultural exchanges with friends here often lead to richer conversations about values and life priorities.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7803,7 +7803,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "看到我们的家族如何创造出自己的传统融合并在这种情况下发挥良好作用，令人感到安心。",
       "english": "It's reassuring to see how our family has created its own blend of traditions that work well in this context.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7813,7 +7813,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "你知道，作为一个成年人的语言学习的反思让我看到了耐心和坚持不懈的努力有助于让我感觉更自在。",
       "english": "You know, reflecting on language learning as an adult has shown me how much patience and consistent effort contribute to feeling more at home.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7823,7 +7823,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在这里建立生活的旅程告诉我，身份是不断演变的，而不是保持不变的。",
       "english": "I mean, the journey of building a life here has taught me that identity is something that continues to evolve rather than staying fixed.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7833,7 +7833,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "最近，我注意到食物和共享膳食如何成为我们日常生活中文化之间的强大桥梁。",
       "english": "Lately I've been noticing how food and shared meals serve as powerful bridges between cultures in our daily life.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7843,7 +7843,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，充分拥抱这两种传统可以带来更完整、更充实的整体体验。",
       "english": "I sort of believe that embracing both heritages fully allows for a more complete and fulfilling experience overall.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7853,7 +7853,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些观察继续影响着我如何以开放和深思熟虑的方式应对新情况。",
       "english": "You know, these observations continue to shape how I approach new situations with openness and thoughtful consideration.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7863,7 +7863,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "认识到承载多种文化观点所带来的安静力量是有力量的。",
       "english": "It's empowering to recognize the quiet strength that comes from carrying multiple cultural perspectives.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7873,7 +7873,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B9.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这种持续的反思让我对我们所走过的道路感到更加踏实和感激。",
       "english": "Overall, this ongoing reflection helps me feel more grounded and appreciative of the path we've walked.",
       "sourceAudio": "中级/B9.mp3",
       "sourceDocument": "中级/B9.docx",
@@ -7883,7 +7883,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "你知道，经过二十五年多的婚姻，我了解到定期检查彼此的内心世界对于保持联系有着真正的作用。",
       "english": "You know, after more than twenty-five years of marriage, I've learned that checking in regularly about each other's inner world makes a real difference in staying connected.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7893,7 +7893,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "我一直在努力更清楚地表达我的需求，而不是指望我的丈夫像我过去那样读懂字里行间的意思。",
       "english": "I've been working on expressing my needs more clearly without expecting my husband to read between the lines like I might have in the past.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7903,7 +7903,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，情商如何随着时间的推移而发展，并有助于应对长期关系中不可避免的起起落落，这真是令人着迷。",
       "english": "I mean, it's fascinating how emotional intelligence develops over time and helps navigate the inevitable ups and downs of long-term relationships.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7913,7 +7913,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "最近，我们对未来的计划进行了更诚实的对话，这让我们即使在繁忙的时期也更加亲密。",
       "english": "Lately we've been having more honest conversations about future plans, which has brought us closer even during busy periods.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7923,7 +7923,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "你知道，我开始重视给予彼此空间，同时仍然保持相互支持和理解的基础。",
       "english": "You know, I've come to value giving each other space while still maintaining that foundation of mutual support and understanding.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7933,7 +7933,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "改进的一件事是认识到何时提供建议以及何时全神贯注地倾听。",
       "english": "One thing that has improved is recognizing when to offer advice and when to simply listen with full presence.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7943,7 +7943,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，持续表达的小小赞赏行为比大动作更能加强联系。",
       "english": "I sort of realize that small acts of appreciation consistently expressed can strengthen the bond more than grand gestures.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7953,7 +7953,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "看到我们的沟通模式如何成熟并适应不同的人生阶段，真是太美好了。",
       "english": "It's kind of beautiful to see how our communication patterns have matured and adapted through different life stages.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7963,7 +7963,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，多年来，以好奇心而不是防御性态度对待分歧，避免了许多不必要的冲突。",
       "english": "I mean, approaching differences with curiosity rather than defensiveness has prevented many unnecessary conflicts over the years.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7973,7 +7973,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加注意平衡我作为支持者的角色和在合作伙伴关系中满足我自己的情感需求。",
       "english": "Lately I've been more mindful about balancing my role as supporter with honoring my own emotional needs in the partnership.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7983,7 +7983,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "您知道，反思我们如何共同应对压力，凸显了团队合作对于维持家庭和谐的重要性。",
       "english": "You know, reflecting on how we handle stress together has highlighted the importance of teamwork in maintaining harmony at home.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -7993,7 +7993,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "我注意到，分享脆弱的时刻可以加深信任，并为更亲密的关系创造空间。",
       "english": "I've noticed that sharing vulnerable moments deepens trust and creates space for greater intimacy.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8003,7 +8003,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "我发现定期在一起的低压力时间，即使只是喝茶聊天，也能让我们的联系充满活力。",
       "english": "I find that regular low-pressure time together, even just chatting over tea, keeps the connection vibrant.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8013,7 +8013,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "令人欣慰的是，只要有耐心和努力，人际关系可以在以后的岁月里继续变得更加牢固。",
       "english": "It's reassuring to know that with patience and effort, relationships can continue growing stronger well into later years.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8023,7 +8023,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "你知道，我不仅在家里，而且在其他关系中运用了我所学到的同理心。",
       "english": "You know, I've been applying what I've learned about empathy not just at home but in other relationships too.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8033,7 +8033,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "最近的焦点是庆祝彼此的成长并承认我们共同经历的旅程。",
       "english": "Lately the focus has been on celebrating each other's growth and acknowledging the journey we've shared.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8043,7 +8043,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，中年情商感觉像是最有价值的技能之一，可以通过练习不断提高。",
       "english": "I mean, emotional intelligence in midlife feels like one of the most valuable skills that keeps improving with practice.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8053,7 +8053,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，相互尊重和友善是持久伙伴关系的支柱。",
       "english": "I sort of believe that mutual respect and kindness form the quiet backbone of a lasting partnership.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8063,7 +8063,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些动态继续教会我如何以更成熟和更扎实的形式了解爱。",
       "english": "You know, these dynamics continue to teach me about love in its more mature and grounded form.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8073,7 +8073,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B10.mp3",
-      "chinese": "",
+      "chinese": "总的来说，对情感意识的投资以我深切欣赏的方式丰富了我们的关系。",
       "english": "Overall, investing in emotional awareness has enriched our relationship in ways I deeply appreciate.",
       "sourceAudio": "中级/B10.mp3",
       "sourceDocument": "中级/B10.docx",
@@ -8083,7 +8083,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着家族企业的发展，我发现自己所扮演的角色以意想不到的方式将运营支持与战略思维结合起来。",
       "english": "You know, as the family business has grown, I've found myself taking on roles that blend operational support with strategic thinking in unexpected ways.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8093,7 +8093,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我一直在反思我的贡献如何随着时间的推移从实践任务演变为更多以咨询和规划为导向的工作。",
       "english": "I've been reflecting on how my contributions have evolved from hands-on tasks to more advisory and planning-oriented work over time.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8103,7 +8103,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在保持家庭优先事项的同时在职业努力中找到满足感需要不断的微调，但感觉是值得的。",
       "english": "I mean, finding fulfillment in professional efforts while maintaining family priorities requires constant fine-tuning but feels worthwhile.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8113,7 +8113,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索如何将我的创造力和分析能力更多地融入到日常职责中。",
       "english": "Lately I've been exploring ways to incorporate more of my creative and analytical strengths into daily responsibilities.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8123,7 +8123,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "你知道，指导年轻同事或支持我们领域的人才为我的使命感增添了一层有意义的意义。",
       "english": "You know, mentoring younger colleagues or supporting talent in our field has added a meaningful layer to my sense of purpose.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8133,7 +8133,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我学到的一件事是，适应能力和学习意愿可以让职业生涯在几十年内保持吸引力。",
       "english": "One thing I've learned is that adaptability and willingness to learn keep professional life engaging across decades.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8143,7 +8143,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，在这方面的成功包括为家庭创造可持续的东西，而不仅仅是个人进步。",
       "english": "I sort of realize that success in this context includes building something sustainable for the family rather than just personal advancement.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8153,7 +8153,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "看到积累的经验如何让我更加轻松和自信地应对挑战，我感到很满意。",
       "english": "It's kind of satisfying to see how accumulated experience allows me to navigate challenges with greater ease and confidence.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8163,7 +8163,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡以收入为中心的决策与公司的长期愿景一直是一个有趣的增长领域。",
       "english": "I mean, balancing revenue-focused decisions with long-term vision for the company has been an interesting growth area.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8173,7 +8173,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地记录可能有利于团队或未来转型的流程和见解。",
       "english": "Lately I've been more intentional about documenting processes and insights that could benefit the team or future transitions.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8183,7 +8183,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "您知道，业务需求和个人价值观的交集继续影响着我抓住机遇的方式。",
       "english": "You know, the intersection of business needs and personal values continues to shape how I approach opportunities.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8193,7 +8193,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我注意到，定期退后一步可以帮助我对正在进行的项目带来更新鲜的视角。",
       "english": "I've noticed that stepping back periodically helps me return with fresher perspectives on ongoing projects.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8203,7 +8203,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我发现庆祝一路上的小里程碑可以防止倦怠并保持动力。",
       "english": "I find that celebrating small milestones along the way prevents burnout and maintains motivation.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8213,7 +8213,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "它使我能够认识到我通过文化洞察力和实践知识带来的独特价值。",
       "english": "It's empowering to recognize the unique value I bring through both cultural insight and practical knowledge.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8223,7 +8223,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "要知道，这个阶段的持续专业发展更多的是深度感，而不是快速扩张感。",
       "english": "You know, continuous professional development at this stage feels more about depth than rapid expansion.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8233,7 +8233,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是创建支持效率、同时为创新提供空间的系统。",
       "english": "Lately the emphasis has been on creating systems that support efficiency while allowing space for innovation.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8243,7 +8243,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将工作成就感与整体生活满意度相结合仍然是我持续考虑的关键因素之一。",
       "english": "I mean, integrating work fulfillment with overall life satisfaction remains one of my key ongoing considerations.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8253,7 +8253,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，有意义的贡献来自于将努力与眼前的需求和更大的目标结合起来。",
       "english": "I sort of believe that meaningful contribution comes from aligning efforts with both immediate needs and bigger picture goals.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8263,7 +8263,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些对职业发展的反思让我保持专注和前瞻性思维。",
       "english": "You know, these reflections on career evolution keep me engaged and forward-thinking.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8273,7 +8273,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B11.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这个阶段带来了比我预期更丰富的职业使命感。",
       "english": "Overall, this phase has brought a richer sense of professional purpose than I anticipated.",
       "sourceAudio": "中级/B11.mp3",
       "sourceDocument": "中级/B11.docx",
@@ -8283,7 +8283,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在练习在烹饪或园艺等日常活动中更加专注，而不是让我的思绪徘徊在待办事项清单上。",
       "english": "You know, I've been practicing being more present during everyday activities like cooking or gardening instead of letting my mind wander to to-do lists.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8293,7 +8293,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "最近我发现，即使是短暂的正念呼吸也能重新集中我的注意力，减少不必要的紧张。",
       "english": "Lately I've noticed that even short moments of mindful breathing can reset my focus and reduce unnecessary tension.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8303,7 +8303,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，不加评判地培养对自己想法的认识已经逐渐改变了我对日常压力的反应。",
       "english": "I mean, cultivating awareness of my thoughts without judgment has gradually changed how I respond to daily stressors.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8313,7 +8313,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "有帮助的一件事是在开始日常工作之前先进行几分钟的安静反思。",
       "english": "One thing that helps is starting the morning with a few minutes of quiet reflection before diving into routines.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8323,7 +8323,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "你知道，有趣的是，关注我周围的感官细节可以让我更加欣赏平凡的时刻。",
       "english": "You know, it's interesting how paying attention to sensory details around me brings more appreciation to ordinary moments.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8333,7 +8333,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "我经常尝试单一任务，发现它可以提高我所做的事情的质量。",
       "english": "I've been experimenting with single-tasking more often and finding it leads to better quality in whatever I'm doing.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8343,7 +8343,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，谈话中的存在可以让联系感觉更深入、更真实。",
       "english": "I sort of realize that presence in conversations makes the connections feel deeper and more authentic.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8353,7 +8353,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "最近，实时注意到感恩的做法已经以积极的方式改变了我的整体情绪。",
       "english": "Lately the practice of noticing gratitude in real time has shifted my overall mood in positive ways.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8363,7 +8363,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，正念并不是完美，而是在注意力分散时轻轻地收回注意力。",
       "english": "I mean, mindfulness isn't about perfection but about gently returning attention when it drifts.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8373,7 +8373,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "你知道，将这些练习融入忙碌的日子里，对我的平静感产生了明显的影响。",
       "english": "You know, integrating these practices into busy days has made a noticeable difference in my sense of calm.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8383,7 +8383,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "我发现，心无旁骛地散步可以让你的思维更加清晰，并产生创造性的见解。",
       "english": "I've found that walking without distractions allows for clearer thinking and creative insights.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8393,7 +8393,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "观察情绪的产生和消失而不是完全陷入其中是很有力量的。",
       "english": "It's kind of powerful to observe emotions as they arise and pass without getting completely swept up in them.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8403,7 +8403,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "最近我更加意识到我的环境如何影响我的精神状态，并相应地做出小小的调整。",
       "english": "Lately I've been more aware of how my environment affects my mental state and making small adjustments accordingly.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8413,7 +8413,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "我尝试全神贯注地对待每一次互动，这丰富了我和他人的经验。",
       "english": "I try to approach each interaction with full attention, which enriches both my experience and the other person's.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8423,7 +8423,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种持续的存在感培养将继续支持更好的决策和关系。",
       "english": "You know, this ongoing cultivation of presence continues to support better decision-making and relationships.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8433,7 +8433,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，通往更大正念的旅程感觉就像是一种自然展开的终生练习。",
       "english": "I mean, the journey toward greater mindfulness feels like a lifelong practice that unfolds naturally.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8443,7 +8443,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "当我晚上进行正念活动放松时，我发现睡眠得到了改善，焦虑也减少了。",
       "english": "I've noticed improved sleep and reduced anxiety when I wind down with mindful activities in the evening.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8453,7 +8453,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉通过适应当下，我可以更充分地品味生活。",
       "english": "Lately it feels like I'm savoring life more fully by staying attuned to the present.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8463,7 +8463,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "我有点相信意识是任何领域发生有意义的变革的基础。",
       "english": "I sort of believe that awareness is the foundation for meaningful change in any area.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8473,7 +8473,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B12.mp3",
-      "chinese": "",
+      "chinese": "总体而言，这些做法为日常生活带来了更安静、更集中的品质。",
       "english": "Overall, these practices have brought a quieter, more centered quality to daily living.",
       "sourceAudio": "中级/B12.mp3",
       "sourceDocument": "中级/B12.docx",
@@ -8483,7 +8483,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "你知道，从积极的养育方式转变为更多的支持性顾问角色既是一种解放，也是一种情感上的丰富。",
       "english": "You know, transitioning from active parenting to more of a supportive advisor role has been both liberating and emotionally rich.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8493,7 +8493,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "我一直在学习只在被要求时提供指导，同时仍然深深地关心他们远方的福祉。",
       "english": "I've been learning to offer guidance only when asked while still staying deeply invested in their well-being from afar.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8503,7 +8503,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在保持我们牢固的家庭联系的同时，见证他们的独立和独特的道路是值得的。",
       "english": "I mean, it's rewarding to witness their independence and unique paths while maintaining our strong family connection.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8513,7 +8513,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "最近，我们分享了更多成人之间的对话，内容涵盖从职业挑战到生活哲学的各个方面。",
       "english": "Lately we've been sharing more adult-to-adult conversations that cover everything from career challenges to life philosophies.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8523,7 +8523,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "您知道，在参与和空间之间找到适当的平衡仍然是这一新篇章的重要组成部分。",
       "english": "You know, finding the right balance between involvement and space continues to be an important part of this new chapter.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8533,7 +8533,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "令人高兴的一件事是看到我们早期强调的价值观现在如何体现在他们的决策中。",
       "english": "One thing that brings joy is seeing how the values we emphasized early on show up in their decision-making now.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8543,7 +8543,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到我的角色已经转向鼓励和庆祝他们的成就。",
       "english": "I sort of realize that my role has shifted toward encouragement and celebration of their accomplishments.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8553,7 +8553,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "当他们寻求我的观点时，这真是太棒了，因为他们重视我多年来获得的经验。",
       "english": "It's kind of wonderful when they seek my perspective because they value the experience I've gained over the years.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8563,7 +8563,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在保持情感亲密的同时保持距离需要创造力和持续的努力。",
       "english": "I mean, navigating distance while keeping emotional closeness requires creativity and consistent effort.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8573,7 +8573,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在反思，我为他们成为坚韧而有思想的成年人感到多么自豪。",
       "english": "Lately I've been reflecting on how proud I am of the resilient and thoughtful adults they've become.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8583,7 +8583,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "你知道，分享我自己的经历中的故事有助于在不强加期望的情况下架起理解的桥梁。",
       "english": "You know, sharing stories from my own journey helps bridge understanding without imposing expectations.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8593,7 +8593,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "我注意到，在没有立即解决方案的情况下倾听可以以有意义的方式加强我们的联系。",
       "english": "I've noticed that listening without immediate solutions strengthens our bond in meaningful ways.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8603,7 +8603,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "我尝试像他们年轻时那样充分地庆祝他们的里程碑，只是以不同的形式。",
       "english": "I try to celebrate their milestones as fully as I did when they were younger, just in different forms.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8613,7 +8613,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "最近，围绕未来家庭计划的对话开辟了新的联系层面。",
       "english": "Lately the conversations around future family plans have opened up new layers of connection.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8623,7 +8623,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，作为成年人的父母，这种不断变化的角色感觉是迄今为止最有成就感的阶段之一。",
       "english": "I mean, this evolving role as a parent of adults feels like one of the most fulfilling stages so far.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8633,7 +8633,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "你知道，支持他们的成长，同时满足我自己的需求，可以为每个人创造更健康的活力。",
       "english": "You know, supporting their growth while honoring my own needs creates a healthier dynamic for everyone.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8643,7 +8643,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，通过存在和尊重来表达无条件的爱是现在最重要的。",
       "english": "I sort of believe that unconditional love expressed through presence and respect is what matters most now.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8653,7 +8653,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "看到随着时间的推移逐渐形成的相互尊重和感情真是令人振奋。",
       "english": "It's heartening to see the mutual respect and affection that has developed over time.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8663,7 +8663,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "最近，我很感激有机会见证他们正在进行的旅程并为其做出贡献。",
       "english": "Lately I've felt grateful for the opportunity to witness and contribute to their ongoing journeys.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8673,7 +8673,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B13.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这些不断变化的家庭角色继续给我的生活带来深度和欢乐。",
       "english": "Overall, these changing family roles continue to bring depth and joy to my life.",
       "sourceAudio": "中级/B13.mp3",
       "sourceDocument": "中级/B13.docx",
@@ -8683,7 +8683,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在重新发现在忙碌的家庭岁月中我搁置的创造性追求的乐趣。",
       "english": "You know, I've been rediscovering the joy of creative pursuits that I set aside during busier family years.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8693,7 +8693,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在尝试写作和内容创作，作为处理经验和分享见解的一种方式。",
       "english": "Lately I've been experimenting with writing and content creation as a way to process experiences and share insights.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8703,7 +8703,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，从事挑战我的思想和双手的爱好带来了一种令人耳目一新的流动感和满足感。",
       "english": "I mean, engaging in hobbies that challenge my mind and hands has brought a refreshing sense of flow and satisfaction.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8713,7 +8713,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我注意到的一件事是，创造性活动如何帮助我挖掘在日常任务中无法接触到的观点。",
       "english": "One thing I've noticed is how creative activities help me tap into perspectives I don't access during routine tasks.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8723,7 +8723,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "你知道，在一周中融入一些小的创意时刻可以防止生活感觉过于一维。",
       "english": "You know, incorporating small creative moments into the week prevents life from feeling too one-dimensional.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8733,7 +8733,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我一直在探索如何将我的技术兴趣与更多的艺术表达结合起来以达到平衡。",
       "english": "I've been exploring ways to combine my technical interests with more artistic expression for balance.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8743,7 +8743,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，通过各种媒介的自我表达可以以微妙但有力的方式支持情感健康。",
       "english": "I sort of realize that self-expression through various mediums supports emotional well-being in subtle but powerful ways.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8753,7 +8753,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "最近，纯粹为了享受而学习新技能的过程重新点燃了一种玩乐感。",
       "english": "Lately the process of learning new skills purely for enjoyment has reignited a sense of playfulness.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8763,7 +8763,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，与家人或朋友分享创意成果可以创建额外的联系和反馈层。",
       "english": "I mean, sharing creative outputs with family or friends creates additional layers of connection and feedback.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8773,7 +8773,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "你知道，创造是一种解放，没有要求它完美或富有成效的压力。",
       "english": "You know, it's liberating to create without the pressure of needing it to be perfect or productive.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8783,7 +8783,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我发现专门的爱好时间可以作为冥想和缓解压力的一种形式。",
       "english": "I've found that dedicated hobby time acts as a form of meditation and stress relief.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8793,7 +8793,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加愿意在融合不同人才的小项目上进行合作。",
       "english": "Lately I've been more open to collaborating on small projects that blend different talents.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8803,7 +8803,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我尝试以好奇心而不是自我批评来对待创造力，这使其可持续。",
       "english": "I try to approach creativity with curiosity rather than self-criticism, which keeps it sustainable.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8813,7 +8813,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "要知道，这些出路已经成为保持活力和新鲜能量的必需品。",
       "english": "You know, these outlets have become essential for maintaining vitality and fresh energy.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8823,7 +8823,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，完成精心制作的事情所带来的满足感远远超出了活动本身。",
       "english": "I mean, the satisfaction from completing something made with care extends far beyond the activity itself.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8833,7 +8833,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "最近感觉培养创造力以意想不到的方式支持整体生活的实现。",
       "english": "Lately it feels like nurturing creativity supports overall life fulfillment in unexpected ways.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8843,7 +8843,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "我有点相信每个人都有独特的表达天赋，值得在任何年龄段去探索。",
       "english": "I sort of believe that everyone has unique expressive gifts worth exploring at any age.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8853,7 +8853,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "你知道，更有意识地整合兴趣爱好丰富了我的个人时间和家庭互动。",
       "english": "You know, integrating hobbies more consciously has enriched both my personal time and family interactions.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8863,7 +8863,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "看到自我表达如何随着生活经历而发展和深化是值得的。",
       "english": "It's rewarding to see how self-expression evolves and deepens with life experience.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8873,7 +8873,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B14.mp3",
-      "chinese": "",
+      "chinese": "总体而言，优先考虑创造力为本章增添了色彩和深度。",
       "english": "Overall, prioritizing creativity has added color and depth to this chapter.",
       "sourceAudio": "中级/B14.mp3",
       "sourceDocument": "中级/B14.docx",
@@ -8883,7 +8883,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "你知道，回顾我们所面临的各种挑战，我看到了韧性是如何通过持续的小选择逐渐增强的。",
       "english": "You know, looking back on various challenges we've faced, I've seen how resilience builds gradually through consistent small choices.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8893,7 +8893,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "当商业或家庭事务中出现意外情况时，我一直在制定更好的适应策略。",
       "english": "I've been developing better strategies for adapting when unexpected situations arise in business or family matters.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8903,7 +8903,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，通过练习和反思，在困难时期保持观点变得更加容易。",
       "english": "I mean, maintaining perspective during difficult periods has become easier with practice and reflection.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8913,7 +8913,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直专注于我可以控制的事情，并释放对超出范围的结果的执着。",
       "english": "Lately I've been focusing on what I can control and releasing attachment to outcomes beyond that.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8923,7 +8923,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "您知道，在不同的人生转变中，转变和寻找新方法的能力对我们很有帮助。",
       "english": "You know, the ability to pivot and find new approaches has served us well through different life transitions.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8933,7 +8933,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "有用的一件事是利用过去的经验来为当前的问题解决提供信息，而不是纠缠于它们。",
       "english": "One thing that helps is drawing on past experiences to inform current problem-solving without dwelling on them.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8943,7 +8943,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到脆弱与决心相结合可以创造出真正的力量。",
       "english": "I sort of realize that vulnerability combined with determination creates authentic strength.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8953,7 +8953,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "公开承认挑战，同时仍满怀希望地前进，是一种力量。",
       "english": "It's kind of empowering to acknowledge challenges openly while still moving forward with hope.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8963,7 +8963,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，建立支持网络和自我护理习惯可以在困难时期奠定坚实的基础。",
       "english": "I mean, building support networks and self-care routines provides a solid foundation during tougher times.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8973,7 +8973,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加主动地预测潜在的障碍并准备灵活的应对措施。",
       "english": "Lately I've been more proactive about anticipating potential obstacles and preparing flexible responses.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8983,7 +8983,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "你知道，即使在困难中练习感恩也会显着改变情感体验。",
       "english": "You know, practicing gratitude even amid difficulties shifts the emotional experience noticeably.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -8993,7 +8993,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "我了解到，在需要时寻求帮助是智慧而不是软弱的表现。",
       "english": "I've learned that asking for help when needed is a sign of wisdom rather than weakness.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9003,7 +9003,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "我尝试将挫折视为暂时的、提供信息的，而不是定义性的。",
       "english": "I try to view setbacks as temporary and informative rather than defining.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9013,7 +9013,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是应对挑战后的恢复和学习。",
       "english": "Lately the emphasis has been on recovery and learning after navigating challenges.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9023,7 +9023,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，中年的韧性包括尊重情感，同时保持前进的动力。",
       "english": "I mean, resilience in midlife includes honoring emotions while maintaining forward momentum.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9033,7 +9033,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着时间的推移，这些适应性策略不断发展并为我提供更好的服务。",
       "english": "You know, these adaptive strategies continue to evolve and serve me better over time.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9043,7 +9043,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，如果深思熟虑地应对，每一个挑战都蕴藏着成长的种子。",
       "english": "I sort of believe that every challenge carries seeds of growth if approached thoughtfully.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9053,7 +9053,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "根据过去的证据，相信我有能力处理所发生的事情，这让人放心。",
       "english": "It's reassuring to trust in my capacity to handle what comes based on past evidence.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9063,7 +9063,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉自己更有能力支持他人克服自己的困难。",
       "english": "Lately I've felt stronger in my ability to support others through their own difficulties as well.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9073,7 +9073,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B15.mp3",
-      "chinese": "",
+      "chinese": "总体而言，培养适应力已成为最有价值的生活技能之一。",
       "english": "Overall, cultivating resilience has become one of the most valuable life skills.",
       "sourceAudio": "中级/B15.mp3",
       "sourceDocument": "中级/B15.docx",
@@ -9083,7 +9083,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在更刻意地思考我想通过言语和行动传递的价值观和原则。",
       "english": "You know, I've been thinking more intentionally about the values and principles I want to pass on through both words and actions.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9093,7 +9093,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是在我们的家庭结构中创造持久的安全感和爱。",
       "english": "Lately the focus has been on creating a lasting sense of security and love within our family structure.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9103,7 +9103,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，遗产更多的是关于我们分享的情感和实践智慧，而不是物质事物。",
       "english": "I mean, legacy feels less about material things and more about the emotional and practical wisdom we share.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9113,7 +9113,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "至关重要的一件事是确保房屋和家庭资产为后代提供稳定。",
       "english": "One thing that matters deeply is ensuring the house and family assets provide stability for the generations ahead.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9123,7 +9123,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "您知道，与核心价值观保持一致的生活会给日常决策带来安静的正直感。",
       "english": "You know, living in alignment with core values brings a quiet sense of integrity to daily decisions.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9133,7 +9133,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "我一直在思考我们作为移民的旅程如何塑造我们留给子孙后代的故事。",
       "english": "I've been reflecting on how our journey as immigrants shapes the story we leave for our children and beyond.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9143,7 +9143,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，有意义的生活来自于反映我们真正关心的事情的一致选择。",
       "english": "I sort of realize that meaningful living comes from consistent choices that reflect what we truly care about.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9153,7 +9153,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加刻意地记录家族历史和一路上吸取的教训。",
       "english": "Lately I've been more deliberate about documenting family history and lessons learned along the way.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9163,7 +9163,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，以深思熟虑的方式为社区和事业做出贡献感觉像是建立积极遗产的一部分。",
       "english": "I mean, contributing to community and causes in thoughtful ways feels like part of building a positive legacy.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9173,7 +9173,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "您知道，平衡当前的享受与面向未来的规划可以创造一个令人满意的中间立场。",
       "english": "You know, balancing present enjoyment with future-oriented planning creates a fulfilling middle ground.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9183,7 +9183,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "令人振奋的是，即使角色发生变化，共同的价值观仍继续指导我们的家庭。",
       "english": "It's heartening to see how shared values continue to guide our family even as roles evolve.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9193,7 +9193,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "我努力塑造耐心、韧性和善良的榜样，让它们成为家庭文化的自然组成部分。",
       "english": "I try to model patience, resilience, and kindness so they become natural parts of the family culture.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9203,7 +9203,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是加强跨时间联系的经历和记忆。",
       "english": "Lately the emphasis has been on experiences and memories that strengthen bonds across time.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9213,7 +9213,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，用我们自己的方式而不是外部措施来定义成功是一种解放。",
       "english": "I mean, defining success on our own terms rather than external measures has been liberating.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9223,7 +9223,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "您知道，投资于个人成长和人际关系可以为我们创造的遗产带来红利。",
       "english": "You know, investing in personal growth and relationships pays dividends in the kind of legacy we create.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9233,7 +9233,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "我发现有目的的生活并不需要宏大的姿态，而是需要稳定、有目的的步骤。",
       "english": "I've noticed that living with purpose doesn't require grand gestures but steady, intentional steps.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9243,7 +9243,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，有意义的生活是通过爱、努力和反思日复一日地建立起来的。",
       "english": "I sort of believe that a meaningful life is built day by day through love, effort, and reflection.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9253,7 +9253,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "最近，我很感激有机会通过我们的选择塑造持久的事物。",
       "english": "Lately I've felt grateful for the opportunity to shape something enduring through our choices.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9263,7 +9263,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "您知道，这些围绕遗产的考虑为日常生活带来了清晰度和动力。",
       "english": "You know, these considerations around legacy bring clarity and motivation to daily life.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9273,7 +9273,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B16.mp3",
-      "chinese": "",
+      "chinese": "总体而言，关注价值观和有意义的联系使本章感觉丰富且有目的。",
       "english": "Overall, focusing on values and meaningful connections makes this chapter feel rich and purposeful.",
       "sourceAudio": "中级/B16.mp3",
       "sourceDocument": "中级/B16.docx",
@@ -9283,7 +9283,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在认识到，设定明确的个人界限并不自私，但实际上对于在我的所有角色中保持精力和存在感是必要的。",
       "english": "You know, I've been learning that setting clear personal boundaries isn't selfish but actually necessary for maintaining energy and presence in all my roles.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9293,7 +9293,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "最近，我更有意识地在某些晚上享受安静的时间，而不是让每一刻都充满义务。",
       "english": "Lately I've been more intentional about protecting certain evenings for quiet time instead of filling every moment with obligations.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9303,7 +9303,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在支持家庭和事业的同时仍然满足自己的需求之间找到最佳平衡点是一个持续的过程。",
       "english": "I mean, finding the sweet spot between being supportive to family and business while still honoring my own needs has been an ongoing process.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9313,7 +9313,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "有帮助的一件事是学会友善而坚定地传达这些界限，以便每个人都了解我来自哪里。",
       "english": "One thing that has helped is learning to communicate those boundaries kindly but firmly so everyone understands where I'm coming from.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9323,7 +9323,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "你知道，当我意识到拒绝额外的承诺可以让我更充分地去做最重要的事情时，我感到很轻松。",
       "english": "You know, it's kind of liberating to realize that saying no to extra commitments allows me to show up more fully for the things that matter most.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9333,7 +9333,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "我注意到，当我尊重自己的极限时，我实际上在处理日常责任时变得更加耐心和有效。",
       "english": "I've noticed that when I respect my own limits, I actually become more patient and effective in handling daily responsibilities.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9343,7 +9343,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，随着生命阶段的变化和优先事项随着时间的推移而变化，这种平衡会自然演变。",
       "english": "I sort of believe that this balance evolves naturally as life stages change and priorities shift over time.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9353,7 +9353,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "最近，我们在家里进行了公开讨论，讨论如何以对每个人来说都公平且可持续的方式分配任务。",
       "english": "Lately we've been having open discussions at home about dividing tasks in ways that feel fair and sustainable for everyone.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9363,7 +9363,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在这个忙碌的篇章中，保护精神空间已经变得与管理身体时间一样重要。",
       "english": "I mean, protecting mental space has become just as important as managing physical time in this busy chapter.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9373,7 +9373,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "你知道，在同意新事物之前先自我检查一下的做法可以避免很多不必要的压力。",
       "english": "You know, the practice of checking in with myself before agreeing to something new has prevented a lot of unnecessary overwhelm.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9383,7 +9383,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "看到界限的微小调整如何在工作、家庭和个人生活之间创造出更加和谐的氛围，令人感到安心。",
       "english": "It's reassuring to see how small adjustments in boundaries create more harmony across work, family, and personal life.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9393,7 +9393,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "最近，我发现自己很欣赏通过选择性地投入精力而获得的自由。",
       "english": "Lately I find myself appreciating the freedom that comes from being selective about where I invest my energy.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9403,7 +9403,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "我尝试为我们的儿子树立这种平衡的榜样，以便他们了解自我照顾和责任的重要性。",
       "english": "I try to model this balance for our sons so they understand the importance of self-care alongside responsibility.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9413,7 +9413,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "你知道，文化背景如何以微妙的方式影响我们对职责和个人空间的看法，这很有趣。",
       "english": "You know, it's interesting how cultural backgrounds influence our views on duty and personal space in subtle ways.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9423,7 +9423,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，不断完善这些界限可以帮助我维持长期的幸福感，而不是精疲力竭。",
       "english": "I mean, continuously refining these boundaries helps me sustain long-term well-being rather than burning out.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9433,7 +9433,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是创造既支持生产力又支持真正休息的节奏。",
       "english": "Lately the focus has been on creating rhythms that support both productivity and genuine rest.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9443,7 +9443,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，健康的界限可以通过促进相互尊重和理解来加强关系。",
       "english": "I sort of realize that healthy boundaries strengthen relationships by fostering mutual respect and understanding.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9453,7 +9453,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "你知道，这项技能在不断发展，并且一年比一年更好地为我服务。",
       "english": "You know, this skill continues to develop and serves me better with each passing year.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9463,7 +9463,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "认识到照顾好自己最终会让我周围的每个人受益，这是一种力量。",
       "english": "It's empowering to recognize that taking care of myself ultimately benefits everyone around me.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9473,7 +9473,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B17.mp3",
-      "chinese": "",
+      "chinese": "总的来说，平衡责任和深思熟虑的界限给日常生活带来了更多的平静。",
       "english": "Overall, balancing responsibilities with thoughtful boundaries has brought greater peace to daily life.",
       "sourceAudio": "中级/B17.mp3",
       "sourceDocument": "中级/B17.docx",
@@ -9483,7 +9483,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "You know, as the seasons shift here in Oregon, I often reflect on how they mirror the natural transitions we experience in life.",
       "english": "You know, as the seasons shift here in Oregon, I often reflect on how they mirror the natural transitions we experience in life.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9493,7 +9493,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "Lately I've been noticing how the changing light and weather influence my energy levels and daily rhythms in interesting ways.",
       "english": "Lately I've been noticing how the changing light and weather influence my energy levels and daily rhythms in interesting ways.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9503,7 +9503,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "I mean, embracing these cycles rather than resisting them has made moving through different life phases feel more graceful.",
       "english": "I mean, embracing these cycles rather than resisting them has made moving through different life phases feel more graceful.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9513,7 +9513,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "One thing that stands out is how fall always prompts me to think about what I'm ready to release from the previous year.",
       "english": "One thing that stands out is how fall always prompts me to think about what I'm ready to release from the previous year.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9523,7 +9523,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "You know, preparing the garden for winter reminds me of the importance of creating foundations for future growth.",
       "english": "You know, preparing the garden for winter reminds me of the importance of creating foundations for future growth.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9533,7 +9533,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "I sort of believe that life's transitions become easier when we approach them with the same patience we give to nature.",
       "english": "I sort of believe that life's transitions become easier when we approach them with the same patience we give to nature.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9543,7 +9543,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在讨论随着我们一起进入人生的新阶段，家庭计划可能会如何演变。",
       "english": "Lately we've been discussing how family plans might evolve as we move into new seasons of life together.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9553,7 +9553,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "I mean, the longer evenings in winter provide perfect opportunities for deeper conversations and reflection.",
       "english": "I mean, the longer evenings in winter provide perfect opportunities for deeper conversations and reflection.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9563,7 +9563,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "You know, watching the spring blooms return always fills me with hope about fresh possibilities ahead.",
       "english": "You know, watching the spring blooms return always fills me with hope about fresh possibilities ahead.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9573,7 +9573,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "It's kind of beautiful how these seasonal markers help me track personal growth over the years.",
       "english": "It's kind of beautiful how these seasonal markers help me track personal growth over the years.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9583,7 +9583,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "Lately I've been more mindful about adjusting routines gently as the weather and life circumstances change.",
       "english": "Lately I've been more mindful about adjusting routines gently as the weather and life circumstances change.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9593,7 +9593,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "我试图找到尊重每个季节及其所代表的转变的小仪式。",
       "english": "I try to find small rituals that honor each season and the transitions they represent.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9603,7 +9603,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "You know, midlife has taught me that change is constant, much like the weather patterns here.",
       "english": "You know, midlife has taught me that change is constant, much like the weather patterns here.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9613,7 +9613,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "I mean, preparing thoughtfully for upcoming shifts in family or business brings a sense of calm readiness.",
       "english": "I mean, preparing thoughtfully for upcoming shifts in family or business brings a sense of calm readiness.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9623,7 +9623,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是品味每个季节的独特礼物，而不是匆忙浏览它们。",
       "english": "Lately the emphasis has been on savoring the unique gifts of each season rather than rushing through them.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9633,7 +9633,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "I sort of realize that flexibility during transitions is one of the most valuable skills we've developed.",
       "english": "I sort of realize that flexibility during transitions is one of the most valuable skills we've developed.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9643,7 +9643,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些自然循环继续提供关于耐心、更新和放手的智慧。",
       "english": "You know, these natural cycles continue to offer wisdom about patience, renewal, and letting go.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9653,7 +9653,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "令人放心的是，随着季节的流逝，生命的各个阶段都会带来自己的时机和机会。",
       "english": "It's reassuring to trust that just as seasons pass, life phases bring their own timing and opportunities.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9663,7 +9663,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉更加适应这些节奏以及它们如何支持整体健康。",
       "english": "Lately I've felt more attuned to these rhythms and how they support overall well-being.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9673,7 +9673,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B18.mp3",
-      "chinese": "",
+      "chinese": "总的来说，拥抱季节和生活的转变增加了我们旅程的深度和欣赏度。",
       "english": "Overall, embracing seasonal and life transitions has added depth and appreciation to our journey.",
       "sourceAudio": "中级/B18.mp3",
       "sourceDocument": "中级/B18.docx",
@@ -9683,7 +9683,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着我们的儿子长大成人，我在他们寻求指导时提供指导而不是指导每一步，从而获得了巨大的成就感。",
       "english": "You know, as our sons have grown into adults, I've found great fulfillment in offering guidance when they seek it rather than directing every step.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9693,7 +9693,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考如何通过我们的移民和商业经验获得的智慧来支持面临类似道路的其他人。",
       "english": "Lately I've been reflecting on how the wisdom gained through our immigration and business experiences can support others facing similar paths.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9703,7 +9703,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，分享成功和挫折的见解比提供完美的建议更能建立真实的联系。",
       "english": "I mean, sharing insights from both successes and setbacks creates more authentic connections than giving perfect advice.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9713,7 +9713,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "感觉有意义的一件事是看着他们以自己独特的方式应用我们讨论过的想法。",
       "english": "One thing that feels meaningful is watching them apply ideas we've discussed in their own unique ways.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9723,7 +9723,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "你知道，商业环境中的指导教会了我，就像我与年轻团队成员分享的一样多。",
       "english": "You know, mentoring in the business context has taught me as much as I've shared with younger team members.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9733,7 +9733,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，有效的指导来自于首先倾听，然后谦虚地提出观点。",
       "english": "I sort of believe that effective guidance comes from listening first and then offering perspectives humbly.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9743,7 +9743,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "最近我们一直在讨论长期规划，感觉是合作而不是单方面的。",
       "english": "Lately we've been having conversations about long-term planning that feel collaborative rather than one-sided.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9753,7 +9753,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，传递有关财务和复原力的实用知识现在感觉像是一项重要的责任。",
       "english": "I mean, passing along practical knowledge about finances and resilience feels like an important responsibility now.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9763,7 +9763,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "你知道，我们背景的文化智慧和美国经验的融合丰富了我可以提供的指导。",
       "english": "You know, the blend of cultural wisdom from our background and American experiences enriches the guidance I can provide.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9773,7 +9773,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "当他们回来分享我们讨论的内容如何帮助他们应对挑战时，这是一种回报。",
       "english": "It's kind of rewarding when they come back and share how something we discussed helped them navigate a challenge.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9783,7 +9783,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地记录重要的课程，以便将来可以访问它们。",
       "english": "Lately I've been more intentional about documenting key lessons so they remain accessible for the future.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9793,7 +9793,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "我尝试鼓励独立思考，同时仍然提供稳定的支持来源。",
       "english": "I try to encourage independent thinking while still being available as a steady source of support.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9803,7 +9803,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "你知道，导师和顾问的角色随着每个人的成长而不断演变。",
       "english": "You know, this role of mentor and advisor continues to evolve as everyone grows.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9813,7 +9813,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，公开分享我们的旅程故事有助于揭开我们后人的道路神秘面纱。",
       "english": "I mean, sharing stories openly about our journey helps demystify the path for those coming after us.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9823,7 +9823,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是授权而不是保护，这感觉像是健康的进步。",
       "english": "Lately the focus has been on empowering rather than protecting, which feels like healthy progression.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9833,7 +9833,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，真正的智慧往往是通过现场和例子而不是言语来传达的。",
       "english": "I sort of realize that true wisdom is often conveyed through presence and example more than words.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9843,7 +9843,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些指导和分享的机会为这个人生阶段增添了意义。",
       "english": "You know, these opportunities to guide and share have added purpose to this life stage.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9853,7 +9853,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "看到我们多年来强调的价值观和战略所产生的连锁反应，令人振奋。",
       "english": "It's heartening to see the ripple effects of the values and strategies we've emphasized over the years.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9863,7 +9863,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "最近，我很感激有机会以这些有意义的方式做出贡献。",
       "english": "Lately I've felt grateful for the chance to contribute in these meaningful ways.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9873,7 +9873,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B19.mp3",
-      "chinese": "",
+      "chinese": "总体而言，指导和分享智慧已成为家庭和职业生活中深刻实现的方面。",
       "english": "Overall, mentorship and sharing wisdom have become deeply fulfilling aspects of family and professional life.",
       "sourceAudio": "中级/B19.mp3",
       "sourceDocument": "中级/B19.docx",
@@ -9883,7 +9883,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "你知道，我最近更加意识到科技如何融入我们的日常生活而不完全接管。",
       "english": "You know, I've been more conscious lately about how technology fits into our daily routines without taking over completely.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9893,7 +9893,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索有用的应用程序和工具，它们可以真正简化与业务和家庭管理相关的任务。",
       "english": "Lately I've been exploring useful apps and tools that genuinely simplify tasks related to business and family management.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9903,7 +9903,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，有意限制晚上的屏幕时间可以改善睡眠质量和家庭联系。",
       "english": "I mean, setting intentional limits on screen time in the evenings has improved both sleep quality and family connections.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9913,7 +9913,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "我学到的一件事是，当技术服务于我们的目标而不是决定生活节奏时，它的效果最好。",
       "english": "One thing I've learned is that technology works best when it serves our goals rather than dictating the pace of life.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9923,7 +9923,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "您知道，尽管距离遥远，但定期使用视频通话有助于我们与儿子们保持亲密关系。",
       "english": "You know, using video calls regularly has helped maintain closeness with our sons despite the distance.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9933,7 +9933,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，定期回顾数字习惯可以防止它们成为无意识的默认行为。",
       "english": "I sort of realize that periodically reviewing digital habits prevents them from becoming mindless defaults.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9943,7 +9943,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在实施一些小规则，例如不使用设备进餐，以促进更好的在家状态。",
       "english": "Lately we've been implementing small rules like device-free meals to foster better presence at home.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9953,7 +9953,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，为企业学习新的数字技能一直具有挑战性，但在现阶段最终会带来力量。",
       "english": "I mean, learning new digital skills for the business has been challenging but ultimately empowering at this stage.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9963,7 +9963,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "您知道，平衡在线工具的便利性与面对面互动的价值仍然是关键。",
       "english": "You know, balancing the convenience of online tools with the value of in-person interactions remains key.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9973,7 +9973,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "有趣的是，技术改变了沟通方式，同时也带来了新的导航挑战。",
       "english": "It's kind of interesting how technology has transformed communication while also creating new challenges to navigate.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9983,7 +9983,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加仔细地管理我的数字输入，以支持积极的心态和学习。",
       "english": "Lately I've been curating my digital inputs more carefully to support positive mindset and learning.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -9993,7 +9993,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "我尝试将科技视为一个有用的仆人，而不是一个持续的干扰。",
       "english": "I try to approach tech as a helpful servant rather than a constant distraction.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10003,7 +10003,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "您知道，与朋友和家人分享实用的数字技巧可以创造良好的知识交流。",
       "english": "You know, sharing practical digital tips with friends and family creates nice exchanges of knowledge.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10013,7 +10013,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，保持网络安全意识和良好实践已成为负责任的现代生活的一部分。",
       "english": "I mean, maintaining cybersecurity awareness and good practices has become part of responsible modern living.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10023,7 +10023,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是使用技术来增强而不是取代现实生活体验。",
       "english": "Lately the emphasis has been on using technology to enhance rather than replace real-life experiences.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10033,7 +10033,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "我有点相信数字健康是当今世界维持平衡的一项基本技能。",
       "english": "I sort of believe that digital wellness is an essential skill for sustaining balance in today's world.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10043,7 +10043,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "您知道，随着新工具的出现，这些正念方法不断发展。",
       "english": "You know, these mindful approaches continue to evolve as new tools emerge.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10053,7 +10053,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "看到有意识的使用如何在不牺牲和平的情况下提高生产力，令人感到安心。",
       "english": "It's reassuring to see how intentional use supports productivity without sacrificing peace.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10063,7 +10063,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉比前几年能更好地控制自己与技术的关系。",
       "english": "Lately I've felt more in control of my relationship with technology than in previous years.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10073,7 +10073,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B20.mp3",
-      "chinese": "",
+      "chinese": "总体而言，数字工具的周到集成提高了效率，同时保护了最重要的东西。",
       "english": "Overall, thoughtful integration of digital tools has improved efficiency while protecting what matters most.",
       "sourceAudio": "中级/B20.mp3",
       "sourceDocument": "中级/B20.docx",
@@ -10083,7 +10083,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "你知道，我每天都通过记录特定的时刻而不是一般的想法来加深我的感恩练习。",
       "english": "You know, I've been deepening my gratitude practice by noting specific moments rather than general ideas each day.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10093,7 +10093,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "最近我注意到，积极地将挑战重新定义为学习机会会改变我对它们的整个体验。",
       "english": "Lately I've noticed that actively reframing challenges into learning opportunities shifts my entire experience of them.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10103,7 +10103,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，定期向我的丈夫和家人表达感激之情以安静但有力的方式加强了我们的联系。",
       "english": "I mean, expressing appreciation regularly to my husband and family has strengthened our bonds in quiet but powerful ways.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10113,7 +10113,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "持续有帮助的一件事就是在一天中停下来承认小小的安慰和成功。",
       "english": "One thing that consistently helps is pausing during the day to acknowledge small comforts and successes.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10123,7 +10123,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种积极框架的习惯让中年过渡变得更容易管理和充满希望。",
       "english": "You know, this habit of positive framing has made navigating midlife transitions feel more manageable and hopeful.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10133,7 +10133,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "我渐渐意识到，感恩并不是忽视困难，而是拥有更广阔的视野。",
       "english": "I sort of realize that gratitude isn't about ignoring difficulties but about holding a broader perspective.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10143,7 +10143,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "最近，我们在给家人打电话时分享了感激之情，这让每个人都更加亲近。",
       "english": "Lately we've been sharing gratitude reflections during family calls, which brings everyone closer.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10153,7 +10153,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，专注于进展顺利的事情会创造出度过困难时期的动力。",
       "english": "I mean, focusing on what's going well creates momentum that carries through tougher periods.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10163,7 +10163,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "你知道，将感激之情融入晚上的日常生活中可以帮助我以更平静的心态结束一天。",
       "english": "You know, incorporating gratitude into evening routines helps me end the day with a calmer mind.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10173,7 +10173,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "令人惊奇的是，持续的练习如何训练大脑更自然地发现积极的方面。",
       "english": "It's kind of amazing how consistent practice trains the mind to spot positive aspects more naturally.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10183,7 +10183,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在写下挑战中的教训以及我感激的事情。",
       "english": "Lately I've been writing down lessons from challenges alongside things I'm thankful for.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10193,7 +10193,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "我尝试在当下向人们表达具体的感激之情，而不是留到以后再表达。",
       "english": "I try to express specific appreciation to people in the moment rather than saving it for later.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10203,7 +10203,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种方法显着改善了我的整体前景和适应能力。",
       "english": "You know, this approach has improved my overall outlook and resilience noticeably.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10213,7 +10213,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，对我们移民之旅的感激之情继续激发人们对未来的乐观情绪。",
       "english": "I mean, gratitude for our immigration journey continues to fuel optimism about the future.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10223,7 +10223,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "最近，这种做法已经扩大到包括对自己的成长和努力的赞赏。",
       "english": "Lately the practice has expanded to include appreciation for my own growth and efforts.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10233,7 +10233,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，积极的框架与现实主义相结合可以创造可持续的福祉。",
       "english": "I sort of believe that positive framing combined with realism creates sustainable well-being.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10243,7 +10243,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "您知道，与他人分享这些实践通常会引发有意义的对话。",
       "english": "You know, sharing these practices with others often sparks meaningful conversations.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10253,7 +10253,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "看到感激之情如何向外蔓延并有益于人际关系，真是令人振奋。",
       "english": "It's heartening to see how gratitude ripples outward and benefits relationships.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10263,7 +10263,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这些有意识的习惯，我感到更加踏实和满足。",
       "english": "Lately I've felt more grounded and content through these intentional habits.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10273,7 +10273,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B21.mp3",
-      "chinese": "",
+      "chinese": "总的来说，培养感恩和积极的心态已成为日常生活的基石。",
       "english": "Overall, cultivating gratitude and positive framing has become a cornerstone of daily life.",
       "sourceAudio": "中级/B21.mp3",
       "sourceDocument": "中级/B21.docx",
@@ -10283,7 +10283,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "您知道，通过提前准备问题，我在医疗预约期间变得更加积极主动地为自己辩护。",
       "english": "You know, I've become more proactive about advocating for myself during medical appointments by preparing questions in advance.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10293,7 +10293,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在研究和讨论以深思熟虑的方式补充传统医疗保健的整体方法。",
       "english": "Lately I've been researching and discussing holistic approaches that complement traditional healthcare in thoughtful ways.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10303,7 +10303,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，了解预防措施让我对管理长期健康更有信心。",
       "english": "I mean, staying informed about preventive measures has given me greater confidence in managing long-term wellness.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10313,7 +10313,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "有用的一件事是清晰记录症状和生活方式因素，以便与医生分享。",
       "english": "One thing that helps is keeping clear records of symptoms and lifestyle factors to share with doctors.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10323,7 +10323,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "你知道，平衡基于证据的信息和对我的身体实际有效的信息是关键。",
       "english": "You know, balancing evidence-based information with what actually works for my body has been key.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10333,7 +10333,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到健康倡导包括倾听直觉和专业建议。",
       "english": "I sort of realize that health advocacy includes listening to intuition alongside professional advice.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10343,7 +10343,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在更深入地探索家庭健康史，以便做出更明智的选择。",
       "english": "Lately we've been exploring family health history more deeply to make better informed choices.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10353,7 +10353,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，根据我的感觉结合定期运动和营养调整是有效的。",
       "english": "I mean, incorporating regular movement and nutrition adjustments based on how I feel has been effective.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10363,7 +10363,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "您知道，与医疗保健提供者就中年问题进行公开对话令人放心。",
       "english": "You know, open conversations with healthcare providers about midlife concerns have been reassuring.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10373,7 +10373,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "这是一种积极主动的授权，而不是被动地遵循建议。",
       "english": "It's kind of empowering to take an active role rather than passively following recommendations.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10383,7 +10383,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "最近，人们关注的焦点是可持续的习惯，这些习惯可以支持能量和活力，而不是快速修复。",
       "english": "Lately the focus has been on sustainable habits that support energy and vitality over quick fixes.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10393,7 +10393,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "我尝试以支持性、非强迫性的方式与朋友和家人分享有用的健康见解。",
       "english": "I try to share useful wellness insights with friends and family in a supportive, non-pushy way.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10403,7 +10403,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "您知道，随着新信息的出现，这种知情方法会不断发展。",
       "english": "You know, this informed approach continues to evolve as new information becomes available.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10413,7 +10413,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，优先考虑睡眠、压力管理和快乐的运动已经产生了最大的差异。",
       "english": "I mean, prioritizing sleep, stress management, and joyful movement has made the biggest differences.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10423,7 +10423,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉自己的身体信号和这个阶段的需求更加协调。",
       "english": "Lately I've felt more in tune with my body's signals and what it needs at this stage.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10433,7 +10433,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "我有点相信健康倡导是度过晚年的一项重要技能。",
       "english": "I sort of believe that health advocacy is an important skill for navigating later years.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10443,7 +10443,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "您知道，这些选择不仅支持身体健康，还支持整体生活质量。",
       "english": "You know, these choices support not just physical health but overall quality of life.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10453,7 +10453,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "看到持续、正念的健康实践所产生的积极影响是值得的。",
       "english": "It's rewarding to see the positive effects of consistent, mindful wellness practices.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10463,7 +10463,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加感激能够获得良好的护理和做出明智决定的能力。",
       "english": "Lately I've been more grateful for access to good care and the ability to make informed decisions.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10473,7 +10473,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B22.mp3",
-      "chinese": "",
+      "chinese": "总体而言，用知识和自我倡导来接近健康带来了更大的平静和活力。",
       "english": "Overall, approaching health with knowledge and self-advocacy has brought greater peace and vitality.",
       "sourceAudio": "中级/B22.mp3",
       "sourceDocument": "中级/B22.docx",
@@ -10483,7 +10483,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在加深对财务策略的理解，以确保我们家庭的长期安全。",
       "english": "You know, I've been deepening my understanding of financial strategies to ensure long-term security for our family.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10493,7 +10493,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在审查信托和遗产规划等选项，着眼于保护房屋和资产。",
       "english": "Lately we've been reviewing options like trusts and estate planning with an eye toward protecting the house and assets.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10503,7 +10503,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将实际的税收优化与我们围绕稳定和慷慨的价值观结合起来是正确的。",
       "english": "I mean, combining practical tax optimization with our values around stability and generosity feels right.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10513,7 +10513,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "让我感到平静的一件事是看到多年来持续储蓄和投资所取得的进步。",
       "english": "One thing that gives me peace is seeing the progress from consistent saving and investing over the years.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10523,7 +10523,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "你知道，与我丈夫公开讨论这些问题加强了我们在规划方面的合作关系。",
       "english": "You know, discussing these matters openly with my husband has strengthened our partnership in planning.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10533,7 +10533,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到财务智慧包括灵活性和随着情况变化定期调整。",
       "english": "I sort of realize that financial wisdom includes flexibility and regular adjustments as circumstances change.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10543,7 +10543,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "最近我一直在思考如何以自然的方式将实用知识传授给我们的儿子。",
       "english": "Lately I've been thinking about how to pass on practical knowledge to our sons in natural ways.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10553,7 +10553,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡当前的享受与对未来的深思熟虑的准备是一门持续的艺术。",
       "english": "I mean, balancing current enjoyment with thoughtful preparation for the future is an ongoing art.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10563,7 +10563,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "你知道，了解不同的投资方法增强了我在这些领域的信心。",
       "english": "You know, learning about different investment approaches has expanded my confidence in these areas.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10573,7 +10573,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "构建既支持安全又支持帮助他人的系统是一种令人满意的感觉。",
       "english": "It's kind of satisfying to build systems that support both security and the ability to help others.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10583,7 +10583,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是制定一个全面的计划来兑现我们的旅程和目标。",
       "english": "Lately the emphasis has been on creating a comprehensive plan that honors our journey and goals.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10593,7 +10593,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "我尝试在做出决策时同时考虑短期需求和长期遗产。",
       "english": "I try to make decisions with both short-term needs and long-term legacy in mind.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10603,7 +10603,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "你知道，这个过程会继续减少潜在的担忧并增加清晰度。",
       "english": "You know, this process continues to reduce underlying worries and increase clarity.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10613,7 +10613,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将业务增长与个人财务健康相结合需要仔细协调。",
       "english": "I mean, integrating business growth with personal financial health requires careful coordination.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10623,7 +10623,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "最近，经过专门的学习，我感觉自己更有能力驾驭这些主题了。",
       "english": "Lately I've felt more empowered navigating these topics after dedicated learning.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10633,7 +10633,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "我有点相信财务规划最终是为了自由和内心的平静。",
       "english": "I sort of believe that financial planning is ultimately about freedom and peace of mind.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10643,7 +10643,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "您知道，负责任地分享见解可以帮助下一代变得更强大。",
       "english": "You know, sharing insights responsibly can help the next generation start stronger.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10653,7 +10653,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "看到严格的选择如何与有意义的安全结合在一起，令人感到安心。",
       "english": "It's reassuring to see how disciplined choices compound into meaningful security.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10663,7 +10663,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是涵盖健康、家庭和家庭福祉的整体规划。",
       "english": "Lately the focus has been on holistic planning that covers health, home, and family well-being.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10673,7 +10673,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B23.mp3",
-      "chinese": "",
+      "chinese": "总体而言，以智慧和意图处理财务问题是非常有益的。",
       "english": "Overall, approaching finances with wisdom and intention has been deeply rewarding.",
       "sourceAudio": "中级/B23.mp3",
       "sourceDocument": "中级/B23.docx",
@@ -10683,7 +10683,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "你知道，在这个阶段，我一直在更深入地思考除了日常责任之外什么能带来真正的成就感。",
       "english": "You know, at this stage I've been reflecting more deeply on what brings genuine fulfillment beyond daily responsibilities.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10693,7 +10693,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "最近我发现，目标常常来自于我的优势、价值观和为他人服务的交叉点。",
       "english": "Lately I've come to see that purpose often emerges from the intersection of my strengths, values, and service to others.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10703,7 +10703,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，持续的个人成长，同时欣赏自己所处的位置，可以在中年创造一个很好的平衡。",
       "english": "I mean, continuing personal growth while appreciating where I am creates a nice balance in midlife.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10713,7 +10713,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "感觉有意义的一件事是以与我们的故事相一致的方式通过企业和家庭做出贡献。",
       "english": "One thing that feels meaningful is contributing through the business and family in ways that align with our story.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10723,7 +10723,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "您知道，持续学习可以让生活充满乐趣并防止停滞。",
       "english": "You know, embracing ongoing learning keeps life engaging and prevents stagnation.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10733,7 +10733,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，成就感来自于实现目标和享受旅程本身。",
       "english": "I sort of realize that fulfillment comes from both achieving goals and savoring the journey itself.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10743,7 +10743,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索表达创造力和分享有意义的经验的新方法。",
       "english": "Lately I've been exploring new ways to express creativity and share experiences meaningfully.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10753,7 +10753,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，培养人际关系和社区联系构成了我使命感的重要组成部分。",
       "english": "I mean, nurturing relationships and community connections forms a big part of my sense of purpose.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10763,7 +10763,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "你知道，反思我们的移民道路提醒我，成长是一个终生的过程。",
       "english": "You know, reflecting on our immigration path reminds me that growth is a lifelong process.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10773,7 +10773,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "以个人而非外部衡量标准来定义成功是一种解放。",
       "english": "It's kind of liberating to define success on personal terms rather than external measures.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10783,7 +10783,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是日常生活中的存在和感恩。",
       "english": "Lately the emphasis has been on presence and gratitude within everyday moments.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10793,7 +10793,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "我尝试将日常行动与更广泛的意图结合起来，以实现丰富而有意义的生活。",
       "english": "I try to align daily actions with broader intentions for a rich and purposeful life.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10803,7 +10803,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "您知道，本章提供了深入研究和做出贡献的独特机会。",
       "english": "You know, this chapter offers unique opportunities for depth and contribution.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10813,7 +10813,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡野心与满足仍然是一种有益的改进。",
       "english": "I mean, balancing ambition with contentment continues to be a rewarding refinement.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10823,7 +10823,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "最近，我对未来的可能性感到一种平静的兴奋。",
       "english": "Lately I've felt a quiet excitement about the possibilities still ahead.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10833,7 +10833,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，当我们保持开放和有意识的时候，人生目标会自然而然地演变。",
       "english": "I sort of believe that life purpose evolves naturally as we stay open and intentional.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10843,7 +10843,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "您知道，投资于个人发展可以为家庭和社区提供更好的支持。",
       "english": "You know, investing in personal development supports better support for family and community.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10853,7 +10853,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "认识到多年来积累的成长和智慧是令人振奋的。",
       "english": "It's heartening to recognize the growth and wisdom accumulated over the years.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10863,7 +10863,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思带来了更大的清晰度和前进的动力。",
       "english": "Lately these reflections have brought greater clarity and motivation moving forward.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10873,7 +10873,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B24.mp3",
-      "chinese": "",
+      "chinese": "总体而言，通过持续成长来追求成就感使这个阶段充满活力和有意义。",
       "english": "Overall, pursuing fulfillment through ongoing growth makes this stage feel vibrant and meaningful.",
       "sourceAudio": "中级/B24.mp3",
       "sourceDocument": "中级/B24.docx",
@@ -10883,7 +10883,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在更有意地思考我们想要建立的遗产，不仅通过资产，而且通过我们传递给下一代的价值观和故事。",
       "english": "You know, I've been thinking more intentionally about the kind of legacy we want to build not just through assets but through the values and stories we pass on to the next generation.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10893,7 +10893,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在讨论我们作为移民的经历如何为我们的儿子以及潜在的他们的孩子提供灵感和实践指导。",
       "english": "Lately we've been having conversations about how our experiences as immigrants can serve as inspiration and practical guidance for our sons and potentially their children.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10903,7 +10903,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，通过房子和家庭传统创造一种连续性和稳定感感觉像是现阶段最有意义的贡献之一。",
       "english": "I mean, creating a sense of continuity and stability through the house and family traditions feels like one of the most meaningful contributions at this stage.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10913,7 +10913,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "让我感到非常满意的一件事是，看到我们早期培养的适应力现在如何反映在我们的孩子如何应对自己的挑战上。",
       "english": "One thing that brings me quiet satisfaction is seeing how the resilience we developed early on is now reflected in how our children approach their own challenges.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10923,7 +10923,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "要知道，用深思熟虑的方式记录家族史，已经成为一个将过去、现在和未来连接成一个美丽循环的项目。",
       "english": "You know, documenting family history in a thoughtful way has become a project that connects the past, present, and future in a beautiful circle.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10933,7 +10933,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，遗产是建立在我们如何对待彼此以及如何处理责任的日常选择中的。",
       "english": "I sort of realize that legacy is built in the everyday choices we make about how we treat each other and how we handle responsibilities.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10943,7 +10943,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索构建我们的遗产和财务计划的方法，以便它们反映子孙后代繁荣发展的安全和自由。",
       "english": "Lately I've been exploring ways to structure our estate and financial plans so they reflect both security and the freedom for future generations to thrive.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10953,7 +10953,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在不强加期望的情况下分享我们旅程中的经验教训可以让他们开辟自己有意义的道路。",
       "english": "I mean, sharing the lessons from our journey without imposing expectations allows them to forge their own meaningful paths.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10963,7 +10963,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "您知道，对代际影响的关注为我们的日常决策和长期规划增添了更深层次的目的。",
       "english": "You know, this focus on intergenerational impact has added a deeper layer of purpose to our daily decisions and long-term planning.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10973,7 +10973,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "想象一下我们几十年来辛辛苦苦创建的基础所产生的连锁反应，真是令人暖心。",
       "english": "It's kind of heartwarming to imagine the ripple effects of the foundation we've worked so hard to create over these decades.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10983,7 +10983,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "最近，我很感激有机会塑造一些超越我们一生的持久事物。",
       "english": "Lately I've felt grateful for the opportunity to shape something enduring that goes beyond our own lifetime.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -10993,7 +10993,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "我尝试塑造坚忍、善良和适应的价值观，使它们成为我们家庭文化的自然组成部分。",
       "english": "I try to model the values of perseverance, kindness, and adaptability so they become natural parts of our family culture.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11003,7 +11003,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "您知道，平衡当前的享受与对未来的深思熟虑的准备感觉像是一种负责任和充满爱心的方法。",
       "english": "You know, balancing present enjoyment with thoughtful preparation for the future feels like a responsible and loving approach.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11013,7 +11013,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，这些反思继续引导我做出尊重我们的根源和我们所拥抱的机会的选择。",
       "english": "I mean, these reflections continue to guide me toward choices that honor both our roots and the opportunities we've embraced.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11023,7 +11023,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "最近，遗产建设的过程带来了一种和平感和前瞻性的乐观情绪。",
       "english": "Lately the process of legacy building has brought a sense of peace and forward-looking optimism.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11033,7 +11033,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "我相信最强大的遗产是那些植根于爱、智慧和实际支持的遗产。",
       "english": "I sort of believe that the strongest legacies are those rooted in love, wisdom, and practical support.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11043,7 +11043,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "要知道，这一刻意塑造我们家庭未来故事的篇章让人感觉意义深远。",
       "english": "You know, this chapter of intentionally shaping our family's future story feels deeply meaningful.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11053,7 +11053,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "令人欣慰的是，我们所做的努力正在产生持久的积极影响。",
       "english": "It's reassuring to know that the efforts we've put in are creating lasting positive impact.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11063,7 +11063,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "最近，我更多地参与了这些对话，因为它们对长期而言很重要。",
       "english": "Lately I've been more present in these conversations because they matter for the long term.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11073,7 +11073,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B25.mp3",
-      "chinese": "",
+      "chinese": "总的来说，对遗产和代际联系的关注极大地丰富了这一阶段的生活。",
       "english": "Overall, focusing on legacy and intergenerational connection has enriched this stage of life tremendously.",
       "sourceAudio": "中级/B25.mp3",
       "sourceDocument": "中级/B25.docx",
@@ -11083,7 +11083,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在寻找更多方式与俄勒冈州当地社区互动，而不仅仅是住在这里，通过微小但持续的贡献。",
       "english": "You know, I've been finding more ways to engage with our local community in Oregon beyond just living here, through small but consistent contributions.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11093,7 +11093,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "最近参加社区活动提醒我与来自不同背景的人建立联系是多么有价值。",
       "english": "Lately participating in neighborhood events has reminded me how valuable it is to build connections with people from different backgrounds.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11103,7 +11103,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，通过志愿服务或分享经验知识来提供支持会产生良好的归属感。",
       "english": "I mean, offering support through volunteering or sharing knowledge from our experiences creates a nice sense of belonging.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11113,7 +11113,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "值得注意的一件事是这些互动如何丰富日常生活并提供超越我们直接圈子的视角。",
       "english": "One thing that stands out is how these interactions enrich daily life and provide perspective beyond our immediate circle.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11123,7 +11123,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "您知道，支持符合我们价值观的当地事业感觉就像我们家庭旅程的自然延伸。",
       "english": "You know, supporting local causes that align with our values feels like a natural extension of our family journey.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11133,7 +11133,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，以深思熟虑的方式回馈可以增强社区和我们自己的使命感。",
       "english": "I sort of realize that giving back in thoughtful ways strengthens both the community and our own sense of purpose.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11143,7 +11143,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加愿意与邻居合作开展改善该地区的简单项目。",
       "english": "Lately I've been more open to collaborating with neighbors on simple projects that improve the area.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11153,7 +11153,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，这些活动让我们建立了有意义的友谊，并对我们所居住的地方有了更深的认识。",
       "english": "I mean, these engagements have led to meaningful friendships and a deeper appreciation for where we live.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11163,7 +11163,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "您知道，平衡家庭和企业承诺与社区参与需要良好的规划，但这是值得的。",
       "english": "You know, balancing family and business commitments with community involvement requires good planning but it's worth it.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11173,7 +11173,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "看到持续不断的小努力在建立支持性环境方面所产生的积极影响是一种成就感。",
       "english": "It's kind of fulfilling to see the positive effects of small consistent efforts in building a supportive environment.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11183,7 +11183,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是以真实而不是强制性的方式做出贡献。",
       "english": "Lately the focus has been on contributing in ways that feel authentic rather than obligatory.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11193,7 +11193,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "我尝试倾听社区的需求，并在我的技能和经验自然适合的情况下提供帮助。",
       "english": "I try to listen to community needs and offer help where my skills and experiences fit naturally.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11203,7 +11203,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "要知道，这次的参与拓宽了我的视野，也带来了意想不到的快乐。",
       "english": "You know, this involvement has broadened my perspective and brought unexpected joy.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11213,7 +11213,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，成为比我们自己更伟大的事物的一部分会增加中年的丰富性。",
       "english": "I mean, being part of something larger than ourselves adds richness to midlife.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11223,7 +11223,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这些社会贡献，我感觉联系更加紧密，更加脚踏实地。",
       "english": "Lately I've felt more connected and grounded through these social contributions.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11233,7 +11233,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "我有点相信社区参与是全面生活的重要组成部分。",
       "english": "I sort of believe that community engagement is an important part of a well-rounded life.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11243,7 +11243,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些经历继续教会我善良、互惠和共同的人性。",
       "english": "You know, these experiences continue to teach me about kindness, reciprocity, and shared humanity.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11253,7 +11253,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "见证个人的共同努力如何产生真正的影响是令人振奋的。",
       "english": "It's heartening to witness how individual efforts collectively make a real difference.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11263,7 +11263,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "最近我更加有意识地培养这些联系。",
       "english": "Lately I've been more intentional about nurturing these connections.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11273,7 +11273,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B26.mp3",
-      "chinese": "",
+      "chinese": "总体而言，积极的社区参与增强了我们的家感和使命感。",
       "english": "Overall, active community involvement has enhanced our sense of home and purpose here.",
       "sourceAudio": "中级/B26.mp3",
       "sourceDocument": "中级/B26.docx",
@@ -11283,7 +11283,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "你知道，多年来，我的情感更加成熟，这帮助我更加优雅地处理人际关系和挑战。",
       "english": "You know, over the years I've developed a deeper level of emotional maturity that helps me navigate relationships and challenges with more grace.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11293,7 +11293,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加关注自己的情绪模式以及它们如何影响我在日常生活中的反应。",
       "english": "Lately I've been paying closer attention to my emotional patterns and how they influence my responses in daily situations.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11303,7 +11303,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，了解自己的触发因素和优势改善了我与丈夫和家人的沟通和联系。",
       "english": "I mean, understanding my own triggers and strengths has improved how I communicate and connect with my husband and family.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11313,7 +11313,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "具有变革性的一件事是学会在做出反应之前暂停并处理感受。",
       "english": "One thing that has been transformative is learning to pause and process feelings before reacting.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11323,7 +11323,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种自我理解给我的互动带来了更大的平静和真实。",
       "english": "You know, this self-understanding has brought greater peace and authenticity to my interactions.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11333,7 +11333,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到情感成熟包括尊重自己的感受和考虑他人的观点。",
       "english": "I sort of realize that emotional maturity includes both honoring my feelings and considering others' perspectives.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11343,7 +11343,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "最近，我在困难时刻练习更多的自我同情，而不是过度批评。",
       "english": "Lately I've been practicing more self-compassion during difficult moments instead of being overly critical.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11353,7 +11353,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，以安全的方式公开分享情感极大地加深了我们的家庭纽带。",
       "english": "I mean, sharing emotions openly in a safe way has deepened our family bonds significantly.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11363,7 +11363,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "您知道，反思这一领域的个人成长仍然是一个有益的终生过程。",
       "english": "You know, reflecting on personal growth in this area continues to be a rewarding lifelong process.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11373,7 +11373,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "认识到我在用智慧管理情绪方面已经取得了多大的进步，这有点令人鼓舞。",
       "english": "It's kind of empowering to recognize how far I've come in managing emotions with wisdom.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11383,7 +11383,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "最近，定期自我反思的做法帮助我与自己的价值观保持一致。",
       "english": "Lately the practice of regular self-reflection has helped me stay aligned with my values.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11393,7 +11393,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "我尝试以对自己和他人的好奇和善意来处理情感状况。",
       "english": "I try to approach emotional situations with curiosity and kindness toward myself and others.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11403,7 +11403,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种成熟度支持在个人和商业环境中做出更好的决策。",
       "english": "You know, this maturity supports better decision-making in both personal and business contexts.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11413,7 +11413,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，不加评判地拥抱人类的全部情感带来了更多的自由。",
       "english": "I mean, embracing the full range of human emotions without judgment has brought more freedom.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11423,7 +11423,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这种持续的自我理解，我感觉更加集中和有弹性。",
       "english": "Lately I've felt more centered and resilient through this ongoing self-understanding.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11433,7 +11433,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "我有点相信情商是我们可以培养的最有价值的技能之一。",
       "english": "I sort of believe that emotional intelligence is one of the most valuable skills we can cultivate.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11443,7 +11443,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些见解继续改善我的日常生活和人际关系的质量。",
       "english": "You know, these insights continue to improve the quality of my daily life and relationships.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11453,7 +11453,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "当我经历这个人生阶段时，相信我的情感成长是令人安心的。",
       "english": "It's reassuring to trust my emotional growth as I move through this life stage.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11463,7 +11463,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加感激支持外在和谐的内在工作。",
       "english": "Lately I've been more grateful for the inner work that supports outer harmony.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11473,7 +11473,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B27.mp3",
-      "chinese": "",
+      "chinese": "总体而言，发展情感成熟度是非常有益的。",
       "english": "Overall, developing emotional maturity has been profoundly rewarding.",
       "sourceAudio": "中级/B27.mp3",
       "sourceDocument": "中级/B27.docx",
@@ -11483,7 +11483,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在花时间想象令人满意的下一章会是什么样子，同时对它如何展开保持开放的态度。",
       "english": "You know, I've been spending time envisioning what a fulfilling next chapter might look like while staying open to how it unfolds.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11493,7 +11493,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一家人对未来的讨论变得更加协作和充满希望。",
       "english": "Lately our family discussions about the future have become more collaborative and hopeful.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11503,7 +11503,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡实际规划与和平与稳定的梦想对于这个阶段来说是正确的。",
       "english": "I mean, balancing practical planning with dreams for peace and stability feels right for this stage.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11513,7 +11513,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "激励我的一件事是想象我们的儿子们在我们创建的基础上继续发展。",
       "english": "One thing that inspires me is imagining our sons building on the foundation we've created.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11523,7 +11523,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "你知道，保持灵活性，同时设定温和的意图有助于减少对未知事物的焦虑。",
       "english": "You know, maintaining flexibility while setting gentle intentions helps reduce anxiety about the unknown.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11533,7 +11533,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，充满希望的计划既包括具体的步骤，也包括对过程的信任。",
       "english": "I sort of realize that hopeful planning includes both concrete steps and trust in the process.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11543,7 +11543,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加专注于创造与我想要生活的未来相一致的日常体验。",
       "english": "Lately I've been more focused on creating daily experiences that align with the future I want to live into.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11553,7 +11553,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，反思我们过去的旅程让我有信心我们能够驾驭接下来的事情。",
       "english": "I mean, reflecting on our past journey gives me confidence that we can navigate what comes next.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11563,7 +11563,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "你知道，这个愿景过程带来了兴奋和代理感。",
       "english": "You know, this visioning process has brought excitement and a sense of agency.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11573,7 +11573,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "一家人一起梦想未来的可能性真是太美好了。",
       "english": "It's kind of beautiful to dream together as a family about possibilities ahead.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11583,7 +11583,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是健康、联系和未来几年的持续增长。",
       "english": "Lately the emphasis has been on health, connection, and continued growth in the years to come.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11593,7 +11593,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "我尝试以对现在的感激和对明天的乐观态度来迎接未来。",
       "english": "I try to approach the future with gratitude for the present and optimism for tomorrow.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11603,7 +11603,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些充满希望的计划今天继续激励积极的行动。",
       "english": "You know, these hopeful plans continue to motivate positive actions today.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11613,7 +11613,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，为安全和冒险创造空间可以让生活充满活力。",
       "english": "I mean, creating space for both security and adventure keeps life vibrant.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11623,7 +11623,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "最近，我对我们故事的自然展开感到更加平静。",
       "english": "Lately I've felt more at peace with the natural unfolding of our story.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11633,7 +11633,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，积极的未来愿景支持现在更好的选择。",
       "english": "I sort of believe that a positive future vision supports better choices in the now.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11643,7 +11643,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种前瞻性的方法完美地丰富了当前的章节。",
       "english": "You know, this forward-looking approach enriches the current chapter beautifully.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11653,7 +11653,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "它赋予我们积极参与塑造我们未来道路的力量。",
       "english": "It's empowering to actively participate in shaping our path ahead.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11663,7 +11663,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思让我充满了希望和决心。",
       "english": "Lately these reflections have filled me with quiet hope and determination.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11673,7 +11673,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B28.mp3",
-      "chinese": "",
+      "chinese": "总体而言，充满希望的未来愿景已成为力量和快乐的源泉。",
       "english": "Overall, hopeful future visioning has become a source of strength and joy.",
       "sourceAudio": "中级/B28.mp3",
       "sourceDocument": "中级/B28.docx",
@@ -11683,7 +11683,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "你知道，我一直在更积极地将正念融入烹饪或散步等日常任务中，而不是将其视为单独的练习。",
       "english": "You know, I've been integrating mindfulness more actively into everyday tasks like cooking or walking rather than treating it as separate practice.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11693,7 +11693,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "最近，充分关注当下帮助我更深入地享受简单的活动。",
       "english": "Lately paying full attention to the present moment has helped me enjoy simple activities more deeply.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11703,7 +11703,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在忙碌的时候提高对呼吸和感觉的认识会带来平静。",
       "english": "I mean, bringing awareness to breathing and sensations during busy times creates pockets of calm.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11713,7 +11713,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "我注意到的一件事是，用心倾听如何改善与家人和朋友的对话。",
       "english": "One thing I've noticed is how mindful listening improves conversations with family and friends.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11723,7 +11723,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种积极的整合使得正念即使在日程安排满的日子里也能持续下去。",
       "english": "You know, this active integration makes mindfulness sustainable even on full schedule days.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11733,7 +11733,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，行动中的正念将平凡的时刻变成了存在的机会。",
       "english": "I sort of realize that mindfulness in action turns ordinary moments into opportunities for presence.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11743,7 +11743,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "最近，我在浇灌花园等日常活动中用心练习感恩。",
       "english": "Lately I've been practicing gratitude mindfully during routine activities like watering the garden.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11753,7 +11753,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，这种方法可以减轻压力并增加对日常生活的欣赏。",
       "english": "I mean, this approach reduces stress and increases appreciation for daily life.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11763,7 +11763,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "您知道，与亲人轻松分享这些做法可以创造美好的共享体验。",
       "english": "You know, sharing these practices lightly with loved ones has created nice shared experiences.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11773,7 +11773,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "更加用心地生活而不是自动驾驶是一种变革。",
       "english": "It's kind of transformative to live more mindfully rather than on autopilot.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11783,7 +11783,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "最近，这个习惯显着改善了我的注意力和情绪调节能力。",
       "english": "Lately the habit has improved my focus and emotional regulation noticeably.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11793,7 +11793,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "白天每当我的思绪走神时，我都会尝试轻轻地回到当下。",
       "english": "I try to return gently to the present whenever my mind wanders during the day.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11803,7 +11803,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "你知道，整合正念可以提高生产力和内心的平静。",
       "english": "You know, integrating mindfulness has enhanced both productivity and inner peace.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11813,7 +11813,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，它已经成为一种自然的存在方式，而不是额外的事情。",
       "english": "I mean, it's become a natural way of being rather than something extra to do.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11823,7 +11823,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这种练习，我感觉与自己和周围环境的联系更加紧密。",
       "english": "Lately I've felt more connected to myself and my surroundings through this practice.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11833,7 +11833,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，日常的正念活动会带来巨大的幸福感。",
       "english": "I sort of believe that daily mindful action compounds into significant well-being.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11843,7 +11843,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种整合继续支持生活各个领域的平衡。",
       "english": "You know, this integration continues to support balance across all areas of life.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11853,7 +11853,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "看到积极的影响在人际关系和工作中产生连锁反应是值得的。",
       "english": "It's rewarding to see the positive effects ripple through relationships and work.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11863,7 +11863,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "最近，正念已成为我最有价值的日常工具之一。",
       "english": "Lately mindfulness has become one of my most valued daily tools.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11873,7 +11873,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B29.mp3",
-      "chinese": "",
+      "chinese": "总的来说，在行动中用心生活带来了更多的存在感和快乐。",
       "english": "Overall, living mindfully in action has brought greater presence and joy.",
       "sourceAudio": "中级/B29.mp3",
       "sourceDocument": "中级/N29.docx",
@@ -11883,7 +11883,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "你知道，回顾这些年，我对我们个人和家庭所经历的成长感到深深的庆贺。",
       "english": "You know, looking back over these years, I feel a deep sense of celebration for the growth we've experienced both individually and as a family.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11893,7 +11893,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直怀着感激之情反思自早期移民时代以来我们所取得的进步。",
       "english": "Lately I've been reflecting with gratitude on how far we've come since those early immigration days.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11903,7 +11903,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，承认我们的进步和韧性会在这个阶段带来美妙的成就感。",
       "english": "I mean, acknowledging our progress and resilience brings a wonderful sense of fulfillment at this stage.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11913,7 +11913,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "引人注目的一件事是我们在经历所有的风风雨雨后所建立的安静的力量。",
       "english": "One thing that stands out is the quiet strength we've built through all the ups and downs.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11923,7 +11923,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "你知道，一起庆祝大大小小的里程碑让这段旅程变得更加有意义。",
       "english": "You know, celebrating small and large milestones together has made the journey even more meaningful.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11933,7 +11933,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到这一章充满了智慧、爱和持续的可能性。",
       "english": "I sort of realize that this chapter is rich with wisdom, love, and continued possibility.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11943,7 +11943,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "最近，我对张开双臂拥抱未来感到乐观。",
       "english": "Lately I've been feeling optimistic about embracing whatever the future holds with open arms.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11953,7 +11953,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，我们的英语、商业、家庭活力和个人理解的增长让我感到自豪。",
       "english": "I mean, the growth in our English, business, family dynamics, and personal understanding fills me with pride.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11963,7 +11963,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "你知道，以反思结束这 30 天的练习感觉就像一个美丽的圆圈。",
       "english": "You know, closing this 30-day practice with reflection feels like a beautiful full circle.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11973,7 +11973,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "认识到我们独特的生活故事的深度和美丽真是太棒了。",
       "english": "It's kind of wonderful to recognize the depth and beauty in our unique life story.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11983,7 +11983,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "最近，我变得更加活在当下，并且更加欣赏我们所营造的和平氛围。",
       "english": "Lately I've been more present and appreciative of the peace we've cultivated.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -11993,7 +11993,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "我努力以开放的心态和稳健的步伐将所有的教训发扬光大。",
       "english": "I try to carry forward all the lessons with an open heart and steady steps.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12003,7 +12003,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "你知道，这段成长之旅每天都在继续激励着我。",
       "english": "You know, this journey of growth continues to inspire me every single day.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12013,7 +12013,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，庆祝我们现在所处的位置是为了纪念让我们走到这一步的所有努力。",
       "english": "I mean, celebrating where we are now honors all the effort that got us here.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12023,7 +12023,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思让我感到专注、充满希望和深深的感激。",
       "english": "Lately these reflections have left me feeling centered, hopeful, and deeply thankful.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12033,7 +12033,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "我相信每一个结局都是一个充满潜力的新开始。",
       "english": "I sort of believe that every ending is also a new beginning filled with potential.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12043,7 +12043,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "你知道，我很高兴能在未来的日子里继续练习和成长。",
       "english": "You know, I'm excited to keep practicing and growing in the days ahead.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12053,7 +12053,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "看到持续的努力如何随着时间的推移带来真正的转变，这是令人鼓舞的。",
       "english": "It's empowering to see how consistent effort leads to real transformation over time.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12063,7 +12063,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "最近，我感到自己已经准备好并充满感激地充满信心地踏入接下来的一切。",
       "english": "Lately I feel ready and grateful to step into whatever comes next with confidence.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12073,7 +12073,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E4%B8%AD%E7%BA%A7/B30.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这次语言练习和生活反思的中级之旅非常有意义，我为我们共同取得的进步感到自豪。",
       "english": "Overall, this mid-level journey of language practice and life reflection has been incredibly rewarding, and I'm proud of the progress we've made together.",
       "sourceAudio": "中级/B30.mp3",
       "sourceDocument": "中级/B30.docx",
@@ -12085,7 +12085,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
   "native": [
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "你知道，我逐渐明白，真正的自我意识往往不是来自伟大的顿悟，而是来自数十年生活经验中对一个人的模式的累积的安静观察。",
       "english": "You know, I've come to understand that true self-awareness often emerges not from grand epiphanies but from the cumulative quiet observations of one's patterns over decades of lived experience.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12095,7 +12095,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "在某种程度上，随着年龄的增长，我越发欣赏拥抱不确定性如何能够矛盾地带来更深层次的内在稳定感和真实的生活方向。",
       "english": "In a way, the older I get, the more I appreciate how embracing uncertainty can paradoxically lead to a deeper sense of inner stability and authentic direction in life.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12105,7 +12105,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，反思我们对过去的叙述如何不可避免地塑造我们对未来的设想是很有趣的。",
       "english": "I mean, it's fascinating to reflect on how the narratives we construct about our past inevitably shape the possibilities we allow ourselves to envision for the future.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12115,7 +12115,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "我最近一直在思考的一件事是野心和满足感之间的微妙平衡，认识到两者在经过严格审视的生活中都占有一席之地。",
       "english": "One thing I've been contemplating lately is the delicate balance between ambition and contentment, recognizing that both have their place in a well-examined life.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12125,7 +12125,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "你知道，培养智力上的谦逊已经变得至关重要，因为它打开了真正学习和与他人建立更有意义的联系的大门。",
       "english": "You know, cultivating intellectual humility has become essential, as it opens the door to genuine learning and more meaningful connections with others.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12135,7 +12135,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "最近，我发现自己对长期以来关于成功的假设提出了质疑，意识到成就感往往在于价值观的一致性，而不是外部验证。",
       "english": "Lately I've found myself questioning long-held assumptions about success, realizing that fulfillment often resides in the alignment of values rather than external validation.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12145,7 +12145,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，美好生活的艺术涉及我们是谁和我们渴望成为谁之间的持续对话，同时又不忽视当下。",
       "english": "I sort of believe that the art of living well involves a continuous dialogue between who we are and who we aspire to become, without losing sight of the present moment.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12155,7 +12155,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "当你认识到脆弱性远不是弱点，而是真正的关系和个人成长的基石时，你会发现这是非常有洞察力的。",
       "english": "It's profoundly insightful when you realize that vulnerability, far from being a weakness, actually serves as a cornerstone for authentic relationships and personal growth.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12165,7 +12165,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "你知道，定期生活审核的做法——评估什么真正能激发活力，什么会消耗能量——近年来帮助我做出了更有目的的选择。",
       "english": "You know, the practice of periodic life audits—assessing what truly energizes versus what drains—has helped me make more intentional choices in recent years.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12175,7 +12175,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C1.mp3",
-      "chinese": "",
+      "chinese": "在很多方面，我了解到智慧并不意味着拥有所有答案，而是关于存在和目的提出越来越复杂的问题。",
       "english": "In many ways, I've learned that wisdom isn't about having all the answers but about asking increasingly sophisticated questions about existence and purpose.",
       "sourceAudio": "高级/C1.mp3",
       "sourceDocument": "高级/C1.docx",
@@ -12185,7 +12185,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，接受事物的无常，同时仍然全身心地致力于最重要的追求，有一定的优雅。",
       "english": "I mean, there's a certain elegance in accepting the impermanence of things while still committing fully to the pursuits that matter most.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12195,7 +12195,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索创造力和纪律如何以允许个人努力创新和可持续进步的方式交叉。",
       "english": "Lately I've been exploring how creativity and discipline intersect in ways that allow for both innovation and sustainable progress in personal endeavors.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12205,7 +12205,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "你知道，通往自我掌控的旅程似乎需要思想、情感和直觉的和谐整合，而不是偏袒其中之一。",
       "english": "You know, the journey toward self-mastery seems to require a harmonious integration of mind, emotion, and intuition rather than favoring one over the others.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12215,7 +12215,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "值得注意的是，将挑战重新定义为改进的机会可以改变一个人应对逆境和恢复能力的整个方法。",
       "english": "It's remarkable how reframing challenges as opportunities for refinement can transform one's entire approach to adversity and resilience.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12225,7 +12225,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，即使在积累了多年的知识之后，保持初学者的心态，也能让生活在智力上充满活力，在情感上保持新鲜。",
       "english": "I sort of realize that maintaining a beginner's mind, even after years of accumulated knowledge, keeps life intellectually vibrant and emotionally fresh.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12235,7 +12235,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "你知道，我越来越重视孤独，不是将其视为孤立，而是将其视为深刻反思和与个人核心价值观重新联系的沃土。",
       "english": "You know, I've grown to value solitude not as isolation but as a fertile space for deep reflection and reconnection with one's core values.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12245,7 +12245,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是将哲学见解融入日常决策中，以提高一致性和满意度。",
       "english": "Lately the emphasis has been on integrating philosophical insights into everyday decision-making for greater coherence and satisfaction.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12255,7 +12255,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，了解代理与环境之间的相互作用使我对成就和挫折的看法更加微妙。",
       "english": "I mean, understanding the interplay between agency and circumstance has nuanced my perspective on both achievements and setbacks.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12265,7 +12265,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "你知道，这个持续的哲学探究过程不断丰富我对深思熟虑的生活意味着什么的体验。",
       "english": "You know, this ongoing process of philosophical inquiry continues to enrich my experience of what it means to lead a thoughtful life.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12275,7 +12275,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C2.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这些层层的自我反思培养了我与自己和周围世界更加细致和富有同情心的关系。",
       "english": "Overall, these layers of self-reflection have cultivated a more nuanced and compassionate relationship with myself and the world around me.",
       "sourceAudio": "高级/C2.mp3",
       "sourceDocument": "高级/C2.docx",
@@ -12285,7 +12285,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "你知道，在我的职业生涯中，我逐渐认识到领导力不仅是指导他人，而且是营造一个集体智慧能够真正蓬勃发展的环境。",
       "english": "You know, in my professional journey, I've come to see leadership not merely as directing others but as fostering an environment where collective intelligence can truly flourish.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12295,7 +12295,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考如何平衡战略思维与同理心理解，以创造可持续的组织成功。",
       "english": "Lately I've been reflecting on how strategic thinking must be balanced with empathetic understanding to create sustainable organizational success.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12305,7 +12305,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，最有效的方法通常来自于综合不同的观点，而不是严格遵守传统的方法。",
       "english": "I mean, the most effective approaches often emerge from synthesizing diverse perspectives rather than adhering rigidly to conventional methodologies.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12315,7 +12315,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "显而易见的一件事是，求知欲与严格的执行力相结合，甚至可以在最成熟的领域推动创新。",
       "english": "One thing that has become clear is that intellectual curiosity, when paired with disciplined execution, drives innovation in even the most established fields.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12325,7 +12325,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "您知道，驾驭复杂的商业环境需要将多年磨练的严谨分析和直觉判断巧妙地结合起来。",
       "english": "You know, navigating complex business landscapes requires a sophisticated blend of analytical rigor and intuitive judgment honed over years.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12335,7 +12335,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，真正的专业知识在于知道何时转向、何时坚持以及何时寻求他人的协作投入。",
       "english": "I sort of believe that true expertise lies in knowing when to pivot, when to persist, and when to seek collaborative input from others.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12345,7 +12345,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是构建鼓励团队内部持续学习和适应性的系统。",
       "english": "Lately the focus has been on building systems that encourage continuous learning and adaptability within the team.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12355,7 +12355,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，指导下一代专业人士增强了我对知识转移的长期影响的认识。",
       "english": "I mean, mentoring the next generation of professionals has reinforced my appreciation for the long-term impact of knowledge transfer.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12365,7 +12365,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "您知道，将道德考虑纳入战略决策对于创造持久价值已变得不容谈判。",
       "english": "You know, integrating ethical considerations into strategic decisions has become non-negotiable for creating lasting value.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12375,7 +12375,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C3.mp3",
-      "chinese": "",
+      "chinese": "观察文化智慧如何增强一个人在不同环境下有效运作的能力，这是非常有启发性的。",
       "english": "It's quite illuminating to observe how cultural intelligence enhances one's ability to operate effectively across different contexts.",
       "sourceAudio": "高级/C3.mp3",
       "sourceDocument": "高级/C3.docx",
@@ -12385,7 +12385,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索如何深思熟虑地利用技术，同时保留推动有意义进步的人为因素。",
       "english": "Lately I've been exploring ways to leverage technology thoughtfully while preserving the human elements that drive meaningful progress.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12395,7 +12395,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "我尝试以创造性解决问题的心态来应对工作场所的挑战，而不仅仅是控制损害。",
       "english": "I try to approach challenges in the workplace with a mindset of creative problem-solving rather than mere damage control.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12405,7 +12405,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "您知道，随着时间的推移，激情和熟练程度的交集往往会揭示出最令人满意的职业轨迹。",
       "english": "You know, the intersection of passion and proficiency often reveals the most fulfilling career trajectories over time.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12415,7 +12415,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在高风险环境中保持知识诚实可以建立显着复合的信任和信誉。",
       "english": "I mean, maintaining intellectual honesty in high-stakes environments builds trust and credibility that compounds significantly.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12425,7 +12425,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思影响了我如何优先考虑与近期目标和更广泛愿景相一致的举措。",
       "english": "Lately these reflections have influenced how I prioritize initiatives that align with both immediate goals and broader vision.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12435,7 +12435,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，有效的领导不仅需要培养自己的韧性，还需要培养整个组织的韧性。",
       "english": "I sort of realize that effective leadership involves cultivating resilience not just in oneself but throughout the entire organization.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12445,7 +12445,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着新的经验和见解塑造了我的方法，这种专业理念不断发展。",
       "english": "You know, this professional philosophy continues to evolve as new experiences and insights shape my approach.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12455,7 +12455,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "看到深思熟虑的决策如何产生远远超出初衷的积极连锁反应，这是值得的。",
       "english": "It's rewarding to see how thoughtful decision-making can create positive ripple effects far beyond the original intent.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12465,7 +12465,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "最近，当我的工作体现出价值观和专业知识的连贯整合时，我感觉更加协调。",
       "english": "Lately I've felt more aligned when my work reflects a coherent integration of values and expertise.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12475,7 +12475,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C4.mp3",
-      "chinese": "",
+      "chinese": "总的来说，接受这种细致入微的专业理念为我的贡献带来了更大的目的和效率。",
       "english": "Overall, embracing this nuanced professional philosophy has brought greater purpose and effectiveness to my contributions.",
       "sourceAudio": "高级/C4.mp3",
       "sourceDocument": "高级/C4.docx",
@@ -12485,7 +12485,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "您知道，维持长期关系需要对随着时间的推移影响互动的微妙情绪暗流有深入的了解。",
       "english": "You know, navigating long-term relationships requires a sophisticated understanding of the subtle emotional undercurrents that influence interactions over time.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12495,7 +12495,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直意识到积极、富有同理心的倾听如何能够将潜在的冲突转化为更深层次联系的机会。",
       "english": "Lately I've been appreciating how active, empathetic listening can transform potential conflicts into opportunities for deeper connection.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12505,7 +12505,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，认识到同情心和真正的同理心之间的区别，改善了我在充满挑战的时期支持我所爱的人的方式。",
       "english": "I mean, recognizing the difference between sympathy and genuine empathy has refined the way I support my loved ones during challenging periods.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12515,7 +12515,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "在成熟的关系中最突出的一件事是在保持个人自主权的同时庆祝彼此的成长的重要性。",
       "english": "One thing that stands out in mature relationships is the importance of celebrating each other's growth while maintaining individual autonomy.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12525,7 +12525,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "你知道，建设性对话的艺术涉及平衡诚实与同情心，以加强而不是紧张关系的方式。",
       "english": "You know, the art of constructive dialogue involves balancing honesty with compassion in ways that strengthen rather than strain bonds.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12535,7 +12535,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，深思熟虑地分享脆弱性可以创造深厚的信任和亲密感，并在生活的变化中持续存在。",
       "english": "I sort of believe that vulnerability shared thoughtfully can create profound levels of trust and intimacy that endure through life's changes.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12545,7 +12545,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在探索在相互尊重的情况下，我们不同的沟通方式如何相互补充。",
       "english": "Lately we've been exploring how our different communication styles complement each other when approached with mutual respect.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12555,7 +12555,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，了解不言而喻的期望的作用有助于防止家庭动态中出现许多不必要的误解。",
       "english": "I mean, understanding the role of unspoken expectations has helped prevent many unnecessary misunderstandings in family dynamics.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12565,7 +12565,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "您知道，营造一个让每个人都感到被倾听和重视的环境需要持续的关注和刻意的努力。",
       "english": "You know, fostering an environment where everyone feels heard and valued requires ongoing attention and intentional effort.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12575,7 +12575,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C5.mp3",
-      "chinese": "",
+      "chinese": "微小的善意行为，经过持续实践，如何累积成关系安全的强大基础，这是相当深刻的。",
       "english": "It's quite profound how small acts of kindness, consistently practiced, accumulate into a powerful foundation of relational security.",
       "sourceAudio": "高级/C5.mp3",
       "sourceDocument": "高级/C5.docx",
@@ -12585,7 +12585,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加注意以具体、有意义的方式表达感激之情，而不是笼统的陈述。",
       "english": "Lately I've been more mindful of expressing appreciation in specific, meaningful ways rather than generic statements.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12595,7 +12595,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "我尝试以好奇心而非防御性的态度来对待观点上的差异，这样可以开启更丰富的对话。",
       "english": "I try to approach differences in perspective with curiosity instead of defensiveness, which opens up richer dialogues.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12605,7 +12605,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着家庭角色和责任的演变，这种情感上的细微差别变得越来越有价值。",
       "english": "You know, this level of emotional nuance has become increasingly valuable as family roles and responsibilities evolve.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12615,7 +12615,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，为他人的情绪保留空间而不立即尝试修复它们的能力是一项值得培养的技能。",
       "english": "I mean, the capacity to hold space for others' emotions without immediately trying to fix them is a skill worth cultivating.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12625,7 +12625,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "最近，这些见解提高了我们家庭谈话的质量和整体和谐。",
       "english": "Lately these insights have enhanced the quality of our family conversations and overall harmony.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12635,7 +12635,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，牢固的关系依赖于独立和相互依赖之间的微妙平衡。",
       "english": "I sort of realize that strong relationships thrive on a delicate balance of independence and interdependence.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12645,7 +12645,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "你知道，对这些动态的反思不断加深了我对人际关系复杂性的认识。",
       "english": "You know, reflecting on these dynamics continues to deepen my appreciation for the complexity of human connection.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12655,7 +12655,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "见证相互成长和支持如何在不同的人生阶段维持伙伴关系是令人振奋的。",
       "english": "It's heartening to witness how mutual growth and support can sustain partnerships through various life stages.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12665,7 +12665,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉自己更有能力优雅地处理人际关系的微妙之处了。",
       "english": "Lately I've felt more equipped to navigate the subtleties of interpersonal relationships with grace.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12675,7 +12675,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C6.mp3",
-      "chinese": "",
+      "chinese": "总的来说，关注这些情感上的细微差别以深刻有意义的方式丰富了我的人际关系。",
       "english": "Overall, attending to these emotional nuances has enriched my connections in profoundly meaningful ways.",
       "sourceAudio": "高级/C6.mp3",
       "sourceDocument": "高级/C6.docx",
@@ -12685,7 +12685,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "你知道，生活在中国传统和美国文化的交汇处让我对这两个社会有了独特而细致的视角。",
       "english": "You know, having lived at the intersection of Chinese heritage and American culture has provided me with a uniquely nuanced lens on both societies.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12695,7 +12695,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考双文化经历如何增强一个人驾驭日益互联的世界的能力。",
       "english": "Lately I've been reflecting on how bicultural experiences enhance one's ability to navigate an increasingly interconnected world.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12705,7 +12705,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，欣赏集体主义和个人主义方法的优势可以实现更复杂的跨文化理解。",
       "english": "I mean, appreciating the strengths of collectivist and individualist approaches allows for more sophisticated cross-cultural understanding.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12715,7 +12715,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "一直让我感兴趣的一件事是，不同的社会如何以独特但互补的方式概念化成功、家庭和成就感。",
       "english": "One thing that continues to intrigue me is how different societies conceptualize success, family, and fulfillment in distinct yet complementary ways.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12725,7 +12725,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种观点在跨背景的个人关系和专业合作中已被证明是无价的。",
       "english": "You know, this perspective has proven invaluable in both personal relationships and professional collaborations across backgrounds.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12735,7 +12735,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，真正的文化智慧包括谦逊、开放和从不同世界观中学习的意愿。",
       "english": "I sort of believe that true cultural intelligence involves humility, openness, and a willingness to learn from diverse worldviews.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12745,7 +12745,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "最近，商业和社会的全球规模促使人们对道德和可持续实践进行更深入的思考。",
       "english": "Lately the global dimensions of business and society have prompted deeper consideration of ethical and sustainable practices.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12755,7 +12755,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，弥合文化差距需要耐心和能力，不仅需要翻译语言，还需要翻译潜在的价值观和假设。",
       "english": "I mean, bridging cultural gaps requires patience and the ability to translate not just language but underlying values and assumptions.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12765,7 +12765,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "你知道，观察移民故事如何塑造国家认同，让我对美国多元化的理解更加深刻。",
       "english": "You know, observing how immigration stories shape national identities has added layers to my appreciation of American pluralism.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12775,7 +12775,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C7.mp3",
-      "chinese": "",
+      "chinese": "看到一种文化的传统智慧在应用于另一种环境时如何提供新的见解，真是令人着迷。",
       "english": "It's fascinating to see how traditional wisdom from one culture can offer fresh insights when applied in another context.",
       "sourceAudio": "高级/C7.mp3",
       "sourceDocument": "高级/C7.docx",
@@ -12785,7 +12785,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地保护我们的遗产元素，同时充分拥抱这个社会的机会。",
       "english": "Lately I've been more intentional about preserving elements of our heritage while fully embracing opportunities in this society.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12795,7 +12795,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "我尝试以求知欲和尊重而不是判断来对待文化差异。",
       "english": "I try to approach cultural differences with intellectual curiosity and respect rather than judgment.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12805,7 +12805,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种混合的观点继续影响着我对从教育到社区建设等各个方面的看法。",
       "english": "You know, this blended perspective continues to inform my views on everything from education to community building.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12815,7 +12815,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，东西方哲学的综合丰富了我个人的意义和决策框架。",
       "english": "I mean, the synthesis of Eastern and Western philosophies has enriched my personal framework for meaning and decision-making.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12825,7 +12825,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "最近，这些见解影响了我处理更广泛的社会和全球问题的方式。",
       "english": "Lately these insights have influenced how I engage with broader social and global issues.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12835,7 +12835,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，文化的流畅性为全球范围内更具同理心和更有效的沟通打开了大门。",
       "english": "I sort of realize that cultural fluency opens doors to more empathetic and effective communication worldwide.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12845,7 +12845,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "你知道，拥抱多种观点最终会导致对人类经验的更全面的理解。",
       "english": "You know, embracing multiple perspectives ultimately leads to a more comprehensive understanding of human experience.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12855,7 +12855,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "为弥合分歧和促进相互欣赏的对话做出贡献是值得的。",
       "english": "It's rewarding to contribute to conversations that bridge divides and foster mutual appreciation.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12865,7 +12865,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "最近，我对这段双文化之旅为我的生活增添的深度感到感激。",
       "english": "Lately I've felt grateful for the depth this bicultural journey has added to my life.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12875,7 +12875,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C8.mp3",
-      "chinese": "",
+      "chinese": "总的来说，培养全球文化洞察力已经成为我世界观的一个组成部分。",
       "english": "Overall, cultivating global cultural insight has become an integral part of my worldview.",
       "sourceAudio": "高级/C8.mp3",
       "sourceDocument": "高级/C8.docx",
@@ -12885,7 +12885,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "您知道，中年健康已经演变成一种更加综合的实践，考虑身体、思想和环境之间错综复杂的联系。",
       "english": "You know, approaching wellness in midlife has evolved into a more integrative practice that considers the intricate connections between body, mind, and environment.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12895,7 +12895,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索基于证据的策略，这些策略不仅支持身体活力，还支持认知敏锐度和情绪平衡。",
       "english": "Lately I've been exploring evidence-based strategies that support not just physical vitality but cognitive sharpness and emotional equilibrium as well.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12905,7 +12905,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，长寿科学强调了持续的习惯对零星努力的深远影响。",
       "english": "I mean, the science of longevity highlights the profound impact of consistent habits over sporadic efforts.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12915,7 +12915,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "显而易见的一件事是个性化方法的重要性，而不是一刀切的解决方案。",
       "english": "One thing that has become clear is the importance of personalized approaches rather than one-size-fits-all solutions.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12925,7 +12925,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "您知道，事实证明，优先考虑恢复和压力管理与锻炼和营养对于持续健康同样重要。",
       "english": "You know, prioritizing recovery and stress management has proven as crucial as exercise and nutrition for sustained well-being.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12935,7 +12935,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "我有点相信真正的健康包含与周围环境和社区的和谐关系。",
       "english": "I sort of believe that true health encompasses a harmonious relationship with one's surroundings and community.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12945,7 +12945,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是增强对与年龄相关的变化的抵御能力的预防措施。",
       "english": "Lately the emphasis has been on preventive practices that enhance resilience against age-related changes.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12955,7 +12955,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将正念与身体活动相结合会产生超越单个组成部分的协同效益。",
       "english": "I mean, integrating mindfulness with physical activity creates synergistic benefits that extend beyond individual components.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12965,7 +12965,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "你知道，及时了解新兴研究并明智地应用它是我方法的关键。",
       "english": "You know, staying informed about emerging research while applying it judiciously has been key to my approach.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12975,7 +12975,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C9.mp3",
-      "chinese": "",
+      "chinese": "通过明智和主动的选择来掌握自己的健康叙述是非常有力量的。",
       "english": "It's quite empowering to take ownership of one's health narrative through informed and proactive choices.",
       "sourceAudio": "高级/C9.mp3",
       "sourceDocument": "高级/C9.docx",
@@ -12985,7 +12985,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "最近，我注意到优质的睡眠和社交关系如何显着影响整体活力。",
       "english": "Lately I've noticed how quality sleep and social connections significantly influence overall vitality.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -12995,7 +12995,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "我尝试仔细聆听身体的信号，并根据科学和直觉进行相应调整。",
       "english": "I try to listen attentively to my body's signals and adjust accordingly with both science and intuition.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13005,7 +13005,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "您知道，随着新见解的出现，这种整体视角会不断发展。",
       "english": "You know, this holistic perspective continues to evolve as new insights become available.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13015,7 +13015,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，与衰老建立积极的关系可以让我们更好地享受当下，同时深思熟虑地规划未来。",
       "english": "I mean, fostering a positive relationship with aging allows for greater enjoyment of the present while planning thoughtfully for the future.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13025,7 +13025,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "最近，这些做法带来了更加充满活力和平衡的日常体验。",
       "english": "Lately these practices have contributed to a more vibrant and balanced daily experience.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13035,7 +13035,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到健康是一个持续的精致之旅，而不是一个固定的目的地。",
       "english": "I sort of realize that wellness is an ongoing journey of refinement rather than a fixed destination.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13045,7 +13045,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "您知道，与家人和朋友负责任地分享知识可以放大积极影响。",
       "english": "You know, sharing knowledge responsibly with family and friends amplifies the positive impact.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13055,7 +13055,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "看到综合方法如何支持长期繁荣是令人满意的。",
       "english": "It's satisfying to see how integrative approaches support long-term thriving.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13065,7 +13065,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "最近，我对影响持续健康的微妙因素更加敏感。",
       "english": "Lately I've felt more attuned to the subtle factors that influence sustained health.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13075,7 +13075,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C10.mp3",
-      "chinese": "",
+      "chinese": "总体而言，接受这种全面的健康观是变革性的。",
       "english": "Overall, embracing this comprehensive view of wellness has been transformative.",
       "sourceAudio": "高级/C10.mp3",
       "sourceDocument": "高级/C10.docx",
@@ -13085,7 +13085,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "要知道，在这个阶段发展金融成熟度不仅涉及技术知识，还涉及对风险、机会和家庭影响的细致入微的理解。",
       "english": "You know, developing financial sophistication at this stage involves not only technical knowledge but also a nuanced understanding of risk, opportunity, and family impact.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13095,7 +13095,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在完善我们的策略，以平衡增长与保护，特别是在房屋等长期资产方面。",
       "english": "Lately we've been refining our strategies to balance growth with preservation, particularly regarding long-term assets like the house.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13105,7 +13105,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将税收效率与慈善目标相结合，可以创造一种更全面的财富管理方法。",
       "english": "I mean, integrating tax efficiency with philanthropic goals creates a more holistic approach to wealth management.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13115,7 +13115,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "突出的一件事是将财务决策与核心价值观和长期愿景保持一致的重要性。",
       "english": "One thing that stands out is the importance of aligning financial decisions with core values and long-term vision.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13125,7 +13125,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "您知道，积极主动的遗产规划可以让您高枕无忧，同时为不断变化的情况提供灵活性。",
       "english": "You know, proactive estate planning provides peace of mind while offering flexibility for evolving circumstances.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13135,7 +13135,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，真正的管理包括教育下一代负责任的财务原则。",
       "english": "I sort of believe that true stewardship includes educating the next generation about responsible financial principles.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13145,7 +13145,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是应对市场动态的多样化和适应性。",
       "english": "Lately the focus has been on diversification and adaptability in response to market dynamics.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13155,7 +13155,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将财富视为安全、机会和积极贡献的工具，可以有意义地重新定义其目的。",
       "english": "I mean, viewing wealth as a tool for security, opportunity, and positive contribution reframes its purpose meaningfully.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13165,7 +13165,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "您知道，定期的投资组合审查和情景规划有助于更有信心地应对不确定性。",
       "english": "You know, regular portfolio reviews and scenario planning help navigate uncertainty with greater confidence.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13175,7 +13175,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C11.mp3",
-      "chinese": "",
+      "chinese": "认识到行为金融学原理如何影响甚至是最理性的决策是很有洞察力的。",
       "english": "It's insightful to recognize how behavioral finance principles influence even the most rational decisions.",
       "sourceAudio": "高级/C11.mp3",
       "sourceDocument": "高级/C11.docx",
@@ -13185,7 +13185,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索符合我们道德观点的可持续投资选择。",
       "english": "Lately I've been exploring sustainable investment options that align with our ethical perspectives.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13195,7 +13195,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "我努力保持平衡的观点，尊重谨慎和有计划的乐观态度。",
       "english": "I try to maintain a balanced outlook that honors both prudence and calculated optimism.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13205,7 +13205,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种程度的财务成熟度支持更大的自由和慷慨。",
       "english": "You know, this level of financial maturity supports greater freedom and generosity.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13215,7 +13215,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，深思熟虑的遗产管理不仅限于数字，还包括家庭和谐和价值观传播。",
       "english": "I mean, thoughtful legacy stewardship extends beyond numbers to encompass family harmony and values transmission.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13225,7 +13225,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "最近，这些考虑使事情变得更加清晰，并减少了潜在的担忧。",
       "english": "Lately these considerations have brought clarity and reduced underlying concerns.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13235,7 +13235,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，有效的规划是一个通过不断学习的迭代过程。",
       "english": "I sort of realize that effective planning is an iterative process informed by ongoing learning.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13245,7 +13245,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "您知道，将业务绩效与个人财务健康相结合需要仔细协调。",
       "english": "You know, integrating business performance with personal financial health requires careful coordination.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13255,7 +13255,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "构建能够适应并同时保护最重要内容的框架令人放心。",
       "english": "It's reassuring to build frameworks that can adapt while protecting what matters most.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13265,7 +13265,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉自己更有能力处理这些复杂但重要的问题。",
       "english": "Lately I've felt more empowered navigating these complex but important matters.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13275,7 +13275,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C12.mp3",
-      "chinese": "",
+      "chinese": "总体而言，以成熟和管理的方式处理财务问题是非常有益的。",
       "english": "Overall, approaching finances with sophistication and stewardship has been profoundly beneficial.",
       "sourceAudio": "高级/C12.mp3",
       "sourceDocument": "高级/C12.docx",
@@ -13285,7 +13285,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "你知道，多年来对社会变迁的观察加深了我对技术、文化和人类价值观复杂相互作用的认识。",
       "english": "You know, observing societal shifts over the years has deepened my appreciation for the complex interplay of technology, culture, and human values.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13295,7 +13295,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考快速的变化如何挑战传统机构，同时为创新创造新的机会。",
       "english": "Lately I've been contemplating how rapid changes challenge traditional institutions while creating new opportunities for innovation.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13305,7 +13305,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，深思熟虑地处理当代问题需要平衡批判性分析与建设性乐观。",
       "english": "I mean, engaging thoughtfully with contemporary issues requires balancing critical analysis with constructive optimism.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13315,7 +13315,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "让我印象深刻的一件事是公民对话对于弥合社区内部分歧的重要性。",
       "english": "One thing that strikes me is the importance of civil discourse in bridging divides within our communities.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13325,7 +13325,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "您知道，了解历史背景可以增强一个人更细致地解释当前事件的能力。",
       "english": "You know, understanding historical context enhances one's ability to interpret current events with greater nuance.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13335,7 +13335,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，当个人行动与更广泛的意识相结合时，可以为积极的变化做出有意义的贡献。",
       "english": "I sort of believe that individual actions, when aligned with broader awareness, can contribute meaningfully to positive change.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13345,7 +13345,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "最近，教育和终身学习在培养知情公民意识方面的作用尤为突出。",
       "english": "Lately the role of education and lifelong learning in fostering informed citizenship has been particularly salient.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13355,7 +13355,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，驾驭信息环境需要强大的批判性思维和洞察力。",
       "english": "I mean, navigating information landscapes demands strong critical thinking and discernment skills.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13365,7 +13365,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "您知道，在两极分化的时代，欣赏不同观点的同时保持知识的完整性至关重要。",
       "english": "You know, appreciating diverse viewpoints while maintaining intellectual integrity is essential in polarized times.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13375,7 +13375,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "见证当地社区的努力如何有效应对更大的社会挑战是一件很有趣的事情。",
       "english": "It's fascinating to witness how local community efforts can address larger societal challenges effectively.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13385,7 +13385,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地支持促进公平和可持续发展的举措。",
       "english": "Lately I've been more intentional about supporting initiatives that promote equity and sustainability.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13395,7 +13395,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "我尝试以谦虚的态度进行社会观察并致力于持续学习。",
       "english": "I try to approach societal observations with humility and a commitment to ongoing learning.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13405,7 +13405,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种参与丰富了个人观点并鼓励更负责任的参与。",
       "english": "You know, this engagement enriches personal perspective and encourages more responsible participation.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13415,7 +13415,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡倡导与实用主义通常会产生最可持续的结果。",
       "english": "I mean, balancing advocacy with pragmatism often yields the most sustainable outcomes.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13425,7 +13425,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思影响了我如何参与重要话题的对话。",
       "english": "Lately these reflections have influenced how I contribute to conversations on important topics.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13435,7 +13435,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，深思熟虑的社会参与是有目标的生活的一部分。",
       "english": "I sort of realize that thoughtful societal engagement is part of living a purposeful life.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13445,7 +13445,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "你知道，社会规范的演变继续提供丰富的反思素材。",
       "english": "You know, the evolution of social norms continues to offer rich material for reflection.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13455,7 +13455,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "在更广泛的复杂性中看到一些创新和同情心是令人鼓舞的。",
       "english": "It's encouraging to see pockets of innovation and compassion amid broader complexities.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13465,7 +13465,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这些观察，我感觉自己与更大的人类故事有了更多的联系。",
       "english": "Lately I've felt more connected to the larger human story through these observations.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13475,7 +13475,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C13.mp3",
-      "chinese": "",
+      "chinese": "总的来说，与社会保持知情和深思熟虑的接触可以增加一个人世界观的深度。",
       "english": "Overall, maintaining informed and thoughtful engagement with society adds depth to one's worldview.",
       "sourceAudio": "高级/C13.mp3",
       "sourceDocument": "高级/C13.docx",
@@ -13485,7 +13485,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着时间的推移，存在主义的反思往往集中在在生活固有的不确定性中寻找真实的意义。",
       "english": "You know, as time progresses, existential reflections tend to center on the search for authentic meaning amidst life's inherent uncertainties.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13495,7 +13495,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考我们告诉自己的关于目标的故事如何深刻影响我们日常生活的质量。",
       "english": "Lately I've been pondering how the stories we tell ourselves about purpose profoundly influence the quality of our daily existence.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13505,7 +13505,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，拥抱有限的时间和无限的可能性之间的紧张关系可以带来更有意义的生活。",
       "english": "I mean, embracing the tension between finite time and infinite possibilities can lead to more intentional living.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13515,7 +13515,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "引起深刻共鸣的一件事是，意义通常是通过关系和贡献共同创造的，而不是孤立发现的。",
       "english": "One thing that resonates deeply is the idea that meaning is often co-created through relationships and contributions rather than discovered in isolation.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13525,7 +13525,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "你知道，矛盾的是，对死亡的思考反而增强了人们对丰富的日常经历的欣赏。",
       "english": "You know, contemplating mortality paradoxically enhances appreciation for the richness of everyday experiences.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13535,7 +13535,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，美好的生活融合了智力追求、情感深度和道德行为。",
       "english": "I sort of believe that a life well-lived integrates intellectual pursuit, emotional depth, and ethical action.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13545,7 +13545,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "最近，个人成就感和集体福祉之间的相互作用占据了我的思考。",
       "english": "Lately the interplay between personal fulfillment and collective well-being has occupied my thoughts.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13555,7 +13555,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在平凡中发现美，同时追求非凡，创造了一种和谐的方法。",
       "english": "I mean, finding beauty in the ordinary while striving for the extraordinary creates a harmonious approach.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13565,7 +13565,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些更深层次的思考继续影响着我如何优先考虑时间和精力。",
       "english": "You know, these deeper reflections continue to shape how I prioritize time and energy.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13575,7 +13575,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "认识到超越个人一生的爱和智慧的遗产是非常令人感动的。",
       "english": "It's profoundly moving to recognize the legacy of love and wisdom that transcends individual lifetimes.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13585,7 +13585,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "最近，我对人类存在所固有的神秘和奇迹产生了一种默默的崇敬。",
       "english": "Lately I've felt a quiet reverence for the mystery and wonder inherent in human existence.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13595,7 +13595,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "我尝试以开放的态度来处理这些问题，而不是需要明确的答案。",
       "english": "I try to approach these questions with openness rather than the need for definitive answers.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13605,7 +13605,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "你知道，当与实际参与相平衡时，这种存在主义探究会丰富而不是压倒一切。",
       "english": "You know, this existential inquiry enriches rather than overwhelms when balanced with practical engagement.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13615,7 +13615,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将个人叙述与更大的人类主题联系起来既可以提供安慰，也可以提供动力。",
       "english": "I mean, connecting personal narrative to larger human themes provides both comfort and motivation.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13625,7 +13625,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思让我对自己和他人产生了更大的同情心。",
       "english": "Lately these reflections have fostered greater compassion toward myself and others.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13635,7 +13635,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，随着我们积累经验和洞察力，意义就会演变。",
       "english": "I sort of realize that meaning evolves as we accumulate experience and insight.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13645,7 +13645,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "你知道，以好奇心拥抱生活中更深层次的问题可以维持一种惊奇感。",
       "english": "You know, embracing life's deeper questions with curiosity sustains a sense of wonder.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13655,7 +13655,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "它赋予作者故事的力量，同时承认存在的协作本质。",
       "english": "It's empowering to author one's story while acknowledging the collaborative nature of existence.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13665,7 +13665,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "最近，我对有机会思考和参与感到深深的感激。",
       "english": "Lately I've experienced a profound sense of gratitude for the opportunity to ponder and participate.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13675,7 +13675,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C14.mp3",
-      "chinese": "",
+      "chinese": "总体而言，这些存在主义的反思为生命的这一章注入了更大的深度和宁静。",
       "english": "Overall, these existential reflections have imbued this chapter of life with greater depth and serenity.",
       "sourceAudio": "高级/C14.mp3",
       "sourceDocument": "高级/C14.docx",
@@ -13685,7 +13685,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "你知道，在解决复杂的道德困境时，我发现最深思熟虑的决定往往来自于仔细权衡相互竞争的价值观，而不是寻求简单化的正确或错误的答案。",
       "english": "You know, in navigating complex ethical dilemmas, I've found that the most thoughtful decisions often emerge from carefully weighing competing values rather than seeking simplistic right-or-wrong answers.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13695,7 +13695,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考职业环境中的个人诚信如何需要对原则和实际情况有深入的理解。",
       "english": "Lately I've been reflecting on how personal integrity in professional contexts requires a sophisticated understanding of both principles and contextual realities.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13705,7 +13705,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，短期实用主义和长期道德一致性之间的紧张关系继续挑战和完善我的决策方法。",
       "english": "I mean, the tension between short-term pragmatism and long-term moral consistency continues to challenge and refine my approach to decision-making.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13715,7 +13715,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "越来越清楚的一件事是，将行动与根深蒂固的信念结合起来，同时对新的道德见解保持开放的态度非常重要。",
       "english": "One thing that has become increasingly clear is the importance of aligning actions with deeply held convictions while remaining open to new ethical insights.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13725,7 +13725,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "你知道，培养道德勇气不仅包括知道什么是正确的，而且包括即使在不方便的情况下也有毅力采取行动。",
       "english": "You know, cultivating moral courage involves not just knowing what is right but having the fortitude to act on it even when it's inconvenient.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13735,7 +13735,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，真正的道德领导力源于持续的自我审视和承认自己的偏见和局限性的意愿。",
       "english": "I sort of believe that true ethical leadership stems from consistent self-examination and a willingness to acknowledge one's own biases and limitations.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13745,7 +13745,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "最近，个人责任和系统影响之间的相互作用占据了我对道德问题的大部分思考。",
       "english": "Lately the interplay between individual responsibility and systemic influences has occupied much of my thinking on moral matters.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13755,7 +13755,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，与他人进行细致入微的道德讨论常常会暴露盲点并丰富自己的道德框架。",
       "english": "I mean, engaging in nuanced ethical discussions with others often reveals blind spots and enriches one's own moral framework.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13765,7 +13765,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "您知道，将同情心与智力严谨相结合可以创造一种更人性化的方法来解决困难情况。",
       "english": "You know, integrating compassion with intellectual rigor creates a more humane approach to resolving difficult situations.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13775,7 +13775,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "当道德选择虽然目前具有挑战性，但能带来更大的长期和谐和自尊时，会让人感到非常满意。",
       "english": "It's profoundly satisfying when ethical choices, though challenging in the moment, lead to greater long-term harmony and self-respect.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13785,7 +13785,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地记录重大决策背后的推理，以供将来反思和学习。",
       "english": "Lately I've been more intentional about documenting the reasoning behind significant decisions for future reflection and learning.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13795,7 +13795,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "我尝试以理智的谦逊态度来处理道德问题，同时保持核心价值观的清晰性。",
       "english": "I try to approach moral questions with intellectual humility while maintaining clarity about core values.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13805,7 +13805,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种对伦理哲学的持续参与加深了我对人类选择复杂性的认识。",
       "english": "You know, this ongoing engagement with ethical philosophy has deepened my appreciation for the complexity of human choices.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13815,7 +13815,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡个人道德与集体责任仍然是中年最能激发智力的方面之一。",
       "english": "I mean, balancing personal ethics with collective responsibilities remains one of the most intellectually stimulating aspects of midlife.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13825,7 +13825,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思影响了我如何指导他人在压力下做出原则性决定。",
       "english": "Lately these reflections have influenced how I mentor others in making principled decisions under pressure.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13835,7 +13835,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，道德成熟包括接受模糊性而不失去道德指南针。",
       "english": "I sort of realize that ethical maturity involves embracing ambiguity without losing one's moral compass.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13845,7 +13845,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "你知道，在生活的各个领域追求道德一致性会带来一种安静但强大的正直感。",
       "english": "You know, the pursuit of ethical consistency across all domains of life brings a quiet but powerful sense of integrity.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13855,7 +13855,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "看到文化背景如何塑造不同的道德推理方法是很有启发性的。",
       "english": "It's illuminating to see how cultural backgrounds shape different approaches to moral reasoning.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13865,7 +13865,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉自己更有能力以深思熟虑和优雅的方式驾驭这些微妙的领域。",
       "english": "Lately I've felt more equipped to navigate these nuanced territories with thoughtfulness and grace.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13875,7 +13875,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C15.mp3",
-      "chinese": "",
+      "chinese": "总体而言，加深对道德决策的参与已成为过上有意义的生活的核心。",
       "english": "Overall, deepening my engagement with ethical decision-making has become central to living a purposeful life.",
       "sourceAudio": "高级/C15.mp3",
       "sourceDocument": "高级/C15.docx",
@@ -13885,7 +13885,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "您知道，几十年来保持创造力需要刻意培养求知欲和探索陌生领域的意愿。",
       "english": "You know, sustaining creativity over decades requires a deliberate cultivation of intellectual curiosity and a willingness to explore unfamiliar territories.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13895,7 +13895,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在尝试跨学科的方法，融合不同领域的见解来激发新的想法。",
       "english": "Lately I've been experimenting with interdisciplinary approaches that blend insights from different fields to spark fresh ideas.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13905,7 +13905,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，最具创新性的解决方案往往出现在严格的分析和富有想象力的思维的交叉点上。",
       "english": "I mean, the most innovative solutions often arise at the intersection of rigorous analysis and imaginative thinking.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13915,7 +13915,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "持续激励我的一件事是，将失败作为创作过程的一部分如何将一个人从完美主义中解放出来。",
       "english": "One thing that continues to inspire me is how embracing failure as part of the creative process liberates one from perfectionism.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13925,7 +13925,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "您知道，事实证明，为非结构化思维创造空间对于个人和专业项目的突破至关重要。",
       "english": "You know, creating space for unstructured thinking has proven essential for breakthroughs in both personal and professional projects.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13935,7 +13935,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，真正的创新源于对事物如何运作以及它们如何以不同方式运作的深刻好奇。",
       "english": "I sort of believe that true innovation stems from a deep curiosity about how things work and how they might work differently.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13945,7 +13945,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "最近，记录和连接不同观察结果的实践极大地提高了我的创造性产出。",
       "english": "Lately the practice of documenting and connecting disparate observations has enhanced my creative output significantly.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13955,7 +13955,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，与具有不同想法的人合作可以挑战假设并扩大创造性的可能性。",
       "english": "I mean, collaborating with people who think differently challenges assumptions and expands creative possibilities.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13965,7 +13965,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "您知道，将创造性追求融入日常生活可以防止停滞并保持思维敏捷。",
       "english": "You know, integrating creative pursuits into daily life prevents stagnation and keeps the mind remarkably agile.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13975,7 +13975,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "即使在专业领域，培养初学者的思维方式也能促进持续的创新，这是非常了不起的。",
       "english": "It's quite remarkable how nurturing a beginner's mindset even in areas of expertise fuels ongoing innovation.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13985,7 +13985,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地让自己接触到平常领域之外的各种灵感来源。",
       "english": "Lately I've been more intentional about exposing myself to diverse sources of inspiration beyond my usual domains.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -13995,7 +13995,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "我尝试通过纪律和有趣的实验来应对创造性的挑战。",
       "english": "I try to approach creative challenges with both discipline and playful experimentation.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14005,7 +14005,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种平衡在各种努力中继续产生令人满意的结果。",
       "english": "You know, this balance continues to yield satisfying results across various endeavors.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14015,7 +14015,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，发现的乐趣仍然是智力生活中最有价值的方面之一。",
       "english": "I mean, the joy of discovery remains one of the most rewarding aspects of intellectual life.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14025,7 +14025,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "最近这些创作实践不仅丰富了我的作品，也丰富了我整体的活力感。",
       "english": "Lately these creative practices have enriched not only my work but my overall sense of vitality.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14035,7 +14035,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到创造力不是与生俱来的天赋，而是与持续的培养和开放有关。",
       "english": "I sort of realize that creativity is less about innate talent and more about consistent cultivation and openness.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14045,7 +14045,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "您知道，与他人分享创作过程可以使学习和灵感倍增。",
       "english": "You know, sharing the creative process with others multiplies the learning and inspiration.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14055,7 +14055,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "看到想法从最初的火花发展成为有意义的贡献，我感到非常满足。",
       "english": "It's deeply fulfilling to see ideas evolve from initial sparks into meaningful contributions.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14065,7 +14065,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "最近，我对未来的创造潜力再次感到兴奋。",
       "english": "Lately I've felt a renewed sense of excitement about the creative potential still ahead.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14075,7 +14075,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C16.mp3",
-      "chinese": "",
+      "chinese": "总的来说，优先考虑求知欲和创造力对于这个人生阶段来说是变革性的。",
       "english": "Overall, prioritizing intellectual curiosity and creativity has been transformative for this life stage.",
       "sourceAudio": "高级/C16.mp3",
       "sourceDocument": "高级/C16.docx",
@@ -14085,7 +14085,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着我们家庭的成熟，我开始将遗产不仅仅视为物质供给，而且视为代代相传来之不易的智慧。",
       "english": "You know, as our family has matured, I've come to view legacy not merely as material provisions but as the transmission of hard-earned wisdom across generations.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14095,7 +14095,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在进行更深刻的对话，讨论我们的移民之旅如何影响我们希望向子孙后代灌输的价值观。",
       "english": "Lately we've been having more profound conversations about how our immigration journey informs the values we hope to instill in future generations.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14105,7 +14105,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在保护文化遗产和鼓励独立思考之间取得平衡需要相当的细微差别和敏感性。",
       "english": "I mean, balancing the preservation of cultural heritage with encouragement of independent thinking requires considerable nuance and sensitivity.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14115,7 +14115,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "令人深感满足的一件事是见证我们早期塑造的韧性现在如何体现在孩子的生活方式中。",
       "english": "One thing that brings deep satisfaction is witnessing how the resilience we modeled early on now manifests in our children's approaches to life.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14125,7 +14125,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "您知道，有意创造讲故事和反思的机会有助于以有意义的方式弥合代沟。",
       "english": "You know, intentionally creating opportunities for storytelling and reflection helps bridge generational gaps in meaningful ways.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14135,7 +14135,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "我认为最有价值的遗产包括情商、道德基础和实用的生活技能。",
       "english": "I sort of believe that the most valuable legacy consists of emotional intelligence, ethical grounding, and practical life skills.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14145,7 +14145,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是构建我们的房屋和资产计划，以支持下一代的安全和自治。",
       "english": "Lately the focus has been on structuring our plans for the house and assets to support both security and autonomy for the next generation.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14155,7 +14155,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，分享弱点和优点会创造出更真实、更相关的家庭叙事。",
       "english": "I mean, sharing vulnerabilities alongside strengths creates a more authentic and relatable family narrative.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14165,7 +14165,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种代际对话不断发展并加强我们的集体认同感和目标感。",
       "english": "You know, this intergenerational dialogue continues to evolve and strengthen our collective sense of identity and purpose.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14175,7 +14175,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "看到每个家庭成员以独特的方式解释和建立我们提供的基础，真是令人感动。",
       "english": "It's profoundly moving to see the unique ways each family member interprets and builds upon the foundation we've provided.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14185,7 +14185,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加刻意地记录所学到的经验教训，以便在我有生之年仍然可以访问它们。",
       "english": "Lately I've been more deliberate about documenting lessons learned so they remain accessible beyond my own lifetime.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14195,7 +14195,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "我尝试在不强加的情况下提供指导，提供观点，同时尊重个人的道路。",
       "english": "I try to guide without imposing, offering perspectives while honoring individual paths.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14205,7 +14205,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种遗产建设方法让人感觉既负责任又解放。",
       "english": "You know, this approach to legacy building feels both responsible and liberating.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14215,7 +14215,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，我们的中国根源和美国经验的结合为下一代创造了一幅丰富的挂毯。",
       "english": "I mean, the synthesis of our Chinese roots and American experiences creates a rich tapestry for the next generation.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14225,7 +14225,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "最近，这些努力带来了一种安静的满足感和连续性。",
       "english": "Lately these efforts have brought a quiet sense of fulfillment and continuity.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14235,7 +14235,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到家族遗产是一个活生生的过程，而不是固定的遗产。",
       "english": "I sort of realize that family legacy is a living process rather than a fixed inheritance.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14245,7 +14245,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "您知道，投资于这些关系和智慧转移会产生超越物质衡量标准的回报。",
       "english": "You know, investing in these relationships and wisdom transfers yields returns that transcend material measures.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14255,7 +14255,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "看到已经出现的积极连锁反应是令人振奋的。",
       "english": "It's heartening to observe the positive ripple effects already emerging.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14265,7 +14265,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "最近，我很感激有机会为这个正在进行的家庭故事做出贡献。",
       "english": "Lately I've felt grateful for the opportunity to contribute to this ongoing family story.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14275,7 +14275,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C17.mp3",
-      "chinese": "",
+      "chinese": "总体而言，培育代际智慧已成为本章最有意义的方面之一。",
       "english": "Overall, nurturing intergenerational wisdom has become one of the most meaningful aspects of this chapter.",
       "sourceAudio": "高级/C17.mp3",
       "sourceDocument": "高级/C17.docx",
@@ -14285,7 +14285,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "你知道，反思重大逆境时期就会发现，韧性通常是如何通过内部资源和外部支持的复杂相互作用来发展的。",
       "english": "You know, reflecting on periods of significant adversity has revealed how resilience often develops through a complex interplay of internal resources and external support.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14295,7 +14295,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考创伤后成长的概念，以及挑战如何促进深刻的积极转变。",
       "english": "Lately I've been contemplating the concept of post-traumatic growth and how challenges can catalyze profound positive transformations.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14305,7 +14305,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将困难的经历融入到一个人的生活叙述中的过程需要诚实和富有同情心的自我理解。",
       "english": "I mean, the process of integrating difficult experiences into one's life narrative requires both honesty and compassionate self-understanding.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14315,7 +14315,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "值得注意的一件事是，即使在不确定的情况下，人类也具有寻找意义和力量的非凡能力。",
       "english": "One thing that stands out is the remarkable capacity humans have to find meaning and strength even in the midst of uncertainty.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14325,7 +14325,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "您知道，培养适应性策略，同时尊重挫折的情感影响是长期繁荣的关键。",
       "english": "You know, cultivating adaptive strategies while honoring the emotional impact of setbacks has been key to long-term thriving.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14335,7 +14335,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，真正的韧性包括知道何时坚持、何时优雅地转变的智慧。",
       "english": "I sort of believe that true resilience includes the wisdom to know when to persist and when to pivot gracefully.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14345,7 +14345,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "最近，将逆境重新定义为老师而不仅仅是障碍的做法极大地改变了我的观点。",
       "english": "Lately the practice of reframing adversity as a teacher rather than merely an obstacle has shifted my perspective significantly.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14355,7 +14355,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，借鉴过去克服困难的经验，为应对当前的挑战提供了坚实的基础。",
       "english": "I mean, drawing on past experiences of overcoming difficulties provides a solid foundation for facing current challenges.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14365,7 +14365,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种韧性的持续发展继续在个人、家庭和职业领域为我提供良好的帮助。",
       "english": "You know, this ongoing development of resilience continues to serve me well across personal, family, and professional domains.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14375,7 +14375,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "见证在困难时期共同的脆弱性如何能够加深联系和集体力量是非常鼓舞人心的。",
       "english": "It's quite inspiring to witness how shared vulnerability in difficult times can deepen connections and collective strength.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14385,7 +14385,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加关注在克服困难时出现的微妙的成长迹象。",
       "english": "Lately I've been more attentive to the subtle signs of growth that emerge from navigating hardships.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14395,7 +14395,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "我尝试以现实主义和充满希望的决心相结合来应对逆境。",
       "english": "I try to approach adversity with a blend of realism and hopeful determination.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14405,7 +14405,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些反思增强了我支持他人度过困难时期的能力。",
       "english": "You know, these reflections have enhanced my capacity to support others through their own difficult periods.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14415,7 +14415,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将逆境中的教训融入日常实践中可以创造可持续的内部资源。",
       "english": "I mean, integrating lessons from adversity into daily practices creates sustainable inner resources.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14425,7 +14425,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "最近，这种观点让我们在面对生活不可避免的波动时更加平静。",
       "english": "Lately this perspective has brought greater equanimity in the face of life's inevitable fluctuations.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14435,7 +14435,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，那些认真对待自己经历的人可以获得创伤后成长。",
       "english": "I sort of realize that post-traumatic growth is available to those who engage thoughtfully with their experiences.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14445,7 +14445,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "你知道，拥抱这段恢复力的旅程为我的人生故事增添了深度和真实性。",
       "english": "You know, embracing this journey of resilience has added depth and authenticity to my life story.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14455,7 +14455,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "认识到通过优雅地坚持而积累的安静力量是有力量的。",
       "english": "It's empowering to recognize the quiet strength that accumulates through persevering with grace.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14465,7 +14465,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "最近，当我面对新的挑战时，我感觉准备更加充分，更加集中精力。",
       "english": "Lately I've felt more prepared and centered when facing new challenges.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14475,7 +14475,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C18.mp3",
-      "chinese": "",
+      "chinese": "总的来说，理解和培养韧性是人生最有价值的老师之一。",
       "english": "Overall, understanding and cultivating resilience has been one of life's most valuable teachers.",
       "sourceAudio": "高级/C18.mp3",
       "sourceDocument": "高级/C18.docx",
@@ -14485,7 +14485,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "你知道，加深我的冥想练习揭示了真实的存在如何将最平凡的时刻转化为深刻洞察力与平静的源泉。",
       "english": "You know, deepening my contemplative practices has revealed how true presence transforms even the most ordinary moments into sources of profound insight and peace.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14495,7 +14495,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "最近，我将正念更无缝地融入日常活动中，而不是将其视为一项单独的练习。",
       "english": "Lately I've been integrating mindfulness more seamlessly into daily activities rather than treating it as a separate exercise.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14505,7 +14505,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在我们快节奏的世界中，在分心的情况下培养持续的注意力变得越来越重要。",
       "english": "I mean, the cultivation of sustained attention amid distractions has become increasingly vital in our fast-paced world.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14515,7 +14515,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "持续让我惊讶的一件事是，随着时间的推移，定期的冥想练习如何增强清晰度和情绪调节。",
       "english": "One thing that continues to amaze me is how regular contemplative practice enhances clarity and emotional regulation over time.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14525,7 +14525,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "你知道，探索不同的正念传统丰富了我的个人方法，而不是教条主义。",
       "english": "You know, exploring different traditions of mindfulness has enriched my personal approach without dogmatism.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14535,7 +14535,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "我有点相信存在不是为了实现某种特定的状态，而是为了温和地回到当前时刻。",
       "english": "I sort of believe that presence is less about achieving a particular state and more about returning gently to the current moment.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14545,7 +14545,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "最近，正念倾听的练习极大地提高了我的人际关系和谈话的质量。",
       "english": "Lately the practice of mindful listening has profoundly improved the quality of my relationships and conversations.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14555,7 +14555,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，全天有意识地停顿可以让你在决策时有更大的洞察力。",
       "english": "I mean, creating intentional pauses throughout the day allows for greater discernment in decision-making.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14565,7 +14565,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种沉思的维度增加了一层深度，完美地平衡了智力和实践追求。",
       "english": "You know, this contemplative dimension adds a layer of depth that balances intellectual and practical pursuits beautifully.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14575,7 +14575,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "值得注意的是，意识上的微小转变可以导致整体福祉的重大变化。",
       "english": "It's quite remarkable how small shifts in awareness can lead to significant changes in overall well-being.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14585,7 +14585,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在尝试基于自然的正念来增强联系和视角。",
       "english": "Lately I've been experimenting with nature-based mindfulness to enhance connection and perspective.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14595,7 +14595,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "我尝试以好奇心和耐心来进行这些实践，而不是追求完美。",
       "english": "I try to approach these practices with curiosity and patience rather than striving for perfection.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14605,7 +14605,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "您知道，持续存在的好处继续以微妙而强大的方式展现出来。",
       "english": "You know, the benefits of sustained presence continue to unfold in subtle yet powerful ways.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14615,7 +14615,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将沉思与行动结合起来可以创造一种更和谐的生活方式。",
       "english": "I mean, integrating contemplation with action creates a more harmonious way of engaging with life.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14625,7 +14625,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "最近，这些练习培养了更深层次的内心宽敞和平静的感觉。",
       "english": "Lately these practices have cultivated a deeper sense of inner spaciousness and equanimity.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14635,7 +14635,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到正念最终是为了让生活更加充实和真实。",
       "english": "I sort of realize that mindfulness is ultimately about living more fully and authentically.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14645,7 +14645,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "您知道，与他人深思熟虑地分享这些见解可以激发他们自己的存在之旅。",
       "english": "You know, sharing these insights thoughtfully with others can spark their own journeys of presence.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14655,7 +14655,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "在生活的复杂性中回到当下具有深刻的基础。",
       "english": "It's profoundly grounding to return to the present amid life's complexities.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14665,7 +14665,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉与自己和更大的存在之流的联系更加紧密。",
       "english": "Lately I've felt more connected to both myself and the larger flow of existence.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14675,7 +14675,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C19.mp3",
-      "chinese": "",
+      "chinese": "总体而言，致力于冥想练习对于内心的平静和清晰具有变革性的作用。",
       "english": "Overall, committing to contemplative practices has been transformative for inner peace and clarity.",
       "sourceAudio": "高级/C19.mp3",
       "sourceDocument": "高级/C19.docx",
@@ -14685,7 +14685,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "您知道，参与社会变革需要在理想主义和对复杂系统的务实理解之间取得复杂的平衡。",
       "english": "You know, engaging with societal change requires a sophisticated balance between idealism and pragmatic understanding of complex systems.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14695,7 +14695,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考深思熟虑的倡导如何能够弥合分歧，同时推动有意义的进展。",
       "english": "Lately I've been reflecting on how thoughtful advocacy can bridge divides while advancing meaningful progress.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14705,7 +14705,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，有效的思想领导力涉及通过清晰的沟通来综合知识，从而引起不同受众的共鸣。",
       "english": "I mean, effective thought leadership involves synthesizing knowledge with clear communication that resonates across different audiences.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14715,7 +14715,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "突出的一件事是坚持不懈、有原则的努力能够随着时间的推移产生持久的影响。",
       "english": "One thing that stands out is the power of persistent, principled efforts in creating lasting impact over time.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14725,7 +14725,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "你知道，以理智的谦逊态度处理社会问题，同时保持信念，可以进行更具建设性的对话。",
       "english": "You know, approaching social issues with intellectual humility while maintaining conviction allows for more constructive dialogue.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14735,7 +14735,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，可持续的变革源于尊重不同观点的协作努力。",
       "english": "I sort of believe that sustainable change emerges from collaborative efforts that honor diverse perspectives.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14745,7 +14745,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "最近，技术、政策和人类价值观的交叉促使人们对潜在的未来进行更深入的分析。",
       "english": "Lately the intersection of technology, policy, and human values has prompted deeper analysis of potential futures.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14755,7 +14755,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，通过行动和反思为重要对话做出贡献感觉越来越重要。",
       "english": "I mean, contributing to important conversations through both action and reflection feels increasingly significant.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14765,7 +14765,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种与更广泛的社会动态的接触丰富了个人目标和观点。",
       "english": "You know, this engagement with broader societal dynamics enriches personal purpose and perspective.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14775,7 +14775,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "看到个人的声音在经过深思熟虑的放大后如何影响积极的轨迹是令人鼓舞的。",
       "english": "It's inspiring to see how individual voices, when amplified thoughtfully, can influence positive trajectories.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14785,7 +14785,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地支持与长期社会福祉相一致的举措。",
       "english": "Lately I've been more intentional about supporting initiatives that align with long-term societal well-being.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14795,7 +14795,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "我尝试用证据、同理心和战略思维来进行倡导。",
       "english": "I try to approach advocacy with evidence, empathy, and strategic thinking.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14805,7 +14805,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "您知道，随着新挑战和机遇的出现，这些努力不断发展。",
       "english": "You know, these efforts continue to evolve as new challenges and opportunities arise.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14815,7 +14815,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡批评与建设性愿景通常会产生最有效的结果。",
       "english": "I mean, balancing critique with constructive vision often yields the most effective outcomes.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14825,7 +14825,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "最近，这种参与加深了我对社会系统复杂性的认识。",
       "english": "Lately this involvement has deepened my appreciation for the complexity of social systems.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14835,7 +14835,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到深思熟虑的参与是负责任的公民的重要组成部分。",
       "english": "I sort of realize that thoughtful engagement is a vital part of responsible citizenship.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14845,7 +14845,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "你知道，追求积极的改变仍然是一生中有意义的主线。",
       "english": "You know, the pursuit of positive change remains a meaningful thread throughout life.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14855,7 +14855,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "以超越直接圈子的方式做出贡献是值得的。",
       "english": "It's rewarding to contribute in ways that extend beyond immediate circles.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14865,7 +14865,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "最近，我感觉自己更有能力有意义地参与重要的讨论。",
       "english": "Lately I've felt more empowered to participate meaningfully in important discussions.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14875,7 +14875,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C20.mp3",
-      "chinese": "",
+      "chinese": "总体而言，通过深思熟虑的倡导参与社会变革可以显着增加一个人一生工作的深度。",
       "english": "Overall, engaging with societal change through thoughtful advocacy adds significant depth to one's life work.",
       "sourceAudio": "高级/C20.mp3",
       "sourceDocument": "高级/C20.docx",
@@ -14885,7 +14885,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "你知道，拥抱衰老的自然过程使我的注意力从保持青春转向以有意义的方式培养智慧和活力。",
       "english": "You know, embracing the natural process of aging has shifted my focus from preserving youth to cultivating wisdom and vitality in meaningful ways.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14895,7 +14895,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考人生阶段的转变如何为反思和更新目标提供独特的机会。",
       "english": "Lately I've been contemplating how life stage transitions offer unique opportunities for reflection and renewed purpose.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14905,7 +14905,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，经验的积累带来了更丰富、更细致的视角，而年轻的自己根本无法获得这些视角。",
       "english": "I mean, the accumulation of experience brings a richer, more nuanced perspective that younger selves simply couldn't access.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14915,7 +14915,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "显而易见的一件事是主动适应不断变化的身体和认知现实的重要性。",
       "english": "One thing that has become evident is the importance of proactive adaptation to changing physical and cognitive realities.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14925,7 +14925,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "你知道，在这个阶段重新定义成功和成就感可以带来更大的自由和真实性。",
       "english": "You know, redefining success and fulfillment at this stage allows for greater freedom and authenticity.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14935,7 +14935,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "我有点相信真正的智慧涉及将知识与同情心和谦逊相结合。",
       "english": "I sort of believe that true wisdom involves integrating knowledge with compassion and humility.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14945,7 +14945,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是通过有意识的练习来保持身体、心理和社会活力。",
       "english": "Lately the emphasis has been on maintaining physical, mental, and social vitality through intentional practices.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14955,7 +14955,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，优雅地完成这些转变需要接受和积极主动的参与。",
       "english": "I mean, navigating these transitions with grace requires both acceptance and proactive engagement.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14965,7 +14965,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "您知道，这个人生阶段为指导和为后代做出贡献提供了特殊的有利位置。",
       "english": "You know, this life stage offers a special vantage point for mentoring and contributing to future generations.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14975,7 +14975,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "释放早期的压力并接受成熟的礼物是一种深刻的解放。",
       "english": "It's profoundly liberating to release earlier pressures and embrace the gifts of maturity.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14985,7 +14985,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加欣赏生活经验积累所带来的深度。",
       "english": "Lately I've been more appreciative of the depth that comes with accumulated life experience.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -14995,7 +14995,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "我尝试以好奇心和尊重身体和心灵不断变化的需求来对待衰老。",
       "english": "I try to approach aging with curiosity and respect for the body's and mind's evolving needs.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15005,7 +15005,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些反思继续告诉我如何优先考虑时间和精力。",
       "english": "You know, these reflections continue to inform how I prioritize time and energy.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15015,7 +15015,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在当下寻找快乐，同时深思熟虑地规划未来可以创造平衡。",
       "english": "I mean, finding joy in the present while planning thoughtfully for the future creates balance.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15025,7 +15025,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "最近，这种观点给未来带来了更多的平静和兴奋。",
       "english": "Lately this perspective has brought greater peace and excitement about what lies ahead.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15035,7 +15035,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到每个生命阶段都有其独特的美丽和贡献形式。",
       "english": "I sort of realize that each life stage carries its own unique forms of beauty and contribution.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15045,7 +15045,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "你知道，以开放的态度拥抱转变可以保持活力和意义。",
       "english": "You know, embracing transitions with openness sustains vitality and meaning.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15055,7 +15055,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "见证个人成长持续到晚年是非常令人满足的。",
       "english": "It's deeply satisfying to witness personal growth continuing well into later years.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15065,7 +15065,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "最近，我对这些自然过程中产生的智慧感到感激。",
       "english": "Lately I've felt grateful for the wisdom that emerges through these natural processes.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15075,7 +15075,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C21.mp3",
-      "chinese": "",
+      "chinese": "总的来说，以正念和目标来应对衰老是一种丰富和赋权的方式。",
       "english": "Overall, approaching aging with mindfulness and purpose has been enriching and empowering.",
       "sourceAudio": "高级/C21.mp3",
       "sourceDocument": "高级/C21.docx",
@@ -15085,7 +15085,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "你知道，这个阶段对目标的追求往往超越个人成就，并与比个人更大的事物联系起来。",
       "english": "You know, the search for purpose at this stage often transcends individual achievements and connects to something larger than oneself.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15095,7 +15095,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索如何将日常行为与超越意义感结合起来，以提高整体生活满意度。",
       "english": "Lately I've been exploring how aligning daily actions with a sense of transcendent meaning enhances overall life satisfaction.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15105,7 +15105,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，思考存在的更大问题既会带来谦卑，也会带来对意识礼物的深刻欣赏。",
       "english": "I mean, contemplating the bigger questions of existence brings both humility and a profound appreciation for the gift of consciousness.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15115,7 +15115,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "引起深刻共鸣的一件事是，意义经常是通过服务、联系和创造性贡献来发现的。",
       "english": "One thing that resonates deeply is the idea that meaning is frequently discovered through service, connection, and creative contribution.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15125,7 +15125,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "你知道，保持惊奇和好奇心可以维持对生命更深奥秘的参与。",
       "english": "You know, maintaining a sense of wonder and curiosity sustains engagement with life's deeper mysteries.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15135,7 +15135,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，当我们随着时间的推移整合经验和见解时，目标会有机地演变。",
       "english": "I sort of believe that purpose evolves organically as we integrate experiences and insights over time.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15145,7 +15145,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "最近，个人成就感和集体福祉之间的相互作用一直是我思考的核心。",
       "english": "Lately the interplay between personal fulfillment and collective well-being has been central to my reflections.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15155,7 +15155,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，找到为他人的生活做出有意义的贡献的方法会创造出超越物质成功的遗产。",
       "english": "I mean, finding ways to contribute meaningfully to others' lives creates a legacy that extends beyond material success.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15165,7 +15165,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种超越的视角有助于以更大的平静和希望应对挑战。",
       "english": "You know, this transcendent perspective helps navigate challenges with greater equanimity and hope.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15175,7 +15175,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "认识到所有人类故事和努力的相互联系是非常令人感动的。",
       "english": "It's quite moving to recognize the interconnectedness of all human stories and efforts.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15185,7 +15185,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地进行培养这种意义感的实践。",
       "english": "Lately I've been more intentional about cultivating practices that nurture this sense of meaning.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15195,7 +15195,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "我尝试以开放和持续的探究来处理目的问题，而不是僵化的结论。",
       "english": "I try to approach questions of purpose with openness and ongoing inquiry rather than rigid conclusions.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15205,7 +15205,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些探索继续阐明在漫长的生命弧线中真正重要的是什么。",
       "english": "You know, these explorations continue to illuminate what truly matters in the long arc of life.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15215,7 +15215,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，整合智力、情感和精神维度可以创造更全面的体验。",
       "english": "I mean, integrating intellectual, emotional, and spiritual dimensions creates a more holistic experience.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15225,7 +15225,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "最近这个框架带来了更深的满足感和动力。",
       "english": "Lately this framework has brought deeper contentment and motivation.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15235,7 +15235,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，意义常常通过存在和真实的参与来展现出来。",
       "english": "I sort of realize that meaning often reveals itself through presence and authentic engagement.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15245,7 +15245,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "你知道，拥抱超越的观点会丰富而不是使日常生活变得复杂。",
       "english": "You know, embracing transcendent perspectives enriches rather than complicates daily living.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15255,7 +15255,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "与一个人不断发展的目标感保持一致的生活是非常令人满足的。",
       "english": "It's profoundly fulfilling to live in alignment with one's evolving sense of purpose.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15265,7 +15265,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "最近，我感受到与更大的人类事业之间有一种安静但强大的联系。",
       "english": "Lately I've felt a quiet but powerful connection to the larger human endeavor.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15275,7 +15275,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C22.mp3",
-      "chinese": "",
+      "chinese": "总体而言，追求目的和意义已成为这一人生篇章的指导力量。",
       "english": "Overall, pursuing purpose and meaning has become the guiding force of this life chapter.",
       "sourceAudio": "高级/C22.mp3",
       "sourceDocument": "高级/C22.docx",
@@ -15285,7 +15285,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "您知道，拥抱真正的全球公民需要培养对相互关联的系统的复杂意识，同时尊重不同社会的独特背景。",
       "english": "You know, embracing a truly global citizenship involves cultivating a sophisticated awareness of interconnected systems while honoring the unique contexts of different societies.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15295,7 +15295,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考我们家庭的双文化之旅如何自然地增强了我以更大的同理心和细致入微的态度处理国际问题的能力。",
       "english": "Lately I've been reflecting on how our family's bicultural journey has naturally expanded my capacity to engage with international issues with greater empathy and nuance.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15305,7 +15305,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，同时掌握多种文化框架的能力可以丰富一个人对全球挑战和机遇的理解。",
       "english": "I mean, the ability to hold multiple cultural frameworks simultaneously enriches one's understanding of global challenges and opportunities.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15315,7 +15315,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "值得注意的一件事是知情的世界主义的重要性，它避免肤浅，同时促进真正的跨文化对话。",
       "english": "One thing that stands out is the importance of informed cosmopolitanism that avoids superficiality while fostering genuine cross-cultural dialogue.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15325,7 +15325,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "您知道，应对全球化的复杂性需要平衡地方承诺与更广泛的共同人性意识。",
       "english": "You know, navigating the complexities of globalization requires balancing local commitments with a broader sense of shared humanity.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15335,7 +15335,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，有效的全球公民意识来自于跨境的智力参与和富有同情心的行动。",
       "english": "I sort of believe that effective global citizenship emerges from both intellectual engagement and compassionate action across borders.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15345,7 +15345,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "最近，技术、移民和文化交流的交叉促使我们更深入地思考我们在这个相互关联的世界中的角色。",
       "english": "Lately the intersections of technology, migration, and cultural exchange have prompted deeper consideration of our roles in this interconnected world.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15355,7 +15355,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在深思熟虑地为全球对话做出贡献的同时仍然植根于个人和家庭现实，可以创造一种有意义的平衡。",
       "english": "I mean, contributing thoughtfully to global conversations while remaining rooted in personal and family realities creates a meaningful balance.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15365,7 +15365,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种观点继续影响着我处理国际业务决策的方式。",
       "english": "You know, this perspective continues to influence how I approach business decisions with international dimensions.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15375,7 +15375,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "认识到个体故事如何为人类迁徙和适应的更大范围做出贡献，是非常有洞察力的。",
       "english": "It's profoundly insightful to recognize how individual stories contribute to the larger tapestry of human migration and adaptation.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15385,7 +15385,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加刻意地了解全球发展动态，同时通过道德和实用的视角对其进行过滤。",
       "english": "Lately I've been more intentional about staying informed on global developments while filtering them through ethical and practical lenses.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15395,7 +15395,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "我尝试以谦虚的态度和开放的学习态度来接受不同的观点。",
       "english": "I try to engage with diverse viewpoints with intellectual humility and openness to learning.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15405,7 +15405,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "你知道，多年来这种国际化的取向为我的世界观增添了非凡的深度。",
       "english": "You know, this cosmopolitan orientation has added remarkable depth to my worldview over the years.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15415,7 +15415,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡国家认同与全球意识仍然是一个持续且有益的过程。",
       "english": "I mean, balancing national identity with global awareness remains an ongoing and rewarding process.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15425,7 +15425,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思增强了我对丰富的多元文化经历的欣赏。",
       "english": "Lately these reflections have enhanced my appreciation for the richness of multicultural experiences.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15435,7 +15435,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，真正的全球公民意识是每天通过深思熟虑的选择和联系来实践的。",
       "english": "I sort of realize that true global citizenship is practiced daily through mindful choices and connections.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15445,7 +15445,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "您知道，在我们的家庭中培养这种观点已经引发了关于责任和机会的宝贵讨论。",
       "english": "You know, fostering this perspective within our family has created valuable discussions about responsibility and opportunity.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15455,7 +15455,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "看到这种意识如何转化为地方和更广泛层面的有意义的贡献是令人鼓舞的。",
       "english": "It's inspiring to see how such awareness can translate into meaningful contributions at both local and broader levels.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15465,7 +15465,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这些考虑，我感觉与更广泛的人类社区有了更多的联系。",
       "english": "Lately I've felt more connected to the wider human community through these considerations.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15475,7 +15475,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C23.mp3",
-      "chinese": "",
+      "chinese": "总的来说，培养世界性思维已经成为我个人和智力成长不可或缺的一部分。",
       "english": "Overall, cultivating cosmopolitan thinking has become an integral part of my personal and intellectual growth.",
       "sourceAudio": "高级/C23.mp3",
       "sourceDocument": "高级/C23.docx",
@@ -15485,7 +15485,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "要知道，深入接触文学艺术已经成为我近年来思想和情感生活最丰富的维度之一。",
       "english": "You know, engaging deeply with literature and art has become one of the most enriching dimensions of my intellectual and emotional life in recent years.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15495,7 +15495,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "最近我一直在重新审视经典作品和当代声音，通过积累的生活经验寻找新的意义。",
       "english": "Lately I've been revisiting classic works alongside contemporary voices, finding new layers of meaning through the lens of accumulated life experience.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15505,7 +15505,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，叙事在阐明普遍人类真理的同时突出文化特性的力量永远让我感到惊讶。",
       "english": "I mean, the power of narrative to illuminate universal human truths while highlighting cultural specificities never ceases to amaze me.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15515,7 +15515,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "让我继续高兴的一件事是艺术表达如何弥合分歧并培养不同背景的同理心。",
       "english": "One thing that continues to delight me is how artistic expression can bridge divides and foster empathy across different backgrounds.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15525,7 +15525,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "你知道，定期接触美——无论是通过阅读、音乐还是视觉艺术——可以深刻地滋养精神。",
       "english": "You know, incorporating regular encounters with beauty—whether through reading, music, or visual arts—nourishes the spirit in profound ways.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15535,7 +15535,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "我有点相信文化欣赏涉及与创作者的主动对话而不是被动消费。",
       "english": "I sort of believe that cultural appreciation involves active dialogue with creators rather than passive consumption.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15545,7 +15545,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "最近，对不同艺术传统如何处理身份和归属感主题的探索特别引起共鸣。",
       "english": "Lately the exploration of how different artistic traditions address themes of identity and belonging has been particularly resonant.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15555,7 +15555,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，这些追求为业务和日常责任的更多分析需求提供了一种受欢迎的平衡。",
       "english": "I mean, these pursuits provide a welcome counterbalance to the more analytical demands of business and daily responsibilities.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15565,7 +15565,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "你知道，与家人和朋友讨论文学或艺术常常会带来意想不到的有意义的对话。",
       "english": "You know, discussing literature or art with family and friends often leads to unexpectedly meaningful conversations.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15575,7 +15575,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "一个精心设计的句子或图像能够改变一个人对长期持有的假设的看法，这是非常了不起的。",
       "english": "It's quite remarkable how a well-crafted sentence or image can shift one's perspective on long-held assumptions.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15585,7 +15585,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加慎重地为这些沉思的文化体验创造空间。",
       "english": "Lately I've been more deliberate about creating space for these contemplative cultural experiences.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15595,7 +15595,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "我尝试以批判性的洞察力和开放的包容性来对待艺术。",
       "english": "I try to approach art with both critical discernment and open-hearted receptivity.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15605,7 +15605,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种参与继续加深了我对人类状况的理解。",
       "english": "You know, this engagement continues to deepen my understanding of the human condition.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15615,7 +15615,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，伟大作品的永恒相关性为人生的各个阶段提供了安慰和洞察力。",
       "english": "I mean, the timeless relevance of great works offers comfort and insight across life's various stages.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15625,7 +15625,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "最近，这些艺术探索在我自己的反思实践中激发了新的创造力。",
       "english": "Lately these artistic explorations have sparked fresh creativity in my own reflective practices.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15635,7 +15635,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到文化欣赏是一种维持智力活力的积极实践。",
       "english": "I sort of realize that cultural appreciation is an active practice that sustains intellectual vitality.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15645,7 +15645,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "您知道，与下一代分享这些经验将为终身丰富播下种子。",
       "english": "You know, sharing these experiences with the next generation plants seeds for lifelong enrichment.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15655,7 +15655,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "目睹艺术如何超越时间和地点触及我们内心的本质，真是令人感动。",
       "english": "It's profoundly moving to witness how art transcends time and place to touch something essential in us.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15665,7 +15665,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这些文化活动，我感受到了新的惊奇感。",
       "english": "Lately I've felt a renewed sense of wonder through these cultural engagements.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15675,7 +15675,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C24.mp3",
-      "chinese": "",
+      "chinese": "总的来说，培养对艺术和文学的欣赏能力为这一人生篇章增添了不可估量的丰富性。",
       "english": "Overall, nurturing appreciation for art and literature has added immeasurable richness to this chapter of life.",
       "sourceAudio": "高级/C24.mp3",
       "sourceDocument": "高级/C24.docx",
@@ -15685,7 +15685,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着岁月的积累，一个人所处时代的深思熟虑的建筑成为创造有意义的生活的最关键要素之一。",
       "english": "You know, as the years accumulate, the thoughtful architecture of one's time becomes one of the most critical elements in crafting a meaningful life.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15695,7 +15695,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在完善自己的优先顺序，认识到我们选择关注的事情最终会塑造我们的生活轨迹。",
       "english": "Lately I've been refining my approach to priorities, recognizing that what we choose to focus on ultimately shapes our life's trajectory.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15705,7 +15705,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，清晰而善意地说“不”的艺术对于保护真正重要的事情的空间至关重要。",
       "english": "I mean, the art of saying no with clarity and kindness has become essential for protecting space for what truly matters.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15715,7 +15715,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "越来越清晰的一件事是能源的紧急需求和重要的长期投资之间的区别。",
       "english": "One thing that has grown clearer is the distinction between urgent demands and important long-term investments of energy.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15725,7 +15725,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "您知道，设计既尊重生产力又保证真正休息的生活节奏需要持续的有意调整。",
       "english": "You know, designing life rhythms that honor both productivity and genuine rest requires ongoing intentional adjustment.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15735,7 +15735,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，有效的时间管理涉及将日常行为与更深层次的生活价值观和愿望结合起来。",
       "english": "I sort of believe that effective time stewardship involves aligning daily actions with deeper life values and aspirations.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15745,7 +15745,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "最近，定期优先审核的做法帮助我消除了干扰并扩大了有意义的追求。",
       "english": "Lately the practice of periodic priority audits has helped me eliminate distractions and amplify meaningful pursuits.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15755,7 +15755,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡家庭承诺、职业责任和个人成长需要复杂的协调。",
       "english": "I mean, balancing family commitments, professional responsibilities, and personal growth demands sophisticated orchestration.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15765,7 +15765,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "你知道，将时间视为值得仔细管理的有限资源已经改变了我每天的生活方式。",
       "english": "You know, viewing time as a finite resource worthy of careful curation has transformed how I approach each day.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15775,7 +15775,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "释放不再符合一个人不断发展的目标感的活动是相当自由的。",
       "english": "It's quite liberating to release activities that no longer align with one's evolving sense of purpose.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15785,7 +15785,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地在繁忙的日程中为反思创造缓冲。",
       "english": "Lately I've been more conscious of creating buffers for reflection amid busy schedules.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15795,7 +15795,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "我尝试将时间管理视为一种创造性行为，而不是一种限制性行为。",
       "english": "I try to approach time management as a creative act rather than a restrictive one.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15805,7 +15805,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种对生活的建筑视角随着新的见解和环境而不断发展。",
       "english": "You know, this architectural perspective on life continues to evolve with new insights and circumstances.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15815,7 +15815,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在人际关系和自我发展上投入时间会产生最持久的回报。",
       "english": "I mean, investing time in relationships and self-development yields the most enduring returns.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15825,7 +15825,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "最近，这些改进为生活的不同领域带来了更大的和谐。",
       "english": "Lately these refinements have brought greater harmony across different domains of life.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15835,7 +15835,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，掌握优先级并不是控制，而是明智的调整。",
       "english": "I sort of realize that mastery of priorities is less about control and more about wise alignment.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15845,7 +15845,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "您知道，与家庭成员分享这些原则可以培养集体意向性。",
       "english": "You know, sharing these principles with family members fosters collective intentionality.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15855,7 +15855,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "看到深思熟虑的选择如何融入精心设计的生活，真是令人非常满意。",
       "english": "It's profoundly satisfying to see how deliberate choices compound into a life well-designed.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15865,7 +15865,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这种精致的时间处理方式，我感觉更加活在当下、更有目标。",
       "english": "Lately I've felt more present and purposeful through this refined approach to time.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15875,7 +15875,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/c25.mp3",
-      "chinese": "",
+      "chinese": "总体而言，深思熟虑地制定一个人的优先事项已成为中年实现目标的基础。",
       "english": "Overall, thoughtfully architecting one's priorities has become foundational to fulfillment in midlife.",
       "sourceAudio": "高级/c25.mp3",
       "sourceDocument": "高级/C25.docx",
@@ -15885,7 +15885,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "你知道，环境意识的加深使我的观点从抽象的关注转向了实际的、综合的可持续生活。",
       "english": "You know, deepening environmental consciousness has shifted my perspective from abstract concern to practical, integrated sustainable living.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15895,7 +15895,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索我们的家庭和商业实践如何为生态管理做出更有意义的贡献。",
       "english": "Lately I've been exploring ways our household and business practices can contribute more meaningfully to ecological stewardship.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15905,7 +15905,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，个人选择与行星系统的相互联系已经变得越来越明显和激励人心。",
       "english": "I mean, the interconnectedness of individual choices with planetary systems has become increasingly evident and motivating.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15915,7 +15915,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "值得注意的一件事是可持续实践通常如何提高生活质量，同时减少不必要的消费。",
       "english": "One thing that stands out is how sustainable practices often enhance quality of life while reducing unnecessary consumption.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15925,7 +15925,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "您知道，以科学理解和道德承诺来处理环境问题会创建一个更全面的框架。",
       "english": "You know, approaching environmental issues with both scientific understanding and ethical commitment creates a more holistic framework.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15935,7 +15935,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "我有点相信真正的可持续性不仅涵盖环境，还涵盖社会和经济层面。",
       "english": "I sort of believe that true sustainability encompasses not just environmental but also social and economic dimensions.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15945,7 +15945,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "最近，人们的注意力集中在小的、持续的变化上，这些变化随着时间的推移会产生显着的积极影响。",
       "english": "Lately the focus has been on small, consistent changes that compound into significant positive impact over time.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15955,7 +15955,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，教育我们自己和家人了解这些问题可以培养共同的责任感和希望。",
       "english": "I mean, educating ourselves and family about these issues fosters a shared sense of responsibility and hope.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15965,7 +15965,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "您知道，将可持续原则融入日常决策感觉像是深思熟虑的生活的自然延伸。",
       "english": "You know, integrating sustainable principles into daily decisions feels like a natural extension of thoughtful living.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15975,7 +15975,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "认识到正念消费如何与个人价值观和长期福祉保持一致是非常有力量的。",
       "english": "It's quite empowering to recognize how mindful consumption can align with personal values and long-term well-being.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15985,7 +15985,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加关注我们在住房、旅行和商业运营方面的选择对环境的影响。",
       "english": "Lately I've been more attentive to the environmental footprint of our choices regarding the house, travel, and business operations.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -15995,7 +15995,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "我尝试以实用主义而不是完美主义来处理这些问题。",
       "english": "I try to approach these matters with pragmatism rather than perfectionism.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16005,7 +16005,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "你知道，随着新信息和技术的出现，这种意识不断发展。",
       "english": "You know, this consciousness continues to evolve as new information and technologies emerge.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16015,7 +16015,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，平衡便利性和可持续性需要创造性地解决问题和持续学习。",
       "english": "I mean, balancing convenience with sustainability requires creative problem-solving and ongoing learning.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16025,7 +16025,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "最近，这些做法带来了更深层次的协调感和内心的平静。",
       "english": "Lately these practices have brought a deeper sense of alignment and peace of mind.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16035,7 +16035,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到个人和集体行动共同可以推动有意义的系统性变革。",
       "english": "I sort of realize that individual and collective actions together can drive meaningful systemic change.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16045,7 +16045,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "您知道，在我们的社区内分享可持续方法可以倍增积极效果。",
       "english": "You know, sharing sustainable approaches within our community multiplies positive effects.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16055,7 +16055,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "令人振奋的是，人们在这一关键领域的意识和创新不断增强。",
       "english": "It's heartening to see growing awareness and innovation in this crucial area.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16065,7 +16065,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这些有意的练习，我感觉与自然世界的联系更加紧密。",
       "english": "Lately I've felt more connected to the natural world through these intentional practices.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16075,7 +16075,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C26.mp3",
-      "chinese": "",
+      "chinese": "总的来说，环保意识以意想不到的方式丰富了我们的生活方式。",
       "english": "Overall, embracing environmental consciousness has enriched our lifestyle in unexpected ways.",
       "sourceAudio": "高级/C26.mp3",
       "sourceDocument": "高级/C26.docx",
@@ -16085,7 +16085,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "你知道，接触各种智慧传统为我提供了丰富的见解，指导我如何驾驭当代生活。",
       "english": "You know, engaging with various wisdom traditions has provided a rich tapestry of insights that inform how I navigate contemporary life.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16095,7 +16095,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "最近，我被哲学探究所吸引，这些探究探索意识的本质并在复杂的世界中寻找意义。",
       "english": "Lately I've been drawn to philosophical inquiries that explore the nature of consciousness and the search for meaning in a complex world.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16105,7 +16105,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，东方沉思实践与西方分析传统的结合为反思提供了特别肥沃的土壤。",
       "english": "I mean, the synthesis of Eastern contemplative practices with Western analytical traditions offers a particularly fertile ground for reflection.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16115,7 +16115,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "一直让我着迷的一件事是，古代智慧如何与现代困境有着显着的相关性。",
       "english": "One thing that continues to fascinate me is how ancient wisdom speaks with remarkable relevance to modern dilemmas.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16125,7 +16125,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "你知道，保持知识开放性，同时立足于核心原则，可以创造一种平衡的哲学方法。",
       "english": "You know, maintaining intellectual openness while grounding oneself in core principles creates a balanced philosophical approach.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16135,7 +16135,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "我有点相信智慧是通过知识、经验和道德生活的耐心整合而产生的。",
       "english": "I sort of believe that wisdom emerges through the patient integration of knowledge, experience, and ethical living.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16145,7 +16145,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "最近，对坚忍原则和正念的探索增强了我的韧性和平静。",
       "english": "Lately the exploration of stoic principles and mindfulness has enhanced my resilience and equanimity.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16155,7 +16155,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，这些调查在我们这个时代的快速变化中提供了一个稳定的指南针。",
       "english": "I mean, these inquiries provide a steady compass amid the rapid changes of our times.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16165,7 +16165,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "你知道，与有思想的同伴讨论哲学思想可以加深理解和联系。",
       "english": "You know, discussing philosophical ideas with thoughtful companions deepens understanding and connection.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16175,7 +16175,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "看到不同的传统如何以互补的方式解决人类普遍关心的问题，真是令人受益匪浅。",
       "english": "It's profoundly enriching to see how different traditions address universal human concerns in complementary ways.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16185,7 +16185,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地将哲学见解应用到日常决策中。",
       "english": "Lately I've been more intentional about applying philosophical insights to everyday decision-making.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16195,7 +16195,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "我尝试以尊重和批判性的态度而不是教条来对待这些传统。",
       "english": "I try to approach these traditions with respect and critical engagement rather than dogma.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16205,7 +16205,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种持续不断的探究维持着一种惊奇感和智力活力。",
       "english": "You know, this ongoing inquiry sustains a sense of wonder and intellectual vitality.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16215,7 +16215,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，对智慧的追求仍然是一生中最有价值的终生努力之一。",
       "english": "I mean, the pursuit of wisdom remains one of life's most rewarding lifelong endeavors.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16225,7 +16225,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思在我的互动中培养了更大的同情心和清晰度。",
       "english": "Lately these reflections have cultivated greater compassion and clarity in my interactions.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16235,7 +16235,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，哲学的成熟需要拥抱复杂性，同时又不忽视基本真理。",
       "english": "I sort of realize that philosophical maturity involves embracing complexity without losing sight of essential truths.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16245,7 +16245,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "你知道，整合这些观点给我的生活叙事带来了更深的连贯性。",
       "english": "You know, integrating these perspectives has brought deeper coherence to my life narrative.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16255,7 +16255,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "见证永恒的想法如何继续照亮当代体验是令人鼓舞的。",
       "english": "It's inspiring to witness how timeless ideas continue to illuminate contemporary experience.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16265,7 +16265,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "最近，我对我们所积累的智慧感到一种平静的感激之情。",
       "english": "Lately I've felt a quiet sense of gratitude for the accumulated wisdom available to us.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16275,7 +16275,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C27.mp3",
-      "chinese": "",
+      "chinese": "总的来说，专注的哲学探究已经成为我个人成长的基石。",
       "english": "Overall, dedicated philosophical inquiry has become a cornerstone of my personal growth.",
       "sourceAudio": "高级/C27.mp3",
       "sourceDocument": "高级/C27.docx",
@@ -16285,7 +16285,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "你知道，这个阶段的个人进化过程似乎通过刻意的变革性学习经历而加速。",
       "english": "You know, the process of personal evolution at this stage seems to accelerate through deliberate transformative learning experiences.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16295,7 +16295,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在拥抱机会，这些机会可以拓展我的思维，并以建设性的方式挑战舒适的假设。",
       "english": "Lately I've been embracing opportunities that stretch my thinking and challenge comfortable assumptions in constructive ways.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16305,7 +16305,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，愿意检查并偶尔修改长期持有的信念标志着成熟成长的一个重要方面。",
       "english": "I mean, the willingness to examine and occasionally revise long-held beliefs marks a significant aspect of mature growth.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16315,7 +16315,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "显而易见的一件事是，不适往往预示着有意义的发展的门槛。",
       "english": "One thing that has become evident is how discomfort often signals the threshold of meaningful development.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16325,7 +16325,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "你知道，在尊重过去经验的同时整合新的见解会创造出更加复杂和有弹性的自我理解。",
       "english": "You know, integrating new insights while honoring past experiences creates a more sophisticated and resilient self-understanding.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16335,7 +16335,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "我有点相信变革性学习在心理安全和智力严谨的环境中蓬勃发展。",
       "english": "I sort of believe that transformative learning thrives in environments of psychological safety and intellectual rigor.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16345,7 +16345,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "最近，反思性日记的实践有助于从成功和挫折中总结经验教训。",
       "english": "Lately the practice of reflective journaling has helped crystallize lessons from both successes and setbacks.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16355,7 +16355,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，这个进化过程涉及持续改进，而不是彻底的重塑。",
       "english": "I mean, this evolutionary process involves continuous refinement rather than radical reinvention.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16365,7 +16365,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "您知道，与值得信赖的其他人分享旅程可以提供宝贵的镜子和支持。",
       "english": "You know, sharing the journey with trusted others provides valuable mirrors and support.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16375,7 +16375,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "积累的生活经验如何放大新学习的影响是非常值得注意的。",
       "english": "It's quite remarkable how accumulated life experience amplifies the impact of new learning.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16385,7 +16385,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加积极地寻求多样化的投入，以激发新的观点。",
       "english": "Lately I've been more proactive about seeking diverse inputs that catalyze fresh perspectives.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16395,7 +16395,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "我尝试以野心和自我同情心来实现个人进化。",
       "english": "I try to approach personal evolution with both ambition and self-compassion.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16405,7 +16405,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种持续的转变继续以美丽和意想不到的方式展开。",
       "english": "You know, this ongoing transformation continues to unfold in beautiful and unexpected ways.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16415,7 +16415,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将变革视为增长的自然组成部分可以保持活力和参与度。",
       "english": "I mean, embracing change as a natural part of growth sustains vitality and engagement.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16425,7 +16425,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "最近，这些实践使各种角色变得更加真实和有效。",
       "english": "Lately these practices have led to greater authenticity and effectiveness in various roles.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16435,7 +16435,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，最深刻的学习往往是通过生活经验而不是仅仅通过正式的学习来实现的。",
       "english": "I sort of realize that the most profound learning often happens through lived experience rather than formal study alone.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16445,7 +16445,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "您知道，庆祝一路上的渐进进步可以保持动力和观点。",
       "english": "You know, celebrating incremental progress along the way maintains motivation and perspective.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16455,7 +16455,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "它使人能够见证自己几十年来持续发展的能力。",
       "english": "It's empowering to witness one's own capacity for continued development over decades.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16465,7 +16465,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "最近，我对这一进化之旅中仍然存在的潜力感到兴奋。",
       "english": "Lately I've felt excited about the potential still ahead in this evolutionary journey.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16475,7 +16475,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C28.mp3",
-      "chinese": "",
+      "chinese": "总的来说，致力于变革性学习是中年最有价值的方面之一。",
       "english": "Overall, committing to transformative learning has been one of the most rewarding aspects of midlife.",
       "sourceAudio": "高级/C28.mp3",
       "sourceDocument": "高级/C28.docx",
@@ -16485,7 +16485,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "你知道，在成熟的关系中，联系的深度往往通过共同的历史、相互的脆弱性和不断发展的理解而加深。",
       "english": "You know, in mature relationships, the depth of connection often grows through shared history, mutual vulnerability, and evolving understanding.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16495,7 +16495,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在欣赏长期合作伙伴关系如何从有意识地培养情感和智力上的亲密关系中受益。",
       "english": "Lately I've been appreciating how long-term partnerships benefit from intentional cultivation of emotional and intellectual intimacy.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16505,7 +16505,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，共同应对中年的复杂性需要连续性和开放的改变。",
       "english": "I mean, navigating the complexities of midlife together requires both continuity and openness to change.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16515,7 +16515,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "加强我们联系的一件事是定期、诚实地谈论梦想、恐惧和不断变化的需求。",
       "english": "One thing that has strengthened our bond is the practice of regular, honest conversations about dreams, fears, and evolving needs.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16525,7 +16525,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "您知道，平衡独立性与深度相互依赖会创造一种有弹性且令人满意的关系动态。",
       "english": "You know, balancing independence with deep interdependence creates a resilient and fulfilling relational dynamic.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16535,7 +16535,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，当双方都感到安全地完全做自己时，真正的亲密关系就会蓬勃发展。",
       "english": "I sort of believe that true intimacy flourishes when both partners feel safe to be fully themselves.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16545,7 +16545,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是表达欣赏和保持对彼此内心世界的好奇心。",
       "english": "Lately the focus has been on expressing appreciation and maintaining curiosity about each other's inner worlds.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16555,7 +16555,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，并肩经历生活的转变加深了我们的相互尊重和感情。",
       "english": "I mean, weathering life's transitions side by side has deepened our mutual respect and affection.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16565,7 +16565,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "你知道，这个阶段的关系提供了独特的陪伴和分享智慧的机会。",
       "english": "You know, this stage of relationship offers unique opportunities for companionship and shared wisdom.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16575,7 +16575,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "拥有一个真正了解自己人生旅程背景的伴侣是一件非常令人欣慰的事情。",
       "english": "It's profoundly comforting to have a partner who truly understands the context of one's life journey.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16585,7 +16585,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "最近，我们一直在创造更多的空间，让大家一起度过快乐、低压力的时光。",
       "english": "Lately we've been creating more space for joyful, low-pressure time together.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16595,7 +16595,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "我尝试以持续致力于成长和更新的方式来处理我们的关系。",
       "english": "I try to approach our relationship with ongoing commitment to growth and renewal.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16605,7 +16605,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些成熟的联系为面对生活的不确定性提供了宝贵的基础。",
       "english": "You know, these mature connections provide an invaluable foundation for facing life's uncertainties.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16615,7 +16615,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，几十年来亲密关系的演变揭示了美丽和韧性的层次。",
       "english": "I mean, the evolution of intimacy over decades reveals layers of beauty and resilience.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16625,7 +16625,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "最近，这种关系深度带来了更大的和平和共同目标。",
       "english": "Lately this relational depth has brought greater peace and shared purpose.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16635,7 +16635,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到维持联系需要努力和优雅的接受。",
       "english": "I sort of realize that sustaining connection requires both effort and graceful acceptance.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16645,7 +16645,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "你知道，对这些关系的投资会带来晚年最丰富的回报。",
       "english": "You know, investing in these relationships yields the richest rewards of later life.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16655,7 +16655,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "看到爱情如何成熟为稳定、深刻的陪伴，真是令人振奋。",
       "english": "It's heartening to see how love matures into a steady, profound companionship.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16665,7 +16665,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "最近，我对支撑我们生活的亲密联系深感感激。",
       "english": "Lately I've felt deeply grateful for the intimate connections that anchor our lives.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16675,7 +16675,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C29.mp3",
-      "chinese": "",
+      "chinese": "总的来说，培养成熟的人际关系已经成为人生最宝贵的财富之一。",
       "english": "Overall, nurturing mature relationships has become one of life's greatest treasures.",
       "sourceAudio": "高级/C29.mp3",
       "sourceDocument": "高级/C29.docx",
@@ -16685,7 +16685,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "你知道，达到生命的综合点需要将各种经验线索编织成一个连贯而真实的整体。",
       "english": "You know, reaching a point of synthesis in life involves weaving together the various threads of experience into a coherent and authentic whole.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16695,7 +16695,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考我的旅程的各个方面——移民、家庭、商业和个人成长——如何形成一个统一的叙述。",
       "english": "Lately I've been contemplating how the diverse aspects of my journey—immigration, family, business, and personal growth—form a unified narrative.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16705,7 +16705,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，整合的过程带来了超越各个章节的深刻的连贯感。",
       "english": "I mean, the process of integration brings a profound sense of coherence that transcends individual chapters.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16715,7 +16715,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "让人感到特别满意的一件事是看到过去的挑战如何对当前的智慧和能力做出积极贡献。",
       "english": "One thing that feels particularly satisfying is seeing how past challenges contribute positively to current wisdom and capacity.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16725,7 +16725,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "你知道，拥抱完整性意味着尊重自己的各个方面，而不是支离破碎。",
       "english": "You know, embracing wholeness means honoring all dimensions of oneself without fragmentation.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16735,7 +16735,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，当行动、价值观和愿望和谐一致时，真正的融合就会发生。",
       "english": "I sort of believe that true integration occurs when actions, values, and aspirations align harmoniously.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16745,7 +16745,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "最近，反思综合的实践帮助我欣赏了生活展开模式的优雅。",
       "english": "Lately the practice of reflective synthesis has helped me appreciate the elegance of life's unfolding pattern.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16755,7 +16755,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，这个阶段提供了一个独特的优势，可以将不同的经历连接成有意义的见解。",
       "english": "I mean, this stage offers a unique vantage point for connecting disparate experiences into meaningful insight.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16765,7 +16765,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "你知道，与他人分享这种综合的观点可以提供指导和启发。",
       "english": "You know, sharing this integrated perspective with others can provide guidance and inspiration.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16775,7 +16775,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "见证看似无关的线索最终如何揭示它们的相互关联是非常美妙的。",
       "english": "It's quite beautiful to witness how seemingly unrelated threads eventually reveal their interconnectedness.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16785,7 +16785,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加注重与这种完整感保持一致的生活。",
       "english": "Lately I've been more focused on living in alignment with this sense of wholeness.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16795,7 +16795,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "我尝试将整合视为一个持续、温和的过程，而不是最终目的地。",
       "english": "I try to approach integration as an ongoing, gentle process rather than a final destination.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16805,7 +16805,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种综合丰富了决策并带来了更深的和平。",
       "english": "You know, this synthesis enriches decision-making and brings deeper peace.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16815,7 +16815,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，通往完整的旅程继续以优雅和发现的方式展开。",
       "english": "I mean, the journey toward wholeness continues to unfold with grace and discovery.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16825,7 +16825,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思培养了更大的自我接纳和目标。",
       "english": "Lately these reflections have cultivated greater self-acceptance and purpose.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16835,7 +16835,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到整合既是个人成就也是持续的实践。",
       "english": "I sort of realize that integration is both a personal achievement and a continuous practice.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16845,7 +16845,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "你知道，拥抱全方位的生活经历可以创造深刻的丰富性。",
       "english": "You know, embracing the full spectrum of life experiences creates profound richness.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16855,7 +16855,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "带着感激和前进的动力站在这个综合点上是有力量的。",
       "english": "It's empowering to stand at this point of synthesis with gratitude and forward momentum.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16865,7 +16865,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这个整合过程，我感受到了一种安静而深刻的成就感。",
       "english": "Lately I've felt a quiet but deep sense of fulfillment through this integrative process.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16875,7 +16875,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C30.mp3",
-      "chinese": "",
+      "chinese": "总的来说，生活教训的综合给本章带来了非凡的连贯性和平静。",
       "english": "Overall, the synthesis of life's lessons has brought remarkable coherence and serenity to this chapter.",
       "sourceAudio": "高级/C30.mp3",
       "sourceDocument": "高级/C30.docx",
@@ -16885,7 +16885,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "你知道，培养一种超然的感激之情已经逐渐将我的观点从关注缺失的东西转变为深深欣赏塑造此生的错综复杂的经历。",
       "english": "You know, cultivating a transcendent sense of gratitude has gradually shifted my perspective from focusing on what is missing to deeply appreciating the intricate tapestry of experiences that have shaped this life.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16895,7 +16895,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考，当以智力深度进行实践时，感恩如何成为一种变革性的力量，甚至可以为最具挑战性的章节赋予意义。",
       "english": "Lately I've been reflecting on how gratitude, when practiced with intellectual depth, becomes a transformative force that illuminates even the most challenging chapters with meaning.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16905,7 +16905,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，对所给予的事物抱有深深的感激之情，并富有同情心地接受生活的不完美的能力，就能创造出一种非常平衡的观点。",
       "english": "I mean, the ability to hold both profound thankfulness for what has been given and compassionate acceptance of life's imperfections creates a remarkably balanced outlook.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16915,7 +16915,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "一直让我感动的一件事是认识到无数小决定和更大力量的融合如何导致我们现在享受的丰富。",
       "english": "One thing that continues to move me is recognizing how the convergence of countless small decisions and larger forces has led to the richness we now enjoy.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16925,7 +16925,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "您知道，不仅在内心表达感激之情，而且通过对他人深思熟虑的行动表达感激之情，可以倍增其在人际关系和社区中的积极影响。",
       "english": "You know, expressing gratitude not just inwardly but through thoughtful actions toward others multiplies its positive impact across relationships and community.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16935,7 +16935,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，在不可避免的存在不确定性中，这种超然的感激之情可以作为稳定的锚。",
       "english": "I sort of believe that this transcendent gratitude serves as a steady anchor amid the inevitable uncertainties of existence.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16945,7 +16945,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "最近，全神贯注地品味平凡时刻的做法揭示了我在早年、忙碌的岁月中可能忽视的美丽层次。",
       "english": "Lately the practice of savoring ordinary moments with full presence has revealed layers of beauty I might have overlooked in earlier, busier years.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16955,7 +16955,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，将对我们的移民旅程、家庭纽带和职业发展的欣赏结合起来，带来深刻的一致性感。",
       "english": "I mean, integrating appreciation for our immigration journey, family bonds, and professional growth brings a profound sense of coherence.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16965,7 +16965,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种更深层次的感激之情增强了韧性，并为更加慷慨的精神开辟了道路。",
       "english": "You know, this deeper gratitude has enhanced resilience and opened pathways to greater generosity of spirit.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16975,7 +16975,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "承认个人努力和幸运环境在我们所建立的生活中所扮演的角色，真是令人深感谦卑。",
       "english": "It's profoundly humbling to acknowledge the role of both personal effort and fortunate circumstances in the life we've built.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16985,7 +16985,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加有意识地记录并与家人分享这些感激之情，以加强我们的集体叙事。",
       "english": "Lately I've been more intentional about documenting and sharing these appreciations with family to strengthen our collective narrative.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -16995,7 +16995,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "我试着以一种安静的敬意对待每一天，珍惜它所带来的机会。",
       "english": "I try to approach each day with a quiet reverence for the opportunities it presents.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17005,7 +17005,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种取向继续为日常生活注入更多的欢乐和宁静。",
       "english": "You know, this orientation continues to infuse daily living with greater joy and serenity.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17015,7 +17015,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在这个阶段，感恩不再是一种练习，而更像是一种自然的存在方式。",
       "english": "I mean, gratitude at this stage feels less like an exercise and more like a natural way of being.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17025,7 +17025,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "最近，这些反思与存在本身的奇迹建立了更深层次的联系。",
       "english": "Lately these reflections have cultivated an even deeper connection to the wonder of existence itself.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17035,7 +17035,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，超然的感激之情最终会让一个人生活得更加充实和自由。",
       "english": "I sort of realize that transcendent gratitude ultimately liberates one to live more fully and freely.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17045,7 +17045,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "你知道，与亲人分享这种观点会产生积极的涟漪，远远超出我们自己的范围。",
       "english": "You know, sharing this perspective with loved ones creates ripples of positivity that extend far beyond ourselves.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17055,7 +17055,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "目睹欣赏如何成为一个自我强化的幸福循环是令人振奋的。",
       "english": "It's heartening to witness how appreciation becomes a self-reinforcing cycle of well-being.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17065,7 +17065,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这种深深的感恩实践，我感受到了一种持久的平静感。",
       "english": "Lately I've felt an abiding sense of peace through this practice of profound thankfulness.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17075,7 +17075,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C31.mp3",
-      "chinese": "",
+      "chinese": "总的来说，拥抱超越的感恩已经成为这个人生阶段最伟大的礼物之一。",
       "english": "Overall, embracing transcendent gratitude has become one of the greatest gifts of this life stage.",
       "sourceAudio": "高级/C31.mp3",
       "sourceDocument": "高级/C31.docx",
@@ -17085,7 +17085,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "您知道，在这个时刻发展远见卓识需要将过去的经验教训与对可能的未来进行富有想象力且扎实的预测相结合。",
       "english": "You know, developing visionary thinking at this juncture involves synthesizing past lessons with imaginative yet grounded projections about possible futures.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17095,7 +17095,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在思考我们家族对房屋、生意和遗产的长期计划如何才能既保护又赋予子孙后代权力。",
       "english": "Lately I've been contemplating how our family's long-term plans for the house, business, and legacy can be both protective and empowering for generations to come.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17105,7 +17105,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，有远见的智慧的艺术在于平衡大胆的抱负和对不可预见的情况的务实适应。",
       "english": "I mean, the art of visionary wisdom lies in balancing bold aspirations with pragmatic adaptability to unforeseen circumstances.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17115,7 +17115,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "显而易见的一件事是情景规划在驾驭日益复杂和动态的世界中的力量。",
       "english": "One thing that has become evident is the power of scenario planning in navigating an increasingly complex and dynamic world.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17125,7 +17125,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "你知道，在家庭中培养这种前瞻性的导向会鼓励主动而非被动的改变方式。",
       "english": "You know, fostering this forward-looking orientation within the family encourages proactive rather than reactive approaches to change.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17135,7 +17135,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "我有点相信真正的远见思维将道德考虑与创新可能性结合起来。",
       "english": "I sort of believe that true visionary thinking integrates ethical considerations with innovative possibilities.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17145,7 +17145,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "最近，对技术、社会和可持续发展新兴趋势的探索为更细致的战略思考提供了信息。",
       "english": "Lately the exploration of emerging trends in technology, society, and sustainability has informed more nuanced strategic thinking.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17155,7 +17155,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，创建灵活的框架，可以在保留核心价值观的同时不断发展，感觉就像负责任的管理。",
       "english": "I mean, creating flexible frameworks that can evolve while preserving core values feels like responsible stewardship.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17165,7 +17165,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "你知道，即使在全球充满不确定性的情况下，这种面向未来的智慧也能提供一种代理感和希望。",
       "english": "You know, this future-oriented wisdom provides a sense of agency and hope even amid global uncertainties.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17175,7 +17175,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "想象我们所建立的基础如何以我们无法完全预测的方式支持繁荣，这是非常鼓舞人心的。",
       "english": "It's quite inspiring to envision how the foundations we've built might support flourishing in ways we cannot fully predict.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17185,7 +17185,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加谨慎地将日常行动与这些长期愿景结合起来。",
       "english": "Lately I've been more deliberate about aligning daily actions with these longer-term visions.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17195,7 +17195,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "我尝试以乐观、准备和对出现的开放态度来迎接未来。",
       "english": "I try to approach the future with a blend of optimism, preparation, and openness to emergence.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17205,7 +17205,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "您知道，分享这些富有远见的对话可以增强我们的集体韧性和目标。",
       "english": "You know, sharing these visionary conversations strengthens our collective resilience and purpose.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17215,7 +17215,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，经验和远见的综合为决策提供了强有力的指导。",
       "english": "I mean, the synthesis of experience and foresight creates a powerful guide for decision-making.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17225,7 +17225,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "最近，这种观点减少了焦虑，同时增加了对未来的兴奋。",
       "english": "Lately this perspective has reduced anxiety while increasing excitement about what lies ahead.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17235,7 +17235,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，有远见的智慧是通过不断的反思和勇敢的想象来培养的。",
       "english": "I sort of realize that visionary wisdom is cultivated through consistent reflection and courageous imagining.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17245,7 +17245,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "你知道，这些做法继续塑造一个更加有意和充满希望的轨迹。",
       "english": "You know, these practices continue to shape a more intentional and hopeful trajectory.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17255,7 +17255,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "它使人们能够积极参与创造未来，而不仅仅是预测未来。",
       "english": "It's empowering to actively participate in crafting the future rather than merely anticipating it.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17265,7 +17265,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "最近，我感受到了一种基于历史和可能性的平静的信心。",
       "english": "Lately I've felt a quiet confidence grounded in both history and possibility.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17275,7 +17275,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C32.mp3",
-      "chinese": "",
+      "chinese": "总体而言，采用前瞻性思维增加了本章的深度和方向。",
       "english": "Overall, embracing visionary thinking has added depth and direction to this chapter.",
       "sourceAudio": "高级/C32.mp3",
       "sourceDocument": "高级/C32.docx",
@@ -17285,7 +17285,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "要知道，内心平静与平静的培养，已经成为持续自我探究和人生体验的最有价值的成果之一。",
       "english": "You know, the cultivation of inner peace and equanimity has become one of the most valuable fruits of sustained self-inquiry and life experience.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17295,7 +17295,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "最近我一直在探索在外部波动和情绪动荡中培养稳定中心的做法。",
       "english": "Lately I've been exploring practices that foster a stable center amid external fluctuations and emotional turbulence.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17305,7 +17305,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，精神上的成熟似乎意味着以优雅的态度对待生活中的悖论，而不是寻求过早的解决方案。",
       "english": "I mean, spiritual maturity seems to involve holding life's paradoxes with grace rather than seeking premature resolution.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17315,7 +17315,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "显着加深的一件事是对环境做出深思熟虑的反应而不是冲动反应的能力。",
       "english": "One thing that has deepened significantly is the capacity to respond thoughtfully rather than react impulsively to circumstances.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17325,7 +17325,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种平静提供了一个清晰的空间，从中自然会出现更明智的选择。",
       "english": "You know, this equanimity provides a clear space from which wiser choices naturally emerge.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17335,7 +17335,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，真正的内心平静来自于一个人的行为、价值观和更深层次的自我意识之间的协调。",
       "english": "I sort of believe that true inner peace arises from alignment between one's actions, values, and deeper sense of self.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17345,7 +17345,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "最近，将沉思意识融入日常活动中增强了整体的平静。",
       "english": "Lately the integration of contemplative awareness into everyday activities has enhanced overall serenity.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17355,7 +17355,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在充分参与当下的同时拥抱无常会创造出一种矛盾的解放立场。",
       "english": "I mean, embracing impermanence while fully engaging with the present creates a paradoxically liberating stance.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17365,7 +17365,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种精神层面以更大的同情心丰富了人际关系和决策。",
       "english": "You know, this spiritual dimension enriches relationships and decision-making with greater compassion.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17375,7 +17375,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "建立一个独立于外部条件的稳定的内部参考点具有深刻的基础。",
       "english": "It's profoundly grounding to develop a stable inner reference point independent of external conditions.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17385,7 +17385,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加关注支持持续平静的微妙变化。",
       "english": "Lately I've been more attentive to the subtle shifts that support sustained equanimity.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17395,7 +17395,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "我尝试通过单独的反思和有意义的联系来培养这种成熟度。",
       "english": "I try to nurture this maturity through both solitary reflection and meaningful connection.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17405,7 +17405,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "你知道，通往内心平静的旅程继续以令人惊讶的温柔展开。",
       "english": "You know, the journey toward inner peace continues to unfold with surprising gentleness.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17415,7 +17415,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，与家人分享这种取向可以支持集体的情绪恢复力。",
       "english": "I mean, sharing this orientation with family members supports collective emotional resilience.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17425,7 +17425,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "最近，这些实践培养了人们对生命固有的美丽和神秘的更深层次的认识。",
       "english": "Lately these practices have cultivated a deeper appreciation for life's inherent beauty and mystery.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17435,7 +17435,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，精神上的成熟不在于超越，而在于充分体现的存在。",
       "english": "I sort of realize that spiritual maturity is less about transcendence and more about fully embodied presence.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17445,7 +17445,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种内在的工作给日常生活带来了非凡的自由和轻松。",
       "english": "You know, this inner work has brought remarkable freedom and lightness to daily living.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17455,7 +17455,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "目睹平静如何向外蔓延，造福我们周围的人，真是令人振奋。",
       "english": "It's heartening to witness how equanimity ripples outward to benefit those around us.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17465,7 +17465,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "最近，通过这些发展，我感受到了一种安静但深刻的完整感。",
       "english": "Lately I've felt a quiet but profound sense of wholeness through these developments.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17475,7 +17475,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C33.mp3",
-      "chinese": "",
+      "chinese": "总体而言，培养内心的平静和精神的成熟具有变革性。",
       "english": "Overall, nurturing inner peace and spiritual maturity has been transformative.",
       "sourceAudio": "高级/C33.mp3",
       "sourceDocument": "高级/C33.docx",
@@ -17485,7 +17485,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "你知道，考虑一个人的创造性遗产会让人思考我们独特的贡献如何在我们所处的时代之外继续产生共鸣。",
       "english": "You know, considering one's creative legacy invites reflection on how our unique contributions might continue to resonate beyond our immediate time.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17495,7 +17495,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在探索如何以能够激励他人的形式记录和分享我们家庭旅程的见解。",
       "english": "Lately I've been exploring ways to document and share insights from our family's journey in forms that could inspire others.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17505,7 +17505,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，最持久的贡献往往将个人真实性与普遍相关性融为一体。",
       "english": "I mean, the most enduring contributions often blend personal authenticity with universal relevance.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17515,7 +17515,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "感觉有意义的一件事就是创造比其创造者更长久的有价值的东西——无论是想法、系统还是故事。",
       "english": "One thing that feels meaningful is creating things of value—whether ideas, systems, or stories—that outlast their creator.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17525,7 +17525,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "您知道，这种对创意遗产的导向鼓励我们更加有意地投入时间和才能。",
       "english": "You know, this orientation toward creative legacy encourages greater intentionality in how we invest our time and talents.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17535,7 +17535,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，当与一个人最深层的优势和价值观相一致时，真正的贡献就会自然而然地产生。",
       "english": "I sort of believe that true contribution flows naturally when aligned with one's deepest strengths and values.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17545,7 +17545,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "最近的重点是从经验中提炼智慧，使其成为易于理解和有影响力的形式。",
       "english": "Lately the focus has been on distilling wisdom from experience into accessible and impactful forms.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17555,7 +17555,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，指导和知识共享是跨代扩大影响力的有效方式。",
       "english": "I mean, mentoring and knowledge sharing represent powerful ways to extend influence across generations.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17565,7 +17565,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "你知道，建立支持持续繁荣的结构——家庭、职业或社区——让人感到深深的满足感。",
       "english": "You know, building structures—familial, professional, or communal—that support ongoing flourishing feels deeply fulfilling.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17575,7 +17575,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "想象一下今天努力的小种子如何在明天成长为更大的事情是令人鼓舞的。",
       "english": "It's inspiring to imagine how small seeds of effort today might grow into something larger tomorrow.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17585,7 +17585,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加刻意地捕捉和组织洞察力，以供未来的可访问性使用。",
       "english": "Lately I've been more deliberate about capturing and organizing insights for future accessibility.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17595,7 +17595,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "我尝试以谦逊和服务精神对待创意遗产。",
       "english": "I try to approach creative legacy with humility and a spirit of service.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17605,7 +17605,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种观点丰富了现在，同时将关怀延伸到未来。",
       "english": "You know, this perspective enriches the present while extending care into the future.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17615,7 +17615,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，个人叙事与更广泛的人类主题的结合会产生共鸣。",
       "english": "I mean, the synthesis of personal narrative with broader human themes creates resonant contributions.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17625,7 +17625,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "最近，这些努力带来了一种超越日常生活的使命感。",
       "english": "Lately these efforts have brought a sense of purpose that transcends daily routines.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17635,7 +17635,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，持久的遗产是从真实而慷慨的生活中有机地产生的。",
       "english": "I sort of realize that enduring legacy emerges organically from living authentically and generously.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17645,7 +17645,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "您知道，投资于创造性和智力贡献会带来极大的满足感。",
       "english": "You know, investing in creative and intellectual contributions yields profound satisfaction.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17655,7 +17655,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "看到想法和价值观在他人的生活中扎根是令人欣慰的。",
       "english": "It's rewarding to see ideas and values take root in others' lives.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17665,7 +17665,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "最近，我感到有动力去完善和分享我们一路上学到的东西。",
       "english": "Lately I've felt motivated to refine and share what we've learned along the way.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17675,7 +17675,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C34.mp3",
-      "chinese": "",
+      "chinese": "总体而言，关注创意遗产为这一人生阶段增添了重要意义。",
       "english": "Overall, focusing on creative legacy has added significant meaning to this life stage.",
       "sourceAudio": "高级/C34.mp3",
       "sourceDocument": "高级/C34.docx",
@@ -17685,7 +17685,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "你知道，在生活中实现和谐感需要将看似对立的力量不断整合成一个连贯且流动的整体。",
       "english": "You know, achieving a sense of harmony in life involves the ongoing integration of seemingly opposing forces into a coherent and flowing whole.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17695,7 +17695,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "最近，我一直在努力平衡活动与休息、野心与满足、给予与接受之间的平衡。",
       "english": "Lately I've been refining the balance between activity and rest, ambition and contentment, giving and receiving.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17705,7 +17705,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，当外部行为与内部价值观和节奏相一致时，真正的和谐就会出现。",
       "english": "I mean, true harmony emerges when external actions align with internal values and rhythms.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17715,7 +17715,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "变得更加清晰的一件事是平衡的动态本质——它需要持续的温和调整，而不是静态的完美。",
       "english": "One thing that has become clearer is the dynamic nature of balance—it requires continuous gentle adjustment rather than static perfection.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17725,7 +17725,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种综合的生活方式尊重人类体验的各个方面，而不是支离破碎。",
       "english": "You know, this integrated approach to living honors all dimensions of human experience without fragmentation.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17735,7 +17735,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "我有点相信和谐是通过正念意识和富有同情心的自我纠正来培养的。",
       "english": "I sort of believe that harmony is cultivated through mindful awareness and compassionate self-correction.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17745,7 +17745,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "最近，定期生活回顾的做法有助于重新调整家庭、工作、健康和精神方面的优先事项。",
       "english": "Lately the practice of regular life reviews has helped realign priorities across family, work, health, and spirit.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17755,7 +17755,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在结构和自发性之间找到流动，为生产力和快乐创造空间。",
       "english": "I mean, finding flow between structure and spontaneity creates space for both productivity and joy.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17765,7 +17765,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "你知道，这种平衡的取向可以增强韧性和整体生活满意度。",
       "english": "You know, this balanced orientation enhances resilience and overall life satisfaction.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17775,7 +17775,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "体验内在真理与外在表达之间的更大一致性是令人深感满足的。",
       "english": "It's profoundly satisfying to experience greater congruence between inner truth and outer expression.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17785,7 +17785,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "最近，我更加关注表明何时需要重新校准的微妙信号。",
       "english": "Lately I've been more attentive to the subtle signals that indicate when recalibration is needed.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17795,7 +17795,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "我尝试将平衡视为一种艺术形式，而不是一个僵化的公式。",
       "english": "I try to approach balance as an art form rather than a rigid formula.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17805,7 +17805,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "您知道，在家庭内部分享这种对和谐的追求可以促进集体福祉。",
       "english": "You know, sharing this pursuit of harmony within the family fosters collective well-being.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17815,7 +17815,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，不同生活元素的融合创造了更丰富、更可持续的存在。",
       "english": "I mean, the integration of diverse life elements creates a richer, more sustainable existence.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17825,7 +17825,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "最近，这些改进培养了更深的平静和活力。",
       "english": "Lately these refinements have cultivated deeper peace and vitality.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17835,7 +17835,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到和谐既是一种实践，也是一致生活的自然结果。",
       "english": "I sort of realize that harmony is both a practice and a natural outcome of aligned living.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17845,7 +17845,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "你知道，拥抱这种整合的存在方式继续美好地展开。",
       "english": "You know, embracing this integrated way of being continues to unfold beautifully.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17855,7 +17855,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "释放完美平衡的幻觉，有利于优雅的导航，这是一种解放。",
       "english": "It's liberating to release the illusion of perfect balance in favor of graceful navigation.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17865,7 +17865,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "最近，在这个持续的过程中，我感觉更加集中和完整。",
       "english": "Lately I've felt more centered and whole through this ongoing process.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17875,7 +17875,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C35.mp3",
-      "chinese": "",
+      "chinese": "总体而言，有意识的和谐生活已成为实现的基石。",
       "english": "Overall, living with conscious harmony has become a cornerstone of fulfillment.",
       "sourceAudio": "高级/C35.mp3",
       "sourceDocument": "高级/C35.docx",
@@ -17885,7 +17885,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "您知道，经过多年的不懈努力达到这一顶峰带来了一个深刻的机会来庆祝这段旅程，同时保持前进的动力。",
       "english": "You know, reaching this point of culmination after years of dedicated effort brings a profound opportunity to celebrate the journey while maintaining forward momentum.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17895,7 +17895,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "最近，我怀着深深的感激之情反思了我们家庭的整个故事——从早期的移民挑战到我们创造的稳定、有意义的生活。",
       "english": "Lately I've been reflecting with deep gratitude on the full arc of our family's story—from early immigration challenges to the stable, meaningful life we've created.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17905,7 +17905,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，承认个人成长、人际关系和贡献方面的进步为庆祝和更新愿景创造了空间。",
       "english": "I mean, acknowledging progress across personal growth, relationships, and contributions creates space for both celebration and renewed vision.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17915,7 +17915,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "感觉特别重要的一件事是认识到一致的小选择如何转化为实质性的转变。",
       "english": "One thing that feels especially significant is recognizing how consistent small choices have compounded into substantial transformation.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17925,7 +17925,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "你知道，这一终极反思是为了纪念带领我们度过每个阶段的坚韧、爱和智慧。",
       "english": "You know, this culminating reflection honors the resilience, love, and wisdom that have carried us through every phase.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17935,7 +17935,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "我有点相信，每一个结局都会自然而然地开启一个充满潜力的新开始。",
       "english": "I sort of believe that every ending naturally opens into a new beginning filled with potential.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17945,7 +17945,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "最近，庆祝个人和家庭里程碑的做法强化了积极的生活取向。",
       "english": "Lately the practice of celebrating milestones—both personal and familial—has reinforced a positive life orientation.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17955,7 +17955,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，在继承教训的同时保持对进化的开放态度可以确保持续的增长和活力。",
       "english": "I mean, carrying forward the lessons while remaining open to evolution ensures continued growth and vitality.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17965,7 +17965,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "要知道，这个舞台提供了一个欣赏过去、品味现在、畅想未来的美好平台。",
       "english": "You know, this stage offers a beautiful vantage point for appreciating the past, savoring the present, and envisioning the future.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17975,7 +17975,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "目睹多年前种下的种子全面开花，令人深感感动。",
       "english": "It's profoundly moving to witness the full flowering of seeds planted many years ago.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17985,7 +17985,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "最近，我感受到了一种安静但强烈的完成感，同时也对接下来发生的事情充满了热切的期待。",
       "english": "Lately I've felt a quiet but powerful sense of completion alongside eager anticipation for what comes next.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -17995,7 +17995,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "我试图以崇敬和顽皮的好奇心来达到这一顶峰。",
       "english": "I try to approach this culmination with both reverence and playful curiosity.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18005,7 +18005,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "您知道，分享这些想法可以加强我们家庭的共同叙事和目标。",
       "english": "You know, sharing these reflections strengthens our family's shared narrative and purpose.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18015,7 +18015,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "我的意思是，前面所有章节的整合为下一章奠定了丰富的基础。",
       "english": "I mean, the integration of all previous chapters creates a rich foundation for the next.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18025,7 +18025,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "最近，这种观点让我充满了深深的满足和平静的兴奋。",
       "english": "Lately this perspective has filled me with deep contentment and quiet excitement.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18035,7 +18035,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "我有点意识到，生命的真正顶峰在于不断成长、联系和贡献的舞蹈。",
       "english": "I sort of realize that life's true culmination lies in the ongoing dance of growth, connection, and contribution.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18045,7 +18045,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "你知道，一边庆祝这段旅程，一边满怀信心地向前迈进，感觉就像是完美的结合。",
       "english": "You know, celebrating this journey while stepping forward with confidence feels like the perfect synthesis.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18055,7 +18055,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "怀着感恩、智慧和开放的心态站在这个门槛上是一种力量。",
       "english": "It's empowering to stand at this threshold with gratitude, wisdom, and open-hearted readiness.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18065,7 +18065,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "最近我体会到了一种深深的满足感和平和的动力。",
       "english": "Lately I've experienced a profound sense of fulfillment and peaceful momentum.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18075,7 +18075,7 @@ const nativeFlowSentencesByLevel: Record<NativeFlowLevelId, NativeFlowSentence[]
     },
     {
       "audioSrc": "/images%202/%E5%9C%B0%E9%81%93%E8%AF%AD%E6%84%9F%E8%AE%AD%E7%BB%83/%E9%AB%98%E7%BA%A7/C36.mp3",
-      "chinese": "",
+      "chinese": "总的来说，这段语言掌握和生活反思的高级旅程非常有意义，我对我们共同取得的进步深表感谢。这是带着恩典和喜乐的持续成长。",
       "english": "Overall, this advanced journey of language mastery and life reflection has been extraordinarily rewarding, and I'm deeply grateful for the progress we've made together. Here's to continued growth with grace and joy.",
       "sourceAudio": "高级/C36.mp3",
       "sourceDocument": "高级/C36.docx",
@@ -18118,7 +18118,7 @@ export const nativeFlowCourseStats = {
       "sourceLinesRead": 600
     }
   },
-  "translationFilesFound": false
+  "translationFilesFound": true
 };
 
 export function getNativeFlowLevel(levelId: string) {
