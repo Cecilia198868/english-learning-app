@@ -2073,37 +2073,18 @@
 
 .variantCard[data-tone="featured"] {
   border-color: rgba(132, 103, 255, 0.5);
-  background:
-    radial-gradient(circle at 92% 8%, rgba(118, 87, 255, 0.14), transparent 22%),
-    linear-gradient(135deg, #ffffff, #fbf8ff);
+  background: linear-gradient(135deg, #ffffff, #fbf8ff);
   color: #7657ff;
 }
 
 .variantCard[data-tone="featured"]::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 17px;
-  height: 44px;
-  border-radius: 17px 0 12px 0;
-  background: linear-gradient(180deg, #8668ff, #7352ff);
-  content: "";
+  display: none;
+  content: none;
 }
 
 .variantCard[data-tone="featured"]::after {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border-radius: 0 16px 0 15px;
-  background: linear-gradient(135deg, rgba(132, 103, 255, 0.9), rgba(132, 103, 255, 0.35));
-  color: #ffffff;
-  content: "\2605";
-  font-size: 0.78rem;
-  font-weight: 900;
+  display: none;
+  content: none;
 }
 
 .variantCard[data-tone="orange"] {
@@ -3695,34 +3676,24 @@
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] {
-  grid-template-columns: clamp(54px, 14vw, 66px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) clamp(50px, 13vw, 58px);
   min-height: clamp(150px, 34vw, 172px);
   border-color: rgba(132, 103, 255, 0.62);
-  background:
-    radial-gradient(circle at 90% 4%, rgba(118, 87, 255, 0.15), transparent 18%),
-    linear-gradient(135deg, #ffffff, #fbf8ff);
+  background: linear-gradient(135deg, #ffffff, #fbf8ff);
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"]::before {
-  width: clamp(32px, 8.5vw, 40px);
-  height: clamp(66px, 17vw, 82px);
-  border-radius: 0 0 10px 10px;
-  left: clamp(14px, 3.8vw, 20px);
-  background: linear-gradient(180deg, #8061ff, #6e4df4);
+  display: none;
+  content: none;
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"]::after {
-  width: clamp(42px, 11vw, 52px);
-  height: clamp(42px, 11vw, 52px);
-  border-radius: 0 18px 0 22px;
-  font-size: 1.1rem;
+  display: none;
+  content: none;
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] .variantIcon {
-  z-index: 1;
-  margin-top: clamp(-18px, -4vw, -12px);
-  background: rgba(248, 246, 255, 0.95);
-  color: #7657ff;
+  display: none;
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] strong {
@@ -3742,9 +3713,10 @@
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] > button {
-  background: linear-gradient(135deg, #8f73ff, #6d4cf4);
-  color: #ffffff;
-  margin-left: clamp(88px, 23vw, 120px);
+  grid-column: 2;
+  background: #ffffff;
+  color: #7657ff;
+  margin-left: 0;
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="orange"] {
@@ -4920,30 +4892,28 @@
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] {
-  grid-template-columns: 2.92rem minmax(0, 1fr) 2.52rem !important;
+  grid-template-columns: minmax(0, 1fr) 2.52rem !important;
   min-height: 6.18rem !important;
+  background: linear-gradient(135deg, #ffffff, #fbf8ff) !important;
   padding: 0.78rem 0.74rem 0.78rem 0.86rem !important;
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"]::before {
-  left: 0.62rem !important;
-  width: 2rem !important;
-  height: 4.3rem !important;
-  border-radius: 0 0 0.7rem 0.7rem !important;
+  display: none !important;
+  content: none !important;
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"]::after {
-  width: 2.5rem !important;
-  height: 2.5rem !important;
-  border-radius: 0 1rem 0 1.1rem !important;
-  font-size: 0.95rem !important;
+  display: none !important;
+  content: none !important;
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] .variantIcon {
-  z-index: 1 !important;
-  width: 2.42rem !important;
-  height: 2.42rem !important;
-  background: rgba(248, 246, 255, 0.96) !important;
+  display: none !important;
+}
+
+.studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] > div {
+  grid-column: 1 !important;
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] strong {
@@ -4960,9 +4930,10 @@
 }
 
 .studyPhone:has(.resultIntro) .variantCard[data-tone="featured"] > button {
+  grid-column: 2 !important;
   align-self: start !important;
-  background: linear-gradient(135deg, #8f73ff, #6d4cf4) !important;
-  color: #ffffff !important;
+  background: #ffffff !important;
+  color: #7657ff !important;
 }
 
 .studyPhone:has(.resultIntro) .followCard {
