@@ -11105,3 +11105,26 @@
   display: none !important;
   background: none !important;
 }
+
+/* Classic-scene first page: long Chinese prompts must wrap inside the card. */
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .speechBubble,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .speechBubble {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneIdle .chinesePrompt,
+.studyShellWithBottomNav .classicPhone.studyPhone.studyPhoneRecording .chinesePrompt {
+  box-sizing: border-box !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  line-height: 1.24 !important;
+  text-align: left !important;
+}
