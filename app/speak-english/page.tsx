@@ -279,6 +279,7 @@ const nativeFinalResultGraceMs = 1400;
 const speechMaxDurationMs = 45000;
 
 type FreeStudyRouteState = {
+  aiGuidedConfirmOnly?: boolean;
   aiGuidedFollowPracticePending?: boolean;
   nativeSpeech?: string;
   userEnglishText?: string;
@@ -308,6 +309,7 @@ function readFreeStudyRouteState(): FreeStudyRouteState | null {
     const parsedState = JSON.parse(rawState) as FreeStudyRouteState;
 
     return {
+      aiGuidedConfirmOnly: parsedState.aiGuidedConfirmOnly === true,
       aiGuidedFollowPracticePending:
         parsedState.aiGuidedFollowPracticePending === true,
       nativeSpeech:
@@ -4819,7 +4821,7 @@ function SpeakEnglishClient() {
   }
 
   function startAiGuidedStepTwoNativeRound() {
-    if (isListening) {
+    if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
       cancelRecognition();
     }
 
@@ -4831,6 +4833,7 @@ function SpeakEnglishClient() {
   function saveFreeStudyRouteState(
     nextUserEnglishText = message,
     options: {
+      aiGuidedConfirmOnly?: boolean;
       aiGuidedFollowPracticePending?: boolean;
       nativeSpeech?: string;
     } = {}
@@ -4845,6 +4848,7 @@ function SpeakEnglishClient() {
     window.sessionStorage.setItem(
       freeStudyRouteStateStorageKey,
       JSON.stringify({
+        aiGuidedConfirmOnly: options.aiGuidedConfirmOnly === true,
         aiGuidedFollowPracticePending:
           options.aiGuidedFollowPracticePending === true,
         nativeSpeech: nextNativeSpeech,
@@ -4932,8 +4936,44 @@ function SpeakEnglishClient() {
     queueRecognitionStart("english");
   }
 
+  function openAiGuidedNativeConfirmation(confirmedSpeech: string) {
+    const normalizedSpeech = confirmedSpeech.trim();
+    if (!normalizedSpeech) return;
+
+    if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
+      cancelRecognition();
+    }
+
+    setTrainingGroundMode("guided");
+    setPrimingPracticeStage(null);
+    setPracticeStage("native");
+    setNativeSpeech(normalizedSpeech);
+    setMessage(normalizedSpeech);
+    setIsNativeSpeechConfirmed(false);
+    setIsRecognizingNativeSpeech(false);
+    resetAuthoritativeEnglish();
+    setHasNativeSpeech(true);
+    setHasEnglishAttempt(false);
+    setStandardEnglish("");
+    setExpressionVariants([]);
+    setSelectedExpressionIndex(0);
+    setIsLoadingExpressionVariants(false);
+    setHighlightedExpressions([]);
+    setVocabularyNotice("");
+    resetGuidedFollowupState();
+    resetFreeConversationState();
+    setInputText("");
+    setComposingPinyin("");
+    setLiveTranscript("");
+    setKeyboardMode("zh");
+    setShowQuickPanel(false);
+    setShowExpressionMenu(false);
+    setShowClassicCoursePicker(false);
+    resetClassicCoursePicker();
+  }
+
   function openAiGuidedExpressionStepOne() {
-    if (isListening) {
+    if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
       cancelRecognition();
     }
 
@@ -4965,6 +5005,7 @@ function SpeakEnglishClient() {
 
     aiGuidedFollowPracticePendingRef.current = true;
     saveFreeStudyRouteState(message, {
+      aiGuidedConfirmOnly: false,
       aiGuidedFollowPracticePending: true,
       nativeSpeech: confirmedSpeech,
     });
@@ -4986,19 +5027,14 @@ function SpeakEnglishClient() {
 
     aiGuidedFollowPracticePendingRef.current = true;
     saveFreeStudyRouteState("", {
+      aiGuidedConfirmOnly: true,
       aiGuidedFollowPracticePending: true,
       nativeSpeech: suggestedSpeech,
     });
-    const routeKey = `/ai-guided-expression/step-4:${suggestedSpeech}`;
 
-    if (pathname !== "/ai-guided-expression/step-4") {
-      handledStepRouteRef.current = "";
-      router.push("/ai-guided-expression/step-4");
-      return;
-    }
-
-    handledStepRouteRef.current = routeKey;
-    startAiGuidedStepFourEnglishRound(suggestedSpeech);
+    handledStepRouteRef.current =
+      `/ai-guided-expression/step-4:confirm:${suggestedSpeech}`;
+    openAiGuidedNativeConfirmation(suggestedSpeech);
   }
 
   function startFreeStudyStepTwoChineseRound(
@@ -5197,6 +5233,14 @@ function SpeakEnglishClient() {
     void startRecognition("english");
   }
 
+  function handleAiGuidedNativeMicrophoneClick() {
+    handleFreeStudyNativeMicrophoneClick();
+  }
+
+  function handleAiGuidedEnglishMicrophoneClick() {
+    handleFreeStudyEnglishMicrophoneClick();
+  }
+
   function confirmNativeSpeech() {
     const confirmedSpeech = nativeSpeech.trim();
     if (!confirmedSpeech) return;
@@ -5243,10 +5287,18 @@ function SpeakEnglishClient() {
     const confirmedSpeech = nativeSpeech.trim();
     if (!confirmedSpeech) return;
 
-    aiGuidedFollowPracticePendingRef.current = false;
-    recordAiGuidedBackendProgress({ step: "native" });
+    const savedRouteState = readFreeStudyRouteState();
+    const isFollowPractice =
+      aiGuidedFollowPracticePendingRef.current ||
+      savedRouteState?.aiGuidedFollowPracticePending === true;
+
+    aiGuidedFollowPracticePendingRef.current = isFollowPractice;
+    if (!isFollowPractice) {
+      recordAiGuidedBackendProgress({ step: "native" });
+    }
     saveFreeStudyRouteState("", {
-      aiGuidedFollowPracticePending: false,
+      aiGuidedConfirmOnly: false,
+      aiGuidedFollowPracticePending: isFollowPractice,
       nativeSpeech: confirmedSpeech,
     });
 
@@ -5334,12 +5386,20 @@ function SpeakEnglishClient() {
 
       if (!confirmedSpeech) return;
 
-      const routeKey = `${pathname}:${confirmedSpeech}`;
+      const shouldOpenConfirmationOnly =
+        savedRouteState?.aiGuidedConfirmOnly === true;
+      const routeKey = shouldOpenConfirmationOnly
+        ? `${pathname}:confirm:${confirmedSpeech}`
+        : `${pathname}:${confirmedSpeech}`;
       if (handledStepRouteRef.current === routeKey) return;
 
       handledStepRouteRef.current = routeKey;
       aiGuidedFollowPracticePendingRef.current =
         savedRouteState?.aiGuidedFollowPracticePending === true;
+      if (shouldOpenConfirmationOnly) {
+        openAiGuidedNativeConfirmation(confirmedSpeech);
+        return;
+      }
       startAiGuidedStepFourEnglishRound(confirmedSpeech);
       return;
     }
@@ -7181,7 +7241,7 @@ function SpeakEnglishClient() {
                 recordingState="recording"
                 onHomeClick={openLoggedInHomePage}
                 onAccountClick={openAccountPage}
-                onStopChineseRecording={handlePrimaryPracticeAction}
+                onStopChineseRecording={handleAiGuidedNativeMicrophoneClick}
               />
             </div>
           ) : null}
@@ -7364,7 +7424,7 @@ function SpeakEnglishClient() {
                 onEditChinese={updateNativeSpeechDraft}
                 onRetryChinese={retryNativeSpeech}
                 onStartEnglishRecording={confirmAiGuidedNativeSpeechInline}
-                onStopEnglishRecording={handlePrimaryPracticeAction}
+                onStopEnglishRecording={handleAiGuidedEnglishMicrophoneClick}
               />
             </div>
           ) : null}
