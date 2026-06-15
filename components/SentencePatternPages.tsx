@@ -51,8 +51,8 @@ type SentencePatternProgressApiPayload = SentencePatternProgressSnapshot & {
   snapshot?: SentencePatternProgressSnapshot;
 };
 
-const FINISH_AFTER_SILENCE_MS = 2000;
 const RESTART_AFTER_NO_SPEECH_MS = 240;
+const MANUAL_STOP_FALLBACK_MS = 900;
 
 function isInteractiveCardTarget(
   target: EventTarget | null,
@@ -886,11 +886,13 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
   const { practice } = getPractice(level, patternId, practiceId);
   const [isRecording, setIsRecording] = useState(false);
   const transcriptRef = useRef("");
+  const baseTranscriptRef = useRef("");
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
-  const finishAfterSilenceTimerRef = useRef<number | null>(null);
+  const stopFallbackTimerRef = useRef<number | null>(null);
   const finishRecordingRef = useRef(false);
-  const heardSpeechRef = useRef(false);
-  const restartOnEndRef = useRef(false);
+  const stopRequestedRef = useRef(false);
+  const recordingSessionIdRef = useRef(0);
+  const practiceSessionKeyRef = useRef(`${level.id}:${patternId}:${practiceId}`);
   const progress = Math.round((practiceId / practiceCount) * 100);
   const nextPractice = practiceId >= practiceCount ? practiceId : practiceId + 1;
   const previousPractice = practiceId <= 1 ? practiceId : practiceId - 1;
@@ -907,18 +909,18 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
     Math.round((completedPracticeCount / Math.max(practiceCount, 1)) * 100)
   );
 
-  function clearFinishAfterSilenceTimer() {
-    if (finishAfterSilenceTimerRef.current === null) return;
-    window.clearTimeout(finishAfterSilenceTimerRef.current);
-    finishAfterSilenceTimerRef.current = null;
+  function clearStopFallbackTimer() {
+    if (stopFallbackTimerRef.current === null) return;
+    window.clearTimeout(stopFallbackTimerRef.current);
+    stopFallbackTimerRef.current = null;
   }
 
   useEffect(() => {
     return () => {
+      recordingSessionIdRef.current += 1;
       finishRecordingRef.current = true;
-      if (finishAfterSilenceTimerRef.current !== null) {
-        window.clearTimeout(finishAfterSilenceTimerRef.current);
-      }
+      stopRequestedRef.current = true;
+      clearStopFallbackTimer();
       try {
         recognitionRef.current?.abort?.();
       } catch {}
@@ -926,11 +928,35 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
     };
   }, []);
 
+  useEffect(() => {
+    const practiceSessionKey = `${level.id}:${patternId}:${practiceId}`;
+    if (practiceSessionKeyRef.current === practiceSessionKey) return;
+
+    practiceSessionKeyRef.current = practiceSessionKey;
+    recordingSessionIdRef.current += 1;
+    finishRecordingRef.current = true;
+    stopRequestedRef.current = true;
+    transcriptRef.current = "";
+    baseTranscriptRef.current = "";
+    clearStopFallbackTimer();
+    try {
+      recognitionRef.current?.abort?.();
+    } catch {}
+    recognitionRef.current = null;
+    const resetUiTimer = window.setTimeout(() => {
+      setIsRecording(false);
+    }, 0);
+
+    return () => {
+      window.clearTimeout(resetUiTimer);
+    };
+  }, [level.id, patternId, practiceId]);
+
   function finishRecording(transcript: string) {
     if (finishRecordingRef.current) return;
     finishRecordingRef.current = true;
-    restartOnEndRef.current = false;
-    clearFinishAfterSilenceTimer();
+    stopRequestedRef.current = true;
+    clearStopFallbackTimer();
     recognitionRef.current = null;
     setIsRecording(false);
 
@@ -944,30 +970,30 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
     router.push(`/sentence-patterns/${level.id}/${patternId}/result?practice=${practiceId}`);
   }
 
-  function finishBufferedRecording() {
-    const transcript = transcriptRef.current.trim();
-
-    if ((!transcript && !heardSpeechRef.current) || finishRecordingRef.current) {
-      return false;
+  function stopRecordingForFinalResult() {
+    if (finishRecordingRef.current) {
+      return;
     }
 
+    stopRequestedRef.current = true;
+    clearStopFallbackTimer();
     const recognition = recognitionRef.current;
-    try {
-      recognition?.stop();
-    } catch {}
 
-    finishRecording(transcript);
-    return true;
-  }
-
-  function stopRecordingForFinalResult() {
-    if (finishBufferedRecording()) {
+    if (!recognition) {
+      finishRecording(transcriptRef.current);
       return;
     }
 
     try {
-      recognitionRef.current?.stop();
-    } catch {}
+      recognition.stop();
+    } catch {
+      finishRecording(transcriptRef.current);
+      return;
+    }
+
+    stopFallbackTimerRef.current = window.setTimeout(() => {
+      finishRecording(transcriptRef.current);
+    }, MANUAL_STOP_FALLBACK_MS);
   }
 
   function startRecording() {
@@ -978,9 +1004,11 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
 
     setIsRecording(true);
     transcriptRef.current = "";
+    baseTranscriptRef.current = "";
     finishRecordingRef.current = false;
-    heardSpeechRef.current = false;
-    restartOnEndRef.current = false;
+    stopRequestedRef.current = false;
+    const recordingSessionId = recordingSessionIdRef.current + 1;
+    recordingSessionIdRef.current = recordingSessionId;
 
     const Recognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -991,84 +1019,85 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
     }
 
     const beginRecognition = () => {
-      if (finishRecordingRef.current) return;
+      if (
+        finishRecordingRef.current ||
+        stopRequestedRef.current ||
+        recordingSessionIdRef.current !== recordingSessionId
+      ) {
+        return;
+      }
 
       const recognition = new Recognition();
       recognitionRef.current = recognition;
+      const isCurrentRecognitionSession = () =>
+        recordingSessionIdRef.current === recordingSessionId &&
+        recognitionRef.current === recognition &&
+        !finishRecordingRef.current;
+
       recognition.lang = "en-US";
       recognition.continuous = true;
       recognition.interimResults = true;
-      const scheduleFinishAfterSilence = () => {
-        clearFinishAfterSilenceTimer();
-        finishAfterSilenceTimerRef.current = window.setTimeout(() => {
-          stopRecordingForFinalResult();
-        }, FINISH_AFTER_SILENCE_MS);
-      };
 
       recognition.onspeechstart = () => {
-        heardSpeechRef.current = true;
-        clearFinishAfterSilenceTimer();
+        if (!isCurrentRecognitionSession()) return;
       };
 
       recognition.onspeechend = () => {
-        scheduleFinishAfterSilence();
+        if (!isCurrentRecognitionSession()) return;
       };
 
       recognition.onresult = (event) => {
+        if (!isCurrentRecognitionSession()) return;
+
         const text = Array.from(event.results)
           .map((result) => result[0]?.transcript || "")
           .join(" ")
           .trim();
-        transcriptRef.current = text;
-        if (!text) return;
-
-        heardSpeechRef.current = true;
-        scheduleFinishAfterSilence();
+        transcriptRef.current = [baseTranscriptRef.current, text]
+          .filter(Boolean)
+          .join(" ")
+          .trim();
       };
 
       recognition.onerror = (event) => {
+        if (!isCurrentRecognitionSession()) return;
+
         const errorName =
           "error" in event && typeof event.error === "string" ? event.error : "";
-        if (
-          (errorName === "no-speech" || errorName === "aborted") &&
-          !transcriptRef.current.trim() &&
-          !heardSpeechRef.current
-        ) {
-          restartOnEndRef.current = errorName === "no-speech";
+
+        if (stopRequestedRef.current) {
           return;
         }
-        finishRecording(transcriptRef.current);
+
+        if (errorName === "not-allowed" || errorName === "service-not-allowed") {
+          finishRecording(transcriptRef.current);
+        }
       };
 
       recognition.onend = () => {
+        if (!isCurrentRecognitionSession()) return;
+
         recognitionRef.current = null;
-        clearFinishAfterSilenceTimer();
-
         if (finishRecordingRef.current) return;
-        const transcript = transcriptRef.current.trim();
-        if (transcript) {
-          finishRecording(transcript);
-          return;
-        }
 
-        if (heardSpeechRef.current) {
+        if (stopRequestedRef.current) {
           finishRecording(transcriptRef.current);
           return;
         }
 
-        if (restartOnEndRef.current) {
-          restartOnEndRef.current = false;
-          window.setTimeout(beginRecognition, RESTART_AFTER_NO_SPEECH_MS);
-          return;
-        }
-
-        setIsRecording(false);
+        baseTranscriptRef.current = transcriptRef.current.trim();
+        window.setTimeout(beginRecognition, RESTART_AFTER_NO_SPEECH_MS);
       };
 
       try {
         recognition.start();
       } catch {
-        finishRecording(transcriptRef.current);
+        recognitionRef.current = null;
+        if (!transcriptRef.current.trim()) {
+          finishRecordingRef.current = true;
+          stopRequestedRef.current = true;
+          setIsRecording(false);
+        }
       }
     };
 
@@ -1146,9 +1175,9 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
         <section className={styles.recordCard}>
           <p>
             <StatIcon type="mic" />
-            {isRecording ? "正在录音，停顿 2 秒后会自动进入下一步" : "点击麦克风，开始录制你的英文表达"}
+            {isRecording ? "正在录音，再次点击麦克风结束并进入下一步" : "点击麦克风，开始录制你的英文表达"}
           </p>
-          <small>慢慢想，停顿 2 秒后会自动进入下一页</small>
+          <small>说完后请再次点击麦克风，系统才会进入下一页</small>
           <button
             type="button"
             className={styles.bigMic}
