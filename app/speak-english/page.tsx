@@ -3044,6 +3044,7 @@ function SpeakEnglishClient() {
   const speechStopFallbackTimerRef = useRef<number | null>(null);
   const speechMaxTimerRef = useRef<number | null>(null);
   const speechRecognitionSessionIdRef = useRef(0);
+  const isRecognitionStartingRef = useRef(false);
   const activeRecognitionStageRef = useRef<PracticeStage>(
     initialRouteViewState.practiceStage
   );
@@ -3952,11 +3953,13 @@ function SpeakEnglishClient() {
     }
 
     function resetStaleRecognition() {
-      if (!recognitionRef.current) return;
+      if (!recognitionRef.current && !isRecognitionStartingRef.current) return;
 
       speechRecognitionSessionIdRef.current += 1;
+      isRecognitionStartingRef.current = false;
       shouldCommitSpeechRef.current = false;
-      recognitionRef.current.abort?.();
+      const recognition = recognitionRef.current;
+      recognition?.abort?.();
       recognitionRef.current = null;
       clearLifecycleSpeechTimers();
       speechBufferRef.current = "";
@@ -3985,6 +3988,7 @@ function SpeakEnglishClient() {
 
     return () => {
       speechRecognitionSessionIdRef.current += 1;
+      isRecognitionStartingRef.current = false;
       shouldCommitSpeechRef.current = false;
       clearLifecycleSpeechTimers();
       recognitionRef.current?.abort?.();
@@ -4853,7 +4857,7 @@ function SpeakEnglishClient() {
     const normalizedSpeech = confirmedSpeech.trim();
     if (!normalizedSpeech) return;
 
-    if (isListening) {
+    if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
       cancelRecognition();
     }
 
@@ -4893,7 +4897,7 @@ function SpeakEnglishClient() {
     const normalizedSpeech = confirmedSpeech.trim();
     if (!normalizedSpeech) return;
 
-    if (isListening) {
+    if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
       cancelRecognition();
     }
 
@@ -5000,7 +5004,7 @@ function SpeakEnglishClient() {
   function startFreeStudyStepTwoChineseRound(
     options: { navigate?: boolean } = {}
   ) {
-    if (isListening) {
+    if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
       cancelRecognition();
     }
 
@@ -5034,6 +5038,7 @@ function SpeakEnglishClient() {
 
   function finishRecognition(finalTranscript = speechBufferRef.current.trim()) {
     invalidateSpeechRecognitionSession();
+    isRecognitionStartingRef.current = false;
 
     const completedStage = activeRecognitionStageRef.current;
 
@@ -5090,6 +5095,7 @@ function SpeakEnglishClient() {
 
   function cancelRecognition(options: { message?: string } = {}) {
     invalidateSpeechRecognitionSession();
+    isRecognitionStartingRef.current = false;
     shouldCommitSpeechRef.current = false;
     recognitionRef.current?.abort?.();
     recognitionRef.current = null;
@@ -5153,6 +5159,42 @@ function SpeakEnglishClient() {
     }
 
     void startRecognition();
+  }
+
+  function handleFreeStudyNativeMicrophoneClick() {
+    if (isRecognitionStartingRef.current || isPrimingNativeSpeech) {
+      return;
+    }
+
+    if (isListening || recognitionRef.current) {
+      if (activeRecognitionStageRef.current !== "native") return;
+
+      stopRecognition({ forceUiReset: true });
+      return;
+    }
+
+    void startRecognition("native");
+  }
+
+  function handleFreeStudyEnglishMicrophoneClick() {
+    if (isRecognitionStartingRef.current || isPrimingEnglishSpeech) {
+      return;
+    }
+
+    if (isListening || recognitionRef.current) {
+      if (activeRecognitionStageRef.current !== "english") return;
+
+      if (finishBufferedEnglishRecognition()) {
+        return;
+      }
+
+      stopRecognition({ forceUiReset: true });
+      return;
+    }
+
+    if (!nativeSpeech.trim() || hasEnglishAttempt) return;
+
+    void startRecognition("english");
   }
 
   function confirmNativeSpeech() {
@@ -5359,11 +5401,14 @@ function SpeakEnglishClient() {
   }
 
   async function startRecognition(forcedPracticeStage?: PracticeStage) {
-    if (isListening || recognitionRef.current) return;
+    if (isRecognitionStartingRef.current || recognitionRef.current) return;
+
+    isRecognitionStartingRef.current = true;
 
     const RecognitionConstructor = getRecognitionConstructor();
 
     if (!RecognitionConstructor) {
+      isRecognitionStartingRef.current = false;
       setPrimingPracticeStage(null);
       setMessage("Speech recognition is not available in this browser");
       return;
@@ -5419,12 +5464,14 @@ function SpeakEnglishClient() {
       shouldGuardFreePractice &&
       !(await ensureFreePracticeAvailable(guardedPracticeRoundId))
     ) {
+      isRecognitionStartingRef.current = false;
       shouldCommitSpeechRef.current = false;
       setPrimingPracticeStage(null);
       return;
     }
 
     if (speechRecognitionSessionIdRef.current !== recognitionSessionId) {
+      isRecognitionStartingRef.current = false;
       return;
     }
 
@@ -5636,6 +5683,7 @@ function SpeakEnglishClient() {
 
     try {
       recognition.start();
+      isRecognitionStartingRef.current = false;
       speechNoInputTimerRef.current = window.setTimeout(() => {
         if (!isCurrentRecognitionSession()) return;
         if (speechBufferRef.current.trim()) return;
@@ -5653,6 +5701,7 @@ function SpeakEnglishClient() {
       }, speechMaxDurationMs);
     } catch {
       invalidateSpeechRecognitionSession();
+      isRecognitionStartingRef.current = false;
       shouldCommitSpeechRef.current = false;
       clearAllSpeechTimers();
       speechBufferRef.current = "";
@@ -5690,6 +5739,10 @@ function SpeakEnglishClient() {
       return;
     }
     const stoppingSessionId = speechRecognitionSessionIdRef.current;
+    const stopFallbackDelayMs =
+      activeRecognitionStageRef.current === "native"
+        ? Math.max(speechStopFallbackMs, nativeFinalResultGraceMs + 700)
+        : speechStopFallbackMs;
 
     try {
       recognition.stop();
@@ -5702,7 +5755,7 @@ function SpeakEnglishClient() {
       if (speechRecognitionSessionIdRef.current !== stoppingSessionId) return;
 
       finishRecognition();
-    }, speechStopFallbackMs);
+    }, stopFallbackDelayMs);
   }
 
   useEffect(() => {
@@ -8525,7 +8578,7 @@ function SpeakEnglishClient() {
               menuLabel="回到首页"
               onMenuClick={openLoggedInHomePage}
               onAccountClick={openAccountPage}
-              onMicrophoneClick={handlePrimaryPracticeAction}
+              onMicrophoneClick={handleFreeStudyNativeMicrophoneClick}
               recordingState="idle"
             />
           ) : null}
@@ -8536,7 +8589,7 @@ function SpeakEnglishClient() {
               menuLabel="回到首页"
               onMenuClick={openLoggedInHomePage}
               onAccountClick={openAccountPage}
-              onMicrophoneClick={handlePrimaryPracticeAction}
+              onMicrophoneClick={handleFreeStudyNativeMicrophoneClick}
               recordingState="recording"
             />
           ) : null}
@@ -8553,7 +8606,7 @@ function SpeakEnglishClient() {
               onEditChinese={updateNativeSpeechDraft}
               onRetryChinese={openFreeStudyStepTwoForNextChinese}
               onStartEnglishPractice={confirmFreeStudyNativeSpeechInline}
-              onStopEnglishRecording={handlePrimaryPracticeAction}
+              onStopEnglishRecording={handleFreeStudyEnglishMicrophoneClick}
               viewState={
                 showReferenceEnglishPrompt || showReferenceEnglishListening
                   ? "recordingEnglish"
