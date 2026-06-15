@@ -4609,7 +4609,7 @@
 /* Sentence-pattern result: compact second-step layout matching the reference. */
 .studyPhone:has(.resultIntro) {
   padding-right: clamp(0.72rem, 3.2vw, 0.95rem) !important;
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 5.85rem) !important;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 10.8rem) !important;
   padding-left: clamp(0.72rem, 3.2vw, 0.95rem) !important;
 }
 
@@ -4938,20 +4938,22 @@
 
 .studyPhone:has(.resultIntro) .followCard {
   display: grid !important;
-  position: static !important;
+  position: fixed !important;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
   align-items: center !important;
-  left: auto !important;
+  left: 50% !important;
   right: auto !important;
-  bottom: max(0.45rem, env(safe-area-inset-bottom, 0px)) !important;
-  z-index: auto !important;
-  width: 100% !important;
+  bottom: calc(
+    max(0.7rem, env(safe-area-inset-bottom, 0px)) + clamp(3.95rem, 17vw, 4.7rem) + 0.52rem
+  ) !important;
+  z-index: 119 !important;
+  width: min(calc(100vw - 1.55rem), 398px) !important;
   min-height: 4.08rem !important;
   gap: 0.58rem !important;
-  margin: 0.62rem 0 0 !important;
+  margin: 0 !important;
   border-radius: 1.22rem !important;
-  padding: 0.66rem 0.78rem calc(0.66rem + env(safe-area-inset-bottom, 0px)) !important;
-  transform: none !important;
+  padding: 0.66rem 0.78rem !important;
+  transform: translateX(-50%) !important;
 }
 
 .studyPhone:has(.resultIntro) .followCard::before {
