@@ -5554,7 +5554,8 @@ function SpeakEnglishClient() {
           ? "native"
           : practiceStage);
     const isManualStopFreeStudyRecognition =
-      !isAiGuidedMode && (pathname?.startsWith("/free-study") ?? false);
+      (pathname?.startsWith("/free-study") ?? false) ||
+      (pathname?.startsWith("/ai-guided-expression") ?? false);
     const shouldAutoStopAfterSpeechSilence =
       !isManualStopFreeStudyRecognition;
     const shouldCreateNewPracticeRound =
@@ -5776,9 +5777,11 @@ function SpeakEnglishClient() {
           try {
             recognition.start();
           } catch {
-            recognitionRef.current = null;
-            setIsListening(false);
-            setPrimingPracticeStage(null);
+            if (!transcript) {
+              recognitionRef.current = null;
+              setIsListening(false);
+              setPrimingPracticeStage(null);
+            }
           }
         }, speechRestartAfterEarlyEndMs);
         return;
