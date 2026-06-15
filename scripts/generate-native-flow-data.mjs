@@ -223,7 +223,6 @@ for (const level of levels) {
 
     for (const english of selectedLines) {
       entries.push({
-        audioSrc: assetPath("images 2", "地道语感训练", level.folder, mp3Name),
         chinese:
           existingTranslations.translationsByLevel[level.id]?.get(english) || "",
         english,
@@ -241,6 +240,12 @@ for (const level of levels) {
 
   const sentences = entries.slice(0, TOTAL_SENTENCES).map((entry, index) => ({
     ...entry,
+    audioSrc: assetPath(
+      "native-flow-audio",
+      level.id,
+      `day-${String(Math.floor(index / DAILY_SENTENCES) + 1).padStart(2, "0")}`,
+      `sentence-${String((index % DAILY_SENTENCES) + 1).padStart(2, "0")}.mp3`,
+    ),
     day: Math.floor(index / DAILY_SENTENCES) + 1,
     daySentence: (index % DAILY_SENTENCES) + 1,
     id: index + 1,
