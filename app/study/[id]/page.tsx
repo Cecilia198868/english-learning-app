@@ -117,7 +117,8 @@ const GUEST_FULL_CLASSIC_LESSON_IDS = new Set([
   "tax_form_1040_filing_zh",
 ]);
 const GUEST_CLASSIC_SENTENCE_LIMIT = 5;
-const CLASSIC_RECORDING_SILENCE_DELAY_MS = 2000;
+const CLASSIC_RECORDING_RESTART_DELAY_MS = 240;
+const CLASSIC_RECORDING_STOP_FALLBACK_MS = 900;
 const HAS_CLASSIC_SCENE_PRE_RECORDED_AUDIO = false;
 function isClassicSceneLessonId(lessonId: string) {
   return (
@@ -850,7 +851,12 @@ export default function StudyPage() {
   const isSequencePlayingRef = useRef(false);
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
   const speechBufferRef = useRef("");
-  const speechSilenceTimerRef = useRef<number | null>(null);
+  const speechBaseTranscriptRef = useRef("");
+  const speechFinishedRef = useRef(true);
+  const speechStopRequestedRef = useRef(false);
+  const speechSessionIdRef = useRef(0);
+  const speechRestartTimerRef = useRef<number | null>(null);
+  const speechStopFallbackTimerRef = useRef<number | null>(null);
 
   const refreshFreePracticeUsageCount = useCallback(() => {
     setFreePracticeUsageCount(getFreePracticeUsage(freePracticeScope).count);
@@ -895,10 +901,15 @@ export default function StudyPage() {
     }
   }
 
-  function clearSpeechSilenceTimer() {
-    if (speechSilenceTimerRef.current !== null) {
-      window.clearTimeout(speechSilenceTimerRef.current);
-      speechSilenceTimerRef.current = null;
+  function clearSpeechRecognitionTimers() {
+    if (speechRestartTimerRef.current !== null) {
+      window.clearTimeout(speechRestartTimerRef.current);
+      speechRestartTimerRef.current = null;
+    }
+
+    if (speechStopFallbackTimerRef.current !== null) {
+      window.clearTimeout(speechStopFallbackTimerRef.current);
+      speechStopFallbackTimerRef.current = null;
     }
   }
 
@@ -911,7 +922,11 @@ export default function StudyPage() {
     setIsLoadingExpressionVariants(false);
     setShowFollowReadModal(false);
     speechBufferRef.current = "";
-    clearSpeechSilenceTimer();
+    speechBaseTranscriptRef.current = "";
+    speechSessionIdRef.current += 1;
+    speechFinishedRef.current = true;
+    speechStopRequestedRef.current = true;
+    clearSpeechRecognitionTimers();
     recognitionRef.current?.abort?.();
     recognitionRef.current = null;
     setIsListening(false);
@@ -1623,7 +1638,10 @@ export default function StudyPage() {
       clearAutoTimer();
       isSequencePlayingRef.current = false;
       clearSequenceTimer();
-      clearSpeechSilenceTimer();
+      clearSpeechRecognitionTimers();
+      speechSessionIdRef.current += 1;
+      speechFinishedRef.current = true;
+      speechStopRequestedRef.current = true;
       recognitionRef.current?.abort?.();
       stopClipPlayback();
       if (sourceAudioObjectUrlRef.current) {
@@ -1963,10 +1981,46 @@ export default function StudyPage() {
     return window.SpeechRecognition || window.webkitSpeechRecognition || null;
   }
 
-  function stopEnglishRecognition() {
-    clearSpeechSilenceTimer();
-    recognitionRef.current?.stop();
+  function finishEnglishRecognition(transcript: string, practiceIndex: number) {
+    if (speechFinishedRef.current) return;
+
+    speechFinishedRef.current = true;
+    speechStopRequestedRef.current = true;
+    clearSpeechRecognitionTimers();
     recognitionRef.current = null;
+    setIsListening(false);
+    setLiveTranscript("");
+
+    const finalTranscript =
+      transcript.trim() || currentPair.english.trim() || "未识别到录音";
+
+    setSpokenEnglish(finalTranscript);
+    markCurrentSentenceCompleted(practiceIndex);
+    setMessage("");
+  }
+
+  function stopEnglishRecognition() {
+    if (speechFinishedRef.current) return;
+
+    speechStopRequestedRef.current = true;
+    clearSpeechRecognitionTimers();
+    const recognition = recognitionRef.current;
+
+    if (!recognition) {
+      finishEnglishRecognition(speechBufferRef.current, currentIndexRef.current);
+      return;
+    }
+
+    try {
+      recognition.stop();
+    } catch {
+      finishEnglishRecognition(speechBufferRef.current, currentIndexRef.current);
+      return;
+    }
+
+    speechStopFallbackTimerRef.current = window.setTimeout(() => {
+      finishEnglishRecognition(speechBufferRef.current, currentIndexRef.current);
+    }, CLASSIC_RECORDING_STOP_FALLBACK_MS);
   }
 
   function handleEnglishPracticeAction() {
@@ -1989,60 +2043,116 @@ export default function StudyPage() {
 
     stopSequencePlayback();
     recognitionRef.current?.abort?.();
-    clearSpeechSilenceTimer();
+    clearSpeechRecognitionTimers();
     speechBufferRef.current = "";
+    speechBaseTranscriptRef.current = "";
+    speechFinishedRef.current = false;
+    speechStopRequestedRef.current = false;
     setLiveTranscript("");
     setShowEnglish(false);
-    setMessage("正在听，请慢慢说完整");
+    setMessage("正在听，请说完后再次点击麦克风");
     const practiceIndex = currentIndex;
-
-    const recognition = new RecognitionConstructor();
-    recognition.lang = "en-US";
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognitionRef.current = recognition;
+    const speechSessionId = speechSessionIdRef.current + 1;
+    speechSessionIdRef.current = speechSessionId;
     setIsListening(true);
 
-    recognition.onresult = (event) => {
-      const transcripts = Array.from(event.results)
-        .map((result) => result[0]?.transcript || "")
-        .filter(Boolean);
-      const transcript = transcripts.join(" ").trim();
-
-      if (!transcript) {
+    const beginRecognition = () => {
+      if (
+        speechFinishedRef.current ||
+        speechStopRequestedRef.current ||
+        speechSessionIdRef.current !== speechSessionId
+      ) {
         return;
       }
 
-      setLiveTranscript(transcript);
-      speechBufferRef.current = transcript;
-      clearSpeechSilenceTimer();
-      speechSilenceTimerRef.current = window.setTimeout(() => {
-        stopEnglishRecognition();
-      }, CLASSIC_RECORDING_SILENCE_DELAY_MS);
-    };
+      const recognition = new RecognitionConstructor();
+      recognition.lang = "en-US";
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognitionRef.current = recognition;
 
-    recognition.onerror = () => {
-      clearSpeechSilenceTimer();
-      setIsListening(false);
-      setLiveTranscript("");
-      setMessage("没有听清，请再试一次");
-    };
+      const isCurrentRecognitionSession = () =>
+        speechSessionIdRef.current === speechSessionId &&
+        recognitionRef.current === recognition &&
+        !speechFinishedRef.current;
 
-    recognition.onend = () => {
-      clearSpeechSilenceTimer();
-      const finalTranscript = speechBufferRef.current.trim();
-      if (finalTranscript) {
-        setSpokenEnglish(finalTranscript);
-        markCurrentSentenceCompleted(practiceIndex);
-      } else {
-        setMessage("没有听清，请再试一次");
+      recognition.onresult = (event) => {
+        if (!isCurrentRecognitionSession()) return;
+
+        const transcripts = Array.from(event.results)
+          .map((result) => result[0]?.transcript || "")
+          .filter(Boolean);
+        const transcript = transcripts.join(" ").trim();
+
+        if (!transcript) {
+          return;
+        }
+
+        const mergedTranscript = [
+          speechBaseTranscriptRef.current,
+          transcript,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .trim();
+
+        setLiveTranscript(mergedTranscript);
+        speechBufferRef.current = mergedTranscript;
+      };
+
+      recognition.onerror = (event) => {
+        if (!isCurrentRecognitionSession()) return;
+
+        const errorName =
+          "error" in event && typeof event.error === "string" ? event.error : "";
+
+        if (speechStopRequestedRef.current) {
+          return;
+        }
+
+        if (errorName === "not-allowed" || errorName === "service-not-allowed") {
+          speechFinishedRef.current = true;
+          speechStopRequestedRef.current = true;
+          clearSpeechRecognitionTimers();
+          recognitionRef.current = null;
+          setIsListening(false);
+          setLiveTranscript("");
+          setMessage("请允许麦克风权限后再试");
+        }
+      };
+
+      recognition.onend = () => {
+        if (!isCurrentRecognitionSession()) return;
+
+        recognitionRef.current = null;
+
+        if (speechStopRequestedRef.current) {
+          finishEnglishRecognition(speechBufferRef.current, practiceIndex);
+          return;
+        }
+
+        speechBaseTranscriptRef.current = speechBufferRef.current.trim();
+        speechRestartTimerRef.current = window.setTimeout(
+          beginRecognition,
+          CLASSIC_RECORDING_RESTART_DELAY_MS
+        );
+      };
+
+      try {
+        recognition.start();
+      } catch {
+        recognitionRef.current = null;
+        if (speechStopRequestedRef.current) {
+          finishEnglishRecognition(speechBufferRef.current, practiceIndex);
+        } else {
+          speechFinishedRef.current = true;
+          setIsListening(false);
+          setMessage("录音启动失败，请再点一次麦克风");
+        }
       }
-      setLiveTranscript("");
-      setIsListening(false);
-      recognitionRef.current = null;
     };
 
-    recognition.start();
+    beginRecognition();
   }
 
   const spokenDisplay = (isListening && liveTranscript ? liveTranscript : spokenEnglish).trim();
@@ -2792,7 +2902,7 @@ export default function StudyPage() {
 
           <p className={styles.micHint}>
             {isListening
-              ? "正在录音，停顿 2 秒后会自动进入下一页"
+              ? "正在录音，再次点击麦克风结束并进入下一页"
               : message || "点击麦克风开始练习"}
           </p>
 
