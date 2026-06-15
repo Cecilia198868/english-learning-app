@@ -281,6 +281,7 @@ const speechMaxDurationMs = 45000;
 type FreeStudyRouteState = {
   aiGuidedConfirmOnly?: boolean;
   aiGuidedFollowPracticePending?: boolean;
+  aiGuidedNativeCommitted?: boolean;
   nativeSpeech?: string;
   userEnglishText?: string;
 };
@@ -312,6 +313,7 @@ function readFreeStudyRouteState(): FreeStudyRouteState | null {
       aiGuidedConfirmOnly: parsedState.aiGuidedConfirmOnly === true,
       aiGuidedFollowPracticePending:
         parsedState.aiGuidedFollowPracticePending === true,
+      aiGuidedNativeCommitted: parsedState.aiGuidedNativeCommitted === true,
       nativeSpeech:
         typeof parsedState.nativeSpeech === "string"
           ? parsedState.nativeSpeech
@@ -4835,6 +4837,7 @@ function SpeakEnglishClient() {
     options: {
       aiGuidedConfirmOnly?: boolean;
       aiGuidedFollowPracticePending?: boolean;
+      aiGuidedNativeCommitted?: boolean;
       nativeSpeech?: string;
     } = {}
   ) {
@@ -4851,6 +4854,8 @@ function SpeakEnglishClient() {
         aiGuidedConfirmOnly: options.aiGuidedConfirmOnly === true,
         aiGuidedFollowPracticePending:
           options.aiGuidedFollowPracticePending === true,
+        aiGuidedNativeCommitted:
+          options.aiGuidedNativeCommitted === true,
         nativeSpeech: nextNativeSpeech,
         userEnglishText: nextUserEnglishText.trim(),
       } satisfies FreeStudyRouteState)
@@ -5029,11 +5034,19 @@ function SpeakEnglishClient() {
     saveFreeStudyRouteState("", {
       aiGuidedConfirmOnly: true,
       aiGuidedFollowPracticePending: true,
+      aiGuidedNativeCommitted: false,
       nativeSpeech: suggestedSpeech,
     });
 
-    handledStepRouteRef.current =
-      `/ai-guided-expression/step-4:confirm:${suggestedSpeech}`;
+    const routeKey = `/ai-guided-expression/step-4:confirm:${suggestedSpeech}`;
+
+    if (pathname !== "/ai-guided-expression/step-4") {
+      handledStepRouteRef.current = "";
+      router.push("/ai-guided-expression/step-4");
+      return;
+    }
+
+    handledStepRouteRef.current = routeKey;
     openAiGuidedNativeConfirmation(suggestedSpeech);
   }
 
@@ -5096,6 +5109,19 @@ function SpeakEnglishClient() {
         setPracticeStage("native");
         if (isAiGuidedMode) {
           recordAiGuidedBackendProgress({ step: "native" });
+          saveFreeStudyRouteState("", {
+            aiGuidedConfirmOnly: true,
+            aiGuidedFollowPracticePending: false,
+            aiGuidedNativeCommitted: true,
+            nativeSpeech: finalTranscript,
+          });
+          if (pathname !== "/ai-guided-expression/step-4") {
+            handledStepRouteRef.current = "";
+            router.push("/ai-guided-expression/step-4");
+          } else {
+            handledStepRouteRef.current =
+              `/ai-guided-expression/step-4:confirm:${finalTranscript}`;
+          }
         }
       } else {
         saveFreeStudyRouteState(finalTranscript);
@@ -5293,12 +5319,13 @@ function SpeakEnglishClient() {
       savedRouteState?.aiGuidedFollowPracticePending === true;
 
     aiGuidedFollowPracticePendingRef.current = isFollowPractice;
-    if (!isFollowPractice) {
+    if (!isFollowPractice && savedRouteState?.aiGuidedNativeCommitted !== true) {
       recordAiGuidedBackendProgress({ step: "native" });
     }
     saveFreeStudyRouteState("", {
       aiGuidedConfirmOnly: false,
       aiGuidedFollowPracticePending: isFollowPractice,
+      aiGuidedNativeCommitted: false,
       nativeSpeech: confirmedSpeech,
     });
 
@@ -5315,7 +5342,7 @@ function SpeakEnglishClient() {
   }
 
   function confirmAiGuidedNativeSpeechInline() {
-    confirmAiGuidedNativeSpeech({ navigate: false });
+    confirmAiGuidedNativeSpeech();
   }
 
   function retryEnglishSpeech() {
