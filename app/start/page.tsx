@@ -1,8 +1,11 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import StartPageClient from "@/components/StartPageClient";
-import { classicSceneCategoryMenus } from "@/data/classicSceneCategoryMenus";
 import { getAiGuidedProgress } from "@/lib/aiGuidedExpressionProgress";
+import {
+  getLearningHomeProgress,
+  type LearningHomeContinueStudy,
+} from "@/lib/learningHomeProgress";
 import { getBonusProUntilForEmail } from "@/lib/referrals";
 import { findUserByEmail } from "@/lib/userStore";
 
@@ -66,33 +69,43 @@ async function loadHasProEntitlement(email: string) {
   return false;
 }
 
-function createFallbackContinueStudy() {
-  const restaurantMenu = classicSceneCategoryMenus["restaurant-takeout"];
-  const sectionCard = restaurantMenu.cards.find(
-    (card) => card.id === "basic-ordering"
-  );
+async function loadContinueStudy(
+  email: string
+): Promise<LearningHomeContinueStudy | null> {
+  if (!email) return null;
 
+  try {
+    const progress = await getLearningHomeProgress(`user:${email}`);
+    return progress.continueStudy;
+  } catch {
+    return null;
+  }
+}
+
+function createFallbackContinueStudy() {
   return {
-    categoryLabel: "场景练习",
-    completed: 23,
-    href: sectionCard?.href || "/classic-scenes/restaurant-takeout/basic-ordering",
-    statusLabel: "进行中",
-    title: "在咖啡馆点咖啡",
-    total: 80,
+    categoryLabel: "学习记录",
+    completed: 0,
+    href: "/classic-scenes",
+    statusLabel: "暂无记录",
+    title: "选择一个课程开始学习",
+    total: 0,
   };
 }
 
 export default async function StartPage() {
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email?.trim().toLowerCase() || "";
-  const [aiProgress, hasProEntitlement] = await Promise.all([
+  const [aiProgress, backendContinueStudy, hasProEntitlement] = await Promise.all([
     loadAiProgress(userEmail),
+    loadContinueStudy(userEmail),
     loadHasProEntitlement(userEmail),
   ]);
 
   return (
     <StartPageClient
       aiProgress={aiProgress}
+      backendContinueStudy={backendContinueStudy}
       fallbackContinueStudy={createFallbackContinueStudy()}
       hasProEntitlement={hasProEntitlement}
       userEmail={session?.user?.email || ""}

@@ -1033,16 +1033,52 @@ export default function StudyPage() {
     setHasLoadedLesson(true);
   }, [accountAccessKind, lessonId, progressKey]);
 
+  function createLearningHomeContinueStudy(index: number) {
+    const total = Math.max(pairs.length, index + 1, 1);
+    const completed = Math.min(Math.max(index + 1, 1), total);
+    const title = (lesson?.title || lessonTitle || "学习课程").trim();
+
+    return {
+      categoryLabel: isClassicSceneLessonId(lessonId)
+        ? "场景练习"
+        : "自建课程",
+      completed,
+      href: `/study/${encodeURIComponent(lessonId)}`,
+      statusLabel: completed >= total ? "已完成" : "进行中",
+      title,
+      total,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  function syncLearningHomeProgress(
+    continueStudy: ReturnType<typeof createLearningHomeContinueStudy>
+  ) {
+    void fetch("/api/learning-home/progress", {
+      body: JSON.stringify({ continueStudy }),
+      cache: "no-store",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      keepalive: true,
+      method: "POST",
+    }).catch(() => {
+      // Local progress is still saved below if the network snapshot is unavailable.
+    });
+  }
+
   function saveProgress(index: number) {
+    const continueStudy = createLearningHomeContinueStudy(index);
+
     localStorage.setItem(progressKey, String(index));
     localStorage.setItem(
       LAST_STUDY_PROGRESS_KEY,
       JSON.stringify({
+        ...continueStudy,
         courseId: lessonId,
         sentenceIndex: index,
-        updatedAt: new Date().toISOString(),
       })
     );
+    syncLearningHomeProgress(continueStudy);
   }
 
   function handleExpressionClick(

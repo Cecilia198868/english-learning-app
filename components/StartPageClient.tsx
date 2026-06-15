@@ -23,10 +23,12 @@ type ContinueStudySummary = {
   statusLabel: string;
   title: string;
   total: number;
+  updatedAt?: string;
 };
 
 type StartPageClientProps = {
   aiProgress: AiProgressSummary;
+  backendContinueStudy: ContinueStudySummary | null;
   fallbackContinueStudy: ContinueStudySummary;
   hasProEntitlement: boolean;
   userEmail: string;
@@ -41,8 +43,25 @@ type StoredLesson = {
 };
 
 type StoredLastStudy = {
+  categoryLabel?: unknown;
+  completed?: unknown;
   courseId?: unknown;
+  href?: unknown;
   sentenceIndex?: unknown;
+  statusLabel?: unknown;
+  title?: unknown;
+  total?: unknown;
+  updatedAt?: unknown;
+};
+
+type AiProgressApiPayload = Partial<AiProgressSummary> & {
+  challenge?: {
+    completed?: unknown;
+    goal?: unknown;
+  };
+  data?: unknown;
+  progress?: unknown;
+  snapshot?: unknown;
 };
 
 type PracticeCardTone = "violet" | "cyan" | "pink";
@@ -160,6 +179,110 @@ function getPercent(completed: number, total: number) {
   return Math.min(100, Math.round((clampCount(completed, total) / total) * 100));
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function cleanText(value: unknown) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function readFiniteNumber(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function getUpdatedAtTime(value?: string) {
+  if (!value) return 0;
+  const time = new Date(value).getTime();
+  return Number.isFinite(time) ? time : 0;
+}
+
+function normalizeContinueStudy(value: unknown): ContinueStudySummary | null {
+  if (!isRecord(value)) return null;
+
+  const title = cleanText(value.title);
+  const href = cleanText(value.href);
+  if (!title || !href.startsWith("/")) return null;
+
+  const rawCompleted = readFiniteNumber(value.completed) ?? 0;
+  const rawTotal = readFiniteNumber(value.total) ?? 0;
+  const total = Math.max(0, Math.floor(rawTotal));
+  const completed = clampCount(rawCompleted, total || Math.max(0, rawCompleted));
+
+  return {
+    categoryLabel: cleanText(value.categoryLabel) || "学习记录",
+    completed,
+    href,
+    statusLabel:
+      cleanText(value.statusLabel) ||
+      (total > 0 && completed >= total ? "已完成" : "进行中"),
+    title,
+    total,
+    updatedAt: cleanText(value.updatedAt) || undefined,
+  };
+}
+
+function pickLatestContinueStudy(
+  fallback: ContinueStudySummary,
+  ...candidates: Array<ContinueStudySummary | null | undefined | unknown>
+) {
+  let latest: ContinueStudySummary | null = null;
+
+  for (const candidate of candidates) {
+    const normalized = normalizeContinueStudy(candidate);
+    if (!normalized) continue;
+
+    if (
+      !latest ||
+      getUpdatedAtTime(normalized.updatedAt) >= getUpdatedAtTime(latest.updatedAt)
+    ) {
+      latest = normalized;
+    }
+  }
+
+  return latest || fallback;
+}
+
+function getNestedAiProgressPayload(payload: unknown) {
+  if (!isRecord(payload)) return null;
+  const apiPayload = payload as AiProgressApiPayload;
+
+  if (isRecord(apiPayload.progress)) return apiPayload.progress;
+  if (isRecord(apiPayload.snapshot)) return apiPayload.snapshot;
+  if (isRecord(apiPayload.data)) return apiPayload.data;
+
+  return payload;
+}
+
+function normalizeAiProgressPayload(
+  payload: unknown,
+  fallback: AiProgressSummary
+): AiProgressSummary {
+  const source = getNestedAiProgressPayload(payload);
+  if (!isRecord(source)) return fallback;
+
+  const apiPayload = source as AiProgressApiPayload;
+  const challenge = isRecord(apiPayload.challenge) ? apiPayload.challenge : {};
+
+  return {
+    challengeCompleted:
+      readFiniteNumber(apiPayload.challengeCompleted) ??
+      readFiniteNumber(challenge.completed) ??
+      fallback.challengeCompleted,
+    challengeGoal:
+      readFiniteNumber(apiPayload.challengeGoal) ??
+      readFiniteNumber(challenge.goal) ??
+      fallback.challengeGoal,
+    dailyGoal: readFiniteNumber(apiPayload.dailyGoal) ?? fallback.dailyGoal,
+    level: readFiniteNumber(apiPayload.level) ?? fallback.level,
+    streakDays: readFiniteNumber(apiPayload.streakDays) ?? fallback.streakDays,
+    todayCompleted:
+      readFiniteNumber(apiPayload.todayCompleted) ?? fallback.todayCompleted,
+    totalCompleted:
+      readFiniteNumber(apiPayload.totalCompleted) ?? fallback.totalCompleted,
+  };
+}
+
 function displayName(userName: string, userEmail: string) {
   const cleaned = userName.trim();
   const email = userEmail.trim();
@@ -210,20 +333,24 @@ function countTrainingItems(content: string, fallbackTotal: number) {
 
 function createContinueStudyFromStorage(
   fallback: ContinueStudySummary
-): ContinueStudySummary {
+): ContinueStudySummary | null {
   try {
     const raw = window.localStorage.getItem(LAST_STUDY_PROGRESS_KEY);
     const saved = raw ? (JSON.parse(raw) as StoredLastStudy) : null;
+    const directSummary = normalizeContinueStudy(saved);
+    if (directSummary) return directSummary;
+
     const courseId =
       typeof saved?.courseId === "string" ? saved.courseId.trim() : "";
 
-    if (!courseId) return fallback;
+    if (!courseId) return null;
 
     const sentenceIndex =
       typeof saved?.sentenceIndex === "number" &&
       Number.isFinite(saved.sentenceIndex)
         ? Math.max(0, Math.floor(saved.sentenceIndex))
         : 0;
+    const updatedAt = cleanText(saved?.updatedAt) || undefined;
     const storedLesson = parseStoredLessons().find(
       (lesson) => lesson.id === courseId
     );
@@ -242,10 +369,11 @@ function createContinueStudyFromStorage(
       return {
         categoryLabel: "自建课程",
         completed: clampCount(sentenceIndex + 1, total),
-        href: `/study/${courseId}`,
+        href: `/study/${encodeURIComponent(courseId)}`,
         statusLabel: "进行中",
         title,
         total,
+        updatedAt,
       };
     }
 
@@ -253,15 +381,16 @@ function createContinueStudyFromStorage(
     const total = Math.max(completed, fallback.total || completed);
 
     return {
-      categoryLabel: fallback.categoryLabel,
+      categoryLabel: "学习记录",
       completed: clampCount(completed, total),
       href: `/study/${encodeURIComponent(courseId)}`,
       statusLabel: "进行中",
-      title: fallback.title,
+      title: "继续上次学习的课程",
       total,
+      updatedAt,
     };
   } catch {
-    return fallback;
+    return null;
   }
 }
 
@@ -498,6 +627,7 @@ function SubscriberRobot() {
 
 export default function StartPageClient({
   aiProgress,
+  backendContinueStudy,
   fallbackContinueStudy,
   hasProEntitlement,
   userEmail,
@@ -506,21 +636,99 @@ export default function StartPageClient({
 }: StartPageClientProps) {
   const name = displayName(userName, userEmail);
   const isSignedIn = Boolean(userEmail.trim() || userName.trim());
-  const [continueStudy, setContinueStudy] = useState(fallbackContinueStudy);
+  const [liveAiProgress, setLiveAiProgress] = useState(aiProgress);
+  const [continueStudy, setContinueStudy] = useState(() =>
+    pickLatestContinueStudy(fallbackContinueStudy, backendContinueStudy)
+  );
   const [accountAvatar, setAccountAvatar] = useState({
     failed: false,
     src: userImage,
   });
-  const challengeGoal = Math.max(aiProgress.challengeGoal, 1);
+  const challengeGoal = Math.max(liveAiProgress.challengeGoal, 1);
   const challengeCompleted = clampCount(
-    aiProgress.challengeCompleted,
+    liveAiProgress.challengeCompleted,
     challengeGoal
   );
   const continuePercent = getPercent(continueStudy.completed, continueStudy.total);
+  const hasContinueProgress = continueStudy.total > 0;
 
   useEffect(() => {
-    setContinueStudy(createContinueStudyFromStorage(fallbackContinueStudy));
-  }, [fallbackContinueStudy]);
+    let cancelled = false;
+    const localContinueStudy = createContinueStudyFromStorage(fallbackContinueStudy);
+    const nextContinueStudy = pickLatestContinueStudy(
+      fallbackContinueStudy,
+      backendContinueStudy,
+      localContinueStudy
+    );
+
+    const syncLocalTimer = window.setTimeout(() => {
+      if (!cancelled) {
+        setContinueStudy(nextContinueStudy);
+      }
+    }, 0);
+
+    async function refreshContinueStudy() {
+      try {
+        const response = await fetch("/api/learning-home/progress", {
+          cache: "no-store",
+          credentials: "same-origin",
+        });
+        if (!response.ok) return;
+
+        const payload = (await response.json()) as unknown;
+        const remoteContinueStudy = isRecord(payload)
+          ? payload.continueStudy
+          : null;
+
+        if (!cancelled) {
+          setContinueStudy(
+            pickLatestContinueStudy(
+              fallbackContinueStudy,
+              backendContinueStudy,
+              localContinueStudy,
+              remoteContinueStudy
+            )
+          );
+        }
+      } catch {
+        // The server snapshot is a progressive enhancement over local progress.
+      }
+    }
+
+    void refreshContinueStudy();
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(syncLocalTimer);
+    };
+  }, [backendContinueStudy, fallbackContinueStudy]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function refreshAiProgress() {
+      try {
+        const response = await fetch("/api/ai-guided-expression/progress", {
+          cache: "no-store",
+          credentials: "same-origin",
+        });
+        if (!response.ok) return;
+
+        const payload = (await response.json()) as unknown;
+        if (!cancelled) {
+          setLiveAiProgress(normalizeAiProgressPayload(payload, aiProgress));
+        }
+      } catch {
+        // Keep the server-rendered value if the live progress endpoint is unavailable.
+      }
+    }
+
+    void refreshAiProgress();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [aiProgress]);
 
   useEffect(() => {
     const identifier = userEmail || userName || "local-user";
@@ -831,18 +1039,26 @@ export default function StartPageClient({
                 <small>{continueStudy.statusLabel}</small>
               </span>
               <span
-                aria-label={`学习进度 ${continueStudy.completed} / ${continueStudy.total} 句`}
+                aria-label={
+                  hasContinueProgress
+                    ? `学习进度 ${continueStudy.completed} / ${continueStudy.total} 句`
+                    : "暂无学习进度"
+                }
                 className={styles.resumeProgressRow}
               >
                 <span className={styles.progressTrack} style={continueProgressStyle}>
                   <span />
                 </span>
                 <small>
-                  {continueStudy.completed} / {continueStudy.total} 句
+                  {hasContinueProgress
+                    ? `${continueStudy.completed} / ${continueStudy.total} 句`
+                    : "暂无进度"}
                 </small>
               </span>
             </span>
-            <span className={styles.resumeButton}>继续练习</span>
+            <span className={styles.resumeButton}>
+              {hasContinueProgress ? "继续练习" : "开始学习"}
+            </span>
           </Link>
         </section>
 
