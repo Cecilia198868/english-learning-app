@@ -169,6 +169,12 @@ const starterPracticeCards: Array<{
   },
 ];
 
+function getPracticeCardTitle(card: { href: string; title: string }) {
+  if (card.href === "/free-study/step-1") return "自由学习";
+
+  return card.title.replace("自由场习", "自由学习");
+}
+
 function clampCount(value: number, max: number) {
   if (!Number.isFinite(value)) return 0;
   return Math.min(Math.max(Math.floor(value), 0), Math.max(max, 0));
@@ -1010,7 +1016,7 @@ export default function StartPageClient({
                   <PracticeIcon type={card.icon} />
                 </span>
                 <span className={styles.practiceCopy}>
-                  <strong>{card.title}</strong>
+                  <strong>{getPracticeCardTitle(card)}</strong>
                   <small>{card.subtitle}</small>
                 </span>
                 <span className={styles.practiceChevron}>
