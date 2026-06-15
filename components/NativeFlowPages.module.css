@@ -1774,12 +1774,13 @@
 
 /* Native Flow learning desk: fixed one-screen study layout. */
 .learnPhone {
+  box-sizing: border-box;
   display: flex;
   height: 100dvh;
   min-height: 100dvh;
   flex-direction: column;
   overflow: hidden;
-  padding: 0 0 calc(72px + env(safe-area-inset-bottom, 0px));
+  padding: 0 0 calc(196px + env(safe-area-inset-bottom, 0px));
   background:
     radial-gradient(circle at 84% 20%, rgba(116, 138, 255, 0.16), transparent 30%),
     linear-gradient(180deg, #f9fcff 0%, #f2f6ff 58%, #ffffff 100%);
@@ -1953,19 +1954,30 @@
 }
 
 .learnPhone .audioControls {
-  flex: 0 0 114px;
+  position: fixed;
+  left: 50%;
+  bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  z-index: 999;
   box-sizing: border-box;
-  height: 108px;
+  width: min(calc(100vw - 28px), 402px);
+  height: 116px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
-  margin: 14px 14px 0;
-  border-radius: 28px 28px 0 0;
-  padding: 10px 24px 8px;
+  margin: 0;
+  border: 1px solid rgba(223, 230, 247, 0.86);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 10px 22px 12px;
+  transform: translateX(-50%);
+  box-shadow: 0 18px 34px rgba(24, 35, 76, 0.12);
 }
 
 .learnPhone .audioControls button {
-  gap: 4px;
+  min-width: 0;
+  gap: 5px;
+  color: #07113a;
   font-size: 0.82rem;
+  line-height: 1.1;
 }
 
 .learnPhone .audioControls button > span {
@@ -2037,8 +2049,7 @@
   }
 
   .learnPhone .audioControls {
-    margin-right: 12px;
-    margin-left: 12px;
+    width: min(calc(100vw - 24px), 382px);
     padding-right: 18px;
     padding-left: 18px;
   }
