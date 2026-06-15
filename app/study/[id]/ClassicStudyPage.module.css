@@ -11090,3 +11090,18 @@
 .classicResultShell .resultBottomButton {
   height: 2.96rem !important;
 }
+
+/* Remove the decorative ribbon and corner wedge from the featured result card. */
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .variantRibbon {
+  display: none !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .expressionSelectArea {
+  padding-left: 0.78rem !important;
+}
+
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .expressionCardFeatured .cornerStar,
+.classicResultShell .classicResultPage.classicPhone.resultPhone.studyPhone .cornerStar {
+  display: none !important;
+  background: none !important;
+}
