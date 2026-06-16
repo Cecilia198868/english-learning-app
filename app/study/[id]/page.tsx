@@ -13,6 +13,7 @@ import PlayIcon from "@/components/PlayIcon";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import { parseTrainingContent, type SentencePair } from "@/lib/training";
 import { playPreRecordedAudio, stopPreRecordedAudio } from "@/lib/preRecordedAudioClient";
+import { playSpeakFlowTts, stopSpeakFlowTts } from "@/lib/speakFlowTtsClient";
 import {
   getClassicSceneAudioUrl,
   type ClassicSceneAudioVariantKey,
@@ -120,6 +121,7 @@ const GUEST_CLASSIC_SENTENCE_LIMIT = 5;
 const CLASSIC_RECORDING_RESTART_DELAY_MS = 240;
 const CLASSIC_RECORDING_STOP_FALLBACK_MS = 900;
 const HAS_CLASSIC_SCENE_PRE_RECORDED_AUDIO = false;
+const CLASSIC_SCENE_TTS_VOICE_ID = "alloy";
 function isClassicSceneLessonId(lessonId: string) {
   return (
     lessonId.startsWith("bank_") ||
@@ -949,6 +951,7 @@ export default function StudyPage() {
     setIsAutoPlaying(false);
     isSequencePlayingRef.current = false;
     setIsSequencePlaying(false);
+    stopSpeakFlowTts();
     stopPreRecordedAudio();
     window.speechSynthesis.cancel();
     clearSequenceTimer();
@@ -1244,6 +1247,18 @@ export default function StudyPage() {
   ) {
     if (!text) {
       if (onEnd) onEnd();
+      return;
+    }
+
+    if (isClassicSceneLessonId(lessonId) && !isMyCourseLesson) {
+      stopPreRecordedAudio();
+      void playSpeakFlowTts({
+        fallbackVoice: getSelectedVoice() || pickPreferredEnglishVoice(voices),
+        onEnd,
+        rate: normalizeSpeechRate(rate),
+        text,
+        voiceId: CLASSIC_SCENE_TTS_VOICE_ID,
+      });
       return;
     }
 
@@ -1633,6 +1648,7 @@ export default function StudyPage() {
 
     return () => {
       window.speechSynthesis.onvoiceschanged = null;
+      stopSpeakFlowTts();
       window.speechSynthesis.cancel();
       stopPreRecordedAudio();
       clearAutoTimer();

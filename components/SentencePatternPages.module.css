@@ -1573,19 +1573,22 @@
 .patternBottomNav {
   position: fixed;
   left: 50%;
-  bottom: max(0.7rem, env(safe-area-inset-bottom, 0px));
+  bottom: 0;
   z-index: 120;
   box-sizing: border-box;
   display: grid;
-  width: min(calc(100% - 1.55rem), 398px);
-  min-height: clamp(3.95rem, 17vw, 4.7rem);
+  width: min(100%, 430px);
+  min-height: calc(clamp(3.95rem, 17vw, 4.7rem) + env(safe-area-inset-bottom, 0px));
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   gap: clamp(0.18rem, 1vw, 0.42rem);
   border: 1px solid rgba(220, 227, 247, 0.92);
-  border-radius: 999px;
+  border-radius: 1.65rem 1.65rem 0 0;
   background: rgba(255, 255, 255, 0.9);
-  padding: clamp(0.38rem, 1.7vw, 0.52rem) clamp(0.82rem, 4.2vw, 1.18rem);
+  padding:
+    clamp(0.38rem, 1.7vw, 0.52rem)
+    clamp(0.82rem, 4.2vw, 1.18rem)
+    calc(clamp(0.38rem, 1.7vw, 0.52rem) + env(safe-area-inset-bottom, 0px));
   box-shadow:
     0 1.05rem 2.4rem rgba(94, 112, 172, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.98);
@@ -2540,7 +2543,7 @@
 .phone:has(.overviewHeader) {
   min-height: 100dvh;
   padding: max(48px, calc(env(safe-area-inset-top, 0px) + 24px)) 21px
-    max(34px, calc(env(safe-area-inset-bottom, 0px) + 28px));
+    calc(112px + env(safe-area-inset-bottom, 0px));
 }
 
 .overviewHeader {
@@ -4944,7 +4947,7 @@
   left: 50% !important;
   right: auto !important;
   bottom: calc(
-    max(0.7rem, env(safe-area-inset-bottom, 0px)) + clamp(3.95rem, 17vw, 4.7rem) + 0.52rem
+    clamp(3.95rem, 17vw, 4.7rem) + env(safe-area-inset-bottom, 0px) + 0.52rem
   ) !important;
   z-index: 119 !important;
   width: min(calc(100vw - 1.55rem), 398px) !important;

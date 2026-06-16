@@ -7,6 +7,7 @@ import {
 
 type PlaySpeakFlowTtsOptions = {
   fallbackVoice?: SpeechSynthesisVoice | null;
+  onEnd?: () => void;
   rate?: number;
   text: string;
   voiceId?: SpeakFlowVoiceId;
@@ -103,6 +104,7 @@ export function preloadSpeakFlowTts({ text, voiceId }: PlaySpeakFlowTtsOptions) 
 
 export function speakWithBrowserFallback({
   fallbackVoice = null,
+  onEnd,
   rate = 1,
   text,
   voiceId = SPEAKFLOW_DEFAULT_VOICE_ID,
@@ -127,6 +129,9 @@ export function speakWithBrowserFallback({
       window.speechSynthesis.getVoices(),
       voiceId
     );
+  utterance.onend = () => {
+    onEnd?.();
+  };
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
@@ -134,6 +139,7 @@ export function speakWithBrowserFallback({
 
 export async function playSpeakFlowTts({
   fallbackVoice = null,
+  onEnd,
   rate = 1,
   text,
   voiceId,
@@ -153,6 +159,7 @@ export async function playSpeakFlowTts({
     fallbackStarted = true;
     speakWithBrowserFallback({
       fallbackVoice,
+      onEnd,
       rate: normalizedRate,
       text: normalizedText,
       voiceId: selectedVoiceId,
@@ -177,6 +184,7 @@ export async function playSpeakFlowTts({
           currentAudioUrl = "";
         }
         currentAudio = null;
+        onEnd?.();
       },
       { once: true }
     );
@@ -187,6 +195,7 @@ export async function playSpeakFlowTts({
     if (!fallbackStarted && playbackRequestId === requestId) {
       speakWithBrowserFallback({
         fallbackVoice,
+        onEnd,
         rate: normalizedRate,
         text: normalizedText,
         voiceId: selectedVoiceId,
