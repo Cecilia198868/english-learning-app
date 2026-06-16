@@ -50,10 +50,12 @@ import {
 } from "@/lib/expressionHighlights";
 import {
   FREE_PRACTICE_DAILY_LIMIT,
+  fetchFreePracticeUsage,
   getFreePracticeUsage,
   hasFreePracticeCompletion,
   isFreePracticeLimitReached,
   recordFreePracticeCompletion,
+  recordFreePracticeCompletionOnServer,
 } from "@/lib/freePracticeLimit";
 import { createLoginUrl, subscriptionCallbackUrl } from "@/lib/loginRedirect";
 import styles from "./ClassicStudyPage.module.css";
@@ -119,7 +121,6 @@ const GUEST_FULL_CLASSIC_LESSON_IDS = new Set([
 ]);
 const GUEST_CLASSIC_SENTENCE_LIMIT = 5;
 const CLASSIC_RECORDING_RESTART_DELAY_MS = 240;
-const CLASSIC_RECORDING_STOP_FALLBACK_MS = 900;
 const HAS_CLASSIC_SCENE_PRE_RECORDED_AUDIO = false;
 const CLASSIC_SCENE_TTS_VOICE_ID = "alloy";
 function isClassicSceneLessonId(lessonId: string) {
@@ -862,6 +863,13 @@ export default function StudyPage() {
 
   const refreshFreePracticeUsageCount = useCallback(() => {
     setFreePracticeUsageCount(getFreePracticeUsage(freePracticeScope).count);
+    void fetchFreePracticeUsage(freePracticeScope)
+      .then((usage) => {
+        setFreePracticeUsageCount(usage.count);
+      })
+      .catch(() => {
+        // Keep local usage as a fallback if the backend is unavailable.
+      });
   }, [freePracticeScope]);
 
   useEffect(() => {
@@ -1948,6 +1956,21 @@ export default function StudyPage() {
     const completionId = getSentenceCompletionId(index);
 
     if (hasFreePracticeCompletion(freePracticeScope, completionId)) return true;
+    try {
+      const serverUsage = await fetchFreePracticeUsage(freePracticeScope);
+      setFreePracticeUsageCount(serverUsage.count);
+
+      if (
+        serverUsage.completedIds.includes(completionId) ||
+        serverUsage.count < FREE_PRACTICE_DAILY_LIMIT
+      ) {
+        return true;
+      }
+    } catch {
+      // Local usage remains the offline fallback.
+      if (!isFreePracticeLimitReached(freePracticeScope)) return true;
+    }
+
     if (!isFreePracticeLimitReached(freePracticeScope)) return true;
 
     try {
@@ -1985,11 +2008,20 @@ export default function StudyPage() {
   function markCurrentSentenceCompleted(index = currentIndex) {
     if (isAccountPro) return;
 
+    const completionId = getSentenceCompletionId(index);
     const result = recordFreePracticeCompletion(
       freePracticeScope,
-      getSentenceCompletionId(index)
+      completionId
     );
     setFreePracticeUsageCount(result.count);
+
+    void recordFreePracticeCompletionOnServer(freePracticeScope, completionId)
+      .then((serverResult) => {
+        setFreePracticeUsageCount(serverResult.count);
+      })
+      .catch(() => {
+        // The local record is enough for the current session if the backend fails.
+      });
   }
 
   function getRecognitionConstructor() {
@@ -2022,21 +2054,11 @@ export default function StudyPage() {
     clearSpeechRecognitionTimers();
     const recognition = recognitionRef.current;
 
-    if (!recognition) {
-      finishEnglishRecognition(speechBufferRef.current, currentIndexRef.current);
-      return;
-    }
-
     try {
-      recognition.stop();
-    } catch {
-      finishEnglishRecognition(speechBufferRef.current, currentIndexRef.current);
-      return;
-    }
+      recognition?.stop();
+    } catch {}
 
-    speechStopFallbackTimerRef.current = window.setTimeout(() => {
-      finishEnglishRecognition(speechBufferRef.current, currentIndexRef.current);
-    }, CLASSIC_RECORDING_STOP_FALLBACK_MS);
+    finishEnglishRecognition(speechBufferRef.current, currentIndexRef.current);
   }
 
   function handleEnglishPracticeAction() {

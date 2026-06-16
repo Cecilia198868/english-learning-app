@@ -49,10 +49,12 @@ import {
 import {
   FREE_PRACTICE_DAILY_LIMIT,
   type FreePracticeScope,
+  fetchFreePracticeUsage,
   getFreePracticeUsage,
   hasFreePracticeCompletion,
   isFreePracticeLimitReached,
   recordFreePracticeCompletion,
+  recordFreePracticeCompletionOnServer,
 } from "@/lib/freePracticeLimit";
 import type { AppLanguage } from "@/lib/i18n";
 import { createLoginUrl, subscriptionCallbackUrl } from "@/lib/loginRedirect";
@@ -3566,6 +3568,13 @@ function SpeakEnglishClient() {
     setFreePracticeUsageCount(
       getFreePracticeUsage(activeFreePracticeScope).count
     );
+    void fetchFreePracticeUsage(activeFreePracticeScope)
+      .then((usage) => {
+        setFreePracticeUsageCount(usage.count);
+      })
+      .catch(() => {
+        // Local usage remains the fallback when the backend is unavailable.
+      });
   }, [activeFreePracticeScope]);
 
   useEffect(() => {
@@ -4069,15 +4078,28 @@ function SpeakEnglishClient() {
   }
 
   function recordFreePracticeCompletionForFreeAccount() {
+    const scope = activeFreePracticeScope;
+    const completionId = freePracticeRoundIdRef.current;
     const result = recordFreePracticeCompletion(
-      activeFreePracticeScope,
-      freePracticeRoundIdRef.current
+      scope,
+      completionId
     );
     setFreePracticeUsageCount(result.count);
 
     if (result.didRecord && result.limitReached) {
       showFreePracticeLimitAfterCompletion();
     }
+
+    void recordFreePracticeCompletionOnServer(scope, completionId)
+      .then((serverResult) => {
+        setFreePracticeUsageCount(serverResult.count);
+        if (serverResult.didRecord && serverResult.limitReached) {
+          showFreePracticeLimitAfterCompletion();
+        }
+      })
+      .catch(() => {
+        // The local guard still prevents unlimited retries if the request fails.
+      });
   }
 
   function openProFromFreePracticeLimit() {
@@ -4113,6 +4135,21 @@ function SpeakEnglishClient() {
   ) {
     if (hasFreePracticeCompletion(activeFreePracticeScope, completionId)) {
       return true;
+    }
+
+    try {
+      const serverUsage = await fetchFreePracticeUsage(activeFreePracticeScope);
+      setFreePracticeUsageCount(serverUsage.count);
+
+      if (
+        serverUsage.completedIds.includes(completionId) ||
+        serverUsage.count < FREE_PRACTICE_DAILY_LIMIT
+      ) {
+        return true;
+      }
+    } catch {
+      // Fall back to local usage when the backend is temporarily unreachable.
+      if (!isFreePracticeLimitReached(activeFreePracticeScope)) return true;
     }
 
     if (!isFreePracticeLimitReached(activeFreePracticeScope)) return true;
@@ -5098,14 +5135,12 @@ function SpeakEnglishClient() {
     }
 
     clearFreeStudyRouteState();
-    handledStepRouteRef.current = "";
+    handledStepRouteRef.current = "/free-study/step-1";
+    returnToFreeLearningHome();
 
     if (pathname !== "/free-study/step-1") {
       router.push("/free-study/step-1");
-      return;
     }
-
-    returnToFreeLearningHome();
   }
 
   function finishRecognition(finalTranscript = speechBufferRef.current.trim()) {
@@ -5221,13 +5256,42 @@ function SpeakEnglishClient() {
     return true;
   }
 
+  function finishBufferedRecognitionFromManualStop(expectedStage: PracticeStage) {
+    if (
+      activeRecognitionStageRef.current !== expectedStage ||
+      !shouldCommitSpeechRef.current
+    ) {
+      return false;
+    }
+
+    const finalTranscript = speechBufferRef.current.trim();
+    if (!finalTranscript) {
+      return false;
+    }
+
+    speechStopRequestedRef.current = true;
+
+    try {
+      recognitionRef.current?.stop();
+    } catch {
+      // The buffered transcript is enough; stale recognition callbacks are ignored.
+    }
+
+    finishRecognition(finalTranscript);
+    return true;
+  }
+
   function handlePrimaryPracticeAction() {
     if (!isListening && (isPrimingNativeSpeech || isPrimingEnglishSpeech)) {
       return;
     }
 
     if (isListening) {
-      if (finishBufferedEnglishRecognition()) {
+      if (
+        finishBufferedRecognitionFromManualStop(
+          activeRecognitionStageRef.current || "english"
+        )
+      ) {
         return;
       }
 
@@ -5254,6 +5318,8 @@ function SpeakEnglishClient() {
     if (isListening || recognitionRef.current) {
       if (activeRecognitionStageRef.current !== "native") return;
 
+      if (finishBufferedRecognitionFromManualStop("native")) return;
+
       stopRecognition({ forceUiReset: true });
       return;
     }
@@ -5269,9 +5335,7 @@ function SpeakEnglishClient() {
     if (isListening || recognitionRef.current) {
       if (activeRecognitionStageRef.current !== "english") return;
 
-      if (finishBufferedEnglishRecognition()) {
-        return;
-      }
+      if (finishBufferedRecognitionFromManualStop("english")) return;
 
       stopRecognition({ forceUiReset: true });
       return;

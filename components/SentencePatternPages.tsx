@@ -52,7 +52,6 @@ type SentencePatternProgressApiPayload = SentencePatternProgressSnapshot & {
 };
 
 const RESTART_AFTER_NO_SPEECH_MS = 240;
-const MANUAL_STOP_FALLBACK_MS = 900;
 
 function isInteractiveCardTarget(
   target: EventTarget | null,
@@ -979,21 +978,11 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
     clearStopFallbackTimer();
     const recognition = recognitionRef.current;
 
-    if (!recognition) {
-      finishRecording(transcriptRef.current);
-      return;
-    }
-
     try {
-      recognition.stop();
-    } catch {
-      finishRecording(transcriptRef.current);
-      return;
-    }
+      recognition?.stop();
+    } catch {}
 
-    stopFallbackTimerRef.current = window.setTimeout(() => {
-      finishRecording(transcriptRef.current);
-    }, MANUAL_STOP_FALLBACK_MS);
+    finishRecording(transcriptRef.current);
   }
 
   function startRecording() {

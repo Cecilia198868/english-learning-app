@@ -9,16 +9,26 @@ export type FreePracticeScope =
 
 const FREE_PRACTICE_USAGE_KEY_PREFIX = "speakflow-free-practice-usage";
 
-type FreePracticeUsage = {
+export type FreePracticeUsage = {
   completedIds: string[];
   count: number;
   date: string;
 };
 
-type RecordFreePracticeResult = {
+export type RecordFreePracticeResult = {
   count: number;
   didRecord: boolean;
   limitReached: boolean;
+};
+
+export type ServerFreePracticeUsage = FreePracticeUsage & {
+  limit: number;
+  limitReached: boolean;
+};
+
+type FreePracticeUsageApiResponse = {
+  didRecord?: boolean;
+  usage?: Partial<ServerFreePracticeUsage>;
 };
 
 function getTodayKey() {
@@ -80,6 +90,46 @@ function saveFreePracticeUsage(scope: FreePracticeScope, usage: FreePracticeUsag
   }
 }
 
+function normalizeUsage(rawUsage: Partial<FreePracticeUsage> | undefined) {
+  const today = getTodayKey();
+  if (!rawUsage || rawUsage.date !== today) return createEmptyUsage();
+
+  const completedIds = Array.isArray(rawUsage.completedIds)
+    ? rawUsage.completedIds.filter((id): id is string => typeof id === "string")
+    : [];
+  const count =
+    typeof rawUsage.count === "number" && Number.isFinite(rawUsage.count)
+      ? Math.min(Math.max(rawUsage.count, completedIds.length), FREE_PRACTICE_DAILY_LIMIT)
+      : Math.min(completedIds.length, FREE_PRACTICE_DAILY_LIMIT);
+
+  return {
+    completedIds,
+    count,
+    date: today,
+  };
+}
+
+function normalizeServerUsage(
+  payload: FreePracticeUsageApiResponse
+): ServerFreePracticeUsage {
+  const usage = normalizeUsage(payload.usage);
+
+  return {
+    ...usage,
+    limit: FREE_PRACTICE_DAILY_LIMIT,
+    limitReached: usage.count >= FREE_PRACTICE_DAILY_LIMIT,
+  };
+}
+
+export function syncFreePracticeUsage(
+  scope: FreePracticeScope,
+  usage: Partial<FreePracticeUsage>
+) {
+  const nextUsage = normalizeUsage(usage);
+  saveFreePracticeUsage(scope, nextUsage);
+  return nextUsage;
+}
+
 export function hasFreePracticeCompletion(
   scope: FreePracticeScope,
   completionId: string
@@ -128,5 +178,50 @@ export function recordFreePracticeCompletion(
     count: nextUsage.count,
     didRecord: true,
     limitReached: nextUsage.count >= FREE_PRACTICE_DAILY_LIMIT,
+  };
+}
+
+export async function fetchFreePracticeUsage(scope: FreePracticeScope) {
+  const response = await fetch(
+    `/api/free-practice/usage?scope=${encodeURIComponent(scope)}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Unable to load free practice usage");
+  }
+
+  const payload = (await response.json()) as FreePracticeUsageApiResponse;
+  const usage = normalizeServerUsage(payload);
+  syncFreePracticeUsage(scope, usage);
+  return usage;
+}
+
+export async function recordFreePracticeCompletionOnServer(
+  scope: FreePracticeScope,
+  completionId: string
+): Promise<RecordFreePracticeResult & { usage: ServerFreePracticeUsage }> {
+  const response = await fetch("/api/free-practice/usage", {
+    body: JSON.stringify({ completionId, scope }),
+    cache: "no-store",
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error("Unable to record free practice usage");
+  }
+
+  const payload = (await response.json()) as FreePracticeUsageApiResponse;
+  const usage = normalizeServerUsage(payload);
+  syncFreePracticeUsage(scope, usage);
+
+  return {
+    count: usage.count,
+    didRecord: payload.didRecord === true,
+    limitReached: usage.limitReached,
+    usage,
   };
 }
