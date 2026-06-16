@@ -12,8 +12,12 @@ import {
 export type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
 
 export type StoredUser = {
+  displayName?: string;
   email: string;
   passwordHash: string;
+  provider?: string;
+  providerAccountId?: string;
+  userId?: string;
   createdAt: string;
   role?: UserRole;
   subscriptionStatus?: SubscriptionStatus;
@@ -34,15 +38,45 @@ export type UserSubscriptionUpdate = {
 type ProfileRow = {
   cancel_at_period_end?: boolean | null;
   current_period_end?: string | null;
+  display_name?: string | null;
   email: string;
+  provider?: string | null;
+  provider_account_id?: string | null;
   role?: UserRole | null;
   stripe_customer_id?: string | null;
   stripe_subscription_id?: string | null;
   subscription_status?: SubscriptionStatus | null;
+  user_id?: string | null;
+};
+
+type OAuthIdentityRow = {
+  display_name?: string | null;
+  email: string;
+  provider: string;
+  provider_account_id: string;
+  user_id: string;
+};
+
+type LocalOAuthIdentity = {
+  createdAt: string;
+  displayName: string;
+  email: string;
+  provider: string;
+  providerAccountId: string;
+  updatedAt: string;
+  userId: string;
+};
+
+export type OAuthUserProfileInput = {
+  displayName?: string | null;
+  email?: string | null;
+  provider: string;
+  providerAccountId: string;
 };
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const USERS_FILE = path.join(DATA_DIR, "users.json");
+const OAUTH_IDENTITIES_FILE = path.join(DATA_DIR, "oauth-identities.json");
 
 function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
@@ -62,12 +96,67 @@ function profileToStoredUser(profile: ProfileRow): StoredUser {
     cancelAtPeriodEnd: Boolean(profile.cancel_at_period_end),
     createdAt: "",
     currentPeriodEnd: profile.current_period_end || undefined,
+    displayName: profile.display_name || undefined,
     email: normalizeEmail(profile.email),
     passwordHash: "",
+    provider: profile.provider || undefined,
+    providerAccountId: profile.provider_account_id || undefined,
     role: getEffectiveUserRole(profile.email, profile.role),
     stripeCustomerId: profile.stripe_customer_id || undefined,
     stripeSubscriptionId: profile.stripe_subscription_id || undefined,
     subscriptionStatus: normalizeSubscriptionStatus(profile.subscription_status),
+    userId: profile.user_id || undefined,
+  };
+}
+
+function normalizeProvider(provider: string) {
+  return provider.trim().toLowerCase();
+}
+
+function normalizeProviderAccountId(providerAccountId: string) {
+  return providerAccountId.trim();
+}
+
+function buildOAuthUserId(provider: string, providerAccountId: string) {
+  return `${normalizeProvider(provider)}:${normalizeProviderAccountId(providerAccountId)}`;
+}
+
+function providerProfileEmail(provider: string, providerAccountId: string) {
+  const safeProvider = normalizeProvider(provider).replace(/[^a-z0-9]+/g, "-");
+  const safeAccountId = normalizeProviderAccountId(providerAccountId)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 120);
+
+  return `${safeProvider || "oauth"}-${safeAccountId || "user"}@oauth.speakflow.local`;
+}
+
+function normalizeOAuthDisplayName(
+  displayName: string | null | undefined,
+  email: string,
+  provider: string
+) {
+  const normalizedDisplayName = displayName?.trim();
+  if (normalizedDisplayName) return normalizedDisplayName;
+
+  if (!email.endsWith("@oauth.speakflow.local")) {
+    return email.split("@")[0] || email;
+  }
+
+  return provider === "apple" ? "Apple 用户" : "OAuth 用户";
+}
+
+function identityRowToStoredUser(row: OAuthIdentityRow): StoredUser {
+  return {
+    createdAt: "",
+    displayName: row.display_name || undefined,
+    email: normalizeEmail(row.email),
+    passwordHash: "",
+    provider: row.provider,
+    providerAccountId: row.provider_account_id,
+    subscriptionStatus: "free",
+    userId: row.user_id,
   };
 }
 
@@ -238,6 +327,228 @@ export async function loadUsers() {
   } catch {
     return [];
   }
+}
+
+export async function ensureOAuthUserProfile({
+  displayName,
+  email,
+  provider,
+  providerAccountId,
+}: OAuthUserProfileInput) {
+  const normalizedProvider = normalizeProvider(provider);
+  const normalizedProviderAccountId =
+    normalizeProviderAccountId(providerAccountId);
+
+  if (!normalizedProvider || !normalizedProviderAccountId) {
+    throw new Error("INVALID_OAUTH_IDENTITY");
+  }
+
+  const existingIdentity = await findSupabaseOAuthIdentity(
+    normalizedProvider,
+    normalizedProviderAccountId
+  ).catch(() => null);
+  const normalizedEmail = normalizeEmail(
+    existingIdentity?.email ||
+      email ||
+      providerProfileEmail(normalizedProvider, normalizedProviderAccountId)
+  );
+
+  if (!normalizedEmail || !normalizedEmail.includes("@")) {
+    throw new Error("INVALID_EMAIL");
+  }
+
+  const resolvedDisplayName = normalizeOAuthDisplayName(
+    displayName || existingIdentity?.displayName,
+    normalizedEmail,
+    normalizedProvider
+  );
+  const userId =
+    existingIdentity?.userId ||
+    buildOAuthUserId(normalizedProvider, normalizedProviderAccountId);
+
+  try {
+    return await upsertSupabaseOAuthProfile({
+      displayName: resolvedDisplayName,
+      email: normalizedEmail,
+      provider: normalizedProvider,
+      providerAccountId: normalizedProviderAccountId,
+      userId,
+    });
+  } catch {
+    return ensureLocalOAuthUserProfile({
+      displayName: resolvedDisplayName,
+      email: normalizedEmail,
+      provider: normalizedProvider,
+      providerAccountId: normalizedProviderAccountId,
+    });
+  }
+}
+
+async function ensureOAuthIdentityStore() {
+  await mkdir(DATA_DIR, { recursive: true });
+
+  try {
+    await readFile(OAUTH_IDENTITIES_FILE, "utf8");
+  } catch {
+    await writeFile(OAUTH_IDENTITIES_FILE, "[]", "utf8");
+  }
+}
+
+async function loadLocalOAuthIdentities() {
+  await ensureOAuthIdentityStore();
+  const raw = await readFile(OAUTH_IDENTITIES_FILE, "utf8");
+
+  try {
+    const parsed = JSON.parse(raw) as LocalOAuthIdentity[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+async function saveLocalOAuthIdentities(identities: LocalOAuthIdentity[]) {
+  await ensureOAuthIdentityStore();
+  await writeFile(
+    OAUTH_IDENTITIES_FILE,
+    JSON.stringify(identities, null, 2),
+    "utf8"
+  );
+}
+
+async function findSupabaseOAuthIdentity(
+  provider: string,
+  providerAccountId: string
+) {
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("user_auth_identities")
+    .select("user_id, email, display_name, provider, provider_account_id")
+    .eq("provider", provider)
+    .eq("provider_account_id", providerAccountId)
+    .maybeSingle<OAuthIdentityRow>();
+
+  if (error) {
+    throw error;
+  }
+
+  return data ? identityRowToStoredUser(data) : null;
+}
+
+async function upsertSupabaseOAuthProfile({
+  displayName,
+  email,
+  provider,
+  providerAccountId,
+  userId,
+}: {
+  displayName: string;
+  email: string;
+  provider: string;
+  providerAccountId: string;
+  userId: string;
+}) {
+  const supabase = getSupabaseAdmin();
+  const { error: profileError } = await supabase
+    .from("profiles")
+    .upsert(
+      {
+        display_name: displayName,
+        email,
+        provider,
+        provider_account_id: providerAccountId,
+        user_id: userId,
+      },
+      { onConflict: "email" }
+    );
+
+  if (profileError) {
+    throw profileError;
+  }
+
+  const { error: identityError } = await supabase
+    .from("user_auth_identities")
+    .upsert(
+      {
+        display_name: displayName,
+        email,
+        provider,
+        provider_account_id: providerAccountId,
+        user_id: userId,
+      },
+      { onConflict: "provider,provider_account_id" }
+    );
+
+  if (identityError) {
+    throw identityError;
+  }
+
+  return {
+    createdAt: "",
+    displayName,
+    email,
+    passwordHash: "",
+    provider,
+    providerAccountId,
+    role: await getUserRoleByEmail(email),
+    subscriptionStatus: "free" as SubscriptionStatus,
+    userId,
+  };
+}
+
+async function ensureLocalOAuthUserProfile({
+  displayName,
+  email,
+  provider,
+  providerAccountId,
+}: {
+  displayName: string;
+  email: string;
+  provider: string;
+  providerAccountId: string;
+}) {
+  const identities = await loadLocalOAuthIdentities();
+  const existingIdentity =
+    identities.find(
+      (identity) =>
+        identity.provider === provider &&
+        identity.providerAccountId === providerAccountId
+    ) || null;
+  const now = new Date().toISOString();
+  const identity: LocalOAuthIdentity = existingIdentity
+    ? {
+        ...existingIdentity,
+        displayName: displayName || existingIdentity.displayName,
+        email: existingIdentity.email || email,
+        updatedAt: now,
+      }
+    : {
+        createdAt: now,
+        displayName,
+        email,
+        provider,
+        providerAccountId,
+        updatedAt: now,
+        userId: buildOAuthUserId(provider, providerAccountId),
+      };
+
+  if (existingIdentity) {
+    const index = identities.indexOf(existingIdentity);
+    identities[index] = identity;
+  } else {
+    identities.push(identity);
+  }
+
+  await saveLocalOAuthIdentities(identities);
+  const user = await ensureLocalPasswordlessUser(identity.email);
+
+  return {
+    ...user,
+    displayName: identity.displayName,
+    email: identity.email,
+    provider,
+    providerAccountId,
+    userId: identity.userId,
+  };
 }
 
 export async function findUserByEmail(email: string) {

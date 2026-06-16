@@ -21037,3 +21037,52 @@ body .sf-free-result-emphasis {
   hyphens: none !important;
   text-wrap: normal !important;
 }
+
+/* Final guard for the free-study result CTA: keep the arrow small and text white. */
+body .sf-free-result-continue {
+  display: inline-flex !important;
+  height: var(--sf-free-result-cta-height, 4.1rem) !important;
+  min-height: var(--sf-free-result-cta-height, 4.1rem) !important;
+  max-height: var(--sf-free-result-cta-height, 4.1rem) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.62rem !important;
+  overflow: hidden !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+}
+
+body .sf-free-result-continue > svg,
+body .sf-free-result-continue .sf-free-result-continue-icon {
+  display: block !important;
+  flex: 0 0 auto !important;
+  width: 1.24rem !important;
+  height: 1.24rem !important;
+  max-width: 1.24rem !important;
+  max-height: 1.24rem !important;
+  color: #ffffff !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2.8 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+body .sf-free-result-continue > svg path,
+body .sf-free-result-continue .sf-free-result-continue-icon path {
+  fill: none !important;
+  stroke: currentColor !important;
+}
+
+body .sf-free-result-continue > span {
+  display: inline-flex !important;
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: calc(100% - 2.2rem) !important;
+  align-items: center !important;
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}

@@ -99,9 +99,28 @@ function PlayGlyph() {
 
 function ContinueArrowGlyph() {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <path d="M6 16h19" />
-      <path d="m18 8 8 8-8 8" />
+    <svg
+      className="sf-free-result-continue-icon"
+      viewBox="0 0 24 24"
+      width="22"
+      height="22"
+      aria-hidden="true"
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{
+        color: "#ffffff",
+        display: "block",
+        flex: "0 0 auto",
+        height: "1.28rem",
+        width: "1.28rem",
+      }}
+    >
+      <path d="M5 12h12" />
+      <path d="m13 6 6 6-6 6" />
     </svg>
   );
 }
@@ -775,12 +794,14 @@ export default function FreeStudyPageFiveTop({
         }
 
         .sf-free-result-continue {
-          display: flex;
+          display: inline-flex !important;
           width: 100%;
+          height: var(--sf-free-result-cta-height);
           min-height: var(--sf-free-result-cta-height);
-          align-items: center;
-          justify-content: center;
-          gap: clamp(0.58rem, 2.8vw, 0.86rem);
+          max-height: var(--sf-free-result-cta-height);
+          align-items: center !important;
+          justify-content: center !important;
+          gap: clamp(0.5rem, 2.4vw, 0.72rem) !important;
           border: 0;
           border-radius: clamp(1rem, 4.7vw, 1.28rem);
           background: linear-gradient(100deg, #7b55ff 0%, #6239e9 54%, #4d32d9 100%);
@@ -794,6 +815,7 @@ export default function FreeStudyPageFiveTop({
           letter-spacing: 0;
           white-space: nowrap;
           cursor: pointer;
+          overflow: hidden;
           -webkit-tap-highlight-color: transparent;
         }
 
@@ -806,26 +828,45 @@ export default function FreeStudyPageFiveTop({
           outline-offset: 3px;
         }
 
-        .sf-free-result-continue svg,
-        .sf-free-result-continue :global(svg) {
-          width: clamp(1.35rem, 5.8vw, 1.7rem);
-          height: clamp(1.35rem, 5.8vw, 1.7rem);
-          fill: none;
-          stroke: currentColor;
-          stroke-width: 3.6;
-          stroke-linecap: round;
-          stroke-linejoin: round;
+        .sf-free-result-continue .sf-free-result-continue-icon,
+        .sf-free-result-continue :global(.sf-free-result-continue-icon) {
+          display: block !important;
+          flex: 0 0 auto !important;
+          width: clamp(1.08rem, 4.8vw, 1.34rem) !important;
+          height: clamp(1.08rem, 4.8vw, 1.34rem) !important;
+          max-width: clamp(1.08rem, 4.8vw, 1.34rem) !important;
+          max-height: clamp(1.08rem, 4.8vw, 1.34rem) !important;
+          color: #ffffff !important;
+          fill: none !important;
+          stroke: currentColor !important;
+          stroke-width: 2.8 !important;
+          stroke-linecap: round !important;
+          stroke-linejoin: round !important;
+        }
+
+        .sf-free-result-continue .sf-free-result-continue-icon path,
+        .sf-free-result-continue :global(.sf-free-result-continue-icon path) {
+          fill: none !important;
+          stroke: currentColor !important;
         }
 
         .sf-free-result-continue span,
-        .sf-free-result-continue svg,
-        .sf-free-result-continue :global(svg) {
+        .sf-free-result-continue .sf-free-result-continue-icon,
+        .sf-free-result-continue :global(.sf-free-result-continue-icon) {
           color: #ffffff !important;
         }
 
         .sf-free-result-continue span {
+          display: inline-flex !important;
+          flex: 0 1 auto;
+          min-width: 0;
+          width: auto !important;
+          max-width: calc(100% - 2.2rem);
+          align-items: center;
           color: #ffffff !important;
           font-weight: 950;
+          line-height: 1;
+          white-space: nowrap;
         }
 
         .sf-free-result-help-backdrop {

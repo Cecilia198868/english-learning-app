@@ -9,6 +9,7 @@ import {
   normalizePasswordlessTarget,
 } from "@/lib/passwordlessCodes";
 import {
+  ensureOAuthUserProfile,
   ensurePasswordlessUserProfile,
   getUserRoleByEmail,
 } from "@/lib/userStore";
@@ -82,6 +83,36 @@ function resolveUserEmail(
   }
 
   return "";
+}
+
+async function resolveOAuthUser({
+  account,
+  user,
+}: {
+  account: {
+    provider?: string;
+    providerAccountId?: string;
+    type?: string;
+  } | null;
+  user?: {
+    email?: string | null;
+    name?: string | null;
+  };
+}) {
+  if (
+    account?.type !== "oauth" ||
+    !account.provider ||
+    !account.providerAccountId
+  ) {
+    return null;
+  }
+
+  return ensureOAuthUserProfile({
+    displayName: user?.name,
+    email: user?.email,
+    provider: account.provider,
+    providerAccountId: account.providerAccountId,
+  });
 }
 
 function WechatProvider(options: {
@@ -252,6 +283,15 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ account, user }) {
+      const oauthUser = await resolveOAuthUser({ account, user });
+
+      if (oauthUser) {
+        user.email = oauthUser.email;
+        user.name = oauthUser.displayName || oauthUser.email;
+        user.id = oauthUser.userId || oauthUser.email;
+        return true;
+      }
+
       const email = resolveUserEmail(
         user.email,
         account?.provider,
@@ -265,6 +305,34 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async jwt({ account, token, user }) {
+      const oauthUser = await resolveOAuthUser({
+        account,
+        user:
+          user || token.email
+            ? {
+                email:
+                  typeof user?.email === "string"
+                    ? user.email
+                    : typeof token.email === "string"
+                      ? token.email
+                      : null,
+                name:
+                  typeof user?.name === "string"
+                    ? user.name
+                    : typeof token.name === "string"
+                      ? token.name
+                      : null,
+              }
+            : undefined,
+      });
+
+      if (oauthUser) {
+        token.email = oauthUser.email;
+        token.name = oauthUser.displayName || oauthUser.email;
+        token.provider = oauthUser.provider;
+        token.userId = oauthUser.userId;
+      }
+
       const email = resolveUserEmail(
         typeof user?.email === "string" ? user.email : token.email,
         account?.provider,
@@ -286,6 +354,14 @@ export const authOptions: NextAuthOptions = {
         session.user.image =
           typeof token.picture === "string" ? token.picture : "";
         session.user.role = token.role === "admin" ? "admin" : "user";
+        session.user.displayName =
+          typeof token.name === "string" ? token.name : session.user.name || "";
+        session.user.provider =
+          typeof token.provider === "string" ? token.provider : undefined;
+        session.user.userId =
+          typeof token.userId === "string"
+            ? token.userId
+            : session.user.email || "";
       }
 
       return session;
