@@ -547,6 +547,9 @@ export function NativeFlowLearningPage({
   const previousId = Math.max(1, sentenceId - 1);
   const nextId = Math.min(level.totalSentences, sentenceId + 1);
   const progressPercent = Math.max(2, Math.round((sentenceId / level.totalSentences) * 100));
+  const textLength = sentence.english.length + sentence.chinese.length;
+  const sentenceDensity =
+    textLength > 240 ? "long" : textLength > 160 ? "medium" : "normal";
   const playAudio = (playbackRate = 1) => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -600,7 +603,7 @@ export function NativeFlowLearningPage({
         </span>
       </section>
 
-      <article className={styles.sentenceCard}>
+      <article className={styles.sentenceCard} data-density={sentenceDensity}>
         <span className={styles.dailyCount}>每日 20 句</span>
         <span className={styles.dayPill}>
           Day {sentence.day} · 句子 {sentence.daySentence}
