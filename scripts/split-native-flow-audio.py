@@ -3,6 +3,7 @@ import math
 import re
 import shutil
 import subprocess
+import sys
 from collections import OrderedDict
 from pathlib import Path
 
@@ -294,10 +295,14 @@ def split_group(level_id: str, source_audio: str, sentences: list[dict]) -> list
 
 def main() -> None:
     data = load_course_data()
+    selected_levels = set(sys.argv[1:])
     report = {}
     total = 0
 
     for level_id, sentences in data.items():
+        if selected_levels and level_id not in selected_levels:
+            continue
+
         groups: OrderedDict[str, list[dict]] = OrderedDict()
         for sentence in sentences:
             groups.setdefault(sentence["sourceAudio"], []).append(sentence)

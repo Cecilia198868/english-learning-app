@@ -1124,7 +1124,7 @@ export default function StudyPage() {
   }
 
   function handleWordClick(word: string, sourceSentence: string) {
-    const phrase = word.trim();
+    const phrase = word.replace(/^[^A-Za-z]+|[^A-Za-z]+$/g, "").trim();
     if (!phrase) return;
 
     stopSequencePlayback();
@@ -1181,8 +1181,16 @@ export default function StudyPage() {
           exampleZh: wordDefinition.exampleZh,
           sourceSentence,
         });
+      } else if (!isWord) {
+        updateVocabularyWord(pendingExpression.phrase, {
+          meaning: pendingExpression.meaning,
+          partOfSpeech: "phrase",
+          example: sourceSentence,
+          sourceSentence,
+        });
       }
 
+      void flushVocabularyCloudSync();
       closeExpressionModal();
       setMessage(
         result.reason === "DUPLICATE"
@@ -1210,6 +1218,7 @@ export default function StudyPage() {
         : result.word.exampleZh,
       sourceSentence,
     });
+    void flushVocabularyCloudSync();
     closeExpressionModal();
     setMessage(isWord ? "已存入表达库" : "已存入新表达");
   }
@@ -2554,33 +2563,18 @@ export default function StudyPage() {
 
     return segments.map((segment, index) =>
       segment.type === "expression" ? (
-        <span
+        <button
           key={`${segment.value}-${index}`}
-          role="button"
-          tabIndex={0}
+          type="button"
           onClick={(event) => {
             event.stopPropagation();
             handleExpressionClick(segment.expression, text);
           }}
-          onKeyDown={(event) => {
-            if (
-              event.target === event.currentTarget &&
-              (event.key === "Enter" || event.key === " ")
-            ) {
-              event.preventDefault();
-              event.stopPropagation();
-              handleExpressionClick(segment.expression, text);
-            }
-          }}
           className={styles.highlightedExpressionToken}
           aria-label={`收藏表达 ${segment.value}`}
         >
-          {renderClassicWordTokens(
-            segment.value,
-            text,
-            `classic-expression-${index}`
-          )}
-        </span>
+          {segment.value}
+        </button>
       ) : (
         <span key={`${segment.value}-${index}`}>
           {renderClassicWordTokens(
@@ -3237,6 +3231,38 @@ export default function StudyPage() {
         </nav>
 
         {renderClassicHelpModal()}
+
+        {pendingExpression ? (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--overlay-bg)] p-4 backdrop-blur-[10px]">
+            <div className="w-full max-w-[390px] rounded-[30px] border border-[var(--border-color)] bg-[var(--card-bg-solid)] p-6 text-[var(--text-primary)] shadow-[0_28px_80px_var(--shadow-color)]">
+              <h2 className="text-[1.6rem] font-extrabold">
+                {pendingExpression.meaning}
+              </h2>
+              <p className="mt-5 rounded-[20px] border border-[var(--border-color)] bg-[var(--card-bg)] px-5 py-4 text-[1.65rem] font-extrabold text-[var(--text-primary)] shadow-[inset_0_1px_0_var(--theme-inset)]">
+                {pendingExpression.phrase}
+              </p>
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={handleConfirmAddExpression}
+                  disabled={isSavingExpression}
+                  className="rounded-[18px] bg-[var(--accent-primary)] px-4 py-4 text-[1.08rem] font-extrabold text-white shadow-[0_12px_28px_var(--shadow-color)] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {pendingExpression.kind === "word"
+                    ? "➕ 收藏单词"
+                    : "➕ 收藏表达"}
+                </button>
+                <button
+                  type="button"
+                  onClick={closeExpressionModal}
+                  className="rounded-[18px] border border-[var(--border-color)] bg-[var(--button-bg)] px-4 py-4 text-[1.08rem] font-extrabold text-[var(--button-text)] hover:bg-[var(--chip-bg)]"
+                >
+                  取消
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
 
         {showFollowReadModal ? (
           <div className={styles.followModalBackdrop} role="presentation">

@@ -245,6 +245,10 @@
   --flow-accent-2: #8d6bff;
 }
 
+.simpleLifeCard {
+  cursor: pointer;
+}
+
 .levelArt {
   display: grid;
   width: 76px;
@@ -1516,8 +1520,8 @@
 .menuPhone .menuHero {
   display: grid;
   grid-template-columns: minmax(0, 50%) minmax(0, 1fr);
-  min-height: 210px;
-  margin-top: 18px;
+  min-height: 198px;
+  margin-top: 16px;
   align-items: start;
 }
 
@@ -1572,16 +1576,16 @@
 }
 
 .menuPhone .levelCard {
-  grid-template-columns: 70px minmax(0, 1fr) 44px;
-  gap: 10px;
-  min-height: 108px;
+  grid-template-columns: 68px minmax(0, 1fr) 42px;
+  gap: 9px;
+  min-height: 104px;
   border-radius: 18px;
   padding: 9px 12px;
 }
 
 .menuPhone .levelArt {
-  width: 68px;
-  height: 68px;
+  width: 66px;
+  height: 66px;
   border-radius: 18px;
 }
 
@@ -1634,18 +1638,22 @@
 }
 
 .menuPhone .levelChevron {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
+}
+
+.menuPhone .simpleLifeCard .levelCopy strong {
+  font-size: clamp(0.92rem, 3.72vw, 1.08rem);
 }
 
 .menuPhone .totalCard {
   position: relative;
   grid-template-columns: 46px minmax(0, 1fr) 62px;
   gap: 9px;
-  min-height: 72px;
-  margin-top: 10px;
+  min-height: 68px;
+  margin-top: 9px;
   border-radius: 18px;
-  padding: 10px 13px;
+  padding: 9px 13px;
   overflow: hidden;
 }
 
@@ -1788,7 +1796,7 @@
 
 .learnPhone .learnHeader {
   display: grid;
-  flex: 0 0 98px;
+  flex: 0 0 90px;
   grid-template-columns: 54px minmax(0, 1fr) 54px;
   align-items: center;
   gap: 8px;
@@ -1839,68 +1847,71 @@
 }
 
 .learnPhone .learnBluePanel {
-  flex: 0 0 128px;
+  flex: 0 0 82px;
   margin: 0;
   background:
     radial-gradient(circle at 86% 26%, rgba(71, 215, 242, 0.55), transparent 32%),
     linear-gradient(135deg, #07146a 0%, #084895 54%, #36b7e6 100%);
-  padding: 32px 22px 34px;
+  padding: 14px 18px 12px;
   color: #ffffff;
 }
 
 .learnPhone .learnProgress {
   max-width: 320px;
   margin: 0 auto;
+  gap: 10px;
 }
 
 .learnPhone .learnProgress strong {
   justify-self: center;
-  font-size: 1.06rem;
-  font-weight: 900;
+  font-size: 0.875rem;
+  font-weight: 500;
   line-height: 1;
   white-space: nowrap;
 }
 
 .learnPhone .learnProgress a {
-  min-height: 40px;
+  min-height: 32px;
+  max-width: 78px;
   border-color: rgba(255, 255, 255, 0.24);
   background: rgba(255, 255, 255, 0.12);
-  font-size: 0.9rem;
-  padding: 0 14px;
+  font-size: 0.75rem;
+  padding: 0 10px;
 }
 
 .learnPhone .learnProgressTrack {
   width: min(100%, 284px);
   max-width: none;
-  height: 6px;
-  margin-top: 17px;
+  height: 4px;
+  margin-top: 10px;
 }
 
 .learnPhone .sentenceCard {
   display: flex;
-  flex: 0 0 430px;
+  flex: 0 0 474px;
   min-height: 0;
-  height: 430px;
+  height: 474px;
   flex-direction: column;
-  margin: -30px 14px 0;
+  margin: -10px 14px 0;
   border-radius: 28px;
-  padding: 64px 14px 14px;
+  padding: 34px 14px 12px;
   overflow: hidden;
 }
 
 .learnPhone .dailyCount {
-  top: 42px;
-  right: 24px;
-  font-size: 0.84rem;
-  font-weight: 820;
+  top: 18px;
+  right: 22px;
+  color: #8c95ad;
+  font-size: 0.75rem;
+  font-weight: 600;
   white-space: nowrap;
 }
 
 .learnPhone .dayPill {
-  min-height: 31px;
-  margin-bottom: 14px;
-  font-size: 0.92rem;
-  padding: 0 18px;
+  min-height: 24px;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  padding: 0 12px;
 }
 
 .learnPhone .paperCard {
@@ -1913,7 +1924,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 16px 18px 14px;
+  padding: 16px 20px 16px;
   scrollbar-width: none;
 }
 
@@ -1923,8 +1934,8 @@
 
 .learnPhone .sentenceTag,
 .learnPhone .translationTag {
-  min-height: 23px;
-  font-size: 0.66rem;
+  min-height: 22px;
+  font-size: 0.68rem;
   padding: 0 10px;
 }
 
@@ -1933,9 +1944,10 @@
   width: 100%;
   max-width: none;
   min-width: 0;
-  margin-top: 20px;
-  font-size: clamp(1.26rem, 5.15vw, 1.34rem);
-  line-height: 1.36;
+  margin-top: 14px;
+  font-size: clamp(2.125rem, 9vw, 2.375rem);
+  font-weight: 800;
+  line-height: 1.5;
   letter-spacing: 0;
   text-align: left;
   text-wrap: normal;
@@ -1946,51 +1958,51 @@
 }
 
 .learnPhone .paperCard hr {
-  margin: 16px 0 14px;
+  margin: 18px 0 14px;
 }
 
 .learnPhone .paperCard p {
   margin-top: 14px;
-  font-size: 0.86rem;
-  font-weight: 700;
-  line-height: 1.48;
+  font-size: clamp(1.5rem, 6.4vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.6;
 }
 
 .learnPhone .sentenceCard[data-density="medium"] .paperCard h2 {
-  margin-top: 16px;
-  font-size: clamp(1.06rem, 4.35vw, 1.18rem);
-  line-height: 1.3;
+  margin-top: 13px;
+  font-size: clamp(1.82rem, 7.6vw, 2.08rem);
+  line-height: 1.45;
 }
 
 .learnPhone .sentenceCard[data-density="medium"] .paperCard hr {
-  margin: 13px 0 11px;
+  margin: 15px 0 12px;
 }
 
 .learnPhone .sentenceCard[data-density="medium"] .paperCard p {
-  margin-top: 10px;
-  font-size: 0.78rem;
-  line-height: 1.42;
+  margin-top: 12px;
+  font-size: clamp(1.28rem, 5.5vw, 1.5rem);
+  line-height: 1.55;
 }
 
 .learnPhone .sentenceCard[data-density="long"] .paperCard {
   padding-top: 14px;
-  padding-bottom: 12px;
+  padding-bottom: 14px;
 }
 
 .learnPhone .sentenceCard[data-density="long"] .paperCard h2 {
   margin-top: 12px;
-  font-size: clamp(0.88rem, 3.7vw, 1.02rem);
-  line-height: 1.28;
+  font-size: clamp(1.48rem, 6.15vw, 1.75rem);
+  line-height: 1.42;
 }
 
 .learnPhone .sentenceCard[data-density="long"] .paperCard hr {
-  margin: 10px 0 9px;
+  margin: 13px 0 10px;
 }
 
 .learnPhone .sentenceCard[data-density="long"] .paperCard p {
-  margin-top: 8px;
-  font-size: 0.72rem;
-  line-height: 1.38;
+  margin-top: 10px;
+  font-size: clamp(1.08rem, 4.7vw, 1.28rem);
+  line-height: 1.5;
 }
 
 .learnPhone .sentenceCard[data-density="long"] .paperCard i {

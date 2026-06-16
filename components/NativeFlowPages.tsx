@@ -7,6 +7,7 @@ import type {
   NativeFlowProgressRow,
   NativeFlowSentence,
 } from "@/data/nativeFlow/courseData";
+import InteractiveExpressionText from "./InteractiveExpressionText";
 import styles from "./NativeFlowPages.module.css";
 
 function BackIcon() {
@@ -179,6 +180,34 @@ function LevelArt({ tone }: { tone: NativeFlowLevel["tone"] }) {
   );
 }
 
+function SimpleLifeArt() {
+  return (
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 120 120">
+      <defs>
+        <linearGradient id="simple-life-room" x1="17" x2="103" y1="12" y2="109">
+          <stop stopColor="#f0fff7" />
+          <stop offset="1" stopColor="#c2f0dd" />
+        </linearGradient>
+        <linearGradient id="simple-life-chair" x1="45" x2="98" y1="47" y2="94">
+          <stop stopColor="#6ddfc6" />
+          <stop offset="1" stopColor="#28b697" />
+        </linearGradient>
+      </defs>
+      <rect width="120" height="120" rx="26" fill="url(#simple-life-room)" />
+      <path d="M65 20v32M88 20v32M56 31h42M56 44h42" stroke="#9fe5d3" strokeLinecap="round" strokeWidth="3.5" />
+      <path d="M34 72V44" stroke="#15977e" strokeLinecap="round" strokeWidth="4" />
+      <path d="M33 44c-12-12-22-9-25-8 2 12 11 18 25 14Z" fill="#38c5a7" />
+      <path d="M36 43c11-14 22-13 26-11-1 12-10 19-26 15Z" fill="#65d6c8" />
+      <ellipse cx="34" cy="75" rx="21" ry="6" fill="#1aa78d" opacity=".2" />
+      <path d="M54 69c0-11 9-20 20-20h12c12 0 22 10 22 22v20H54V69Z" fill="url(#simple-life-chair)" />
+      <path d="M47 72c0-7 6-12 13-12h11v32H47V72ZM99 64c8 0 14 6 14 14v14H92V64h7Z" fill="#51d0b5" />
+      <path d="M51 93h60" stroke="#11977d" strokeLinecap="round" strokeWidth="5" opacity=".28" />
+      <path d="M26 88h28" stroke="#8a7460" strokeLinecap="round" strokeWidth="4" opacity=".32" />
+      <ellipse cx="40" cy="86" rx="18" ry="5" fill="#f5efe6" />
+    </svg>
+  );
+}
+
 function HeroHeadphones() {
   return (
     <svg aria-hidden="true" className={styles.heroHeadphones} focusable="false" viewBox="0 0 360 310">
@@ -294,13 +323,13 @@ export function NativeFlowMenuPage({ levels }: { levels: NativeFlowLevel[] }) {
         <div className={styles.levelStack}>
           {levels.map((level) => (
             <Link
-              className={styles.levelCard}
+              className={`${styles.levelCard} ${level.id === "simple" ? styles.simpleLifeCard : ""}`}
               data-tone={level.tone}
               href={`/native-flow/${level.id}/learn`}
               key={level.id}
             >
               <span className={styles.levelArt}>
-                <LevelArt tone={level.tone} />
+                {level.id === "simple" ? <SimpleLifeArt /> : <LevelArt tone={level.tone} />}
               </span>
               <span className={styles.levelCopy}>
                 <span className={styles.levelBadge}>{level.badge}</span>
@@ -337,7 +366,7 @@ export function NativeFlowMenuPage({ levels }: { levels: NativeFlowLevel[] }) {
           <HeadphonesIcon />
         </span>
         <div>
-          <strong>总计 600+ 真实美语长句</strong>
+          <strong>总计 800+ 真实美语长句</strong>
           <p>坚持练习，英语会更自然地流出来！</p>
         </div>
         <MiniIcon type="chart" />
@@ -591,7 +620,7 @@ export function NativeFlowLearningPage({
       <section className={styles.learnBluePanel}>
         <div className={styles.learnProgress}>
           <strong>
-            第 <span>{sentence.id}</span> / {level.totalSentences} 句
+            <span>{sentence.id}</span> / {level.totalSentences}
           </strong>
           <Link href="/native-flow/records">
             <MiniIcon type="chart" />
@@ -610,7 +639,12 @@ export function NativeFlowLearningPage({
         </span>
         <div className={styles.paperCard}>
           <span className={styles.sentenceTag}>英文句子</span>
-          <h2>{sentence.english}</h2>
+          <h2>
+            <InteractiveExpressionText
+              sourceSentence={sentence.english}
+              text={sentence.english}
+            />
+          </h2>
           {sentence.chinese ? (
             <>
               <hr />

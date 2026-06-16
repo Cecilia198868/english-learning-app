@@ -784,7 +784,7 @@ export default function FreeStudyPageFiveTop({
           border: 0;
           border-radius: clamp(1rem, 4.7vw, 1.28rem);
           background: linear-gradient(100deg, #7b55ff 0%, #6239e9 54%, #4d32d9 100%);
-          color: #ffffff;
+          color: #ffffff !important;
           box-shadow:
             0 1rem 2rem rgba(86, 58, 210, 0.25),
             inset 0 1px 0 rgba(255, 255, 255, 0.22);
@@ -806,7 +806,8 @@ export default function FreeStudyPageFiveTop({
           outline-offset: 3px;
         }
 
-        .sf-free-result-continue svg {
+        .sf-free-result-continue svg,
+        .sf-free-result-continue :global(svg) {
           width: clamp(1.35rem, 5.8vw, 1.7rem);
           height: clamp(1.35rem, 5.8vw, 1.7rem);
           fill: none;
@@ -817,11 +818,13 @@ export default function FreeStudyPageFiveTop({
         }
 
         .sf-free-result-continue span,
-        .sf-free-result-continue svg {
-          color: #ffffff;
+        .sf-free-result-continue svg,
+        .sf-free-result-continue :global(svg) {
+          color: #ffffff !important;
         }
 
         .sf-free-result-continue span {
+          color: #ffffff !important;
           font-weight: 950;
         }
 

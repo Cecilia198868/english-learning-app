@@ -4,6 +4,9 @@ import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   addVocabularyWord,
+  flushVocabularyCloudSync,
+  generateVocabularyDefinition,
+  hasUsableMeaning,
   tokenizeEnglishSentence,
   updateVocabularyWord,
 } from "@/lib/vocabulary";
@@ -97,17 +100,48 @@ export default function InteractiveExpressionText({
     setIsSavingExpression(false);
   }
 
-  function confirmSaveExpression() {
+  async function confirmSaveExpression() {
     if (!pendingExpression || isSavingExpression) return;
 
     setIsSavingExpression(true);
+    const isWord = pendingExpression.kind === "word";
+    let wordDefinition: Awaited<
+      ReturnType<typeof generateVocabularyDefinition>
+    > | null = null;
+
+    if (isWord) {
+      try {
+        wordDefinition = await generateVocabularyDefinition(
+          pendingExpression.phrase
+        );
+        if (!hasUsableMeaning(wordDefinition.meaning)) {
+          throw new Error("Missing native meaning");
+        }
+      } catch {
+        setPendingExpression({
+          ...pendingExpression,
+          statusMessage: "中文释义生成失败，请稍后再试",
+        });
+        setIsSavingExpression(false);
+        return;
+      }
+    }
+
     const result = addVocabularyWord(
       pendingExpression.phrase,
       pendingExpression.sourceSentence
     );
 
     if (!result.ok) {
-      if (pendingExpression.kind === "phrase") {
+      if (isWord && wordDefinition) {
+        updateVocabularyWord(pendingExpression.phrase, {
+          meaning: wordDefinition.meaning,
+          partOfSpeech: wordDefinition.partOfSpeech || "word",
+          example: pendingExpression.sourceSentence || wordDefinition.example,
+          exampleZh: wordDefinition.exampleZh,
+          sourceSentence: pendingExpression.sourceSentence,
+        });
+      } else if (!isWord) {
         updateVocabularyWord(pendingExpression.phrase, {
           meaning: pendingExpression.meaning,
           partOfSpeech: "phrase",
@@ -116,31 +150,37 @@ export default function InteractiveExpressionText({
         });
       }
 
+      void flushVocabularyCloudSync();
       setPendingExpression({
         ...pendingExpression,
         statusMessage:
           result.reason === "DUPLICATE"
-            ? "\u8fd9\u4e2a\u5185\u5bb9\u5df2\u7ecf\u5728\u8868\u8fbe\u5e93\u4e2d"
+            ? isWord
+              ? "\u8fd9\u4e2a\u5355\u8bcd\u5df2\u7ecf\u6536\u85cf\u8fc7\u4e86\uff0c\u4e2d\u6587\u91ca\u4e49\u5df2\u66f4\u65b0"
+              : "\u8fd9\u4e2a\u5185\u5bb9\u5df2\u7ecf\u5728\u8868\u8fbe\u5e93\u4e2d"
             : result.message,
       });
       setIsSavingExpression(false);
       return;
     }
 
-    if (pendingExpression.kind === "phrase") {
-      updateVocabularyWord(result.word.word, {
-        meaning: pendingExpression.meaning,
-        partOfSpeech: "phrase",
-        example: pendingExpression.sourceSentence,
-        sourceSentence: pendingExpression.sourceSentence,
-      });
-    } else {
-      updateVocabularyWord(result.word.word, {
-        partOfSpeech: "word",
-        sourceSentence: pendingExpression.sourceSentence,
-      });
-    }
+    updateVocabularyWord(result.word.word, {
+      meaning: isWord
+        ? wordDefinition?.meaning || result.word.meaning
+        : pendingExpression.meaning,
+      partOfSpeech: isWord
+        ? wordDefinition?.partOfSpeech || "word"
+        : "phrase",
+      example: isWord
+        ? pendingExpression.sourceSentence || wordDefinition?.example || ""
+        : pendingExpression.sourceSentence,
+      exampleZh: isWord
+        ? wordDefinition?.exampleZh || ""
+        : result.word.exampleZh,
+      sourceSentence: pendingExpression.sourceSentence,
+    });
 
+    void flushVocabularyCloudSync();
     closeModal();
   }
 
