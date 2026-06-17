@@ -3392,17 +3392,20 @@ function SpeakEnglishClient() {
     expressionVariantsForDisplay[
       Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)
     ] || expressionVariantsForDisplay[0];
-  const referenceResultVariantTexts = expressionVariantLabels.map((_, index) => {
+  const referenceResultFallbackText =
+    standardEnglish.trim() || authoritativeEnglish.trim();
+  const referenceResultCandidateTexts = expressionVariantLabels.map((_, index) => {
     const variantText = expressionVariantsForDisplay[index]?.text?.trim() || "";
-    const fallbackText =
-      standardEnglish.trim() ||
-      authoritativeEnglish.trim() ||
-      (isLoadingExpressionVariants ? "Preparing a better expression..." : "");
 
     return variantText && variantText !== "This sentence is still being prepared."
       ? variantText
-      : fallbackText;
+      : referenceResultFallbackText;
   });
+  const firstReferenceResultText =
+    referenceResultCandidateTexts.find((text) => Boolean(text.trim())) || "";
+  const referenceResultVariantTexts = referenceResultCandidateTexts.map(
+    (text) => text || firstReferenceResultText
+  );
   const referenceResultPreloadKey = referenceResultVariantTexts
     .map((text) => text.trim())
     .filter(Boolean)
@@ -8859,6 +8862,7 @@ function SpeakEnglishClient() {
                 userEnglishText={message}
                 expressions={referenceResultVariantTexts}
                 selectedExpressionIndex={selectedExpressionIndex}
+                isLoadingExpressions={isLoadingExpressionVariants}
                 hasProEntitlement={isAccountPro}
                 avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
                 avatarAlt={accountEmail || accountName || "user"}

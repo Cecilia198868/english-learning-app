@@ -92,6 +92,8 @@ const progressStatusCopy: Record<AiGuidedProgressStepStatus, string> = {
   locked: "待练习",
 };
 
+const pendingExpressionText = "This sentence is still being prepared.";
+
 const expressionMeta = [
   {
     badge: "最自然地道",
@@ -401,7 +403,9 @@ export default function AiGuidedExpressionStepFive({
   const displayNextChinese =
     nextChineseText.trim() || (isLoadingNextChinese ? COPY.loadingNext : COPY.nextFallback);
   const safeExpressions =
-    expressions.length > 0 ? expressions : ["That's why I'm looking for a better job."];
+    expressions.length > 0
+      ? expressions.map((expression) => expression.trim() || pendingExpressionText)
+      : [pendingExpressionText];
 
   useEffect(() => {
     if (!isProgressOpen) return;

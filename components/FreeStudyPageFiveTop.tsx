@@ -7,6 +7,7 @@ type FreeStudyPageFiveTopProps = {
   userEnglishText: string;
   expressions: string[];
   selectedExpressionIndex: number;
+  isLoadingExpressions?: boolean;
   avatarSrc?: string;
   avatarAlt?: string;
   accountLabel?: string;
@@ -53,6 +54,20 @@ const expressionMeta = [
     tone: "purple",
   },
 ] as const;
+
+const pendingRecommendationCopy = "正在生成推荐表达...";
+const unavailableRecommendationCopy = "推荐表达暂时没有生成，请稍后再试。";
+
+function isPlaceholderExpression(text: string | undefined) {
+  const normalized = text?.trim() || "";
+
+  return (
+    !normalized ||
+    normalized === "Preparing a better expression." ||
+    normalized === "Preparing a better expression..." ||
+    normalized === "This sentence is still being prepared."
+  );
+}
 
 function WaveGlyph() {
   return (
@@ -149,7 +164,9 @@ function ExpressionIcon({ name }: { name: (typeof expressionMeta)[number]["icon"
 }
 
 function renderExpressionText(text: string, tone: string) {
-  const normalized = text.trim() || "Preparing a better expression.";
+  const normalized = text.trim();
+  if (!normalized) return "";
+
   const match = normalized.match(/^(.*?)([A-Za-z]+(?:\s+[A-Za-z]+)?)([.!?。！？]*)$/);
 
   if (!match) return normalized;
@@ -167,6 +184,7 @@ export default function FreeStudyPageFiveTop({
   userEnglishText,
   expressions,
   selectedExpressionIndex,
+  isLoadingExpressions = false,
   hasProEntitlement = false,
   onAiGuidedPractice,
   onRetryEnglish,
@@ -179,12 +197,19 @@ export default function FreeStudyPageFiveTop({
   renderUserExpressionText,
 }: FreeStudyPageFiveTopProps) {
   const displayText = userEnglishText.trim() || " ";
+  const firstReadyExpression = expressions.find(
+    (expression) => !isPlaceholderExpression(expression)
+  );
   const preparedExpressions = expressionMeta.map((meta, index) => ({
     ...meta,
-    text:
-      expressions[index]?.trim() ||
-      expressions[0]?.trim() ||
-      "Preparing a better expression.",
+    isReady:
+      !isPlaceholderExpression(expressions[index]) || Boolean(firstReadyExpression),
+    text: !isPlaceholderExpression(expressions[index])
+      ? expressions[index]!.trim()
+      : firstReadyExpression?.trim() ||
+        (isLoadingExpressions
+          ? pendingRecommendationCopy
+          : unavailableRecommendationCopy),
   }));
   const safeSelectedIndex = Math.min(
     Math.max(selectedExpressionIndex, 0),
@@ -584,6 +609,10 @@ export default function FreeStudyPageFiveTop({
           box-shadow: 0 16px 34px rgba(110,74,180,.13), inset 0 0 0 1px rgba(139,86,238,.32);
         }
 
+        .sf-free-result-expression-card.is-pending {
+          cursor: default;
+        }
+
         .sf-free-result-expression-icon {
           position: absolute;
           left: clamp(.65rem, 3vw, .86rem);
@@ -733,6 +762,12 @@ export default function FreeStudyPageFiveTop({
 
         .sf-free-result-expression-card.is-green .sf-free-result-slow {
           color: #1d9b59;
+        }
+
+        .sf-free-result-play:disabled,
+        .sf-free-result-slow:disabled {
+          cursor: default;
+          opacity: .48;
         }
 
         .sf-free-result-more {
@@ -1389,8 +1424,11 @@ export default function FreeStudyPageFiveTop({
                 key={`${expression.tone}-${index}-${expression.text}`}
                 className={`sf-free-result-expression-card is-${expression.tone} ${
                   selected ? "is-selected" : ""
-                }`}
-                onClick={() => onSelectExpression(index)}
+                } ${expression.isReady ? "" : "is-pending"}`}
+                aria-busy={!expression.isReady && isLoadingExpressions}
+                onClick={() => {
+                  if (expression.isReady) onSelectExpression(index);
+                }}
               >
                 <span className="sf-free-result-expression-icon" aria-hidden="true">
                   <ExpressionIcon name={expression.icon} />
@@ -1398,14 +1436,19 @@ export default function FreeStudyPageFiveTop({
 
                 <span className="sf-free-result-expression-copy">
                   <span className="sf-free-result-badge">{expression.badge}</span>
-                  <p lang="en" className="sf-free-result-expression-text">
-                    {renderInteractiveExpressionText
+                  <p
+                    lang={expression.isReady ? "en" : "zh-CN"}
+                    className="sf-free-result-expression-text"
+                  >
+                    {expression.isReady && renderInteractiveExpressionText
                       ? renderInteractiveExpressionText(
                           expression.text,
                           index,
                           expression.tone
                         )
-                      : renderExpressionText(expression.text, expression.tone)}
+                      : expression.isReady
+                        ? renderExpressionText(expression.text, expression.tone)
+                        : expression.text}
                   </p>
                   {expression.description ? (
                     <span className="sf-free-result-note">
@@ -1419,8 +1462,10 @@ export default function FreeStudyPageFiveTop({
                   <button
                     type="button"
                     aria-label="播放这句表达"
+                    disabled={!expression.isReady}
                     onClick={(event) => {
                       event.stopPropagation();
+                      if (!expression.isReady) return;
                       onSelectExpression(index);
                       onPlayExpression(index, 1);
                     }}
@@ -1431,8 +1476,10 @@ export default function FreeStudyPageFiveTop({
                   <button
                     type="button"
                     aria-label="0.75倍速播放这句表达"
+                    disabled={!expression.isReady}
                     onClick={(event) => {
                       event.stopPropagation();
+                      if (!expression.isReady) return;
                       onSelectExpression(index);
                       onPlayExpression(index, 0.75);
                     }}

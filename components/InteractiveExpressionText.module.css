@@ -103,8 +103,14 @@
 
 .saveButton {
   background: var(--accent-primary, #7657ff);
-  color: #ffffff;
+  color: #ffffff !important;
+  font-weight: 950;
   box-shadow: 0 12px 26px var(--shadow-color, rgba(84, 102, 155, 0.16));
+}
+
+.saveButton * {
+  color: #ffffff !important;
+  font-weight: 950;
 }
 
 .saveButton:disabled {
