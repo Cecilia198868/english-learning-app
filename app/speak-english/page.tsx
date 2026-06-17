@@ -62,6 +62,7 @@ import { createLoginUrl, subscriptionCallbackUrl } from "@/lib/loginRedirect";
 type KeyboardMode = "zh" | "en" | "handwriting" | "symbols";
 type PracticeStage = "native" | "english";
 type TrainingGroundMode = "default" | "guided";
+type FreeStudyRouteScope = "free" | "guided";
 type GuidedConversationTurn = {
   chinese: string;
   userEnglish: string;
@@ -285,6 +286,7 @@ type FreeStudyRouteState = {
   aiGuidedFollowPracticePending?: boolean;
   aiGuidedNativeCommitted?: boolean;
   nativeSpeech?: string;
+  scope?: FreeStudyRouteScope;
   userEnglishText?: string;
 };
 
@@ -303,13 +305,23 @@ function getSessionAvatar(user?: SessionResponse["user"]) {
   );
 }
 
-function readFreeStudyRouteState(): FreeStudyRouteState | null {
+function readFreeStudyRouteState(
+  expectedScope?: FreeStudyRouteScope
+): FreeStudyRouteState | null {
   if (typeof window === "undefined") return null;
 
   try {
     const rawState = window.sessionStorage.getItem(freeStudyRouteStateStorageKey);
     if (!rawState) return null;
     const parsedState = JSON.parse(rawState) as FreeStudyRouteState;
+    const parsedScope =
+      parsedState.scope === "free" || parsedState.scope === "guided"
+        ? parsedState.scope
+        : undefined;
+
+    if (expectedScope && parsedScope !== expectedScope) {
+      return null;
+    }
 
     return {
       aiGuidedConfirmOnly: parsedState.aiGuidedConfirmOnly === true,
@@ -320,6 +332,7 @@ function readFreeStudyRouteState(): FreeStudyRouteState | null {
         typeof parsedState.nativeSpeech === "string"
           ? parsedState.nativeSpeech
           : "",
+      scope: parsedScope,
       userEnglishText:
         typeof parsedState.userEnglishText === "string"
           ? parsedState.userEnglishText
@@ -3313,6 +3326,11 @@ function SpeakEnglishClient() {
     !isAiGuidedMode &&
     !showQuickPanel &&
     !showAccountMenu;
+  const isFreeStudyEnglishRecordingActive =
+    !isAiGuidedMode &&
+    practiceStage === "english" &&
+    (isPrimingEnglishSpeech ||
+      (isListening && activeRecognitionStageRef.current === "english"));
   const showReferenceResult =
     hasEnglishAttempt &&
     !isFreeConversationMode &&
@@ -3348,6 +3366,11 @@ function SpeakEnglishClient() {
     (Boolean(nativeSpeech) || isPrimingEnglishSpeech) &&
     !showQuickPanel &&
     !showAccountMenu;
+  const isGuidedEnglishRecordingActive =
+    isAiGuidedMode &&
+    practiceStage === "english" &&
+    (isPrimingEnglishSpeech ||
+      (isListening && activeRecognitionStageRef.current === "english"));
   const showGuidedReferenceResult =
     isAiGuidedMode &&
     hasEnglishAttempt &&
@@ -4651,29 +4674,6 @@ function SpeakEnglishClient() {
     resetFreeConversationState();
   }
 
-  function prepareGuidedSuggestedEnglishRound(
-    suggestion: string,
-    roundId = createFreePracticeRoundId()
-  ) {
-    freePracticeRoundIdRef.current = roundId;
-    setPrimingPracticeStage("english");
-    setPracticeStage("english");
-    setNativeSpeech(suggestion);
-    setMessage(suggestion);
-    setIsNativeSpeechConfirmed(true);
-    resetAuthoritativeEnglish();
-    setHasNativeSpeech(true);
-    setHasEnglishAttempt(false);
-    setStandardEnglish("");
-    setExpressionVariants([]);
-    setSelectedExpressionIndex(0);
-    setIsLoadingExpressionVariants(false);
-    setHighlightedExpressions([]);
-    setVocabularyNotice("");
-    resetGuidedFollowupState();
-    resetFreeConversationState();
-  }
-
   function prepareFreeConversationAnswerRound(
     roundId = createFreePracticeRoundId()
   ) {
@@ -4850,6 +4850,7 @@ function SpeakEnglishClient() {
   }
 
   function openTrainingGroundMode() {
+    clearFreeStudyRouteState();
     setTrainingGroundMode("guided");
     aiGuidedFollowPracticePendingRef.current = false;
     guidedConversationTurnsRef.current = [];
@@ -4883,12 +4884,14 @@ function SpeakEnglishClient() {
       aiGuidedFollowPracticePending?: boolean;
       aiGuidedNativeCommitted?: boolean;
       nativeSpeech?: string;
+      scope?: FreeStudyRouteScope;
     } = {}
   ) {
     if (typeof window === "undefined") return;
 
+    const nextScope = options.scope ?? (isAiGuidedMode ? "guided" : "free");
     const savedNativeSpeech =
-      readFreeStudyRouteState()?.nativeSpeech?.trim() || "";
+      readFreeStudyRouteState(nextScope)?.nativeSpeech?.trim() || "";
     const nextNativeSpeech =
       options.nativeSpeech?.trim() || nativeSpeech.trim() || savedNativeSpeech;
 
@@ -4901,6 +4904,7 @@ function SpeakEnglishClient() {
         aiGuidedNativeCommitted:
           options.aiGuidedNativeCommitted === true,
         nativeSpeech: nextNativeSpeech,
+        scope: nextScope,
         userEnglishText: nextUserEnglishText.trim(),
       } satisfies FreeStudyRouteState)
     );
@@ -5037,7 +5041,10 @@ function SpeakEnglishClient() {
     const confirmedSpeech = nativeSpeech.trim();
     if (!confirmedSpeech) return;
 
-    saveFreeStudyRouteState(message, { nativeSpeech: confirmedSpeech });
+    saveFreeStudyRouteState(message, {
+      nativeSpeech: confirmedSpeech,
+      scope: "free",
+    });
 
     if (pathname !== "/free-study/step-4") {
       router.push("/free-study/step-4");
@@ -5057,6 +5064,7 @@ function SpeakEnglishClient() {
       aiGuidedConfirmOnly: false,
       aiGuidedFollowPracticePending: true,
       nativeSpeech: confirmedSpeech,
+      scope: "guided",
     });
     const routeKey = `/ai-guided-expression/step-4:${confirmedSpeech}`;
 
@@ -5080,6 +5088,7 @@ function SpeakEnglishClient() {
       aiGuidedFollowPracticePending: true,
       aiGuidedNativeCommitted: false,
       nativeSpeech: suggestedSpeech,
+      scope: "guided",
     });
 
     const routeKey = `/ai-guided-expression/step-4:confirm:${suggestedSpeech}`;
@@ -5129,20 +5138,6 @@ function SpeakEnglishClient() {
     startFreeStudyStepTwoChineseRound();
   }
 
-  function openFreeStudyStepOneForNextChinese() {
-    if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
-      cancelRecognition();
-    }
-
-    clearFreeStudyRouteState();
-    handledStepRouteRef.current = "/free-study/step-1";
-    returnToFreeLearningHome();
-
-    if (pathname !== "/free-study/step-1") {
-      router.push("/free-study/step-1");
-    }
-  }
-
   function finishRecognition(finalTranscript = speechBufferRef.current.trim()) {
     invalidateSpeechRecognitionSession();
     isRecognitionStartingRef.current = false;
@@ -5172,6 +5167,7 @@ function SpeakEnglishClient() {
             aiGuidedFollowPracticePending: false,
             aiGuidedNativeCommitted: true,
             nativeSpeech: finalTranscript,
+            scope: "guided",
           });
           if (pathname !== "/ai-guided-expression/step-4") {
             handledStepRouteRef.current = "";
@@ -5182,7 +5178,9 @@ function SpeakEnglishClient() {
           }
         }
       } else {
-        saveFreeStudyRouteState(finalTranscript);
+        saveFreeStudyRouteState(finalTranscript, {
+          scope: isAiGuidedMode ? "guided" : "free",
+        });
         setHasEnglishAttempt(true);
         if (isAiGuidedMode) {
           const guidedStep = aiGuidedFollowPracticePendingRef.current
@@ -5379,7 +5377,10 @@ function SpeakEnglishClient() {
     const confirmedSpeech = nativeSpeech.trim();
     if (!confirmedSpeech) return;
 
-    saveFreeStudyRouteState("", { nativeSpeech: confirmedSpeech });
+    saveFreeStudyRouteState("", {
+      nativeSpeech: confirmedSpeech,
+      scope: "free",
+    });
 
     if (options.navigate !== false && pathname !== "/free-study/step-4") {
       router.push("/free-study/step-4");
@@ -5400,7 +5401,7 @@ function SpeakEnglishClient() {
     const confirmedSpeech = nativeSpeech.trim();
     if (!confirmedSpeech) return;
 
-    const savedRouteState = readFreeStudyRouteState();
+    const savedRouteState = readFreeStudyRouteState("guided");
     const isFollowPractice =
       aiGuidedFollowPracticePendingRef.current ||
       savedRouteState?.aiGuidedFollowPracticePending === true;
@@ -5414,6 +5415,7 @@ function SpeakEnglishClient() {
       aiGuidedFollowPracticePending: isFollowPractice,
       aiGuidedNativeCommitted: false,
       nativeSpeech: confirmedSpeech,
+      scope: "guided",
     });
 
     if (
@@ -5492,7 +5494,7 @@ function SpeakEnglishClient() {
     }
 
     if (pathname === "/ai-guided-expression/step-4") {
-      const savedRouteState = readFreeStudyRouteState();
+      const savedRouteState = readFreeStudyRouteState("guided");
       const confirmedSpeech = (
         savedRouteState?.nativeSpeech ||
         nativeSpeech
@@ -5541,7 +5543,7 @@ function SpeakEnglishClient() {
 
     if (pathname !== "/free-study/step-4") return;
 
-    const savedRouteState = readFreeStudyRouteState();
+    const savedRouteState = readFreeStudyRouteState("free");
     const confirmedSpeech = (
       savedRouteState?.nativeSpeech ||
       nativeSpeech
@@ -5579,6 +5581,24 @@ function SpeakEnglishClient() {
 
     isRecognitionStartingRef.current = true;
 
+    const shouldOpenGuidedSuggestionConfirmation =
+      !forcedPracticeStage &&
+      isAiGuidedMode &&
+      hasEnglishAttempt &&
+      Boolean(standardEnglish.trim());
+
+    if (shouldOpenGuidedSuggestionConfirmation) {
+      isRecognitionStartingRef.current = false;
+      shouldCommitSpeechRef.current = false;
+      speechBufferRef.current = "";
+      speechRecognitionBaseTranscriptRef.current = "";
+      speechLastResultAtRef.current = 0;
+      speechStopRequestedRef.current = false;
+      setPrimingPracticeStage(null);
+      startAiGuidedSuggestedRound();
+      return;
+    }
+
     const RecognitionConstructor = getRecognitionConstructor();
 
     if (!RecognitionConstructor) {
@@ -5598,21 +5618,14 @@ function SpeakEnglishClient() {
     speechRecognitionSessionIdRef.current = recognitionSessionId;
     const isStartingFreeConversationAnswerRound =
       !forcedPracticeStage && isFreeConversationMode && hasEnglishAttempt;
-    const isStartingGuidedSuggestedEnglishRound =
-      !forcedPracticeStage && isAiGuidedMode && Boolean(standardEnglish);
-    const guidedSuggestedChinese = isStartingGuidedSuggestedEnglishRound
-      ? guidedFollowupSuggestion.trim() || "我还想多说一点我的感受。"
-      : "";
     const isStartingNextNativeRound =
       !forcedPracticeStage &&
+      !isAiGuidedMode &&
       Boolean(standardEnglish) &&
-      !isStartingGuidedSuggestedEnglishRound &&
       !isStartingFreeConversationAnswerRound;
     const nextPracticeStage: PracticeStage =
       forcedPracticeStage ||
       (isStartingFreeConversationAnswerRound
-        ? "english"
-        : isStartingGuidedSuggestedEnglishRound
         ? "english"
         : isStartingNextNativeRound
           ? "native"
@@ -5623,7 +5636,6 @@ function SpeakEnglishClient() {
     const shouldAutoStopAfterSpeechSilence =
       !isManualStopFreeStudyRecognition;
     const shouldCreateNewPracticeRound =
-      isStartingGuidedSuggestedEnglishRound ||
       isStartingFreeConversationAnswerRound ||
       isStartingNextNativeRound;
     const guardedPracticeRoundId = shouldCreateNewPracticeRound
@@ -5631,7 +5643,6 @@ function SpeakEnglishClient() {
       : freePracticeRoundIdRef.current;
     const shouldGuardFreePractice =
       nextPracticeStage === "native" ||
-      isStartingGuidedSuggestedEnglishRound ||
       isStartingFreeConversationAnswerRound ||
       (nextPracticeStage === "english" &&
         !hasEnglishAttempt &&
@@ -5654,12 +5665,7 @@ function SpeakEnglishClient() {
       return;
     }
 
-    if (isStartingGuidedSuggestedEnglishRound) {
-      prepareGuidedSuggestedEnglishRound(
-        guidedSuggestedChinese,
-        guardedPracticeRoundId
-      );
-    } else if (isStartingFreeConversationAnswerRound) {
+    if (isStartingFreeConversationAnswerRound) {
       prepareFreeConversationAnswerRound(guardedPracticeRoundId);
     } else if (isStartingNextNativeRound) {
       prepareNextNativeRound(guardedPracticeRoundId);
@@ -7586,7 +7592,7 @@ function SpeakEnglishClient() {
                 chineseText={nativeSpeech}
                 hasProEntitlement={isAccountPro}
                 viewState={
-                  showGuidedReferenceEnglishListening
+                  isGuidedEnglishRecordingActive
                     ? "recordingEnglish"
                     : "confirmChinese"
                 }
@@ -8840,7 +8846,7 @@ function SpeakEnglishClient() {
               onStartEnglishPractice={confirmFreeStudyNativeSpeechInline}
               onStopEnglishRecording={handleFreeStudyEnglishMicrophoneClick}
               viewState={
-                showReferenceEnglishPrompt || showReferenceEnglishListening
+                isFreeStudyEnglishRecordingActive
                   ? "recordingEnglish"
                   : "confirmChinese"
               }
@@ -8860,7 +8866,7 @@ function SpeakEnglishClient() {
                 onAvatarError={() => setAccountImageFailed(true)}
                 onAiGuidedPractice={openAiGuidedExpressionStepOne}
                 onRetryEnglish={openFreeStudyStepFourForRetry}
-                onContinueNext={openFreeStudyStepOneForNextChinese}
+                onContinueNext={openFreeStudyStepTwoForNextChinese}
                 onMenuClick={openLoggedInHomePage}
                 onAccountClick={openAccountPage}
                 onPlayExpression={readReferenceResultVariant}
