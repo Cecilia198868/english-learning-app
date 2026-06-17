@@ -97,34 +97,6 @@ function PlayGlyph() {
   );
 }
 
-function ContinueArrowGlyph() {
-  return (
-    <svg
-      className="sf-free-result-continue-icon"
-      viewBox="0 0 24 24"
-      width="22"
-      height="22"
-      aria-hidden="true"
-      focusable="false"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{
-        color: "#ffffff",
-        display: "block",
-        flex: "0 0 auto",
-        height: "1.28rem",
-        width: "1.28rem",
-      }}
-    >
-      <path d="M5 12h12" />
-      <path d="m13 6 6 6-6 6" />
-    </svg>
-  );
-}
-
 function CheckGlyph() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -267,7 +239,7 @@ export default function FreeStudyPageFiveTop({
         }
 
         .sf-free-result-page {
-          --sf-free-result-cta-height: clamp(3.8rem, 15vw, 4.35rem);
+          --sf-free-result-cta-height: clamp(3.75rem, 12.5vw, 4.05rem);
           --sf-free-result-nav-height: clamp(4.86rem, 20.2vw, 5.65rem);
           --sf-free-result-fixed-gap: clamp(0.72rem, 3vw, 0.95rem);
           position: absolute;
@@ -789,7 +761,7 @@ export default function FreeStudyPageFiveTop({
             var(--sf-free-result-nav-height) +
             var(--sf-free-result-fixed-gap)
           );
-          width: min(calc(100% - 1.55rem), 398px);
+          width: min(calc(100% - 2.25rem), 386px);
           transform: translateX(-50%);
         }
 
@@ -809,7 +781,7 @@ export default function FreeStudyPageFiveTop({
           box-shadow:
             0 1rem 2rem rgba(86, 58, 210, 0.25),
             inset 0 1px 0 rgba(255, 255, 255, 0.22);
-          font-size: clamp(1.1rem, 4.7vw, 1.38rem);
+          font-size: clamp(1.04rem, 4.4vw, 1.24rem);
           font-weight: 950;
           line-height: 1;
           letter-spacing: 0;
@@ -828,40 +800,32 @@ export default function FreeStudyPageFiveTop({
           outline-offset: 3px;
         }
 
-        .sf-free-result-continue .sf-free-result-continue-icon,
-        .sf-free-result-continue :global(.sf-free-result-continue-icon) {
-          display: block !important;
+        .sf-free-result-continue-arrow {
+          display: inline-flex !important;
           flex: 0 0 auto !important;
-          width: clamp(1.08rem, 4.8vw, 1.34rem) !important;
-          height: clamp(1.08rem, 4.8vw, 1.34rem) !important;
-          max-width: clamp(1.08rem, 4.8vw, 1.34rem) !important;
-          max-height: clamp(1.08rem, 4.8vw, 1.34rem) !important;
+          width: 1.28rem !important;
+          height: 1.28rem !important;
+          max-width: 1.28rem !important;
+          max-height: 1.28rem !important;
+          align-items: center !important;
+          justify-content: center !important;
           color: #ffffff !important;
-          fill: none !important;
-          stroke: currentColor !important;
-          stroke-width: 2.8 !important;
-          stroke-linecap: round !important;
-          stroke-linejoin: round !important;
+          font-size: 1.35rem !important;
+          font-weight: 950 !important;
+          line-height: 1 !important;
         }
 
-        .sf-free-result-continue .sf-free-result-continue-icon path,
-        .sf-free-result-continue :global(.sf-free-result-continue-icon path) {
-          fill: none !important;
-          stroke: currentColor !important;
-        }
-
-        .sf-free-result-continue span,
-        .sf-free-result-continue .sf-free-result-continue-icon,
-        .sf-free-result-continue :global(.sf-free-result-continue-icon) {
+        .sf-free-result-continue span:not(.sf-free-result-continue-arrow),
+        .sf-free-result-continue-arrow {
           color: #ffffff !important;
         }
 
-        .sf-free-result-continue span {
+        .sf-free-result-continue span:not(.sf-free-result-continue-arrow) {
           display: inline-flex !important;
           flex: 0 1 auto;
           min-width: 0;
           width: auto !important;
-          max-width: calc(100% - 2.2rem);
+          max-width: calc(100% - 2rem);
           align-items: center;
           color: #ffffff !important;
           font-weight: 950;
@@ -1491,7 +1455,9 @@ export default function FreeStudyPageFiveTop({
           className="sf-free-result-continue"
           onClick={onContinueNext}
         >
-          <ContinueArrowGlyph />
+          <span className="sf-free-result-continue-arrow" aria-hidden="true">
+            {"\u2192"}
+          </span>
           <span>{"\u7ee7\u7eed\u7ec3\u4e60\u4e0b\u4e00\u53e5"}</span>
         </button>
       </div>

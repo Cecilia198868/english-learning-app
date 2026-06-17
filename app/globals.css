@@ -21041,9 +21041,9 @@ body .sf-free-result-emphasis {
 /* Final guard for the free-study result CTA: keep the arrow small and text white. */
 body .sf-free-result-continue {
   display: inline-flex !important;
-  height: var(--sf-free-result-cta-height, 4.1rem) !important;
-  min-height: var(--sf-free-result-cta-height, 4.1rem) !important;
-  max-height: var(--sf-free-result-cta-height, 4.1rem) !important;
+  height: var(--sf-free-result-cta-height, 4rem) !important;
+  min-height: var(--sf-free-result-cta-height, 4rem) !important;
+  max-height: var(--sf-free-result-cta-height, 4rem) !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 0.62rem !important;
@@ -21052,29 +21052,26 @@ body .sf-free-result-continue {
   font-weight: 950 !important;
 }
 
-body .sf-free-result-continue > svg,
-body .sf-free-result-continue .sf-free-result-continue-icon {
-  display: block !important;
+body .sf-free-result-continue > svg {
+  display: none !important;
+}
+
+body .sf-free-result-continue .sf-free-result-continue-arrow {
+  display: inline-flex !important;
   flex: 0 0 auto !important;
-  width: 1.24rem !important;
-  height: 1.24rem !important;
-  max-width: 1.24rem !important;
-  max-height: 1.24rem !important;
+  width: 1.28rem !important;
+  height: 1.28rem !important;
+  max-width: 1.28rem !important;
+  max-height: 1.28rem !important;
+  align-items: center !important;
+  justify-content: center !important;
   color: #ffffff !important;
-  fill: none !important;
-  stroke: currentColor !important;
-  stroke-width: 2.8 !important;
-  stroke-linecap: round !important;
-  stroke-linejoin: round !important;
+  font-size: 1.35rem !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
 }
 
-body .sf-free-result-continue > svg path,
-body .sf-free-result-continue .sf-free-result-continue-icon path {
-  fill: none !important;
-  stroke: currentColor !important;
-}
-
-body .sf-free-result-continue > span {
+body .sf-free-result-continue > span:not(.sf-free-result-continue-arrow) {
   display: inline-flex !important;
   flex: 0 1 auto !important;
   min-width: 0 !important;
