@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { NextResponse } from "next/server";
 import {
   createFallbackExpressionVariantMap,
+  isExpressionVariantMapDistinctEnough,
   normalizeExpressionVariantMap,
 } from "@/lib/expressionVariantFallbacks";
 
@@ -16,8 +17,48 @@ type VariantResponse = {
   natural?: string;
 };
 
+const MAX_VARIANT_GENERATION_ATTEMPTS = 3;
+
+const EXPRESSION_VARIANT_PROMPT = [
+  "You create English practice lines for an AI-guided speaking app.",
+  "This app is not a translation tool. It is a conversation partner that helps the learner keep chatting.",
+  "The four English versions must feel like four different levels of Americans saying the same real-life idea.",
+  "Use semantic authority strictly: use authoritativeEnglish when provided; otherwise use only the meaning of chinese. If both are missing, infer the intended meaning from learnerTranscript and correct likely grammar.",
+  "When chinese or authoritativeEnglish exists, learnerTranscript is unreliable speech recognition. Never copy extra facts, places, reasons, nouns, or events from it unless they are supported by chinese or authoritativeEnglish.",
+  'Return JSON only with keys "standard", "idiomatic", "simple", and "natural".',
+  "standard: standard, natural American English; accurate and polished.",
+  "natural: what Americans would most commonly say; contractions and casual wording are allowed.",
+  "idiomatic: more native-sounding; idioms, fixed phrases, phrasal verbs, and local wording are allowed when natural.",
+  "simple: CEFR A1-A2; short, clear, beginner-friendly words. It may split the idea into two short sentences.",
+  "Hard rules: no two values may be identical; no pair may be more than 70% text-similar; each version must use noticeably different wording.",
+  "Do not use filler such as Honestly, in other words, from another angle, or meta comments about expressing the idea.",
+  "Keep each value one short spoken English line.",
+].join("\n");
+
 function cleanText(value: unknown) {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
+}
+
+function buildVariantRequestPayload({
+  authoritativeEnglish,
+  chineseText,
+  learnerTranscript,
+  rejectedVariants,
+}: {
+  authoritativeEnglish: string;
+  chineseText: string;
+  learnerTranscript: string;
+  rejectedVariants?: VariantResponse;
+}) {
+  return JSON.stringify({
+    authoritativeEnglish,
+    chinese: chineseText,
+    learnerTranscript,
+    rejectedVariants,
+    retryInstruction: rejectedVariants
+      ? "The rejectedVariants were identical or too similar. Regenerate four clearly different versions now."
+      : undefined,
+  });
 }
 
 export async function POST(req: Request) {
@@ -47,31 +88,59 @@ export async function POST(req: Request) {
       });
     }
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content:
-            'Create four clearly different English alternatives for a spoken English learner. Semantic authority is strict: use "authoritativeEnglish" when it is provided; otherwise use only the meaning of "chinese". If both authoritativeEnglish and chinese are missing, use learnerTranscript as the best available context and correct likely grammar, punctuation, and phrasing while preserving the learner\'s likely intended meaning. When chinese or authoritativeEnglish exists, learnerTranscript is unreliable speech recognition: never copy or preserve facts, nouns, reasons, places, events, or causal links from learnerTranscript unless they are clearly supported by chinese or authoritativeEnglish. If learnerTranscript conflicts with chinese or authoritativeEnglish, ignore learnerTranscript. Return only JSON with keys "standard", "idiomatic", "simple", and "natural". Keep each value one sentence. The four values must not be identical. "standard" should be accurate and polished. "idiomatic" should sound more native and use different wording from standard. "simple" should be easier beginner English and may split the idea into two short sentences. "natural" should sound casual and everyday with different wording from standard.',
-        },
-        {
-          role: "user",
-          content: JSON.stringify({
-            authoritativeEnglish,
-            chinese: chineseText,
-            learnerTranscript,
-          }),
-        },
-      ],
-    });
+    let rejectedVariants: VariantResponse | undefined;
 
-    const content = completion.choices[0]?.message?.content || "{}";
-    const variants = JSON.parse(content) as VariantResponse;
+    for (
+      let attempt = 0;
+      attempt < MAX_VARIANT_GENERATION_ATTEMPTS;
+      attempt += 1
+    ) {
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4.1-mini",
+        response_format: { type: "json_object" },
+        temperature: 0.7,
+        messages: [
+          {
+            role: "system",
+            content: EXPRESSION_VARIANT_PROMPT,
+          },
+          {
+            role: "user",
+            content: buildVariantRequestPayload({
+              authoritativeEnglish,
+              chineseText,
+              learnerTranscript,
+              rejectedVariants,
+            }),
+          },
+        ],
+      });
+
+      const content = completion.choices[0]?.message?.content || "{}";
+      const variants = JSON.parse(content) as VariantResponse;
+      const normalizedVariants = normalizeExpressionVariantMap(
+        variants,
+        fallbackSource
+      );
+
+      if (
+        isExpressionVariantMapDistinctEnough(variants) ||
+        attempt === MAX_VARIANT_GENERATION_ATTEMPTS - 1
+      ) {
+        return NextResponse.json({
+          source: isExpressionVariantMapDistinctEnough(variants)
+            ? "openai"
+            : "fallback-normalized",
+          variants: normalizedVariants,
+        });
+      }
+
+      rejectedVariants = variants;
+    }
 
     return NextResponse.json({
-      variants: normalizeExpressionVariantMap(variants, fallbackSource),
+      source: "fallback",
+      variants: createFallbackExpressionVariantMap(fallbackSource),
     });
   } catch (error) {
     const message =
