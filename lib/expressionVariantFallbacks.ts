@@ -15,7 +15,7 @@ const VARIANT_KEYS: ExpressionVariantKey[] = [
   "idiomatic",
   "simple",
 ];
-const MAX_VARIANT_SIMILARITY = 0.7;
+const MAX_VARIANT_SIMILARITY = 0.84;
 
 const placeholderExpressions = new Set([
   "Preparing a better expression.",
@@ -29,17 +29,55 @@ function cleanText(value: unknown) {
 }
 
 function hasFinalPunctuation(value: string) {
-  return /[.!?]$/.test(value);
+  return /[.!?。！？]$/.test(value);
+}
+
+function isQuestionLike(value: string) {
+  const text = cleanText(value);
+  const withoutFinalPunctuation = text.replace(/[.!?。！？]+$/, "").trim();
+
+  if (/[?？]$/.test(text)) return true;
+
+  return /^(?:am|are|can|could|did|do|does|feel like|had|has|have|how about|is|may|might|must|shall|should|want to|was|were|will|would)\b/i.test(
+    withoutFinalPunctuation
+  );
+}
+
+function isQuestionPromptContext(value: string) {
+  return (
+    isQuestionLike(value) ||
+    /[？?]|要不要|想不想|需不需要|吗|嗎/.test(value)
+  );
+}
+
+function normalizeFinalPunctuation(value: string) {
+  const text = cleanText(value);
+  if (!text) return "";
+
+  if (isQuestionLike(text)) {
+    return hasFinalPunctuation(text)
+      ? text.replace(/[.!?。！？]+$/, "?")
+      : `${text}?`;
+  }
+
+  return text
+    .replace(/。$/, ".")
+    .replace(/！$/, "!")
+    .replace(/？$/, "?");
 }
 
 function ensureSentence(value: string) {
   const text = cleanText(value);
   if (!text) return "";
-  return hasFinalPunctuation(text) ? text : `${text}.`;
+  const normalizedText = normalizeFinalPunctuation(text);
+
+  return hasFinalPunctuation(normalizedText)
+    ? normalizedText
+    : `${normalizedText}.`;
 }
 
 function stripFinalPeriod(value: string) {
-  return value.replace(/[.!?]$/, "");
+  return value.replace(/[.!?。！？]$/, "");
 }
 
 function normalizeComparableText(value: string) {
@@ -68,6 +106,48 @@ function normalizeOutputSentence(value: string) {
   return ensureSentence(value)
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/^[a-z]/, (letter) => letter.toUpperCase());
+}
+
+function normalizeVariantOutputSentence(
+  value: string,
+  key: ExpressionVariantKey,
+  fallbackSource: string
+) {
+  const normalized = normalizeOutputSentence(value);
+
+  if (
+    key === "simple" &&
+    isQuestionPromptContext(fallbackSource) &&
+    normalized &&
+    !/[?]$/.test(normalized)
+  ) {
+    return normalized.replace(/[.!]$/, "?");
+  }
+
+  return normalized;
+}
+
+function getComparableWords(value: string) {
+  const text = normalizeComparableText(value);
+  return text ? text.split(" ") : [];
+}
+
+function getComparableCharLength(value: string) {
+  return normalizeComparableText(value).replace(/\s+/g, "").length;
+}
+
+function hasSameWordsOnlyReordered(left: string, right: string) {
+  const leftWords = getComparableWords(left);
+  const rightWords = getComparableWords(right);
+
+  if (leftWords.length < 2 || leftWords.length !== rightWords.length) {
+    return false;
+  }
+
+  return (
+    leftWords.slice().sort().join("\u0001") ===
+    rightWords.slice().sort().join("\u0001")
+  );
 }
 
 function levenshteinDistance(left: string, right: string) {
@@ -101,12 +181,6 @@ function getTextSimilarity(left: string, right: string) {
 
   if (!leftComparable || !rightComparable) return 0;
   if (leftComparable === rightComparable) return 1;
-  if (
-    leftComparable.includes(rightComparable) ||
-    rightComparable.includes(leftComparable)
-  ) {
-    return 1;
-  }
 
   const leftCompact = leftComparable.replace(/\s+/g, "");
   const rightCompact = rightComparable.replace(/\s+/g, "");
@@ -120,7 +194,22 @@ function getTextSimilarity(left: string, right: string) {
 }
 
 function isTooSimilar(left: string, right: string) {
-  return getTextSimilarity(left, right) > MAX_VARIANT_SIMILARITY;
+  const leftComparable = normalizeComparableText(left);
+  const rightComparable = normalizeComparableText(right);
+
+  if (!leftComparable || !rightComparable) return false;
+  if (leftComparable === rightComparable) return true;
+  if (hasSameWordsOnlyReordered(left, right)) return true;
+
+  const similarity = getTextSimilarity(left, right);
+  const leftOpening = getComparableWords(left).slice(0, 3).join(" ");
+  const rightOpening = getComparableWords(right).slice(0, 3).join(" ");
+
+  if (leftOpening && rightOpening && leftOpening !== rightOpening && similarity <= 0.92) {
+    return false;
+  }
+
+  return similarity > MAX_VARIANT_SIMILARITY;
 }
 
 function isDistinctFromUsed(candidate: string, used: string[]) {
@@ -177,10 +266,87 @@ function isSleepAdviceContext(value: string) {
   );
 }
 
+function isChineseJacketQuestionContext(value: string) {
+  return (
+    /[外夾夹大]套|夹克|大衣|上衣/.test(value) &&
+    /要不要|想不想|需不需要|要不|穿|披|套/.test(value)
+  );
+}
+
+function isJacketQuestionContext(value: string) {
+  const text = normalizeComparableText(value);
+
+  return (
+    isChineseJacketQuestionContext(value) ||
+    (/\b(?:coat|jacket)\b/.test(text) &&
+      /\b(?:do you want|would you like|wear|put on|throw on|might want|should)\b/.test(
+        text
+      ))
+  );
+}
+
+function isChinesePhotoQuestionContext(value: string) {
+  return /拍照|照相|照片|相片/.test(value) && /要不要|想不想|要不|吗|嗎|？/.test(value);
+}
+
+function isPhotoQuestionContext(value: string) {
+  const text = normalizeComparableText(value);
+
+  return (
+    isChinesePhotoQuestionContext(value) ||
+    (/\b(?:photo|photos|picture|pictures)\b/.test(text) &&
+      /\b(?:do you want|would you like|take|snap|want)\b/.test(text))
+  );
+}
+
+function getWantToQuestionAction(value: string) {
+  const withoutPunctuation = stripFinalPeriod(ensureSentence(value));
+  const match = withoutPunctuation.match(
+    /^(?:do you want to|would you like to|do you wanna)\s+(.+)$/i
+  );
+
+  return match ? cleanText(match[1]) : "";
+}
+
+function gerundizeFirstWord(phrase: string) {
+  const [firstWord = "", ...restWords] = cleanText(phrase).split(" ");
+  const lowerFirstWord = firstWord.toLowerCase();
+  const irregular: Record<string, string> = {
+    be: "being",
+    get: "getting",
+    go: "going",
+    have: "having",
+    make: "making",
+    put: "putting",
+    run: "running",
+    sit: "sitting",
+    take: "taking",
+    wear: "wearing",
+  };
+  const gerund =
+    irregular[lowerFirstWord] ||
+    (/[aeiou][bcdfghjklmnpqrstvwxyz]$/i.test(firstWord) &&
+    !/[wxy]$/i.test(firstWord)
+      ? `${firstWord}${firstWord.at(-1)}ing`
+      : /e$/i.test(firstWord)
+        ? `${firstWord.slice(0, -1)}ing`
+        : `${firstWord}ing`);
+
+  return cleanText([gerund, ...restWords].join(" "));
+}
+
 function normalizeCommonLearnerEnglish(value: string) {
   const text = ensureSentence(value)
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/\bclubs\b/gi, "clothes");
+
+  if (isChineseJacketQuestionContext(value)) {
+    return "Do you want to wear a jacket?";
+  }
+
+  if (isChinesePhotoQuestionContext(value)) {
+    return "Do you want to take photos?";
+  }
 
   if (hasCjkText(text) && !hasLatinText(text)) {
     return "I want to say this more clearly.";
@@ -297,12 +463,73 @@ function getParkRosesSubject(value: string) {
   return match ? capitalizeFirst(cleanText(match[1])) : "";
 }
 
+function getWhatFocusParts(value: string) {
+  const text = stripFinalPeriod(ensureSentence(value)).replace(/[\u2018\u2019]/g, "'");
+  const match = text.match(
+    /^What\s+(?:(I(?:'m| am) really looking for)|(I(?: really)? want)|(I(?: really)? need)|(I(?:'d| would) like))\s+is\s+(.+)$/i
+  );
+
+  if (!match) return null;
+
+  const focus = cleanText(match[5]);
+  if (!focus) return null;
+
+  if (match[1]) return { focus, intent: "lookingFor" as const };
+  if (match[2]) return { focus, intent: "want" as const };
+  if (match[3]) return { focus, intent: "need" as const };
+  return { focus, intent: "wouldLike" as const };
+}
+
 function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap | null {
   const standard = normalizeOutputSentence(normalizeCommonLearnerEnglish(sourceText));
   const beautifulThing = getBeautifulThingParts(standard);
   const niceWalk = getNiceWalkParts(standard);
   const hiking = getHikingParts(standard);
   const parkSubject = getParkRosesSubject(standard);
+  const whatFocus = getWhatFocusParts(standard);
+
+  if (isJacketQuestionContext(sourceText) || isJacketQuestionContext(standard)) {
+    return {
+      standard: "Do you want to wear a jacket?",
+      natural: "Do you want to put on a jacket?",
+      idiomatic: "You might want to throw on a jacket.",
+      simple: "Wear a jacket?",
+    };
+  }
+
+  if (isPhotoQuestionContext(sourceText) || isPhotoQuestionContext(standard)) {
+    return {
+      standard: "Do you want to take photos?",
+      natural: "Do you want to take some pictures?",
+      idiomatic: "Want to snap a few photos?",
+      simple: "Take photos?",
+    };
+  }
+
+  if (whatFocus) {
+    const helperVerb = whatFocus.intent === "need" ? "need" : "want";
+    const naturalLead =
+      whatFocus.intent === "lookingFor"
+        ? "I'm hoping to find"
+        : whatFocus.intent === "need"
+          ? "I really need"
+          : whatFocus.intent === "wouldLike"
+            ? "I'd really like"
+            : "I really want";
+    const idiomaticLead =
+      whatFocus.intent === "lookingFor"
+        ? "I'm after"
+        : whatFocus.intent === "need"
+          ? "I could really use"
+          : "I'd love";
+
+    return {
+      standard,
+      natural: `${naturalLead} ${whatFocus.focus}.`,
+      idiomatic: `${idiomaticLead} ${whatFocus.focus}.`,
+      simple: `I ${helperVerb} ${whatFocus.focus}.`,
+    };
+  }
 
   if (
     normalizeComparableText(standard) ===
@@ -312,7 +539,7 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
       standard: "I want to say this more clearly.",
       natural: "I want to make this sound more natural.",
       idiomatic: "I want to put this in a better way.",
-      simple: "I want to say this better.",
+      simple: "Say this better.",
     };
   }
 
@@ -349,13 +576,13 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
           standard: "It's nice out today, so I took a two-hour walk.",
           natural: "It was so nice out that I went for a long walk.",
           idiomatic: "The weather was perfect, so I got in a two-hour walk.",
-          simple: "The weather was nice. I walked for two hours.",
+          simple: "Nice weather. I walked two hours.",
         }
       : {
           standard: "It's nice out today, so I took a walk.",
           natural: "It was so nice out that I went for a walk.",
           idiomatic: "The weather was perfect, so I got out for a walk.",
-          simple: "The weather was nice. I took a walk.",
+          simple: "Nice weather. I took a walk.",
         };
   }
 
@@ -365,13 +592,13 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
           standard: "It's nice out today, so we went hiking for two hours.",
           natural: "The weather was great, so we went on a two-hour hike.",
           idiomatic: "It was perfect hiking weather, so we hit the trail.",
-          simple: "The weather was nice. We hiked for two hours.",
+          simple: "Nice weather. We hiked two hours.",
         }
       : {
           standard: "It's nice out today, so we went hiking.",
           natural: "The weather was great, so we went on a hike.",
           idiomatic: "It was perfect hiking weather, so we hit the trail.",
-          simple: "The weather was nice. We went hiking.",
+          simple: "Nice weather. We hiked.",
         };
   }
 
@@ -394,7 +621,7 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
       standard: `${subject} is beautiful.`,
       natural: `${subject} is really pretty.`,
       idiomatic: `${subject} is gorgeous.`,
-      simple: `This is a beautiful ${beautifulThing.noun}.`,
+      simple: `Beautiful ${beautifulThing.noun}.`,
     };
   }
 
@@ -408,19 +635,28 @@ function createSimpleVariant(standard: string) {
   const niceWalk = getNiceWalkParts(text);
   const hiking = getHikingParts(text);
   const parkSubject = getParkRosesSubject(text);
+  const questionAction = getWantToQuestionAction(text);
+  const whatFocus = getWhatFocusParts(text);
 
-  if (beautifulThing) return `This is a beautiful ${beautifulThing.noun}.`;
+  if (questionAction) return `${capitalizeFirst(questionAction)}?`;
+
+  if (whatFocus) {
+    const helperVerb = whatFocus.intent === "need" ? "need" : "want";
+    return `I ${helperVerb} ${whatFocus.focus}.`;
+  }
+
+  if (beautifulThing) return `Beautiful ${beautifulThing.noun}.`;
 
   if (niceWalk) {
     return niceWalk.hasTwoHourDuration
-      ? "The weather was nice. I walked for two hours."
-      : "The weather was nice. I took a walk.";
+      ? "Nice weather. I walked two hours."
+      : "Nice weather. I took a walk.";
   }
 
   if (hiking) {
     return hiking.hasTwoHourDuration
-      ? "The weather was nice. We hiked for two hours."
-      : "The weather was nice. We went hiking.";
+      ? "Nice weather. We hiked two hours."
+      : "Nice weather. We hiked.";
   }
 
   if (parkSubject) {
@@ -465,6 +701,8 @@ function createNaturalVariant(standard: string) {
   const niceWalk = getNiceWalkParts(baseText);
   const hiking = getHikingParts(baseText);
   const parkSubject = getParkRosesSubject(baseText);
+  const questionAction = getWantToQuestionAction(baseText);
+  const whatFocus = getWhatFocusParts(baseText);
 
   if (beautifulThing) {
     const subject =
@@ -472,6 +710,26 @@ function createNaturalVariant(standard: string) {
         ? `${beautifulThing.determiner} ${beautifulThing.noun}`
         : `The ${beautifulThing.noun}`;
     return `${subject} is really pretty.`;
+  }
+
+  if (questionAction) {
+    return `Want to ${questionAction}?`;
+  }
+
+  if (whatFocus) {
+    if (whatFocus.intent === "lookingFor") {
+      return `I'm hoping to find ${whatFocus.focus}.`;
+    }
+
+    if (whatFocus.intent === "need") {
+      return `I really need ${whatFocus.focus}.`;
+    }
+
+    if (whatFocus.intent === "wouldLike") {
+      return `I'd really like ${whatFocus.focus}.`;
+    }
+
+    return `I really want ${whatFocus.focus}.`;
   }
 
   if (niceWalk) {
@@ -517,6 +775,8 @@ function createIdiomaticVariant(standard: string, natural: string) {
   const niceWalk = getNiceWalkParts(text);
   const hiking = getHikingParts(text);
   const parkSubject = getParkRosesSubject(text);
+  const questionAction = getWantToQuestionAction(text);
+  const whatFocus = getWhatFocusParts(text);
 
   if (beautifulThing) {
     const subject =
@@ -524,6 +784,22 @@ function createIdiomaticVariant(standard: string, natural: string) {
         ? `${beautifulThing.determiner} ${beautifulThing.noun}`
         : `The ${beautifulThing.noun}`;
     return `${subject} is gorgeous.`;
+  }
+
+  if (questionAction) {
+    return `Feel like ${gerundizeFirstWord(questionAction)}?`;
+  }
+
+  if (whatFocus) {
+    if (whatFocus.intent === "lookingFor") {
+      return `I'm after ${whatFocus.focus}.`;
+    }
+
+    if (whatFocus.intent === "need") {
+      return `I could really use ${whatFocus.focus}.`;
+    }
+
+    return `I'd love ${whatFocus.focus}.`;
   }
 
   if (niceWalk) {
@@ -565,9 +841,14 @@ function createDistinctFallbackVariant(standard: string, natural: string) {
   const text = ensureSentence(natural || standard);
   const withoutPeriod = stripFinalPeriod(text);
   const beautifulThing = getBeautifulThingParts(text);
+  const questionAction = getWantToQuestionAction(text);
 
   if (beautifulThing) {
     return createNaturalVariant(text);
+  }
+
+  if (questionAction) {
+    return `Feel like ${gerundizeFirstWord(questionAction)}?`;
   }
 
   const adjectiveMatch = withoutPeriod.match(
@@ -617,19 +898,86 @@ function makeUniqueVariant(
   return nonDuplicate;
 }
 
-function isDistinctVariantMap(map: Partial<Record<ExpressionVariantKey, unknown>>) {
-  const values = VARIANT_KEYS.map((key) => cleanText(map[key])).filter(Boolean);
+function isSimpleClearlyShorter(
+  standard: string,
+  natural: string,
+  simple: string
+) {
+  const simpleChars = getComparableCharLength(simple);
+  const baselineChars = Math.min(
+    getComparableCharLength(standard),
+    getComparableCharLength(natural)
+  );
+  const simpleWords = getComparableWords(simple).length;
+  const baselineWords = Math.min(
+    getComparableWords(standard).length,
+    getComparableWords(natural).length
+  );
 
-  if (values.length < VARIANT_KEYS.length) return false;
+  if (!simpleChars || !baselineChars) return false;
+
+  return (
+    simpleChars <= Math.floor(baselineChars * 0.85) ||
+    simpleChars <= baselineChars - 8 ||
+    simpleWords <= baselineWords - 2
+  );
+}
+
+function hasIdiomaticSignal(value: string) {
+  return /\b(?:a bit|a few|bundle up|call it a night|could really use|feel like|get(?:ting)? .* done|got (?:in|out)|gorgeous|hit the trail|I'm after|kind of|might want to|perfect|pretty|ready for bed|really|snap|sort of|throw on|wrap(?:ped)? up|you'd better)\b|(?:\bI'd\b|\byou'd\b|\bit's\b)/i.test(
+    value
+  );
+}
+
+function startsWithDifferentShape(left: string, right: string) {
+  return (
+    getComparableWords(left).slice(0, 2).join(" ") !==
+    getComparableWords(right).slice(0, 2).join(" ")
+  );
+}
+
+function isIdiomaticFunctional(
+  standard: string,
+  natural: string,
+  idiomatic: string
+) {
+  if (!cleanText(idiomatic)) return false;
+  if (hasIdiomaticSignal(idiomatic)) return true;
+
+  const differsFromStandard = startsWithDifferentShape(idiomatic, standard);
+  const differsFromNatural = startsWithDifferentShape(idiomatic, natural);
+  const closestSimilarity = Math.max(
+    getTextSimilarity(idiomatic, standard),
+    getTextSimilarity(idiomatic, natural)
+  );
+
+  return differsFromStandard && differsFromNatural && closestSimilarity <= 0.76;
+}
+
+function isDistinctVariantMap(map: Partial<Record<ExpressionVariantKey, unknown>>) {
+  const values = VARIANT_KEYS.map((key) => cleanText(map[key]));
+
+  if (values.some((value) => !value)) return false;
 
   const exactValues = values.map((value) => value.trim().toLowerCase());
   if (new Set(exactValues).size < values.length) return false;
+
+  const punctuationlessValues = values.map(normalizeComparableText);
+  if (new Set(punctuationlessValues).size < values.length) return false;
 
   for (let leftIndex = 0; leftIndex < values.length; leftIndex += 1) {
     for (let rightIndex = leftIndex + 1; rightIndex < values.length; rightIndex += 1) {
       if (isTooSimilar(values[leftIndex], values[rightIndex])) return false;
     }
   }
+
+  const standard = cleanText(map.standard);
+  const natural = cleanText(map.natural);
+  const idiomatic = cleanText(map.idiomatic);
+  const simple = cleanText(map.simple);
+
+  if (!isSimpleClearlyShorter(standard, natural, simple)) return false;
+  if (!isIdiomaticFunctional(standard, natural, idiomatic)) return false;
 
   return true;
 }
@@ -668,6 +1016,29 @@ function buildDistinctMapFromCandidates(
   return { standard, natural, idiomatic, simple };
 }
 
+function createEmergencyDistinctVariantMap(standardSource: string): ExpressionVariantMap {
+  const standard = normalizeOutputSentence(
+    normalizeCommonLearnerEnglish(standardSource)
+  ) || "I want to say this more clearly.";
+  const questionAction = getWantToQuestionAction(standard);
+
+  if (questionAction) {
+    return {
+      standard,
+      natural: `Want to ${questionAction}?`,
+      idiomatic: `Feel like ${gerundizeFirstWord(questionAction)}?`,
+      simple: `${capitalizeFirst(questionAction)}?`,
+    };
+  }
+
+  return {
+    standard,
+    natural: createNaturalVariant(standard),
+    idiomatic: createIdiomaticVariant(standard, createNaturalVariant(standard)),
+    simple: createSimpleVariant(standard),
+  };
+}
+
 function enforceDistinctVariantMap(
   variants: ExpressionVariantMap,
   fallback: ExpressionVariantMap,
@@ -683,7 +1054,7 @@ function enforceDistinctVariantMap(
     return knownScenario;
   }
 
-  return buildDistinctMapFromCandidates(
+  const rebuiltMap = buildDistinctMapFromCandidates(
     {
       standard: [variants.standard, fallback.standard],
       natural: [
@@ -707,6 +1078,14 @@ function enforceDistinctVariantMap(
     },
     fallback
   );
+
+  if (isDistinctVariantMap(rebuiltMap)) return rebuiltMap;
+
+  const emergencyMap = createEmergencyDistinctVariantMap(
+    fallbackSource || variants.standard || fallback.standard
+  );
+
+  return isDistinctVariantMap(emergencyMap) ? emergencyMap : rebuiltMap;
 }
 
 export function isPlaceholderExpression(value: unknown) {
@@ -718,6 +1097,10 @@ export function isExpressionVariantMapDistinctEnough(
   variants: Partial<Record<ExpressionVariantKey, unknown>> | undefined
 ) {
   return isDistinctVariantMap(variants || {});
+}
+
+export function normalizeEnglishExpressionPunctuation(value: string) {
+  return normalizeOutputSentence(value);
 }
 
 export function createFallbackExpressionVariantMap(sourceText: string): ExpressionVariantMap {
@@ -790,13 +1173,18 @@ export function normalizeExpressionVariantMap(
   const fallbackSourceKey = normalizeComparableText(fallbackSource);
 
   function candidateOrFallback(
+    key: ExpressionVariantKey,
     value: unknown,
     fallbackValue: string,
     allowSourceEcho = false
   ) {
     const candidate =
       !isPlaceholderExpression(value) && !isWeakGeneratedVariant(value) && cleanText(value)
-        ? normalizeOutputSentence(normalizeCommonLearnerEnglish(cleanText(value)))
+        ? normalizeVariantOutputSentence(
+            normalizeCommonLearnerEnglish(cleanText(value)),
+            key,
+            fallbackSource
+          )
         : "";
     const candidateKey = normalizeComparableText(candidate);
     const echoesLearnerSource =
@@ -808,15 +1196,20 @@ export function normalizeExpressionVariantMap(
   }
 
   const standard = candidateOrFallback(
+    "standard",
     variants?.standard,
     fallback.standard,
     normalizeComparableText(fallback.standard) === fallbackSourceKey
   );
   const initialMap = {
     standard,
-    natural: candidateOrFallback(variants?.natural, fallback.natural),
-    idiomatic: candidateOrFallback(variants?.idiomatic, fallback.idiomatic),
-    simple: candidateOrFallback(variants?.simple, fallback.simple),
+    natural: candidateOrFallback("natural", variants?.natural, fallback.natural),
+    idiomatic: candidateOrFallback(
+      "idiomatic",
+      variants?.idiomatic,
+      fallback.idiomatic
+    ),
+    simple: candidateOrFallback("simple", variants?.simple, fallback.simple),
   };
 
   return enforceDistinctVariantMap(initialMap, fallback, fallbackSource);

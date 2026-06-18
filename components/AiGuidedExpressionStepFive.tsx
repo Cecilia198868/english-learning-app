@@ -93,8 +93,7 @@ const progressStatusCopy: Record<AiGuidedProgressStepStatus, string> = {
   locked: "待练习",
 };
 
-const pendingExpressionText = "正在生成推荐表达...";
-const unavailableExpressionText = "推荐表达暂时没有生成，请稍后再试。";
+const pendingExpressionText = "正在重新生成更合适的表达...";
 
 function isPlaceholderExpression(text: string | undefined) {
   const normalized = text?.trim() || "";
@@ -417,21 +416,16 @@ export default function AiGuidedExpressionStepFive({
   const hasNextChineseText = Boolean(nextChineseText.trim());
   const displayNextChinese =
     nextChineseText.trim() || (isLoadingNextChinese ? COPY.loadingNext : COPY.nextFallback);
-  const firstReadyExpression = expressions.find(
-    (expression) => !isPlaceholderExpression(expression)
-  );
   const preparedExpressions = expressionMeta.map((meta, index) => {
     const expression = expressions[index];
-    const isReady =
-      !isPlaceholderExpression(expression) || Boolean(firstReadyExpression);
+    const isReady = !isPlaceholderExpression(expression);
 
     return {
       ...meta,
       isReady,
       text: !isPlaceholderExpression(expression)
         ? expression!.trim()
-        : firstReadyExpression?.trim() ||
-          (isLoadingExpressions ? pendingExpressionText : unavailableExpressionText),
+        : pendingExpressionText,
     };
   });
 

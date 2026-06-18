@@ -55,8 +55,7 @@ const expressionMeta = [
   },
 ] as const;
 
-const pendingRecommendationCopy = "正在生成推荐表达...";
-const unavailableRecommendationCopy = "推荐表达暂时没有生成，请稍后再试。";
+const pendingRecommendationCopy = "正在重新生成更合适的表达...";
 
 function isPlaceholderExpression(text: string | undefined) {
   const normalized = text?.trim() || "";
@@ -197,24 +196,12 @@ export default function FreeStudyPageFiveTop({
   renderUserExpressionText,
 }: FreeStudyPageFiveTopProps) {
   const displayText = userEnglishText.trim() || " ";
-  const firstReadyExpression = expressions.find(
-    (expression) => !isPlaceholderExpression(expression)
-  );
-  const fallbackExpressionText = !isPlaceholderExpression(displayText)
-    ? displayText
-    : "";
   const preparedExpressions = expressionMeta.map((meta, index) => ({
     ...meta,
-    isReady:
-      !isPlaceholderExpression(expressions[index]) ||
-      Boolean(firstReadyExpression || fallbackExpressionText),
+    isReady: !isPlaceholderExpression(expressions[index]),
     text: !isPlaceholderExpression(expressions[index])
       ? expressions[index]!.trim()
-      : firstReadyExpression?.trim() ||
-        fallbackExpressionText ||
-        (isLoadingExpressions
-          ? pendingRecommendationCopy
-          : unavailableRecommendationCopy),
+      : pendingRecommendationCopy,
   }));
   const safeSelectedIndex = Math.min(
     Math.max(selectedExpressionIndex, 0),

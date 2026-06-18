@@ -50,7 +50,6 @@ import {
   createFallbackExpressionVariantMap,
   isExpressionVariantMapDistinctEnough,
   normalizeExpressionVariantApiPayload,
-  normalizeExpressionVariantMap,
   toExpressionVariantApiFields,
   type ExpressionVariantKey,
 } from "@/lib/expressionVariantFallbacks";
@@ -3003,6 +3002,24 @@ function createExpressionVariantsFromMap(
   }));
 }
 
+function createPendingExpressionVariants() {
+  return expressionVariantLabels.map(({ key, label }) => ({
+    key,
+    label,
+    text: "",
+  }));
+}
+
+function createExpressionVariantMapFromVariants(variants: ExpressionVariant[]) {
+  return variants.reduce<Partial<Record<ExpressionVariantKey, string>>>(
+    (result, variant) => {
+      result[variant.key] = variant.text?.trim() || "";
+      return result;
+    },
+    {}
+  );
+}
+
 function normalizeApiExpressionVariants(
   data: ExpressionVariantApiResponse | undefined,
   fallbackSource: string
@@ -3451,26 +3468,41 @@ function SpeakEnglishClient() {
     !showListeningPrompt &&
     !showFreeConversationAnswerPrompt;
   const showAiGuidedNudge = hasEnglishAttempt && !isAiGuidedMode;
-  const expressionVariantsForDisplay = expressionVariants.length
+  const expressionVariantFallbackSourceForDisplay =
+    authoritativeEnglish.trim() ||
+    nativeSpeech.trim() ||
+    standardEnglish.trim() ||
+    message.trim();
+  const rawExpressionVariantsForDisplay = expressionVariants.length
     ? expressionVariants
-    : createFallbackExpressionVariants(standardEnglish);
+    : isLoadingExpressionVariants
+      ? createPendingExpressionVariants()
+      : createFallbackExpressionVariants(expressionVariantFallbackSourceForDisplay);
+  const rawExpressionVariantMapForDisplay = createExpressionVariantMapFromVariants(
+    rawExpressionVariantsForDisplay
+  );
+  const expressionVariantsForDisplay =
+    isExpressionVariantMapDistinctEnough(rawExpressionVariantMapForDisplay)
+      ? rawExpressionVariantsForDisplay
+      : isLoadingExpressionVariants
+        ? createPendingExpressionVariants()
+        : createFallbackExpressionVariants(expressionVariantFallbackSourceForDisplay);
   const selectedExpression =
     expressionVariantsForDisplay[
       Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)
     ] || expressionVariantsForDisplay[0];
-  const referenceResultFallbackText =
-    standardEnglish.trim() ||
-    authoritativeEnglish.trim() ||
-    (!isLoadingExpressionVariants ? message.trim() : "");
-  const expressionVariantMapForResultDisplay = normalizeExpressionVariantMap(
-    expressionVariantsForDisplay.reduce<
-      Partial<Record<ExpressionVariantKey, string>>
-    >((result, variant) => {
-      result[variant.key] = variant.text;
-      return result;
-    }, {}),
-    referenceResultFallbackText
-  );
+  const expressionVariantMapCandidateForResultDisplay =
+    createExpressionVariantMapFromVariants(expressionVariantsForDisplay);
+  const hasQualifiedExpressionVariantsForResult =
+    isExpressionVariantMapDistinctEnough(
+      expressionVariantMapCandidateForResultDisplay
+    );
+  const expressionVariantMapForResultDisplay: Partial<
+    Record<ExpressionVariantKey, string>
+  > =
+    hasQualifiedExpressionVariantsForResult
+      ? expressionVariantMapCandidateForResultDisplay
+      : {};
   const referenceResultVariantOrder = isAiGuidedMode
     ? aiGuidedResultVariantOrder
     : freeStudyResultVariantOrder;
@@ -3479,13 +3511,9 @@ function SpeakEnglishClient() {
 
     return variantText && variantText !== "This sentence is still being prepared."
       ? variantText
-      : referenceResultFallbackText;
+      : "";
   });
-  const firstReferenceResultText =
-    referenceResultCandidateTexts.find((text) => Boolean(text.trim())) || "";
-  const referenceResultVariantTexts = referenceResultCandidateTexts.map(
-    (text) => text || firstReferenceResultText
-  );
+  const referenceResultVariantTexts = referenceResultCandidateTexts;
   const referenceResultPreloadKey = referenceResultVariantTexts
     .map((text) => text.trim())
     .filter(Boolean)
@@ -6152,7 +6180,7 @@ function SpeakEnglishClient() {
     const currentChinese = nativeSpeech.trim();
     const learnerEnglish = message.trim();
     const fallbackExpressionSource =
-      authoritativeEnglish.trim() || learnerEnglish;
+      authoritativeEnglish.trim() || currentChinese || learnerEnglish;
 
     if (
       isFreeConversationMode ||
@@ -6440,11 +6468,10 @@ function SpeakEnglishClient() {
 
   function readReferenceResultVariant(variantIndex: number, rate = 1) {
     const referenceText = referenceResultVariantTexts[variantIndex]?.trim();
-    const variantText = expressionVariantsForDisplay[variantIndex]?.text?.trim();
-    const text = referenceText || variantText || standardEnglish;
 
+    if (!referenceText) return;
     setSelectedExpressionIndex(variantIndex);
-    speakEnglishText(text, rate, referenceResultVoiceId);
+    speakEnglishText(referenceText, rate, referenceResultVoiceId);
   }
 
   function getSelectedReferenceResultText() {
@@ -6452,10 +6479,9 @@ function SpeakEnglishClient() {
       selectedExpressionIndex,
       Math.max(referenceResultVariantTexts.length - 1, 0)
     );
-    const variantText = expressionVariantsForDisplay[safeIndex]?.text?.trim();
     const referenceText = referenceResultVariantTexts[safeIndex]?.trim();
 
-    return referenceText || variantText || standardEnglish.trim();
+    return referenceText || "";
   }
 
   function saveSelectedReferenceResultExpression() {

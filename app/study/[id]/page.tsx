@@ -567,6 +567,16 @@ function createExpressionVariantsFromMap(
   }));
 }
 
+function createExpressionVariantMapFromVariants(variants: ExpressionVariant[]) {
+  return variants.reduce<Partial<Record<ExpressionVariantKey, string>>>(
+    (result, variant) => {
+      result[variant.key] = variant.text?.trim() || "";
+      return result;
+    },
+    {}
+  );
+}
+
 function normalizeApiExpressionVariants(
   data: ExpressionVariantApiResponse | undefined,
   fallbackSource: string
@@ -1810,9 +1820,8 @@ export default function StudyPage() {
     if (!spokenEnglish || isListening) return;
 
     let cancelled = false;
-    const fallbackVariants = createFallbackExpressionVariants(
-      currentPair.english || ""
-    );
+    const expressionFallbackSource = currentPair.chinese || currentPair.english || "";
+    const fallbackVariants = createFallbackExpressionVariants(expressionFallbackSource);
     const prebuiltVariants = prebuiltClassicExpressionSet?.variants || [];
 
     setExpressionVariants(
@@ -1844,7 +1853,7 @@ export default function StudyPage() {
 
         const normalizedVariants = normalizeApiExpressionVariants(
           data,
-          currentPair.english || currentPair.chinese
+          expressionFallbackSource
         );
         logExpressionVariantResult("AI expression result:", normalizedVariants);
         const nextVariants = createExpressionVariantsFromMap(normalizedVariants);
@@ -2473,9 +2482,20 @@ export default function StudyPage() {
   const showStudyListeningPrompt = hasLoadedLesson && isListening;
   const showStudyVoiceOnlyPrompt = showStudyPrompt || showStudyListeningPrompt;
   const showExpressionFeedback = Boolean(spokenDisplay) && !showStudyListeningPrompt;
-  const expressionVariantsForDisplay = expressionVariants.length
+  const expressionVariantFallbackSourceForDisplay =
+    currentPair.chinese || currentPair.english || spokenDisplay || "";
+  const fallbackExpressionVariantsForDisplay = createFallbackExpressionVariants(
+    expressionVariantFallbackSourceForDisplay
+  );
+  const rawExpressionVariantsForDisplay = expressionVariants.length
     ? expressionVariants
-    : createFallbackExpressionVariants(currentPair.english || "");
+    : fallbackExpressionVariantsForDisplay;
+  const expressionVariantsForDisplay =
+    isExpressionVariantMapDistinctEnough(
+      createExpressionVariantMapFromVariants(rawExpressionVariantsForDisplay)
+    )
+      ? rawExpressionVariantsForDisplay
+      : fallbackExpressionVariantsForDisplay;
   const selectedExpression =
     expressionVariantsForDisplay[
       Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)

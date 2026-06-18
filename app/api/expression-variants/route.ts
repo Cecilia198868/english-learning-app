@@ -21,6 +21,7 @@ type VariantResponse = {
   naturalExpression?: string;
   idiomaticExpression?: string;
   simpleExpression?: string;
+  variants?: Partial<Record<keyof ExpressionVariantMap, unknown>>;
 };
 
 const MAX_VARIANT_GENERATION_ATTEMPTS = 3;
@@ -32,11 +33,13 @@ const EXPRESSION_VARIANT_PROMPT = [
   "Use semantic authority strictly: use authoritativeEnglish when provided; otherwise use only the meaning of chinese. If both are missing, infer the intended meaning from learnerTranscript and correct likely grammar.",
   "When chinese or authoritativeEnglish exists, learnerTranscript is unreliable speech recognition. Never copy extra facts, places, reasons, nouns, or events from it unless they are supported by chinese or authoritativeEnglish.",
   'Return JSON only with keys "recommendedExpression", "naturalExpression", "idiomaticExpression", and "simpleExpression".',
-  "recommendedExpression: standard, natural American English; accurate and polished.",
-  "naturalExpression: what Americans would most commonly say; contractions and casual wording are allowed.",
-  "idiomaticExpression: more native-sounding; idioms, fixed phrases, phrasal verbs, and local wording are allowed when natural.",
-  "simpleExpression: CEFR A1-A2; short, clear, beginner-friendly words. It may split the idea into two short sentences.",
-  "Hard rules: no two values may be identical; no pair may be more than 70% text-similar; each version must use noticeably different wording.",
+  "recommendedExpression: standard, correct, learner-friendly spoken English.",
+  "naturalExpression: what Americans would naturally say in daily conversation; it may be slightly more casual or use a different everyday verb.",
+  "idiomaticExpression: more native and life-like, using a different structure, phrasal verb, soft advice pattern, or casual wording when natural. Keep it easy.",
+  "simpleExpression: clearly shorter and simpler than recommendedExpression or naturalExpression; suitable for beginners and often a short fragment is okay.",
+  "If the idea is a question, every question-form value must end with a question mark.",
+  "Hard rules: no two values may be identical; after removing punctuation no two values may be identical; do not create four tiny rewrites of the same sentence.",
+  "Hard rules: simpleExpression must be visibly shorter; idiomaticExpression must not use the same sentence frame as recommendedExpression unless it adds a natural spoken pattern.",
   "Do not use filler such as Honestly, in other words, from another angle, or meta comments about expressing the idea.",
   "Keep each value one short spoken English line.",
 ].join("\n");
@@ -62,9 +65,30 @@ function buildVariantRequestPayload({
     learnerTranscript,
     rejectedVariants,
     retryInstruction: rejectedVariants
-      ? "The rejectedVariants were identical or too similar. Regenerate four clearly different versions now."
+      ? "The rejectedVariants failed validation because the four lines were identical, punctuation-only changes, too similar, not simple enough, or not idiomatic enough. Regenerate four functionally different versions now."
       : undefined,
   });
+}
+
+function pickRawVariantMap(variants: VariantResponse): Partial<ExpressionVariantMap> {
+  return {
+    standard: cleanText(
+      variants.recommendedExpression ??
+        variants.standard ??
+        variants.variants?.standard
+    ),
+    natural: cleanText(
+      variants.naturalExpression ?? variants.natural ?? variants.variants?.natural
+    ),
+    idiomatic: cleanText(
+      variants.idiomaticExpression ??
+        variants.idiomatic ??
+        variants.variants?.idiomatic
+    ),
+    simple: cleanText(
+      variants.simpleExpression ?? variants.simple ?? variants.variants?.simple
+    ),
+  };
 }
 
 function createExpressionVariantResponse(
@@ -98,7 +122,7 @@ export async function POST(req: Request) {
     const learnerTranscript = cleanText(userEnglish);
     const authoritativeEnglish = cleanText(standardEnglish);
     fallbackSource =
-      authoritativeEnglish || learnerTranscript || chineseText;
+      authoritativeEnglish || chineseText || learnerTranscript;
 
     if (!chineseText && !authoritativeEnglish && !learnerTranscript) {
       return NextResponse.json({ error: "NO_CONTEXT" }, { status: 400 });
@@ -141,12 +165,21 @@ export async function POST(req: Request) {
 
       const content = completion.choices[0]?.message?.content || "{}";
       const variants = JSON.parse(content) as VariantResponse;
+      const rawVariantMap = pickRawVariantMap(variants);
+      const isRawDistinct =
+        isExpressionVariantMapDistinctEnough(rawVariantMap);
+
+      if (!isRawDistinct && attempt < MAX_VARIANT_GENERATION_ATTEMPTS - 1) {
+        rejectedVariants = variants;
+        continue;
+      }
+
       const normalizedVariants = normalizeExpressionVariantApiPayload(
         variants,
         fallbackSource
       );
       const isNormalizedDistinct =
-        isExpressionVariantMapDistinctEnough(normalizedVariants);
+        isRawDistinct && isExpressionVariantMapDistinctEnough(normalizedVariants);
 
       if (
         isNormalizedDistinct ||

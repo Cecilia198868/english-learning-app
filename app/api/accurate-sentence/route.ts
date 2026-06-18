@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
+import { normalizeEnglishExpressionPunctuation } from "@/lib/expressionVariantFallbacks";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -35,7 +36,9 @@ export async function POST(req: Request) {
       ],
     });
 
-    const english = completion.choices[0]?.message?.content?.trim() || "";
+    const english = normalizeEnglishExpressionPunctuation(
+      completion.choices[0]?.message?.content?.trim() || ""
+    );
 
     if (!english) {
       return NextResponse.json({ error: "EMPTY_ENGLISH" }, { status: 500 });
