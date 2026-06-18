@@ -2987,7 +2987,7 @@ function normalizeSpeechRate(rate: number) {
 }
 
 const SLOW_READ_RATE = 0.75;
-const AI_GUIDED_REFERENCE_VOICE_ID: SpeakFlowVoiceId = "alloy";
+const RESULT_EXPRESSION_VOICE_ID: SpeakFlowVoiceId = "alloy";
 
 function MenuGlyph({
   level,
@@ -3259,9 +3259,7 @@ function SpeakEnglishClient() {
   const voiceMenuItemLabel = language === "en" ? "Voice" : "声音";
   const isAiGuidedRoute = pathname?.startsWith("/ai-guided-expression") ?? false;
   const isAiGuidedMode = trainingGroundMode === "guided" || isAiGuidedRoute;
-  const referenceResultVoiceId = isAiGuidedMode
-    ? AI_GUIDED_REFERENCE_VOICE_ID
-    : selectedVoiceId;
+  const referenceResultVoiceId = RESULT_EXPRESSION_VOICE_ID;
   const activeFreePracticeScope: FreePracticeScope = isAiGuidedMode
     ? "guided"
     : "free";
