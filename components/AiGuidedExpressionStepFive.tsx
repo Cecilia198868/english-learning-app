@@ -64,7 +64,7 @@ const COPY = {
   changeAria: "换一句新的中文建议",
   loadingNext: "正在为你准备下一句...",
   menuLabel: "回到学习首页",
-  nextFallback: "我还想补充一个小细节。",
+  nextFallback: "你现在感觉怎么样？",
   nextTitle: "下一句，可以这样说",
   pageLabel: "AI引导表达结果页",
   playAria: "播放这句表达",
