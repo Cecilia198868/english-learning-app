@@ -200,13 +200,18 @@ export default function FreeStudyPageFiveTop({
   const firstReadyExpression = expressions.find(
     (expression) => !isPlaceholderExpression(expression)
   );
+  const fallbackExpressionText = !isPlaceholderExpression(displayText)
+    ? displayText
+    : "";
   const preparedExpressions = expressionMeta.map((meta, index) => ({
     ...meta,
     isReady:
-      !isPlaceholderExpression(expressions[index]) || Boolean(firstReadyExpression),
+      !isPlaceholderExpression(expressions[index]) ||
+      Boolean(firstReadyExpression || fallbackExpressionText),
     text: !isPlaceholderExpression(expressions[index])
       ? expressions[index]!.trim()
       : firstReadyExpression?.trim() ||
+        fallbackExpressionText ||
         (isLoadingExpressions
           ? pendingRecommendationCopy
           : unavailableRecommendationCopy),

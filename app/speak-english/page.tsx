@@ -3393,7 +3393,9 @@ function SpeakEnglishClient() {
       Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)
     ] || expressionVariantsForDisplay[0];
   const referenceResultFallbackText =
-    standardEnglish.trim() || authoritativeEnglish.trim();
+    standardEnglish.trim() ||
+    authoritativeEnglish.trim() ||
+    (!isLoadingExpressionVariants ? message.trim() : "");
   const referenceResultCandidateTexts = expressionVariantLabels.map((_, index) => {
     const variantText = expressionVariantsForDisplay[index]?.text?.trim() || "";
 
@@ -3410,8 +3412,12 @@ function SpeakEnglishClient() {
     .map((text) => text.trim())
     .filter(Boolean)
     .join("\u0001");
-  const guidedResultSuggestion =
-    guidedFollowupSuggestion.trim() || "我还想多说一点我的感受。";
+  const guidedResultSuggestion = guidedFollowupSuggestion.trim();
+  const isGuidedFollowupPending =
+    isAiGuidedMode &&
+    hasEnglishAttempt &&
+    Boolean(nativeSpeech.trim() || message.trim()) &&
+    !guidedResultSuggestion;
   const freeConversationExpressionVariants = useMemo(() => {
     const standard =
       freeConversationResponse?.standard ||
@@ -6047,11 +6053,22 @@ function SpeakEnglishClient() {
   }, [hasNativeSpeech, isNativeSpeechConfirmed, nativeSpeech]);
 
   useEffect(() => {
-    if (isFreeConversationMode || !hasEnglishAttempt || !nativeSpeech) return;
+    const currentChinese = nativeSpeech.trim();
+    const learnerEnglish = message.trim();
+    const fallbackExpressionSource =
+      authoritativeEnglish.trim() || learnerEnglish;
+
+    if (
+      isFreeConversationMode ||
+      !hasEnglishAttempt ||
+      (!currentChinese && !learnerEnglish)
+    ) {
+      return;
+    }
 
     let cancelled = false;
-    const fallbackVariants = authoritativeEnglish
-      ? createFallbackExpressionVariants(authoritativeEnglish)
+    const fallbackVariants = fallbackExpressionSource
+      ? createFallbackExpressionVariants(fallbackExpressionSource)
       : [];
     setExpressionVariants([]);
     setSelectedExpressionIndex(0);
@@ -6063,8 +6080,8 @@ function SpeakEnglishClient() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            chinese: nativeSpeech,
-            userEnglish: message,
+            chinese: currentChinese,
+            userEnglish: learnerEnglish,
             standardEnglish: authoritativeEnglish,
           }),
         });
@@ -6119,9 +6136,13 @@ function SpeakEnglishClient() {
 
   useEffect(() => {
     const currentChinese = nativeSpeech.trim();
-    const recommendedEnglish = standardEnglish.trim();
+    const recommendedEnglish =
+      standardEnglish.trim() || authoritativeEnglish.trim();
+    const learnerEnglish = message.trim();
+    const hasFollowupContext = Boolean(currentChinese || learnerEnglish);
     const requestKey = JSON.stringify({
       currentChinese,
+      learnerEnglish,
       refreshKey: guidedFollowupRefreshKey,
       recommendedEnglish,
     });
@@ -6129,9 +6150,7 @@ function SpeakEnglishClient() {
     if (
       !isAiGuidedMode ||
       !hasEnglishAttempt ||
-      isLoadingExpressionVariants ||
-      !currentChinese ||
-      !recommendedEnglish ||
+      !hasFollowupContext ||
       guidedFollowupRequestKeyRef.current === requestKey
     ) {
       return;
@@ -6156,7 +6175,7 @@ function SpeakEnglishClient() {
                 recommendedEnglish: turnRecommendedEnglish,
               })
             ),
-            userEnglish: "",
+            userEnglish: learnerEnglish,
           }),
         });
         const data = (await response.json()) as { suggestion?: unknown };
@@ -6178,8 +6197,8 @@ function SpeakEnglishClient() {
             ...guidedConversationTurnsRef.current,
             {
               chinese: currentChinese,
-              recommendedEnglish,
-              userEnglish: "",
+              recommendedEnglish: recommendedEnglish || learnerEnglish,
+              userEnglish: learnerEnglish,
             },
           ].slice(-6);
           setIsLoadingGuidedFollowup(false);
@@ -6196,7 +6215,8 @@ function SpeakEnglishClient() {
     hasEnglishAttempt,
     guidedFollowupRefreshKey,
     isAiGuidedMode,
-    isLoadingExpressionVariants,
+    authoritativeEnglish,
+    message,
     nativeSpeech,
     standardEnglish,
   ]);
@@ -7614,8 +7634,11 @@ function SpeakEnglishClient() {
             <AiGuidedExpressionStepFive
               userEnglishText={message}
               nextChineseText={guidedResultSuggestion}
-              isLoadingNextChinese={isLoadingGuidedFollowup}
+              isLoadingNextChinese={
+                isLoadingGuidedFollowup || isGuidedFollowupPending
+              }
               expressions={referenceResultVariantTexts}
+              isLoadingExpressions={isLoadingExpressionVariants}
               selectedExpressionIndex={selectedExpressionIndex}
               hasProEntitlement={isAccountPro}
               menuLabel="回到学习首页"

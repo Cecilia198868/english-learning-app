@@ -8,6 +8,7 @@ type AiGuidedExpressionStepFiveProps = {
   userEnglishText: string;
   nextChineseText: string;
   isLoadingNextChinese?: boolean;
+  isLoadingExpressions?: boolean;
   expressions: string[];
   selectedExpressionIndex: number;
   hasProEntitlement?: boolean;
@@ -92,7 +93,19 @@ const progressStatusCopy: Record<AiGuidedProgressStepStatus, string> = {
   locked: "待练习",
 };
 
-const pendingExpressionText = "This sentence is still being prepared.";
+const pendingExpressionText = "正在生成推荐表达...";
+const unavailableExpressionText = "推荐表达暂时没有生成，请稍后再试。";
+
+function isPlaceholderExpression(text: string | undefined) {
+  const normalized = text?.trim() || "";
+
+  return (
+    !normalized ||
+    normalized === "Preparing a better expression." ||
+    normalized === "Preparing a better expression..." ||
+    normalized === "This sentence is still being prepared."
+  );
+}
 
 const expressionMeta = [
   {
@@ -377,6 +390,7 @@ export default function AiGuidedExpressionStepFive({
   userEnglishText,
   nextChineseText,
   isLoadingNextChinese = false,
+  isLoadingExpressions = false,
   expressions,
   selectedExpressionIndex,
   hasProEntitlement = false,
@@ -402,10 +416,23 @@ export default function AiGuidedExpressionStepFive({
     formatUserExpressionDisplay(userEnglishText) || "I'm practicing this sentence.";
   const displayNextChinese =
     nextChineseText.trim() || (isLoadingNextChinese ? COPY.loadingNext : COPY.nextFallback);
-  const safeExpressions =
-    expressions.length > 0
-      ? expressions.map((expression) => expression.trim() || pendingExpressionText)
-      : [pendingExpressionText];
+  const firstReadyExpression = expressions.find(
+    (expression) => !isPlaceholderExpression(expression)
+  );
+  const preparedExpressions = expressionMeta.map((meta, index) => {
+    const expression = expressions[index];
+    const isReady =
+      !isPlaceholderExpression(expression) || Boolean(firstReadyExpression);
+
+    return {
+      ...meta,
+      isReady,
+      text: !isPlaceholderExpression(expression)
+        ? expression!.trim()
+        : firstReadyExpression?.trim() ||
+          (isLoadingExpressions ? pendingExpressionText : unavailableExpressionText),
+    };
+  });
 
   useEffect(() => {
     if (!isProgressOpen) return;
@@ -943,6 +970,10 @@ export default function AiGuidedExpressionStepFive({
             inset 0 1px 0 rgba(255, 255, 255, 0.96);
         }
 
+        .sf-ai-guided-step-five-record-card.is-pending {
+          cursor: default;
+        }
+
         .sf-ai-guided-step-five-record-icon {
           display: grid;
           width: clamp(2.75rem, 12.4vw, 3.35rem);
@@ -1101,6 +1132,12 @@ export default function AiGuidedExpressionStepFive({
 
         .sf-ai-guided-step-five-slow-button {
           width: clamp(2.52rem, 11.2vw, 3rem);
+        }
+
+        .sf-ai-guided-step-five-play:disabled,
+        .sf-ai-guided-step-five-slow-button:disabled {
+          cursor: default;
+          opacity: 0.48;
         }
 
         .sf-ai-guided-step-five-more {
@@ -1686,37 +1723,39 @@ export default function AiGuidedExpressionStepFive({
               <span>{COPY.records}</span>
             </h2>
             <div className="sf-ai-guided-step-five-record-list">
-              {safeExpressions.map((text, index) => {
-                const meta =
-                  expressionMeta[index] ||
-                  expressionMeta[expressionMeta.length - 1];
+              {preparedExpressions.map((expression, index) => {
                 const isSelected = selectedExpressionIndex === index;
 
                 return (
                   <article
-                    key={`ai-guided-step-five-expression-${index}-${text}`}
-                    className={`sf-ai-guided-step-five-record-card is-${meta.tone} ${
+                    key={`ai-guided-step-five-expression-${index}-${expression.text}`}
+                    className={`sf-ai-guided-step-five-record-card is-${expression.tone} ${
                       isSelected ? "is-selected" : ""
-                    }`}
-                    onClick={() => onSelectExpression(index)}
+                    } ${expression.isReady ? "" : "is-pending"}`}
+                    aria-busy={!expression.isReady && isLoadingExpressions}
+                    onClick={() => {
+                      if (expression.isReady) onSelectExpression(index);
+                    }}
                   >
                     <div
-                      className={`sf-ai-guided-step-five-record-icon is-${meta.tone}`}
+                      className={`sf-ai-guided-step-five-record-icon is-${expression.tone}`}
                       aria-hidden="true"
                     >
-                      <ExpressionIcon name={meta.icon} />
+                      <ExpressionIcon name={expression.icon} />
                     </div>
                     <div className="sf-ai-guided-step-five-record-copy">
                       <div className="sf-ai-guided-step-five-record-toolbar">
-                        <p className={`sf-ai-guided-step-five-record-badge is-${meta.tone}`}>
-                          {meta.badge}
+                        <p className={`sf-ai-guided-step-five-record-badge is-${expression.tone}`}>
+                          {expression.badge}
                         </p>
                         <div className="sf-ai-guided-step-five-record-actions">
                           <button
                             type="button"
                             aria-label={`${COPY.playAria} ${index + 1}`}
+                            disabled={!expression.isReady}
                             onClick={(event) => {
                               event.stopPropagation();
+                              if (!expression.isReady) return;
                               onSelectExpression(index);
                               onPlayExpression(index, 1);
                             }}
@@ -1727,8 +1766,10 @@ export default function AiGuidedExpressionStepFive({
                           <button
                             type="button"
                             aria-label={`以 0.75 倍速播放第 ${index + 1} 条表达`}
+                            disabled={!expression.isReady}
                             onClick={(event) => {
                               event.stopPropagation();
+                              if (!expression.isReady) return;
                               onSelectExpression(index);
                               onPlayExpression(index, 0.75);
                             }}
@@ -1738,10 +1779,19 @@ export default function AiGuidedExpressionStepFive({
                           </button>
                         </div>
                       </div>
-                      <p lang="en" className="sf-ai-guided-step-five-record-text">
-                        {renderInteractiveExpressionText
-                          ? renderInteractiveExpressionText(text, index, meta.tone)
-                          : renderExpressionText(text, meta.tone)}
+                      <p
+                        lang={expression.isReady ? "en" : "zh-CN"}
+                        className="sf-ai-guided-step-five-record-text"
+                      >
+                        {expression.isReady && renderInteractiveExpressionText
+                          ? renderInteractiveExpressionText(
+                              expression.text,
+                              index,
+                              expression.tone
+                            )
+                          : expression.isReady
+                            ? renderExpressionText(expression.text, expression.tone)
+                            : expression.text}
                       </p>
                     </div>
                   </article>
