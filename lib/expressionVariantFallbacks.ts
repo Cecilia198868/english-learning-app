@@ -38,9 +38,30 @@ function capitalizeFirst(value: string) {
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
 }
 
-function lowerFirst(value: string) {
+function normalizeOutputSentence(value: string) {
+  return ensureSentence(value).replace(/^[a-z]/, (letter) => letter.toUpperCase());
+}
+
+function getBeautifulThingParts(value: string) {
+  const match = stripFinalPeriod(ensureSentence(value)).match(
+    /^(This|That|The|A|An) ([A-Za-z][A-Za-z' -]*?) is beautiful$/i
+  );
+
+  if (!match) return null;
+
+  const determiner = capitalizeFirst(match[1].toLowerCase());
+  const noun = cleanText(match[2]).replace(/^(?:a|an|the)\s+/i, "");
+
+  return noun ? { determiner, noun } : null;
+}
+
+function isWeakGeneratedVariant(value: unknown) {
   const text = cleanText(value);
-  return text ? text.charAt(0).toLowerCase() + text.slice(1) : text;
+  return (
+    /^honestly,\s*in other words,/i.test(text) ||
+    /^in other words,/i.test(text) ||
+    /^honestly,\s*(?:this|that|the|a|an|it|there)\b/i.test(text)
+  );
 }
 
 function normalizeCommonLearnerEnglish(value: string) {
@@ -77,6 +98,15 @@ function normalizeCommonLearnerEnglish(value: string) {
 function createSimpleVariant(standard: string) {
   const text = ensureSentence(standard);
   const withoutPeriod = stripFinalPeriod(text);
+  const beautifulThing = getBeautifulThingParts(text);
+
+  if (beautifulThing) {
+    return ensureSentence(
+      /^(?:This|That)$/i.test(beautifulThing.determiner)
+        ? `${beautifulThing.determiner} is a beautiful ${beautifulThing.noun}`
+        : `It is a beautiful ${beautifulThing.noun}`
+    );
+  }
 
   const hikingMatch = withoutPeriod.match(
     /^It[’']s nice out today, so we went hiking(?: for two hours)?$/i
@@ -128,6 +158,15 @@ function createNaturalVariant(standard: string) {
   const baseText = leadingToday
     ? ensureSentence(`${capitalizeFirst(stripFinalPeriod(leadingToday[1]))} today`)
     : ensureSentence(standard);
+  const beautifulThing = getBeautifulThingParts(baseText);
+
+  if (beautifulThing) {
+    return ensureSentence(
+      /^(?:This|That)$/i.test(beautifulThing.determiner)
+        ? `${beautifulThing.determiner} ${beautifulThing.noun} is really beautiful`
+        : `The ${beautifulThing.noun} is really beautiful`
+    );
+  }
 
   const hikingMatch = stripFinalPeriod(baseText).match(
     /^It[’']s nice out today, so we went hiking(?: for two hours)?$/i
@@ -164,6 +203,11 @@ function createNaturalVariant(standard: string) {
 function createIdiomaticVariant(standard: string, natural: string) {
   const text = ensureSentence(standard);
   const withoutPeriod = stripFinalPeriod(text);
+  const beautifulThing = getBeautifulThingParts(text);
+
+  if (beautifulThing) {
+    return `What a beautiful ${beautifulThing.noun}!`;
+  }
 
   const hikingMatch = withoutPeriod.match(
     /^It[’']s nice out today, so we went hiking(?: for two hours)?$/i
@@ -201,11 +245,26 @@ function createIdiomaticVariant(standard: string, natural: string) {
   return ensureSentence(natural || text);
 }
 
-function createOralVariant(standard: string, natural: string) {
+function createDistinctFallbackVariant(standard: string, natural: string) {
   const text = ensureSentence(natural || standard);
-  if (/^I think /i.test(text)) return text.replace(/^I think /i, "Honestly, I think ");
-  if (/^I /i.test(text)) return text.replace(/^I /i, "Honestly, I ");
-  return `Honestly, ${lowerFirst(text)}`;
+  const withoutPeriod = stripFinalPeriod(text);
+  const beautifulThing = getBeautifulThingParts(text);
+
+  if (beautifulThing) {
+    return createNaturalVariant(text);
+  }
+
+  const adjectiveMatch = withoutPeriod.match(
+    /^(.+) is (good|nice|great|beautiful|interesting|important|helpful|easy|hard)$/i
+  );
+  if (adjectiveMatch) {
+    return ensureSentence(`${adjectiveMatch[1]} is really ${adjectiveMatch[2]}`);
+  }
+
+  if (/^I think /i.test(text)) return text.replace(/^I think /i, "I really think ");
+  if (/^I want to /i.test(text)) return text.replace(/^I want to /i, "I'd like to ");
+
+  return text;
 }
 
 function makeUniqueVariant(
@@ -213,8 +272,8 @@ function makeUniqueVariant(
   fallback: string,
   used: Set<string>
 ) {
-  const candidates = [preferred, fallback, createOralVariant(fallback, preferred)]
-    .map(ensureSentence)
+  const candidates = [preferred, fallback, createDistinctFallbackVariant(fallback, preferred)]
+    .map(normalizeOutputSentence)
     .filter(Boolean);
 
   for (const candidate of candidates) {
@@ -225,7 +284,7 @@ function makeUniqueVariant(
     }
   }
 
-  const finalCandidate = ensureSentence(`In other words, ${lowerFirst(fallback)}`);
+  const finalCandidate = normalizeOutputSentence(fallback);
   used.add(finalCandidate.toLowerCase());
   return finalCandidate;
 }
@@ -267,7 +326,9 @@ export function normalizeExpressionVariantMap(
     allowSourceEcho = false
   ) {
     const candidate =
-      !isPlaceholderExpression(value) && cleanText(value) ? cleanText(value) : "";
+      !isPlaceholderExpression(value) && !isWeakGeneratedVariant(value) && cleanText(value)
+        ? normalizeOutputSentence(cleanText(value))
+        : "";
     const candidateKey = normalizeComparableText(candidate);
     const echoesLearnerSource =
       !allowSourceEcho &&
