@@ -1,0 +1,18 @@
+{
+  "user:xuhuiyangny@gmail.com": {
+    "completedExpressionIds": [
+      "free:1781383854718:y5hz7wbvuuq"
+    ],
+    "createdAt": "2026-06-13T20:50:53.834Z",
+    "dailyCounts": {
+      "2026-06-13": 1
+    },
+    "stepCompletions": {
+      "native": "2026-06-13T20:50:53.835Z",
+      "english": "2026-06-13T20:51:05.482Z",
+      "suggestions": "2026-06-13T20:51:05.482Z"
+    },
+    "updatedAt": "2026-06-13T20:51:05.482Z",
+    "userKey": "user:xuhuiyangny@gmail.com"
+  }
+}

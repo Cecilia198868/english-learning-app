@@ -1,0 +1,4804 @@
+{
+  "simple": [
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-01.mp3",
+      "source": "简单/q.mp3",
+      "start": 0.0,
+      "end": 2.388,
+      "duration": 2.388,
+      "english": "Hey, what's going on with you today?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-02.mp3",
+      "source": "简单/q.mp3",
+      "start": 2.147,
+      "end": 5.638,
+      "duration": 3.49,
+      "english": "I'm doing alright, just taking it one day at a time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-03.mp3",
+      "source": "简单/q.mp3",
+      "start": 5.397,
+      "end": 7.708,
+      "duration": 2.31,
+      "english": "How's everything been treating you lately?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-04.mp3",
+      "source": "简单/q.mp3",
+      "start": 7.468,
+      "end": 10.467,
+      "duration": 3.0,
+      "english": "Not too bad, just trying to stay busy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-05.mp3",
+      "source": "简单/q.mp3",
+      "start": 10.228,
+      "end": 12.857,
+      "duration": 2.63,
+      "english": "What's new in your world these days?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-06.mp3",
+      "source": "简单/q.mp3",
+      "start": 12.618,
+      "end": 16.248,
+      "duration": 3.63,
+      "english": "I've been hanging in there, you know how it is."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-07.mp3",
+      "source": "简单/q.mp3",
+      "start": 16.008,
+      "end": 19.387,
+      "duration": 3.38,
+      "english": "How you holding up with all this stuff going on?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-08.mp3",
+      "source": "简单/q.mp3",
+      "start": 19.147,
+      "end": 21.788,
+      "duration": 2.64,
+      "english": "Pretty good actually, thanks for asking."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-09.mp3",
+      "source": "简单/q.mp3",
+      "start": 21.547,
+      "end": 24.878,
+      "duration": 3.33,
+      "english": "Long time no see, how've you been keeping?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-10.mp3",
+      "source": "简单/q.mp3",
+      "start": 24.637,
+      "end": 27.738,
+      "duration": 3.1,
+      "english": "I'm getting by, just the usual routine."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-11.mp3",
+      "source": "简单/q.mp3",
+      "start": 27.497,
+      "end": 29.988,
+      "duration": 2.49,
+      "english": "What's good with you this week?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-12.mp3",
+      "source": "简单/q.mp3",
+      "start": 29.747,
+      "end": 32.457,
+      "duration": 2.71,
+      "english": "Can't complain too much, life's alright."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-13.mp3",
+      "source": "简单/q.mp3",
+      "start": 32.218,
+      "end": 34.837,
+      "duration": 2.62,
+      "english": "How's your day shaping up so far?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-14.mp3",
+      "source": "简单/q.mp3",
+      "start": 34.598,
+      "end": 36.797,
+      "duration": 2.2,
+      "english": "It's been a mixed bag but I'm managing."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-15.mp3",
+      "source": "简单/q.mp3",
+      "start": 36.558,
+      "end": 38.247,
+      "duration": 1.69,
+      "english": "You doing okay lately?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-16.mp3",
+      "source": "简单/q.mp3",
+      "start": 38.008,
+      "end": 39.907,
+      "duration": 1.9,
+      "english": "Yeah, I'm hanging tough."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-17.mp3",
+      "source": "简单/q.mp3",
+      "start": 39.668,
+      "end": 42.247,
+      "duration": 2.58,
+      "english": "How's life treating you these days?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-18.mp3",
+      "source": "简单/q.mp3",
+      "start": 42.008,
+      "end": 45.427,
+      "duration": 3.42,
+      "english": "Same old same old, but it's all good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-19.mp3",
+      "source": "简单/q.mp3",
+      "start": 45.188,
+      "end": 47.237,
+      "duration": 2.05,
+      "english": "What's been keeping you busy?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-01\\sentence-20.mp3",
+      "source": "简单/q.mp3",
+      "start": 46.998,
+      "end": 49.177,
+      "duration": 2.18,
+      "english": "Just the everyday stuff, nothing crazy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-01.mp3",
+      "source": "简单/q.mp3",
+      "start": 48.938,
+      "end": 52.377,
+      "duration": 3.44,
+      "english": "I grabbed coffee this morning and it really hit the spot."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-02.mp3",
+      "source": "简单/q.mp3",
+      "start": 52.138,
+      "end": 55.398,
+      "duration": 3.26,
+      "english": "Traffic was a nightmare again on the way home."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-03.mp3",
+      "source": "简单/q.mp3",
+      "start": 55.158,
+      "end": 58.398,
+      "duration": 3.24,
+      "english": "I finally got around to cleaning out that closet yesterday."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-04.mp3",
+      "source": "简单/q.mp3",
+      "start": 58.158,
+      "end": 61.557,
+      "duration": 3.4,
+      "english": "The weather's been so nice lately, perfect for walks."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-05.mp3",
+      "source": "简单/q.mp3",
+      "start": 61.318,
+      "end": 65.448,
+      "duration": 4.13,
+      "english": "I'm trying to cut back on my screen time in the evenings."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-06.mp3",
+      "source": "简单/q.mp3",
+      "start": 65.207,
+      "end": 68.458,
+      "duration": 3.25,
+      "english": "We had leftovers for dinner last night, nothing fancy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-07.mp3",
+      "source": "简单/q.mp3",
+      "start": 68.218,
+      "end": 71.758,
+      "duration": 3.54,
+      "english": "I need to run a few errands after work today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-08.mp3",
+      "source": "简单/q.mp3",
+      "start": 71.517,
+      "end": 74.698,
+      "duration": 3.18,
+      "english": "My plants are actually doing pretty well this season."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-09.mp3",
+      "source": "简单/q.mp3",
+      "start": 74.457,
+      "end": 79.238,
+      "duration": 4.78,
+      "english": "I slept in a bit this morning and it felt amazing."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-10.mp3",
+      "source": "简单/q.mp3",
+      "start": 78.998,
+      "end": 83.438,
+      "duration": 4.44,
+      "english": "The kids called earlier and we caught up for a while."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-11.mp3",
+      "source": "简单/q.mp3",
+      "start": 83.197,
+      "end": 86.348,
+      "duration": 3.15,
+      "english": "I'm thinking about making something simple for lunch."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-12.mp3",
+      "source": "简单/q.mp3",
+      "start": 86.108,
+      "end": 89.407,
+      "duration": 3.3,
+      "english": "Work has been steady but not overwhelming lately."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-13.mp3",
+      "source": "简单/q.mp3",
+      "start": 89.167,
+      "end": 92.157,
+      "duration": 2.99,
+      "english": "I took the dog for a good walk earlier."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-14.mp3",
+      "source": "简单/q.mp3",
+      "start": 91.917,
+      "end": 95.708,
+      "duration": 3.79,
+      "english": "That new show everyone's talking about is actually pretty funny."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-15.mp3",
+      "source": "简单/q.mp3",
+      "start": 95.468,
+      "end": 98.588,
+      "duration": 3.12,
+      "english": "I'm trying to drink more water throughout the day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-16.mp3",
+      "source": "简单/q.mp3",
+      "start": 98.347,
+      "end": 101.738,
+      "duration": 3.39,
+      "english": "The house feels cozy with the lights on in the evening."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-17.mp3",
+      "source": "简单/q.mp3",
+      "start": 101.498,
+      "end": 104.797,
+      "duration": 3.3,
+      "english": "I finally finished that book I started last month."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-18.mp3",
+      "source": "简单/q.mp3",
+      "start": 104.557,
+      "end": 107.688,
+      "duration": 3.13,
+      "english": "Grocery shopping always takes longer than I plan."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-19.mp3",
+      "source": "简单/q.mp3",
+      "start": 107.447,
+      "end": 110.448,
+      "duration": 3.0,
+      "english": "I'm looking forward to a quiet weekend at home."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-02\\sentence-20.mp3",
+      "source": "简单/q.mp3",
+      "start": 110.207,
+      "end": 112.849,
+      "duration": 2.642,
+      "english": "Life's been pretty chill these past few weeks."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-01.mp3",
+      "source": "简单/2.mp3",
+      "start": 0.0,
+      "end": 2.538,
+      "duration": 2.538,
+      "english": "I'm getting hungry, what sounds good for lunch?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-02.mp3",
+      "source": "简单/2.mp3",
+      "start": 2.297,
+      "end": 5.478,
+      "duration": 3.18,
+      "english": "That pasta we had last time was really satisfying."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-03.mp3",
+      "source": "简单/2.mp3",
+      "start": 5.237,
+      "end": 8.847,
+      "duration": 3.61,
+      "english": "I threw together a quick salad with what was in the fridge."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-04.mp3",
+      "source": "简单/2.mp3",
+      "start": 8.607,
+      "end": 11.717,
+      "duration": 3.11,
+      "english": "Let's order takeout tonight, I'm too tired to cook."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-05.mp3",
+      "source": "简单/2.mp3",
+      "start": 11.478,
+      "end": 14.287,
+      "duration": 2.81,
+      "english": "The coffee this morning was stronger than usual."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-06.mp3",
+      "source": "简单/2.mp3",
+      "start": 14.048,
+      "end": 17.148,
+      "duration": 3.1,
+      "english": "I need to remember to buy more eggs next time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-07.mp3",
+      "source": "简单/2.mp3",
+      "start": 16.907,
+      "end": 20.258,
+      "duration": 3.35,
+      "english": "This soup really hits the spot on a cold day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-08.mp3",
+      "source": "简单/2.mp3",
+      "start": 20.017,
+      "end": 22.898,
+      "duration": 2.88,
+      "english": "I'm trying to eat more vegetables these days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-09.mp3",
+      "source": "简单/2.mp3",
+      "start": 22.657,
+      "end": 25.658,
+      "duration": 3.0,
+      "english": "Breakfast was just toast and fruit this morning."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-10.mp3",
+      "source": "简单/2.mp3",
+      "start": 25.418,
+      "end": 28.538,
+      "duration": 3.12,
+      "english": "That restaurant downtown is always packed for a reason."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-11.mp3",
+      "source": "简单/2.mp3",
+      "start": 28.297,
+      "end": 31.568,
+      "duration": 3.27,
+      "english": "I made extra so we have leftovers for tomorrow."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-12.mp3",
+      "source": "简单/2.mp3",
+      "start": 31.328,
+      "end": 34.047,
+      "duration": 2.72,
+      "english": "The flavors in this dish are really well balanced."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-13.mp3",
+      "source": "简单/2.mp3",
+      "start": 33.808,
+      "end": 35.767,
+      "duration": 1.96,
+      "english": "I'm craving something sweet after dinner."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-14.mp3",
+      "source": "简单/2.mp3",
+      "start": 35.528,
+      "end": 38.177,
+      "duration": 2.65,
+      "english": "Cooking together would be fun this weekend."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-15.mp3",
+      "source": "简单/2.mp3",
+      "start": 37.938,
+      "end": 40.648,
+      "duration": 2.71,
+      "english": "I prefer simple meals during the week."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-16.mp3",
+      "source": "简单/2.mp3",
+      "start": 40.408,
+      "end": 43.137,
+      "duration": 2.73,
+      "english": "This sandwich turned out better than I expected."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-17.mp3",
+      "source": "简单/2.mp3",
+      "start": 42.898,
+      "end": 46.017,
+      "duration": 3.12,
+      "english": "Let's grill something outside if the weather stays nice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-18.mp3",
+      "source": "简单/2.mp3",
+      "start": 45.778,
+      "end": 48.817,
+      "duration": 3.04,
+      "english": "I'm full but it was totally worth it."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-19.mp3",
+      "source": "简单/2.mp3",
+      "start": 48.578,
+      "end": 51.707,
+      "duration": 3.13,
+      "english": "Fresh fruit from the market tastes so much better."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-03\\sentence-20.mp3",
+      "source": "简单/2.mp3",
+      "start": 51.468,
+      "end": 54.377,
+      "duration": 2.91,
+      "english": "I need to restock the pantry this weekend."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-01.mp3",
+      "source": "简单/2.mp3",
+      "start": 54.138,
+      "end": 57.067,
+      "duration": 2.93,
+      "english": "I need to stop by the store on my way home."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-02.mp3",
+      "source": "简单/2.mp3",
+      "start": 56.828,
+      "end": 61.027,
+      "duration": 4.2,
+      "english": "This one is on sale but I'm not sure if I need it."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-03.mp3",
+      "source": "简单/2.mp3",
+      "start": 60.788,
+      "end": 64.017,
+      "duration": 3.23,
+      "english": "The line at checkout was surprisingly short today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-04.mp3",
+      "source": "简单/2.mp3",
+      "start": 63.778,
+      "end": 66.877,
+      "duration": 3.1,
+      "english": "I forgot my list so I'm trying to remember everything."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-05.mp3",
+      "source": "简单/2.mp3",
+      "start": 66.637,
+      "end": 69.017,
+      "duration": 2.38,
+      "english": "These shoes feel comfortable enough to try."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-06.mp3",
+      "source": "简单/2.mp3",
+      "start": 68.777,
+      "end": 71.547,
+      "duration": 2.77,
+      "english": "I'll probably return this if it doesn't fit right."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-07.mp3",
+      "source": "简单/2.mp3",
+      "start": 71.307,
+      "end": 73.978,
+      "duration": 2.67,
+      "english": "Running errands always takes longer than planned."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-08.mp3",
+      "source": "简单/2.mp3",
+      "start": 73.737,
+      "end": 77.438,
+      "duration": 3.7,
+      "english": "I found a better deal online but I like the local shop."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-09.mp3",
+      "source": "简单/2.mp3",
+      "start": 77.197,
+      "end": 79.918,
+      "duration": 2.72,
+      "english": "Do you need anything while I'm out?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-10.mp3",
+      "source": "简单/2.mp3",
+      "start": 79.677,
+      "end": 82.698,
+      "duration": 3.02,
+      "english": "The price went up again so I might wait."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-11.mp3",
+      "source": "简单/2.mp3",
+      "start": 82.457,
+      "end": 86.098,
+      "duration": 3.64,
+      "english": "This should last us for a couple of weeks."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-12.mp3",
+      "source": "简单/2.mp3",
+      "start": 85.858,
+      "end": 88.858,
+      "duration": 3.0,
+      "english": "I like comparing options before buying something bigger."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-13.mp3",
+      "source": "简单/2.mp3",
+      "start": 88.617,
+      "end": 91.968,
+      "duration": 3.35,
+      "english": "Carrying all these bags is a good workout."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-14.mp3",
+      "source": "简单/2.mp3",
+      "start": 91.727,
+      "end": 95.678,
+      "duration": 3.95,
+      "english": "I need to pick up a few things for the house."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-15.mp3",
+      "source": "简单/2.mp3",
+      "start": 95.438,
+      "end": 97.998,
+      "duration": 2.56,
+      "english": "The quality seems decent for the price."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-16.mp3",
+      "source": "简单/2.mp3",
+      "start": 97.757,
+      "end": 100.407,
+      "duration": 2.65,
+      "english": "I'll pay with my card if that's okay."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-17.mp3",
+      "source": "简单/2.mp3",
+      "start": 100.167,
+      "end": 102.808,
+      "duration": 2.64,
+      "english": "These reusable bags are coming in handy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-18.mp3",
+      "source": "简单/2.mp3",
+      "start": 102.567,
+      "end": 105.808,
+      "duration": 3.24,
+      "english": "I think I'll take two of these just in case."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-19.mp3",
+      "source": "简单/2.mp3",
+      "start": 105.567,
+      "end": 108.308,
+      "duration": 2.74,
+      "english": "Time to head home after all that shopping."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-04\\sentence-20.mp3",
+      "source": "简单/2.mp3",
+      "start": 108.067,
+      "end": 110.602,
+      "duration": 2.535,
+      "english": "I crossed a few things off my list today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-01.mp3",
+      "source": "简单/3.mp3",
+      "start": 0.0,
+      "end": 2.728,
+      "duration": 2.728,
+      "english": "Work was pretty steady today, nothing too crazy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-02.mp3",
+      "source": "简单/3.mp3",
+      "start": 2.487,
+      "end": 5.107,
+      "duration": 2.62,
+      "english": "I need to catch up on some emails later."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-03.mp3",
+      "source": "简单/3.mp3",
+      "start": 4.867,
+      "end": 7.607,
+      "duration": 2.74,
+      "english": "The meeting actually went better than I thought."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-04.mp3",
+      "source": "简单/3.mp3",
+      "start": 7.367,
+      "end": 11.377,
+      "duration": 4.01,
+      "english": "I'm trying to stay focused on one task at a time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-05.mp3",
+      "source": "简单/3.mp3",
+      "start": 11.138,
+      "end": 14.117,
+      "duration": 2.98,
+      "english": "Break time, I really need this coffee."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-06.mp3",
+      "source": "简单/3.mp3",
+      "start": 13.878,
+      "end": 16.968,
+      "duration": 3.09,
+      "english": "The project is coming along nicely so far."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-07.mp3",
+      "source": "简单/3.mp3",
+      "start": 16.727,
+      "end": 19.938,
+      "duration": 3.21,
+      "english": "I have a few things to finish before the end of day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-08.mp3",
+      "source": "简单/3.mp3",
+      "start": 19.697,
+      "end": 23.018,
+      "duration": 3.32,
+      "english": "Working from home has its good and bad sides."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-09.mp3",
+      "source": "简单/3.mp3",
+      "start": 22.777,
+      "end": 25.428,
+      "duration": 2.65,
+      "english": "I learned something useful in today's call."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-10.mp3",
+      "source": "简单/3.mp3",
+      "start": 25.188,
+      "end": 27.758,
+      "duration": 2.57,
+      "english": "Let's touch base again later this week."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-11.mp3",
+      "source": "简单/3.mp3",
+      "start": 27.517,
+      "end": 31.288,
+      "duration": 3.77,
+      "english": "My inbox is finally under control for now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-12.mp3",
+      "source": "简单/3.mp3",
+      "start": 31.047,
+      "end": 34.137,
+      "duration": 3.09,
+      "english": "I need to schedule some focused time tomorrow."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-13.mp3",
+      "source": "简单/3.mp3",
+      "start": 33.898,
+      "end": 36.557,
+      "duration": 2.66,
+      "english": "The team has been really helpful lately."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-14.mp3",
+      "source": "简单/3.mp3",
+      "start": 36.318,
+      "end": 39.078,
+      "duration": 2.76,
+      "english": "I'm looking forward to wrapping this up soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-15.mp3",
+      "source": "简单/3.mp3",
+      "start": 38.838,
+      "end": 40.787,
+      "duration": 1.95,
+      "english": "Today felt pretty productive overall."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-16.mp3",
+      "source": "简单/3.mp3",
+      "start": 40.547,
+      "end": 44.057,
+      "duration": 3.51,
+      "english": "I have a couple of small tasks left to do."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-17.mp3",
+      "source": "简单/3.mp3",
+      "start": 43.818,
+      "end": 47.207,
+      "duration": 3.39,
+      "english": "The deadline isn't until next week so we're good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-18.mp3",
+      "source": "简单/3.mp3",
+      "start": 46.968,
+      "end": 50.517,
+      "duration": 3.55,
+      "english": "I enjoy the challenge but I also need balance."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-19.mp3",
+      "source": "简单/3.mp3",
+      "start": 50.278,
+      "end": 52.797,
+      "duration": 2.52,
+      "english": "Let's brainstorm some ideas next time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-05\\sentence-20.mp3",
+      "source": "简单/3.mp3",
+      "start": 52.558,
+      "end": 55.477,
+      "duration": 2.92,
+      "english": "I'm grateful for the flexibility in my schedule."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-01.mp3",
+      "source": "简单/3.mp3",
+      "start": 55.238,
+      "end": 57.907,
+      "duration": 2.67,
+      "english": "The kids are doing well and staying busy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-02.mp3",
+      "source": "简单/3.mp3",
+      "start": 57.668,
+      "end": 60.247,
+      "duration": 2.58,
+      "english": "We had a nice family dinner last night."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-03.mp3",
+      "source": "简单/3.mp3",
+      "start": 60.008,
+      "end": 63.427,
+      "duration": 3.42,
+      "english": "My husband and I talked about plans for the weekend."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-04.mp3",
+      "source": "简单/3.mp3",
+      "start": 63.188,
+      "end": 66.008,
+      "duration": 2.82,
+      "english": "The house feels peaceful when everything is tidy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-05.mp3",
+      "source": "简单/3.mp3",
+      "start": 65.767,
+      "end": 68.988,
+      "duration": 3.22,
+      "english": "I talked to my son yesterday and it was great."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-06.mp3",
+      "source": "简单/3.mp3",
+      "start": 68.748,
+      "end": 71.598,
+      "duration": 2.85,
+      "english": "We're thinking about a small get-together soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-07.mp3",
+      "source": "简单/3.mp3",
+      "start": 71.358,
+      "end": 73.918,
+      "duration": 2.56,
+      "english": "Family time is really important to me."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-08.mp3",
+      "source": "简单/3.mp3",
+      "start": 73.677,
+      "end": 76.608,
+      "duration": 2.93,
+      "english": "The garden is looking better with regular care."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-09.mp3",
+      "source": "简单/3.mp3",
+      "start": 76.367,
+      "end": 79.358,
+      "duration": 2.99,
+      "english": "We sat outside and just chatted for a while."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-10.mp3",
+      "source": "简单/3.mp3",
+      "start": 79.117,
+      "end": 81.907,
+      "duration": 2.79,
+      "english": "I'm proud of how everyone's handling things."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-11.mp3",
+      "source": "简单/3.mp3",
+      "start": 81.667,
+      "end": 85.267,
+      "duration": 3.6,
+      "english": "Home is where I can truly relax after the day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-12.mp3",
+      "source": "简单/3.mp3",
+      "start": 85.027,
+      "end": 87.738,
+      "duration": 2.71,
+      "english": "Let's plan something simple for the family."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-13.mp3",
+      "source": "简单/3.mp3",
+      "start": 87.498,
+      "end": 90.328,
+      "duration": 2.83,
+      "english": "The grandkids always bring so much energy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-14.mp3",
+      "source": "简单/3.mp3",
+      "start": 90.087,
+      "end": 92.778,
+      "duration": 2.69,
+      "english": "We keep things low-key but meaningful."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-15.mp3",
+      "source": "简单/3.mp3",
+      "start": 92.537,
+      "end": 95.728,
+      "duration": 3.19,
+      "english": "I appreciate the little things my family does."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-16.mp3",
+      "source": "简单/3.mp3",
+      "start": 95.487,
+      "end": 98.228,
+      "duration": 2.74,
+      "english": "Everyone's schedules are pretty full these days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-17.mp3",
+      "source": "简单/3.mp3",
+      "start": 97.987,
+      "end": 100.868,
+      "duration": 2.88,
+      "english": "We try to stay connected even when busy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-18.mp3",
+      "source": "简单/3.mp3",
+      "start": 100.627,
+      "end": 103.438,
+      "duration": 2.81,
+      "english": "The house feels more like home every day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-19.mp3",
+      "source": "简单/3.mp3",
+      "start": 103.197,
+      "end": 105.657,
+      "duration": 2.46,
+      "english": "Family dinners don't need to be fancy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-06\\sentence-20.mp3",
+      "source": "简单/3.mp3",
+      "start": 105.417,
+      "end": 108.042,
+      "duration": 2.625,
+      "english": "I'm grateful for this stable life we've built."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-01.mp3",
+      "source": "简单/4.mp3",
+      "start": 0.0,
+      "end": 2.377,
+      "duration": 2.377,
+      "english": "I'm feeling pretty good about things lately."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-02.mp3",
+      "source": "简单/4.mp3",
+      "start": 2.137,
+      "end": 5.298,
+      "duration": 3.16,
+      "english": "Today was one of those days where everything clicked."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-03.mp3",
+      "source": "简单/4.mp3",
+      "start": 5.058,
+      "end": 7.987,
+      "duration": 2.93,
+      "english": "I'm a bit tired but in a good way."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-04.mp3",
+      "source": "简单/4.mp3",
+      "start": 7.747,
+      "end": 10.307,
+      "duration": 2.56,
+      "english": "That made me smile all day long."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-05.mp3",
+      "source": "简单/4.mp3",
+      "start": 10.068,
+      "end": 12.957,
+      "duration": 2.89,
+      "english": "I'm excited to see what the weekend brings."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-06.mp3",
+      "source": "简单/4.mp3",
+      "start": 12.718,
+      "end": 15.537,
+      "duration": 2.82,
+      "english": "Sometimes I just need a quiet evening."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-07.mp3",
+      "source": "简单/4.mp3",
+      "start": 15.298,
+      "end": 18.128,
+      "duration": 2.83,
+      "english": "I'm grateful for the small things right now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-08.mp3",
+      "source": "简单/4.mp3",
+      "start": 17.887,
+      "end": 20.928,
+      "duration": 3.04,
+      "english": "It feels nice to have everything under control."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-09.mp3",
+      "source": "简单/4.mp3",
+      "start": 20.688,
+      "end": 23.768,
+      "duration": 3.08,
+      "english": "I'm looking forward to some rest this weekend."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-10.mp3",
+      "source": "简单/4.mp3",
+      "start": 23.527,
+      "end": 25.948,
+      "duration": 2.42,
+      "english": "Today was better than I expected."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-11.mp3",
+      "source": "简单/4.mp3",
+      "start": 25.707,
+      "end": 28.228,
+      "duration": 2.52,
+      "english": "I'm in a pretty positive mood lately."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-12.mp3",
+      "source": "简单/4.mp3",
+      "start": 27.988,
+      "end": 30.538,
+      "duration": 2.55,
+      "english": "That situation stressed me out a little."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-13.mp3",
+      "source": "简单/4.mp3",
+      "start": 30.297,
+      "end": 32.847,
+      "duration": 2.55,
+      "english": "I'm happy with how things are going."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-14.mp3",
+      "source": "简单/4.mp3",
+      "start": 32.608,
+      "end": 35.277,
+      "duration": 2.67,
+      "english": "I feel more relaxed after that walk."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-15.mp3",
+      "source": "简单/4.mp3",
+      "start": 35.038,
+      "end": 37.497,
+      "duration": 2.46,
+      "english": "Life feels pretty balanced these days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-16.mp3",
+      "source": "简单/4.mp3",
+      "start": 37.258,
+      "end": 39.487,
+      "duration": 2.23,
+      "english": "I'm proud of how I handled that."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-17.mp3",
+      "source": "简单/4.mp3",
+      "start": 39.248,
+      "end": 41.547,
+      "duration": 2.3,
+      "english": "It was a relief to get that done."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-18.mp3",
+      "source": "简单/4.mp3",
+      "start": 41.308,
+      "end": 43.797,
+      "duration": 2.49,
+      "english": "I'm content with where things stand."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-19.mp3",
+      "source": "简单/4.mp3",
+      "start": 43.558,
+      "end": 45.758,
+      "duration": 2.2,
+      "english": "Today left me feeling hopeful."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-07\\sentence-20.mp3",
+      "source": "简单/4.mp3",
+      "start": 45.518,
+      "end": 48.328,
+      "duration": 2.81,
+      "english": "Everything seems to be falling into place."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-01.mp3",
+      "source": "简单/4.mp3",
+      "start": 48.088,
+      "end": 50.917,
+      "duration": 2.83,
+      "english": "The sun is shining so nicely today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-02.mp3",
+      "source": "简单/4.mp3",
+      "start": 50.678,
+      "end": 53.377,
+      "duration": 2.7,
+      "english": "It looks like rain might be coming later."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-03.mp3",
+      "source": "简单/4.mp3",
+      "start": 53.138,
+      "end": 56.387,
+      "duration": 3.25,
+      "english": "The air feels really fresh after last night's rain."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-04.mp3",
+      "source": "简单/4.mp3",
+      "start": 56.148,
+      "end": 58.607,
+      "duration": 2.46,
+      "english": "It's getting warmer which is perfect for outdoors."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-05.mp3",
+      "source": "简单/4.mp3",
+      "start": 58.367,
+      "end": 60.877,
+      "duration": 2.51,
+      "english": "The leaves are changing color so beautifully."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-06.mp3",
+      "source": "简单/4.mp3",
+      "start": 60.638,
+      "end": 63.557,
+      "duration": 2.92,
+      "english": "I hope the weather stays nice this weekend."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-07.mp3",
+      "source": "简单/4.mp3",
+      "start": 63.318,
+      "end": 65.928,
+      "duration": 2.61,
+      "english": "It's a bit chilly in the mornings now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-08.mp3",
+      "source": "简单/4.mp3",
+      "start": 65.688,
+      "end": 67.898,
+      "duration": 2.21,
+      "english": "The sunset last night was gorgeous."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-09.mp3",
+      "source": "简单/4.mp3",
+      "start": 67.657,
+      "end": 71.098,
+      "duration": 3.44,
+      "english": "We need a few more warm days like this."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-10.mp3",
+      "source": "简单/4.mp3",
+      "start": 70.858,
+      "end": 73.127,
+      "duration": 2.27,
+      "english": "The wind is stronger than I thought."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-11.mp3",
+      "source": "简单/4.mp3",
+      "start": 72.887,
+      "end": 75.578,
+      "duration": 2.69,
+      "english": "It's one of those perfect mild days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-12.mp3",
+      "source": "简单/4.mp3",
+      "start": 75.337,
+      "end": 78.297,
+      "duration": 2.96,
+      "english": "The sky is so clear and blue today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-13.mp3",
+      "source": "简单/4.mp3",
+      "start": 78.057,
+      "end": 80.738,
+      "duration": 2.68,
+      "english": "Fall weather always makes me feel cozy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-14.mp3",
+      "source": "简单/4.mp3",
+      "start": 80.498,
+      "end": 83.188,
+      "duration": 2.69,
+      "english": "I love when the temperature is just right."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-15.mp3",
+      "source": "简单/4.mp3",
+      "start": 82.947,
+      "end": 85.157,
+      "duration": 2.21,
+      "english": "It might get cold again soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-16.mp3",
+      "source": "简单/4.mp3",
+      "start": 84.917,
+      "end": 87.407,
+      "duration": 2.49,
+      "english": "The garden looks great with this sunshine."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-17.mp3",
+      "source": "简单/4.mp3",
+      "start": 87.167,
+      "end": 90.218,
+      "duration": 3.05,
+      "english": "Today's weather is making me want to go outside."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-18.mp3",
+      "source": "简单/4.mp3",
+      "start": 89.977,
+      "end": 92.907,
+      "duration": 2.93,
+      "english": "The forecast looks good for the next few days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-19.mp3",
+      "source": "简单/4.mp3",
+      "start": 92.667,
+      "end": 94.988,
+      "duration": 2.32,
+      "english": "It's been a nice break from the heat."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-08\\sentence-20.mp3",
+      "source": "简单/4.mp3",
+      "start": 94.748,
+      "end": 97.071,
+      "duration": 2.323,
+      "english": "I enjoy these kinds of comfortable days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-01.mp3",
+      "source": "简单/5.mp3",
+      "start": 0.0,
+      "end": 2.337,
+      "duration": 2.337,
+      "english": "What are you up to this weekend?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-02.mp3",
+      "source": "简单/5.mp3",
+      "start": 2.097,
+      "end": 5.768,
+      "duration": 3.67,
+      "english": "I'm just gonna chill at home and catch up on rest."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-03.mp3",
+      "source": "简单/5.mp3",
+      "start": 5.527,
+      "end": 8.487,
+      "duration": 2.96,
+      "english": "We might go for a drive if the weather's nice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-04.mp3",
+      "source": "简单/5.mp3",
+      "start": 8.248,
+      "end": 11.167,
+      "duration": 2.92,
+      "english": "I'm looking forward to sleeping in on Saturday."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-05.mp3",
+      "source": "简单/5.mp3",
+      "start": 10.928,
+      "end": 13.727,
+      "duration": 2.8,
+      "english": "Let's grab brunch somewhere casual if you're free."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-06.mp3",
+      "source": "简单/5.mp3",
+      "start": 13.488,
+      "end": 16.918,
+      "duration": 3.43,
+      "english": "I need a low-key weekend with no big plans."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-07.mp3",
+      "source": "简单/5.mp3",
+      "start": 16.677,
+      "end": 19.688,
+      "duration": 3.01,
+      "english": "We're thinking about watching a movie at home."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-08.mp3",
+      "source": "简单/5.mp3",
+      "start": 19.447,
+      "end": 23.058,
+      "duration": 3.61,
+      "english": "I'm gonna tackle some small chores around the house."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-09.mp3",
+      "source": "简单/5.mp3",
+      "start": 22.817,
+      "end": 25.777,
+      "duration": 2.96,
+      "english": "How about a walk in the park this Sunday?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-10.mp3",
+      "source": "简单/5.mp3",
+      "start": 25.537,
+      "end": 28.658,
+      "duration": 3.12,
+      "english": "I just want to relax and not do much."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-11.mp3",
+      "source": "简单/5.mp3",
+      "start": 28.418,
+      "end": 30.858,
+      "duration": 2.44,
+      "english": "We usually keep weekends pretty simple."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-12.mp3",
+      "source": "简单/5.mp3",
+      "start": 30.617,
+      "end": 33.177,
+      "duration": 2.56,
+      "english": "I'm hoping to get some reading done."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-13.mp3",
+      "source": "简单/5.mp3",
+      "start": 32.938,
+      "end": 35.578,
+      "duration": 2.64,
+      "english": "Let's meet up for coffee if you have time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-14.mp3",
+      "source": "简单/5.mp3",
+      "start": 35.338,
+      "end": 37.917,
+      "duration": 2.58,
+      "english": "I'm planning to cook something easy at home."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-15.mp3",
+      "source": "简单/5.mp3",
+      "start": 37.678,
+      "end": 40.287,
+      "duration": 2.61,
+      "english": "The weekend can't come soon enough."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-16.mp3",
+      "source": "简单/5.mp3",
+      "start": 40.047,
+      "end": 42.597,
+      "duration": 2.55,
+      "english": "I might visit family if everyone's free."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-17.mp3",
+      "source": "简单/5.mp3",
+      "start": 42.358,
+      "end": 45.197,
+      "duration": 2.84,
+      "english": "I'm gonna enjoy the quiet while I can."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-18.mp3",
+      "source": "简单/5.mp3",
+      "start": 44.958,
+      "end": 47.317,
+      "duration": 2.36,
+      "english": "We don't have anything big scheduled."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-19.mp3",
+      "source": "简单/5.mp3",
+      "start": 47.078,
+      "end": 49.427,
+      "duration": 2.35,
+      "english": "A lazy morning sounds perfect right now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-09\\sentence-20.mp3",
+      "source": "简单/5.mp3",
+      "start": 49.188,
+      "end": 51.617,
+      "duration": 2.43,
+      "english": "I'm ready for some downtime this weekend."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-01.mp3",
+      "source": "简单/5.mp3",
+      "start": 51.378,
+      "end": 54.337,
+      "duration": 2.96,
+      "english": "I like to read before bed most nights."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-02.mp3",
+      "source": "简单/5.mp3",
+      "start": 54.098,
+      "end": 56.377,
+      "duration": 2.28,
+      "english": "Gardening on the weekend always relaxes me."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-03.mp3",
+      "source": "简单/5.mp3",
+      "start": 56.138,
+      "end": 58.567,
+      "duration": 2.43,
+      "english": "I've been listening to podcasts while driving."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-04.mp3",
+      "source": "简单/5.mp3",
+      "start": 58.328,
+      "end": 61.047,
+      "duration": 2.72,
+      "english": "Cooking new recipes is my favorite hobby lately."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-05.mp3",
+      "source": "简单/5.mp3",
+      "start": 60.808,
+      "end": 63.887,
+      "duration": 3.08,
+      "english": "I try to walk every day when I can."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-06.mp3",
+      "source": "简单/5.mp3",
+      "start": 63.648,
+      "end": 66.407,
+      "duration": 2.76,
+      "english": "Listening to music helps me unwind after work."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-07.mp3",
+      "source": "简单/5.mp3",
+      "start": 66.167,
+      "end": 68.138,
+      "duration": 1.97,
+      "english": "I enjoy watching sports on the weekends."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-08.mp3",
+      "source": "简单/5.mp3",
+      "start": 67.897,
+      "end": 69.868,
+      "duration": 1.97,
+      "english": "Knitting or crocheting is my quiet time activity."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-09.mp3",
+      "source": "简单/5.mp3",
+      "start": 69.627,
+      "end": 72.038,
+      "duration": 2.41,
+      "english": "I like taking photos when we're out."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-10.mp3",
+      "source": "简单/5.mp3",
+      "start": 71.797,
+      "end": 74.638,
+      "duration": 2.84,
+      "english": "Reading the news in the morning is my routine."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-11.mp3",
+      "source": "简单/5.mp3",
+      "start": 74.397,
+      "end": 76.978,
+      "duration": 2.58,
+      "english": "I sometimes bake cookies for the family."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-12.mp3",
+      "source": "简单/5.mp3",
+      "start": 76.737,
+      "end": 79.688,
+      "duration": 2.95,
+      "english": "Going for bike rides is fun on nice days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-13.mp3",
+      "source": "简单/5.mp3",
+      "start": 79.447,
+      "end": 81.998,
+      "duration": 2.55,
+      "english": "I watch a show to relax in the evening."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-14.mp3",
+      "source": "简单/5.mp3",
+      "start": 81.757,
+      "end": 84.568,
+      "duration": 2.81,
+      "english": "Painting or drawing helps clear my mind."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-15.mp3",
+      "source": "简单/5.mp3",
+      "start": 84.328,
+      "end": 86.928,
+      "duration": 2.6,
+      "english": "I enjoy spending time with my plants."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-16.mp3",
+      "source": "简单/5.mp3",
+      "start": 86.688,
+      "end": 89.538,
+      "duration": 2.85,
+      "english": "Listening to old songs brings back memories."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-17.mp3",
+      "source": "简单/5.mp3",
+      "start": 89.297,
+      "end": 91.968,
+      "duration": 2.67,
+      "english": "I try to learn something new each week."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-18.mp3",
+      "source": "简单/5.mp3",
+      "start": 91.727,
+      "end": 94.328,
+      "duration": 2.6,
+      "english": "Board games with family are always fun."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-19.mp3",
+      "source": "简单/5.mp3",
+      "start": 94.087,
+      "end": 96.988,
+      "duration": 2.9,
+      "english": "I like organizing things when I have time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-10\\sentence-20.mp3",
+      "source": "简单/5.mp3",
+      "start": 96.748,
+      "end": 99.553,
+      "duration": 2.805,
+      "english": "These small hobbies make life more enjoyable."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-01.mp3",
+      "source": "简单/6.mp3",
+      "start": 0.0,
+      "end": 2.508,
+      "duration": 2.508,
+      "english": "I try to drink water throughout the day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-02.mp3",
+      "source": "简单/6.mp3",
+      "start": 2.268,
+      "end": 5.178,
+      "duration": 2.91,
+      "english": "Getting enough sleep makes a big difference."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-03.mp3",
+      "source": "简单/6.mp3",
+      "start": 4.938,
+      "end": 8.037,
+      "duration": 3.1,
+      "english": "I take a short walk to clear my head."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-04.mp3",
+      "source": "简单/6.mp3",
+      "start": 7.798,
+      "end": 10.877,
+      "duration": 3.08,
+      "english": "Eating more fruits and veggies helps me feel better."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-05.mp3",
+      "source": "简单/6.mp3",
+      "start": 10.638,
+      "end": 13.337,
+      "duration": 2.7,
+      "english": "I stretch a little in the morning."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-06.mp3",
+      "source": "简单/6.mp3",
+      "start": 13.098,
+      "end": 16.378,
+      "duration": 3.28,
+      "english": "Taking deep breaths really calms me down."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-07.mp3",
+      "source": "简单/6.mp3",
+      "start": 16.137,
+      "end": 19.428,
+      "duration": 3.29,
+      "english": "I need to cut back on caffeine sometimes."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-08.mp3",
+      "source": "简单/6.mp3",
+      "start": 19.188,
+      "end": 22.448,
+      "duration": 3.26,
+      "english": "A warm shower at night helps me relax."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-09.mp3",
+      "source": "简单/6.mp3",
+      "start": 22.207,
+      "end": 25.378,
+      "duration": 3.17,
+      "english": "I try to go to bed around the same time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-10.mp3",
+      "source": "简单/6.mp3",
+      "start": 25.137,
+      "end": 27.568,
+      "duration": 2.43,
+      "english": "Light exercise keeps my energy up."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-11.mp3",
+      "source": "简单/6.mp3",
+      "start": 27.328,
+      "end": 30.648,
+      "duration": 3.32,
+      "english": "I feel better when I eat home-cooked meals."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-12.mp3",
+      "source": "简单/6.mp3",
+      "start": 30.407,
+      "end": 32.667,
+      "duration": 2.26,
+      "english": "Rest days are important too."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-13.mp3",
+      "source": "简单/6.mp3",
+      "start": 32.428,
+      "end": 35.057,
+      "duration": 2.63,
+      "english": "I drink herbal tea before bed."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-14.mp3",
+      "source": "简单/6.mp3",
+      "start": 34.818,
+      "end": 37.807,
+      "duration": 2.99,
+      "english": "Moving my body every day feels good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-15.mp3",
+      "source": "简单/6.mp3",
+      "start": 37.568,
+      "end": 40.508,
+      "duration": 2.94,
+      "english": "I try to avoid too much junk food."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-16.mp3",
+      "source": "简单/6.mp3",
+      "start": 40.268,
+      "end": 43.137,
+      "duration": 2.87,
+      "english": "Fresh air in the morning wakes me up."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-17.mp3",
+      "source": "简单/6.mp3",
+      "start": 42.898,
+      "end": 45.927,
+      "duration": 3.03,
+      "english": "I listen to my body when I'm tired."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-18.mp3",
+      "source": "简单/6.mp3",
+      "start": 45.688,
+      "end": 48.627,
+      "duration": 2.94,
+      "english": "Small healthy habits add up over time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-19.mp3",
+      "source": "简单/6.mp3",
+      "start": 48.388,
+      "end": 51.438,
+      "duration": 3.05,
+      "english": "I feel more balanced when I stay active."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-11\\sentence-20.mp3",
+      "source": "简单/6.mp3",
+      "start": 51.198,
+      "end": 53.697,
+      "duration": 2.5,
+      "english": "Taking care of myself helps everything else."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-01.mp3",
+      "source": "简单/6.mp3",
+      "start": 53.458,
+      "end": 56.747,
+      "duration": 3.29,
+      "english": "I need to watch my spending this month."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-02.mp3",
+      "source": "简单/6.mp3",
+      "start": 56.508,
+      "end": 59.188,
+      "duration": 2.68,
+      "english": "That was a good deal at the store."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-03.mp3",
+      "source": "简单/6.mp3",
+      "start": 58.948,
+      "end": 61.477,
+      "duration": 2.53,
+      "english": "I'm trying to save a little each week."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-04.mp3",
+      "source": "简单/6.mp3",
+      "start": 61.238,
+      "end": 63.977,
+      "duration": 2.74,
+      "english": "We usually eat at home to save money."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-05.mp3",
+      "source": "简单/6.mp3",
+      "start": 63.738,
+      "end": 66.858,
+      "duration": 3.12,
+      "english": "I pay my bills right when they come in."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-06.mp3",
+      "source": "简单/6.mp3",
+      "start": 66.617,
+      "end": 69.297,
+      "duration": 2.68,
+      "english": "This purchase can wait until next month."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-07.mp3",
+      "source": "简单/6.mp3",
+      "start": 69.057,
+      "end": 72.028,
+      "duration": 2.97,
+      "english": "I'm looking for ways to cut costs a bit."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-08.mp3",
+      "source": "简单/6.mp3",
+      "start": 71.787,
+      "end": 74.728,
+      "duration": 2.94,
+      "english": "Groceries add up faster than I expect."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-09.mp3",
+      "source": "简单/6.mp3",
+      "start": 74.487,
+      "end": 77.328,
+      "duration": 2.84,
+      "english": "I use cash for small daily things."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-10.mp3",
+      "source": "简单/6.mp3",
+      "start": 77.087,
+      "end": 79.608,
+      "duration": 2.52,
+      "english": "Let's check prices before we decide."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-11.mp3",
+      "source": "简单/6.mp3",
+      "start": 79.367,
+      "end": 81.898,
+      "duration": 2.53,
+      "english": "I'm sticking to my budget this time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-12.mp3",
+      "source": "简单/6.mp3",
+      "start": 81.657,
+      "end": 84.388,
+      "duration": 2.73,
+      "english": "That repair cost more than I thought."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-13.mp3",
+      "source": "简单/6.mp3",
+      "start": 84.147,
+      "end": 87.168,
+      "duration": 3.02,
+      "english": "We try not to buy things we don't need."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-14.mp3",
+      "source": "简单/6.mp3",
+      "start": 86.927,
+      "end": 89.157,
+      "duration": 2.23,
+      "english": "Online shopping is convenient but tricky."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-15.mp3",
+      "source": "简单/6.mp3",
+      "start": 88.917,
+      "end": 93.098,
+      "duration": 4.18,
+      "english": "I review my expenses at the end of the month."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-16.mp3",
+      "source": "简单/6.mp3",
+      "start": 92.858,
+      "end": 95.688,
+      "duration": 2.83,
+      "english": "Saving for something special feels good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-17.mp3",
+      "source": "简单/6.mp3",
+      "start": 95.447,
+      "end": 98.538,
+      "duration": 3.09,
+      "english": "I forgot to bring my reusable bag again."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-18.mp3",
+      "source": "简单/6.mp3",
+      "start": 98.297,
+      "end": 100.788,
+      "duration": 2.49,
+      "english": "Small changes help with the budget."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-19.mp3",
+      "source": "简单/6.mp3",
+      "start": 100.547,
+      "end": 102.938,
+      "duration": 2.39,
+      "english": "I'm being careful with money lately."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-12\\sentence-20.mp3",
+      "source": "简单/6.mp3",
+      "start": 102.697,
+      "end": 104.829,
+      "duration": 2.132,
+      "english": "It all balances out in the end."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-01.mp3",
+      "source": "简单/7.mp3",
+      "start": 0.0,
+      "end": 2.428,
+      "duration": 2.428,
+      "english": "I need to do laundry this afternoon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-02.mp3",
+      "source": "简单/7.mp3",
+      "start": 2.188,
+      "end": 4.638,
+      "duration": 2.45,
+      "english": "The kitchen is finally clean again."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-03.mp3",
+      "source": "简单/7.mp3",
+      "start": 4.397,
+      "end": 6.987,
+      "duration": 2.59,
+      "english": "I watered the plants earlier today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-04.mp3",
+      "source": "简单/7.mp3",
+      "start": 6.747,
+      "end": 9.847,
+      "duration": 3.1,
+      "english": "We fixed that small leak in the bathroom."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-05.mp3",
+      "source": "简单/7.mp3",
+      "start": 9.607,
+      "end": 12.077,
+      "duration": 2.47,
+      "english": "The floors need sweeping pretty soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-06.mp3",
+      "source": "简单/7.mp3",
+      "start": 11.838,
+      "end": 14.527,
+      "duration": 2.69,
+      "english": "I like keeping the living room tidy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-07.mp3",
+      "source": "简单/7.mp3",
+      "start": 14.288,
+      "end": 17.318,
+      "duration": 3.03,
+      "english": "Taking out the trash is my weekly task."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-08.mp3",
+      "source": "简单/7.mp3",
+      "start": 17.078,
+      "end": 19.588,
+      "duration": 2.51,
+      "english": "The yard looks nice after mowing."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-09.mp3",
+      "source": "简单/7.mp3",
+      "start": 19.348,
+      "end": 21.828,
+      "duration": 2.48,
+      "english": "I organized the closet this morning."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-10.mp3",
+      "source": "简单/7.mp3",
+      "start": 21.587,
+      "end": 24.558,
+      "duration": 2.97,
+      "english": "Dishes pile up faster than I like."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-11.mp3",
+      "source": "简单/7.mp3",
+      "start": 24.317,
+      "end": 27.258,
+      "duration": 2.94,
+      "english": "We changed the air filter last week."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-12.mp3",
+      "source": "简单/7.mp3",
+      "start": 27.017,
+      "end": 29.538,
+      "duration": 2.52,
+      "english": "The house feels fresh after cleaning."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-13.mp3",
+      "source": "简单/7.mp3",
+      "start": 29.297,
+      "end": 31.948,
+      "duration": 2.65,
+      "english": "I need to dust the shelves soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-14.mp3",
+      "source": "简单/7.mp3",
+      "start": 31.707,
+      "end": 34.197,
+      "duration": 2.49,
+      "english": "Putting things away keeps it neat."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-15.mp3",
+      "source": "简单/7.mp3",
+      "start": 33.958,
+      "end": 36.797,
+      "duration": 2.84,
+      "english": "The windows could use a wipe down."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-16.mp3",
+      "source": "简单/7.mp3",
+      "start": 36.558,
+      "end": 39.467,
+      "duration": 2.91,
+      "english": "I enjoy the smell of clean sheets."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-17.mp3",
+      "source": "简单/7.mp3",
+      "start": 39.227,
+      "end": 41.828,
+      "duration": 2.6,
+      "english": "Small repairs make a big difference."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-18.mp3",
+      "source": "简单/7.mp3",
+      "start": 41.588,
+      "end": 44.487,
+      "duration": 2.9,
+      "english": "I'm slowly working through the to-do list."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-19.mp3",
+      "source": "简单/7.mp3",
+      "start": 44.248,
+      "end": 46.697,
+      "duration": 2.45,
+      "english": "The garage needs some organizing too."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-13\\sentence-20.mp3",
+      "source": "简单/7.mp3",
+      "start": 46.458,
+      "end": 49.117,
+      "duration": 2.66,
+      "english": "Home feels better when it's in order."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-01.mp3",
+      "source": "简单/7.mp3",
+      "start": 48.878,
+      "end": 51.777,
+      "duration": 2.9,
+      "english": "I ran into an old friend at the store."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-02.mp3",
+      "source": "简单/7.mp3",
+      "start": 51.538,
+      "end": 53.898,
+      "duration": 2.36,
+      "english": "Let's catch up soon over coffee."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-03.mp3",
+      "source": "简单/7.mp3",
+      "start": 53.658,
+      "end": 55.648,
+      "duration": 1.99,
+      "english": "My friends keep me laughing."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-04.mp3",
+      "source": "简单/7.mp3",
+      "start": 55.408,
+      "end": 57.487,
+      "duration": 2.08,
+      "english": "We text almost every day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-05.mp3",
+      "source": "简单/7.mp3",
+      "start": 57.248,
+      "end": 59.677,
+      "duration": 2.43,
+      "english": "I miss hanging out more often."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-06.mp3",
+      "source": "简单/7.mp3",
+      "start": 59.438,
+      "end": 61.957,
+      "duration": 2.52,
+      "english": "A quick call brightened my day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-07.mp3",
+      "source": "简单/7.mp3",
+      "start": 61.718,
+      "end": 64.108,
+      "duration": 2.39,
+      "english": "We're planning a small get-together."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-08.mp3",
+      "source": "简单/7.mp3",
+      "start": 63.867,
+      "end": 65.958,
+      "duration": 2.09,
+      "english": "Friends make life more fun."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-09.mp3",
+      "source": "简单/7.mp3",
+      "start": 65.718,
+      "end": 68.388,
+      "duration": 2.67,
+      "english": "I value the ones who check in."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-10.mp3",
+      "source": "简单/7.mp3",
+      "start": 68.147,
+      "end": 70.758,
+      "duration": 2.61,
+      "english": "We shared some good stories last time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-11.mp3",
+      "source": "简单/7.mp3",
+      "start": 70.517,
+      "end": 73.047,
+      "duration": 2.53,
+      "english": "Staying in touch takes a little effort."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-12.mp3",
+      "source": "简单/7.mp3",
+      "start": 72.807,
+      "end": 75.318,
+      "duration": 2.51,
+      "english": "I enjoy our casual conversations."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-13.mp3",
+      "source": "简单/7.mp3",
+      "start": 75.078,
+      "end": 77.517,
+      "duration": 2.44,
+      "english": "Let's do something simple next month."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-14.mp3",
+      "source": "简单/7.mp3",
+      "start": 77.277,
+      "end": 79.638,
+      "duration": 2.36,
+      "english": "Good friends are hard to find."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-15.mp3",
+      "source": "简单/7.mp3",
+      "start": 79.397,
+      "end": 81.598,
+      "duration": 2.2,
+      "english": "I feel lucky to have them."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-16.mp3",
+      "source": "简单/7.mp3",
+      "start": 81.358,
+      "end": 83.828,
+      "duration": 2.47,
+      "english": "We support each other through everything."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-17.mp3",
+      "source": "简单/7.mp3",
+      "start": 83.587,
+      "end": 85.868,
+      "duration": 2.28,
+      "english": "A short visit means a lot."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-18.mp3",
+      "source": "简单/7.mp3",
+      "start": 85.627,
+      "end": 88.308,
+      "duration": 2.68,
+      "english": "I like keeping things low-pressure."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-19.mp3",
+      "source": "简单/7.mp3",
+      "start": 88.067,
+      "end": 90.428,
+      "duration": 2.36,
+      "english": "Friends feel like family sometimes."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-14\\sentence-20.mp3",
+      "source": "简单/7.mp3",
+      "start": 90.188,
+      "end": 92.186,
+      "duration": 1.999,
+      "english": "Reaching out always feels good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-01.mp3",
+      "source": "简单/8.mp3",
+      "start": 0.0,
+      "end": 2.218,
+      "duration": 2.218,
+      "english": "I saw something interesting in the news."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-02.mp3",
+      "source": "简单/8.mp3",
+      "start": 1.978,
+      "end": 4.248,
+      "duration": 2.27,
+      "english": "What do you think about that story?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-03.mp3",
+      "source": "简单/8.mp3",
+      "start": 4.008,
+      "end": 6.407,
+      "duration": 2.4,
+      "english": "The weather report looks better today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-04.mp3",
+      "source": "简单/8.mp3",
+      "start": 6.167,
+      "end": 8.557,
+      "duration": 2.39,
+      "english": "I don't watch much news lately."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-05.mp3",
+      "source": "简单/8.mp3",
+      "start": 8.318,
+      "end": 11.487,
+      "duration": 3.17,
+      "english": "That movie everyone likes is pretty good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-06.mp3",
+      "source": "简单/8.mp3",
+      "start": 11.248,
+      "end": 14.018,
+      "duration": 2.77,
+      "english": "Prices keep going up, it's crazy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-07.mp3",
+      "source": "简单/8.mp3",
+      "start": 13.778,
+      "end": 16.777,
+      "duration": 3.0,
+      "english": "I heard about the new store opening."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-08.mp3",
+      "source": "简单/8.mp3",
+      "start": 16.537,
+      "end": 18.818,
+      "duration": 2.28,
+      "english": "Traffic seems worse this week."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-09.mp3",
+      "source": "简单/8.mp3",
+      "start": 18.578,
+      "end": 21.238,
+      "duration": 2.66,
+      "english": "The game last night was exciting."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-10.mp3",
+      "source": "简单/8.mp3",
+      "start": 20.997,
+      "end": 23.718,
+      "duration": 2.72,
+      "english": "I try not to worry about everything."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-11.mp3",
+      "source": "简单/8.mp3",
+      "start": 23.477,
+      "end": 26.128,
+      "duration": 2.65,
+      "english": "Did you hear about the local event?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-12.mp3",
+      "source": "简单/8.mp3",
+      "start": 25.887,
+      "end": 28.218,
+      "duration": 2.33,
+      "english": "Things change so fast these days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-13.mp3",
+      "source": "简单/8.mp3",
+      "start": 27.977,
+      "end": 30.188,
+      "duration": 2.21,
+      "english": "I like reading positive stories."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-14.mp3",
+      "source": "简单/8.mp3",
+      "start": 29.947,
+      "end": 31.818,
+      "duration": 1.87,
+      "english": "The forecast says sun tomorrow."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-15.mp3",
+      "source": "简单/8.mp3",
+      "start": 31.578,
+      "end": 33.688,
+      "duration": 2.11,
+      "english": "Opinions differ on that topic."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-16.mp3",
+      "source": "简单/8.mp3",
+      "start": 33.448,
+      "end": 36.197,
+      "duration": 2.75,
+      "english": "I keep it simple with the news."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-17.mp3",
+      "source": "简单/8.mp3",
+      "start": 35.958,
+      "end": 38.107,
+      "duration": 2.15,
+      "english": "That was a nice surprise."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-18.mp3",
+      "source": "简单/8.mp3",
+      "start": 37.867,
+      "end": 40.157,
+      "duration": 2.29,
+      "english": "I focus on what I can control."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-19.mp3",
+      "source": "简单/8.mp3",
+      "start": 39.918,
+      "end": 42.078,
+      "duration": 2.16,
+      "english": "The community event looked fun."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-15\\sentence-20.mp3",
+      "source": "简单/8.mp3",
+      "start": 41.838,
+      "end": 44.247,
+      "duration": 2.41,
+      "english": "Life has its ups and downs."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-01.mp3",
+      "source": "简单/8.mp3",
+      "start": 44.008,
+      "end": 46.427,
+      "duration": 2.42,
+      "english": "I'm thinking about next month's plans."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-02.mp3",
+      "source": "简单/8.mp3",
+      "start": 46.188,
+      "end": 48.857,
+      "duration": 2.67,
+      "english": "We might take a short trip soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-03.mp3",
+      "source": "简单/8.mp3",
+      "start": 48.617,
+      "end": 51.087,
+      "duration": 2.47,
+      "english": "I need to schedule that appointment."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-04.mp3",
+      "source": "简单/8.mp3",
+      "start": 50.848,
+      "end": 52.967,
+      "duration": 2.12,
+      "english": "Summer is coming up fast."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-05.mp3",
+      "source": "简单/8.mp3",
+      "start": 52.727,
+      "end": 54.927,
+      "duration": 2.2,
+      "english": "Let's decide on dinner later."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-06.mp3",
+      "source": "简单/8.mp3",
+      "start": 54.688,
+      "end": 57.037,
+      "duration": 2.35,
+      "english": "I'm looking forward to the holidays."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-07.mp3",
+      "source": "简单/8.mp3",
+      "start": 56.797,
+      "end": 59.357,
+      "duration": 2.56,
+      "english": "We have a few things coming up."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-08.mp3",
+      "source": "简单/8.mp3",
+      "start": 59.117,
+      "end": 61.547,
+      "duration": 2.43,
+      "english": "I try not to overplan anymore."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-09.mp3",
+      "source": "简单/8.mp3",
+      "start": 61.308,
+      "end": 63.427,
+      "duration": 2.12,
+      "english": "Next week should be quieter."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-10.mp3",
+      "source": "简单/8.mp3",
+      "start": 63.188,
+      "end": 65.668,
+      "duration": 2.48,
+      "english": "I'm excited for the change of season."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-11.mp3",
+      "source": "简单/8.mp3",
+      "start": 65.427,
+      "end": 68.998,
+      "duration": 3.57,
+      "english": "We can figure it out as we go."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-12.mp3",
+      "source": "简单/8.mp3",
+      "start": 68.757,
+      "end": 71.928,
+      "duration": 3.17,
+      "english": "I have one big goal for this month."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-13.mp3",
+      "source": "简单/8.mp3",
+      "start": 71.688,
+      "end": 74.258,
+      "duration": 2.57,
+      "english": "The kids are making their own plans."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-14.mp3",
+      "source": "简单/8.mp3",
+      "start": 74.017,
+      "end": 76.438,
+      "duration": 2.42,
+      "english": "I'm keeping options open for now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-15.mp3",
+      "source": "简单/8.mp3",
+      "start": 76.197,
+      "end": 78.578,
+      "duration": 2.38,
+      "english": "We should do that again sometime."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-16.mp3",
+      "source": "简单/8.mp3",
+      "start": 78.337,
+      "end": 80.448,
+      "duration": 2.11,
+      "english": "Things usually work out fine."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-17.mp3",
+      "source": "简单/8.mp3",
+      "start": 80.207,
+      "end": 82.297,
+      "duration": 2.09,
+      "english": "I'm ready for whatever comes."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-18.mp3",
+      "source": "简单/8.mp3",
+      "start": 82.057,
+      "end": 84.288,
+      "duration": 2.23,
+      "english": "Let's take it day by day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-19.mp3",
+      "source": "简单/8.mp3",
+      "start": 84.047,
+      "end": 85.928,
+      "duration": 1.88,
+      "english": "The future looks pretty good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-16\\sentence-20.mp3",
+      "source": "简单/8.mp3",
+      "start": 85.688,
+      "end": 87.484,
+      "duration": 1.797,
+      "english": "I'm grateful for what's ahead."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-01.mp3",
+      "source": "简单/9.mp3",
+      "start": 0.0,
+      "end": 3.308,
+      "duration": 3.308,
+      "english": "I usually start with a cup of coffee right away."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-02.mp3",
+      "source": "简单/9.mp3",
+      "start": 3.067,
+      "end": 7.708,
+      "duration": 4.64,
+      "english": "The first thing I do is check my phone quickly."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-03.mp3",
+      "source": "简单/9.mp3",
+      "start": 7.468,
+      "end": 10.497,
+      "duration": 3.03,
+      "english": "I try to make my bed every morning."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-04.mp3",
+      "source": "简单/9.mp3",
+      "start": 10.258,
+      "end": 12.938,
+      "duration": 2.68,
+      "english": "Breakfast is simple, just toast and fruit."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-05.mp3",
+      "source": "简单/9.mp3",
+      "start": 12.698,
+      "end": 15.217,
+      "duration": 2.52,
+      "english": "I take a quick shower to wake up."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-06.mp3",
+      "source": "简单/9.mp3",
+      "start": 14.978,
+      "end": 17.518,
+      "duration": 2.54,
+      "english": "Mornings are better when I move a little."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-07.mp3",
+      "source": "简单/9.mp3",
+      "start": 17.277,
+      "end": 19.658,
+      "duration": 2.38,
+      "english": "I listen to music while getting ready."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-08.mp3",
+      "source": "简单/9.mp3",
+      "start": 19.418,
+      "end": 22.137,
+      "duration": 2.72,
+      "english": "The drive to work is my quiet time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-09.mp3",
+      "source": "简单/9.mp3",
+      "start": 21.897,
+      "end": 24.478,
+      "duration": 2.58,
+      "english": "I always drink some water first thing."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-10.mp3",
+      "source": "简单/9.mp3",
+      "start": 24.238,
+      "end": 26.928,
+      "duration": 2.69,
+      "english": "It feels good to plan the day early."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-11.mp3",
+      "source": "简单/9.mp3",
+      "start": 26.688,
+      "end": 29.128,
+      "duration": 2.44,
+      "english": "I open the windows for fresh air."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-12.mp3",
+      "source": "简单/9.mp3",
+      "start": 28.887,
+      "end": 31.398,
+      "duration": 2.51,
+      "english": "My routine keeps me on track."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-13.mp3",
+      "source": "简单/9.mp3",
+      "start": 31.157,
+      "end": 34.267,
+      "duration": 3.11,
+      "english": "I stretch for a few minutes after waking."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-14.mp3",
+      "source": "简单/9.mp3",
+      "start": 34.028,
+      "end": 36.417,
+      "duration": 2.39,
+      "english": "Coffee and news is my morning combo."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-15.mp3",
+      "source": "简单/9.mp3",
+      "start": 36.178,
+      "end": 38.617,
+      "duration": 2.44,
+      "english": "I try not to rush too much."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-16.mp3",
+      "source": "简单/9.mp3",
+      "start": 38.378,
+      "end": 40.567,
+      "duration": 2.19,
+      "english": "The light coming in feels nice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-17.mp3",
+      "source": "简单/9.mp3",
+      "start": 40.328,
+      "end": 43.247,
+      "duration": 2.92,
+      "english": "I make a short to-do list."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-18.mp3",
+      "source": "简单/9.mp3",
+      "start": 43.008,
+      "end": 46.487,
+      "duration": 3.48,
+      "english": "Mornings go smoother when I prepare the night before."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-19.mp3",
+      "source": "简单/9.mp3",
+      "start": 46.248,
+      "end": 49.247,
+      "duration": 3.0,
+      "english": "I enjoy the quiet before everyone wakes up."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-17\\sentence-20.mp3",
+      "source": "简单/9.mp3",
+      "start": 49.008,
+      "end": 51.427,
+      "duration": 2.42,
+      "english": "Starting slow helps the whole day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-01.mp3",
+      "source": "简单/9.mp3",
+      "start": 51.188,
+      "end": 54.197,
+      "duration": 3.01,
+      "english": "I like to read a bit before bed."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-02.mp3",
+      "source": "简单/9.mp3",
+      "start": 53.958,
+      "end": 56.977,
+      "duration": 3.02,
+      "english": "Turning off screens helps me sleep better."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-03.mp3",
+      "source": "简单/9.mp3",
+      "start": 56.738,
+      "end": 59.527,
+      "duration": 2.79,
+      "english": "A warm drink in the evening is relaxing."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-04.mp3",
+      "source": "简单/9.mp3",
+      "start": 59.288,
+      "end": 62.067,
+      "duration": 2.78,
+      "english": "I review the day for a few minutes."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-05.mp3",
+      "source": "简单/9.mp3",
+      "start": 61.828,
+      "end": 64.178,
+      "duration": 2.35,
+      "english": "The house gets quiet after dinner."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-06.mp3",
+      "source": "简单/9.mp3",
+      "start": 63.938,
+      "end": 67.138,
+      "duration": 3.2,
+      "english": "I usually tidy up a little at night."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-07.mp3",
+      "source": "简单/9.mp3",
+      "start": 66.897,
+      "end": 69.848,
+      "duration": 2.95,
+      "english": "Bedtime around the same time feels good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-08.mp3",
+      "source": "简单/9.mp3",
+      "start": 69.608,
+      "end": 72.748,
+      "duration": 3.14,
+      "english": "I listen to soft music to unwind."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-09.mp3",
+      "source": "简单/9.mp3",
+      "start": 72.507,
+      "end": 75.138,
+      "duration": 2.63,
+      "english": "Taking a few deep breaths calms me."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-10.mp3",
+      "source": "简单/9.mp3",
+      "start": 74.897,
+      "end": 77.308,
+      "duration": 2.41,
+      "english": "I put my phone away early."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-11.mp3",
+      "source": "简单/9.mp3",
+      "start": 77.067,
+      "end": 79.458,
+      "duration": 2.39,
+      "english": "Evenings are for simple things."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-12.mp3",
+      "source": "简单/9.mp3",
+      "start": 79.218,
+      "end": 81.758,
+      "duration": 2.54,
+      "english": "I feel better after a hot shower."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-13.mp3",
+      "source": "简单/9.mp3",
+      "start": 81.517,
+      "end": 83.748,
+      "duration": 2.23,
+      "english": "We chat a little before sleep."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-14.mp3",
+      "source": "简单/9.mp3",
+      "start": 83.507,
+      "end": 85.498,
+      "duration": 1.99,
+      "english": "The routine helps me relax."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-15.mp3",
+      "source": "简单/9.mp3",
+      "start": 85.257,
+      "end": 88.388,
+      "duration": 3.13,
+      "english": "I try to end the day on a good note."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-16.mp3",
+      "source": "简单/9.mp3",
+      "start": 88.147,
+      "end": 90.178,
+      "duration": 2.03,
+      "english": "Lights off by a certain time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-17.mp3",
+      "source": "简单/9.mp3",
+      "start": 89.938,
+      "end": 92.488,
+      "duration": 2.55,
+      "english": "I think about three good things today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-18.mp3",
+      "source": "简单/9.mp3",
+      "start": 92.248,
+      "end": 94.267,
+      "duration": 2.02,
+      "english": "Nighttime is my favorite quiet time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-19.mp3",
+      "source": "简单/9.mp3",
+      "start": 94.027,
+      "end": 96.638,
+      "duration": 2.61,
+      "english": "Getting ready for bed feels peaceful."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-18\\sentence-20.mp3",
+      "source": "简单/9.mp3",
+      "start": 96.397,
+      "end": 98.508,
+      "duration": 2.11,
+      "english": "Tomorrow will be another day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-01.mp3",
+      "source": "简单/10.mp3",
+      "start": 0.0,
+      "end": 2.278,
+      "duration": 2.278,
+      "english": "Traffic was lighter than usual today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-02.mp3",
+      "source": "简单/10.mp3",
+      "start": 2.038,
+      "end": 4.737,
+      "duration": 2.7,
+      "english": "I always check the gas before leaving."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-03.mp3",
+      "source": "简单/10.mp3",
+      "start": 4.497,
+      "end": 7.588,
+      "duration": 3.09,
+      "english": "The drive home takes about thirty minutes."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-04.mp3",
+      "source": "简单/10.mp3",
+      "start": 7.348,
+      "end": 11.057,
+      "duration": 3.71,
+      "english": "I listen to the radio in the car."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-05.mp3",
+      "source": "简单/10.mp3",
+      "start": 10.818,
+      "end": 13.147,
+      "duration": 2.33,
+      "english": "Parking was easy for once."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-06.mp3",
+      "source": "简单/10.mp3",
+      "start": 12.908,
+      "end": 15.927,
+      "duration": 3.02,
+      "english": "I take the back roads when I can."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-07.mp3",
+      "source": "简单/10.mp3",
+      "start": 15.688,
+      "end": 18.418,
+      "duration": 2.73,
+      "english": "The GPS took me a different way."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-08.mp3",
+      "source": "简单/10.mp3",
+      "start": 18.177,
+      "end": 20.887,
+      "duration": 2.71,
+      "english": "Driving with the windows down feels nice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-09.mp3",
+      "source": "简单/10.mp3",
+      "start": 20.647,
+      "end": 23.498,
+      "duration": 2.85,
+      "english": "I need to get the car washed soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-10.mp3",
+      "source": "简单/10.mp3",
+      "start": 23.258,
+      "end": 25.768,
+      "duration": 2.51,
+      "english": "Rush hour is the worst part."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-11.mp3",
+      "source": "简单/10.mp3",
+      "start": 25.527,
+      "end": 28.148,
+      "duration": 2.62,
+      "english": "I enjoy a short drive to clear my head."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-12.mp3",
+      "source": "简单/10.mp3",
+      "start": 27.907,
+      "end": 30.308,
+      "duration": 2.4,
+      "english": "The highway was smooth this time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-13.mp3",
+      "source": "简单/10.mp3",
+      "start": 30.067,
+      "end": 32.557,
+      "duration": 2.49,
+      "english": "I always buckle up right away."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-14.mp3",
+      "source": "简单/10.mp3",
+      "start": 32.318,
+      "end": 34.707,
+      "duration": 2.39,
+      "english": "Music makes the drive better."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-15.mp3",
+      "source": "简单/10.mp3",
+      "start": 34.468,
+      "end": 37.037,
+      "duration": 2.57,
+      "english": "I stop for coffee on longer trips."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-16.mp3",
+      "source": "简单/10.mp3",
+      "start": 36.797,
+      "end": 39.247,
+      "duration": 2.45,
+      "english": "The car needs a small repair."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-17.mp3",
+      "source": "简单/10.mp3",
+      "start": 39.008,
+      "end": 41.688,
+      "duration": 2.68,
+      "english": "I plan my route the night before."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-18.mp3",
+      "source": "简单/10.mp3",
+      "start": 41.448,
+      "end": 43.727,
+      "duration": 2.28,
+      "english": "Driving at night is peaceful."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-19.mp3",
+      "source": "简单/10.mp3",
+      "start": 43.488,
+      "end": 46.477,
+      "duration": 2.99,
+      "english": "I try to stay patient in traffic."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-19\\sentence-20.mp3",
+      "source": "简单/10.mp3",
+      "start": 46.238,
+      "end": 48.807,
+      "duration": 2.57,
+      "english": "Getting around gets easier with practice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-01.mp3",
+      "source": "简单/10.mp3",
+      "start": 48.568,
+      "end": 51.477,
+      "duration": 2.91,
+      "english": "It's really nice out today, isn't it?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-02.mp3",
+      "source": "简单/10.mp3",
+      "start": 51.238,
+      "end": 53.777,
+      "duration": 2.54,
+      "english": "Looks like rain coming this afternoon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-03.mp3",
+      "source": "简单/10.mp3",
+      "start": 53.538,
+      "end": 55.887,
+      "duration": 2.35,
+      "english": "The heat is finally easing up."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-04.mp3",
+      "source": "简单/10.mp3",
+      "start": 55.648,
+      "end": 58.357,
+      "duration": 2.71,
+      "english": "Fall weather makes me want to bake."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-05.mp3",
+      "source": "简单/10.mp3",
+      "start": 58.117,
+      "end": 60.627,
+      "duration": 2.51,
+      "english": "It's windy but the sun feels good."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-06.mp3",
+      "source": "简单/10.mp3",
+      "start": 60.388,
+      "end": 63.387,
+      "duration": 3.0,
+      "english": "I hope it stays dry for the weekend."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-07.mp3",
+      "source": "简单/10.mp3",
+      "start": 63.148,
+      "end": 65.498,
+      "duration": 2.35,
+      "english": "The leaves are turning so pretty."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-08.mp3",
+      "source": "简单/10.mp3",
+      "start": 65.257,
+      "end": 67.968,
+      "duration": 2.71,
+      "english": "Winter is coming faster than I thought."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-09.mp3",
+      "source": "简单/10.mp3",
+      "start": 67.727,
+      "end": 69.998,
+      "duration": 2.27,
+      "english": "Perfect weather for a long walk."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-10.mp3",
+      "source": "简单/10.mp3",
+      "start": 69.757,
+      "end": 71.288,
+      "duration": 1.53,
+      "english": "The forecast changed again."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-11.mp3",
+      "source": "简单/10.mp3",
+      "start": 71.047,
+      "end": 72.708,
+      "duration": 1.66,
+      "english": "It's humid and sticky outside."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-12.mp3",
+      "source": "简单/10.mp3",
+      "start": 72.468,
+      "end": 74.738,
+      "duration": 2.27,
+      "english": "I love these mild days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-13.mp3",
+      "source": "简单/10.mp3",
+      "start": 74.498,
+      "end": 77.047,
+      "duration": 2.55,
+      "english": "The sunset was beautiful last night."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-14.mp3",
+      "source": "简单/10.mp3",
+      "start": 76.807,
+      "end": 79.517,
+      "duration": 2.71,
+      "english": "We need more sunny days like this."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-15.mp3",
+      "source": "简单/10.mp3",
+      "start": 79.277,
+      "end": 81.988,
+      "duration": 2.71,
+      "english": "The air smells fresh after the rain."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-16.mp3",
+      "source": "简单/10.mp3",
+      "start": 81.748,
+      "end": 84.708,
+      "duration": 2.96,
+      "english": "Spring always feels like a new start."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-17.mp3",
+      "source": "简单/10.mp3",
+      "start": 84.468,
+      "end": 86.708,
+      "duration": 2.24,
+      "english": "Bundle up, it's getting colder."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-18.mp3",
+      "source": "简单/10.mp3",
+      "start": 86.468,
+      "end": 88.748,
+      "duration": 2.28,
+      "english": "The garden loves this weather."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-19.mp3",
+      "source": "简单/10.mp3",
+      "start": 88.507,
+      "end": 91.047,
+      "duration": 2.54,
+      "english": "It's one of those perfect days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-20\\sentence-20.mp3",
+      "source": "简单/10.mp3",
+      "start": 90.807,
+      "end": 93.231,
+      "duration": 2.424,
+      "english": "Weather can change so quickly here."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-01.mp3",
+      "source": "简单/11.mp3",
+      "start": 0.0,
+      "end": 1.598,
+      "duration": 1.598,
+      "english": "You did a great job on that."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-02.mp3",
+      "source": "简单/11.mp3",
+      "start": 1.357,
+      "end": 3.618,
+      "duration": 2.26,
+      "english": "That color looks really good on you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-03.mp3",
+      "source": "简单/11.mp3",
+      "start": 3.377,
+      "end": 5.508,
+      "duration": 2.13,
+      "english": "Your cooking is always delicious."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-04.mp3",
+      "source": "简单/11.mp3",
+      "start": 5.268,
+      "end": 7.397,
+      "duration": 2.13,
+      "english": "I'm impressed with how you handled it."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-05.mp3",
+      "source": "简单/11.mp3",
+      "start": 7.157,
+      "end": 9.537,
+      "duration": 2.38,
+      "english": "The garden looks amazing this year."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-06.mp3",
+      "source": "简单/11.mp3",
+      "start": 9.298,
+      "end": 11.567,
+      "duration": 2.27,
+      "english": "You have such a nice smile."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-07.mp3",
+      "source": "简单/11.mp3",
+      "start": 11.328,
+      "end": 13.727,
+      "duration": 2.4,
+      "english": "This place turned out really cozy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-08.mp3",
+      "source": "简单/11.mp3",
+      "start": 13.488,
+      "end": 15.847,
+      "duration": 2.36,
+      "english": "You're really good at explaining things."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-09.mp3",
+      "source": "简单/11.mp3",
+      "start": 15.607,
+      "end": 17.518,
+      "duration": 1.91,
+      "english": "That was a smart decision."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-10.mp3",
+      "source": "简单/11.mp3",
+      "start": 17.277,
+      "end": 19.478,
+      "duration": 2.2,
+      "english": "I love your positive attitude."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-11.mp3",
+      "source": "简单/11.mp3",
+      "start": 19.238,
+      "end": 21.348,
+      "duration": 2.11,
+      "english": "The kids are doing so well."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-12.mp3",
+      "source": "简单/11.mp3",
+      "start": 21.107,
+      "end": 22.608,
+      "duration": 1.5,
+      "english": "Your idea worked out perfectly."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-13.mp3",
+      "source": "简单/11.mp3",
+      "start": 22.367,
+      "end": 23.998,
+      "duration": 1.63,
+      "english": "You make everything more fun."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-14.mp3",
+      "source": "简单/11.mp3",
+      "start": 23.758,
+      "end": 25.547,
+      "duration": 1.79,
+      "english": "This meal is restaurant quality."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-15.mp3",
+      "source": "简单/11.mp3",
+      "start": 25.307,
+      "end": 27.788,
+      "duration": 2.48,
+      "english": "I'm proud of the progress you're making."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-16.mp3",
+      "source": "简单/11.mp3",
+      "start": 27.547,
+      "end": 29.788,
+      "duration": 2.24,
+      "english": "You have great taste in music."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-17.mp3",
+      "source": "简单/11.mp3",
+      "start": 29.547,
+      "end": 31.488,
+      "duration": 1.94,
+      "english": "That outfit is sharp."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-18.mp3",
+      "source": "简单/11.mp3",
+      "start": 31.247,
+      "end": 33.177,
+      "duration": 1.93,
+      "english": "Your help means a lot."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-19.mp3",
+      "source": "简单/11.mp3",
+      "start": 32.938,
+      "end": 34.787,
+      "duration": 1.85,
+      "english": "Everything you touch turns out nice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-21\\sentence-20.mp3",
+      "source": "简单/11.mp3",
+      "start": 34.547,
+      "end": 36.587,
+      "duration": 2.04,
+      "english": "You're a natural at this."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-01.mp3",
+      "source": "简单/11.mp3",
+      "start": 36.348,
+      "end": 38.357,
+      "duration": 2.01,
+      "english": "Sorry about that, my bad."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-02.mp3",
+      "source": "简单/11.mp3",
+      "start": 38.117,
+      "end": 40.297,
+      "duration": 2.18,
+      "english": "I didn't mean to be late."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-03.mp3",
+      "source": "简单/11.mp3",
+      "start": 40.058,
+      "end": 42.777,
+      "duration": 2.72,
+      "english": "Let me make it up to you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-04.mp3",
+      "source": "简单/11.mp3",
+      "start": 42.538,
+      "end": 44.367,
+      "duration": 1.83,
+      "english": "I should have checked first."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-05.mp3",
+      "source": "简单/11.mp3",
+      "start": 44.128,
+      "end": 45.927,
+      "duration": 1.8,
+      "english": "Sorry for the mix-up."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-06.mp3",
+      "source": "简单/11.mp3",
+      "start": 45.688,
+      "end": 47.457,
+      "duration": 1.77,
+      "english": "I'll fix it right away."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-07.mp3",
+      "source": "简单/11.mp3",
+      "start": 47.218,
+      "end": 48.797,
+      "duration": 1.58,
+      "english": "That was my mistake."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-08.mp3",
+      "source": "简单/11.mp3",
+      "start": 48.558,
+      "end": 50.607,
+      "duration": 2.05,
+      "english": "I apologize for the inconvenience."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-09.mp3",
+      "source": "简单/11.mp3",
+      "start": 50.367,
+      "end": 52.477,
+      "duration": 2.11,
+      "english": "Next time I'll be more careful."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-10.mp3",
+      "source": "简单/11.mp3",
+      "start": 52.238,
+      "end": 54.057,
+      "duration": 1.82,
+      "english": "Thanks for being understanding."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-11.mp3",
+      "source": "简单/11.mp3",
+      "start": 53.818,
+      "end": 55.807,
+      "duration": 1.99,
+      "english": "I didn't realize it bothered you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-12.mp3",
+      "source": "简单/11.mp3",
+      "start": 55.568,
+      "end": 57.637,
+      "duration": 2.07,
+      "english": "Let me know how I can help."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-13.mp3",
+      "source": "简单/11.mp3",
+      "start": 57.398,
+      "end": 59.617,
+      "duration": 2.22,
+      "english": "Sorry, I dropped the ball on that."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-14.mp3",
+      "source": "简单/11.mp3",
+      "start": 59.378,
+      "end": 61.258,
+      "duration": 1.88,
+      "english": "I'll take care of it today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-15.mp3",
+      "source": "简单/11.mp3",
+      "start": 61.018,
+      "end": 62.597,
+      "duration": 1.58,
+      "english": "That won't happen again."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-16.mp3",
+      "source": "简单/11.mp3",
+      "start": 62.358,
+      "end": 64.148,
+      "duration": 1.79,
+      "english": "I feel bad about it."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-17.mp3",
+      "source": "简单/11.mp3",
+      "start": 63.908,
+      "end": 66.148,
+      "duration": 2.24,
+      "english": "Thanks for giving me another chance."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-18.mp3",
+      "source": "简单/11.mp3",
+      "start": 65.907,
+      "end": 67.588,
+      "duration": 1.68,
+      "english": "I spoke too quickly."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-19.mp3",
+      "source": "简单/11.mp3",
+      "start": 67.347,
+      "end": 69.407,
+      "duration": 2.06,
+      "english": "Let's sort this out together."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-22\\sentence-20.mp3",
+      "source": "简单/11.mp3",
+      "start": 69.167,
+      "end": 70.844,
+      "duration": 1.677,
+      "english": "I appreciate your patience."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-01.mp3",
+      "source": "简单/12.mp3",
+      "start": 0.0,
+      "end": 1.538,
+      "duration": 1.538,
+      "english": "Thanks so much for your help."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-02.mp3",
+      "source": "简单/12.mp3",
+      "start": 1.297,
+      "end": 2.877,
+      "duration": 1.58,
+      "english": "I really appreciate it."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-03.mp3",
+      "source": "简单/12.mp3",
+      "start": 2.637,
+      "end": 4.638,
+      "duration": 2.0,
+      "english": "That means a lot to me."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-04.mp3",
+      "source": "简单/12.mp3",
+      "start": 4.397,
+      "end": 6.228,
+      "duration": 1.83,
+      "english": "Thank you for thinking of me."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-05.mp3",
+      "source": "简单/12.mp3",
+      "start": 5.987,
+      "end": 8.077,
+      "duration": 2.09,
+      "english": "I'm grateful for your support."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-06.mp3",
+      "source": "简单/12.mp3",
+      "start": 7.837,
+      "end": 9.877,
+      "duration": 2.04,
+      "english": "This made my day better."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-07.mp3",
+      "source": "简单/12.mp3",
+      "start": 9.638,
+      "end": 11.087,
+      "duration": 1.45,
+      "english": "Thanks for listening."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-08.mp3",
+      "source": "简单/12.mp3",
+      "start": 10.848,
+      "end": 13.597,
+      "duration": 2.75,
+      "english": "I don't know what I'd do without you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-09.mp3",
+      "source": "简单/12.mp3",
+      "start": 13.357,
+      "end": 14.577,
+      "duration": 1.22,
+      "english": "You're the best."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-10.mp3",
+      "source": "简单/12.mp3",
+      "start": 14.338,
+      "end": 16.008,
+      "duration": 1.67,
+      "english": "Thank you for everything."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-11.mp3",
+      "source": "简单/12.mp3",
+      "start": 15.768,
+      "end": 17.418,
+      "duration": 1.65,
+      "english": "I really needed that."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-12.mp3",
+      "source": "简单/12.mp3",
+      "start": 17.177,
+      "end": 19.228,
+      "duration": 2.05,
+      "english": "It was so kind of you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-13.mp3",
+      "source": "简单/12.mp3",
+      "start": 18.988,
+      "end": 20.938,
+      "duration": 1.95,
+      "english": "Thanks again for your time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-14.mp3",
+      "source": "简单/12.mp3",
+      "start": 20.697,
+      "end": 22.568,
+      "duration": 1.87,
+      "english": "I'm lucky to have you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-15.mp3",
+      "source": "简单/12.mp3",
+      "start": 22.328,
+      "end": 24.188,
+      "duration": 1.86,
+      "english": "That was really thoughtful."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-16.mp3",
+      "source": "简单/12.mp3",
+      "start": 23.947,
+      "end": 26.297,
+      "duration": 2.35,
+      "english": "I appreciate you more than you know."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-17.mp3",
+      "source": "简单/12.mp3",
+      "start": 26.057,
+      "end": 27.568,
+      "duration": 1.51,
+      "english": "Thanks for being there."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-18.mp3",
+      "source": "简单/12.mp3",
+      "start": 27.328,
+      "end": 29.387,
+      "duration": 2.06,
+      "english": "This means the world to me."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-19.mp3",
+      "source": "简单/12.mp3",
+      "start": 29.147,
+      "end": 30.738,
+      "duration": 1.59,
+      "english": "You're always so helpful."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-23\\sentence-20.mp3",
+      "source": "简单/12.mp3",
+      "start": 30.497,
+      "end": 33.117,
+      "duration": 2.62,
+      "english": "Thank you from the bottom of my heart."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-01.mp3",
+      "source": "简单/12.mp3",
+      "start": 32.878,
+      "end": 34.707,
+      "duration": 1.83,
+      "english": "Take care and drive safe."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-02.mp3",
+      "source": "简单/12.mp3",
+      "start": 34.468,
+      "end": 35.947,
+      "duration": 1.48,
+      "english": "Talk to you soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-03.mp3",
+      "source": "简单/12.mp3",
+      "start": 35.708,
+      "end": 37.197,
+      "duration": 1.49,
+      "english": "See you next week."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-04.mp3",
+      "source": "简单/12.mp3",
+      "start": 36.958,
+      "end": 39.027,
+      "duration": 2.07,
+      "english": "Have a great rest of your day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-05.mp3",
+      "source": "简单/12.mp3",
+      "start": 38.788,
+      "end": 40.167,
+      "duration": 1.38,
+      "english": "Catch you later."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-06.mp3",
+      "source": "简单/12.mp3",
+      "start": 39.928,
+      "end": 41.857,
+      "duration": 1.93,
+      "english": "Thanks again, bye for now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-07.mp3",
+      "source": "简单/12.mp3",
+      "start": 41.617,
+      "end": 43.078,
+      "duration": 1.46,
+      "english": "Enjoy your evening."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-08.mp3",
+      "source": "简单/12.mp3",
+      "start": 42.838,
+      "end": 44.347,
+      "duration": 1.51,
+      "english": "Let's stay in touch."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-09.mp3",
+      "source": "简单/12.mp3",
+      "start": 44.108,
+      "end": 45.417,
+      "duration": 1.31,
+      "english": "Safe travels."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-10.mp3",
+      "source": "简单/12.mp3",
+      "start": 45.178,
+      "end": 46.427,
+      "duration": 1.25,
+      "english": "See you around."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-11.mp3",
+      "source": "简单/12.mp3",
+      "start": 46.188,
+      "end": 47.487,
+      "duration": 1.3,
+      "english": "Have a good one."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-12.mp3",
+      "source": "简单/12.mp3",
+      "start": 47.248,
+      "end": 48.688,
+      "duration": 1.44,
+      "english": "Until next time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-13.mp3",
+      "source": "简单/12.mp3",
+      "start": 48.448,
+      "end": 50.127,
+      "duration": 1.68,
+      "english": "Keep in touch, okay?"
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-14.mp3",
+      "source": "简单/12.mp3",
+      "start": 49.888,
+      "end": 51.417,
+      "duration": 1.53,
+      "english": "Bye, love you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-15.mp3",
+      "source": "简单/12.mp3",
+      "start": 51.178,
+      "end": 53.457,
+      "duration": 2.28,
+      "english": "Looking forward to catching up soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-16.mp3",
+      "source": "简单/12.mp3",
+      "start": 53.218,
+      "end": 54.537,
+      "duration": 1.32,
+      "english": "Take it easy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-17.mp3",
+      "source": "简单/12.mp3",
+      "start": 54.297,
+      "end": 56.067,
+      "duration": 1.77,
+      "english": "Have fun with the family."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-18.mp3",
+      "source": "简单/12.mp3",
+      "start": 55.828,
+      "end": 57.008,
+      "duration": 1.18,
+      "english": "Talk soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-19.mp3",
+      "source": "简单/12.mp3",
+      "start": 56.768,
+      "end": 57.898,
+      "duration": 1.13,
+      "english": "Stay well."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-24\\sentence-20.mp3",
+      "source": "简单/12.mp3",
+      "start": 57.658,
+      "end": 58.906,
+      "duration": 1.249,
+      "english": "Goodbye for now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-01.mp3",
+      "source": "简单/13.mp3",
+      "start": 0.0,
+      "end": 2.337,
+      "duration": 2.337,
+      "english": "You've got this, I know you do."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-02.mp3",
+      "source": "简单/13.mp3",
+      "start": 2.097,
+      "end": 5.438,
+      "duration": 3.34,
+      "english": "I'm here if you need to talk."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-03.mp3",
+      "source": "简单/13.mp3",
+      "start": 5.197,
+      "end": 7.197,
+      "duration": 2.0,
+      "english": "Keep going, you're doing great."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-04.mp3",
+      "source": "简单/13.mp3",
+      "start": 6.957,
+      "end": 9.417,
+      "duration": 2.46,
+      "english": "Take your time, no rush."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-05.mp3",
+      "source": "简单/13.mp3",
+      "start": 9.178,
+      "end": 11.087,
+      "duration": 1.91,
+      "english": "I believe in you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-06.mp3",
+      "source": "简单/13.mp3",
+      "start": 10.848,
+      "end": 13.907,
+      "duration": 3.06,
+      "english": "One step at a time, that's all."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-07.mp3",
+      "source": "简单/13.mp3",
+      "start": 13.668,
+      "end": 15.917,
+      "duration": 2.25,
+      "english": "You're stronger than you think."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-08.mp3",
+      "source": "简单/13.mp3",
+      "start": 15.678,
+      "end": 18.088,
+      "duration": 2.41,
+      "english": "I'm proud of you for trying."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-09.mp3",
+      "source": "简单/13.mp3",
+      "start": 17.848,
+      "end": 20.518,
+      "duration": 2.67,
+      "english": "It'll work out, just wait and see."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-10.mp3",
+      "source": "简单/13.mp3",
+      "start": 20.277,
+      "end": 21.988,
+      "duration": 1.71,
+      "english": "You've come so far already."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-11.mp3",
+      "source": "简单/13.mp3",
+      "start": 21.747,
+      "end": 23.408,
+      "duration": 1.66,
+      "english": "I'm rooting for you."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-12.mp3",
+      "source": "简单/13.mp3",
+      "start": 23.168,
+      "end": 24.928,
+      "duration": 1.76,
+      "english": "Don't give up now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-13.mp3",
+      "source": "简单/13.mp3",
+      "start": 24.688,
+      "end": 26.698,
+      "duration": 2.01,
+      "english": "You've handled harder things before."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-14.mp3",
+      "source": "简单/13.mp3",
+      "start": 26.457,
+      "end": 28.748,
+      "duration": 2.29,
+      "english": "I'm always in your corner."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-15.mp3",
+      "source": "简单/13.mp3",
+      "start": 28.508,
+      "end": 31.198,
+      "duration": 2.69,
+      "english": "This is just a bump in the road."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-16.mp3",
+      "source": "简单/13.mp3",
+      "start": 30.957,
+      "end": 33.107,
+      "duration": 2.15,
+      "english": "You're making good progress."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-17.mp3",
+      "source": "简单/13.mp3",
+      "start": 32.867,
+      "end": 36.307,
+      "duration": 3.44,
+      "english": "Lean on me when you need to."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-18.mp3",
+      "source": "简单/13.mp3",
+      "start": 36.068,
+      "end": 38.537,
+      "duration": 2.47,
+      "english": "Things will get better soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-19.mp3",
+      "source": "简单/13.mp3",
+      "start": 38.297,
+      "end": 40.867,
+      "duration": 2.57,
+      "english": "You've got a good head on your shoulders."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-25\\sentence-20.mp3",
+      "source": "简单/13.mp3",
+      "start": 40.628,
+      "end": 43.527,
+      "duration": 2.9,
+      "english": "I'm happy to help any way I can."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-01.mp3",
+      "source": "简单/13.mp3",
+      "start": 43.288,
+      "end": 45.727,
+      "duration": 2.44,
+      "english": "I know exactly what you mean."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-02.mp3",
+      "source": "简单/13.mp3",
+      "start": 45.488,
+      "end": 47.377,
+      "duration": 1.89,
+      "english": "That makes total sense."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-03.mp3",
+      "source": "简单/13.mp3",
+      "start": 47.138,
+      "end": 49.717,
+      "duration": 2.58,
+      "english": "Yeah, I feel the same way."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-04.mp3",
+      "source": "简单/13.mp3",
+      "start": 49.477,
+      "end": 51.307,
+      "duration": 1.83,
+      "english": "You're right about that."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-05.mp3",
+      "source": "简单/13.mp3",
+      "start": 51.068,
+      "end": 52.927,
+      "duration": 1.86,
+      "english": "I couldn't agree more."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-06.mp3",
+      "source": "简单/13.mp3",
+      "start": 52.688,
+      "end": 54.527,
+      "duration": 1.84,
+      "english": "Tell me about it."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-07.mp3",
+      "source": "简单/13.mp3",
+      "start": 54.288,
+      "end": 56.938,
+      "duration": 2.65,
+      "english": "I see where you're coming from."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-08.mp3",
+      "source": "简单/13.mp3",
+      "start": 56.698,
+      "end": 58.387,
+      "duration": 1.69,
+      "english": "Absolutely, no doubt."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-09.mp3",
+      "source": "简单/13.mp3",
+      "start": 58.148,
+      "end": 60.157,
+      "duration": 2.01,
+      "english": "That sounds about right."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-10.mp3",
+      "source": "简单/13.mp3",
+      "start": 59.918,
+      "end": 61.737,
+      "duration": 1.82,
+      "english": "I get it completely."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-11.mp3",
+      "source": "简单/13.mp3",
+      "start": 61.498,
+      "end": 63.497,
+      "duration": 2.0,
+      "english": "Me too, all the time."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-12.mp3",
+      "source": "简单/13.mp3",
+      "start": 63.258,
+      "end": 64.758,
+      "duration": 1.5,
+      "english": "You're spot on."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-13.mp3",
+      "source": "简单/13.mp3",
+      "start": 64.517,
+      "end": 67.438,
+      "duration": 2.92,
+      "english": "I was thinking the same thing."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-14.mp3",
+      "source": "简单/13.mp3",
+      "start": 67.197,
+      "end": 68.618,
+      "duration": 1.42,
+      "english": "Fair enough."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-15.mp3",
+      "source": "简单/13.mp3",
+      "start": 68.377,
+      "end": 70.767,
+      "duration": 2.39,
+      "english": "Yeah, it happens to me too."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-16.mp3",
+      "source": "简单/13.mp3",
+      "start": 70.527,
+      "end": 73.008,
+      "duration": 2.48,
+      "english": "I hear you loud and clear."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-17.mp3",
+      "source": "简单/13.mp3",
+      "start": 72.767,
+      "end": 74.767,
+      "duration": 2.0,
+      "english": "That’s a good point."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-18.mp3",
+      "source": "简单/13.mp3",
+      "start": 74.527,
+      "end": 76.838,
+      "duration": 2.31,
+      "english": "Exactly what I was thinking."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-19.mp3",
+      "source": "简单/13.mp3",
+      "start": 76.597,
+      "end": 78.218,
+      "duration": 1.62,
+      "english": "No argument here."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-26\\sentence-20.mp3",
+      "source": "简单/13.mp3",
+      "start": 77.977,
+      "end": 79.804,
+      "duration": 1.827,
+      "english": "I’m with you on that."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-01.mp3",
+      "source": "简单/14.mp3",
+      "start": 0.0,
+      "end": 2.027,
+      "duration": 2.027,
+      "english": "I prefer the simpler option."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-02.mp3",
+      "source": "简单/14.mp3",
+      "start": 1.788,
+      "end": 4.087,
+      "duration": 2.3,
+      "english": "I like this one better."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-03.mp3",
+      "source": "简单/14.mp3",
+      "start": 3.847,
+      "end": 6.708,
+      "duration": 2.86,
+      "english": "Let's go with the first choice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-04.mp3",
+      "source": "简单/14.mp3",
+      "start": 6.468,
+      "end": 9.207,
+      "duration": 2.74,
+      "english": "I'm more of a coffee person."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-05.mp3",
+      "source": "简单/14.mp3",
+      "start": 8.968,
+      "end": 11.247,
+      "duration": 2.28,
+      "english": "I usually pick the quiet spot."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-06.mp3",
+      "source": "简单/14.mp3",
+      "start": 11.008,
+      "end": 13.147,
+      "duration": 2.14,
+      "english": "That works better for me."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-07.mp3",
+      "source": "简单/14.mp3",
+      "start": 12.908,
+      "end": 15.127,
+      "duration": 2.22,
+      "english": "I enjoy the homemade version."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-08.mp3",
+      "source": "简单/14.mp3",
+      "start": 14.888,
+      "end": 17.277,
+      "duration": 2.39,
+      "english": "I'd rather stay close to home."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-09.mp3",
+      "source": "简单/14.mp3",
+      "start": 17.037,
+      "end": 19.188,
+      "duration": 2.15,
+      "english": "This color is my favorite."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-10.mp3",
+      "source": "简单/14.mp3",
+      "start": 18.947,
+      "end": 22.188,
+      "duration": 3.24,
+      "english": "I tend to choose comfort over style."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-11.mp3",
+      "source": "简单/14.mp3",
+      "start": 21.947,
+      "end": 23.918,
+      "duration": 1.97,
+      "english": "Let's keep it casual."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-12.mp3",
+      "source": "简单/14.mp3",
+      "start": 23.677,
+      "end": 26.188,
+      "duration": 2.51,
+      "english": "I like mine with a little sugar."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-13.mp3",
+      "source": "简单/14.mp3",
+      "start": 25.947,
+      "end": 27.898,
+      "duration": 1.95,
+      "english": "The shorter route is fine."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-14.mp3",
+      "source": "简单/14.mp3",
+      "start": 27.657,
+      "end": 29.988,
+      "duration": 2.33,
+      "english": "I'm not picky most days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-15.mp3",
+      "source": "简单/14.mp3",
+      "start": 29.747,
+      "end": 32.068,
+      "duration": 2.32,
+      "english": "I prefer doing it myself."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-16.mp3",
+      "source": "简单/14.mp3",
+      "start": 31.828,
+      "end": 34.087,
+      "duration": 2.26,
+      "english": "That one feels more practical."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-17.mp3",
+      "source": "简单/14.mp3",
+      "start": 33.848,
+      "end": 36.487,
+      "duration": 2.64,
+      "english": "I go for the classic style."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-18.mp3",
+      "source": "简单/14.mp3",
+      "start": 36.248,
+      "end": 38.237,
+      "duration": 1.99,
+      "english": "Let's do whatever is easiest."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-19.mp3",
+      "source": "简单/14.mp3",
+      "start": 37.998,
+      "end": 40.277,
+      "duration": 2.28,
+      "english": "I like things simple."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-27\\sentence-20.mp3",
+      "source": "简单/14.mp3",
+      "start": 40.038,
+      "end": 42.797,
+      "duration": 2.76,
+      "english": "Either way is okay with me."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-01.mp3",
+      "source": "简单/14.mp3",
+      "start": 42.558,
+      "end": 45.137,
+      "duration": 2.58,
+      "english": "The kids are growing up so fast."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-02.mp3",
+      "source": "简单/14.mp3",
+      "start": 44.898,
+      "end": 46.938,
+      "duration": 2.04,
+      "english": "Time really flies these days."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-03.mp3",
+      "source": "简单/14.mp3",
+      "start": 46.698,
+      "end": 49.078,
+      "duration": 2.38,
+      "english": "The flowers look beautiful this year."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-04.mp3",
+      "source": "简单/14.mp3",
+      "start": 48.838,
+      "end": 50.747,
+      "duration": 1.91,
+      "english": "Everyone seems busy lately."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-05.mp3",
+      "source": "简单/14.mp3",
+      "start": 50.508,
+      "end": 52.367,
+      "duration": 1.86,
+      "english": "The neighborhood is quiet today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-06.mp3",
+      "source": "简单/14.mp3",
+      "start": 52.128,
+      "end": 54.227,
+      "duration": 2.1,
+      "english": "Prices keep changing everywhere."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-07.mp3",
+      "source": "简单/14.mp3",
+      "start": 53.988,
+      "end": 56.517,
+      "duration": 2.53,
+      "english": "The dog is full of energy."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-08.mp3",
+      "source": "简单/14.mp3",
+      "start": 56.278,
+      "end": 58.537,
+      "duration": 2.26,
+      "english": "It's nice to see the sun again."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-09.mp3",
+      "source": "简单/14.mp3",
+      "start": 58.297,
+      "end": 60.717,
+      "duration": 2.42,
+      "english": "The traffic wasn't bad at all."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-10.mp3",
+      "source": "简单/14.mp3",
+      "start": 60.477,
+      "end": 63.247,
+      "duration": 2.77,
+      "english": "Things are slowly getting back to normal."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-11.mp3",
+      "source": "简单/14.mp3",
+      "start": 63.008,
+      "end": 65.228,
+      "duration": 2.22,
+      "english": "The store was pretty empty."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-12.mp3",
+      "source": "简单/14.mp3",
+      "start": 64.987,
+      "end": 67.538,
+      "duration": 2.55,
+      "english": "I noticed the leaves are turning."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-13.mp3",
+      "source": "简单/14.mp3",
+      "start": 67.297,
+      "end": 69.528,
+      "duration": 2.23,
+      "english": "Everyone has their own routine."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-14.mp3",
+      "source": "简单/14.mp3",
+      "start": 69.287,
+      "end": 71.498,
+      "duration": 2.21,
+      "english": "The coffee shop was crowded."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-15.mp3",
+      "source": "简单/14.mp3",
+      "start": 71.257,
+      "end": 73.328,
+      "duration": 2.07,
+      "english": "The days are getting shorter."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-16.mp3",
+      "source": "简单/14.mp3",
+      "start": 73.087,
+      "end": 75.288,
+      "duration": 2.2,
+      "english": "People are friendly around here."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-17.mp3",
+      "source": "简单/14.mp3",
+      "start": 75.047,
+      "end": 77.648,
+      "duration": 2.6,
+      "english": "The garden is coming along nicely."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-18.mp3",
+      "source": "简单/14.mp3",
+      "start": 77.407,
+      "end": 79.828,
+      "duration": 2.42,
+      "english": "It's been a busy week for everyone."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-19.mp3",
+      "source": "简单/14.mp3",
+      "start": 79.587,
+      "end": 82.108,
+      "duration": 2.52,
+      "english": "The view from here is nice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-28\\sentence-20.mp3",
+      "source": "简单/14.mp3",
+      "start": 81.867,
+      "end": 84.193,
+      "duration": 2.325,
+      "english": "Life has its little surprises."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-01.mp3",
+      "source": "简单/15.mp3",
+      "start": 0.0,
+      "end": 2.268,
+      "duration": 2.268,
+      "english": "I'm hoping for a peaceful year."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-02.mp3",
+      "source": "简单/15.mp3",
+      "start": 2.027,
+      "end": 4.298,
+      "duration": 2.27,
+      "english": "We might visit family next month."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-03.mp3",
+      "source": "简单/15.mp3",
+      "start": 4.058,
+      "end": 6.508,
+      "duration": 2.45,
+      "english": "I want to travel a bit more."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-04.mp3",
+      "source": "简单/15.mp3",
+      "start": 6.268,
+      "end": 8.607,
+      "duration": 2.34,
+      "english": "Let's see how things go."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-05.mp3",
+      "source": "简单/15.mp3",
+      "start": 8.368,
+      "end": 10.667,
+      "duration": 2.3,
+      "english": "I'm planning to learn something new."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-06.mp3",
+      "source": "简单/15.mp3",
+      "start": 10.428,
+      "end": 13.287,
+      "duration": 2.86,
+      "english": "The kids are thinking about their future."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-07.mp3",
+      "source": "简单/15.mp3",
+      "start": 13.048,
+      "end": 15.557,
+      "duration": 2.51,
+      "english": "I hope the weather stays nice."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-08.mp3",
+      "source": "简单/15.mp3",
+      "start": 15.318,
+      "end": 18.367,
+      "duration": 3.05,
+      "english": "We're saving up for a small project."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-09.mp3",
+      "source": "简单/15.mp3",
+      "start": 18.127,
+      "end": 20.738,
+      "duration": 2.61,
+      "english": "I look forward to quieter times."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-10.mp3",
+      "source": "简单/15.mp3",
+      "start": 20.497,
+      "end": 22.428,
+      "duration": 1.93,
+      "english": "Things are looking up."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-11.mp3",
+      "source": "简单/15.mp3",
+      "start": 22.188,
+      "end": 24.348,
+      "duration": 2.16,
+      "english": "I'm excited for the holidays."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-12.mp3",
+      "source": "简单/15.mp3",
+      "start": 24.107,
+      "end": 26.918,
+      "duration": 2.81,
+      "english": "We have some ideas for the house."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-13.mp3",
+      "source": "简单/15.mp3",
+      "start": 26.677,
+      "end": 29.277,
+      "duration": 2.6,
+      "english": "I hope everything works out well."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-14.mp3",
+      "source": "简单/15.mp3",
+      "start": 29.037,
+      "end": 31.628,
+      "duration": 2.59,
+      "english": "Let's take things as they come."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-15.mp3",
+      "source": "简单/15.mp3",
+      "start": 31.387,
+      "end": 33.727,
+      "duration": 2.34,
+      "english": "I'm aiming for better balance."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-16.mp3",
+      "source": "简单/15.mp3",
+      "start": 33.488,
+      "end": 35.497,
+      "duration": 2.01,
+      "english": "The future feels bright."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-17.mp3",
+      "source": "简单/15.mp3",
+      "start": 35.258,
+      "end": 37.828,
+      "duration": 2.57,
+      "english": "We might make some changes soon."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-18.mp3",
+      "source": "简单/15.mp3",
+      "start": 37.588,
+      "end": 39.887,
+      "duration": 2.3,
+      "english": "I'm keeping my options open."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-19.mp3",
+      "source": "简单/15.mp3",
+      "start": 39.648,
+      "end": 42.527,
+      "duration": 2.88,
+      "english": "I want to enjoy the simple things."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-29\\sentence-20.mp3",
+      "source": "简单/15.mp3",
+      "start": 42.288,
+      "end": 44.537,
+      "duration": 2.25,
+      "english": "Here's to good things ahead."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-01.mp3",
+      "source": "简单/15.mp3",
+      "start": 44.297,
+      "end": 46.727,
+      "duration": 2.43,
+      "english": "It's been a good day overall."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-02.mp3",
+      "source": "简单/15.mp3",
+      "start": 46.488,
+      "end": 48.967,
+      "duration": 2.48,
+      "english": "I'm grateful for another day."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-03.mp3",
+      "source": "简单/15.mp3",
+      "start": 48.727,
+      "end": 51.197,
+      "duration": 2.47,
+      "english": "Life is pretty good right now."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-04.mp3",
+      "source": "简单/15.mp3",
+      "start": 50.958,
+      "end": 53.377,
+      "duration": 2.42,
+      "english": "We made it through another week."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-05.mp3",
+      "source": "简单/15.mp3",
+      "start": 53.138,
+      "end": 55.807,
+      "duration": 2.67,
+      "english": "Things are going in the right direction."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-06.mp3",
+      "source": "简单/15.mp3",
+      "start": 55.568,
+      "end": 58.307,
+      "duration": 2.74,
+      "english": "I'm happy with how today went."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-07.mp3",
+      "source": "简单/15.mp3",
+      "start": 58.068,
+      "end": 60.097,
+      "duration": 2.03,
+      "english": "Another day, another chance."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-08.mp3",
+      "source": "简单/15.mp3",
+      "start": 59.858,
+      "end": 62.947,
+      "duration": 3.09,
+      "english": "It all worked out in the end."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-09.mp3",
+      "source": "简单/15.mp3",
+      "start": 62.708,
+      "end": 65.108,
+      "duration": 2.4,
+      "english": "I'm looking forward to tomorrow."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-10.mp3",
+      "source": "简单/15.mp3",
+      "start": 64.867,
+      "end": 67.258,
+      "duration": 2.39,
+      "english": "We did pretty well today."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-11.mp3",
+      "source": "简单/15.mp3",
+      "start": 67.017,
+      "end": 69.438,
+      "duration": 2.42,
+      "english": "Life has its good moments."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-12.mp3",
+      "source": "简单/15.mp3",
+      "start": 69.197,
+      "end": 71.728,
+      "duration": 2.53,
+      "english": "I'm content with where we are."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-13.mp3",
+      "source": "简单/15.mp3",
+      "start": 71.487,
+      "end": 74.627,
+      "duration": 3.14,
+      "english": "Today was a success in its own way."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-14.mp3",
+      "source": "简单/15.mp3",
+      "start": 74.387,
+      "end": 77.058,
+      "duration": 2.67,
+      "english": "Here's to more days like this."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-15.mp3",
+      "source": "简单/15.mp3",
+      "start": 76.817,
+      "end": 78.818,
+      "duration": 2.0,
+      "english": "I'm thankful for everything."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-16.mp3",
+      "source": "简单/15.mp3",
+      "start": 78.578,
+      "end": 80.608,
+      "duration": 2.03,
+      "english": "We keep moving forward."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-17.mp3",
+      "source": "简单/15.mp3",
+      "start": 80.367,
+      "end": 83.078,
+      "duration": 2.71,
+      "english": "It's nice to end on a good note."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-18.mp3",
+      "source": "简单/15.mp3",
+      "start": 82.837,
+      "end": 85.267,
+      "duration": 2.43,
+      "english": "The best is yet to come."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-19.mp3",
+      "source": "简单/15.mp3",
+      "start": 85.027,
+      "end": 87.678,
+      "duration": 2.65,
+      "english": "I'm ready for whatever comes next."
+    },
+    {
+      "output": "public\\native-flow-audio\\simple\\day-30\\sentence-20.mp3",
+      "source": "简单/15.mp3",
+      "start": 87.438,
+      "end": 89.887,
+      "duration": 2.45,
+      "english": "Take care and see you soon."
+    }
+  ]
+}
