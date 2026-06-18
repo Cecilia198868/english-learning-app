@@ -2981,6 +2981,7 @@ function normalizeSpeechRate(rate: number) {
 }
 
 const SLOW_READ_RATE = 0.75;
+const AI_GUIDED_REFERENCE_VOICE_ID: SpeakFlowVoiceId = "alloy";
 
 function MenuGlyph({
   level,
@@ -3252,6 +3253,9 @@ function SpeakEnglishClient() {
   const voiceMenuItemLabel = language === "en" ? "Voice" : "声音";
   const isAiGuidedRoute = pathname?.startsWith("/ai-guided-expression") ?? false;
   const isAiGuidedMode = trainingGroundMode === "guided" || isAiGuidedRoute;
+  const referenceResultVoiceId = isAiGuidedMode
+    ? AI_GUIDED_REFERENCE_VOICE_ID
+    : selectedVoiceId;
   const activeFreePracticeScope: FreePracticeScope = isAiGuidedMode
     ? "guided"
     : "free";
@@ -3740,14 +3744,14 @@ function SpeakEnglishClient() {
       .slice(0, 4);
 
     textsToPreload.forEach((text) => {
-      preloadSpeakFlowTts({ rate: 1, text, voiceId: selectedVoiceId });
+      preloadSpeakFlowTts({ rate: 1, text, voiceId: referenceResultVoiceId });
       preloadSpeakFlowTts({
         rate: SLOW_READ_RATE,
         text,
-        voiceId: selectedVoiceId,
+        voiceId: referenceResultVoiceId,
       });
     });
-  }, [referenceResultPreloadKey, selectedVoiceId]);
+  }, [referenceResultPreloadKey, referenceResultVoiceId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -6336,13 +6340,17 @@ function SpeakEnglishClient() {
     selectedExpression.text,
   ]);
 
-  function speakEnglishText(text: string, rate: number) {
+  function speakEnglishText(
+    text: string,
+    rate: number,
+    voiceId = selectedVoiceId
+  ) {
     if (!text || typeof window === "undefined") return;
 
     void playSpeakFlowTts({
       rate: normalizeSpeechRate(rate),
       text,
-      voiceId: selectedVoiceId,
+      voiceId,
     });
   }
 
@@ -6369,7 +6377,7 @@ function SpeakEnglishClient() {
     const text = referenceText || variantText || standardEnglish;
 
     setSelectedExpressionIndex(variantIndex);
-    speakEnglishText(text, rate);
+    speakEnglishText(text, rate, referenceResultVoiceId);
   }
 
   function getSelectedReferenceResultText() {
