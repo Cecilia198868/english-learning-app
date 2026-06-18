@@ -30,28 +30,28 @@ type FreeStudyPageFiveTopProps = {
 
 const expressionMeta = [
   {
-    badge: "最自然地道",
-    description: "自然地道 · 最推荐",
+    badge: "推荐表达",
+    description: "最推荐",
     icon: "star",
     tone: "violet",
   },
   {
-    badge: "更地道",
-    description: "",
-    icon: "tree",
-    tone: "green",
-  },
-  {
-    badge: "更简单",
+    badge: "最简单",
     description: "",
     icon: "leaf",
     tone: "blue",
   },
   {
-    badge: "更口语",
+    badge: "最自然",
     description: "",
     icon: "chat",
     tone: "purple",
+  },
+  {
+    badge: "最地道",
+    description: "",
+    icon: "tree",
+    tone: "green",
   },
 ] as const;
 

@@ -2961,6 +2961,12 @@ const aiGuidedResultVariantOrder: ExpressionVariantKey[] = [
   "idiomatic",
   "simple",
 ];
+const freeStudyResultVariantOrder: ExpressionVariantKey[] = [
+  "standard",
+  "simple",
+  "natural",
+  "idiomatic",
+];
 
 function unique(values: string[]) {
   return Array.from(new Set(values));
@@ -3416,11 +3422,20 @@ function SpeakEnglishClient() {
     standardEnglish.trim() ||
     authoritativeEnglish.trim() ||
     (!isLoadingExpressionVariants ? message.trim() : "");
-  const referenceResultCandidateTexts = aiGuidedResultVariantOrder.map((key) => {
-    const variantText =
-      expressionVariantsForDisplay
-        .find((variant) => variant.key === key)
-        ?.text?.trim() || "";
+  const expressionVariantMapForResultDisplay = normalizeExpressionVariantMap(
+    expressionVariantsForDisplay.reduce<
+      Partial<Record<ExpressionVariantKey, string>>
+    >((result, variant) => {
+      result[variant.key] = variant.text;
+      return result;
+    }, {}),
+    referenceResultFallbackText
+  );
+  const referenceResultVariantOrder = isAiGuidedMode
+    ? aiGuidedResultVariantOrder
+    : freeStudyResultVariantOrder;
+  const referenceResultCandidateTexts = referenceResultVariantOrder.map((key) => {
+    const variantText = expressionVariantMapForResultDisplay[key]?.trim() || "";
 
     return variantText && variantText !== "This sentence is still being prepared."
       ? variantText

@@ -27,6 +27,12 @@ function stripFinalPeriod(value: string) {
   return value.replace(/[.!?]$/, "");
 }
 
+function normalizeComparableText(value: string) {
+  return cleanText(value)
+    .replace(/[.!?。！？,，]/g, "")
+    .toLowerCase();
+}
+
 function capitalizeFirst(value: string) {
   const text = cleanText(value);
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
@@ -39,6 +45,20 @@ function lowerFirst(value: string) {
 
 function normalizeCommonLearnerEnglish(value: string) {
   return ensureSentence(value)
+    .replace(
+      /^It[’']?s (?:fine|nice|good) today,? we (?:are )?hiking for (?:two|2)(?: hours?)?\.$/i,
+      "It's nice out today, so we went hiking for two hours."
+    )
+    .replace(
+      /^It[’']?s (?:fine|nice|good) today,? we (?:are )?hiking\.$/i,
+      "It's nice out today, so we went hiking."
+    )
+    .replace(
+      /\bwe (?:are )?hiking for (?:two|2)\b/gi,
+      "we went hiking for two hours"
+    )
+    .replace(/\bwe (?:are )?hiking\b/gi, "we went hiking")
+    .replace(/^It[’']?s fine today\b/i, "It's nice out today")
     .replace(/\bwent to park\b/gi, "went to the park")
     .replace(/\bgo to park\b/gi, "go to the park")
     .replace(/\bvery beautiful\b/gi, "beautiful")
@@ -57,6 +77,15 @@ function normalizeCommonLearnerEnglish(value: string) {
 function createSimpleVariant(standard: string) {
   const text = ensureSentence(standard);
   const withoutPeriod = stripFinalPeriod(text);
+
+  const hikingMatch = withoutPeriod.match(
+    /^It[’']s nice out today, so we went hiking(?: for two hours)?$/i
+  );
+  if (hikingMatch) {
+    return /two hours/i.test(withoutPeriod)
+      ? "The weather was nice today. We went hiking for two hours."
+      : "The weather was nice today. We went hiking.";
+  }
 
   const parkMatch = withoutPeriod.match(
     /^(.+) went to the park today, and there were (.+)$/i
@@ -100,6 +129,15 @@ function createNaturalVariant(standard: string) {
     ? ensureSentence(`${capitalizeFirst(stripFinalPeriod(leadingToday[1]))} today`)
     : ensureSentence(standard);
 
+  const hikingMatch = stripFinalPeriod(baseText).match(
+    /^It[’']s nice out today, so we went hiking(?: for two hours)?$/i
+  );
+  if (hikingMatch) {
+    return /two hours/i.test(baseText)
+      ? "The weather was great today, so we went hiking for two hours."
+      : "The weather was great today, so we went hiking.";
+  }
+
   const parkMatch = stripFinalPeriod(baseText).match(
     /^(.+) went to the park today, and there were (?:many |some )?beautiful (.+)$/i
   );
@@ -126,6 +164,15 @@ function createNaturalVariant(standard: string) {
 function createIdiomaticVariant(standard: string, natural: string) {
   const text = ensureSentence(standard);
   const withoutPeriod = stripFinalPeriod(text);
+
+  const hikingMatch = withoutPeriod.match(
+    /^It[’']s nice out today, so we went hiking(?: for two hours)?$/i
+  );
+  if (hikingMatch) {
+    return /two hours/i.test(withoutPeriod)
+      ? "It was such a nice day that we went hiking for a couple of hours."
+      : "It was such a nice day that we went hiking.";
+  }
 
   const parkMatch = withoutPeriod.match(
     /^(.+) went to the park today, and there were (?:many |some )?beautiful roses$/i
@@ -212,33 +259,45 @@ export function normalizeExpressionVariantMap(
 ): ExpressionVariantMap {
   const fallback = createFallbackExpressionVariantMap(fallbackSource);
   const used = new Set<string>();
+  const fallbackSourceKey = normalizeComparableText(fallbackSource);
 
-  const standard =
-    !isPlaceholderExpression(variants?.standard) && cleanText(variants?.standard)
-      ? cleanText(variants?.standard)
-      : fallback.standard;
+  function candidateOrFallback(
+    value: unknown,
+    fallbackValue: string,
+    allowSourceEcho = false
+  ) {
+    const candidate =
+      !isPlaceholderExpression(value) && cleanText(value) ? cleanText(value) : "";
+    const candidateKey = normalizeComparableText(candidate);
+    const echoesLearnerSource =
+      !allowSourceEcho &&
+      Boolean(candidateKey && fallbackSourceKey && candidateKey === fallbackSourceKey) &&
+      candidateKey !== normalizeComparableText(fallbackValue);
+
+    return candidate && !echoesLearnerSource ? candidate : fallbackValue;
+  }
+
+  const standard = candidateOrFallback(
+    variants?.standard,
+    fallback.standard,
+    normalizeComparableText(fallback.standard) === fallbackSourceKey
+  );
   const standardText = makeUniqueVariant(standard, fallback.standard, used);
 
   return {
     standard: standardText,
     idiomatic: makeUniqueVariant(
-      !isPlaceholderExpression(variants?.idiomatic) && cleanText(variants?.idiomatic)
-        ? cleanText(variants?.idiomatic)
-        : fallback.idiomatic,
+      candidateOrFallback(variants?.idiomatic, fallback.idiomatic),
       fallback.idiomatic,
       used
     ),
     simple: makeUniqueVariant(
-      !isPlaceholderExpression(variants?.simple) && cleanText(variants?.simple)
-        ? cleanText(variants?.simple)
-        : fallback.simple,
+      candidateOrFallback(variants?.simple, fallback.simple),
       fallback.simple,
       used
     ),
     natural: makeUniqueVariant(
-      !isPlaceholderExpression(variants?.natural) && cleanText(variants?.natural)
-        ? cleanText(variants?.natural)
-        : fallback.natural,
+      candidateOrFallback(variants?.natural, fallback.natural),
       fallback.natural,
       used
     ),
