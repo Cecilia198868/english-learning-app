@@ -850,7 +850,7 @@ function getPractice(level: SentencePatternLevel, patternId: number, practiceId:
     targetEnglish: pattern?.text || "Use this sentence pattern to speak English.",
   };
 
-  if (!pattern?.practices?.length) return { pattern, practice: fallback, practiceCount: 20 };
+  if (!pattern?.practices?.length) return { pattern, practice: fallback, practiceCount: 10 };
 
   const practice =
     pattern.practices.find((item) => item.id === practiceId) || pattern.practices[0];

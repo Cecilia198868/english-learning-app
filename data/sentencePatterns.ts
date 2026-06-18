@@ -5,9 +5,17 @@ export type SentencePatternLevelId = "basic" | "intermediate" | "advanced";
 export type SentencePatternTone = "green" | "purple" | "orange";
 
 export type SentencePattern = {
+  examples?: SentencePatternPracticeExample[];
   id: number;
   practices?: SentencePatternPractice[];
   text: string;
+};
+
+export type SentencePatternPracticeExample = {
+  chinese: string;
+  sceneKey?: string;
+  targetEnglish: string;
+  theme?: string;
 };
 
 export type SentencePatternPractice = {
@@ -16,8 +24,10 @@ export type SentencePatternPractice = {
   idiomatic: string;
   natural: string;
   recommended: string;
+  sceneKey?: string;
   simple: string;
   targetEnglish: string;
+  theme?: string;
 };
 
 export type SentencePatternSection = {
@@ -394,7 +404,78 @@ const basicSections: SentencePatternSection[] = [
 
 type BasicPracticeDraft = {
   chinese: string;
+  sceneKey?: string;
   targetEnglish: string;
+  theme?: string;
+};
+
+const sentencePatternManualExamples: Partial<
+  Record<SentencePatternLevelId, Partial<Record<number, SentencePatternPracticeExample[]>>>
+> = {
+  basic: {
+    2: [
+      {
+        chinese: "我想学游泳。",
+        sceneKey: "hobby-learn-swimming",
+        targetEnglish: "I'd like to learn how to swim.",
+        theme: "兴趣爱好",
+      },
+      {
+        chinese: "我想喝杯咖啡。",
+        sceneKey: "food-have-coffee",
+        targetEnglish: "I'd like to have a cup of coffee.",
+        theme: "饮食",
+      },
+      {
+        chinese: "我想早点回家。",
+        sceneKey: "housing-go-home-early",
+        targetEnglish: "I'd like to go home early.",
+        theme: "住房生活",
+      },
+      {
+        chinese: "我想换个工作。",
+        sceneKey: "work-change-jobs",
+        targetEnglish: "I'd like to change jobs.",
+        theme: "工作",
+      },
+      {
+        chinese: "我想周末去海边。",
+        sceneKey: "travel-weekend-beach",
+        targetEnglish: "I'd like to go to the beach this weekend.",
+        theme: "旅游",
+      },
+      {
+        chinese: "我想试试这件外套。",
+        sceneKey: "shopping-try-jacket",
+        targetEnglish: "I'd like to try on this jacket.",
+        theme: "购物",
+      },
+      {
+        chinese: "我想预订一张火车票。",
+        sceneKey: "traffic-book-train-ticket",
+        targetEnglish: "I'd like to book a train ticket.",
+        theme: "交通",
+      },
+      {
+        chinese: "我想和朋友吃晚饭。",
+        sceneKey: "friends-dinner",
+        targetEnglish: "I'd like to have dinner with my friends.",
+        theme: "朋友社交",
+      },
+      {
+        chinese: "我想把手机照片备份一下。",
+        sceneKey: "phone-backup-photos",
+        targetEnglish: "I'd like to back up my phone photos.",
+        theme: "手机电脑",
+      },
+      {
+        chinese: "我想报名瑜伽课。",
+        sceneKey: "sports-yoga-class",
+        targetEnglish: "I'd like to sign up for a yoga class.",
+        theme: "运动",
+      },
+    ],
+  },
 };
 
 type BasicPracticeTopic = {
@@ -417,7 +498,9 @@ type BasicPracticeTopic = {
   problem: string;
   reason: string;
   result: string;
+  sceneKey?: string;
   simple: string;
+  theme?: string;
   timePoint: string;
   whenClause: string;
   zhAction: string;
@@ -441,6 +524,30 @@ type BasicPracticeTopic = {
   zhTimePoint: string;
   zhWhenClause: string;
 };
+
+type PracticeSceneSeed = {
+  action: string;
+  benefit: string;
+  category: string;
+  clause: string;
+  emotion: string;
+  key: string;
+  noun: string;
+  problem: string;
+  reason: string;
+  result: string;
+  zhAction: string;
+  zhBenefit: string;
+  zhClause: string;
+  zhEmotion: string;
+  zhNoun: string;
+  zhProblem: string;
+  zhReason: string;
+  zhResult: string;
+};
+
+const COURSE_PRACTICES_PER_PATTERN = 10;
+const MIN_MANUAL_EXAMPLES_PER_PATTERN = 10;
 
 const basicPracticeTopics: BasicPracticeTopic[] = [
   {
@@ -1325,8 +1432,1551 @@ const basicPracticeTopics: BasicPracticeTopic[] = [
   },
 ];
 
-function makeDraft(chinese: string, targetEnglish: string): BasicPracticeDraft {
-  return { chinese, targetEnglish };
+const sentencePatternSceneSeeds: PracticeSceneSeed[] = [
+  {
+    action: "call my mom after dinner",
+    benefit: "keeps my family close",
+    category: "家庭",
+    clause: "my mom wants to hear from me tonight",
+    emotion: "warm",
+    key: "family-call-mom",
+    noun: "time to call my mom",
+    problem: "I have not called my family this week",
+    reason: "my mom is waiting for my call",
+    result: "my family feels cared for",
+    zhAction: "晚饭后给妈妈打电话",
+    zhBenefit: "让家人更亲近",
+    zhClause: "妈妈今晚想听听我的声音",
+    zhEmotion: "温暖",
+    zhNoun: "给妈妈打电话的时间",
+    zhProblem: "这周还没给家里打电话",
+    zhReason: "妈妈在等我的电话",
+    zhResult: "家人会觉得被关心",
+  },
+  {
+    action: "organize my desk before the meeting",
+    benefit: "helps me work more clearly",
+    category: "工作",
+    clause: "my desk is too messy for the meeting",
+    emotion: "focused",
+    key: "work-organize-desk",
+    noun: "a clean desk before the meeting",
+    problem: "my desk is covered with papers",
+    reason: "the meeting starts soon",
+    result: "I can find my notes quickly",
+    zhAction: "开会前整理书桌",
+    zhBenefit: "让我工作更清楚",
+    zhClause: "我的书桌太乱，不适合开会",
+    zhEmotion: "专注",
+    zhNoun: "开会前整洁的书桌",
+    zhProblem: "桌上堆满了文件",
+    zhReason: "会议马上开始",
+    zhResult: "我能很快找到笔记",
+  },
+  {
+    action: "review my notes before class",
+    benefit: "helps me follow the lesson",
+    category: "学校",
+    clause: "there is a quiz in class today",
+    emotion: "prepared",
+    key: "school-review-notes",
+    noun: "time to review my notes",
+    problem: "I forgot some key points",
+    reason: "class starts in twenty minutes",
+    result: "I feel ready for the quiz",
+    zhAction: "上课前复习笔记",
+    zhBenefit: "帮助我跟上课程",
+    zhClause: "今天课上有小测验",
+    zhEmotion: "有准备",
+    zhNoun: "复习笔记的时间",
+    zhProblem: "我忘了一些重点",
+    zhReason: "二十分钟后就上课",
+    zhResult: "我对小测验更有把握",
+  },
+  {
+    action: "compare prices before buying shoes",
+    benefit: "helps me spend wisely",
+    category: "购物",
+    clause: "these shoes are a little expensive",
+    emotion: "careful",
+    key: "shopping-compare-shoes",
+    noun: "a better price for these shoes",
+    problem: "these shoes cost more than I expected",
+    reason: "another store may have a sale",
+    result: "I can save some money",
+    zhAction: "买鞋前比比价格",
+    zhBenefit: "帮助我理性消费",
+    zhClause: "这双鞋有点贵",
+    zhEmotion: "谨慎",
+    zhNoun: "这双鞋更好的价格",
+    zhProblem: "这双鞋比我预想的贵",
+    zhReason: "另一家店可能在打折",
+    zhResult: "我可以省点钱",
+  },
+  {
+    action: "bring an umbrella this afternoon",
+    benefit: "keeps me from getting wet",
+    category: "天气",
+    clause: "it may rain this afternoon",
+    emotion: "careful",
+    key: "weather-bring-umbrella",
+    noun: "an umbrella in my bag",
+    problem: "the sky looks dark",
+    reason: "the forecast says it may rain",
+    result: "I will stay dry on the way home",
+    zhAction: "下午带把伞",
+    zhBenefit: "避免被雨淋湿",
+    zhClause: "下午可能会下雨",
+    zhEmotion: "谨慎",
+    zhNoun: "包里的一把伞",
+    zhProblem: "天看起来很阴",
+    zhReason: "天气预报说可能下雨",
+    zhResult: "回家路上不会淋湿",
+  },
+  {
+    action: "cook noodles for dinner",
+    benefit: "saves time after work",
+    category: "饮食",
+    clause: "I am too tired to cook a big meal",
+    emotion: "hungry",
+    key: "food-cook-noodles",
+    noun: "a quick bowl of noodles",
+    problem: "I am hungry and tired",
+    reason: "I got home late today",
+    result: "dinner will be simple and warm",
+    zhAction: "晚饭煮碗面",
+    zhBenefit: "下班后节省时间",
+    zhClause: "我太累了，不想做大餐",
+    zhEmotion: "饿",
+    zhNoun: "一碗简单的热面",
+    zhProblem: "我又饿又累",
+    zhReason: "今天回家太晚",
+    zhResult: "晚饭简单又暖和",
+  },
+  {
+    action: "pack my suitcase tonight",
+    benefit: "makes tomorrow morning easier",
+    category: "旅游",
+    clause: "my flight leaves early tomorrow",
+    emotion: "excited",
+    key: "travel-pack-suitcase",
+    noun: "a packed suitcase",
+    problem: "my suitcase is still empty",
+    reason: "I leave early tomorrow morning",
+    result: "I will not rush tomorrow",
+    zhAction: "今晚收拾行李箱",
+    zhBenefit: "让明早轻松一点",
+    zhClause: "我的航班明早很早",
+    zhEmotion: "兴奋",
+    zhNoun: "收拾好的行李箱",
+    zhProblem: "行李箱还是空的",
+    zhReason: "明早很早就出发",
+    zhResult: "明天不会太匆忙",
+  },
+  {
+    action: "leave early to catch the bus",
+    benefit: "helps me get there on time",
+    category: "交通",
+    clause: "the bus only comes every thirty minutes",
+    emotion: "alert",
+    key: "traffic-catch-bus",
+    noun: "enough time to catch the bus",
+    problem: "the bus stop is farther than I thought",
+    reason: "the next bus is important",
+    result: "I will arrive on time",
+    zhAction: "早点出门赶公交",
+    zhBenefit: "帮助我准时到达",
+    zhClause: "公交车每三十分钟才来一班",
+    zhEmotion: "警觉",
+    zhNoun: "赶公交的充足时间",
+    zhProblem: "公交站比我想的远",
+    zhReason: "下一班公交很重要",
+    zhResult: "我会准时到达",
+  },
+  {
+    action: "drink more water today",
+    benefit: "helps me feel better",
+    category: "健康",
+    clause: "my throat feels dry today",
+    emotion: "tired",
+    key: "health-drink-water",
+    noun: "a bottle of water",
+    problem: "my throat feels dry",
+    reason: "I talked a lot this morning",
+    result: "my throat will feel better",
+    zhAction: "今天多喝点水",
+    zhBenefit: "让我舒服一点",
+    zhClause: "今天嗓子有点干",
+    zhEmotion: "累",
+    zhNoun: "一瓶水",
+    zhProblem: "我的嗓子有点干",
+    zhReason: "上午说了很多话",
+    zhResult: "嗓子会舒服一些",
+  },
+  {
+    action: "go jogging after work",
+    benefit: "helps me stay active",
+    category: "运动",
+    clause: "I have been sitting all day",
+    emotion: "energetic",
+    key: "sports-go-jogging",
+    noun: "a short jog after work",
+    problem: "I have not moved much today",
+    reason: "I sat at my desk all day",
+    result: "my body will feel more awake",
+    zhAction: "下班后去慢跑",
+    zhBenefit: "让我保持活力",
+    zhClause: "我坐了一整天",
+    zhEmotion: "有活力",
+    zhNoun: "下班后的一小段慢跑",
+    zhProblem: "今天几乎没怎么活动",
+    zhReason: "我在桌前坐了一整天",
+    zhResult: "身体会更清醒",
+  },
+  {
+    action: "practice guitar for ten minutes",
+    benefit: "makes practice feel easy",
+    category: "兴趣爱好",
+    clause: "I want to learn one new song",
+    emotion: "relaxed",
+    key: "hobby-practice-guitar",
+    noun: "ten minutes of guitar practice",
+    problem: "I have not practiced guitar this week",
+    reason: "I want to learn one new song",
+    result: "I will enjoy music again",
+    zhAction: "练十分钟吉他",
+    zhBenefit: "让练习变得轻松",
+    zhClause: "我想学会一首新歌",
+    zhEmotion: "放松",
+    zhNoun: "十分钟吉他练习",
+    zhProblem: "这周还没练吉他",
+    zhReason: "我想学会一首新歌",
+    zhResult: "我会重新享受音乐",
+  },
+  {
+    action: "meet my friend for coffee",
+    benefit: "helps us catch up",
+    category: "朋友社交",
+    clause: "my friend wants to talk this weekend",
+    emotion: "happy",
+    key: "friends-meet-coffee",
+    noun: "coffee with my friend",
+    problem: "we have not talked for weeks",
+    reason: "my friend has some news",
+    result: "we can catch up properly",
+    zhAction: "和朋友见面喝咖啡",
+    zhBenefit: "让我们好好聊聊近况",
+    zhClause: "朋友这个周末想聊聊",
+    zhEmotion: "开心",
+    zhNoun: "和朋友的一杯咖啡",
+    zhProblem: "我们好几周没聊天了",
+    zhReason: "朋友有些新消息",
+    zhResult: "我们能好好叙旧",
+  },
+  {
+    action: "read a bedtime story to my child",
+    benefit: "helps my child sleep calmly",
+    category: "孩子教育",
+    clause: "my child wants one more story",
+    emotion: "loving",
+    key: "kids-bedtime-story",
+    noun: "a bedtime story for my child",
+    problem: "my child is still wide awake",
+    reason: "bedtime feels hard tonight",
+    result: "my child will feel calm",
+    zhAction: "给孩子读睡前故事",
+    zhBenefit: "帮助孩子安静入睡",
+    zhClause: "孩子还想再听一个故事",
+    zhEmotion: "温柔",
+    zhNoun: "给孩子的睡前故事",
+    zhProblem: "孩子现在还很精神",
+    zhReason: "今晚入睡有点困难",
+    zhResult: "孩子会平静下来",
+  },
+  {
+    action: "back up my phone photos",
+    benefit: "keeps my photos safe",
+    category: "手机电脑",
+    clause: "my phone is almost full",
+    emotion: "careful",
+    key: "tech-backup-photos",
+    noun: "a backup of my phone photos",
+    problem: "my phone storage is almost full",
+    reason: "I do not want to lose my photos",
+    result: "my photos will be safe",
+    zhAction: "备份手机照片",
+    zhBenefit: "保护我的照片",
+    zhClause: "我的手机快满了",
+    zhEmotion: "谨慎",
+    zhNoun: "手机照片的备份",
+    zhProblem: "手机存储快满了",
+    zhReason: "我不想丢照片",
+    zhResult: "照片会更安全",
+  },
+  {
+    action: "save ten dollars this week",
+    benefit: "helps me build a small habit",
+    category: "金钱消费",
+    clause: "I spent too much last month",
+    emotion: "responsible",
+    key: "money-save-ten-dollars",
+    noun: "ten dollars in savings",
+    problem: "I spent too much last month",
+    reason: "I want to manage money better",
+    result: "saving will become easier",
+    zhAction: "这周存十美元",
+    zhBenefit: "帮我养成小习惯",
+    zhClause: "我上个月花太多钱了",
+    zhEmotion: "负责",
+    zhNoun: "存下来的十美元",
+    zhProblem: "上个月花钱太多",
+    zhReason: "我想更好地管钱",
+    zhResult: "存钱会变得更容易",
+  },
+  {
+    action: "clean the kitchen after breakfast",
+    benefit: "keeps the home comfortable",
+    category: "住房生活",
+    clause: "the kitchen is messy after breakfast",
+    emotion: "calm",
+    key: "home-clean-kitchen",
+    noun: "a clean kitchen",
+    problem: "the kitchen sink is full",
+    reason: "breakfast made a mess",
+    result: "the home will feel nicer",
+    zhAction: "早饭后打扫厨房",
+    zhBenefit: "让家里更舒服",
+    zhClause: "早饭后厨房有点乱",
+    zhEmotion: "平静",
+    zhNoun: "干净的厨房",
+    zhProblem: "厨房水槽满了",
+    zhReason: "早饭弄得有点乱",
+    zhResult: "家里会舒服很多",
+  },
+  {
+    action: "buy flowers for Mother's Day",
+    benefit: "makes the holiday feel special",
+    category: "节日活动",
+    clause: "Mother's Day is coming this weekend",
+    emotion: "grateful",
+    key: "holiday-mothers-day-flowers",
+    noun: "flowers for Mother's Day",
+    problem: "I have not prepared a gift yet",
+    reason: "Mother's Day is this weekend",
+    result: "my mom will feel loved",
+    zhAction: "母亲节买束花",
+    zhBenefit: "让节日更有心意",
+    zhClause: "这个周末就是母亲节",
+    zhEmotion: "感激",
+    zhNoun: "母亲节的花",
+    zhProblem: "我还没准备礼物",
+    zhReason: "这个周末就是母亲节",
+    zhResult: "妈妈会感到被爱",
+  },
+  {
+    action: "make a simple plan for Saturday",
+    benefit: "keeps the day organized",
+    category: "计划安排",
+    clause: "Saturday is getting busy",
+    emotion: "organized",
+    key: "plans-saturday-plan",
+    noun: "a simple plan for Saturday",
+    problem: "Saturday has too many small tasks",
+    reason: "I do not want to forget anything",
+    result: "the day will feel organized",
+    zhAction: "给周六做个简单计划",
+    zhBenefit: "让一天更有条理",
+    zhClause: "周六会有点忙",
+    zhEmotion: "有条理",
+    zhNoun: "周六的简单计划",
+    zhProblem: "周六有太多小事",
+    zhReason: "我不想忘记任何事",
+    zhResult: "这一天会更有条理",
+  },
+  {
+    action: "calm down before I reply",
+    benefit: "helps me avoid saying the wrong thing",
+    category: "情绪表达",
+    clause: "I feel upset right now",
+    emotion: "upset",
+    key: "emotion-calm-before-reply",
+    noun: "a moment to calm down",
+    problem: "I feel upset right now",
+    reason: "the message sounded rude",
+    result: "I can reply more kindly",
+    zhAction: "回复前先冷静一下",
+    zhBenefit: "避免说错话",
+    zhClause: "我现在有点不高兴",
+    zhEmotion: "不高兴",
+    zhNoun: "冷静一下的时间",
+    zhProblem: "我现在有点不高兴",
+    zhReason: "那条消息听起来不太礼貌",
+    zhResult: "我能更友善地回复",
+  },
+  {
+    action: "ask my neighbor for help",
+    benefit: "makes the task easier",
+    category: "求助请求",
+    clause: "the box is too heavy for me",
+    emotion: "thankful",
+    key: "help-ask-neighbor",
+    noun: "help from my neighbor",
+    problem: "the box is too heavy",
+    reason: "I cannot move it alone",
+    result: "we can move the box safely",
+    zhAction: "请邻居帮忙",
+    zhBenefit: "让这件事更容易",
+    zhClause: "这个箱子对我来说太重了",
+    zhEmotion: "感激",
+    zhNoun: "邻居的帮忙",
+    zhProblem: "这个箱子太重",
+    zhReason: "我一个人搬不动",
+    zhResult: "我们能安全地搬箱子",
+  },
+];
+
+const sentencePatternSceneDetails = [
+  {
+    action: "today",
+    key: "today",
+    noun: "for today",
+    zhAction: "今天",
+    zhNoun: "今天",
+  },
+  {
+    action: "this morning",
+    key: "morning",
+    noun: "this morning",
+    zhAction: "今天早上",
+    zhNoun: "今天早上",
+  },
+  {
+    action: "after work",
+    key: "after-work",
+    noun: "after work",
+    zhAction: "下班后",
+    zhNoun: "下班后",
+  },
+  {
+    action: "before dinner",
+    key: "before-dinner",
+    noun: "before dinner",
+    zhAction: "晚饭前",
+    zhNoun: "晚饭前",
+  },
+  {
+    action: "this weekend",
+    key: "weekend",
+    noun: "this weekend",
+    zhAction: "这个周末",
+    zhNoun: "这个周末",
+  },
+  {
+    action: "tomorrow morning",
+    key: "tomorrow-morning",
+    noun: "tomorrow morning",
+    zhAction: "明天早上",
+    zhNoun: "明天早上",
+  },
+  {
+    action: "before I leave",
+    key: "before-leaving",
+    noun: "before I leave",
+    zhAction: "出门前",
+    zhNoun: "出门前",
+  },
+  {
+    action: "during lunch break",
+    key: "lunch-break",
+    noun: "during lunch break",
+    zhAction: "午休时",
+    zhNoun: "午休时",
+  },
+  {
+    action: "after class",
+    key: "after-class",
+    noun: "after class",
+    zhAction: "下课后",
+    zhNoun: "下课后",
+  },
+  {
+    action: "before bed",
+    key: "before-bed",
+    noun: "before bed",
+    zhAction: "睡觉前",
+    zhNoun: "睡觉前",
+  },
+  {
+    action: "on Friday",
+    key: "friday",
+    noun: "on Friday",
+    zhAction: "周五",
+    zhNoun: "周五",
+  },
+  {
+    action: "next week",
+    key: "next-week",
+    noun: "next week",
+    zhAction: "下周",
+    zhNoun: "下周",
+  },
+  {
+    action: "tonight",
+    key: "tonight",
+    noun: "tonight",
+    zhAction: "今晚",
+    zhNoun: "今晚",
+  },
+  {
+    action: "after lunch",
+    key: "after-lunch",
+    noun: "after lunch",
+    zhAction: "午饭后",
+    zhNoun: "午饭后",
+  },
+  {
+    action: "before class",
+    key: "before-class",
+    noun: "before class",
+    zhAction: "上课前",
+    zhNoun: "上课前",
+  },
+  {
+    action: "after breakfast",
+    key: "after-breakfast",
+    noun: "after breakfast",
+    zhAction: "早饭后",
+    zhNoun: "早饭后",
+  },
+  {
+    action: "early tomorrow",
+    key: "early-tomorrow",
+    noun: "early tomorrow",
+    zhAction: "明天一早",
+    zhNoun: "明天一早",
+  },
+  {
+    action: "on Monday",
+    key: "monday",
+    noun: "on Monday",
+    zhAction: "周一",
+    zhNoun: "周一",
+  },
+  {
+    action: "next month",
+    key: "next-month",
+    noun: "next month",
+    zhAction: "下个月",
+    zhNoun: "下个月",
+  },
+  {
+    action: "during a short break",
+    key: "short-break",
+    noun: "during a short break",
+    zhAction: "短暂休息时",
+    zhNoun: "短暂休息时",
+  },
+  {
+    action: "when I get home",
+    key: "when-home",
+    noun: "when I get home",
+    zhAction: "到家后",
+    zhNoun: "到家后",
+  },
+  {
+    action: "before the meeting",
+    key: "before-meeting",
+    noun: "before the meeting",
+    zhAction: "开会前",
+    zhNoun: "开会前",
+  },
+  {
+    action: "after school",
+    key: "after-school",
+    noun: "after school",
+    zhAction: "放学后",
+    zhNoun: "放学后",
+  },
+  {
+    action: "before the trip",
+    key: "before-trip",
+    noun: "before the trip",
+    zhAction: "出发前",
+    zhNoun: "出发前",
+  },
+  {
+    action: "this evening",
+    key: "evening",
+    noun: "this evening",
+    zhAction: "今天傍晚",
+    zhNoun: "今天傍晚",
+  },
+  {
+    action: "on the way home",
+    key: "way-home",
+    noun: "on the way home",
+    zhAction: "回家路上",
+    zhNoun: "回家路上",
+  },
+  {
+    action: "before work",
+    key: "before-work",
+    noun: "before work",
+    zhAction: "上班前",
+    zhNoun: "上班前",
+  },
+  {
+    action: "after the call",
+    key: "after-call",
+    noun: "after the call",
+    zhAction: "通话后",
+    zhNoun: "通话后",
+  },
+  {
+    action: "during the weekend",
+    key: "during-weekend",
+    noun: "during the weekend",
+    zhAction: "周末期间",
+    zhNoun: "周末期间",
+  },
+  {
+    action: "when I have a minute",
+    key: "free-minute",
+    noun: "when I have a minute",
+    zhAction: "有空时",
+    zhNoun: "有空时",
+  },
+] as const;
+
+type SentencePatternScenarioTerm = {
+  en: string;
+  key: string;
+  zh: string;
+};
+
+const sentencePatternScenarioPeople: SentencePatternScenarioTerm[] = [
+  { en: "my mom", key: "mom", zh: "妈妈" },
+  { en: "my dad", key: "dad", zh: "爸爸" },
+  { en: "my sister", key: "sister", zh: "姐姐" },
+  { en: "my brother", key: "brother", zh: "哥哥" },
+  { en: "my friend", key: "friend", zh: "朋友" },
+  { en: "my roommate", key: "roommate", zh: "室友" },
+  { en: "my neighbor", key: "neighbor", zh: "邻居" },
+  { en: "my cousin", key: "cousin", zh: "表亲" },
+  { en: "my partner", key: "partner", zh: "伴侣" },
+  { en: "my child", key: "child", zh: "孩子" },
+];
+
+const sentencePatternScenarioPeopleByPool: Record<string, SentencePatternScenarioTerm[]> = {
+  family: [
+    { en: "my mom", key: "mom", zh: "妈妈" },
+    { en: "my dad", key: "dad", zh: "爸爸" },
+    { en: "my sister", key: "sister", zh: "姐姐" },
+    { en: "my brother", key: "brother", zh: "哥哥" },
+    { en: "my cousin", key: "cousin", zh: "表亲" },
+    { en: "my aunt", key: "aunt", zh: "阿姨" },
+    { en: "my uncle", key: "uncle", zh: "叔叔" },
+    { en: "my grandma", key: "grandma", zh: "奶奶" },
+  ],
+  friends: [
+    { en: "my best friend", key: "best-friend", zh: "最好的朋友" },
+    { en: "my old classmate", key: "old-classmate", zh: "老同学" },
+    { en: "my neighbor", key: "neighbor", zh: "邻居" },
+    { en: "my teammate", key: "teammate", zh: "队友" },
+    { en: "my book club friend", key: "book-club-friend", zh: "读书会朋友" },
+    { en: "my roommate", key: "roommate", zh: "室友" },
+    { en: "my college friend", key: "college-friend", zh: "大学朋友" },
+    { en: "my online friend", key: "online-friend", zh: "网友" },
+  ],
+  kids: [
+    { en: "my son", key: "son", zh: "儿子" },
+    { en: "my daughter", key: "daughter", zh: "女儿" },
+    { en: "my student", key: "student", zh: "学生" },
+    { en: "my nephew", key: "nephew", zh: "外甥" },
+    { en: "my niece", key: "niece", zh: "侄女" },
+    { en: "my child", key: "child", zh: "孩子" },
+    { en: "my little brother", key: "little-brother", zh: "弟弟" },
+    { en: "my young cousin", key: "young-cousin", zh: "小表弟" },
+  ],
+  school: [
+    { en: "my classmate", key: "classmate", zh: "同学" },
+    { en: "my teacher", key: "teacher", zh: "老师" },
+    { en: "my study partner", key: "study-partner", zh: "学习搭子" },
+    { en: "my lab partner", key: "lab-partner", zh: "实验搭档" },
+    { en: "my tutor", key: "tutor", zh: "辅导老师" },
+    { en: "my roommate", key: "roommate", zh: "室友" },
+    { en: "my professor", key: "professor", zh: "教授" },
+    { en: "my groupmate", key: "groupmate", zh: "小组同伴" },
+  ],
+  work: [
+    { en: "my manager", key: "manager", zh: "经理" },
+    { en: "my coworker", key: "coworker", zh: "同事" },
+    { en: "my teammate", key: "teammate", zh: "队友" },
+    { en: "a client", key: "client", zh: "客户" },
+    { en: "our designer", key: "designer", zh: "设计师" },
+    { en: "my assistant", key: "assistant", zh: "助理" },
+    { en: "the new intern", key: "intern", zh: "新实习生" },
+    { en: "my supervisor", key: "supervisor", zh: "主管" },
+  ],
+};
+
+const sentencePatternScenarioDetails: Record<string, SentencePatternScenarioTerm[]> = {
+  emotion: [
+    { en: "a rude message", key: "rude-message", zh: "一条不礼貌的消息" },
+    { en: "a bad mood", key: "bad-mood", zh: "不好的心情" },
+    { en: "a nervous speech", key: "nervous-speech", zh: "让人紧张的发言" },
+    { en: "a stressful morning", key: "stressful-morning", zh: "压力很大的早晨" },
+    { en: "an awkward silence", key: "awkward-silence", zh: "尴尬的沉默" },
+    { en: "some happy news", key: "happy-news", zh: "一个好消息" },
+    { en: "a disappointing score", key: "disappointing-score", zh: "让人失望的分数" },
+    { en: "an angry reply", key: "angry-reply", zh: "生气的回复" },
+    { en: "a lonely evening", key: "lonely-evening", zh: "有点孤单的晚上" },
+    { en: "a big decision", key: "big-decision", zh: "一个重要决定" },
+  ],
+  family: [
+    { en: "the weekend dinner", key: "weekend-dinner", zh: "周末晚饭" },
+    { en: "grandma's birthday", key: "grandma-birthday", zh: "奶奶的生日" },
+    { en: "the family photos", key: "family-photos", zh: "家庭照片" },
+    { en: "a doctor visit", key: "doctor-visit", zh: "看医生的事" },
+    { en: "a home repair", key: "home-repair", zh: "家里维修" },
+    { en: "a school meeting", key: "school-meeting", zh: "学校家长会" },
+    { en: "a holiday plan", key: "holiday-plan", zh: "节日安排" },
+    { en: "the grocery list", key: "grocery-list", zh: "购物清单" },
+    { en: "an old recipe", key: "old-recipe", zh: "老菜谱" },
+    { en: "a baby gift", key: "baby-gift", zh: "婴儿礼物" },
+  ],
+  food: [
+    { en: "vegetable noodles", key: "vegetable-noodles", zh: "蔬菜面" },
+    { en: "chicken soup", key: "chicken-soup", zh: "鸡汤" },
+    { en: "a lunch salad", key: "lunch-salad", zh: "午餐沙拉" },
+    { en: "a breakfast sandwich", key: "breakfast-sandwich", zh: "早餐三明治" },
+    { en: "a rice bowl", key: "rice-bowl", zh: "盖饭" },
+    { en: "dumpling filling", key: "dumpling-filling", zh: "饺子馅" },
+    { en: "pasta sauce", key: "pasta-sauce", zh: "意面酱" },
+    { en: "a fruit smoothie", key: "fruit-smoothie", zh: "水果奶昔" },
+    { en: "a takeout order", key: "takeout-order", zh: "外卖订单" },
+    { en: "a birthday cake", key: "birthday-cake", zh: "生日蛋糕" },
+  ],
+  friends: [
+    { en: "coffee near the library", key: "library-coffee", zh: "图书馆附近的咖啡" },
+    { en: "a birthday dinner", key: "birthday-dinner", zh: "生日晚餐" },
+    { en: "a weekend chat", key: "weekend-chat", zh: "周末聊天" },
+    { en: "movie night", key: "movie-night", zh: "电影夜" },
+    { en: "a group photo", key: "group-photo", zh: "合照" },
+    { en: "a hiking plan", key: "hiking-plan", zh: "徒步计划" },
+    { en: "game night", key: "game-night", zh: "游戏夜" },
+    { en: "lunch break", key: "lunch-break", zh: "午休" },
+    { en: "a video call", key: "video-call", zh: "视频电话" },
+    { en: "book club", key: "book-club", zh: "读书会" },
+  ],
+  health: [
+    { en: "a sore throat", key: "sore-throat", zh: "嗓子疼" },
+    { en: "a dental checkup", key: "dental-checkup", zh: "牙齿检查" },
+    { en: "back pain", key: "back-pain", zh: "背疼" },
+    { en: "a sleep schedule", key: "sleep-schedule", zh: "睡眠时间" },
+    { en: "allergy medicine", key: "allergy-medicine", zh: "过敏药" },
+    { en: "an eye exam", key: "eye-exam", zh: "视力检查" },
+    { en: "a daily walk", key: "daily-walk", zh: "每天散步" },
+    { en: "a water bottle", key: "water-bottle", zh: "水杯" },
+    { en: "cold symptoms", key: "cold-symptoms", zh: "感冒症状" },
+    { en: "a health report", key: "health-report", zh: "体检报告" },
+  ],
+  help: [
+    { en: "a heavy box", key: "heavy-box", zh: "一个重箱子" },
+    { en: "a broken chair", key: "broken-chair", zh: "坏掉的椅子" },
+    { en: "a lost key", key: "lost-key", zh: "丢失的钥匙" },
+    { en: "a confusing form", key: "confusing-form", zh: "一张看不懂的表格" },
+    { en: "a flat tire", key: "flat-tire", zh: "爆胎" },
+    { en: "a phone setup", key: "phone-setup", zh: "手机设置" },
+    { en: "moving day", key: "moving-day", zh: "搬家那天" },
+    { en: "a stuck drawer", key: "stuck-drawer", zh: "卡住的抽屉" },
+    { en: "an airport pickup", key: "airport-pickup", zh: "机场接人" },
+    { en: "grocery bags", key: "grocery-bags", zh: "几袋菜" },
+  ],
+  hobby: [
+    { en: "a guitar song", key: "guitar-song", zh: "一首吉他曲" },
+    { en: "a sketchbook page", key: "sketchbook-page", zh: "一页速写" },
+    { en: "a photo walk", key: "photo-walk", zh: "摄影散步" },
+    { en: "garden seeds", key: "garden-seeds", zh: "花园种子" },
+    { en: "a chess game", key: "chess-game", zh: "一盘棋" },
+    { en: "a baking recipe", key: "baking-recipe", zh: "烘焙食谱" },
+    { en: "a podcast episode", key: "podcast-episode", zh: "一期播客" },
+    { en: "a knitting pattern", key: "knitting-pattern", zh: "编织图样" },
+    { en: "a movie list", key: "movie-list", zh: "电影清单" },
+    { en: "a language app", key: "language-app", zh: "语言学习软件" },
+  ],
+  holiday: [
+    { en: "Mother's Day flowers", key: "mothers-day-flowers", zh: "母亲节鲜花" },
+    { en: "New Year dinner", key: "new-year-dinner", zh: "新年晚饭" },
+    { en: "a birthday card", key: "birthday-card", zh: "生日卡片" },
+    { en: "a Thanksgiving dish", key: "thanksgiving-dish", zh: "感恩节菜" },
+    { en: "Christmas lights", key: "christmas-lights", zh: "圣诞灯" },
+    { en: "a school festival", key: "school-festival", zh: "学校节日活动" },
+    { en: "a company party", key: "company-party", zh: "公司聚会" },
+    { en: "a travel gift", key: "travel-gift", zh: "旅行礼物" },
+    { en: "a family reunion", key: "family-reunion", zh: "家庭聚会" },
+    { en: "holiday photos", key: "holiday-photos", zh: "节日照片" },
+  ],
+  home: [
+    { en: "the kitchen counter", key: "kitchen-counter", zh: "厨房台面" },
+    { en: "the bedroom closet", key: "bedroom-closet", zh: "卧室衣柜" },
+    { en: "the laundry basket", key: "laundry-basket", zh: "洗衣篮" },
+    { en: "the bathroom sink", key: "bathroom-sink", zh: "浴室水池" },
+    { en: "the living room shelf", key: "living-room-shelf", zh: "客厅架子" },
+    { en: "the balcony plants", key: "balcony-plants", zh: "阳台植物" },
+    { en: "the dinner table", key: "dinner-table", zh: "餐桌" },
+    { en: "the front door lock", key: "front-door-lock", zh: "前门锁" },
+    { en: "the trash bags", key: "trash-bags", zh: "垃圾袋" },
+    { en: "the window screen", key: "window-screen", zh: "窗纱" },
+  ],
+  kids: [
+    { en: "a bedtime story", key: "bedtime-story", zh: "睡前故事" },
+    { en: "school lunch", key: "school-lunch", zh: "学校午餐" },
+    { en: "a spelling test", key: "spelling-test", zh: "拼写测验" },
+    { en: "a piano lesson", key: "piano-lesson", zh: "钢琴课" },
+    { en: "soccer shoes", key: "soccer-shoes", zh: "足球鞋" },
+    { en: "art homework", key: "art-homework", zh: "美术作业" },
+    { en: "a school backpack", key: "school-backpack", zh: "书包" },
+    { en: "a bedtime routine", key: "bedtime-routine", zh: "睡前流程" },
+    { en: "a parent meeting", key: "parent-meeting", zh: "家长会" },
+    { en: "a library card", key: "library-card", zh: "图书卡" },
+  ],
+  money: [
+    { en: "the grocery budget", key: "grocery-budget", zh: "买菜预算" },
+    { en: "the rent payment", key: "rent-payment", zh: "房租" },
+    { en: "the phone bill", key: "phone-bill", zh: "手机账单" },
+    { en: "a subway card", key: "subway-card", zh: "地铁卡" },
+    { en: "a savings jar", key: "savings-jar", zh: "存钱罐" },
+    { en: "coffee spending", key: "coffee-spending", zh: "咖啡开销" },
+    { en: "a holiday gift fund", key: "holiday-gift-fund", zh: "节日礼物钱" },
+    { en: "an online refund", key: "online-refund", zh: "网购退款" },
+    { en: "emergency money", key: "emergency-money", zh: "应急钱" },
+    { en: "the electricity bill", key: "electricity-bill", zh: "电费" },
+  ],
+  plans: [
+    { en: "Saturday lunch", key: "saturday-lunch", zh: "周六午饭" },
+    { en: "morning errands", key: "morning-errands", zh: "早上的杂事" },
+    { en: "study time", key: "study-time", zh: "学习时间" },
+    { en: "a weekend trip", key: "weekend-trip", zh: "周末旅行" },
+    { en: "a dinner reservation", key: "dinner-reservation", zh: "晚餐预约" },
+    { en: "workout time", key: "workout-time", zh: "运动时间" },
+    { en: "a movie plan", key: "movie-plan", zh: "看电影计划" },
+    { en: "a weekly schedule", key: "weekly-schedule", zh: "每周安排" },
+    { en: "house cleaning", key: "house-cleaning", zh: "打扫房子" },
+    { en: "a family call", key: "family-call", zh: "家庭电话" },
+  ],
+  school: [
+    { en: "the history quiz", key: "history-quiz", zh: "历史小测" },
+    { en: "math homework", key: "math-homework", zh: "数学作业" },
+    { en: "a reading assignment", key: "reading-assignment", zh: "阅读任务" },
+    { en: "science notes", key: "science-notes", zh: "科学笔记" },
+    { en: "exam review", key: "exam-review", zh: "考试复习" },
+    { en: "a library book", key: "library-book", zh: "图书馆的书" },
+    { en: "a class presentation", key: "class-presentation", zh: "课堂展示" },
+    { en: "language homework", key: "language-homework", zh: "语言作业" },
+    { en: "a campus map", key: "campus-map", zh: "校园地图" },
+    { en: "a club meeting", key: "club-meeting", zh: "社团会议" },
+  ],
+  shopping: [
+    { en: "a light jacket", key: "light-jacket", zh: "一件薄外套" },
+    { en: "running shoes", key: "running-shoes", zh: "跑鞋" },
+    { en: "a birthday gift", key: "birthday-gift", zh: "生日礼物" },
+    { en: "a kitchen pan", key: "kitchen-pan", zh: "平底锅" },
+    { en: "a phone charger", key: "phone-charger", zh: "手机充电器" },
+    { en: "a school backpack", key: "school-backpack", zh: "书包" },
+    { en: "a winter coat", key: "winter-coat", zh: "冬天外套" },
+    { en: "coffee mugs", key: "coffee-mugs", zh: "咖啡杯" },
+    { en: "grocery coupons", key: "grocery-coupons", zh: "超市优惠券" },
+    { en: "the sale price", key: "sale-price", zh: "促销价" },
+  ],
+  sports: [
+    { en: "a short run", key: "short-run", zh: "短跑" },
+    { en: "swimming class", key: "swimming-class", zh: "游泳课" },
+    { en: "yoga class", key: "yoga-class", zh: "瑜伽课" },
+    { en: "a basketball game", key: "basketball-game", zh: "篮球赛" },
+    { en: "tennis practice", key: "tennis-practice", zh: "网球练习" },
+    { en: "a bike ride", key: "bike-ride", zh: "骑车" },
+    { en: "a gym session", key: "gym-session", zh: "健身房训练" },
+    { en: "a hiking trail", key: "hiking-trail", zh: "徒步路线" },
+    { en: "dance class", key: "dance-class", zh: "舞蹈课" },
+    { en: "morning stretches", key: "morning-stretches", zh: "早晨拉伸" },
+  ],
+  tech: [
+    { en: "phone photos", key: "phone-photos", zh: "手机照片" },
+    { en: "a laptop update", key: "laptop-update", zh: "电脑更新" },
+    { en: "the Wi-Fi password", key: "wifi-password", zh: "无线网密码" },
+    { en: "a video call", key: "video-call", zh: "视频会议" },
+    { en: "a cloud backup", key: "cloud-backup", zh: "云备份" },
+    { en: "a keyboard problem", key: "keyboard-problem", zh: "键盘问题" },
+    { en: "a tablet charger", key: "tablet-charger", zh: "平板充电器" },
+    { en: "the email inbox", key: "email-inbox", zh: "邮箱收件箱" },
+    { en: "a password reset", key: "password-reset", zh: "重置密码" },
+    { en: "printer setup", key: "printer-setup", zh: "打印机设置" },
+  ],
+  traffic: [
+    { en: "the airport bus", key: "airport-bus", zh: "机场大巴" },
+    { en: "a subway transfer", key: "subway-transfer", zh: "地铁换乘" },
+    { en: "a parking spot", key: "parking-spot", zh: "停车位" },
+    { en: "a bike route", key: "bike-route", zh: "骑车路线" },
+    { en: "a taxi pickup", key: "taxi-pickup", zh: "出租车接人" },
+    { en: "a train platform", key: "train-platform", zh: "火车站台" },
+    { en: "the school bus", key: "school-bus", zh: "校车" },
+    { en: "a road detour", key: "road-detour", zh: "绕路" },
+    { en: "a gas station", key: "gas-station", zh: "加油站" },
+    { en: "a carpool plan", key: "carpool-plan", zh: "拼车安排" },
+  ],
+  travel: [
+    { en: "a beach trip", key: "beach-trip", zh: "海边旅行" },
+    { en: "a hotel booking", key: "hotel-booking", zh: "酒店预订" },
+    { en: "a train ticket", key: "train-ticket", zh: "火车票" },
+    { en: "a city map", key: "city-map", zh: "城市地图" },
+    { en: "a passport copy", key: "passport-copy", zh: "护照复印件" },
+    { en: "a museum visit", key: "museum-visit", zh: "博物馆参观" },
+    { en: "a suitcase list", key: "suitcase-list", zh: "行李清单" },
+    { en: "an airport ride", key: "airport-ride", zh: "去机场的车" },
+    { en: "a weekend cabin", key: "weekend-cabin", zh: "周末小木屋" },
+    { en: "travel insurance", key: "travel-insurance", zh: "旅行保险" },
+  ],
+  weather: [
+    { en: "the walk to the station", key: "station-walk", zh: "去车站的路" },
+    { en: "an outdoor picnic", key: "outdoor-picnic", zh: "户外野餐" },
+    { en: "the morning commute", key: "morning-commute", zh: "早高峰通勤" },
+    { en: "a child's soccer game", key: "child-soccer-game", zh: "孩子的足球赛" },
+    { en: "laundry on the balcony", key: "balcony-laundry", zh: "阳台上的衣服" },
+    { en: "a weekend hike", key: "weekend-hike", zh: "周末徒步" },
+    { en: "rooftop dinner", key: "rooftop-dinner", zh: "天台晚饭" },
+    { en: "school pickup", key: "school-pickup", zh: "接孩子放学" },
+    { en: "an evening run", key: "evening-run", zh: "晚上跑步" },
+    { en: "garden plants", key: "garden-plants", zh: "花园植物" },
+  ],
+  work: [
+    { en: "the client notes", key: "client-notes", zh: "客户记录" },
+    { en: "the budget meeting", key: "budget-meeting", zh: "预算会议" },
+    { en: "the team schedule", key: "team-schedule", zh: "团队排班" },
+    { en: "the sales report", key: "sales-report", zh: "销售报告" },
+    { en: "the office printer", key: "office-printer", zh: "办公室打印机" },
+    { en: "a training plan", key: "training-plan", zh: "培训计划" },
+    { en: "a customer email", key: "customer-email", zh: "客户邮件" },
+    { en: "the weekly update", key: "weekly-update", zh: "每周更新" },
+    { en: "an interview time", key: "interview-time", zh: "面试时间" },
+    { en: "the handoff document", key: "handoff-document", zh: "交接文档" },
+  ],
+};
+
+function makeDraft(
+  chinese: string,
+  targetEnglish: string,
+  sceneKey?: string,
+  theme?: string
+): BasicPracticeDraft {
+  return { chinese, sceneKey, targetEnglish, theme };
+}
+
+function createHash(value: string) {
+  let hash = 2166136261;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return hash >>> 0;
+}
+
+function createGerundPhrase(action: string) {
+  const [verb = "", ...rest] = action.split(" ");
+  const irregular: Record<string, string> = {
+    back: "backing",
+    bring: "bringing",
+    buy: "buying",
+    call: "calling",
+    calm: "calming",
+    clean: "cleaning",
+    compare: "comparing",
+    cook: "cooking",
+    drink: "drinking",
+    go: "going",
+    leave: "leaving",
+    make: "making",
+    meet: "meeting",
+    organize: "organizing",
+    pack: "packing",
+    practice: "practicing",
+    read: "reading",
+    review: "reviewing",
+    save: "saving",
+  };
+  const gerund =
+    irregular[verb] ||
+    (verb.endsWith("e")
+      ? `${verb.slice(0, -1)}ing`
+      : verb
+        ? `${verb}ing`
+        : "");
+
+  return [gerund, ...rest].filter(Boolean).join(" ");
+}
+
+function createTopicFromScene(scene: PracticeSceneSeed): BasicPracticeTopic {
+  const gerund = createGerundPhrase(scene.action);
+
+  return {
+    action: scene.action,
+    apologyAction: `keep you waiting while I ${scene.action}`,
+    benefit: scene.benefit,
+    clause: scene.clause,
+    difficultNoun: scene.problem,
+    emotion: scene.emotion,
+    gerund,
+    idiomatic: scene.noun,
+    method: "sending a quick message",
+    moreFirst: `I ${scene.action}`,
+    moreSecond: scene.result,
+    noun: scene.noun,
+    optionA: scene.noun,
+    optionB: scene.problem,
+    pastParticiple: `handled ${scene.noun}`,
+    pastSimple: `handled ${scene.noun}`,
+    problem: scene.problem,
+    reason: scene.reason,
+    result: scene.result,
+    sceneKey: scene.key,
+    simple: scene.noun,
+    theme: scene.category,
+    timePoint: "a busy day",
+    whenClause: scene.reason,
+    zhAction: scene.zhAction,
+    zhApologyAction: `让你等我${scene.zhAction}`,
+    zhBenefit: scene.zhBenefit,
+    zhClause: scene.zhClause,
+    zhDifficultNoun: scene.zhProblem,
+    zhEmotion: scene.zhEmotion,
+    zhGerund: scene.zhAction,
+    zhMethod: "发一条简短消息",
+    zhMoreFirst: `我${scene.zhAction}`,
+    zhMoreSecond: scene.zhResult,
+    zhNoun: scene.zhNoun,
+    zhOptionA: scene.zhNoun,
+    zhOptionB: scene.zhProblem,
+    zhPastParticiple: `处理过${scene.zhNoun}`,
+    zhPastSimple: `处理了${scene.zhNoun}`,
+    zhProblem: scene.zhProblem,
+    zhReason: scene.zhReason,
+    zhResult: scene.zhResult,
+    zhTimePoint: "忙碌的一天",
+    zhWhenClause: scene.zhReason,
+  };
+}
+
+type ScopedSceneParts = Omit<PracticeSceneSeed, "category" | "key">;
+
+function getScenePoolKey(sceneKey: string) {
+  return sceneKey.split("-")[0] || sceneKey;
+}
+
+function createMomentScopedScene(
+  scene: PracticeSceneSeed,
+  levelId: SentencePatternLevelId,
+  patternId: number,
+  practiceIndex: number,
+  poolKey: string,
+  person: SentencePatternScenarioTerm,
+  detail: SentencePatternScenarioTerm,
+  moment: (typeof sentencePatternSceneDetails)[number],
+  parts: ScopedSceneParts
+): PracticeSceneSeed {
+  return {
+    ...scene,
+    ...parts,
+    action: `${parts.action} ${moment.action}`,
+    clause: `${parts.clause} ${moment.noun}`,
+    key: `${poolKey}-${person.key}-${detail.key}-${moment.key}-${levelId}-${patternId}-${practiceIndex + 1}`,
+    noun: `${parts.noun} ${moment.noun}`,
+    problem: `${parts.problem} ${moment.noun}`,
+    reason: `${parts.reason} ${moment.noun}`,
+    result: `${parts.result} ${moment.noun}`,
+    zhAction: `${moment.zhAction}${parts.zhAction}`,
+    zhClause: `${moment.zhAction}${parts.zhClause}`,
+    zhNoun: `${moment.zhAction}的${parts.zhNoun}`,
+    zhProblem: `${moment.zhAction}${parts.zhProblem}`,
+    zhReason: `${moment.zhAction}${parts.zhReason}`,
+    zhResult: `${moment.zhAction}${parts.zhResult}`,
+  };
+}
+
+function getSentencePatternLevelIndex(levelId: SentencePatternLevelId) {
+  if (levelId === "intermediate") return 1;
+  if (levelId === "advanced") return 2;
+  return 0;
+}
+
+function createScopedSceneSeed(
+  scene: PracticeSceneSeed,
+  levelId: SentencePatternLevelId,
+  patternId: number,
+  practiceIndex: number
+): PracticeSceneSeed {
+  const poolKey = getScenePoolKey(scene.key);
+  const people = sentencePatternScenarioPeopleByPool[poolKey] || sentencePatternScenarioPeople;
+  const details =
+    sentencePatternScenarioDetails[poolKey] || sentencePatternScenarioDetails.plans;
+  const sequenceBase =
+    getSentencePatternLevelIndex(levelId) * 1000 +
+    (patternId - 1) * COURSE_PRACTICES_PER_PATTERN +
+    practiceIndex;
+  const comboSpan =
+    people.length * details.length * sentencePatternSceneDetails.length;
+  const sequence = (sequenceBase + createHash(poolKey)) % comboSpan;
+  const person = people[sequence % people.length];
+  const detail = details[Math.floor(sequence / people.length) % details.length];
+  const moment =
+    sentencePatternSceneDetails[
+      Math.floor(sequence / (people.length * details.length)) %
+        sentencePatternSceneDetails.length
+    ];
+  const build = (parts: ScopedSceneParts) =>
+    createMomentScopedScene(
+      scene,
+      levelId,
+      patternId,
+      practiceIndex,
+      poolKey,
+      person,
+      detail,
+      moment,
+      parts
+    );
+
+  switch (poolKey) {
+    case "emotion":
+      return build({
+        action: `calm down before talking to ${person.en} about ${detail.en}`,
+        benefit: "helps me respond more kindly",
+        clause: `${detail.en} is affecting my mood`,
+        emotion: "upset",
+        noun: `a calm talk with ${person.en} about ${detail.en}`,
+        problem: `${detail.en} is bothering me`,
+        reason: `${person.en} needs a calmer answer`,
+        result: "I can respond without hurting anyone",
+        zhAction: `冷静一下再和${person.zh}聊${detail.zh}`,
+        zhBenefit: "帮助我更友善地回应",
+        zhClause: `${detail.zh}影响了我的心情`,
+        zhEmotion: "不安",
+        zhNoun: `和${person.zh}平静地聊${detail.zh}`,
+        zhProblem: `${detail.zh}让我有点难受`,
+        zhReason: `${person.zh}需要更平和的回复`,
+        zhResult: "我能不伤人地回应",
+      });
+    case "family":
+      return build({
+        action: `call ${person.en} about ${detail.en}`,
+        benefit: "keeps the family connected",
+        clause: `${person.en} wants to talk about ${detail.en}`,
+        emotion: "warm",
+        noun: `a call with ${person.en} about ${detail.en}`,
+        problem: `${person.en} is waiting to talk about ${detail.en}`,
+        reason: `${detail.en} matters to the family`,
+        result: `${person.en} feels listened to`,
+        zhAction: `给${person.zh}打电话聊${detail.zh}`,
+        zhBenefit: "让家人之间更有联系",
+        zhClause: `${person.zh}想聊聊${detail.zh}`,
+        zhEmotion: "温暖",
+        zhNoun: `和${person.zh}聊${detail.zh}的电话`,
+        zhProblem: `${person.zh}正等着聊${detail.zh}`,
+        zhReason: `${detail.zh}对家里挺重要`,
+        zhResult: `${person.zh}会觉得有人认真听`,
+      });
+    case "food":
+      return build({
+        action: `make ${detail.en} with ${person.en}`,
+        benefit: "makes the meal feel easier",
+        clause: `${person.en} wants to eat ${detail.en}`,
+        emotion: "hungry",
+        noun: `${detail.en} with ${person.en}`,
+        problem: `we have not decided what to eat`,
+        reason: `${detail.en} sounds simple and warm`,
+        result: "dinner feels easier",
+        zhAction: `和${person.zh}一起做${detail.zh}`,
+        zhBenefit: "让吃饭这件事更轻松",
+        zhClause: `${person.zh}想吃${detail.zh}`,
+        zhEmotion: "饿",
+        zhNoun: `和${person.zh}一起吃的${detail.zh}`,
+        zhProblem: "我们还没决定吃什么",
+        zhReason: `${detail.zh}简单又舒服`,
+        zhResult: "晚饭会轻松很多",
+      });
+    case "friends":
+      return build({
+        action: `meet ${person.en} for ${detail.en}`,
+        benefit: "helps us catch up",
+        clause: `${person.en} wants to meet for ${detail.en}`,
+        emotion: "happy",
+        noun: `${detail.en} with ${person.en}`,
+        problem: `${person.en} and I have not caught up lately`,
+        reason: `${detail.en} gives us time to talk`,
+        result: "we can talk properly",
+        zhAction: `和${person.zh}见面安排${detail.zh}`,
+        zhBenefit: "让我们好好叙旧",
+        zhClause: `${person.zh}想约${detail.zh}`,
+        zhEmotion: "开心",
+        zhNoun: `和${person.zh}的${detail.zh}`,
+        zhProblem: `我和${person.zh}最近没怎么聊`,
+        zhReason: `${detail.zh}正好能聊聊天`,
+        zhResult: "我们可以好好聊一聊",
+      });
+    case "health":
+      return build({
+        action: `ask ${person.en} about ${detail.en}`,
+        benefit: "helps me take better care of myself",
+        clause: `${detail.en} needs attention`,
+        emotion: "tired",
+        noun: `advice from ${person.en} about ${detail.en}`,
+        problem: `${detail.en} is bothering me`,
+        reason: `${person.en} may know what to do`,
+        result: "I feel safer about my health",
+        zhAction: `问问${person.zh}关于${detail.zh}的事`,
+        zhBenefit: "帮助我更好照顾自己",
+        zhClause: `${detail.zh}需要注意`,
+        zhEmotion: "疲惫",
+        zhNoun: `${person.zh}关于${detail.zh}的建议`,
+        zhProblem: `${detail.zh}让我不太舒服`,
+        zhReason: `${person.zh}可能知道怎么办`,
+        zhResult: "我对自己的健康更安心",
+      });
+    case "help":
+      return build({
+        action: `ask ${person.en} for help with ${detail.en}`,
+        benefit: "makes the task easier",
+        clause: `${detail.en} is hard to handle alone`,
+        emotion: "thankful",
+        noun: `help from ${person.en} with ${detail.en}`,
+        problem: `${detail.en} is hard to handle alone`,
+        reason: `${person.en} is nearby`,
+        result: "the task gets easier",
+        zhAction: `请${person.zh}帮忙处理${detail.zh}`,
+        zhBenefit: "让这件事更容易",
+        zhClause: `${detail.zh}一个人不好处理`,
+        zhEmotion: "感激",
+        zhNoun: `${person.zh}在${detail.zh}上的帮助`,
+        zhProblem: `${detail.zh}一个人不好处理`,
+        zhReason: `${person.zh}就在附近`,
+        zhResult: "这件事会容易很多",
+      });
+    case "hobby":
+      return build({
+        action: `practice ${detail.en} with ${person.en}`,
+        benefit: "makes practice feel more fun",
+        clause: `${detail.en} takes regular practice`,
+        emotion: "relaxed",
+        noun: `${detail.en} practice with ${person.en}`,
+        problem: `I have not practiced ${detail.en} lately`,
+        reason: `${person.en} can keep me motivated`,
+        result: "practice feels more enjoyable",
+        zhAction: `和${person.zh}一起练${detail.zh}`,
+        zhBenefit: "让练习更有意思",
+        zhClause: `${detail.zh}需要经常练`,
+        zhEmotion: "放松",
+        zhNoun: `和${person.zh}一起练${detail.zh}`,
+        zhProblem: `我最近没怎么练${detail.zh}`,
+        zhReason: `${person.zh}能让我更有动力`,
+        zhResult: "练习会更有意思",
+      });
+    case "holiday":
+      return build({
+        action: `prepare ${detail.en} for ${person.en}`,
+        benefit: "makes the day feel special",
+        clause: `${detail.en} would make ${person.en} happy`,
+        emotion: "grateful",
+        noun: `${detail.en} for ${person.en}`,
+        problem: `I have not prepared ${detail.en} yet`,
+        reason: `${person.en} would appreciate it`,
+        result: `${person.en} feels remembered`,
+        zhAction: `给${person.zh}准备${detail.zh}`,
+        zhBenefit: "让这个日子更有心意",
+        zhClause: `${detail.zh}会让${person.zh}开心`,
+        zhEmotion: "感激",
+        zhNoun: `给${person.zh}的${detail.zh}`,
+        zhProblem: `我还没准备${detail.zh}`,
+        zhReason: `${person.zh}会很珍惜这份心意`,
+        zhResult: `${person.zh}会觉得被惦记`,
+      });
+    case "home":
+      return build({
+        action: `take care of ${detail.en} with ${person.en}`,
+        benefit: "keeps the home comfortable",
+        clause: `${detail.en} needs attention`,
+        emotion: "calm",
+        noun: `${detail.en} at home`,
+        problem: `${detail.en} is making the home feel messy`,
+        reason: `${person.en} can help me handle it faster`,
+        result: "home feels cleaner",
+        zhAction: `和${person.zh}一起处理${detail.zh}`,
+        zhBenefit: "让家里更舒服",
+        zhClause: `${detail.zh}需要处理一下`,
+        zhEmotion: "平静",
+        zhNoun: `家里的${detail.zh}`,
+        zhProblem: `${detail.zh}让家里显得有点乱`,
+        zhReason: `${person.zh}能帮我更快处理好`,
+        zhResult: "家里会更干净",
+      });
+    case "kids":
+      return build({
+        action: `help ${person.en} with ${detail.en}`,
+        benefit: "helps the child feel supported",
+        clause: `${person.en} needs help with ${detail.en}`,
+        emotion: "loving",
+        noun: `${detail.en} for ${person.en}`,
+        problem: `${person.en} is stuck on ${detail.en}`,
+        reason: `${person.en} needs patient help`,
+        result: `${person.en} feels more confident`,
+        zhAction: `帮${person.zh}处理${detail.zh}`,
+        zhBenefit: "让孩子觉得有人支持",
+        zhClause: `${person.zh}需要帮忙处理${detail.zh}`,
+        zhEmotion: "温柔",
+        zhNoun: `${person.zh}的${detail.zh}`,
+        zhProblem: `${person.zh}在${detail.zh}上卡住了`,
+        zhReason: `${person.zh}需要耐心帮一下`,
+        zhResult: `${person.zh}会更有信心`,
+      });
+    case "money":
+      return build({
+        action: `talk with ${person.en} about ${detail.en}`,
+        benefit: "helps me spend more wisely",
+        clause: `${detail.en} needs a clear plan`,
+        emotion: "responsible",
+        noun: `a plan for ${detail.en}`,
+        problem: `${detail.en} feels unclear`,
+        reason: `${person.en} can help me think it through`,
+        result: "the money plan feels clearer",
+        zhAction: `和${person.zh}聊聊${detail.zh}`,
+        zhBenefit: "帮助我更理性花钱",
+        zhClause: `${detail.zh}需要一个清楚计划`,
+        zhEmotion: "负责",
+        zhNoun: `${detail.zh}的计划`,
+        zhProblem: `${detail.zh}还不太清楚`,
+        zhReason: `${person.zh}能帮我想清楚`,
+        zhResult: "用钱计划会更清楚",
+      });
+    case "plans":
+      return build({
+        action: `make a plan for ${detail.en} with ${person.en}`,
+        benefit: "keeps the day organized",
+        clause: `${detail.en} needs a clear plan`,
+        emotion: "organized",
+        noun: `a plan for ${detail.en}`,
+        problem: `${detail.en} has too many moving parts`,
+        reason: `${person.en} is involved`,
+        result: "the plan feels easier to follow",
+        zhAction: `和${person.zh}一起安排${detail.zh}`,
+        zhBenefit: "让一天更有条理",
+        zhClause: `${detail.zh}需要一个清楚安排`,
+        zhEmotion: "有条理",
+        zhNoun: `${detail.zh}的安排`,
+        zhProblem: `${detail.zh}有不少细节`,
+        zhReason: `${person.zh}也会参与`,
+        zhResult: "计划会更容易执行",
+      });
+    case "school":
+      return build({
+        action: `review ${detail.en} with ${person.en}`,
+        benefit: "helps me follow the lesson",
+        clause: `${detail.en} needs more review`,
+        emotion: "prepared",
+        noun: `${detail.en} review with ${person.en}`,
+        problem: `I am not ready for ${detail.en}`,
+        reason: `${person.en} can study with me`,
+        result: "I feel more prepared",
+        zhAction: `和${person.zh}一起复习${detail.zh}`,
+        zhBenefit: "帮助我跟上课程",
+        zhClause: `${detail.zh}还需要多复习`,
+        zhEmotion: "有准备",
+        zhNoun: `和${person.zh}一起复习${detail.zh}`,
+        zhProblem: `我对${detail.zh}还没准备好`,
+        zhReason: `${person.zh}可以和我一起学`,
+        zhResult: "我会更有把握",
+      });
+    case "shopping":
+      return build({
+        action: `compare prices for ${detail.en} with ${person.en}`,
+        benefit: "helps me spend wisely",
+        clause: `${detail.en} may be cheaper somewhere else`,
+        emotion: "careful",
+        noun: `a better price for ${detail.en}`,
+        problem: `${detail.en} costs more than expected`,
+        reason: `${person.en} may know a better store`,
+        result: "I can save some money",
+        zhAction: `和${person.zh}一起比比${detail.zh}的价格`,
+        zhBenefit: "帮助我理性消费",
+        zhClause: `${detail.zh}别的地方可能更便宜`,
+        zhEmotion: "谨慎",
+        zhNoun: `${detail.zh}更好的价格`,
+        zhProblem: `${detail.zh}比预想的贵`,
+        zhReason: `${person.zh}可能知道更合适的店`,
+        zhResult: "我可以省点钱",
+      });
+    case "sports":
+      return build({
+        action: `try ${detail.en} with ${person.en}`,
+        benefit: "helps me stay active",
+        clause: `${detail.en} would be good exercise`,
+        emotion: "energetic",
+        noun: `${detail.en} with ${person.en}`,
+        problem: `I have not exercised much lately`,
+        reason: `${person.en} can keep me company`,
+        result: "my body feels more awake",
+        zhAction: `和${person.zh}一起试试${detail.zh}`,
+        zhBenefit: "让我保持活力",
+        zhClause: `${detail.zh}是不错的运动`,
+        zhEmotion: "有活力",
+        zhNoun: `和${person.zh}一起做${detail.zh}`,
+        zhProblem: "我最近运动不太够",
+        zhReason: `${person.zh}可以陪我一起`,
+        zhResult: "身体会更清醒",
+      });
+    case "tech":
+      return build({
+        action: `work on ${detail.en} with ${person.en}`,
+        benefit: "keeps the tech problem under control",
+        clause: `${detail.en} needs attention`,
+        emotion: "careful",
+        noun: `${detail.en} with ${person.en}`,
+        problem: `${detail.en} is slowing me down`,
+        reason: `${person.en} can help me check it`,
+        result: "the device works better",
+        zhAction: `和${person.zh}一起处理${detail.zh}`,
+        zhBenefit: "让电子设备的问题可控",
+        zhClause: `${detail.zh}需要处理一下`,
+        zhEmotion: "谨慎",
+        zhNoun: `和${person.zh}一起处理${detail.zh}`,
+        zhProblem: `${detail.zh}影响了我`,
+        zhReason: `${person.zh}能帮我检查一下`,
+        zhResult: "设备会更好用",
+      });
+    case "traffic":
+      return build({
+        action: `leave early for ${detail.en} with ${person.en}`,
+        benefit: "helps me arrive on time",
+        clause: `${detail.en} may take longer than expected`,
+        emotion: "alert",
+        noun: `enough time for ${detail.en}`,
+        problem: `${detail.en} may be delayed`,
+        reason: `${person.en} is coming with me`,
+        result: "we arrive on time",
+        zhAction: `和${person.zh}早点出发处理${detail.zh}`,
+        zhBenefit: "帮助我准时到达",
+        zhClause: `${detail.zh}可能比想象中久`,
+        zhEmotion: "警觉",
+        zhNoun: `${detail.zh}的充足时间`,
+        zhProblem: `${detail.zh}可能会耽误`,
+        zhReason: `${person.zh}要和我一起去`,
+        zhResult: "我们能准时到",
+      });
+    case "travel":
+      return build({
+        action: `plan ${detail.en} with ${person.en}`,
+        benefit: "makes the trip easier",
+        clause: `${detail.en} needs planning`,
+        emotion: "excited",
+        noun: `a plan for ${detail.en}`,
+        problem: `${detail.en} is not ready yet`,
+        reason: `${person.en} is part of the trip`,
+        result: "the trip feels easier",
+        zhAction: `和${person.zh}一起计划${detail.zh}`,
+        zhBenefit: "让旅行更轻松",
+        zhClause: `${detail.zh}需要提前安排`,
+        zhEmotion: "兴奋",
+        zhNoun: `${detail.zh}的计划`,
+        zhProblem: `${detail.zh}还没准备好`,
+        zhReason: `${person.zh}也会一起去`,
+        zhResult: "旅行会更轻松",
+      });
+    case "weather":
+      return build({
+        action: `remind ${person.en} to prepare for ${detail.en}`,
+        benefit: "keeps us ready for the weather",
+        clause: `${detail.en} may be affected by the weather`,
+        emotion: "careful",
+        noun: `weather preparation for ${detail.en}`,
+        problem: `${detail.en} may be affected by the weather`,
+        reason: `${person.en} may forget to prepare`,
+        result: "we do not get caught off guard",
+        zhAction: `提醒${person.zh}为${detail.zh}提前准备`,
+        zhBenefit: "让我们不被天气影响",
+        zhClause: `${detail.zh}可能受天气影响`,
+        zhEmotion: "谨慎",
+        zhNoun: `${detail.zh}的天气准备`,
+        zhProblem: `${detail.zh}可能被天气影响`,
+        zhReason: `${person.zh}可能会忘记准备`,
+        zhResult: "我们不会措手不及",
+      });
+    case "work":
+      return build({
+        action: `organize ${detail.en} for ${person.en}`,
+        benefit: "helps the work move clearly",
+        clause: `${person.en} needs ${detail.en}`,
+        emotion: "focused",
+        noun: `${detail.en} for ${person.en}`,
+        problem: `${detail.en} is not organized yet`,
+        reason: `${person.en} needs it soon`,
+        result: "the work becomes easier to follow",
+        zhAction: `帮${person.zh}整理${detail.zh}`,
+        zhBenefit: "让工作推进更清楚",
+        zhClause: `${person.zh}需要${detail.zh}`,
+        zhEmotion: "专注",
+        zhNoun: `给${person.zh}的${detail.zh}`,
+        zhProblem: `${detail.zh}还没整理好`,
+        zhReason: `${person.zh}很快就要用`,
+        zhResult: "工作会更容易跟进",
+      });
+    default:
+      return createMomentScopedScene(
+        scene,
+        levelId,
+        patternId,
+        practiceIndex,
+        poolKey,
+        person,
+        detail,
+        moment,
+        scene
+      );
+  }
+}
+
+function selectSceneSeedsForPattern(levelId: SentencePatternLevelId, patternId: number) {
+  const seed = `${levelId}:${patternId}`;
+  const shuffled = [...sentencePatternSceneSeeds].sort(
+    (left, right) =>
+      createHash(`${seed}:${left.key}`) - createHash(`${seed}:${right.key}`)
+  );
+  const selected: PracticeSceneSeed[] = [];
+  const remaining = [...shuffled];
+
+  while (selected.length < COURSE_PRACTICES_PER_PATTERN && remaining.length) {
+    const lastTheme = selected[selected.length - 1]?.category;
+    const nextIndex = Math.max(
+      remaining.findIndex((scene) => scene.category !== lastTheme),
+      0
+    );
+    const [next] = remaining.splice(nextIndex, 1);
+    selected.push(next);
+  }
+
+  return selected;
+}
+
+function selectPracticeTopicsForPattern(
+  levelId: SentencePatternLevelId,
+  patternId: number
+) {
+  const selectedTopics = selectSceneSeedsForPattern(levelId, patternId).map(
+    (scene, index) =>
+      createTopicFromScene(createScopedSceneSeed(scene, levelId, patternId, index))
+  );
+
+  return selectedTopics.length
+    ? selectedTopics
+    : basicPracticeTopics.slice(0, COURSE_PRACTICES_PER_PATTERN);
 }
 
 function cleanGeneratedSentence(value: string) {
@@ -1467,6 +3117,24 @@ function normalizeSentencePatternPracticeVariants(
   };
 }
 
+function normalizeExistingPracticeCourse(
+  practices: SentencePatternPractice[],
+  levelId: SentencePatternLevelId,
+  patternId: number
+) {
+  return practices.map((practice, index) => {
+    const fallbackScene = sentencePatternSceneSeeds[index % sentencePatternSceneSeeds.length];
+
+    return normalizeSentencePatternPracticeVariants({
+      ...practice,
+      sceneKey:
+        practice.sceneKey ||
+        `manual-existing-${index + 1}-${levelId}-${patternId}-${index + 1}`,
+      theme: practice.theme || fallbackScene.category,
+    });
+  });
+}
+
 function createPracticeFromDraft(
   draft: BasicPracticeDraft,
   id: number
@@ -1482,9 +3150,44 @@ function createPracticeFromDraft(
     idiomatic,
     natural,
     recommended,
+    sceneKey: draft.sceneKey,
     simple,
     targetEnglish: recommended,
+    theme: draft.theme,
   });
+}
+
+function createPracticeFromExample(
+  example: SentencePatternPracticeExample,
+  id: number
+) {
+  return createPracticeFromDraft(
+    {
+      chinese: example.chinese,
+      sceneKey: example.sceneKey,
+      targetEnglish: example.targetEnglish,
+      theme: example.theme,
+    },
+    id
+  );
+}
+
+function createPracticeCourseFromExamples(
+  examples: SentencePatternPracticeExample[]
+) {
+  return examples.map((example, index) =>
+    createPracticeFromExample(example, index + 1)
+  );
+}
+
+function getConfiguredPatternExamples(
+  levelId: SentencePatternLevelId,
+  pattern: SentencePattern
+) {
+  const examples =
+    pattern.examples || sentencePatternManualExamples[levelId]?.[pattern.id] || [];
+
+  return examples.length >= MIN_MANUAL_EXAMPLES_PER_PATTERN ? examples : [];
 }
 
 function renderBasicPracticeDraft(
@@ -1726,8 +3429,10 @@ function renderBasicPracticeDraft(
 }
 
 function createBasicPracticeCourse(patternId: number): SentencePatternPractice[] {
-  return basicPracticeTopics.map((topic, index) => {
+  return selectPracticeTopicsForPattern("basic", patternId).map((topic, index) => {
     const draft = renderBasicPracticeDraft(patternId, topic);
+    draft.sceneKey = topic.sceneKey;
+    draft.theme = topic.theme;
     return createPracticeFromDraft(draft, index + 1);
   });
 }
@@ -1737,8 +3442,10 @@ const basicSectionsWithPracticeCourses: SentencePatternSection[] = basicSections
   patterns: section.patterns.map((pattern) => ({
     ...pattern,
     practices:
-      pattern.practices?.length === basicPracticeTopics.length
-        ? pattern.practices.map(normalizeSentencePatternPracticeVariants)
+      pattern.practices?.length && pattern.practices.length >= MIN_MANUAL_EXAMPLES_PER_PATTERN
+        ? normalizeExistingPracticeCourse(pattern.practices, "basic", pattern.id)
+        : getConfiguredPatternExamples("basic", pattern).length
+          ? createPracticeCourseFromExamples(getConfiguredPatternExamples("basic", pattern))
         : createBasicPracticeCourse(pattern.id),
   })),
 }));
@@ -2117,8 +3824,10 @@ function renderIntermediatePracticeDraft(
 }
 
 function createIntermediatePracticeCourse(patternId: number): SentencePatternPractice[] {
-  return basicPracticeTopics.map((topic, index) => {
+  return selectPracticeTopicsForPattern("intermediate", patternId).map((topic, index) => {
     const draft = renderIntermediatePracticeDraft(patternId, topic);
+    draft.sceneKey = topic.sceneKey;
+    draft.theme = topic.theme;
     return createPracticeFromDraft(draft, index + 1);
   });
 }
@@ -2128,8 +3837,10 @@ const intermediateSectionsWithPracticeCourses: SentencePatternSection[] = interm
   patterns: section.patterns.map((pattern) => ({
     ...pattern,
     practices:
-      pattern.practices?.length === basicPracticeTopics.length
-        ? pattern.practices.map(normalizeSentencePatternPracticeVariants)
+      pattern.practices?.length && pattern.practices.length >= MIN_MANUAL_EXAMPLES_PER_PATTERN
+        ? normalizeExistingPracticeCourse(pattern.practices, "intermediate", pattern.id)
+        : getConfiguredPatternExamples("intermediate", pattern).length
+          ? createPracticeCourseFromExamples(getConfiguredPatternExamples("intermediate", pattern))
         : createIntermediatePracticeCourse(pattern.id),
   })),
 }));
@@ -2504,8 +4215,10 @@ function renderAdvancedPracticeDraft(
 }
 
 function createAdvancedPracticeCourse(patternId: number): SentencePatternPractice[] {
-  return basicPracticeTopics.map((topic, index) => {
+  return selectPracticeTopicsForPattern("advanced", patternId).map((topic, index) => {
     const draft = renderAdvancedPracticeDraft(patternId, topic);
+    draft.sceneKey = topic.sceneKey;
+    draft.theme = topic.theme;
     return createPracticeFromDraft(draft, index + 1);
   });
 }
@@ -2515,8 +4228,10 @@ const advancedSectionsWithPracticeCourses: SentencePatternSection[] = advancedSe
   patterns: section.patterns.map((pattern) => ({
     ...pattern,
     practices:
-      pattern.practices?.length === basicPracticeTopics.length
-        ? pattern.practices.map(normalizeSentencePatternPracticeVariants)
+      pattern.practices?.length && pattern.practices.length >= MIN_MANUAL_EXAMPLES_PER_PATTERN
+        ? normalizeExistingPracticeCourse(pattern.practices, "advanced", pattern.id)
+        : getConfiguredPatternExamples("advanced", pattern).length
+          ? createPracticeCourseFromExamples(getConfiguredPatternExamples("advanced", pattern))
         : createAdvancedPracticeCourse(pattern.id),
   })),
 }));
