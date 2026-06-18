@@ -55,6 +55,18 @@ function getBeautifulThingParts(value: string) {
   return noun ? { determiner, noun } : null;
 }
 
+function getNiceWalkParts(value: string) {
+  const match = stripFinalPeriod(ensureSentence(value)).match(
+    /^It[\u2019']s nice out today, so I (?:took a|went for a) (?:(two-hour) )?walk(?: for (two|2) hours?)?$/i
+  );
+
+  if (!match) return null;
+
+  return {
+    hasTwoHourDuration: Boolean(match[1] || match[2]),
+  };
+}
+
 function isWeakGeneratedVariant(value: unknown) {
   const text = cleanText(value);
   return (
@@ -66,6 +78,22 @@ function isWeakGeneratedVariant(value: unknown) {
 
 function normalizeCommonLearnerEnglish(value: string) {
   return ensureSentence(value)
+    .replace(
+      /^It[\u2019']?s (?:fine|nice|good)(?: out)? today,? I (?:take|took|went for) (?:a )?walk for (?:two|2)(?: hours?)?\.$/i,
+      "It's nice out today, so I took a two-hour walk."
+    )
+    .replace(
+      /^It[\u2019']?s (?:fine|nice|good)(?: out)? today,? I (?:take|took|went for) (?:a )?walk\.$/i,
+      "It's nice out today, so I took a walk."
+    )
+    .replace(
+      /^Today (?:it[\u2019']?s )?(?:fine|nice|good)(?: out)?,? I (?:take|took|went for) (?:a )?walk for (?:two|2)(?: hours?)?\.$/i,
+      "It's nice out today, so I took a two-hour walk."
+    )
+    .replace(
+      /^Today (?:it[\u2019']?s )?(?:fine|nice|good)(?: out)?,? I (?:take|took|went for) (?:a )?walk\.$/i,
+      "It's nice out today, so I took a walk."
+    )
     .replace(
       /^It[’']?s (?:fine|nice|good) today,? we (?:are )?hiking for (?:two|2)(?: hours?)?\.$/i,
       "It's nice out today, so we went hiking for two hours."
@@ -99,6 +127,7 @@ function createSimpleVariant(standard: string) {
   const text = ensureSentence(standard);
   const withoutPeriod = stripFinalPeriod(text);
   const beautifulThing = getBeautifulThingParts(text);
+  const niceWalk = getNiceWalkParts(text);
 
   if (beautifulThing) {
     return ensureSentence(
@@ -106,6 +135,12 @@ function createSimpleVariant(standard: string) {
         ? `${beautifulThing.determiner} is a beautiful ${beautifulThing.noun}`
         : `It is a beautiful ${beautifulThing.noun}`
     );
+  }
+
+  if (niceWalk) {
+    return niceWalk.hasTwoHourDuration
+      ? "The weather was nice today. I took a walk for two hours."
+      : "The weather was nice today. I took a walk.";
   }
 
   const hikingMatch = withoutPeriod.match(
@@ -159,6 +194,7 @@ function createNaturalVariant(standard: string) {
     ? ensureSentence(`${capitalizeFirst(stripFinalPeriod(leadingToday[1]))} today`)
     : ensureSentence(standard);
   const beautifulThing = getBeautifulThingParts(baseText);
+  const niceWalk = getNiceWalkParts(baseText);
 
   if (beautifulThing) {
     return ensureSentence(
@@ -166,6 +202,12 @@ function createNaturalVariant(standard: string) {
         ? `${beautifulThing.determiner} ${beautifulThing.noun} is really beautiful`
         : `The ${beautifulThing.noun} is really beautiful`
     );
+  }
+
+  if (niceWalk) {
+    return niceWalk.hasTwoHourDuration
+      ? "It was nice out today, so I went for a two-hour walk."
+      : "It was nice out today, so I went for a walk.";
   }
 
   const hikingMatch = stripFinalPeriod(baseText).match(
@@ -204,9 +246,16 @@ function createIdiomaticVariant(standard: string, natural: string) {
   const text = ensureSentence(standard);
   const withoutPeriod = stripFinalPeriod(text);
   const beautifulThing = getBeautifulThingParts(text);
+  const niceWalk = getNiceWalkParts(text);
 
   if (beautifulThing) {
     return `What a beautiful ${beautifulThing.noun}!`;
+  }
+
+  if (niceWalk) {
+    return niceWalk.hasTwoHourDuration
+      ? "It was a beautiful day, so I went for a two-hour walk."
+      : "It was a beautiful day, so I went for a walk.";
   }
 
   const hikingMatch = withoutPeriod.match(
@@ -327,7 +376,7 @@ export function normalizeExpressionVariantMap(
   ) {
     const candidate =
       !isPlaceholderExpression(value) && !isWeakGeneratedVariant(value) && cleanText(value)
-        ? normalizeOutputSentence(cleanText(value))
+        ? normalizeOutputSentence(normalizeCommonLearnerEnglish(cleanText(value)))
         : "";
     const candidateKey = normalizeComparableText(candidate);
     const echoesLearnerSource =

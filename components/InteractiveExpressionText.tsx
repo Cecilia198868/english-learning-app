@@ -49,6 +49,12 @@ function normalizeClickableWord(word: string) {
   return word.replace(/^[^A-Za-z]+|[^A-Za-z]+$/g, "").trim();
 }
 
+function normalizeDisplayText(value: string) {
+  return value
+    .replace(/[\u2018\u2019\u02bc`]/g, "'")
+    .replace(/\b([A-Za-z])'\s+([A-Za-z])\b/g, "$1'$2");
+}
+
 export default function InteractiveExpressionText({
   className,
   highlightClassName,
@@ -59,14 +65,15 @@ export default function InteractiveExpressionText({
   const [pendingExpression, setPendingExpression] =
     useState<PendingExpression | null>(null);
   const [isSavingExpression, setIsSavingExpression] = useState(false);
-  const source = sourceSentence?.trim() || text.trim();
+  const displayText = normalizeDisplayText(text);
+  const source = normalizeDisplayText(sourceSentence?.trim() || displayText.trim());
   const highlightedExpressions = useMemo(
-    () => createFallbackHighlightedExpressions(text),
-    [text]
+    () => createFallbackHighlightedExpressions(displayText),
+    [displayText]
   );
   const segments = useMemo(
-    () => splitSentenceByHighlightedExpressions(text, highlightedExpressions),
-    [highlightedExpressions, text]
+    () => splitSentenceByHighlightedExpressions(displayText, highlightedExpressions),
+    [displayText, highlightedExpressions]
   );
 
   function openPhrase(expression: HighlightedExpression, fallbackText: string) {
@@ -195,7 +202,7 @@ export default function InteractiveExpressionText({
               className={getClassName(styles.highlight, highlightClassName)}
               onClick={(event) => {
                 event.stopPropagation();
-                openPhrase(segment.expression, text);
+                openPhrase(segment.expression, displayText);
               }}
             >
               {segment.value}
@@ -210,7 +217,7 @@ export default function InteractiveExpressionText({
                     className={getClassName(styles.wordButton, wordClassName)}
                     onClick={(event) => {
                       event.stopPropagation();
-                      openWord(token.value, text);
+                      openWord(token.value, displayText);
                     }}
                   >
                     {token.value}

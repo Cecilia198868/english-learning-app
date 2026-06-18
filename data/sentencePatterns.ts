@@ -1328,7 +1328,11 @@ function makeDraft(chinese: string, targetEnglish: string): BasicPracticeDraft {
 }
 
 function cleanGeneratedSentence(value: string) {
-  return value.replace(/\s+/g, " ").trim();
+  return value
+    .replace(/[\u2018\u2019\u02bc`]/g, "'")
+    .replace(/\b([A-Za-z])'\s+([A-Za-z])\b/g, "$1'$2")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function withFinalPunctuation(value: string, fallback: string) {
@@ -1344,9 +1348,11 @@ function capitalizeFirst(value: string) {
 function createSimplePracticeVariant(targetEnglish: string) {
   const text = cleanGeneratedSentence(targetEnglish);
   const replacements: Array<[RegExp, string | ((...matches: string[]) => string)]> = [
+    [/^I'd like to (.+)\.$/i, "I want to $1."],
     [/^I[’']d like to (.+)\.$/, "I want to $1."],
     [/^I really want to (.+)\.$/, "I want to $1."],
     [/^Could you (.+) for me\?$/, "Can you $1?"],
+    [/^If it's not too much trouble, could you (.+)\?$/i, "Could you $1?"],
     [/^If it[’']s not too much trouble, could you (.+)\?$/, "Could you $1?"],
     [/^I would appreciate it if you could help me (.+)\.$/, "Please help me $1."],
     [/^I would be most grateful if you could possibly help me (.+)\.$/, "Please help me $1."],
@@ -1364,8 +1370,10 @@ function createSimplePracticeVariant(targetEnglish: string) {
     ],
     [/^The problem is that (.+)\.$/, "The problem is $1."],
     [/^It is imperative that we (.+)\.$/, "We need to $1."],
+    [/^It's essential that we (.+)\.$/i, "We need to $1."],
     [/^It[’']s essential that we (.+)\.$/, "We need to $1."],
     [/^I[’']m determined to (.+) no matter what\.$/, "I will $1."],
+    [/^I'm determined to (.+) no matter what\.$/i, "I will $1."],
     [/^Come what may, I am resolved to (.+)\.$/, "I will $1."],
   ];
 
@@ -1382,7 +1390,19 @@ function createSimplePracticeVariant(targetEnglish: string) {
 }
 
 function createNaturalPracticeVariant(targetEnglish: string) {
-  const text = cleanGeneratedSentence(targetEnglish)
+  const source = cleanGeneratedSentence(targetEnglish);
+  const likeToFinishMatch = source.match(
+    /^I'd like to finish (.+) before (.+)\.$/i
+  );
+
+  if (likeToFinishMatch) {
+    return withFinalPunctuation(
+      `I'd like to get ${likeToFinishMatch[1]} done before ${likeToFinishMatch[2]}`,
+      targetEnglish
+    );
+  }
+
+  const text = source
     .replace(/^From my point of view, /, "To me, ")
     .replace(/^In my opinion, /, "I think ")
     .replace(/^I would like to /, "I'd like to ")
@@ -1400,11 +1420,15 @@ function createNaturalPracticeVariant(targetEnglish: string) {
 function createIdiomaticPracticeVariant(targetEnglish: string, naturalEnglish: string) {
   const text = cleanGeneratedSentence(targetEnglish);
   const replacements: Array<[RegExp, string]> = [
+    [/^I'd like to finish (.+) before (.+)\.$/i, "I'd like to wrap up $1 before $2."],
+    [/^I'd like to (.+)\.$/i, "I'd really like to $1."],
     [/^I want to (.+)\.$/, "I'd really like to $1."],
     [/^I want (.+)\.$/, "I'd really like $1."],
     [/^I need (?!to\b)(.+)\.$/, "I could really use $1."],
+    [/^I'm worried about (.+)\.$/i, "I'm a bit worried about $1."],
     [/^I[’']m worried about (.+)\.$/, "I'm a bit worried about $1."],
     [/^I[’']m excited that (.+)\.$/, "I'm really excited that $1."],
+    [/^I'm excited that (.+)\.$/i, "I'm really excited that $1."],
     [/^Can you help me (.+)\?$/, "Could you help me $1?"],
     [/^I have to (.+) because (.+)\.$/, "I need to $1 because $2."],
   ];
