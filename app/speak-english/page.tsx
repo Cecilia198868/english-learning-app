@@ -47,6 +47,11 @@ import {
   type HighlightedExpression,
 } from "@/lib/expressionHighlights";
 import {
+  createFallbackExpressionVariantMap,
+  normalizeExpressionVariantMap,
+  type ExpressionVariantKey,
+} from "@/lib/expressionVariantFallbacks";
+import {
   FREE_PRACTICE_DAILY_LIMIT,
   type FreePracticeScope,
   fetchFreePracticeUsage,
@@ -94,8 +99,6 @@ type ClassicCourseCategory = {
   label: string;
   sections: ClassicCourseSection[];
 };
-
-type ExpressionVariantKey = "standard" | "idiomatic" | "simple" | "natural";
 
 type ExpressionVariant = {
   key: ExpressionVariantKey;
@@ -2948,16 +2951,24 @@ const expressionVariantLabels: Array<{
   { key: "simple", label: "更简单" },
   { key: "natural", label: "更自然" },
 ];
+const aiGuidedResultVariantOrder: ExpressionVariantKey[] = [
+  "standard",
+  "natural",
+  "idiomatic",
+  "simple",
+];
 
 function unique(values: string[]) {
   return Array.from(new Set(values));
 }
 
 function createFallbackExpressionVariants(standardEnglish: string) {
+  const fallbackMap = createFallbackExpressionVariantMap(standardEnglish);
+
   return expressionVariantLabels.map(({ key, label }) => ({
     key,
     label,
-    text: standardEnglish || "This sentence is still being prepared.",
+    text: fallbackMap[key],
   }));
 }
 
@@ -3396,8 +3407,11 @@ function SpeakEnglishClient() {
     standardEnglish.trim() ||
     authoritativeEnglish.trim() ||
     (!isLoadingExpressionVariants ? message.trim() : "");
-  const referenceResultCandidateTexts = expressionVariantLabels.map((_, index) => {
-    const variantText = expressionVariantsForDisplay[index]?.text?.trim() || "";
+  const referenceResultCandidateTexts = aiGuidedResultVariantOrder.map((key) => {
+    const variantText =
+      expressionVariantsForDisplay
+        .find((variant) => variant.key === key)
+        ?.text?.trim() || "";
 
     return variantText && variantText !== "This sentence is still being prepared."
       ? variantText
@@ -6070,8 +6084,11 @@ function SpeakEnglishClient() {
     const fallbackVariants = fallbackExpressionSource
       ? createFallbackExpressionVariants(fallbackExpressionSource)
       : [];
-    setExpressionVariants([]);
+    setExpressionVariants(fallbackVariants);
     setSelectedExpressionIndex(0);
+    if (fallbackVariants[0]?.text) {
+      setStandardEnglish(fallbackVariants[0].text);
+    }
     setIsLoadingExpressionVariants(true);
 
     async function loadExpressionVariants() {
@@ -6093,26 +6110,32 @@ function SpeakEnglishClient() {
 
         if (!response.ok || !data.variants) {
           setExpressionVariants(fallbackVariants);
-          setStandardEnglish(authoritativeEnglish);
+          setStandardEnglish(
+            fallbackVariants[0]?.text || authoritativeEnglish || learnerEnglish
+          );
           return;
         }
 
+        const normalizedVariants = normalizeExpressionVariantMap(
+          data.variants,
+          fallbackExpressionSource || authoritativeEnglish || learnerEnglish
+        );
         const nextVariants = expressionVariantLabels.map(({ key, label }) => ({
           key,
           label,
-          text:
-            typeof data.variants?.[key] === "string" &&
-            data.variants[key]?.trim()
-              ? data.variants[key]!.trim()
-              : "",
+          text: normalizedVariants[key],
         }));
 
         setExpressionVariants(nextVariants);
-        setStandardEnglish(nextVariants[0]?.text || authoritativeEnglish);
+        setStandardEnglish(
+          normalizedVariants.standard || authoritativeEnglish || learnerEnglish
+        );
       } catch {
         if (!cancelled) {
           setExpressionVariants(fallbackVariants);
-          setStandardEnglish(authoritativeEnglish);
+          setStandardEnglish(
+            fallbackVariants[0]?.text || authoritativeEnglish || learnerEnglish
+          );
         }
       } finally {
         if (!cancelled) {
@@ -6310,9 +6333,9 @@ function SpeakEnglishClient() {
   }
 
   function readReferenceResultVariant(variantIndex: number, rate = 1) {
-    const variantText = expressionVariantsForDisplay[variantIndex]?.text?.trim();
     const referenceText = referenceResultVariantTexts[variantIndex]?.trim();
-    const text = variantText || referenceText || standardEnglish;
+    const variantText = expressionVariantsForDisplay[variantIndex]?.text?.trim();
+    const text = referenceText || variantText || standardEnglish;
 
     setSelectedExpressionIndex(variantIndex);
     speakEnglishText(text, rate);
@@ -6326,7 +6349,7 @@ function SpeakEnglishClient() {
     const variantText = expressionVariantsForDisplay[safeIndex]?.text?.trim();
     const referenceText = referenceResultVariantTexts[safeIndex]?.trim();
 
-    return variantText || referenceText || standardEnglish.trim();
+    return referenceText || variantText || standardEnglish.trim();
   }
 
   function saveSelectedReferenceResultExpression() {

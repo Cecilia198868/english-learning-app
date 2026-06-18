@@ -109,24 +109,24 @@ function isPlaceholderExpression(text: string | undefined) {
 
 const expressionMeta = [
   {
-    badge: "最自然地道",
+    badge: "推荐表达",
     icon: "bookmark",
     tone: "violet",
   },
   {
-    badge: "更地道",
+    badge: "最自然",
+    icon: "chat",
+    tone: "purple",
+  },
+  {
+    badge: "最地道",
     icon: "leaf",
     tone: "green",
   },
   {
-    badge: "更简单",
+    badge: "最简单",
     icon: "feather",
     tone: "blue",
-  },
-  {
-    badge: "更口语",
-    icon: "chat",
-    tone: "purple",
   },
 ] as const;
 
