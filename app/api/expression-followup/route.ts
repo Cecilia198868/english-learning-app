@@ -1,5 +1,10 @@
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
+import {
+  createGuidedFollowupSuggestion,
+  normalizeGuidedFollowupSuggestion,
+  type GuidedFollowupInput,
+} from "@/lib/guidedFollowupSuggestions";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -25,6 +30,7 @@ const NATIVE_CHINESE_FOLLOWUP_PROMPT = [
   "不要出现这些翻译腔：'我正在享受...'、'这让我感觉...'、'这是一个...'、'为了这个项目我需要...'、'我将会...'、'它使我...'。",
   "好句子的感觉示例：'我有点担心他太累了，想提醒他早点休息。'、'这事儿我还想再确认一下，免得后面麻烦。'、'忙了一天以后，能安安静静歇会儿就挺舒服。'",
   "要求：1. 保持情景连续性；2. 让情绪或细节自然递进；3. 像真实日常生活；4. 适合初中级学习者；5. 只生成一句简体中文，12到28个汉字左右，可自然使用标点；6. 不要解释，不要给英文；7. 不要用英文单词或拼音。",
+  "如果 previousSuggestions 里已经出现过类似句子，这次必须换一个新的角度，比如细节、感受、下一步动作、原因或观察。",
   '只返回 JSON：{"suggestion":"..."}',
 ].join("\n");
 
@@ -32,61 +38,17 @@ function cleanText(value: unknown) {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
 }
 
-function createFallbackSuggestion(contextText: string) {
-  if (/公园|散步|花|玫瑰|风景|景色|park|walk|rose|flower/i.test(contextText)) {
-    return "我还想拍几张照片留作纪念。";
-  }
-
-  if (/天气|太阳|晒|舒服|后院|户外|weather|sun|sunny|outside|yard/i.test(contextText)) {
-    return "躺在后院晒太阳真舒服！";
-  }
-
-  if (/累|疲惫|休息|放松|tired|rest|relax/i.test(contextText)) {
-    return "我想找个安静的地方休息一下。";
-  }
-
-  if (/开心|高兴|喜欢|享受|happy|like|enjoy/i.test(contextText)) {
-    return "这种感觉让我一整天都很开心。";
-  }
-
-  if (/饿|吃|饭|咖啡|茶|hungry|eat|food|coffee|tea/i.test(contextText)) {
-    return "等一下我想去买点好吃的。";
-  }
-
-  return "这事儿我还想再说得具体一点。";
-}
-
-function normalizeNativeChineseSuggestion(
-  value: unknown,
-  fallbackContext: string
-) {
-  const suggestion = cleanText(value)
-    .replace(/^["'“”‘’]+|["'“”‘’]+$/g, "")
-    .replace(/^(下一句|可以说|中文|建议|推荐中文)[:：]\s*/u, "")
-    .trim();
-
-  if (!suggestion) return createFallbackSuggestion(fallbackContext);
-
-  const hasEnglish = /[A-Za-z]{2,}/.test(suggestion);
-  const looksLikeExplanation = /英文|翻译|表达|可以这样说|JSON|suggestion/i.test(
-    suggestion
-  );
-  const looksTooLong = Array.from(suggestion).length > 42;
-
-  if (hasEnglish || looksLikeExplanation || looksTooLong) {
-    return createFallbackSuggestion(fallbackContext);
-  }
-
-  return suggestion;
-}
-
 export async function POST(req: Request) {
+  let fallbackInput: GuidedFollowupInput = {};
+
   try {
     const body = (await req.json()) as {
       currentChinese?: unknown;
       userEnglish?: unknown;
       recommendedEnglish?: unknown;
       turns?: GuidedTurn[];
+      previousSuggestions?: unknown[];
+      refreshKey?: unknown;
     };
 
     const currentChinese = cleanText(body.currentChinese);
@@ -103,6 +65,20 @@ export async function POST(req: Request) {
           .filter((turn) => turn.chinese || turn.recommendedEnglish)
           .slice(-6)
       : [];
+    const previousSuggestions = Array.isArray(body.previousSuggestions)
+      ? body.previousSuggestions
+      : [];
+    const refreshKey =
+      typeof body.refreshKey === "number" && Number.isFinite(body.refreshKey)
+        ? body.refreshKey
+        : 0;
+    fallbackInput = {
+      currentChinese,
+      previousSuggestions,
+      recommendedEnglish,
+      userEnglish,
+      variantIndex: refreshKey,
+    };
 
     if (!fallbackContext) {
       return NextResponse.json({ suggestion: "" });
@@ -110,7 +86,7 @@ export async function POST(req: Request) {
 
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({
-        suggestion: createFallbackSuggestion(fallbackContext),
+        suggestion: createGuidedFollowupSuggestion(fallbackInput),
         source: "fallback",
       });
     }
@@ -128,8 +104,10 @@ export async function POST(req: Request) {
           content: JSON.stringify({
             currentChinese,
             learnerTranscript: userEnglish,
+            previousSuggestions,
             recommendedEnglish,
             recentTurns: turns,
+            refreshKey,
           }),
         },
       ],
@@ -137,9 +115,9 @@ export async function POST(req: Request) {
 
     const content = completion.choices[0]?.message?.content || "{}";
     const parsed = JSON.parse(content) as FollowupResponse;
-    const suggestion = normalizeNativeChineseSuggestion(
+    const suggestion = normalizeGuidedFollowupSuggestion(
       parsed.suggestion,
-      fallbackContext
+      fallbackInput
     );
 
     return NextResponse.json({
@@ -147,7 +125,9 @@ export async function POST(req: Request) {
     });
   } catch {
     return NextResponse.json({
-      suggestion: "这事儿我还想再说得具体一点。",
+      suggestion:
+        createGuidedFollowupSuggestion(fallbackInput) ||
+        "我还想补充一个小细节。",
       source: "fallback",
     });
   }

@@ -52,6 +52,10 @@ import {
   type ExpressionVariantKey,
 } from "@/lib/expressionVariantFallbacks";
 import {
+  createGuidedFollowupSuggestion,
+  normalizeGuidedFollowupSuggestion,
+} from "@/lib/guidedFollowupSuggestions";
+import {
   FREE_PRACTICE_DAILY_LIMIT,
   type FreePracticeScope,
   fetchFreePracticeUsage,
@@ -3088,6 +3092,7 @@ function SpeakEnglishClient() {
   const aiGuidedFollowPracticePendingRef = useRef(false);
   const guidedConversationTurnsRef = useRef<GuidedConversationTurn[]>([]);
   const guidedFollowupRequestKeyRef = useRef("");
+  const guidedFollowupSuggestionsRef = useRef<string[]>([]);
   const freeConversationRequestKeyRef = useRef("");
   const freeConversationFetchRequestKeyRef = useRef("");
   const authoritativeEnglishRequestKeyRef = useRef("");
@@ -4730,6 +4735,7 @@ function SpeakEnglishClient() {
 
   function resetGuidedFollowupState() {
     guidedFollowupRequestKeyRef.current = "";
+    guidedFollowupSuggestionsRef.current = [];
     setGuidedFollowupSuggestion("");
     setIsLoadingGuidedFollowup(false);
     setGuidedFollowupRefreshKey(0);
@@ -6181,7 +6187,15 @@ function SpeakEnglishClient() {
 
     let cancelled = false;
     guidedFollowupRequestKeyRef.current = requestKey;
-    setGuidedFollowupSuggestion("");
+    const previousSuggestions = guidedFollowupSuggestionsRef.current;
+    const fallbackFollowupSuggestion = createGuidedFollowupSuggestion({
+      currentChinese,
+      previousSuggestions,
+      recommendedEnglish,
+      userEnglish: learnerEnglish,
+      variantIndex: guidedFollowupRefreshKey,
+    });
+    setGuidedFollowupSuggestion(fallbackFollowupSuggestion);
     setIsLoadingGuidedFollowup(true);
 
     async function loadGuidedFollowup() {
@@ -6191,7 +6205,9 @@ function SpeakEnglishClient() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             currentChinese,
+            previousSuggestions,
             recommendedEnglish,
+            refreshKey: guidedFollowupRefreshKey,
             turns: guidedConversationTurnsRef.current.map(
               ({ chinese, recommendedEnglish: turnRecommendedEnglish }) => ({
                 chinese,
@@ -6202,17 +6218,32 @@ function SpeakEnglishClient() {
           }),
         });
         const data = (await response.json()) as { suggestion?: unknown };
-        const suggestion =
-          typeof data.suggestion === "string" ? data.suggestion.trim() : "";
+        const suggestion = normalizeGuidedFollowupSuggestion(data.suggestion, {
+          currentChinese,
+          previousSuggestions,
+          recommendedEnglish,
+          userEnglish: learnerEnglish,
+          variantIndex: guidedFollowupRefreshKey,
+        });
 
         if (!cancelled) {
-          setGuidedFollowupSuggestion(
-            suggestion || "躺在后院晒太阳真舒服！"
-          );
+          setGuidedFollowupSuggestion(suggestion);
+          guidedFollowupSuggestionsRef.current = [
+            ...guidedFollowupSuggestionsRef.current,
+            suggestion,
+          ]
+            .filter(Boolean)
+            .slice(-8);
         }
       } catch {
         if (!cancelled) {
-          setGuidedFollowupSuggestion("躺在后院晒太阳真舒服！");
+          setGuidedFollowupSuggestion(fallbackFollowupSuggestion);
+          if (fallbackFollowupSuggestion) {
+            guidedFollowupSuggestionsRef.current = [
+              ...guidedFollowupSuggestionsRef.current,
+              fallbackFollowupSuggestion,
+            ].slice(-8);
+          }
         }
       } finally {
         if (!cancelled) {

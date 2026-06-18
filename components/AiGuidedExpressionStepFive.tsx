@@ -64,7 +64,7 @@ const COPY = {
   changeAria: "换一句新的中文建议",
   loadingNext: "正在为你准备下一句...",
   menuLabel: "回到学习首页",
-  nextFallback: "那我们休息一下，过会儿再去散步吧。",
+  nextFallback: "我还想补充一个小细节。",
   nextTitle: "下一句，可以这样说",
   pageLabel: "AI引导表达结果页",
   playAria: "播放这句表达",
@@ -414,6 +414,7 @@ export default function AiGuidedExpressionStepFive({
 
   const displayEnglish =
     formatUserExpressionDisplay(userEnglishText) || "I'm practicing this sentence.";
+  const hasNextChineseText = Boolean(nextChineseText.trim());
   const displayNextChinese =
     nextChineseText.trim() || (isLoadingNextChinese ? COPY.loadingNext : COPY.nextFallback);
   const firstReadyExpression = expressions.find(
@@ -1691,14 +1692,16 @@ export default function AiGuidedExpressionStepFive({
               <span>{COPY.nextTitle}</span>
             </h2>
             <p lang="zh-CN" className="sf-ai-guided-step-five-next-text">
-              {isLoadingNextChinese ? COPY.loadingNext : displayNextChinese}
+              {isLoadingNextChinese && !hasNextChineseText
+                ? COPY.loadingNext
+                : displayNextChinese}
             </p>
             <div className="sf-ai-guided-step-five-next-actions">
               <button
                 type="button"
                 aria-label={COPY.useNextAria}
                 onClick={onUseNextChinese}
-                disabled={isLoadingNextChinese}
+                disabled={isLoadingNextChinese && !hasNextChineseText}
                 className="sf-ai-guided-step-five-use-next"
               >
                 <MicGlyph />
@@ -1708,7 +1711,7 @@ export default function AiGuidedExpressionStepFive({
                 type="button"
                 aria-label={COPY.changeAria}
                 onClick={onChangeNextChinese}
-                disabled={isLoadingNextChinese}
+                disabled={isLoadingNextChinese && !hasNextChineseText}
                 className="sf-ai-guided-step-five-change"
               >
                 <RefreshGlyph />
