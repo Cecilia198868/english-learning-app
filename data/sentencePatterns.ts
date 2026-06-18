@@ -1327,6 +1327,116 @@ function makeDraft(chinese: string, targetEnglish: string): BasicPracticeDraft {
   return { chinese, targetEnglish };
 }
 
+function cleanGeneratedSentence(value: string) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function withFinalPunctuation(value: string, fallback: string) {
+  const sentence = cleanGeneratedSentence(value) || fallback;
+  return /[.!?]$/.test(sentence) ? sentence : `${sentence}.`;
+}
+
+function capitalizeFirst(value: string) {
+  const text = cleanGeneratedSentence(value);
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+}
+
+function createSimplePracticeVariant(targetEnglish: string) {
+  const text = cleanGeneratedSentence(targetEnglish);
+  const replacements: Array<[RegExp, string | ((...matches: string[]) => string)]> = [
+    [/^I[’']d like to (.+)\.$/, "I want to $1."],
+    [/^I really want to (.+)\.$/, "I want to $1."],
+    [/^Could you (.+) for me\?$/, "Can you $1?"],
+    [/^If it[’']s not too much trouble, could you (.+)\?$/, "Could you $1?"],
+    [/^I would appreciate it if you could help me (.+)\.$/, "Please help me $1."],
+    [/^I would be most grateful if you could possibly help me (.+)\.$/, "Please help me $1."],
+    [/^I was wondering if you could (.+)\.$/, "Could you $1?"],
+    [/^It would mean a lot to me if you could help me (.+)\.$/, "Please help me $1."],
+    [/^Would it be possible for you to help me (.+)\?$/, "Could you help me $1?"],
+    [/^I[’']d be grateful if you would help me (.+)\.$/, "Please help me $1."],
+    [/^Should you have time, please help me (.+)\.$/, "Please help me $1."],
+    [/^In my opinion, (.+)\.$/, "I think $1."],
+    [/^From my point of view, (.+)\.$/, "I think $1."],
+    [/^It seems to me that (.+)\.$/, "I think $1."],
+    [
+      /^The reason why (.+) is that (.+)\.$/,
+      (_match, subject, reason) => `${capitalizeFirst(subject)} because ${reason}.`,
+    ],
+    [/^The problem is that (.+)\.$/, "The problem is $1."],
+    [/^It is imperative that we (.+)\.$/, "We need to $1."],
+    [/^It[’']s essential that we (.+)\.$/, "We need to $1."],
+    [/^I[’']m determined to (.+) no matter what\.$/, "I will $1."],
+    [/^Come what may, I am resolved to (.+)\.$/, "I will $1."],
+  ];
+
+  for (const [pattern, replacement] of replacements) {
+    if (!pattern.test(text)) continue;
+    const replaced =
+      typeof replacement === "function"
+        ? text.replace(pattern, (...matches) => replacement(...matches))
+        : text.replace(pattern, replacement);
+    return withFinalPunctuation(replaced, text);
+  }
+
+  return text;
+}
+
+function createNaturalPracticeVariant(targetEnglish: string) {
+  const text = cleanGeneratedSentence(targetEnglish)
+    .replace(/^From my point of view, /, "To me, ")
+    .replace(/^In my opinion, /, "I think ")
+    .replace(/^I would like to /, "I'd like to ")
+    .replace(/^I am /, "I'm ")
+    .replace(/^I will /, "I'll ")
+    .replace(/\bIt is\b/g, "It's")
+    .replace(/\bThere is\b/g, "There's")
+    .replace(/\bI cannot\b/g, "I can't")
+    .replace(/\bdo not\b/g, "don't")
+    .replace(/\bdoes not\b/g, "doesn't");
+
+  return withFinalPunctuation(text, targetEnglish);
+}
+
+function createIdiomaticPracticeVariant(targetEnglish: string, naturalEnglish: string) {
+  const text = cleanGeneratedSentence(targetEnglish);
+  const replacements: Array<[RegExp, string]> = [
+    [/^I want to (.+)\.$/, "I'd really like to $1."],
+    [/^I want (.+)\.$/, "I'd really like $1."],
+    [/^I need (?!to\b)(.+)\.$/, "I could really use $1."],
+    [/^I[’']m worried about (.+)\.$/, "I'm a bit worried about $1."],
+    [/^I[’']m excited that (.+)\.$/, "I'm really excited that $1."],
+    [/^Can you help me (.+)\?$/, "Could you help me $1?"],
+    [/^I have to (.+) because (.+)\.$/, "I need to $1 because $2."],
+  ];
+
+  for (const [pattern, replacement] of replacements) {
+    if (!pattern.test(text)) continue;
+    return withFinalPunctuation(text.replace(pattern, replacement), naturalEnglish);
+  }
+
+  return naturalEnglish || text;
+}
+
+function createPracticeFromDraft(
+  draft: BasicPracticeDraft,
+  id: number
+): SentencePatternPractice {
+  const recommended = withFinalPunctuation(draft.targetEnglish, draft.targetEnglish);
+  const simple = createSimplePracticeVariant(recommended);
+  const natural = createNaturalPracticeVariant(recommended);
+  const idiomatic = createIdiomaticPracticeVariant(recommended, natural);
+
+  return {
+    chinese: draft.chinese,
+    id,
+    idiomatic,
+    natural,
+    recommended,
+    simple,
+    targetEnglish: recommended,
+  };
+}
+
 function renderBasicPracticeDraft(
   patternId: number,
   topic: BasicPracticeTopic
@@ -1568,16 +1678,7 @@ function renderBasicPracticeDraft(
 function createBasicPracticeCourse(patternId: number): SentencePatternPractice[] {
   return basicPracticeTopics.map((topic, index) => {
     const draft = renderBasicPracticeDraft(patternId, topic);
-
-    return {
-      chinese: draft.chinese,
-      id: index + 1,
-      idiomatic: topic.idiomatic,
-      natural: draft.targetEnglish,
-      recommended: draft.targetEnglish,
-      simple: topic.simple,
-      targetEnglish: draft.targetEnglish,
-    };
+    return createPracticeFromDraft(draft, index + 1);
   });
 }
 
@@ -1968,16 +2069,7 @@ function renderIntermediatePracticeDraft(
 function createIntermediatePracticeCourse(patternId: number): SentencePatternPractice[] {
   return basicPracticeTopics.map((topic, index) => {
     const draft = renderIntermediatePracticeDraft(patternId, topic);
-
-    return {
-      chinese: draft.chinese,
-      id: index + 1,
-      idiomatic: draft.targetEnglish,
-      natural: draft.targetEnglish,
-      recommended: draft.targetEnglish,
-      simple: topic.simple,
-      targetEnglish: draft.targetEnglish,
-    };
+    return createPracticeFromDraft(draft, index + 1);
   });
 }
 
@@ -2364,16 +2456,7 @@ function renderAdvancedPracticeDraft(
 function createAdvancedPracticeCourse(patternId: number): SentencePatternPractice[] {
   return basicPracticeTopics.map((topic, index) => {
     const draft = renderAdvancedPracticeDraft(patternId, topic);
-
-    return {
-      chinese: draft.chinese,
-      id: index + 1,
-      idiomatic: draft.targetEnglish,
-      natural: draft.targetEnglish,
-      recommended: draft.targetEnglish,
-      simple: topic.simple,
-      targetEnglish: draft.targetEnglish,
-    };
+    return createPracticeFromDraft(draft, index + 1);
   });
 }
 
