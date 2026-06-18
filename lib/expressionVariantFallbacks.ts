@@ -144,6 +144,15 @@ function isColdClothesContext(value: string) {
   );
 }
 
+function isBirdSleepContext(value: string) {
+  const text = normalizeComparableText(value);
+
+  return (
+    /\b(?:bird|birds)\b/.test(text) &&
+    /\b(?:late|night|bedtime|sleep|sleeping|bed)\b/.test(text)
+  );
+}
+
 function normalizeCommonLearnerEnglish(value: string) {
   const text = ensureSentence(value)
     .replace(/[\u2018\u2019]/g, "'")
@@ -151,6 +160,10 @@ function normalizeCommonLearnerEnglish(value: string) {
 
   if (isColdClothesContext(text)) {
     return "It's late and cold, so please put on some warmer clothes.";
+  }
+
+  if (isBirdSleepContext(text)) {
+    return "The little bird is going to sleep because it's late.";
   }
 
   return text
@@ -257,6 +270,15 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
       natural: "It's getting late and chilly, so throw on something warmer.",
       idiomatic: "It's chilly out, so bundle up before you go.",
       simple: "It is late and cold. Please wear warm clothes.",
+    };
+  }
+
+  if (isBirdSleepContext(sourceText) || isBirdSleepContext(standard)) {
+    return {
+      standard: "The little bird is going to sleep because it's late.",
+      natural: "It's getting late, so the little bird's ready for bed.",
+      idiomatic: "It's bedtime for the little bird.",
+      simple: "It is late. The little bird will sleep.",
     };
   }
 
