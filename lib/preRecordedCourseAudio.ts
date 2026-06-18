@@ -39,7 +39,7 @@ export function getClassicSceneAudioUrl(
   const lineSegment = `line-${padSentenceIndex(sentenceIndex)}`;
   const suffix = variantKey === "line" ? "" : `-${variantKey}`;
 
-  return `${PRE_RECORDED_AUDIO_ROOT}/classic-scenes/adam/${lessonSegment}/${lineSegment}${suffix}.mp3`;
+  return `${PRE_RECORDED_AUDIO_ROOT}/classic-scenes/alloy/${lessonSegment}/${lineSegment}${suffix}.mp3`;
 }
 
 export function getSentencePatternAudioUrl(
@@ -51,7 +51,7 @@ export function getSentencePatternAudioUrl(
   return [
     PRE_RECORDED_AUDIO_ROOT,
     "sentence-patterns",
-    "bella",
+    "alloy",
     cleanPathSegment(levelId),
     `pattern-${cleanPathSegment(patternId)}`,
     `practice-${cleanPathSegment(practiceId)}-${variantKey}.mp3`,

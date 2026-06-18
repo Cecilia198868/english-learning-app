@@ -5,8 +5,6 @@ import { featuredLessonRecords } from "@/data/featuredCourses";
 import { prebuiltClassicExpressionLibrary } from "@/data/prebuiltClassicExpressions";
 import { sentencePatternLevels } from "@/data/sentencePatterns";
 import {
-  ELEVENLABS_ADAM_VOICE_ID,
-  ELEVENLABS_BELLA_VOICE_ID,
   ELEVENLABS_COURSE_AUDIO_SPEED,
   getClassicSceneAudioUrl,
   getSentencePatternAudioUrl,
@@ -23,10 +21,11 @@ type AudioScope = "classic-scenes" | "sentence-patterns" | "all";
 
 type AudioTask = {
   courseKind: "classic-scenes" | "sentence-patterns";
+  provider: "openai" | "elevenlabs";
   text: string;
   url: string;
   voiceId: string;
-  voiceName: "Adam" | "Bella";
+  voiceName: "Alloy" | "Bella";
 };
 
 const classicVariantKeys: ClassicSceneAudioVariantKey[] = [
@@ -90,7 +89,6 @@ function hasAdminAccess(req: Request, secret: unknown) {
 }
 
 function collectClassicSceneTasks(lessonIdFilter?: string) {
-  const voiceId = process.env.ELEVENLABS_ADAM_VOICE_ID || ELEVENLABS_ADAM_VOICE_ID;
   const tasks: AudioTask[] = [];
 
   for (const lesson of featuredLessonRecords) {
@@ -102,10 +100,11 @@ function collectClassicSceneTasks(lessonIdFilter?: string) {
       if (lineText) {
         tasks.push({
           courseKind: "classic-scenes",
+          provider: "openai",
           text: lineText,
           url: getClassicSceneAudioUrl(lesson.id, sentenceIndex),
-          voiceId,
-          voiceName: "Adam",
+          voiceId: "alloy",
+          voiceName: "Alloy",
         });
       }
 
@@ -118,10 +117,11 @@ function collectClassicSceneTasks(lessonIdFilter?: string) {
 
         tasks.push({
           courseKind: "classic-scenes",
+          provider: "openai",
           text: variantText,
           url: getClassicSceneAudioUrl(lesson.id, sentenceIndex, variantKey),
-          voiceId,
-          voiceName: "Adam",
+          voiceId: "alloy",
+          voiceName: "Alloy",
         });
       }
     }
@@ -131,7 +131,6 @@ function collectClassicSceneTasks(lessonIdFilter?: string) {
 }
 
 function collectSentencePatternTasks(levelIdFilter?: string, patternIdFilter?: number) {
-  const voiceId = process.env.ELEVENLABS_BELLA_VOICE_ID || ELEVENLABS_BELLA_VOICE_ID;
   const tasks: AudioTask[] = [];
 
   for (const level of sentencePatternLevels) {
@@ -155,6 +154,7 @@ function collectSentencePatternTasks(levelIdFilter?: string, patternIdFilter?: n
 
           tasks.push({
             courseKind: "sentence-patterns",
+            provider: "openai",
             text,
             url: getSentencePatternAudioUrl(
               level.id,
@@ -162,8 +162,8 @@ function collectSentencePatternTasks(levelIdFilter?: string, patternIdFilter?: n
               practice.id,
               variantKey
             ),
-            voiceId,
-            voiceName: "Bella",
+            voiceId: "alloy",
+            voiceName: "Alloy",
           });
         }
       }
@@ -171,6 +171,31 @@ function collectSentencePatternTasks(levelIdFilter?: string, patternIdFilter?: n
   }
 
   return tasks;
+}
+
+async function generateOpenAiAudio(task: AudioTask, apiKey: string) {
+  const response = await fetch("https://api.openai.com/v1/audio/speech", {
+    body: JSON.stringify({
+      input: task.text,
+      instructions: "Speak clearly with a neutral, classroom-friendly tone.",
+      model: "gpt-4o-mini-tts",
+      response_format: "mp3",
+      speed: 1,
+      voice: task.voiceId,
+    }),
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    const message = await response.text().catch(() => "");
+    throw new Error(message || `OpenAI returned ${response.status}`);
+  }
+
+  return Buffer.from(await response.arrayBuffer());
 }
 
 async function generateElevenLabsAudio(task: AudioTask, apiKey: string) {
@@ -252,8 +277,19 @@ export async function POST(req: Request) {
     });
   }
 
-  const apiKey = process.env.ELEVENLABS_API_KEY;
-  if (!apiKey) {
+  const needsOpenAi = tasks.some((task) => task.provider === "openai");
+  const needsElevenLabs = tasks.some((task) => task.provider === "elevenlabs");
+  const openAiApiKey = process.env.OPENAI_API_KEY;
+  const elevenLabsApiKey = process.env.ELEVENLABS_API_KEY;
+
+  if (needsOpenAi && !openAiApiKey) {
+    return NextResponse.json(
+      { error: "Missing OPENAI_API_KEY" },
+      { status: 500 }
+    );
+  }
+
+  if (needsElevenLabs && !elevenLabsApiKey) {
     return NextResponse.json(
       { error: "Missing ELEVENLABS_API_KEY" },
       { status: 500 }
@@ -262,6 +298,7 @@ export async function POST(req: Request) {
 
   if (
     process.env.NODE_ENV === "production" &&
+    process.env.ALLOW_COURSE_AUDIO_GENERATION !== "true" &&
     process.env.ALLOW_ELEVENLABS_COURSE_AUDIO_GENERATION !== "true"
   ) {
     return NextResponse.json(
@@ -282,7 +319,10 @@ export async function POST(req: Request) {
     }
 
     try {
-      const audio = await generateElevenLabsAudio(task, apiKey);
+      const audio =
+        task.provider === "openai"
+          ? await generateOpenAiAudio(task, openAiApiKey || "")
+          : await generateElevenLabsAudio(task, elevenLabsApiKey || "");
       await mkdir(path.dirname(filePath), { recursive: true });
       await writeFile(filePath, audio);
       generated.push(task.url);

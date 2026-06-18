@@ -121,7 +121,7 @@ const GUEST_FULL_CLASSIC_LESSON_IDS = new Set([
 ]);
 const GUEST_CLASSIC_SENTENCE_LIMIT = 5;
 const CLASSIC_RECORDING_RESTART_DELAY_MS = 240;
-const HAS_CLASSIC_SCENE_PRE_RECORDED_AUDIO = false;
+const HAS_CLASSIC_SCENE_PRE_RECORDED_AUDIO = true;
 const CLASSIC_SCENE_TTS_VOICE_ID = "alloy";
 function isClassicSceneLessonId(lessonId: string) {
   return (
@@ -1267,24 +1267,23 @@ export default function StudyPage() {
       return;
     }
 
-    if (isClassicSceneLessonId(lessonId) && !isMyCourseLesson) {
-      stopPreRecordedAudio();
-      void playSpeakFlowTts({
-        fallbackVoice: getSelectedVoice() || pickPreferredEnglishVoice(voices),
-        onEnd,
-        rate: normalizeSpeechRate(rate),
-        text,
-        voiceId: CLASSIC_SCENE_TTS_VOICE_ID,
-      });
-      return;
-    }
-
     if (preRecordedAudioUrl) {
       playPreRecordedAudio({
         fallback: () => speakEnglish(text, rate, onEnd),
         onEnd,
         playbackRate: normalizeSpeechRate(rate),
         url: preRecordedAudioUrl,
+      });
+      return;
+    }
+
+    if (isClassicSceneLessonId(lessonId) && !isMyCourseLesson) {
+      stopPreRecordedAudio();
+      void playSpeakFlowTts({
+        onEnd,
+        rate: normalizeSpeechRate(rate),
+        text,
+        voiceId: CLASSIC_SCENE_TTS_VOICE_ID,
       });
       return;
     }

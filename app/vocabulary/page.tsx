@@ -28,12 +28,6 @@ import {
   preloadSpeakFlowTts,
   stopSpeakFlowTts,
 } from "@/lib/speakFlowTtsClient";
-import {
-  SPEAKFLOW_DEFAULT_VOICE_ID,
-  getSavedSpeakFlowVoiceId,
-  saveSpeakFlowVoiceId,
-  type SpeakFlowVoiceId,
-} from "@/lib/voiceSettings";
 import styles from "./VocabularyPage.module.css";
 
 type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
@@ -48,6 +42,7 @@ type LibrarySortDirection = "asc" | "desc";
 type LibraryStatusFilter = "all" | "learning" | "mastered" | "review" | "shadow";
 
 const SLOW_READ_RATE = 0.5;
+const NEW_EXPRESSION_TTS_VOICE_ID = "alloy";
 
 const EXPRESSION_MEANING_FALLBACKS: Record<string, string> = {
   "set up": "设立；开设；安排",
@@ -855,10 +850,6 @@ export default function VocabularyPage() {
   const [showLearningResultsModal, setShowLearningResultsModal] =
     useState(false);
   const [showExpressionHelpModal, setShowExpressionHelpModal] = useState(false);
-  const [selectedVoiceId, setSelectedVoiceId] =
-    useState<SpeakFlowVoiceId>(SPEAKFLOW_DEFAULT_VOICE_ID);
-  const [voicePreferenceLoaded, setVoicePreferenceLoaded] = useState(false);
-
   const refreshExpressionLearningUsageCount = useCallback(() => {
     setExpressionLearningUsageCount(getExpressionLearningUsageCount());
   }, []);
@@ -866,17 +857,6 @@ export default function VocabularyPage() {
   useEffect(() => {
     refreshExpressionLearningUsageCount();
   }, [refreshExpressionLearningUsageCount]);
-
-  useEffect(() => {
-    setSelectedVoiceId(getSavedSpeakFlowVoiceId());
-    setVoicePreferenceLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (!voicePreferenceLoaded) return;
-
-    saveSpeakFlowVoiceId(selectedVoiceId);
-  }, [selectedVoiceId, voicePreferenceLoaded]);
 
   useEffect(() => {
     const loadTimer = window.setTimeout(() => {
@@ -1023,14 +1003,18 @@ export default function VocabularyPage() {
       .slice(0, 3);
 
     textsToPreload.forEach((text) => {
-      preloadSpeakFlowTts({ rate: 1, text, voiceId: selectedVoiceId });
+      preloadSpeakFlowTts({
+        rate: 1,
+        text,
+        voiceId: NEW_EXPRESSION_TTS_VOICE_ID,
+      });
       preloadSpeakFlowTts({
         rate: SLOW_READ_RATE,
         text,
-        voiceId: selectedVoiceId,
+        voiceId: NEW_EXPRESSION_TTS_VOICE_ID,
       });
     });
-  }, [selectedVoiceId, vocabularyPreloadKey]);
+  }, [vocabularyPreloadKey]);
 
   const isExampleTranslationLoading =
     Boolean(displayedExpression) &&
@@ -1421,7 +1405,7 @@ export default function VocabularyPage() {
     void playSpeakFlowTts({
       rate,
       text: normalizedText,
-      voiceId: selectedVoiceId,
+      voiceId: NEW_EXPRESSION_TTS_VOICE_ID,
     });
   }
 

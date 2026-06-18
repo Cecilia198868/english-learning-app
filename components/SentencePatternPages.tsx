@@ -6,11 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import InteractiveExpressionText from "@/components/InteractiveExpressionText";
-import { playSpeakFlowTts, stopSpeakFlowTts } from "@/lib/speakFlowTtsClient";
 import {
-  SPEAKFLOW_DEFAULT_VOICE_ID,
-  SPEAKFLOW_VOICES,
-} from "@/lib/voiceSettings";
+  playSpeakFlowTts,
+  preloadSpeakFlowTts,
+  stopSpeakFlowTts,
+} from "@/lib/speakFlowTtsClient";
 import type {
   SentencePatternLevel,
   SentencePatternPractice,
@@ -867,13 +867,15 @@ function usePracticeId(max: number) {
 
 const NORMAL_READ_RATE = 0.92;
 const SLOW_READ_RATE = 0.5;
-const SENTENCE_PATTERN_TTS_VOICE_ID =
-  SPEAKFLOW_VOICES[0]?.id || SPEAKFLOW_DEFAULT_VOICE_ID;
+const SENTENCE_PATTERN_TTS_VOICE_ID = "alloy";
 
 function speak(text: string, rate = NORMAL_READ_RATE) {
+  const normalizedText = text.trim();
+  if (!normalizedText) return;
+
   void playSpeakFlowTts({
     rate,
-    text,
+    text: normalizedText,
     voiceId: SENTENCE_PATTERN_TTS_VOICE_ID,
   });
 }
@@ -907,6 +909,8 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
     100,
     Math.round((completedPracticeCount / Math.max(practiceCount, 1)) * 100)
   );
+  const studyPatternText = pattern?.text || practice.targetEnglish;
+  const studyPlaybackText = practice.targetEnglish || studyPatternText;
 
   function clearStopFallbackTimer() {
     if (stopFallbackTimerRef.current === null) return;
@@ -924,8 +928,16 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
         recognitionRef.current?.abort?.();
       } catch {}
       recognitionRef.current = null;
+      stopSpeakFlowTts();
     };
   }, []);
+
+  useEffect(() => {
+    preloadSpeakFlowTts({
+      text: studyPlaybackText,
+      voiceId: SENTENCE_PATTERN_TTS_VOICE_ID,
+    });
+  }, [studyPlaybackText]);
 
   useEffect(() => {
     const practiceSessionKey = `${level.id}:${patternId}:${practiceId}`;
@@ -1129,9 +1141,18 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
             <h1>
               <InteractiveExpressionText
                 sourceSentence={practice.targetEnglish}
-                text={pattern?.text || practice.targetEnglish}
+                text={studyPatternText}
               />
             </h1>
+            <button
+              type="button"
+              className={styles.studyTitleAudioButton}
+              disabled={!studyPlaybackText}
+              onClick={() => speak(studyPlaybackText)}
+              aria-label="播放英文句子"
+            >
+              <StatIcon type="speaker" />
+            </button>
             <Link
               href={nextPatternHref}
               aria-label="下一句型"
@@ -1268,6 +1289,29 @@ export function SentencePatternResultPage({ level, patternId }: StudyProps) {
   function playPatternAudio(text: string, rate = NORMAL_READ_RATE) {
     speak(text, rate);
   }
+
+  useEffect(() => {
+    const texts = [
+      userExpression,
+      practice.recommended,
+      practice.idiomatic,
+      practice.simple,
+      practice.natural,
+    ];
+
+    for (const text of new Set(texts)) {
+      preloadSpeakFlowTts({
+        text,
+        voiceId: SENTENCE_PATTERN_TTS_VOICE_ID,
+      });
+    }
+  }, [
+    practice.idiomatic,
+    practice.natural,
+    practice.recommended,
+    practice.simple,
+    userExpression,
+  ]);
 
   useEffect(() => {
     return () => {
