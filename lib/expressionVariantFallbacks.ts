@@ -2,6 +2,13 @@ export type ExpressionVariantKey = "standard" | "idiomatic" | "simple" | "natura
 
 export type ExpressionVariantMap = Record<ExpressionVariantKey, string>;
 
+export type ExpressionVariantApiFields = {
+  recommendedExpression: string;
+  naturalExpression: string;
+  idiomaticExpression: string;
+  simpleExpression: string;
+};
+
 const VARIANT_KEYS: ExpressionVariantKey[] = [
   "standard",
   "natural",
@@ -42,6 +49,14 @@ function normalizeComparableText(value: string) {
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
+}
+
+function hasCjkText(value: string) {
+  return /[\u3400-\u9fff]/.test(value);
+}
+
+function hasLatinText(value: string) {
+  return /[A-Za-z]/.test(value);
 }
 
 function capitalizeFirst(value: string) {
@@ -153,10 +168,23 @@ function isBirdSleepContext(value: string) {
   );
 }
 
+function isSleepAdviceContext(value: string) {
+  const text = normalizeComparableText(value);
+
+  return (
+    /\b(?:late|night|bedtime|tired|sleepy)\b/.test(text) &&
+    /\b(?:sleep|bed|rest|call it a night)\b/.test(text)
+  );
+}
+
 function normalizeCommonLearnerEnglish(value: string) {
   const text = ensureSentence(value)
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/\bclubs\b/gi, "clothes");
+
+  if (hasCjkText(text) && !hasLatinText(text)) {
+    return "I want to say this more clearly.";
+  }
 
   if (isColdClothesContext(text)) {
     return "It's late and cold, so please put on some warmer clothes.";
@@ -166,7 +194,19 @@ function normalizeCommonLearnerEnglish(value: string) {
     return "The little bird is going to sleep because it's late.";
   }
 
+  if (isSleepAdviceContext(text)) {
+    return "It's late. You should go to bed early.";
+  }
+
   return text
+    .replace(
+      /^It'?s late,? you should (?:be good to|go to|go|be in) bed early\.?$/i,
+      "It's late. You should go to bed early."
+    )
+    .replace(
+      /^It'?s late,? you should (?:sleep|go to sleep) early\.?$/i,
+      "It's late. You should go to bed early."
+    )
     .replace(
       /^It'?s (?:fine|nice|good)(?: out)? today,? I (?:take|took|went for) (?:a )?walk for (?:two|2)(?: hours?)?\.$/i,
       "It's nice out today, so I took a two-hour walk."
@@ -264,6 +304,18 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
   const hiking = getHikingParts(standard);
   const parkSubject = getParkRosesSubject(standard);
 
+  if (
+    normalizeComparableText(standard) ===
+    normalizeComparableText("I want to say this more clearly.")
+  ) {
+    return {
+      standard: "I want to say this more clearly.",
+      natural: "I want to make this sound more natural.",
+      idiomatic: "I want to put this in a better way.",
+      simple: "I want to say this better.",
+    };
+  }
+
   if (isColdClothesContext(sourceText) || isColdClothesContext(standard)) {
     return {
       standard: "It's late and cold, so please put on some warmer clothes.",
@@ -279,6 +331,15 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
       natural: "It's getting late, so the little bird's ready for bed.",
       idiomatic: "It's bedtime for the little bird.",
       simple: "It is late. The little bird will sleep.",
+    };
+  }
+
+  if (isSleepAdviceContext(sourceText) || isSleepAdviceContext(standard)) {
+    return {
+      standard: "It's late. You should go to bed early.",
+      natural: "It's getting late. You should get some sleep.",
+      idiomatic: "It's pretty late. You'd better call it a night.",
+      simple: "It is late. Go to bed early.",
     };
   }
 
@@ -561,6 +622,9 @@ function isDistinctVariantMap(map: Partial<Record<ExpressionVariantKey, unknown>
 
   if (values.length < VARIANT_KEYS.length) return false;
 
+  const exactValues = values.map((value) => value.trim().toLowerCase());
+  if (new Set(exactValues).size < values.length) return false;
+
   for (let leftIndex = 0; leftIndex < values.length; leftIndex += 1) {
     for (let rightIndex = leftIndex + 1; rightIndex < values.length; rightIndex += 1) {
       if (isTooSimilar(values[leftIndex], values[rightIndex])) return false;
@@ -682,6 +746,40 @@ export function createFallbackExpressionVariantMap(sourceText: string): Expressi
   };
 
   return enforceDistinctVariantMap(map, fallback, sourceText);
+}
+
+export function toExpressionVariantApiFields(
+  variants: ExpressionVariantMap
+): ExpressionVariantApiFields {
+  return {
+    recommendedExpression: variants.standard,
+    naturalExpression: variants.natural,
+    idiomaticExpression: variants.idiomatic,
+    simpleExpression: variants.simple,
+  };
+}
+
+export function normalizeExpressionVariantApiPayload(
+  payload:
+    | {
+        recommendedExpression?: unknown;
+        naturalExpression?: unknown;
+        idiomaticExpression?: unknown;
+        simpleExpression?: unknown;
+        variants?: Partial<Record<ExpressionVariantKey, unknown>>;
+      }
+    | undefined,
+  fallbackSource: string
+): ExpressionVariantMap {
+  return normalizeExpressionVariantMap(
+    {
+      standard: payload?.recommendedExpression ?? payload?.variants?.standard,
+      natural: payload?.naturalExpression ?? payload?.variants?.natural,
+      idiomatic: payload?.idiomaticExpression ?? payload?.variants?.idiomatic,
+      simple: payload?.simpleExpression ?? payload?.variants?.simple,
+    },
+    fallbackSource
+  );
 }
 
 export function normalizeExpressionVariantMap(

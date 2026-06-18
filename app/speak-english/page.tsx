@@ -48,7 +48,10 @@ import {
 } from "@/lib/expressionHighlights";
 import {
   createFallbackExpressionVariantMap,
+  isExpressionVariantMapDistinctEnough,
+  normalizeExpressionVariantApiPayload,
   normalizeExpressionVariantMap,
+  toExpressionVariantApiFields,
   type ExpressionVariantKey,
 } from "@/lib/expressionVariantFallbacks";
 import {
@@ -108,6 +111,14 @@ type ExpressionVariant = {
   key: ExpressionVariantKey;
   label: string;
   text: string;
+};
+
+type ExpressionVariantApiResponse = {
+  recommendedExpression?: unknown;
+  naturalExpression?: unknown;
+  idiomaticExpression?: unknown;
+  simpleExpression?: unknown;
+  variants?: Partial<Record<ExpressionVariantKey, unknown>>;
 };
 
 type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
@@ -2982,6 +2993,37 @@ function createFallbackExpressionVariants(standardEnglish: string) {
   }));
 }
 
+function createExpressionVariantsFromMap(
+  variants: Record<ExpressionVariantKey, string>
+) {
+  return expressionVariantLabels.map(({ key, label }) => ({
+    key,
+    label,
+    text: variants[key],
+  }));
+}
+
+function normalizeApiExpressionVariants(
+  data: ExpressionVariantApiResponse | undefined,
+  fallbackSource: string
+) {
+  const normalizedVariants = normalizeExpressionVariantApiPayload(
+    data,
+    fallbackSource
+  );
+
+  return isExpressionVariantMapDistinctEnough(normalizedVariants)
+    ? normalizedVariants
+    : createFallbackExpressionVariantMap(fallbackSource);
+}
+
+function logExpressionVariantResult(
+  label: string,
+  variants: Record<ExpressionVariantKey, string>
+) {
+  console.log(label, toExpressionVariantApiFields(variants));
+}
+
 function normalizeSpeechRate(rate: number) {
   return Math.min(Math.max(rate, 0.5), 1.15);
 }
@@ -3448,6 +3490,12 @@ function SpeakEnglishClient() {
     .map((text) => text.trim())
     .filter(Boolean)
     .join("\u0001");
+  const expressionVariantRenderLogKey = [
+    expressionVariantMapForResultDisplay.standard,
+    expressionVariantMapForResultDisplay.natural,
+    expressionVariantMapForResultDisplay.idiomatic,
+    expressionVariantMapForResultDisplay.simple,
+  ].join("\u0001");
   const guidedResultSuggestion = guidedFollowupSuggestion.trim();
   const isGuidedFollowupPending =
     isAiGuidedMode &&
@@ -3743,6 +3791,17 @@ function SpeakEnglishClient() {
 
     saveSpeakFlowVoiceId(selectedVoiceId);
   }, [selectedVoiceId, voicePreferenceLoaded]);
+
+  useEffect(() => {
+    if (!hasEnglishAttempt) return;
+
+    const [standard, natural, idiomatic, simple] =
+      expressionVariantRenderLogKey.split("\u0001");
+    logExpressionVariantResult(
+      "AI expression render result:",
+      { standard, natural, idiomatic, simple }
+    );
+  }, [expressionVariantRenderLogKey, hasEnglishAttempt]);
 
   useEffect(() => {
     const textsToPreload = referenceResultPreloadKey
@@ -6125,13 +6184,11 @@ function SpeakEnglishClient() {
             standardEnglish: authoritativeEnglish,
           }),
         });
-        const data = (await response.json()) as {
-          variants?: Partial<Record<ExpressionVariantKey, string>>;
-        };
+        const data = (await response.json()) as ExpressionVariantApiResponse;
 
         if (cancelled) return;
 
-        if (!response.ok || !data.variants) {
+        if (!response.ok) {
           setExpressionVariants(fallbackVariants);
           setStandardEnglish(
             fallbackVariants[0]?.text || authoritativeEnglish || learnerEnglish
@@ -6139,15 +6196,12 @@ function SpeakEnglishClient() {
           return;
         }
 
-        const normalizedVariants = normalizeExpressionVariantMap(
-          data.variants,
+        const normalizedVariants = normalizeApiExpressionVariants(
+          data,
           fallbackExpressionSource || authoritativeEnglish || learnerEnglish
         );
-        const nextVariants = expressionVariantLabels.map(({ key, label }) => ({
-          key,
-          label,
-          text: normalizedVariants[key],
-        }));
+        logExpressionVariantResult("AI expression result:", normalizedVariants);
+        const nextVariants = createExpressionVariantsFromMap(normalizedVariants);
 
         setExpressionVariants(nextVariants);
         setStandardEnglish(

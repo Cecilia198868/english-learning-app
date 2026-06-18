@@ -49,6 +49,13 @@ import {
   type HighlightedExpression,
 } from "@/lib/expressionHighlights";
 import {
+  createFallbackExpressionVariantMap,
+  isExpressionVariantMapDistinctEnough,
+  normalizeExpressionVariantApiPayload,
+  toExpressionVariantApiFields,
+  type ExpressionVariantKey,
+} from "@/lib/expressionVariantFallbacks";
+import {
   FREE_PRACTICE_DAILY_LIMIT,
   fetchFreePracticeUsage,
   getFreePracticeUsage,
@@ -378,12 +385,18 @@ type AudioDBRecord = {
   file?: Blob;
 };
 
-type ExpressionVariantKey = "standard" | "idiomatic" | "simple" | "natural";
-
 type ExpressionVariant = {
   key: ExpressionVariantKey;
   label: string;
   text: string;
+};
+
+type ExpressionVariantApiResponse = {
+  recommendedExpression?: unknown;
+  naturalExpression?: unknown;
+  idiomaticExpression?: unknown;
+  simpleExpression?: unknown;
+  variants?: Partial<Record<ExpressionVariantKey, unknown>>;
 };
 
 function getDefaultLessonsData(): LocalLessonData {
@@ -535,11 +548,44 @@ function normalizeSpeechRate(rate: number) {
 const SLOW_READ_RATE = 0.5;
 
 function createFallbackExpressionVariants(standardEnglish: string) {
+  const fallbackMap = createFallbackExpressionVariantMap(standardEnglish);
+
   return expressionVariantLabels.map(({ key, label }) => ({
     key,
     label,
-    text: standardEnglish || "This sentence is still being prepared.",
+    text: fallbackMap[key],
   }));
+}
+
+function createExpressionVariantsFromMap(
+  variants: Record<ExpressionVariantKey, string>
+) {
+  return expressionVariantLabels.map(({ key, label }) => ({
+    key,
+    label,
+    text: variants[key],
+  }));
+}
+
+function normalizeApiExpressionVariants(
+  data: ExpressionVariantApiResponse | undefined,
+  fallbackSource: string
+) {
+  const normalizedVariants = normalizeExpressionVariantApiPayload(
+    data,
+    fallbackSource
+  );
+
+  return isExpressionVariantMapDistinctEnough(normalizedVariants)
+    ? normalizedVariants
+    : createFallbackExpressionVariantMap(fallbackSource);
+}
+
+function logExpressionVariantResult(
+  label: string,
+  variants: Record<ExpressionVariantKey, string>
+) {
+  console.log(label, toExpressionVariantApiFields(variants));
 }
 
 function ArrowLeftIcon() {
@@ -1792,23 +1838,16 @@ export default function StudyPage() {
             standardEnglish: currentPair.english,
           }),
         });
-        const data = (await response.json()) as {
-          variants?: Partial<Record<ExpressionVariantKey, string>>;
-        };
+        const data = (await response.json()) as ExpressionVariantApiResponse;
 
-        if (!response.ok || !data.variants || cancelled) return;
+        if (!response.ok || cancelled) return;
 
-        const nextVariants = expressionVariantLabels.map(({ key, label }) => ({
-          key,
-          label,
-          text:
-            typeof data.variants?.[key] === "string" &&
-            data.variants[key]?.trim()
-              ? data.variants[key]!.trim()
-              : fallbackVariants.find((variant) => variant.key === key)?.text ||
-                currentPair.english ||
-                "",
-        }));
+        const normalizedVariants = normalizeApiExpressionVariants(
+          data,
+          currentPair.english || currentPair.chinese
+        );
+        logExpressionVariantResult("AI expression result:", normalizedVariants);
+        const nextVariants = createExpressionVariantsFromMap(normalizedVariants);
 
         setExpressionVariants(nextVariants);
       } catch {
@@ -2441,6 +2480,24 @@ export default function StudyPage() {
     expressionVariantsForDisplay[
       Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)
     ] || expressionVariantsForDisplay[0];
+  const classicExpressionVariantRenderLogKey = expressionVariantLabels
+    .map(
+      ({ key }) =>
+        expressionVariantsForDisplay.find((variant) => variant.key === key)?.text ||
+        ""
+    )
+    .join("\u0001");
+
+  useEffect(() => {
+    if (!showExpressionFeedback) return;
+
+    const [standard, idiomatic, simple, natural] =
+      classicExpressionVariantRenderLogKey.split("\u0001");
+    logExpressionVariantResult(
+      "AI expression render result:",
+      { standard, natural, idiomatic, simple }
+    );
+  }, [classicExpressionVariantRenderLogKey, showExpressionFeedback]);
 
   useEffect(() => {
     const sentence = selectedExpression.text?.trim();
