@@ -1,3 +1,5 @@
+import { normalizeExpressionVariantMap } from "@/lib/expressionVariantFallbacks";
+
 export type SentencePatternLevelId = "basic" | "intermediate" | "advanced";
 
 export type SentencePatternTone = "green" | "purple" | "orange";
@@ -1441,6 +1443,30 @@ function createIdiomaticPracticeVariant(targetEnglish: string, naturalEnglish: s
   return naturalEnglish || text;
 }
 
+function normalizeSentencePatternPracticeVariants(
+  practice: SentencePatternPractice
+): SentencePatternPractice {
+  const fallbackSource = practice.recommended || practice.targetEnglish;
+  const normalized = normalizeExpressionVariantMap(
+    {
+      idiomatic: practice.idiomatic,
+      natural: practice.natural,
+      simple: practice.simple,
+      standard: practice.recommended,
+    },
+    fallbackSource
+  );
+
+  return {
+    ...practice,
+    idiomatic: normalized.idiomatic,
+    natural: normalized.natural,
+    recommended: normalized.standard,
+    simple: normalized.simple,
+    targetEnglish: normalized.standard || practice.targetEnglish,
+  };
+}
+
 function createPracticeFromDraft(
   draft: BasicPracticeDraft,
   id: number
@@ -1450,7 +1476,7 @@ function createPracticeFromDraft(
   const natural = createNaturalPracticeVariant(recommended);
   const idiomatic = createIdiomaticPracticeVariant(recommended, natural);
 
-  return {
+  return normalizeSentencePatternPracticeVariants({
     chinese: draft.chinese,
     id,
     idiomatic,
@@ -1458,7 +1484,7 @@ function createPracticeFromDraft(
     recommended,
     simple,
     targetEnglish: recommended,
-  };
+  });
 }
 
 function renderBasicPracticeDraft(
@@ -1712,7 +1738,7 @@ const basicSectionsWithPracticeCourses: SentencePatternSection[] = basicSections
     ...pattern,
     practices:
       pattern.practices?.length === basicPracticeTopics.length
-        ? pattern.practices
+        ? pattern.practices.map(normalizeSentencePatternPracticeVariants)
         : createBasicPracticeCourse(pattern.id),
   })),
 }));
@@ -2103,7 +2129,7 @@ const intermediateSectionsWithPracticeCourses: SentencePatternSection[] = interm
     ...pattern,
     practices:
       pattern.practices?.length === basicPracticeTopics.length
-        ? pattern.practices
+        ? pattern.practices.map(normalizeSentencePatternPracticeVariants)
         : createIntermediatePracticeCourse(pattern.id),
   })),
 }));
@@ -2490,7 +2516,7 @@ const advancedSectionsWithPracticeCourses: SentencePatternSection[] = advancedSe
     ...pattern,
     practices:
       pattern.practices?.length === basicPracticeTopics.length
-        ? pattern.practices
+        ? pattern.practices.map(normalizeSentencePatternPracticeVariants)
         : createAdvancedPracticeCourse(pattern.id),
   })),
 }));
