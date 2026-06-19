@@ -3,14 +3,17 @@ import { NextResponse } from "next/server";
 import {
   createFallbackExpressionVariantMap,
   isExpressionVariantMapDistinctEnough,
+  isPlaceholderExpression,
   normalizeExpressionVariantApiPayload,
   toExpressionVariantApiFields,
   type ExpressionVariantMap,
 } from "@/lib/expressionVariantFallbacks";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = process.env.OPENAI_API_KEY
+  ? new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    })
+  : null;
 
 type VariantResponse = {
   standard?: string;
@@ -120,7 +123,10 @@ export async function POST(req: Request) {
 
     const chineseText = cleanText(chinese);
     const learnerTranscript = cleanText(userEnglish);
-    const authoritativeEnglish = cleanText(standardEnglish);
+    const rawAuthoritativeEnglish = cleanText(standardEnglish);
+    const authoritativeEnglish = isPlaceholderExpression(rawAuthoritativeEnglish)
+      ? ""
+      : rawAuthoritativeEnglish;
     fallbackSource =
       authoritativeEnglish || chineseText || learnerTranscript;
 
@@ -128,7 +134,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "NO_CONTEXT" }, { status: 400 });
     }
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!openai) {
       return createExpressionVariantResponse(
         "fallback",
         createFallbackExpressionVariantMap(fallbackSource)

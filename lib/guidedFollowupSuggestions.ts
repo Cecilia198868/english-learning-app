@@ -97,6 +97,20 @@ function getContextText(input: GuidedFollowupInput) {
 
 function getCandidateSuggestions(contextText: string) {
   if (
+    /(\u6d47\u6c34|\u6d47\u82b1|\u9662\u5b50|\u82b1\u56ed|\u8349\u576a|yard|garden|lawn|watering|watered|water the)/i.test(
+      contextText
+    )
+  ) {
+    return [
+      "\u82b1\u8349\u73b0\u5728\u770b\u8d77\u6765\u7cbe\u795e\u591a\u4e86\u3002",
+      "\u9662\u5b50\u91cc\u7684\u571f\u8fd8\u6709\u70b9\u5e72\u3002",
+      "\u6c34\u7ba1\u521a\u624d\u5dee\u70b9\u6253\u7ed3\u4e86\u3002",
+      "\u7b49\u4f1a\u513f\u8981\u4e0d\u8981\u518d\u4fee\u4e00\u4e0b\u8349\uff1f",
+      "\u5916\u9762\u73b0\u5728\u51c9\u5feb\u591a\u4e86\u3002",
+    ];
+  }
+
+  if (
     /天气|冷|降温|外套|衣服|风|下雨|下雪|太阳|热|晚了|天黑|weather|cold|coat|clothes|wind|rain|snow|sunny|hot|late/i.test(
       contextText
     )

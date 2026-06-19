@@ -22,6 +22,10 @@ const placeholderExpressions = new Set([
   "Preparing a better expression...",
   "This sentence is still being prepared.",
   "I'm still working on this sentence.",
+  "I want to say this more clearly.",
+  "I'd like to say this more clearly.",
+  "I really want to say this more clearly.",
+  "Say this better.",
 ]);
 
 const FINAL_PUNCTUATION_PATTERN = /[.!?\u3002\uff01\uff1f]+$/;
@@ -241,6 +245,9 @@ function uniqueCandidates(values: string[]) {
 function isWeakGeneratedVariant(value: unknown) {
   const text = cleanText(value);
   return (
+    /^(?:I(?:'d| would)? like to|I really want to|I want to|Say)\s+(?:say this|this)\s+(?:more clearly|better)\.?$/i.test(
+      text
+    ) ||
     /^honestly,\s*in other words,/i.test(text) ||
     /^in other words,/i.test(text) ||
     /^honestly,\s*(?:this|that|the|a|an|it|there)\b/i.test(text)
@@ -427,6 +434,10 @@ function normalizeCommonLearnerEnglish(value: string) {
     return "This TV show is really good.";
   }
 
+  if (isWateringYardContext(value)) {
+    return "I was watering the yard earlier.";
+  }
+
   if (isFragrantRoseContext(value)) {
     return `${getRoseSubject(value)} smells really good.`;
   }
@@ -572,6 +583,19 @@ function isGoodTvShowContext(value: string) {
   );
 }
 
+function isWateringYardContext(value: string) {
+  const text = cleanText(value);
+
+  return (
+    /(\u6d47\u6c34|\u6d47\u82b1|\u9662\u5b50|\u82b1\u56ed|\u8349\u576a|yard|garden|lawn|water(?:ed|ing)?)/i.test(
+      text
+    ) &&
+    /(\u521a\u624d|\u521a\u521a|\u5728|\u9662\u5b50|\u82b1\u56ed|\u8349\u576a|just now|earlier|outside|yard|garden|lawn|water(?:ed|ing)?)/i.test(
+      text
+    )
+  );
+}
+
 function isPinkRoseContext(value: string) {
   return /粉红|粉色|pink/i.test(cleanText(value));
 }
@@ -607,6 +631,15 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
       natural: "I'm really enjoying this show.",
       idiomatic: "This show is so good.",
       simple: "Great show.",
+    };
+  }
+
+  if (isWateringYardContext(sourceText) || isWateringYardContext(standard)) {
+    return {
+      standard: "I was watering the yard earlier.",
+      natural: "I watered the yard a little while ago.",
+      idiomatic: "I gave the yard some water earlier.",
+      simple: "Watering the yard.",
     };
   }
 
@@ -1531,7 +1564,7 @@ function enforceDistinctVariantMap(
 
 export function isPlaceholderExpression(value: unknown) {
   const text = cleanText(value);
-  return !text || placeholderExpressions.has(text);
+  return !text || placeholderExpressions.has(text) || isWeakGeneratedVariant(text);
 }
 
 export function isExpressionVariantMapDistinctEnough(

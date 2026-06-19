@@ -102,7 +102,11 @@ function isPlaceholderExpression(text: string | undefined) {
     !normalized ||
     normalized === "Preparing a better expression." ||
     normalized === "Preparing a better expression..." ||
-    normalized === "This sentence is still being prepared."
+    normalized === "This sentence is still being prepared." ||
+    normalized === "I want to say this more clearly." ||
+    normalized === "I'd like to say this more clearly." ||
+    normalized === "I really want to say this more clearly." ||
+    normalized === "Say this better."
   );
 }
 

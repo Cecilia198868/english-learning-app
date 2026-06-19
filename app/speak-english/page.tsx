@@ -49,6 +49,7 @@ import {
 import {
   createFallbackExpressionVariantMap,
   isExpressionVariantMapDistinctEnough,
+  isPlaceholderExpression,
   normalizeExpressionVariantApiPayload,
   toExpressionVariantApiFields,
   type ExpressionVariantKey,
@@ -2992,6 +2993,11 @@ function createFallbackExpressionVariants(standardEnglish: string) {
   }));
 }
 
+function getUsableExpressionSource(value: string) {
+  const text = value.trim();
+  return text && !isPlaceholderExpression(text) ? text : "";
+}
+
 function createExpressionVariantsFromMap(
   variants: Record<ExpressionVariantKey, string>
 ) {
@@ -3474,10 +3480,16 @@ function SpeakEnglishClient() {
     !showListeningPrompt &&
     !showFreeConversationAnswerPrompt;
   const showAiGuidedNudge = hasEnglishAttempt && !isAiGuidedMode;
+  const usableAuthoritativeEnglishForDisplay =
+    getUsableExpressionSource(authoritativeEnglish);
+  const usableStandardEnglishForDisplay =
+    getUsableExpressionSource(standardEnglish);
   const expressionVariantFallbackSourceForDisplay = isAiGuidedMode
-    ? authoritativeEnglish.trim() || standardEnglish.trim() || nativeSpeech.trim()
-    : authoritativeEnglish.trim() ||
-      standardEnglish.trim() ||
+    ? usableAuthoritativeEnglishForDisplay ||
+      usableStandardEnglishForDisplay ||
+      nativeSpeech.trim()
+    : usableAuthoritativeEnglishForDisplay ||
+      usableStandardEnglishForDisplay ||
       nativeSpeech.trim() ||
       message.trim();
   const rawExpressionVariantsForDisplay = expressionVariants.length
@@ -6166,7 +6178,7 @@ function SpeakEnglishClient() {
         const english =
           typeof data.english === "string" ? data.english.trim() : "";
 
-        if (!cancelled && response.ok && english) {
+        if (!cancelled && response.ok && getUsableExpressionSource(english)) {
           setAuthoritativeEnglish(english);
         }
       } catch {
@@ -6186,10 +6198,12 @@ function SpeakEnglishClient() {
   useEffect(() => {
     const currentChinese = nativeSpeech.trim();
     const learnerEnglish = message.trim();
+    const usableAuthoritativeEnglish =
+      getUsableExpressionSource(authoritativeEnglish);
     const hasRequiredReferenceChinese =
       isNativeSpeechConfirmed && Boolean(currentChinese);
     const fallbackExpressionSource =
-      authoritativeEnglish.trim() ||
+      usableAuthoritativeEnglish ||
       currentChinese ||
       learnerEnglish;
 
@@ -6207,7 +6221,7 @@ function SpeakEnglishClient() {
       ? createFallbackExpressionVariants(fallbackExpressionSource)
       : [];
     setExpressionVariants(
-      !authoritativeEnglish.trim()
+      !usableAuthoritativeEnglish
         ? createPendingExpressionVariants()
         : fallbackVariants
     );
@@ -6225,7 +6239,7 @@ function SpeakEnglishClient() {
           body: JSON.stringify({
             chinese: currentChinese,
             userEnglish: learnerEnglish,
-            standardEnglish: authoritativeEnglish,
+            standardEnglish: usableAuthoritativeEnglish,
           }),
         });
         const data = (await response.json()) as ExpressionVariantApiResponse;
@@ -6235,7 +6249,7 @@ function SpeakEnglishClient() {
         if (!response.ok) {
           setExpressionVariants(fallbackVariants);
           setStandardEnglish(
-            fallbackVariants[0]?.text || authoritativeEnglish || learnerEnglish
+            fallbackVariants[0]?.text || usableAuthoritativeEnglish || learnerEnglish
           );
           return;
         }
@@ -6249,13 +6263,13 @@ function SpeakEnglishClient() {
 
         setExpressionVariants(nextVariants);
         setStandardEnglish(
-          normalizedVariants.standard || authoritativeEnglish || learnerEnglish
+          normalizedVariants.standard || usableAuthoritativeEnglish || learnerEnglish
         );
       } catch {
         if (!cancelled) {
           setExpressionVariants(fallbackVariants);
           setStandardEnglish(
-            fallbackVariants[0]?.text || authoritativeEnglish || learnerEnglish
+            fallbackVariants[0]?.text || usableAuthoritativeEnglish || learnerEnglish
           );
         }
       } finally {
@@ -6283,7 +6297,8 @@ function SpeakEnglishClient() {
   useEffect(() => {
     const currentChinese = nativeSpeech.trim();
     const recommendedEnglish =
-      standardEnglish.trim() || authoritativeEnglish.trim();
+      getUsableExpressionSource(standardEnglish) ||
+      getUsableExpressionSource(authoritativeEnglish);
     const learnerEnglish = message.trim();
     const hasFollowupContext = isAiGuidedMode
       ? isNativeSpeechConfirmed && Boolean(currentChinese)
