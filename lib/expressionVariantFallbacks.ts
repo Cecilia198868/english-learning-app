@@ -348,6 +348,14 @@ function normalizeCommonLearnerEnglish(value: string) {
     return "Do you want to take photos?";
   }
 
+  if (isGoodTvShowContext(value)) {
+    return "This TV show is really good.";
+  }
+
+  if (isFragrantRoseContext(value)) {
+    return `${getRoseSubject(value)} smells really good.`;
+  }
+
   if (hasCjkText(text) && !hasLatinText(text)) {
     return "I want to say this more clearly.";
   }
@@ -480,6 +488,34 @@ function getWhatFocusParts(value: string) {
   return { focus, intent: "wouldLike" as const };
 }
 
+function isGoodTvShowContext(value: string) {
+  const text = cleanText(value);
+
+  return (
+    /(电视剧|电视|剧集|剧|节目|tv\s*show|show|series)/i.test(text) &&
+    /(好看|有意思|精彩|喜欢|入迷|追|interesting|good|great|enjoy|fun)/i.test(text)
+  );
+}
+
+function isPinkRoseContext(value: string) {
+  return /粉红|粉色|pink/i.test(cleanText(value));
+}
+
+function isFragrantRoseContext(value: string) {
+  const text = cleanText(value);
+
+  return (
+    /(玫瑰|玫瑰花|rose|roses)/i.test(text) &&
+    /(香|闻起来|氣味|气味|smell|smells|fragrant|scent|good|nice|wonderful|amazing)/i.test(
+      text
+    )
+  );
+}
+
+function getRoseSubject(value: string) {
+  return isPinkRoseContext(value) ? "This pink rose" : "This rose";
+}
+
 function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap | null {
   const standard = normalizeOutputSentence(normalizeCommonLearnerEnglish(sourceText));
   const beautifulThing = getBeautifulThingParts(standard);
@@ -487,6 +523,26 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
   const hiking = getHikingParts(standard);
   const parkSubject = getParkRosesSubject(standard);
   const whatFocus = getWhatFocusParts(standard);
+
+  if (isGoodTvShowContext(sourceText) || isGoodTvShowContext(standard)) {
+    return {
+      standard: "This TV show is really good.",
+      natural: "I'm really enjoying this show.",
+      idiomatic: "This show is so good.",
+      simple: "Great show.",
+    };
+  }
+
+  if (isFragrantRoseContext(sourceText) || isFragrantRoseContext(standard)) {
+    const subject = getRoseSubject(`${sourceText} ${standard}`);
+
+    return {
+      standard: `${subject} smells really good.`,
+      natural: "It smells really nice.",
+      idiomatic: `${subject} has such a nice scent.`,
+      simple: "Smells good.",
+    };
+  }
 
   if (isJacketQuestionContext(sourceText) || isJacketQuestionContext(standard)) {
     return {
@@ -924,7 +980,7 @@ function isSimpleClearlyShorter(
 }
 
 function hasIdiomaticSignal(value: string) {
-  return /\b(?:a bit|a few|bundle up|call it a night|could really use|feel like|get(?:ting)? .* done|got (?:in|out)|gorgeous|hit the trail|I'm after|kind of|might want to|perfect|pretty|ready for bed|really|snap|sort of|throw on|wrap(?:ped)? up|you'd better)\b|(?:\bI'd\b|\byou'd\b|\bit's\b)/i.test(
+  return /\b(?:a bit|a few|amazing|bundle up|call it a night|could really use|feel like|get(?:ting)? .* done|got (?:in|out)|gorgeous|has such a|hit the trail|I'm after|kind of|might want to|perfect|pretty|ready for bed|really|scent|snap|sort of|throw on|wonderful|wrap(?:ped)? up|you'd better)\b|(?:\bI'd\b|\byou'd\b|\bit's\b)/i.test(
     value
   );
 }

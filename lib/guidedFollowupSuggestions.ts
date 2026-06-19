@@ -120,6 +120,20 @@ function getCandidateSuggestions(contextText: string) {
     ];
   }
 
+  if (
+    /电视剧|电视|电影|剧集|剧|节目|好看|追剧|第几集|角色|剧情|演员|tv\s*show|show|series|movie|episode|watch|actor|plot/i.test(
+      contextText
+    )
+  ) {
+    return [
+      "你看到第几集了？",
+      "你最喜欢哪个角色？",
+      "剧情后面更精彩。",
+      "这个演员演得真好。",
+      "我也想去看看。",
+    ];
+  }
+
   if (/家|妈妈|爸爸|姐姐|妹妹|哥哥|弟弟|孩子|父母|family|mom|dad|sister|brother|parents|kid/i.test(contextText)) {
     return [
       "家里人现在都好吗？",

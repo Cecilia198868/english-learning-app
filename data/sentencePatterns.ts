@@ -2417,6 +2417,59 @@ function createGerundPhrase(action: string) {
   return [gerund, ...rest].filter(Boolean).join(" ");
 }
 
+function createChineseSocialActivity(detail: string) {
+  if (detail.includes("咖啡")) return `喝${detail}`;
+  if (detail.includes("晚餐")) return `吃${detail}`;
+  if (detail.includes("合照")) return `拍${detail}`;
+  if (detail.includes("视频电话")) return "打视频电话";
+  if (detail.includes("读书会") || detail.includes("电影夜") || detail.includes("游戏夜")) {
+    return `参加${detail}`;
+  }
+  if (detail.includes("午休")) return "午休时见一面";
+  if (detail.includes("计划")) return `安排${detail}`;
+
+  return detail;
+}
+
+function createChineseHobbyActivity(detail: string) {
+  if (detail.includes("吉他曲")) return `练${detail}`;
+  if (detail.includes("一盘棋")) return "下一盘棋";
+  if (detail.includes("花园种子")) return `种${detail}`;
+  if (detail.includes("语言学习软件")) return `用${detail}练习`;
+  if (detail.includes("电影清单")) return `整理${detail}`;
+  if (detail.includes("食谱")) return `试试${detail}`;
+  if (detail.includes("播客")) return `听${detail}`;
+  if (detail.includes("图样") || detail.includes("速写")) return `练${detail}`;
+
+  return `弄${detail}`;
+}
+
+function createChineseSportsActivity(detail: string) {
+  if (detail.endsWith("课")) return `上${detail}`;
+  if (detail.includes("篮球赛")) return "打篮球";
+  if (detail.includes("短跑")) return "去跑一小段";
+  if (detail.includes("骑车")) return "去骑车";
+  if (detail.includes("徒步路线")) return "去徒步";
+  if (detail.includes("健身房训练")) return "去健身房训练";
+  if (detail.includes("网球练习")) return "练网球";
+  if (detail.includes("早晨拉伸")) return "做早晨拉伸";
+
+  return `试试${detail}`;
+}
+
+const CHINESE_TIME_PREFIX_SOURCE =
+  "今天早上|今天傍晚|今天|下班后|晚饭前|这个周末|明天早上|明天一早|出门前|午休时|下课后|睡觉前|周五|下周|今晚|午饭后|上课前|早饭后|周一|下个月|短暂休息时|到家后|开会前|放学后|出发前|回家路上|上班前|通话后|周末期间|有空时";
+
+function createChineseNegativeAction(action: string) {
+  const match = action.match(new RegExp(`^(${CHINESE_TIME_PREFIX_SOURCE})(.+)$`));
+
+  if (match) {
+    return `${match[1]}不${match[2]}`;
+  }
+
+  return `不${action}`;
+}
+
 function createTopicFromScene(scene: PracticeSceneSeed): BasicPracticeTopic {
   const gerund = createGerundPhrase(scene.action);
 
@@ -2434,7 +2487,7 @@ function createTopicFromScene(scene: PracticeSceneSeed): BasicPracticeTopic {
     moreSecond: scene.result,
     noun: scene.noun,
     optionA: scene.noun,
-    optionB: scene.problem,
+    optionB: `not ${gerund}`,
     pastParticiple: `handled ${scene.noun}`,
     pastSimple: `handled ${scene.noun}`,
     problem: scene.problem,
@@ -2457,9 +2510,9 @@ function createTopicFromScene(scene: PracticeSceneSeed): BasicPracticeTopic {
     zhMoreSecond: scene.zhResult,
     zhNoun: scene.zhNoun,
     zhOptionA: scene.zhNoun,
-    zhOptionB: scene.zhProblem,
-    zhPastParticiple: `处理过${scene.zhNoun}`,
-    zhPastSimple: `处理了${scene.zhNoun}`,
+    zhOptionB: createChineseNegativeAction(scene.zhAction),
+    zhPastParticiple: scene.zhAction,
+    zhPastSimple: scene.zhAction,
     zhProblem: scene.zhProblem,
     zhReason: scene.zhReason,
     zhResult: scene.zhResult,
@@ -2495,12 +2548,12 @@ function createMomentScopedScene(
     problem: `${parts.problem} ${moment.noun}`,
     reason: `${parts.reason} ${moment.noun}`,
     result: `${parts.result} ${moment.noun}`,
-    zhAction: `${moment.zhAction}${parts.zhAction}`,
-    zhClause: `${moment.zhAction}${parts.zhClause}`,
-    zhNoun: `${moment.zhAction}的${parts.zhNoun}`,
-    zhProblem: `${moment.zhAction}${parts.zhProblem}`,
-    zhReason: `${moment.zhAction}${parts.zhReason}`,
-    zhResult: `${moment.zhAction}${parts.zhResult}`,
+    zhAction: combineChineseMomentPhrase(moment.zhAction, parts.zhAction),
+    zhClause: combineChineseMomentPhrase(moment.zhAction, parts.zhClause),
+    zhNoun: combineChineseMomentPhrase(moment.zhNoun, parts.zhNoun),
+    zhProblem: combineChineseMomentPhrase(moment.zhAction, parts.zhProblem),
+    zhReason: combineChineseMomentPhrase(moment.zhAction, parts.zhReason),
+    zhResult: combineChineseMomentPhrase(moment.zhAction, parts.zhResult),
   };
 }
 
@@ -2605,7 +2658,8 @@ function createScopedSceneSeed(
         zhReason: `${detail.zh}简单又舒服`,
         zhResult: "晚饭会轻松很多",
       });
-    case "friends":
+    case "friends": {
+      const socialActivity = createChineseSocialActivity(detail.zh);
       return build({
         action: `meet ${person.en} for ${detail.en}`,
         benefit: "helps us catch up",
@@ -2615,15 +2669,16 @@ function createScopedSceneSeed(
         problem: `${person.en} and I have not caught up lately`,
         reason: `${detail.en} gives us time to talk`,
         result: "we can talk properly",
-        zhAction: `和${person.zh}见面安排${detail.zh}`,
+        zhAction: `和${person.zh}一起${socialActivity}`,
         zhBenefit: "让我们好好叙旧",
-        zhClause: `${person.zh}想约${detail.zh}`,
+        zhClause: `${person.zh}想一起${socialActivity}`,
         zhEmotion: "开心",
-        zhNoun: `和${person.zh}的${detail.zh}`,
+        zhNoun: `和${person.zh}一起${socialActivity}`,
         zhProblem: `我和${person.zh}最近没怎么聊`,
         zhReason: `${detail.zh}正好能聊聊天`,
         zhResult: "我们可以好好聊一聊",
       });
+    }
     case "health":
       return build({
         action: `ask ${person.en} about ${detail.en}`,
@@ -2662,25 +2717,27 @@ function createScopedSceneSeed(
         zhReason: `${person.zh}就在附近`,
         zhResult: "这件事会容易很多",
       });
-    case "hobby":
+    case "hobby": {
+      const hobbyActivity = createChineseHobbyActivity(detail.zh);
       return build({
-        action: `practice ${detail.en} with ${person.en}`,
+        action: `work on ${detail.en} with ${person.en}`,
         benefit: "makes practice feel more fun",
-        clause: `${detail.en} takes regular practice`,
+        clause: `${detail.en} would be more fun with ${person.en}`,
         emotion: "relaxed",
-        noun: `${detail.en} practice with ${person.en}`,
-        problem: `I have not practiced ${detail.en} lately`,
+        noun: `${detail.en} with ${person.en}`,
+        problem: `I have not spent time on ${detail.en} lately`,
         reason: `${person.en} can keep me motivated`,
-        result: "practice feels more enjoyable",
-        zhAction: `和${person.zh}一起练${detail.zh}`,
-        zhBenefit: "让练习更有意思",
-        zhClause: `${detail.zh}需要经常练`,
+        result: "the activity feels more enjoyable",
+        zhAction: `和${person.zh}一起${hobbyActivity}`,
+        zhBenefit: "让这件事更有意思",
+        zhClause: `和${person.zh}一起${hobbyActivity}会更有意思`,
         zhEmotion: "放松",
-        zhNoun: `和${person.zh}一起练${detail.zh}`,
-        zhProblem: `我最近没怎么练${detail.zh}`,
+        zhNoun: `和${person.zh}一起${hobbyActivity}`,
+        zhProblem: `我最近没怎么碰${detail.zh}`,
         zhReason: `${person.zh}能让我更有动力`,
-        zhResult: "练习会更有意思",
+        zhResult: "这件事会更有意思",
       });
+    }
     case "holiday":
       return build({
         action: `prepare ${detail.en} for ${person.en}`,
@@ -2771,7 +2828,7 @@ function createScopedSceneSeed(
         zhBenefit: "让一天更有条理",
         zhClause: `${detail.zh}需要一个清楚安排`,
         zhEmotion: "有条理",
-        zhNoun: `${detail.zh}的安排`,
+        zhNoun: `${detail.zh}安排`,
         zhProblem: `${detail.zh}有不少细节`,
         zhReason: `${person.zh}也会参与`,
         zhResult: "计划会更容易执行",
@@ -2814,7 +2871,8 @@ function createScopedSceneSeed(
         zhReason: `${person.zh}可能知道更合适的店`,
         zhResult: "我可以省点钱",
       });
-    case "sports":
+    case "sports": {
+      const sportsActivity = createChineseSportsActivity(detail.zh);
       return build({
         action: `try ${detail.en} with ${person.en}`,
         benefit: "helps me stay active",
@@ -2824,15 +2882,16 @@ function createScopedSceneSeed(
         problem: `I have not exercised much lately`,
         reason: `${person.en} can keep me company`,
         result: "my body feels more awake",
-        zhAction: `和${person.zh}一起试试${detail.zh}`,
+        zhAction: `和${person.zh}一起${sportsActivity}`,
         zhBenefit: "让我保持活力",
         zhClause: `${detail.zh}是不错的运动`,
         zhEmotion: "有活力",
-        zhNoun: `和${person.zh}一起做${detail.zh}`,
+        zhNoun: `和${person.zh}一起${sportsActivity}`,
         zhProblem: "我最近运动不太够",
         zhReason: `${person.zh}可以陪我一起`,
         zhResult: "身体会更清醒",
       });
+    }
     case "tech":
       return build({
         action: `work on ${detail.en} with ${person.en}`,
@@ -2866,8 +2925,8 @@ function createScopedSceneSeed(
         zhBenefit: "帮助我准时到达",
         zhClause: `${detail.zh}可能比想象中久`,
         zhEmotion: "警觉",
-        zhNoun: `${detail.zh}的充足时间`,
-        zhProblem: `${detail.zh}可能会耽误`,
+        zhNoun: `为${detail.zh}预留的时间`,
+        zhProblem: `${detail.zh}可能会耽误行程`,
         zhReason: `${person.zh}要和我一起去`,
         zhResult: "我们能准时到",
       });
@@ -2877,15 +2936,15 @@ function createScopedSceneSeed(
         benefit: "makes the trip easier",
         clause: `${detail.en} needs planning`,
         emotion: "excited",
-        noun: `a plan for ${detail.en}`,
+        noun: `preparation for ${detail.en}`,
         problem: `${detail.en} is not ready yet`,
         reason: `${person.en} is part of the trip`,
         result: "the trip feels easier",
-        zhAction: `和${person.zh}一起计划${detail.zh}`,
+        zhAction: `和${person.zh}一起准备${detail.zh}`,
         zhBenefit: "让旅行更轻松",
         zhClause: `${detail.zh}需要提前安排`,
         zhEmotion: "兴奋",
-        zhNoun: `${detail.zh}的计划`,
+        zhNoun: `${detail.zh}的准备`,
         zhProblem: `${detail.zh}还没准备好`,
         zhReason: `${person.zh}也会一起去`,
         zhResult: "旅行会更轻松",
@@ -2902,10 +2961,10 @@ function createScopedSceneSeed(
         result: "we do not get caught off guard",
         zhAction: `提醒${person.zh}为${detail.zh}提前准备`,
         zhBenefit: "让我们不被天气影响",
-        zhClause: `${detail.zh}可能受天气影响`,
+        zhClause: `天气可能会影响${detail.zh}`,
         zhEmotion: "谨慎",
-        zhNoun: `${detail.zh}的天气准备`,
-        zhProblem: `${detail.zh}可能被天气影响`,
+        zhNoun: `为${detail.zh}提前准备`,
+        zhProblem: `${detail.zh}受天气影响`,
         zhReason: `${person.zh}可能会忘记准备`,
         zhResult: "我们不会措手不及",
       });
@@ -2985,6 +3044,167 @@ function cleanGeneratedSentence(value: string) {
     .replace(/\b([A-Za-z])'\s+([A-Za-z])\b/g, "$1'$2")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+const CHINESE_TIME_MODIFIER_PATTERN = new RegExp(
+  `(${CHINESE_TIME_PREFIX_SOURCE})的`,
+  "g"
+);
+
+function stripChineseSentenceEnding(value: string) {
+  return value.replace(/[。！？!?]+$/g, "").trim();
+}
+
+function cleanChinesePracticeText(value: string) {
+  return value
+    .replace(/\s+/g, "")
+    .replace(/，。/g, "。")
+    .replace(CHINESE_TIME_MODIFIER_PATTERN, "$1")
+    .replace(/的(安排|计划|准备|备份|帮助|价格|时间)的/g, "$1的")
+    .replace(/关于(.+?)的诚实反馈/g, "对$1的真实反馈")
+    .trim();
+}
+
+function withFinalChinesePunctuation(value: string, fallback: string) {
+  const text = improveChinesePromptSyntax(
+    cleanChinesePracticeText(value) || cleanChinesePracticeText(fallback)
+  );
+  if (!text) return text;
+  if (/[。！？?]$/.test(text)) return text.replace(/\?$/g, "？");
+
+  return `${text}。`;
+}
+
+function normalizeChineseNounPhrase(value: string) {
+  return stripChineseSentenceEnding(cleanChinesePracticeText(value))
+    .replace(/(.+)的安排$/g, "$1安排")
+    .replace(/(.+)的计划$/g, "$1计划")
+    .replace(/(.+)的准备$/g, "$1准备")
+    .replace(/(.+)的天气准备$/g, "$1天气准备")
+    .replace(/(.+)的充足时间$/g, "$1充足时间")
+    .replace(/(.+)更好的价格$/g, "$1合适价格")
+    .trim();
+}
+
+function createChineseTaskFromNounPhrase(value: string) {
+  const text = normalizeChineseNounPhrase(value);
+  const helpMatch = text.match(/^(.+)在(.+)上的帮助$/);
+  if (helpMatch) return `能不能请${helpMatch[1]}帮忙处理${helpMatch[2]}`;
+
+  const reservedTimeMatch = text.match(/^为(.+)预留的时间$/);
+  if (reservedTimeMatch) return `${reservedTimeMatch[1]}要预留多少时间`;
+
+  const scopedWeatherMatch = text.match(/^为(.+)做的天气准备$/);
+  if (scopedWeatherMatch) return `${scopedWeatherMatch[1]}遇到天气变化怎么准备`;
+
+  const weatherPreparationMatch = text.match(/^为(.+)提前准备$/);
+  if (weatherPreparationMatch) return `${weatherPreparationMatch[1]}遇到天气变化怎么准备`;
+
+  const arrangementMatch = text.match(/^(.+)安排$/);
+  if (arrangementMatch) return `${arrangementMatch[1]}怎么安排`;
+
+  const planMatch = text.match(/^(.+)计划$/);
+  if (
+    planMatch &&
+    /(周六|周末|旅行|电影|家庭电话|运动时间|学习时间|打扫|晚饭|午饭|预约|行程)/.test(
+      planMatch[1]
+    )
+  ) {
+    return `${planMatch[1]}怎么安排`;
+  }
+
+  const weatherMatch = text.match(/^(.+)天气准备$/);
+  if (weatherMatch) return `${weatherMatch[1]}遇到天气变化怎么准备`;
+
+  const preparationMatch = text.match(/^(.+)准备$/);
+  if (preparationMatch) return `${preparationMatch[1]}要怎么准备`;
+
+  const timeMatch = text.match(/^(.+)充足时间$/);
+  if (timeMatch) return `${timeMatch[1]}要预留多少时间`;
+
+  const priceMatch = text.match(/^(.+)合适价格$/);
+  if (priceMatch) return `${priceMatch[1]}有没有更合适的价格`;
+
+  const backupMatch = text.match(/^(.+)的备份$/);
+  if (backupMatch) return `${backupMatch[1]}怎么备份`;
+
+  return text;
+}
+
+function createChineseLookingForPrompt(zhNoun: string) {
+  const phrase = normalizeChineseNounPhrase(zhNoun);
+  const task = createChineseTaskFromNounPhrase(phrase);
+
+  if (task !== phrase) {
+    return withFinalChinesePunctuation(`我想先确认一下，${task}`, phrase);
+  }
+
+  return withFinalChinesePunctuation(`我正在找${phrase}`, phrase);
+}
+
+function normalizeChinesePracticePrompt(chinese: string, targetEnglish: string) {
+  const cleaned = cleanChinesePracticeText(chinese);
+  const lookingForMatch = cleaned.match(/^我真正想找的是(.+?)[。！？?]?$/);
+  if (lookingForMatch) {
+    return createChineseLookingForPrompt(lookingForMatch[1]);
+  }
+
+  const regularLookingForMatch = cleaned.match(/^我正在找(.+?)[。！？?]?$/);
+  if (regularLookingForMatch) {
+    const phrase = normalizeChineseNounPhrase(regularLookingForMatch[1]);
+    const task = createChineseTaskFromNounPhrase(phrase);
+
+    if (task !== phrase) {
+      return withFinalChinesePunctuation(`我想确认一下，${task}`, cleaned);
+    }
+  }
+
+  const onlyNeedMatch = cleaned.match(/^我需要的只是(.+?)[。！？?]?$/);
+  if (onlyNeedMatch) {
+    const phrase = normalizeChineseNounPhrase(onlyNeedMatch[1]);
+    const task = createChineseTaskFromNounPhrase(phrase);
+
+    if (task !== phrase) {
+      return withFinalChinesePunctuation(`我只需要确认一下，${task}`, cleaned);
+    }
+  }
+
+  const missingMatch = cleaned.match(/^唯一缺少的是(.+?)[。！？?]?$/);
+  if (missingMatch) {
+    const phrase = normalizeChineseNounPhrase(missingMatch[1]);
+    const task = createChineseTaskFromNounPhrase(phrase);
+
+    if (task !== phrase) {
+      return withFinalChinesePunctuation(`现在就差确认一下，${task}`, cleaned);
+    }
+  }
+
+  const text = cleaned
+    .replace(/^我真正想要的是/, "我最想要的是")
+    .replace(/^我真正需要的是/, "我最需要的是");
+
+  return withFinalChinesePunctuation(improveChinesePromptSyntax(text), chinese || targetEnglish);
+}
+
+function combineChineseMomentPhrase(moment: string, phrase: string) {
+  const cleanedMoment = stripChineseSentenceEnding(moment);
+  const cleanedPhrase = normalizeChineseNounPhrase(phrase);
+
+  if (!cleanedMoment || cleanedPhrase.startsWith(cleanedMoment)) {
+    return cleanedPhrase;
+  }
+
+  return `${cleanedMoment}${cleanedPhrase}`;
+}
+
+function improveChinesePromptSyntax(value: string) {
+  const timePrefix = new RegExp(`为什么不(${CHINESE_TIME_PREFIX_SOURCE})(.+?)呢`, "g");
+  const forcedAction = new RegExp(`不得不(${CHINESE_TIME_PREFIX_SOURCE})([^，。！？]+)`, "g");
+
+  return value
+    .replace(timePrefix, "为什么$1不$2呢")
+    .replace(forcedAction, "$1不得不$2")
+    .replace(/由于([^，。！？；]+)和\1，/g, "由于$1，");
 }
 
 function withFinalPunctuation(value: string, fallback: string) {
@@ -3109,6 +3329,10 @@ function normalizeSentencePatternPracticeVariants(
 
   return {
     ...practice,
+    chinese: normalizeChinesePracticePrompt(
+      practice.chinese,
+      normalized.standard || practice.targetEnglish
+    ),
     idiomatic: normalized.idiomatic,
     natural: normalized.natural,
     recommended: normalized.standard,
@@ -3619,7 +3843,7 @@ function renderIntermediatePracticeDraft(
 ): BasicPracticeDraft {
   switch (patternId) {
     case 1:
-      return makeDraft(`我真正想找的是${topic.zhNoun}。`, `What I’m really looking for is ${topic.noun}.`);
+      return makeDraft(createChineseLookingForPrompt(topic.zhNoun), `What I’m really looking for is ${topic.noun}.`);
     case 2:
       return makeDraft(`如果不太麻烦，你能帮我${topic.zhAction}吗？`, `If it’s not too much trouble, could you ${topic.action}?`);
     case 3:

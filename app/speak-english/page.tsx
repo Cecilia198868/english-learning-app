@@ -3414,8 +3414,11 @@ function SpeakEnglishClient() {
     practiceStage === "english" &&
     (isPrimingEnglishSpeech ||
       (isListening && activeRecognitionStageRef.current === "english"));
+  const hasConfirmedReferenceChinese =
+    isNativeSpeechConfirmed && Boolean(nativeSpeech.trim());
   const showReferenceResult =
     hasEnglishAttempt &&
+    hasConfirmedReferenceChinese &&
     !isFreeConversationMode &&
     !isAiGuidedMode &&
     !showQuickPanel &&
@@ -3454,9 +3457,12 @@ function SpeakEnglishClient() {
     practiceStage === "english" &&
     (isPrimingEnglishSpeech ||
       (isListening && activeRecognitionStageRef.current === "english"));
+  const hasConfirmedGuidedChinese =
+    isNativeSpeechConfirmed && Boolean(nativeSpeech.trim());
   const showGuidedReferenceResult =
     isAiGuidedMode &&
     hasEnglishAttempt &&
+    hasConfirmedGuidedChinese &&
     !isFreeConversationMode &&
     !showQuickPanel &&
     !showAccountMenu;
@@ -3468,11 +3474,12 @@ function SpeakEnglishClient() {
     !showListeningPrompt &&
     !showFreeConversationAnswerPrompt;
   const showAiGuidedNudge = hasEnglishAttempt && !isAiGuidedMode;
-  const expressionVariantFallbackSourceForDisplay =
-    authoritativeEnglish.trim() ||
-    nativeSpeech.trim() ||
-    standardEnglish.trim() ||
-    message.trim();
+  const expressionVariantFallbackSourceForDisplay = isAiGuidedMode
+    ? authoritativeEnglish.trim() || standardEnglish.trim() || nativeSpeech.trim()
+    : authoritativeEnglish.trim() ||
+      standardEnglish.trim() ||
+      nativeSpeech.trim() ||
+      message.trim();
   const rawExpressionVariantsForDisplay = expressionVariants.length
     ? expressionVariants
     : isLoadingExpressionVariants
@@ -6179,13 +6186,18 @@ function SpeakEnglishClient() {
   useEffect(() => {
     const currentChinese = nativeSpeech.trim();
     const learnerEnglish = message.trim();
+    const hasRequiredReferenceChinese =
+      isNativeSpeechConfirmed && Boolean(currentChinese);
     const fallbackExpressionSource =
-      authoritativeEnglish.trim() || currentChinese || learnerEnglish;
+      authoritativeEnglish.trim() ||
+      currentChinese ||
+      learnerEnglish;
 
     if (
       isFreeConversationMode ||
       !hasEnglishAttempt ||
-      (!currentChinese && !learnerEnglish)
+      !hasRequiredReferenceChinese ||
+      (!fallbackExpressionSource && !learnerEnglish)
     ) {
       return;
     }
@@ -6194,7 +6206,11 @@ function SpeakEnglishClient() {
     const fallbackVariants = fallbackExpressionSource
       ? createFallbackExpressionVariants(fallbackExpressionSource)
       : [];
-    setExpressionVariants(fallbackVariants);
+    setExpressionVariants(
+      !authoritativeEnglish.trim()
+        ? createPendingExpressionVariants()
+        : fallbackVariants
+    );
     setSelectedExpressionIndex(0);
     if (fallbackVariants[0]?.text) {
       setStandardEnglish(fallbackVariants[0].text);
@@ -6226,7 +6242,7 @@ function SpeakEnglishClient() {
 
         const normalizedVariants = normalizeApiExpressionVariants(
           data,
-          fallbackExpressionSource || authoritativeEnglish || learnerEnglish
+          fallbackExpressionSource || (isAiGuidedMode ? currentChinese : learnerEnglish)
         );
         logExpressionVariantResult("AI expression result:", normalizedVariants);
         const nextVariants = createExpressionVariantsFromMap(normalizedVariants);
@@ -6258,6 +6274,8 @@ function SpeakEnglishClient() {
     authoritativeEnglish,
     hasEnglishAttempt,
     isFreeConversationMode,
+    isAiGuidedMode,
+    isNativeSpeechConfirmed,
     message,
     nativeSpeech,
   ]);
@@ -6267,7 +6285,9 @@ function SpeakEnglishClient() {
     const recommendedEnglish =
       standardEnglish.trim() || authoritativeEnglish.trim();
     const learnerEnglish = message.trim();
-    const hasFollowupContext = Boolean(currentChinese || learnerEnglish);
+    const hasFollowupContext = isAiGuidedMode
+      ? isNativeSpeechConfirmed && Boolean(currentChinese)
+      : Boolean(currentChinese || learnerEnglish);
     const requestKey = JSON.stringify({
       currentChinese,
       learnerEnglish,
@@ -6369,6 +6389,7 @@ function SpeakEnglishClient() {
     guidedFollowupRefreshKey,
     isAiGuidedMode,
     authoritativeEnglish,
+    isNativeSpeechConfirmed,
     message,
     nativeSpeech,
     standardEnglish,
