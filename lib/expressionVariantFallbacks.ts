@@ -24,19 +24,25 @@ const placeholderExpressions = new Set([
   "I'm still working on this sentence.",
 ]);
 
+const FINAL_PUNCTUATION_PATTERN = /[.!?\u3002\uff01\uff1f]+$/;
+const QUESTION_MARK_PATTERN = /[?\uff1f]$/;
+
 function cleanText(value: unknown) {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
 }
 
 function hasFinalPunctuation(value: string) {
-  return /[.!?。！？]$/.test(value);
+  return FINAL_PUNCTUATION_PATTERN.test(value);
 }
 
 function isQuestionLike(value: string) {
   const text = cleanText(value);
-  const withoutFinalPunctuation = text.replace(/[.!?。！？]+$/, "").trim();
+  const withoutFinalPunctuation = text.replace(FINAL_PUNCTUATION_PATTERN, "").trim();
 
-  if (/[?？]$/.test(text)) return true;
+  if (QUESTION_MARK_PATTERN.test(text)) return true;
+  if (/^have\s+(?:a|an|the|some|fun|safe|great|good|nice|one)\b/i.test(withoutFinalPunctuation)) {
+    return false;
+  }
 
   return /^(?:am|are|can|could|did|do|does|feel like|had|has|have|how about|is|may|might|must|shall|should|want to|was|were|will|would)\b/i.test(
     withoutFinalPunctuation
@@ -46,7 +52,9 @@ function isQuestionLike(value: string) {
 function isQuestionPromptContext(value: string) {
   return (
     isQuestionLike(value) ||
-    /[？?]|要不要|想不想|需不需要|吗|嗎/.test(value)
+    /[?\uff1f]|\u8981\u4e0d\u8981|\u60f3\u4e0d\u60f3|\u9700\u4e0d\u9700\u8981|\u5417|\u5462/.test(
+      value
+    )
   );
 }
 
@@ -56,14 +64,14 @@ function normalizeFinalPunctuation(value: string) {
 
   if (isQuestionLike(text)) {
     return hasFinalPunctuation(text)
-      ? text.replace(/[.!?。！？]+$/, "?")
+      ? text.replace(FINAL_PUNCTUATION_PATTERN, "?")
       : `${text}?`;
   }
 
   return text
-    .replace(/。$/, ".")
-    .replace(/！$/, "!")
-    .replace(/？$/, "?");
+    .replace(/\u3002/g, ".")
+    .replace(/\uff01/g, "!")
+    .replace(/\uff1f/g, "?");
 }
 
 function ensureSentence(value: string) {
@@ -77,7 +85,7 @@ function ensureSentence(value: string) {
 }
 
 function stripFinalPeriod(value: string) {
-  return value.replace(/[.!?。！？]$/, "");
+  return value.replace(FINAL_PUNCTUATION_PATTERN, "");
 }
 
 function normalizeComparableText(value: string) {
@@ -308,6 +316,73 @@ function getWantToQuestionAction(value: string) {
   return match ? cleanText(match[1]) : "";
 }
 
+function getHelpRequestAction(value: string) {
+  const withoutPunctuation = stripFinalPeriod(ensureSentence(value));
+  const match = withoutPunctuation.match(
+    /^(?:can|could|would)\s+you\s+help\s+me\s+(.+)$/i
+  );
+
+  return match ? cleanText(match[1]) : "";
+}
+
+function trimHelpRequestAction(action: string) {
+  const text = cleanText(action)
+    .replace(/\bwith my child\b/gi, "with my kid")
+    .replace(/\bchildren\b/gi, "kids");
+
+  if (/^plan a museum visit with my kid next week$/i.test(text)) {
+    return "plan a museum trip";
+  }
+
+  const withoutDetails = text
+    .replace(/\s+with my (?:kid|son|daughter|kids|family)\b.*$/i, "")
+    .replace(/\s+(?:next|this) (?:week|month|weekend|morning|afternoon|evening)\b.*$/i, "")
+    .replace(/\s+after (?:work|school|class|dinner|lunch|breakfast)\b.*$/i, "")
+    .replace(/\s+before (?:work|school|class|dinner|lunch|breakfast)\b.*$/i, "")
+    .replace(/\s+(?:today|tomorrow|tonight)\b.*$/i, "")
+    .replace(/\ba museum visit\b/i, "a museum trip")
+    .trim();
+  const words = withoutDetails.split(/\s+/).filter(Boolean);
+
+  return words.length > 6 ? words.slice(0, 6).join(" ") : withoutDetails || text;
+}
+
+function createHelpRequestVariantMap(action: string): ExpressionVariantMap {
+  const normalizedAction = cleanText(action)
+    .replace(/\bwith my child\b/gi, "with my kid")
+    .replace(/\bchildren\b/gi, "kids");
+  const gerundAction = gerundizeFirstWord(normalizedAction);
+  const simpleAction = trimHelpRequestAction(normalizedAction);
+
+  if (/^plan a museum visit with my kid next week$/i.test(normalizedAction)) {
+    return {
+      standard: "Can you help me plan a museum visit with my child next week?",
+      natural: "Can you help me plan a trip to the museum with my kid next week?",
+      idiomatic: "Could you help me map out a museum trip with my kid for next week?",
+      simple: "Can you help me plan a museum trip?",
+    };
+  }
+
+  if (/^with\s+/i.test(normalizedAction)) {
+    const topic = normalizedAction.replace(/^with\s+/i, "");
+    const simpleTopic = trimHelpRequestAction(topic).replace(/^(?:my|our|the)\s+/i, "");
+
+    return {
+      standard: `Can you help me with ${topic}?`,
+      natural: `Could you help me out with ${topic}?`,
+      idiomatic: `Could you give me a hand with ${topic}?`,
+      simple: `Help me with ${simpleTopic}?`,
+    };
+  }
+
+  return {
+    standard: `Can you help me ${normalizedAction}?`,
+    natural: `Can you help me with ${gerundAction}?`,
+    idiomatic: `Could you give me a hand with ${gerundAction}?`,
+    simple: `Help me ${simpleAction}?`,
+  };
+}
+
 function gerundizeFirstWord(phrase: string) {
   const [firstWord = "", ...restWords] = cleanText(phrase).split(" ");
   const lowerFirstWord = firstWord.toLowerCase();
@@ -523,6 +598,8 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
   const hiking = getHikingParts(standard);
   const parkSubject = getParkRosesSubject(standard);
   const whatFocus = getWhatFocusParts(standard);
+  const helpRequestAction =
+    getHelpRequestAction(standard) || getHelpRequestAction(sourceText);
 
   if (isGoodTvShowContext(sourceText) || isGoodTvShowContext(standard)) {
     return {
@@ -560,6 +637,10 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
       idiomatic: "Want to snap a few photos?",
       simple: "Take photos?",
     };
+  }
+
+  if (helpRequestAction) {
+    return createHelpRequestVariantMap(helpRequestAction);
   }
 
   if (whatFocus) {
@@ -684,6 +765,292 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
   return null;
 }
 
+function shortenEverydayPhrase(value: string, maxWords = 5) {
+  const cleaned = cleanText(value)
+    .replace(/\b(?:today|tomorrow|tonight|this morning|this afternoon|this evening|this week|this weekend|next week|after work|before work|during the holidays|in retirement)\b/gi, "")
+    .replace(/\s+(?:with|for|at|in|on|during|after|before)\s+.+$/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const words = (cleaned || cleanText(value)).split(/\s+/).filter(Boolean);
+
+  return words.length > maxWords ? words.slice(0, maxWords).join(" ") : words.join(" ");
+}
+
+function createEverydaySimpleVariant(standard: string) {
+  const text = ensureSentence(standard);
+  const withoutPunctuation = stripFinalPeriod(text);
+
+  if (/^How are you\b/i.test(text)) return "How are you?";
+  if (/^Long time no see\./i.test(text)) return "Long time no see.";
+  if (/^Nice to meet\b/i.test(text)) return "Nice meeting you.";
+  if (/^What'?s (.+) like\?$/i.test(text)) {
+    return "What's it like?";
+  }
+  if (/^What do you do\b/i.test(text)) return "What do you do?";
+  if (/^How'?s .+\?$/i.test(text)) return "How's it going?";
+  if (/^What'?s (?:up|going on)\?$/i.test(text)) return "What's new?";
+  if (/^What'?s .+\?$/i.test(text)) return "What's up?";
+  if (/^What do you think of (.+)\?$/i.test(text)) {
+    const [, topic] = text.match(/^What do you think of (.+)\?$/i) || [];
+    return `Thoughts on ${shortenEverydayPhrase(topic, 4)}?`;
+  }
+  if (/^What time do you .+\?$/i.test(text)) return "What time?";
+  if (/^How much is .+\?$/i.test(text)) return "How much?";
+  if (/^Do you have (.+)\?$/i.test(text)) {
+    const [, item] = text.match(/^Do you have (.+)\?$/i) || [];
+    return `Do you have ${shortenEverydayPhrase(item, 4)}?`;
+  }
+  if (/^Can I try .+ on\?$/i.test(text)) return "Can I try it on?";
+  if (/^Where is .+\?$/i.test(text)) return "Where is it?";
+  if (/^Can I pay by .+\?$/i.test(text)) return "Can I pay this way?";
+  if (/^Do you accept .+\?$/i.test(text)) return "Do you accept this?";
+  if (/^Can I have .+\?$/i.test(text)) return "Can I have it?";
+  if (/^Can we have a table .+\?$/i.test(text)) return "Table, please?";
+  if (/^How do I get to .+\?$/i.test(text)) return "How do I get there?";
+  if (/^Where is the nearest .+\?$/i.test(text)) return "Where's the nearest one?";
+  if (/^What time does .+\?$/i.test(text)) return "What time?";
+  if (/^Can you take a photo\b/i.test(text)) return "Can you take a photo?";
+  if (/^How long does it take\b/i.test(text)) return "How long?";
+  if (/^Can you send me .+\?$/i.test(text)) return "Can you send it?";
+  if (/^Can you help me\b/i.test(text)) {
+    const helpAction = getHelpRequestAction(text);
+    return helpAction ? `Help me ${trimHelpRequestAction(helpAction)}?` : "Can you help me?";
+  }
+  if (/^What do you recommend\?$/i.test(text)) return "Any recommendations?";
+  if (/^What'?s your favorite (.+)\?$/i.test(text)) {
+    const [, topic] = text.match(/^What'?s your favorite (.+)\?$/i) || [];
+    return `Favorite ${shortenEverydayPhrase(topic, 3)}?`;
+  }
+
+  const fromMatch = text.match(/^I(?:'m| am) from (.+)\.$/i);
+  if (fromMatch) return `From ${shortenEverydayPhrase(fromMatch[1], 5)}.`;
+
+  const introduceMatch = text.match(/^Let me introduce (.+)\.$/i);
+  if (introduceMatch) {
+    const person = cleanText(introduceMatch[1]);
+    if (/myself/i.test(person)) return "I'm introducing myself.";
+    return `This is ${shortenEverydayPhrase(person, 4)}.`;
+  }
+
+  const thisIsMatch = text.match(/^This is (.+)\.$/i);
+  if (thisIsMatch) return `${capitalizeFirst(shortenEverydayPhrase(thisIsMatch[1], 4))}.`;
+
+  const thinkMatch = text.match(/^I think (.+)\.$/i);
+  if (thinkMatch) return "I think so.";
+
+  const soundsMatch = text.match(/^It sounds (.+)\.$/i);
+  if (soundsMatch) return `Sounds ${shortenEverydayPhrase(soundsMatch[1], 3)}.`;
+
+  const niceGoodMatch = text.match(/^It'?s (nice|good) to (.+)\.$/i);
+  if (niceGoodMatch) {
+    return `${capitalizeFirst(niceGoodMatch[1])} to ${shortenEverydayPhrase(niceGoodMatch[2], 4)}.`;
+  }
+
+  const agreeMatch = text.match(/^I (totally )?agree\b.*\.$/i);
+  if (agreeMatch) return "I agree.";
+
+  const disagreeMatch = text.match(/^I (totally )?disagree\b.*\.$/i);
+  if (disagreeMatch) return "I don't agree.";
+
+  const letsMatch = text.match(/^Let'?s (.+)\.$/i);
+  if (letsMatch) return `${capitalizeFirst(shortenEverydayPhrase(letsMatch[1], 4))}.`;
+
+  const needToMatch = text.match(/^I need to (.+)\.$/i);
+  if (needToMatch) return `I need to ${shortenEverydayPhrase(needToMatch[1], 4)}.`;
+
+  const haveToMatch = text.match(/^I have to (.+)\.$/i);
+  if (haveToMatch) return `I need to ${shortenEverydayPhrase(haveToMatch[1], 4)}.`;
+
+  const stateAfterMatch = text.match(/^I(?:'m| am) ([A-Za-z ]+) after .+\.$/i);
+  if (stateAfterMatch) return `I'm ${cleanText(stateAfterMatch[1])}.`;
+
+  const needNounMatch = text.match(/^I need (?:some |a |an )?(.+)\.$/i);
+  if (needNounMatch) return `I need ${shortenEverydayPhrase(needNounMatch[1], 4)}.`;
+
+  const lookingForMatch = text.match(/^I(?:'m| am) looking for (.+)\.$/i);
+  if (lookingForMatch) return `I need ${shortenEverydayPhrase(lookingForMatch[1], 4)}.`;
+
+  const thankMatch = text.match(/^Thank you so much for (.+)\.$/i);
+  if (thankMatch) return `Thanks for ${shortenEverydayPhrase(thankMatch[1], 4)}.`;
+
+  if (/^It'?s my treat\b/i.test(text)) return "My treat.";
+  if (/^You'?re welcome\.?$/i.test(text)) return "No problem.";
+  if (/^No problem\.?$/i.test(text)) return "You're welcome.";
+  if (/^Bye for now\b/i.test(text)) return "Bye.";
+  if (/^Goodbye\b/i.test(text)) return "Bye.";
+
+  if (withoutPunctuation.split(/\s+/).length > 6) {
+    return ensureSentence(shortenEverydayPhrase(withoutPunctuation, 5));
+  }
+
+  return text;
+}
+
+function createEverydayNaturalVariant(standard: string) {
+  const text = ensureSentence(standard);
+
+  if (/^How are you doing\b/i.test(text)) return text.replace(/^How are you doing/i, "How have you been");
+  if (/^How are you\b/i.test(text)) return text.replace(/^How are you/i, "How are you doing");
+  if (/^Nice to meet\b/i.test(text)) return text.replace(/^Nice to meet/i, "It's nice to meet");
+  if (/^What'?s (.+) like\?$/i.test(text)) {
+    const [, topic] = text.match(/^What'?s (.+) like\?$/i) || [];
+    return `How's ${topic}?`;
+  }
+  if (/^Long time no see\./i.test(text)) return text.replace(/^Long time no see\./i, "It's been a while.");
+  if (/^Let me introduce (.+)\.$/i.test(text)) {
+    const [, person] = text.match(/^Let me introduce (.+)\.$/i) || [];
+    return `I'd like you to meet ${person}.`;
+  }
+  if (/^I(?:'m| am) from (.+)\.$/i.test(text)) return text.replace(/^I am /i, "I'm ").replace(/^I'm from /i, "I come from ");
+  if (/^This is (.+)\.$/i.test(text)) return text.replace(/^This is /i, "Here is ");
+  if (/^What do you do\b/i.test(text)) return text.replace(/^What do you do/i, "What do you usually do");
+  if (/^It'?s (nice|good) to (.+)\.$/i.test(text)) return text.replace(/^It'?s /i, "It's really ");
+  if (/^How'?s (.+)\?$/i.test(text)) return text.replace(/^How'?s/i, "How is");
+  if (/^What'?s (.+)\?$/i.test(text)) return text.replace(/^What'?s/i, "What is");
+  if (/^I think /i.test(text)) return text.replace(/^I think /i, "I feel like ");
+  if (/^It sounds /i.test(text)) return text.replace(/^It sounds /i, "That sounds ");
+  if (/^What do you think of /i.test(text)) return text.replace(/^What do you think of /i, "How do you like ");
+  if (/^I agree with /i.test(text)) return text.replace(/^I agree with /i, "I agree with ");
+  if (/^I disagree with /i.test(text)) return text.replace(/^I disagree with /i, "I don't agree with ");
+  if (/^Let'?s /i.test(text)) {
+    return text.replace(/^Let'?s /i, "Why don't we ").replace(/\.$/, "?");
+  }
+  if (/^How about /i.test(text)) return text.replace(/^How about /i, "What about ");
+  if (/^That'?s /i.test(text)) return text.replace(/^That'?s /i, "That's really ");
+  if (/^Tell me about /i.test(text)) return text.replace(/^Tell me about /i, "Can you tell me about ");
+  if (/^I have to /i.test(text)) return text.replace(/^I have to /i, "I need to ");
+  if (/^What time do you /i.test(text)) return text.replace(/^What time do you /i, "When do you ");
+  if (/^I(?:'m| am) ([A-Za-z ]+) after /i.test(text)) return text.replace(/^I am /i, "I'm ");
+  if (/^Let'?s have /i.test(text)) return text.replace(/^Let'?s have /i, "Let's get ");
+  if (/^I need to /i.test(text)) return text.replace(/^I need to /i, "I have to ");
+  if (/^What'?s for /i.test(text)) return text.replace(/^What'?s for /i, "What are we having for ");
+  if (/^I usually /i.test(text)) return text.replace(/^I usually /i, "I normally ");
+  if (/^How much is /i.test(text)) return text.replace(/^How much is /i, "How much does ");
+  if (/^Do you have /i.test(text)) return text.replace(/^Do you have /i, "Do you carry ");
+  if (/^Can I try /i.test(text)) return text.replace(/^Can I try /i, "Could I try ");
+  if (/^Can I pay by /i.test(text)) return text.replace(/^Can I pay by /i, "Can I use ");
+  if (/^I'?d like to /i.test(text)) return text.replace(/^I would like to /i, "I'd like to ");
+  if (/^I'?m just /i.test(text)) return text.replace(/^I'm just /i, "I'm only ");
+  if (/^Do you accept /i.test(text)) return text.replace(/^Do you accept /i, "Can I use ");
+  if (/^I'?d like /i.test(text)) return text.replace(/^I would like /i, "I'd like ");
+  if (/^Can I have /i.test(text)) return text.replace(/^Can I have /i, "Could I get ");
+  if (/^Check|^Bill/i.test(text)) return "Could we get the bill, please?";
+  if (/^It'?s my treat/i.test(text)) return "I've got this.";
+  if (/^Can we have a table /i.test(text)) return text.replace(/^Can we have /i, "Could we get ");
+  if (/^How do I get to /i.test(text)) return text.replace(/^How do I get to /i, "What's the best way to get to ");
+  if (/^Where is the nearest /i.test(text)) return text.replace(/^Where is /i, "Where's ");
+  if (/^What time does /i.test(text)) return text.replace(/^What time does /i, "When does ");
+  if (/^I need (.+) to /i.test(text)) return text.replace(/^I need /i, "I need a ");
+  if (/^I(?:'m| am) lost\./i.test(text)) return text.replace(/^I am /i, "I'm ");
+  if (/^Can you take a photo/i.test(text)) return text.replace(/^Can you /i, "Could you ");
+  if (/^Safe /i.test(text)) return text.replace(/^Safe /i, "Have a safe ");
+  if (/^How long does it take/i.test(text)) return text.replace(/^How long does it take/i, "How long will it take");
+  if (/^Can you send me /i.test(text)) return text.replace(/^Can you send me /i, "Could you send me ");
+  if (/^I(?:'m| am) working on /i.test(text)) return text.replace(/^I am /i, "I'm ");
+  if (/^I need to take /i.test(text)) return text.replace(/^I need to take /i, "I have to take ");
+  if (/^I(?:'m| am) on a tight /i.test(text)) return text.replace(/^I am /i, "I'm ");
+  if (/^Let'?s schedule /i.test(text)) return text.replace(/^Let'?s schedule /i, "Let's set up ");
+  if (/^I don'?t feel /i.test(text)) return text.replace(/^I don'?t feel /i, "I'm not feeling ");
+  if (/^I have a /i.test(text)) return text.replace(/^I have a /i, "I've got a ");
+  if (/^You look /i.test(text)) return text.replace(/^You look /i, "You seem ");
+  if (/^Take care of /i.test(text)) return text.replace(/^Take care of /i, "Look after ");
+  if (/^I need some /i.test(text)) return text.replace(/^I need some /i, "I could use some ");
+  if (/^In my opinion, /i.test(text)) return text.replace(/^In my opinion, /i, "I think ");
+  if (/^I totally agree/i.test(text)) return text.replace(/^I totally agree/i, "I completely agree");
+  if (/^I(?:'m| am) not sure about /i.test(text)) return text.replace(/^I am /i, "I'm ");
+  if (/^I prefer /i.test(text)) return text.replace(/^I prefer /i, "I'd rather have ");
+  if (/^It'?s not my cup of tea/i.test(text)) return "It's not really my thing.";
+  if (/^Let me think about it/i.test(text)) return "Let me think it over.";
+  if (/^Sounds /i.test(text)) return text.replace(/^Sounds /i, "That sounds ");
+  if (/^I love /i.test(text)) return text.replace(/^I love /i, "I really like ");
+  if (/^I hate /i.test(text)) return text.replace(/^I hate /i, "I really don't like ");
+  if (/^Thank you so much for /i.test(text)) return text.replace(/^Thank you so much for /i, "Thanks so much for ");
+  if (/^I really appreciate /i.test(text)) return text.replace(/^I really appreciate /i, "I really value ");
+  if (/^See you /i.test(text)) return text.replace(/^See you /i, "I'll see you ");
+  if (/^Have a /i.test(text)) return text.replace(/^Have a /i, "Hope you have a ");
+  if (/^It was great /i.test(text)) return text.replace(/^It was great /i, "It was really nice ");
+  if (/^I'?ll /i.test(text)) return text.replace(/^I will /i, "I'll ");
+  if (/^Let'?s keep in touch/i.test(text)) return "Let's stay in touch.";
+  if (/^Bye for now/i.test(text)) return "Talk to you later.";
+
+  return text;
+}
+
+function createEverydayIdiomaticVariant(standard: string) {
+  const text = ensureSentence(standard);
+
+  if (/^How are you\b/i.test(text)) return "How's everything going?";
+  if (/^Nice to meet\b/i.test(text)) return text.replace(/^Nice to meet/i, "Great to meet");
+  if (/^What'?s (.+) like\?$/i.test(text)) {
+    const [, topic] = text.match(/^What'?s (.+) like\?$/i) || [];
+    return `What's ${topic} really like?`;
+  }
+  if (/^Long time no see\./i.test(text)) return "It's been ages. How have you been?";
+  if (/^Let me introduce (.+)\.$/i.test(text)) {
+    const [, person] = text.match(/^Let me introduce (.+)\.$/i) || [];
+    return `Meet ${person}.`;
+  }
+  if (/^I(?:'m| am) from (.+)\.$/i.test(text)) return text.replace(/^I am from /i, "I grew up around ").replace(/^I'm from /i, "I grew up around ");
+  if (/^This is (.+)\.$/i.test(text)) return text.replace(/^This is /i, "Take a look at ");
+  if (/^What do you do\b/i.test(text)) return "What do you do day to day?";
+  if (/^It'?s (nice|good) to (.+)\.$/i.test(text)) return text.replace(/^It'?s (nice|good) to /i, "It's always good to ");
+  if (/^How'?s (.+)\?$/i.test(text)) return "How's everything going?";
+  if (/^What'?s (.+)\?$/i.test(text)) return "What's going on?";
+  if (/^I think /i.test(text)) return text.replace(/^I think /i, "I really think ");
+  if (/^It sounds /i.test(text)) return text.replace(/^It sounds /i, "That sounds pretty ");
+  if (/^What do you think of /i.test(text)) return text.replace(/^What do you think of /i, "How do you feel about ");
+  if (/^I agree with /i.test(text)) return text.replace(/^I agree with /i, "I'm with ");
+  if (/^I disagree with /i.test(text)) return text.replace(/^I disagree with /i, "I'm not with ");
+  if (/^Let'?s /i.test(text)) return text.replace(/^Let'?s /i, "We should ");
+  if (/^How about /i.test(text)) return text.replace(/^How about /i, "What do you say to ");
+  if (/^I(?:'m| am) .+ about /i.test(text)) return text.replace(/^I am /i, "I'm pretty ").replace(/^I'm /i, "I'm pretty ");
+  if (/^That'?s /i.test(text)) return text.replace(/^That'?s /i, "That's pretty ");
+  if (/^Tell me about /i.test(text)) return text.replace(/^Tell me about /i, "Fill me in on ");
+  if (/^I have to /i.test(text)) return text.replace(/^I have to /i, "I've got to ");
+  if (/^Can you help me\b/i.test(text)) {
+    const action = getHelpRequestAction(text);
+    return action ? createHelpRequestVariantMap(action).idiomatic : "Could you give me a hand?";
+  }
+  if (/^What time do you /i.test(text)) return text.replace(/^What time do you /i, "When do you usually ");
+  if (/^I need to /i.test(text)) return text.replace(/^I need to /i, "I've got to ");
+  if (/^I usually /i.test(text)) return text.replace(/^I usually /i, "Most days, I ");
+  if (/^Do you have /i.test(text)) return text.replace(/^Do you have /i, "Do you happen to have ");
+  if (/^Can I try /i.test(text)) return text.replace(/^Can I try /i, "Could I give ");
+  if (/^It'?s .+ Any discount\?$/i.test(text)) return "Any chance you can do a better price?";
+  if (/^I'?ll take /i.test(text)) return text.replace(/^I'?ll take /i, "I'll go with ");
+  if (/^I'?d like to /i.test(text)) return text.replace(/^I'?d like to /i, "I'd like to go ahead and ");
+  if (/^I'?m just /i.test(text)) return text.replace(/^I'?m just /i, "I'm just ");
+  if (/^I'?d like /i.test(text)) return text.replace(/^I'?d like /i, "Can I get ");
+  if (/^Can I have /i.test(text)) return text.replace(/^Can I have /i, "Could I grab ");
+  if (/^Check|^Bill/i.test(text)) return "Could we settle up, please?";
+  if (/^It'?s my treat/i.test(text)) return "This one's on me.";
+  if (/^Can we have a table /i.test(text)) return text.replace(/^Can we have /i, "Could we grab ");
+  if (/^How do I get to /i.test(text)) return text.replace(/^How do I get to /i, "How do I get over to ");
+  if (/^I(?:'m| am) lost\./i.test(text)) return "I'm a bit lost. Could you point me in the right direction?";
+  if (/^Safe /i.test(text)) return text.replace(/^Safe /i, "Have a great ");
+  if (/^I have a /i.test(text)) return text.replace(/^I have a /i, "I've got a ");
+  if (/^You look /i.test(text)) return text.replace(/^You look /i, "You look pretty ");
+  if (/^Take care of /i.test(text)) return text.replace(/^Take care of /i, "Make sure you look after ");
+  if (/^Cheer up/i.test(text)) return "Hang in there.";
+  if (/^Take it easy/i.test(text)) return "Go easy on yourself.";
+  if (/^I need some /i.test(text)) return text.replace(/^I need some /i, "I could really use some ");
+  if (/^It'?s not my cup of tea/i.test(text)) return "It's not really my thing.";
+  if (/^Let me think about it/i.test(text)) return "Let me sleep on it.";
+  if (/^I love /i.test(text)) return text.replace(/^I love /i, "I'm really into ");
+  if (/^I hate /i.test(text)) return text.replace(/^I hate /i, "I can't stand ");
+  if (/^Thank you so much for /i.test(text)) return text.replace(/^Thank you so much for /i, "I really appreciate you ");
+  if (/^You'?re welcome/i.test(text)) return "No worries.";
+  if (/^No problem/i.test(text)) return "No worries.";
+  if (/^See you /i.test(text)) return text.replace(/^See you /i, "Catch you ");
+  if (/^Have a /i.test(text)) return text.replace(/^Have a /i, "Hope you have a great ");
+  if (/^Take care\.?$/i.test(text)) return "Take it easy.";
+  if (/^Let'?s keep in touch/i.test(text)) return "Let's stay in touch.";
+  if (/^Bye for now/i.test(text)) return "Catch you later.";
+
+  if (/^I /i.test(text)) return text.replace(/^I /i, "I really ");
+  return text;
+}
+
 function createSimpleVariant(standard: string) {
   const text = ensureSentence(standard);
   const withoutPeriod = stripFinalPeriod(text);
@@ -693,6 +1060,11 @@ function createSimpleVariant(standard: string) {
   const parkSubject = getParkRosesSubject(text);
   const questionAction = getWantToQuestionAction(text);
   const whatFocus = getWhatFocusParts(text);
+  const everydaySimple = createEverydaySimpleVariant(text);
+
+  if (normalizeComparableText(everydaySimple) !== normalizeComparableText(text)) {
+    return everydaySimple;
+  }
 
   if (questionAction) return `${capitalizeFirst(questionAction)}?`;
 
@@ -759,6 +1131,11 @@ function createNaturalVariant(standard: string) {
   const parkSubject = getParkRosesSubject(baseText);
   const questionAction = getWantToQuestionAction(baseText);
   const whatFocus = getWhatFocusParts(baseText);
+  const everydayNatural = createEverydayNaturalVariant(baseText);
+
+  if (normalizeComparableText(everydayNatural) !== normalizeComparableText(baseText)) {
+    return everydayNatural;
+  }
 
   if (beautifulThing) {
     const subject =
@@ -833,6 +1210,14 @@ function createIdiomaticVariant(standard: string, natural: string) {
   const parkSubject = getParkRosesSubject(text);
   const questionAction = getWantToQuestionAction(text);
   const whatFocus = getWhatFocusParts(text);
+  const everydayIdiomatic = createEverydayIdiomaticVariant(text);
+
+  if (
+    normalizeComparableText(everydayIdiomatic) !== normalizeComparableText(text) &&
+    normalizeComparableText(everydayIdiomatic) !== normalizeComparableText(natural)
+  ) {
+    return everydayIdiomatic;
+  }
 
   if (beautifulThing) {
     const subject =
@@ -980,7 +1365,7 @@ function isSimpleClearlyShorter(
 }
 
 function hasIdiomaticSignal(value: string) {
-  return /\b(?:a bit|a few|amazing|bundle up|call it a night|could really use|feel like|get(?:ting)? .* done|got (?:in|out)|gorgeous|has such a|hit the trail|I'm after|kind of|might want to|perfect|pretty|ready for bed|really|scent|snap|sort of|throw on|wonderful|wrap(?:ped)? up|you'd better)\b|(?:\bI'd\b|\byou'd\b|\bit's\b)/i.test(
+  return /\b(?:a bit|a few|amazing|bundle up|call it a night|could really use|feel like|get(?:ting)? .* done|give me a hand|got (?:in|out)|gorgeous|has such a|hit the trail|I'm after|kind of|map out|might want to|perfect|pretty|ready for bed|really|scent|snap|sort of|throw on|wonderful|wrap(?:ped)? up|you'd better)\b|(?:\bI'd\b|\byou'd\b|\bit's\b)/i.test(
     value
   );
 }

@@ -1,3 +1,4 @@
+import { dailyOpeningSections } from "@/data/dailyOpeningSentencePatterns";
 import { normalizeExpressionVariantMap } from "@/lib/expressionVariantFallbacks";
 
 export type SentencePatternLevelId = "basic" | "intermediate" | "advanced";
@@ -56,351 +57,7 @@ export type SentencePatternLevel = {
   sections: SentencePatternSection[];
 };
 
-const basicPatternOnePractices: SentencePatternPractice[] = [
-  {
-    chinese: "我想要的是和家人一起在家度过一个安静的周末。",
-    id: 1,
-    idiomatic: "What I’d really like is a quiet weekend at home with my family.",
-    natural: "What I want is a peaceful weekend at home with my family.",
-    recommended: "What I want is a quiet weekend at home with my family.",
-    simple: "I want a quiet weekend at home with my family.",
-    targetEnglish: "What I want is a quiet weekend at home with my family.",
-  },
-  {
-    chinese: "我需要的是更多时间在截止日期前完成这个项目。",
-    id: 2,
-    idiomatic: "What I really need is extra time to wrap up this project before the deadline.",
-    natural: "What I need is more time to get this project done before the deadline.",
-    recommended: "What I need is more time to finish this project before the deadline.",
-    simple: "I need more time to finish this project before the deadline.",
-    targetEnglish: "What I need is more time to finish this project before the deadline.",
-  },
-  {
-    chinese: "我想要的是一个真正理解我感受的人。",
-    id: 3,
-    idiomatic: "What I’m looking for is someone who truly gets how I feel.",
-    natural: "What I want is someone who really understands my feelings.",
-    recommended: "What I want is someone who truly understands my feelings.",
-    simple: "I want someone who understands my feelings.",
-    targetEnglish: "What I want is someone who truly understands my feelings.",
-  },
-  {
-    chinese: "我需要的是一辆可靠的车，不会经常出故障。",
-    id: 4,
-    idiomatic: "What I need is a dependable car that won’t keep breaking down.",
-    natural: "What I need is a reliable car that doesn’t break down all the time.",
-    recommended: "What I need is a reliable car that doesn’t break down often.",
-    simple: "I need a reliable car.",
-    targetEnglish: "What I need is a reliable car that doesn’t break down often.",
-  },
-  {
-    chinese: "我想要的是明年夏天去欧洲旅行。",
-    id: 5,
-    idiomatic: "What I’d love is to travel around Europe next summer.",
-    natural: "What I want is to take a trip to Europe next summer.",
-    recommended: "What I want is to travel to Europe next summer.",
-    simple: "I want to travel to Europe next summer.",
-    targetEnglish: "What I want is to travel to Europe next summer.",
-  },
-  {
-    chinese: "我需要的是日常生活中更好的工作与生活平衡。",
-    id: 6,
-    idiomatic: "What I really need is a healthier work-life balance in my everyday routine.",
-    natural: "What I need is better balance between work and life every day.",
-    recommended: "What I need is better work-life balance in my daily routine.",
-    simple: "I need better work-life balance.",
-    targetEnglish: "What I need is better work-life balance in my daily routine.",
-  },
-  {
-    chinese: "我想要的是一套离办公室更近的新公寓。",
-    id: 7,
-    idiomatic: "What I’d like is a new apartment that’s closer to my office.",
-    natural: "What I want is a new place closer to work.",
-    recommended: "What I want is a new apartment closer to my office.",
-    simple: "I want a new apartment near my office.",
-    targetEnglish: "What I want is a new apartment closer to my office.",
-  },
-  {
-    chinese: "我需要的是对我的演讲给出诚实的反馈。",
-    id: 8,
-    idiomatic: "What I need is honest, useful feedback on my presentation.",
-    natural: "What I need is some honest feedback about my presentation.",
-    recommended: "What I need is honest feedback on my presentation.",
-    simple: "I need honest feedback on my presentation.",
-    targetEnglish: "What I need is honest feedback on my presentation.",
-  },
-  {
-    chinese: "我想要的是学习如何做健康餐。",
-    id: 9,
-    idiomatic: "What I’d like is to learn how to make healthy meals.",
-    natural: "What I want is to learn how to cook healthier food.",
-    recommended: "What I want is to learn how to cook healthy meals.",
-    simple: "I want to learn to cook healthy meals.",
-    targetEnglish: "What I want is to learn how to cook healthy meals.",
-  },
-  {
-    chinese: "我需要的是在这忙碌的一周后好好睡一觉。",
-    id: 10,
-    idiomatic: "What I really need is a solid night’s sleep after such a busy week.",
-    natural: "What I need is a good night’s rest after this busy week.",
-    recommended: "What I need is a good night’s sleep after this busy week.",
-    simple: "I need a good night’s sleep.",
-    targetEnglish: "What I need is a good night’s sleep after this busy week.",
-  },
-  {
-    chinese: "我想要的是我的孩子们快乐又健康。",
-    id: 11,
-    idiomatic: "What I want most is for my children to be happy and healthy.",
-    natural: "What I want is for my kids to stay happy and healthy.",
-    recommended: "What I want is for my children to be happy and healthy.",
-    simple: "I want my children to be happy and healthy.",
-    targetEnglish: "What I want is for my children to be happy and healthy.",
-  },
-  {
-    chinese: "我需要的是一个清晰的未来职业规划。",
-    id: 12,
-    idiomatic: "What I need is a clear roadmap for my future career.",
-    natural: "What I need is a clear plan for where my career is going.",
-    recommended: "What I need is a clear plan for my future career.",
-    simple: "I need a clear career plan.",
-    targetEnglish: "What I need is a clear plan for my future career.",
-  },
-  {
-    chinese: "我想要的是和父母多一些高质量相处时间。",
-    id: 13,
-    idiomatic: "What I’d really like is to spend more meaningful time with my parents.",
-    natural: "What I want is to have more quality time with my parents.",
-    recommended: "What I want is to spend more quality time with my parents.",
-    simple: "I want more time with my parents.",
-    targetEnglish: "What I want is to spend more quality time with my parents.",
-  },
-  {
-    chinese: "我需要的是在感到压力时得到一些鼓励。",
-    id: 14,
-    idiomatic: "What I need is a bit of encouragement when stress gets to me.",
-    natural: "What I need is some support when I’m feeling stressed.",
-    recommended: "What I need is some encouragement when I feel stressed.",
-    simple: "I need encouragement when I feel stressed.",
-    targetEnglish: "What I need is some encouragement when I feel stressed.",
-  },
-  {
-    chinese: "我想要的是一个不用匆忙的平静早晨。",
-    id: 15,
-    idiomatic: "What I’d love is a calm morning without having to rush.",
-    natural: "What I want is a peaceful morning where I don’t have to rush.",
-    recommended: "What I want is a peaceful morning without rushing.",
-    simple: "I want a peaceful morning.",
-    targetEnglish: "What I want is a peaceful morning without rushing.",
-  },
-  {
-    chinese: "我需要的是理财建议，帮助我更好地管理储蓄。",
-    id: 16,
-    idiomatic: "What I need is financial advice to help me manage my savings better.",
-    natural: "What I need is some advice on managing my savings better.",
-    recommended: "What I need is financial advice to manage my savings better.",
-    simple: "I need financial advice.",
-    targetEnglish: "What I need is financial advice to manage my savings better.",
-  },
-  {
-    chinese: "我想要的是快速提升我的英语口语能力。",
-    id: 17,
-    idiomatic: "What I really want is to improve my spoken English as quickly as possible.",
-    natural: "What I want is to get better at speaking English quickly.",
-    recommended: "What I want is to improve my English speaking skills quickly.",
-    simple: "I want to improve my English speaking quickly.",
-    targetEnglish: "What I want is to improve my English speaking skills quickly.",
-  },
-  {
-    chinese: "我需要的是远离社交媒体几天，休息一下。",
-    id: 18,
-    idiomatic: "What I need is a few days away from social media.",
-    natural: "What I need is to take a short break from social media.",
-    recommended: "What I need is a break from social media for a few days.",
-    simple: "I need a break from social media.",
-    targetEnglish: "What I need is a break from social media for a few days.",
-  },
-  {
-    chinese: "我想要的是一个支持我梦想的伴侣。",
-    id: 19,
-    idiomatic: "What I want is a partner who truly supports my dreams.",
-    natural: "What I want is someone who supports what I dream of doing.",
-    recommended: "What I want is a partner who supports my dreams.",
-    simple: "I want a supportive partner.",
-    targetEnglish: "What I want is a partner who supports my dreams.",
-  },
-  {
-    chinese: "我需要的是在日常对话中感觉更自信。",
-    id: 20,
-    idiomatic: "What I need is to feel more at ease in everyday conversations.",
-    natural: "What I need is more confidence when I talk to people every day.",
-    recommended: "What I need is to feel more confident in everyday conversations.",
-    simple: "I need more confidence in everyday conversations.",
-    targetEnglish: "What I need is to feel more confident in everyday conversations.",
-  },
-];
-
-const basicSections: SentencePatternSection[] = [
-  {
-    englishTitle: "Needs & Wants",
-    id: "needs-wants",
-    range: "1-15",
-    title: "表达需求与愿望",
-    patterns: [
-      {
-        id: 1,
-        practices: basicPatternOnePractices,
-        text: "What I want/need is + 名词/从句.",
-      },
-      { id: 2, text: "I’d like to + 动词 + 细节." },
-      { id: 3, text: "I have to + 动词 + because..." },
-      { id: 4, text: "Can you help me + 动词?" },
-      { id: 5, text: "I’m looking for + 名词/从句." },
-      { id: 6, text: "It would be great if + 从句." },
-      { id: 7, text: "All I need is + 名词/从句." },
-      { id: 8, text: "I really want + 名词/动名词." },
-      { id: 9, text: "Could you + 动词 for me?" },
-      { id: 10, text: "I expect + 从句." },
-      { id: 11, text: "What I’m trying to say is + 从句." },
-      { id: 12, text: "I hope + 从句." },
-      { id: 13, text: "I wish + 从句（虚拟）." },
-      { id: 14, text: "I’m dying for + 名词." },
-      { id: 15, text: "The most important thing for me is + 从句." },
-    ],
-  },
-  {
-    englishTitle: "Opinions & Thoughts",
-    id: "opinions-thoughts",
-    range: "16-30",
-    title: "表达观点与想法",
-    patterns: [
-      { id: 16, text: "In my opinion, + 从句." },
-      { id: 17, text: "I think / believe + 从句." },
-      { id: 18, text: "From my point of view, + 从句." },
-      { id: 19, text: "It seems to me that + 从句." },
-      { id: 20, text: "I feel like + 从句/动名词." },
-      { id: 21, text: "As far as I know, + 从句." },
-      { id: 22, text: "The reason why + 从句 is that..." },
-      { id: 23, text: "What I mean is + 从句." },
-      { id: 24, text: "I’m not sure if + 从句." },
-      { id: 25, text: "To be honest, + 从句." },
-      { id: 26, text: "Personally, I prefer + A to B." },
-      { id: 27, text: "It depends on + 名词/从句." },
-      { id: 28, text: "I doubt whether + 从句." },
-      { id: 29, text: "In fact, + 从句." },
-      { id: 30, text: "My idea is that + 从句." },
-    ],
-  },
-  {
-    englishTitle: "Emotions & Feelings",
-    id: "emotions-feelings",
-    range: "31-45",
-    title: "情感与感受",
-    patterns: [
-      { id: 31, text: "I’m + 情感 + about + 名词/从句." },
-      { id: 32, text: "I feel + 情感 + when + 从句." },
-      { id: 33, text: "It makes me + 情感 + to + 动词." },
-      { id: 34, text: "I’m worried about + 名词/从句." },
-      { id: 35, text: "I can’t stand + 名词/动名词." },
-      { id: 36, text: "I’m excited / upset that + 从句." },
-      { id: 37, text: "This is + 最高级 + I’ve ever + 过去分词." },
-      { id: 38, text: "I’m sorry to + 动词." },
-      { id: 39, text: "I’m happy for you that + 从句." },
-      { id: 40, text: "It’s hard for me to + 动词." },
-      { id: 41, text: "I’m tired of + 动名词." },
-      { id: 42, text: "I appreciate it when + 从句." },
-      { id: 43, text: "That really + 动词 + me." },
-      { id: 44, text: "I’m fed up with + 名词." },
-      { id: 45, text: "How I feel is + 从句." },
-    ],
-  },
-  {
-    englishTitle: "Past Experiences",
-    id: "past-experiences",
-    range: "46-60",
-    title: "过去经历与回忆",
-    patterns: [
-      { id: 46, text: "I have + 过去分词 + before." },
-      { id: 47, text: "Last time I + 过去式, + 从句." },
-      { id: 48, text: "When I was + 年龄/时间, + 从句." },
-      { id: 49, text: "I remember + 动名词/从句." },
-      { id: 50, text: "It was the first time that + 从句." },
-      { id: 51, text: "I used to + 动词原形." },
-      { id: 52, text: "I’ve just + 过去分词." },
-      { id: 53, text: "What happened was + 从句." },
-      { id: 54, text: "I went through + 名词." },
-      { id: 55, text: "Back then, + 从句." },
-      { id: 56, text: "I’ve never + 过去分词 + before." },
-      { id: 57, text: "After + 动名词, I + 过去式." },
-      { id: 58, text: "That reminds me of + 名词/从句." },
-      { id: 59, text: "I had a hard time + 动名词." },
-      { id: 60, text: "One of the best things I’ve done is + 从句." },
-    ],
-  },
-  {
-    englishTitle: "Plans & Future",
-    id: "plans-future",
-    range: "61-75",
-    title: "计划与未来",
-    patterns: [
-      { id: 61, text: "I’m going to + 动词." },
-      { id: 62, text: "I plan to + 动词 + 细节." },
-      { id: 63, text: "Next time, I will + 动词." },
-      { id: 64, text: "I’m thinking of + 动名词." },
-      { id: 65, text: "We should + 动词 + because..." },
-      { id: 66, text: "If I have time, I will + 动词." },
-      { id: 67, text: "I’m about to + 动词." },
-      { id: 68, text: "Let’s + 动词原形 + together." },
-      { id: 69, text: "I hope to + 动词 + soon." },
-      { id: 70, text: "In the future, I want + 从句." },
-      { id: 71, text: "I’m looking forward to + 动名词." },
-      { id: 72, text: "How about we + 动词?" },
-      { id: 73, text: "I’ll try my best to + 动词." },
-      { id: 74, text: "As soon as + 从句, I will + 动词." },
-      { id: 75, text: "My goal is to + 动词." },
-    ],
-  },
-  {
-    englishTitle: "Problems, Reasons & Advice",
-    id: "problems-reasons-advice",
-    range: "76-90",
-    title: "问题、原因与建议",
-    patterns: [
-      { id: 76, text: "The problem is that + 从句." },
-      { id: 77, text: "Why don’t you + 动词?" },
-      { id: 78, text: "You should + 动词." },
-      { id: 79, text: "Because + 从句, + 结果." },
-      { id: 80, text: "How can I + 动词?" },
-      { id: 81, text: "What if + 从句?" },
-      { id: 82, text: "I suggest that + 从句." },
-      { id: 83, text: "There is something wrong with + 名词." },
-      { id: 84, text: "The main reason is + 从句." },
-      { id: 85, text: "You’d better + 动词." },
-      { id: 86, text: "Is there any way to + 动词?" },
-      { id: 87, text: "I have no idea how + 从句." },
-      { id: 88, text: "Let me explain why + 从句." },
-      { id: 89, text: "It’s important to + 动词." },
-      { id: 90, text: "How do you deal with + 名词?" },
-    ],
-  },
-  {
-    englishTitle: "Comparison, Agreement & Closing",
-    id: "comparison-agreement-closing",
-    range: "91-100",
-    title: "比较、同意与结束",
-    patterns: [
-      { id: 91, text: "It’s better / worse than + 名词/从句." },
-      { id: 92, text: "I totally agree that + 从句." },
-      { id: 93, text: "I don’t think + 从句." },
-      { id: 94, text: "Compared to + 名词, + 从句." },
-      { id: 95, text: "Neither... nor..." },
-      { id: 96, text: "Not only... but also..." },
-      { id: 97, text: "The more + 形容词, the more + 形容词." },
-      { id: 98, text: "It was nice + 动名词 with you." },
-      { id: 99, text: "Let’s keep in touch by + 方式." },
-      { id: 100, text: "Thank you for + 动名词, + 从句." },
-    ],
-  },
-];
+const basicSections: SentencePatternSection[] = dailyOpeningSections;
 
 type BasicPracticeDraft = {
   chinese: string;
@@ -3313,17 +2970,603 @@ function createIdiomaticPracticeVariant(targetEnglish: string, naturalEnglish: s
   return naturalEnglish || text;
 }
 
+function comparablePracticeVariant(value: string) {
+  return cleanGeneratedSentence(value)
+    .replace(/[^a-z0-9]+/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function stripEnglishFinalPunctuation(value: string) {
+  return cleanGeneratedSentence(value).replace(/[.!?]+$/g, "");
+}
+
+function lowerFirstPracticeWord(value: string) {
+  const text = cleanGeneratedSentence(value);
+  return text ? text.charAt(0).toLowerCase() + text.slice(1) : text;
+}
+
+function shortPracticePhrase(value: string, maxWords = 4) {
+  const withoutDetails = stripEnglishFinalPunctuation(value)
+    .replace(/\s+(?:with|for|at|in|on|during|after|before|because)\s+.+$/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const words = (withoutDetails || stripEnglishFinalPunctuation(value))
+    .split(/\s+/)
+    .filter(Boolean);
+
+  return words.length > maxWords ? words.slice(0, maxWords).join(" ") : words.join(" ");
+}
+
+function practiceQuestion(value: string) {
+  const text = stripEnglishFinalPunctuation(value);
+  return text ? `${text}?` : "";
+}
+
+function practiceSentence(value: string) {
+  const text = stripEnglishFinalPunctuation(value);
+  return text ? `${text}.` : "";
+}
+
+function practiceExclamation(value: string) {
+  const text = stripEnglishFinalPunctuation(value);
+  return text ? `${text}!` : "";
+}
+
+function isPluralPracticeSubject(value: string) {
+  const subject = cleanGeneratedSentence(value).toLowerCase();
+
+  return (
+    /\b(?:parents|kids|children|people|friends|shoes|clothes|noodles|vegetables|tickets|keys)\b/.test(
+      subject
+    ) || (subject.endsWith("s") && !/(?:ss|is)$/.test(subject))
+  );
+}
+
+function practicePronounForSubject(subject: string) {
+  const normalized = cleanGeneratedSentence(subject).toLowerCase();
+
+  if (/\b(?:husband|father|dad|brother|son)\b/.test(normalized)) return "He";
+  if (/\b(?:wife|mother|mom|sister|daughter)\b/.test(normalized)) return "She";
+  if (isPluralPracticeSubject(normalized) || /\bfamily\b/.test(normalized)) return "They";
+
+  return "It";
+}
+
+function withPracticeArticle(value: string) {
+  const phrase = cleanGeneratedSentence(value);
+  if (!phrase || /^(?:a|an|the|my|your|our|his|her|their)\b/i.test(phrase)) return phrase;
+
+  return /^[aeiou]/i.test(phrase) ? `an ${phrase}` : `a ${phrase}`;
+}
+
+function isWeakPracticeCandidate(value: string) {
+  const text = cleanGeneratedSentence(value);
+
+  return (
+    /^I really (?:.+ (?:is|are) not my cup|[a-z]+ is|[a-z]+ are|my|the|we'?d|you'?re|cheer up|take care)\b/i.test(text) ||
+    /^That's really about\b/i.test(text) ||
+    /^I'm pretty (?:just|working on|on a tight|looking for)\b/i.test(text) ||
+    /\bgreat (?:nice|good|wonderful)\b/i.test(text) ||
+    /^Have a (?:safe|great) .+\?$/i.test(text)
+  );
+}
+
+function isBillPracticeRequest(value: string) {
+  return /\b(?:bill|check)\b/i.test(value) && /(?:please|bring|get|like|settle|pay)/i.test(value);
+}
+
+function backupNaturalPracticeVariant(standard: string) {
+  const text = withFinalPunctuation(standard, standard);
+
+  if (isBillPracticeRequest(text)) return "Could we get the bill, please?";
+  if (/^How about /i.test(text)) return text.replace(/^How about /i, "What about ");
+  if (/^Can /i.test(text)) return text.replace(/^Can /i, "Could ");
+  if (/^Do you /i.test(text)) return text.replace(/^Do you /i, "Do you happen to ");
+  if (/^Where /i.test(text)) return text.replace(/^Where /i, "Could you tell me where ");
+  if (/^What time /i.test(text)) return text.replace(/^What time /i, "Do you know when ");
+  if (/^What /i.test(text)) return text.replace(/^What /i, "Could you tell me what ");
+  if (/^How /i.test(text)) return text.replace(/^How /i, "Could you tell me how ");
+  if (/^I agree with /i.test(text)) return "I agree with that.";
+  if (/^I disagree with /i.test(text)) return "I don't agree with that.";
+  if (/^I(?:'m| am) ([A-Za-z ]+) about (.+)\.$/i.test(text)) {
+    return text
+      .replace(/^I am /i, "I feel ")
+      .replace(/^I'm /i, "I feel ");
+  }
+  if (/^I(?:'m| am) ([A-Za-z ]+) after (.+)\.$/i.test(text)) {
+    return text
+      .replace(/^I am /i, "I feel ")
+      .replace(/^I'm /i, "I feel ");
+  }
+  if (/^I(?:'m| am) allergic to (.+)\.$/i.test(text)) {
+    const [, item] = text.match(/^I(?:'m| am) allergic to (.+)\.$/i) || [];
+    return practiceSentence(`I have an allergy to ${shortPracticePhrase(item || text, 3)}`);
+  }
+  if (/^(.+) (is|are) the most (.+)\.$/i.test(text)) {
+    const [, subject, be, quality] = text.match(/^(.+) (is|are) the most (.+)\.$/i) || [];
+    return practiceSentence(`${capitalizeFirst(subject || "")} ${be} really ${shortPracticePhrase(quality || "", 3)}`);
+  }
+  if (/^My (.+) (is|are) (.+)\.$/i.test(text)) {
+    const [, subject, be, state] = text.match(/^My (.+) (is|are) (.+)\.$/i) || [];
+    return practiceSentence(`My ${subject} ${be} really ${shortPracticePhrase(state || "", 3)}`);
+  }
+  if (/^The (.+) (is|are) (.+)\.$/i.test(text)) {
+    const [, subject, be, state] = text.match(/^The (.+) (is|are) (.+)\.$/i) || [];
+    const seem = be?.toLowerCase() === "are" || isPluralPracticeSubject(subject) ? "seem" : "seems";
+    return practiceSentence(`The ${subject} ${seem} ${shortPracticePhrase(state || "", 3)}`);
+  }
+  if (/^Good (.+)[.!]$/i.test(text)) {
+    const [, phrase] = text.match(/^Good (.+)[.!]$/i) || [];
+    return practiceSentence(`Nice ${shortPracticePhrase(phrase || text, 2)}`);
+  }
+  if (/^Sounds (.+) to me\.$/i.test(text)) {
+    const [, state] = text.match(/^Sounds (.+) to me\.$/i) || [];
+    return practiceSentence(`That sounds ${shortPracticePhrase(state || text, 3)} to me`);
+  }
+  if (/^I'?ll (.+)\.$/i.test(text)) {
+    const [, action] = text.match(/^I'?ll (.+)\.$/i) || [];
+    return practiceSentence(`I'll make sure to ${shortPracticePhrase(action || text, 5)}`);
+  }
+  if (/^Let'?s /i.test(text)) {
+    return practiceQuestion(text.replace(/^Let'?s /i, "Why don't we "));
+  }
+  if (/^Tell me about /i.test(text)) return text.replace(/^Tell me about /i, "Can you tell me about ");
+  if (/^We'?d like the bill\.$/i.test(text)) return "Could we get the bill, please?";
+  if (/^I(?:'m| am) just (.+)\.$/i.test(text)) {
+    const [, action] = text.match(/^I(?:'m| am) just (.+)\.$/i) || [];
+    return practiceSentence(`I'm only ${shortPracticePhrase(action || text, 4)}`);
+  }
+  if (/^I(?:'m| am) lost\. Can you help me\?$/i.test(text)) return "I'm lost. Could you help me?";
+  if (/^Safe (.+)!$/i.test(text)) {
+    const [, trip] = text.match(/^Safe (.+)!$/i) || [];
+    return practiceExclamation(`Have a safe ${shortPracticePhrase(trip || "trip", 2)}`);
+  }
+  if (/^I(?:'m| am) working on (.+)\.$/i.test(text)) {
+    const [, project] = text.match(/^I(?:'m| am) working on (.+)\.$/i) || [];
+    return practiceSentence(`I'm still working on ${shortPracticePhrase(project || text, 4)}`);
+  }
+  if (/^I(?:'m| am) on a tight (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I(?:'m| am) on a tight (.+)\.$/i) || [];
+    return practiceSentence(`I'm short on ${shortPracticePhrase(thing || "time", 3)}`);
+  }
+  if (/^I(?:'m| am) looking for (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I(?:'m| am) looking for (.+)\.$/i) || [];
+    return practiceSentence(`I'm trying to find ${shortPracticePhrase(thing || text, 5)}`);
+  }
+  if (/^I(?:'m| am) sorry to hear that\.$/i.test(text)) return "I'm really sorry to hear that.";
+  if (/^I(?:'m| am) lost\. Can you help me (.+)\?$/i.test(text)) {
+    const [, action] = text.match(/^I(?:'m| am) lost\. Can you help me (.+)\?$/i) || [];
+    return practiceQuestion(`I'm lost. Could you help me ${shortPracticePhrase(action || "", 6)}`);
+  }
+  if (/^I(?:'m| am) (.+)\.$/i.test(text)) {
+    const [, state] = text.match(/^I(?:'m| am) (.+)\.$/i) || [];
+    return practiceSentence(`I'm feeling ${shortPracticePhrase(state || text, 4)}`);
+  }
+  if (/^Take care of (.+)\.$/i.test(text)) {
+    const [, person] = text.match(/^Take care of (.+)\.$/i) || [];
+    return practiceSentence(`Look after ${shortPracticePhrase(person || text, 3)}`);
+  }
+  if (/^Cheer up(?:, .+)?[.!]$/i.test(text)) return "Try to stay positive. It'll be fine.";
+  if (/^Take it easy (.+)\.$/i.test(text)) {
+    const [, context] = text.match(/^Take it easy (.+)\.$/i) || [];
+    return practiceSentence(`Try to relax ${shortPracticePhrase(context || "", 3)}`);
+  }
+  if (/^Take it easy\.$/i.test(text)) return "Try to relax.";
+  if (/^I(?:'m| am) (.+) for you\.$/i.test(text)) {
+    const [, feeling] = text.match(/^I(?:'m| am) (.+) for you\.$/i) || [];
+    return practiceSentence(`I'm really ${shortPracticePhrase(feeling || text, 3)} for you`);
+  }
+  if (/^You'?re welcome anytime\.$/i.test(text)) return "Anytime.";
+  if (/^No problem\.$/i.test(text)) return "Of course.";
+  if (/^See you (.+)\.$/i.test(text)) {
+    const [, time] = text.match(/^See you (.+)\.$/i) || [];
+    return practiceSentence(`I'll see you ${shortPracticePhrase(time || "soon", 3)}`);
+  }
+  if (/^Take care\.$/i.test(text)) return "Take care of yourself.";
+  if (/^You'?re welcome\b/i.test(text)) return "Of course.";
+  if (/^No problem\b/i.test(text)) return "Of course.";
+  if (/^Have a (.+)\.$/i.test(text)) {
+    const [, wish] = text.match(/^Have a (.+)\.$/i) || [];
+    return practiceSentence(`Hope you have a ${shortPracticePhrase(wish || "great day", 4)}`);
+  }
+  if (/^Take care (.+)\.$/i.test(text)) {
+    const [, context] = text.match(/^Take care (.+)\.$/i) || [];
+    return practiceSentence(`Be careful ${shortPracticePhrase(context || "", 4)}`);
+  }
+  if (/^It was great (.+) with you\.$/i.test(text)) {
+    const [, activity] = text.match(/^It was great (.+) with you\.$/i) || [];
+    return practiceSentence(`It was really nice ${shortPracticePhrase(activity || "", 4)} with you`);
+  }
+  if (/^(?:Goodbye|Bye)\.$/i.test(text)) return "See you later.";
+  if (/^(.+) (is|are) not my cup of tea\.$/i.test(text)) {
+    const [, subject] = text.match(/^(.+) (is|are) not my cup of tea\.$/i) || [];
+    return practiceSentence(`I'm not really into ${lowerFirstPracticeWord(subject || "that")}`);
+  }
+  if (/^No problem at all\.$/i.test(text)) return "Don't worry about it.";
+  if (/^Take care, (.+)\.$/i.test(text)) {
+    const [, person] = text.match(/^Take care, (.+)\.$/i) || [];
+    return practiceSentence(`Take care of yourself, ${shortPracticePhrase(person || "", 3)}`);
+  }
+  if (/^Goodbye, .+\.$/i.test(text)) return "See you soon.";
+  if (/^I(?:'m| am) /i.test(text)) return text.replace(/^I am /i, "I'm ");
+  if (/^I have /i.test(text)) return text.replace(/^I have /i, "I've got ");
+  if (/^I need /i.test(text)) return text.replace(/^I need /i, "I could use ");
+  if (/^I love /i.test(text)) return text.replace(/^I love /i, "I really like ");
+  if (/^I hate /i.test(text)) return text.replace(/^I hate /i, "I really don't like ");
+
+  return text.includes("?")
+    ? practiceQuestion(`Could you tell me ${lowerFirstPracticeWord(stripEnglishFinalPunctuation(text))}`)
+    : practiceSentence(`I really ${lowerFirstPracticeWord(stripEnglishFinalPunctuation(text))}`);
+}
+
+function backupIdiomaticPracticeVariant(standard: string) {
+  const text = withFinalPunctuation(standard, standard);
+
+  if (isBillPracticeRequest(text)) return "Could we settle up, please?";
+  if (/^Can you help me\b/i.test(text)) {
+    return practiceQuestion(text.replace(/^Can you help me\b/i, "Could you give me a hand"));
+  }
+  if (/^How about (.+)\?$/i.test(text)) {
+    return practiceQuestion(text.replace(/^How about /i, "What do you say to "));
+  }
+  if (/^I agree with /i.test(text)) return text.replace(/^I agree with /i, "I'm with ");
+  if (/^I disagree with /i.test(text)) return text.replace(/^I disagree with /i, "I'm not with ");
+  if (/^Let'?s /i.test(text)) return text.replace(/^Let'?s /i, "We should ");
+  if (/^I(?:'m| am) allergic to (.+)\.$/i.test(text)) {
+    const [, item] = text.match(/^I(?:'m| am) allergic to (.+)\.$/i) || [];
+    return practiceSentence(`I can't have ${shortPracticePhrase(item || text, 3)}`);
+  }
+  if (/^I(?:'m| am) just (.+)\.$/i.test(text)) {
+    const [, action] = text.match(/^I(?:'m| am) just (.+)\.$/i) || [];
+    return practiceSentence(`I'm just ${shortPracticePhrase(action || text, 4)} for now`);
+  }
+  if (/^I(?:'m| am) working on (.+)\.$/i.test(text)) {
+    const [, project] = text.match(/^I(?:'m| am) working on (.+)\.$/i) || [];
+    return practiceSentence(`I'm plugging away at ${shortPracticePhrase(project || text, 4)}`);
+  }
+  if (/^I(?:'m| am) on a tight (.+)\.$/i.test(text)) return "I'm pressed for time.";
+  if (/^I(?:'m| am) looking for (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I(?:'m| am) looking for (.+)\.$/i) || [];
+    return practiceSentence(`I'm trying to track down ${shortPracticePhrase(thing || text, 5)}`);
+  }
+  if (/^I(?:'m| am) lost\. Can you help me\?$/i.test(text)) {
+    return "I'm a bit lost. Could you point me in the right direction?";
+  }
+  if (/^I(?:'m| am) sorry to hear that\.$/i.test(text)) return "That's really tough to hear.";
+  if (/^I(?:'m| am) (.+) for you\.$/i.test(text)) {
+    const [, feeling] = text.match(/^I(?:'m| am) (.+) for you\.$/i) || [];
+    return practiceSentence(`I'm so ${shortPracticePhrase(feeling || text, 3)} for you`);
+  }
+  if (/^I(?:'m| am) very (.+)\.$/i.test(text)) {
+    const [, state] = text.match(/^I(?:'m| am) very (.+)\.$/i) || [];
+    return practiceSentence(`I'm really ${shortPracticePhrase(state || text, 4)}`);
+  }
+  if (/^I(?:'m| am) /i.test(text)) return text.replace(/^I am /i, "I'm pretty ").replace(/^I'm /i, "I'm pretty ");
+  if (/^That'?s /i.test(text)) return text.replace(/^That'?s /i, "That's pretty ");
+  if (/^I need /i.test(text)) return text.replace(/^I need /i, "I could really use ");
+  if (/^I have (?:a |an )?(.+?) at (.+)\.$/i.test(text)) {
+    const [, event, time] = text.match(/^I have (?:a |an )?(.+?) at (.+)\.$/i) || [];
+    return practiceSentence(`I've got ${withPracticeArticle(shortPracticePhrase(event || "", 4))} coming up at ${shortPracticePhrase(time || "", 5)}`);
+  }
+  if (/^I have (?:a |an )?(.+)\.$/i.test(text)) {
+    const [, issue] = text.match(/^I have (?:a |an )?(.+)\.$/i) || [];
+    return practiceSentence(`I'm dealing with ${withPracticeArticle(shortPracticePhrase(issue || text, 4))}`);
+  }
+  if (/^(.+) (is|are) the most (.+)\.$/i.test(text)) {
+    const [, subject, be] = text.match(/^(.+) (is|are) the most (.+)\.$/i) || [];
+    return practiceSentence(`${capitalizeFirst(subject || "")} ${be} what matters most`);
+  }
+  if (/^My (.+) (is|are) (.+)\.$/i.test(text)) {
+    const [, subject, be, state] = text.match(/^My (.+) (is|are) (.+)\.$/i) || [];
+    return practiceSentence(`My ${subject} ${be} pretty ${shortPracticePhrase(state || "", 3)}`);
+  }
+  if (/^The (.+) (is|are) (.+)\.$/i.test(text)) {
+    const [, subject, be, state] = text.match(/^The (.+) (is|are) (.+)\.$/i) || [];
+    return practiceSentence(`The ${subject} ${be} pretty ${shortPracticePhrase(state || "", 3)}`);
+  }
+  if (/^Good (.+)[.!]$/i.test(text)) {
+    const [, phrase] = text.match(/^Good (.+)[.!]$/i) || [];
+    return practiceSentence(`Great ${shortPracticePhrase(phrase || text, 2)}`);
+  }
+  if (/^Sounds (.+) to me\.$/i.test(text)) {
+    const [, state] = text.match(/^Sounds (.+) to me\.$/i) || [];
+    return practiceSentence(`Sounds pretty ${shortPracticePhrase(state || text, 2)} to me`);
+  }
+  if (/^I'?ll (.+)\.$/i.test(text)) {
+    const [, action] = text.match(/^I'?ll (.+)\.$/i) || [];
+    return practiceSentence(`I'll be sure to ${shortPracticePhrase(action || text, 5)}`);
+  }
+  if (/^Tell me about /i.test(text)) return text.replace(/^Tell me about /i, "Fill me in on ");
+  if (/^We'?d like the bill\.$/i.test(text)) return "Could we settle up, please?";
+  if (/^Safe (.+)!$/i.test(text)) {
+    const [, trip] = text.match(/^Safe (.+)!$/i) || [];
+    return practiceExclamation(`Have a great ${shortPracticePhrase(trip || "trip", 2)}`);
+  }
+  if (/^Take care of (.+)\.$/i.test(text)) {
+    const [, person] = text.match(/^Take care of (.+)\.$/i) || [];
+    return practiceSentence(`Make sure you look after ${shortPracticePhrase(person || text, 3)}`);
+  }
+  if (/^You'?re welcome anytime\.$/i.test(text)) return "Anytime, really.";
+  if (/^You'?re welcome\b/i.test(text)) return "No worries.";
+  if (/^No problem\b/i.test(text)) return "No worries.";
+  if (/^It'?s not my cup of tea\.$/i.test(text)) return "It's not for me.";
+  if (/^(.+) (is|are) not my cup of tea\.$/i.test(text)) {
+    const [, subject] = text.match(/^(.+) (is|are) not my cup of tea\.$/i) || [];
+    return practiceSentence(`${capitalizeFirst(shortPracticePhrase(subject || "That", 4))} just isn't for me`);
+  }
+  if (/^Have a (.+)\.$/i.test(text)) {
+    const [, wish] = text.match(/^Have a (.+)\.$/i) || [];
+    const simpleWish = shortPracticePhrase(wish || "great day", 4).replace(/^(?:nice|good|great|wonderful)\s+/i, "");
+    return practiceSentence(`Enjoy your ${simpleWish || "day"}`);
+  }
+  if (/^Take care (.+)\.$/i.test(text)) return "Stay safe out there.";
+  if (/^Take care, (.+)\.$/i.test(text)) return "Stay safe out there.";
+  if (/^It was great (.+) with you\.$/i.test(text)) {
+    const [, activity] = text.match(/^It was great (.+) with you\.$/i) || [];
+    return practiceSentence(`I really enjoyed ${shortPracticePhrase(activity || "", 4)} with you`);
+  }
+  if (/^(?:Goodbye|Bye)\.$/i.test(text)) return "Take care.";
+  if (/^Goodbye, .+\.$/i.test(text)) return "Take care.";
+  if (/^See you (.+)\.$/i.test(text)) {
+    const [, time] = text.match(/^See you (.+)\.$/i) || [];
+    return practiceSentence(`Catch you ${shortPracticePhrase(time || "later", 3)}`);
+  }
+  if (/^Take care\.$/i.test(text)) return "Take it easy.";
+  if (/^I love /i.test(text)) return text.replace(/^I love /i, "I'm really into ");
+  if (/^I hate /i.test(text)) return text.replace(/^I hate /i, "I can't stand ");
+  if (/^You'?re welcome/i.test(text) || /^No problem/i.test(text)) return "No worries.";
+
+  return text.includes("?")
+    ? practiceQuestion(`Any chance you could help with ${shortPracticePhrase(text, 4)}`)
+    : practiceSentence(`That's really about ${shortPracticePhrase(text, 4)}`);
+}
+
+function backupSimplePracticeVariant(standard: string) {
+  const text = withFinalPunctuation(standard, standard);
+
+  if (/^How are you\b/i.test(text)) return "How are you?";
+  if (/^Can you help me with (.+)\?$/i.test(text)) {
+    const [, topic] = text.match(/^Can you help me with (.+)\?$/i) || [];
+    return practiceQuestion(`Help me with ${shortPracticePhrase(topic || "", 3)}`);
+  }
+  if (/^Can you help me (.+)\?$/i.test(text)) {
+    const [, action] = text.match(/^Can you help me (.+)\?$/i) || [];
+    return practiceQuestion(`Help me ${shortPracticePhrase(action || "", 4)}`);
+  }
+  if (isBillPracticeRequest(text)) return "The bill.";
+  if (/^Tell me about (.+)\.$/i.test(text)) {
+    const [, topic] = text.match(/^Tell me about (.+)\.$/i) || [];
+    return practiceQuestion(shortPracticePhrase(topic || text, 3));
+  }
+  if (/^I need to (.+)\.$/i.test(text)) {
+    const [, action] = text.match(/^I need to (.+)\.$/i) || [];
+    return practiceSentence(`Need to ${shortPracticePhrase(action || text, 3)}`);
+  }
+  if (/^My (.+) (is|are) (.+)\.$/i.test(text)) {
+    const [, subject, , state] = text.match(/^My (.+) (is|are) (.+)\.$/i) || [];
+    const pronoun = practicePronounForSubject(subject || "");
+    const verb = pronoun === "They" ? "are" : "is";
+    return practiceSentence(`${pronoun} ${verb} ${shortPracticePhrase(state || text, 3)}`);
+  }
+  if (/^The (.+) (is|are) (.+)\.$/i.test(text)) {
+    const [, subject, be, state] = text.match(/^The (.+) (is|are) (.+)\.$/i) || [];
+    const pronoun = be?.toLowerCase() === "are" || isPluralPracticeSubject(subject) ? "They" : "It";
+    const verb = pronoun === "They" ? "are" : "is";
+    return practiceSentence(`${pronoun} ${verb} ${shortPracticePhrase(state || text, 3)}`);
+  }
+  if (/^We'?d like the bill\.$/i.test(text)) return "The bill.";
+  if (/^I(?:'m| am) just (.+)\.$/i.test(text)) {
+    const [, action] = text.match(/^I(?:'m| am) just (.+)\.$/i) || [];
+    return practiceSentence(`Just ${shortPracticePhrase(action || text, 3)}`);
+  }
+  if (/^I(?:'m| am) lost\. Can you help me\?$/i.test(text)) return "Lost. Help?";
+  if (/^Safe (.+)!$/i.test(text)) return "Travel safe!";
+  if (/^I(?:'m| am) working on (.+)\.$/i.test(text)) return "Working on it.";
+  if (/^I(?:'m| am) on a tight (.+)\.$/i.test(text)) return "No time.";
+  if (/^I(?:'m| am) looking for (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I(?:'m| am) looking for (.+)\.$/i) || [];
+    return practiceSentence(`Need ${shortPracticePhrase(thing || text, 3)}`);
+  }
+  if (/^Take care of (.+)\.$/i.test(text)) return "Take care.";
+  if (/^I(?:'m| am) sorry to hear that\.$/i.test(text)) return "So sorry.";
+  if (/^Cheer up(?:, .+)?[.!]$/i.test(text)) return "Stay positive.";
+  if (/^Take it easy\.$/i.test(text)) return "Relax.";
+  if (/^Take it easy (.+)\.$/i.test(text)) return "Relax.";
+  if (/^I(?:'m| am) (.+) for you\.$/i.test(text)) {
+    const [, feeling] = text.match(/^I(?:'m| am) (.+) for you\.$/i) || [];
+    return practiceSentence(`${capitalizeFirst(shortPracticePhrase(feeling || text, 2))} for you`);
+  }
+  if (/^You'?re welcome anytime\.$/i.test(text)) return "You're welcome.";
+  if (/^No problem\.$/i.test(text)) return "No problem.";
+  if (/^See you (.+)\.$/i.test(text)) return "See you.";
+  if (/^Take care\.$/i.test(text)) return "Bye.";
+  if (/^You'?re welcome\b/i.test(text)) return "Anytime.";
+  if (/^No problem\b/i.test(text)) return "No problem.";
+  if (/^It'?s not my cup of tea\.$/i.test(text)) return "Not for me.";
+  if (/^(.+) (is|are) not my cup of tea\.$/i.test(text)) {
+    const [, subject] = text.match(/^(.+) (is|are) not my cup of tea\.$/i) || [];
+    return practiceSentence(`Not into ${shortPracticePhrase(subject || "that", 3)}`);
+  }
+  if (/^Have a (.+)\.$/i.test(text)) {
+    const [, wish] = text.match(/^Have a (.+)\.$/i) || [];
+    return practiceSentence(capitalizeFirst(shortPracticePhrase(wish || "nice day", 2)));
+  }
+  if (/^Take care (.+)\.$/i.test(text)) return "Be careful.";
+  if (/^Take care, .+\.$/i.test(text)) return "Take care.";
+  if (/^(?:Goodbye|Bye)\.$/i.test(text)) return "Bye.";
+  if (/^Goodbye, .+\.$/i.test(text)) return "Bye.";
+  if (/^How about (.+)\?$/i.test(text)) {
+    const [, phrase] = text.match(/^How about (.+)\?$/i) || [];
+    return practiceQuestion(shortPracticePhrase(phrase || text, 3));
+  }
+  if (/^I agree\b/i.test(text)) return "I agree.";
+  if (/^I disagree\b/i.test(text)) return "I don't agree.";
+  if (/^Let'?s (.+)\.$/i.test(text)) {
+    const [, phrase] = text.match(/^Let'?s (.+)\.$/i) || [];
+    return practiceSentence(shortPracticePhrase(phrase || text, 3));
+  }
+  if (/^(?:Check|Bill|The check|The bill)\b/i.test(text)) return "The bill.";
+  if (/^I'?d like (.+)\.$/i.test(text)) {
+    const [, phrase] = text.match(/^I'?d like (.+)\.$/i) || [];
+    return practiceSentence(shortPracticePhrase(phrase || text, 3));
+  }
+  if (/^That'?s (?:a |an )?(.+)\.$/i.test(text)) {
+    const [, phrase] = text.match(/^That'?s (?:a |an )?(.+)\.$/i) || [];
+    return practiceSentence(capitalizeFirst(shortPracticePhrase(phrase || text, 3)));
+  }
+  if (/^I(?:'m| am) allergic to (.+)\.$/i.test(text)) {
+    const [, item] = text.match(/^I(?:'m| am) allergic to (.+)\.$/i) || [];
+    return practiceSentence(`Allergic to ${shortPracticePhrase(item || text, 3)}`);
+  }
+  if (/^I(?:'m| am) ([A-Za-z ]+) about /i.test(text)) {
+    const [, feeling] = text.match(/^I(?:'m| am) ([A-Za-z ]+) about /i) || [];
+    return practiceSentence(`I'm ${cleanGeneratedSentence(feeling)}`);
+  }
+  if (/^I(?:'m| am) (full|thirsty|hungry|tired|lost|sick|ready)\b/i.test(text)) {
+    const [, state] = text.match(/^I(?:'m| am) ([A-Za-z]+)/i) || [];
+    return practiceSentence(capitalizeFirst(state || "ready"));
+  }
+  if (/^I have (?:a |an )?(.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I have (?:a |an )?(.+)\.$/i) || [];
+    return practiceSentence(capitalizeFirst(shortPracticePhrase(thing || text, 3)));
+  }
+  if (/^I(?:'m| am) working on (.+)\.$/i.test(text)) {
+    const [, project] = text.match(/^I(?:'m| am) working on (.+)\.$/i) || [];
+    return practiceSentence(`Working on ${shortPracticePhrase(project || text, 3)}`);
+  }
+  if (/^I(?:'m| am) on a tight (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I(?:'m| am) on a tight (.+)\.$/i) || [];
+    return practiceSentence(`Tight ${shortPracticePhrase(thing || text, 2)}`);
+  }
+  if (/^Good (.+)[.!]$/i.test(text)) {
+    return practiceExclamation("Nice");
+  }
+  if (/^I(?:'m| am) looking for (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I(?:'m| am) looking for (.+)\.$/i) || [];
+    return practiceSentence(`Need ${shortPracticePhrase(thing || text, 3)}`);
+  }
+  if (/^I don'?t feel (.+)\.$/i.test(text)) {
+    const [, state] = text.match(/^I don'?t feel (.+)\.$/i) || [];
+    return practiceSentence(`Not feeling ${shortPracticePhrase(state || text, 2)}`);
+  }
+  if (/^You look (.+)\.$/i.test(text)) {
+    const [, state] = text.match(/^You look (.+)\.$/i) || [];
+    return practiceQuestion(capitalizeFirst(shortPracticePhrase(state || text, 2)));
+  }
+  if (/^I(?:'m| am) (.+) for you\.$/i.test(text)) {
+    const [, feeling] = text.match(/^I(?:'m| am) (.+) for you\.$/i) || [];
+    return practiceSentence(`${capitalizeFirst(shortPracticePhrase(feeling || text, 2))} for you`);
+  }
+  if (/^(.+) is the most .+\.$/i.test(text)) {
+    const [, subject] = text.match(/^(.+) is the most .+\.$/i) || [];
+    return practiceSentence(shortPracticePhrase(subject || text, 3));
+  }
+  if (/^Sounds (.+) to me\.$/i.test(text)) {
+    const [, state] = text.match(/^Sounds (.+) to me\.$/i) || [];
+    return practiceSentence(`Sounds ${shortPracticePhrase(state || text, 2)}`);
+  }
+  if (/^I love (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I love (.+)\.$/i) || [];
+    return practiceSentence(`Love ${shortPracticePhrase(thing || text, 3)}`);
+  }
+  if (/^I hate (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I hate (.+)\.$/i) || [];
+    return practiceSentence(`Don't like ${shortPracticePhrase(thing || text, 3)}`);
+  }
+  if (/^I really appreciate (.+)\.$/i.test(text)) {
+    const [, thing] = text.match(/^I really appreciate (.+)\.$/i) || [];
+    return practiceSentence(`Thanks for ${shortPracticePhrase(thing || text, 3)}`);
+  }
+  if (/^It was great (.+) with you\.$/i.test(text)) {
+    const [, activity] = text.match(/^It was great (.+) with you\.$/i) || [];
+    return practiceSentence(`Great ${shortPracticePhrase(activity || text, 3)}`);
+  }
+  if (/^I'?ll (.+)\.$/i.test(text)) {
+    const [, action] = text.match(/^I'?ll (.+)\.$/i) || [];
+    return practiceSentence(capitalizeFirst(shortPracticePhrase(action || text, 4)));
+  }
+  if (/^I(?:'m| am) (.+)\.$/i.test(text)) {
+    const [, state] = text.match(/^I(?:'m| am) (.+)\.$/i) || [];
+    return practiceSentence(capitalizeFirst(shortPracticePhrase(state || text, 3)));
+  }
+  if (/^I .+\.$/i.test(text)) return practiceSentence(shortPracticePhrase(text, 4));
+  if (/^You .+\.$/i.test(text)) return practiceSentence(shortPracticePhrase(text, 4));
+  if (/^What .+\?$/i.test(text)) return "What?";
+  if (/^Where .+\?$/i.test(text)) return "Where?";
+  if (/^How .+\?$/i.test(text)) return "How?";
+  if (/^Can .+\?$/i.test(text)) return "Can I?";
+  if (/^Do .+\?$/i.test(text)) return "Do you?";
+
+  return text.includes("?")
+    ? practiceQuestion(shortPracticePhrase(text, 3))
+    : practiceSentence(shortPracticePhrase(text, 4));
+}
+
+function firstDistinctPracticeCandidate(candidates: string[], used: Set<string>) {
+  for (const candidate of candidates) {
+    const normalized = comparablePracticeVariant(candidate);
+    if (candidate && normalized && !used.has(normalized) && !isWeakPracticeCandidate(candidate)) {
+      used.add(normalized);
+      return candidate;
+    }
+  }
+
+  const fallback =
+    candidates.find((candidate) => candidate && !isWeakPracticeCandidate(candidate)) ||
+    candidates.find(Boolean) ||
+    "Say it simply.";
+  used.add(comparablePracticeVariant(fallback));
+  return fallback;
+}
+
+function ensurePracticeVariantFieldsDistinct(
+  variants: {
+    standard: string;
+    natural: string;
+    idiomatic: string;
+    simple: string;
+  },
+  fallbackSource: string
+) {
+  const standard = variants.standard || withFinalPunctuation(fallbackSource, fallbackSource);
+  const used = new Set([comparablePracticeVariant(standard)]);
+  const natural = firstDistinctPracticeCandidate(
+    [variants.natural, backupNaturalPracticeVariant(standard)],
+    used
+  );
+  const idiomatic = firstDistinctPracticeCandidate(
+    [variants.idiomatic, backupIdiomaticPracticeVariant(standard)],
+    used
+  );
+  const simple = firstDistinctPracticeCandidate(
+    [backupSimplePracticeVariant(standard), variants.simple],
+    used
+  );
+
+  return {
+    standard,
+    natural,
+    idiomatic,
+    simple,
+  };
+}
+
 function normalizeSentencePatternPracticeVariants(
   practice: SentencePatternPractice
 ): SentencePatternPractice {
   const fallbackSource = practice.recommended || practice.targetEnglish;
-  const normalized = normalizeExpressionVariantMap(
-    {
-      idiomatic: practice.idiomatic,
-      natural: practice.natural,
-      simple: practice.simple,
-      standard: practice.recommended,
-    },
+  const normalized = ensurePracticeVariantFieldsDistinct(
+    normalizeExpressionVariantMap(
+      {
+        idiomatic: practice.idiomatic,
+        natural: practice.natural,
+        simple: practice.simple,
+        standard: practice.recommended,
+      },
+      fallbackSource
+    ),
     fallbackSource
   );
 
