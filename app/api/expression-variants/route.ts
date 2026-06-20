@@ -43,14 +43,26 @@ const LEARNER_NOISE_STOPWORDS = new Set([
   "an",
   "and",
   "are",
+  "at",
   "be",
   "been",
   "being",
+  "bit",
+  "by",
   "could",
   "did",
   "do",
   "does",
+  "down",
+  "even",
+  "feel",
+  "felt",
   "for",
+  "from",
+  "get",
+  "go",
+  "going",
+  "got",
   "had",
   "has",
   "have",
@@ -58,23 +70,45 @@ const LEARNER_NOISE_STOPWORDS = new Set([
   "in",
   "is",
   "it",
+  "just",
+  "kind",
   "like",
+  "little",
+  "lot",
+  "many",
   "may",
   "might",
+  "more",
+  "morning",
   "my",
   "need",
+  "night",
+  "now",
   "of",
   "on",
   "or",
   "our",
   "please",
+  "pretty",
+  "put",
+  "really",
   "should",
+  "so",
+  "some",
+  "still",
   "that",
   "the",
+  "there",
   "this",
   "to",
+  "today",
+  "too",
+  "up",
+  "very",
   "was",
+  "we",
   "were",
+  "with",
   "would",
   "you",
   "your",
@@ -193,44 +227,160 @@ function getEnglishTokens(value: string) {
     .filter(Boolean);
 }
 
-function createAllowedSemanticTokenSet(semanticFallback: ExpressionVariantMap) {
+function addAllowedSemanticTokens(allowed: Set<string>, tokens: string[]) {
+  tokens.forEach((token) => allowed.add(normalizeToken(token)));
+}
+
+function createAllowedSemanticTokenSet(
+  semanticFallback: ExpressionVariantMap,
+  authoritativeEnglish: string
+) {
   const allowed = new Set(
     getEnglishTokens(Object.values(semanticFallback).join(" "))
   );
 
+  addAllowedSemanticTokens(allowed, getEnglishTokens(authoritativeEnglish));
+
   if (allowed.has("jacket") || allowed.has("coat")) {
-    ["jacket", "coat", "outerwear"].forEach((token) => allowed.add(token));
+    addAllowedSemanticTokens(allowed, [
+      "jacket",
+      "coat",
+      "outerwear",
+      "cold",
+      "chilly",
+      "cool",
+      "clothes",
+      "clothing",
+      "layer",
+      "layers",
+      "warm",
+      "warmer",
+      "wear",
+      "wearing",
+      "put",
+      "on",
+      "grab",
+      "throw",
+      "bundle",
+    ]);
   }
 
   if (allowed.has("wear") || allowed.has("grab")) {
-    ["wear", "wearing", "put", "on", "grab", "throw"].forEach((token) =>
-      allowed.add(normalizeToken(token))
-    );
+    addAllowedSemanticTokens(allowed, [
+      "wear",
+      "wearing",
+      "put",
+      "on",
+      "grab",
+      "throw",
+      "clothes",
+      "clothing",
+      "layer",
+      "layers",
+    ]);
+  }
+
+  if (
+    allowed.has("cold") ||
+    allowed.has("chilly") ||
+    allowed.has("cool")
+  ) {
+    addAllowedSemanticTokens(allowed, [
+      "cold",
+      "chilly",
+      "cool",
+      "warm",
+      "warmer",
+      "clothes",
+      "clothing",
+      "layer",
+      "layers",
+      "dress",
+      "wear",
+      "put",
+      "on",
+      "bundle",
+    ]);
+  }
+
+  if (
+    allowed.has("clothe") ||
+    allowed.has("clothing") ||
+    allowed.has("layer") ||
+    allowed.has("dress")
+  ) {
+    addAllowedSemanticTokens(allowed, [
+      "clothes",
+      "clothing",
+      "layer",
+      "layers",
+      "dress",
+      "wear",
+      "put",
+      "on",
+      "warm",
+      "warmer",
+    ]);
+  }
+
+  if (allowed.has("river") || allowed.has("riverside")) {
+    addAllowedSemanticTokens(allowed, [
+      "river",
+      "riverside",
+      "riverbank",
+      "bank",
+      "along",
+      "by",
+      "near",
+    ]);
+  }
+
+  if (allowed.has("rose") || allowed.has("flower")) {
+    addAllowedSemanticTokens(allowed, [
+      "rose",
+      "roses",
+      "flower",
+      "flowers",
+      "bunch",
+      "lot",
+      "lots",
+      "many",
+    ]);
   }
 
   return allowed;
 }
 
 function hasUnsupportedLearnerTerms({
+  authoritativeEnglish,
   chineseText,
   learnerTranscript,
   semanticFallback,
   variants,
 }: {
+  authoritativeEnglish: string;
   chineseText: string;
   learnerTranscript: string;
   semanticFallback: ExpressionVariantMap;
   variants: Partial<ExpressionVariantMap>;
 }) {
+  const hasSemanticFallback = hasCompleteEnglishVariantMap(semanticFallback);
+  const hasAuthoritativeEnglish =
+    /[A-Za-z]/.test(authoritativeEnglish) &&
+    !isInvalidExpressionForDisplay(authoritativeEnglish);
+
   if (
     !chineseText ||
     !learnerTranscript ||
-    !hasCompleteEnglishVariantMap(semanticFallback)
+    (!hasSemanticFallback && !hasAuthoritativeEnglish)
   ) {
     return false;
   }
 
-  const allowedSemanticTokens = createAllowedSemanticTokenSet(semanticFallback);
+  const allowedSemanticTokens = createAllowedSemanticTokenSet(
+    semanticFallback,
+    authoritativeEnglish
+  );
   const unsupportedLearnerTokens = getEnglishTokens(learnerTranscript).filter(
     (token) =>
       !LEARNER_NOISE_STOPWORDS.has(token) && !allowedSemanticTokens.has(token)
@@ -250,11 +400,13 @@ function hasUnsupportedLearnerTerms({
 }
 
 function isVariantMapSafeForSemanticSource({
+  authoritativeEnglish,
   chineseText,
   learnerTranscript,
   semanticFallback,
   variants,
 }: {
+  authoritativeEnglish: string;
   chineseText: string;
   learnerTranscript: string;
   semanticFallback: ExpressionVariantMap;
@@ -263,6 +415,7 @@ function isVariantMapSafeForSemanticSource({
   return (
     isStrictlyDistinct(variants) &&
     !hasUnsupportedLearnerTerms({
+      authoritativeEnglish,
       chineseText,
       learnerTranscript,
       semanticFallback,
@@ -272,11 +425,13 @@ function isVariantMapSafeForSemanticSource({
 }
 
 function getVariantRejectionReason({
+  authoritativeEnglish,
   chineseText,
   learnerTranscript,
   semanticFallback,
   variants,
 }: {
+  authoritativeEnglish: string;
   chineseText: string;
   learnerTranscript: string;
   semanticFallback: ExpressionVariantMap;
@@ -303,6 +458,7 @@ function getVariantRejectionReason({
 
   if (
     hasUnsupportedLearnerTerms({
+      authoritativeEnglish,
       chineseText,
       learnerTranscript,
       semanticFallback,
@@ -668,6 +824,7 @@ export async function POST(req: Request) {
       lastOpenAiResponse = variants;
       const rawVariantMap = pickRawVariantMap(variants);
       const rawRejectionReason = getVariantRejectionReason({
+        authoritativeEnglish,
         chineseText,
         learnerTranscript,
         semanticFallback: semanticFallbackVariants,
@@ -678,6 +835,7 @@ export async function POST(req: Request) {
         !rawRejectionReason &&
         hasCompleteEnglishVariantMap(rawVariantMap) &&
         isVariantMapSafeForSemanticSource({
+          authoritativeEnglish,
           chineseText,
           learnerTranscript,
           semanticFallback: semanticFallbackVariants,
@@ -691,6 +849,7 @@ export async function POST(req: Request) {
           simple: cleanText(rawVariantMap.simple),
         };
         const normalizedRejectionReason = getVariantRejectionReason({
+          authoritativeEnglish,
           chineseText,
           learnerTranscript,
           semanticFallback: semanticFallbackVariants,
@@ -701,6 +860,7 @@ export async function POST(req: Request) {
           !normalizedRejectionReason &&
           hasCompleteEnglishVariantMap(normalizedVariants) &&
           isVariantMapSafeForSemanticSource({
+            authoritativeEnglish,
             chineseText,
             learnerTranscript,
             semanticFallback: semanticFallbackVariants,
