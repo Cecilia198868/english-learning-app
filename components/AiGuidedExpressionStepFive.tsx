@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import AiGuidedExpressionHelpModal from "@/components/AiGuidedExpressionHelpModal";
+import { isInvalidExpressionForDisplay } from "@/lib/expressionVariantFallbacks";
 import { FREE_PRACTICE_DAILY_LIMIT } from "@/lib/freePracticeLimit";
 
 type AiGuidedExpressionStepFiveProps = {
@@ -9,6 +10,9 @@ type AiGuidedExpressionStepFiveProps = {
   nextChineseText: string;
   isLoadingNextChinese?: boolean;
   isLoadingExpressions?: boolean;
+  expressionError?: string | null;
+  expressionErrorText?: string;
+  isRegeneratingExpressions?: boolean;
   expressions: string[];
   selectedExpressionIndex: number;
   hasProEntitlement?: boolean;
@@ -18,6 +22,7 @@ type AiGuidedExpressionStepFiveProps = {
   onUseNextChinese: () => void;
   onChangeNextChinese: () => void;
   onAccountClick: () => void;
+  onRegenerateExpressions?: () => void;
   onPlayExpression: (index: number, rate?: number) => void;
   onSelectExpression: (index: number) => void;
   renderExpressionText?: (
@@ -93,20 +98,22 @@ const progressStatusCopy: Record<AiGuidedProgressStepStatus, string> = {
   locked: "待练习",
 };
 
-const pendingExpressionText = "正在重新生成更合适的表达...";
-
 function isPlaceholderExpression(text: string | undefined) {
   const normalized = text?.trim() || "";
 
   return (
-    !normalized ||
+    isInvalidExpressionForDisplay(normalized) ||
     normalized === "Preparing a better expression." ||
     normalized === "Preparing a better expression..." ||
     normalized === "This sentence is still being prepared." ||
     normalized === "I want to say this more clearly." ||
     normalized === "I'd like to say this more clearly." ||
     normalized === "I really want to say this more clearly." ||
-    normalized === "Say this better."
+    normalized === "Say this better." ||
+    normalized === "I want to say that in English." ||
+    normalized === "I'm trying to say it in English." ||
+    normalized === "I'm trying to put that into English." ||
+    normalized === "Say it in English."
   );
 }
 
@@ -394,6 +401,9 @@ export default function AiGuidedExpressionStepFive({
   nextChineseText,
   isLoadingNextChinese = false,
   isLoadingExpressions = false,
+  expressionError = null,
+  expressionErrorText = "",
+  isRegeneratingExpressions = false,
   expressions,
   selectedExpressionIndex,
   hasProEntitlement = false,
@@ -403,6 +413,7 @@ export default function AiGuidedExpressionStepFive({
   onUseNextChinese,
   onChangeNextChinese,
   onAccountClick,
+  onRegenerateExpressions,
   onPlayExpression,
   onSelectExpression,
   renderExpressionText: renderInteractiveExpressionText,
@@ -420,18 +431,31 @@ export default function AiGuidedExpressionStepFive({
   const hasNextChineseText = Boolean(nextChineseText.trim());
   const displayNextChinese =
     nextChineseText.trim() || (isLoadingNextChinese ? COPY.loadingNext : COPY.nextFallback);
+  const displayExpressionError = (expressionError ?? expressionErrorText).trim();
   const preparedExpressions = expressionMeta.map((meta, index) => {
-    const expression = expressions[index];
+    const expression = expressions[index]?.trim() || "";
     const isReady = !isPlaceholderExpression(expression);
 
     return {
       ...meta,
       isReady,
-      text: !isPlaceholderExpression(expression)
-        ? expression!.trim()
-        : pendingExpressionText,
+      text: isReady ? expression : "",
     };
   });
+  const hasCompleteReadyExpressions = preparedExpressions.every(
+    (expression) => expression.isReady
+  );
+  const showExpressionLoading =
+    isLoadingExpressions || isRegeneratingExpressions;
+  const expressionStatusText = displayExpressionError
+    ? displayExpressionError
+    : showExpressionLoading
+      ? "正在生成表达..."
+      : "表达生成失败，请点击重新生成";
+  const showExpressionStatus =
+    Boolean(displayExpressionError) ||
+    showExpressionLoading ||
+    !hasCompleteReadyExpressions;
 
   useEffect(() => {
     if (!isProgressOpen) return;
@@ -949,6 +973,36 @@ export default function AiGuidedExpressionStepFive({
         .sf-ai-guided-step-five-record-list {
           display: grid;
           gap: clamp(0.48rem, 2.1vw, 0.6rem);
+        }
+
+        .sf-ai-guided-step-five-expression-status {
+          display: grid;
+          gap: 0.72rem;
+          border: 1px solid rgba(75, 107, 255, 0.18);
+          border-radius: 0.9rem;
+          background: rgba(255, 255, 255, 0.86);
+          padding: 1rem;
+          color: #25305d;
+          box-shadow: 0 12px 28px rgba(43, 102, 255, 0.08);
+        }
+
+        .sf-ai-guided-step-five-expression-status p {
+          margin: 0;
+          font-size: clamp(0.96rem, 3.8vw, 1.08rem);
+          font-weight: 850;
+          line-height: 1.35;
+        }
+
+        .sf-ai-guided-step-five-expression-status button {
+          justify-self: start;
+          border: 0;
+          border-radius: 0.72rem;
+          background: #426dff;
+          padding: 0.68rem 0.92rem;
+          color: white;
+          font-size: 0.92rem;
+          font-weight: 900;
+          box-shadow: 0 10px 22px rgba(66, 109, 255, 0.22);
         }
 
         .sf-ai-guided-step-five-record-card {
@@ -1723,82 +1777,84 @@ export default function AiGuidedExpressionStepFive({
               <WaveGlyph />
               <span>{COPY.records}</span>
             </h2>
-            <div className="sf-ai-guided-step-five-record-list">
-              {preparedExpressions.map((expression, index) => {
-                const isSelected = selectedExpressionIndex === index;
+            {showExpressionStatus ? (
+              <div
+                className="sf-ai-guided-step-five-expression-status"
+                aria-busy={showExpressionLoading}
+              >
+                <p>{expressionStatusText}</p>
+                {!showExpressionLoading && onRegenerateExpressions ? (
+                  <button type="button" onClick={onRegenerateExpressions}>
+                    重新生成
+                  </button>
+                ) : null}
+              </div>
+            ) : (
+              <div className="sf-ai-guided-step-five-record-list">
+                {preparedExpressions.map((expression, index) => {
+                  const isSelected = selectedExpressionIndex === index;
 
-                return (
-                  <article
-                    key={`ai-guided-step-five-expression-${index}-${expression.text}`}
-                    className={`sf-ai-guided-step-five-record-card is-${expression.tone} ${
-                      isSelected ? "is-selected" : ""
-                    } ${expression.isReady ? "" : "is-pending"}`}
-                    aria-busy={!expression.isReady && isLoadingExpressions}
-                    onClick={() => {
-                      if (expression.isReady) onSelectExpression(index);
-                    }}
-                  >
-                    <div
-                      className={`sf-ai-guided-step-five-record-icon is-${expression.tone}`}
-                      aria-hidden="true"
+                  return (
+                    <article
+                      key={`ai-guided-step-five-expression-${index}-${expression.text}`}
+                      className={`sf-ai-guided-step-five-record-card is-${expression.tone} ${
+                        isSelected ? "is-selected" : ""
+                      }`}
+                      onClick={() => onSelectExpression(index)}
                     >
-                      <ExpressionIcon name={expression.icon} />
-                    </div>
-                    <div className="sf-ai-guided-step-five-record-copy">
-                      <div className="sf-ai-guided-step-five-record-toolbar">
-                        <p className={`sf-ai-guided-step-five-record-badge is-${expression.tone}`}>
-                          {expression.badge}
-                        </p>
-                        <div className="sf-ai-guided-step-five-record-actions">
-                          <button
-                            type="button"
-                            aria-label={`${COPY.playAria} ${index + 1}`}
-                            disabled={!expression.isReady}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              if (!expression.isReady) return;
-                              onSelectExpression(index);
-                              onPlayExpression(index, 1);
-                            }}
-                            className="sf-ai-guided-step-five-play"
-                          >
-                            <PlayGlyph />
-                          </button>
-                          <button
-                            type="button"
-                            aria-label={`以 0.75 倍速播放第 ${index + 1} 条表达`}
-                            disabled={!expression.isReady}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              if (!expression.isReady) return;
-                              onSelectExpression(index);
-                              onPlayExpression(index, 0.75);
-                            }}
-                            className="sf-ai-guided-step-five-slow-button"
-                          >
-                            0.75x
-                          </button>
-                        </div>
-                      </div>
-                      <p
-                        lang={expression.isReady ? "en" : "zh-CN"}
-                        className="sf-ai-guided-step-five-record-text"
+                      <div
+                        className={`sf-ai-guided-step-five-record-icon is-${expression.tone}`}
+                        aria-hidden="true"
                       >
-                        {expression.isReady && renderInteractiveExpressionText
-                          ? renderInteractiveExpressionText(
-                              expression.text,
-                              index,
-                              expression.tone
-                            )
-                          : expression.isReady
-                            ? renderExpressionText(expression.text, expression.tone)
-                            : expression.text}
-                      </p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+                        <ExpressionIcon name={expression.icon} />
+                      </div>
+                      <div className="sf-ai-guided-step-five-record-copy">
+                        <div className="sf-ai-guided-step-five-record-toolbar">
+                          <p className={`sf-ai-guided-step-five-record-badge is-${expression.tone}`}>
+                            {expression.badge}
+                          </p>
+                          <div className="sf-ai-guided-step-five-record-actions">
+                            <button
+                              type="button"
+                              aria-label={`${COPY.playAria} ${index + 1}`}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                onSelectExpression(index);
+                                onPlayExpression(index, 1);
+                              }}
+                              className="sf-ai-guided-step-five-play"
+                            >
+                              <PlayGlyph />
+                            </button>
+                            <button
+                              type="button"
+                              aria-label={`以 0.75 倍速播放第 ${index + 1} 条表达`}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                onSelectExpression(index);
+                                onPlayExpression(index, 0.75);
+                              }}
+                              className="sf-ai-guided-step-five-slow-button"
+                            >
+                              0.75x
+                            </button>
+                          </div>
+                        </div>
+                        <p lang="en" className="sf-ai-guided-step-five-record-text">
+                          {renderInteractiveExpressionText
+                            ? renderInteractiveExpressionText(
+                                expression.text,
+                                index,
+                                expression.tone
+                              )
+                            : renderExpressionText(expression.text, expression.tone)}
+                        </p>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
             <p className="sf-ai-guided-step-five-more">
               <span>{COPY.seeMore}</span>
               <ChevronDownGlyph />

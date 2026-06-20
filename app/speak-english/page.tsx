@@ -47,8 +47,9 @@ import {
   type HighlightedExpression,
 } from "@/lib/expressionHighlights";
 import {
+  containsChinese,
   createFallbackExpressionVariantMap,
-  isExpressionVariantMapDistinctEnough,
+  isInvalidExpressionForDisplay,
   isPlaceholderExpression,
   normalizeExpressionVariantApiPayload,
   toExpressionVariantApiFields,
@@ -114,10 +115,15 @@ type ExpressionVariant = {
 };
 
 type ExpressionVariantApiResponse = {
+  error?: unknown;
   recommendedExpression?: unknown;
   naturalExpression?: unknown;
   idiomaticExpression?: unknown;
   simpleExpression?: unknown;
+  standard?: unknown;
+  natural?: unknown;
+  idiomatic?: unknown;
+  simple?: unknown;
   variants?: Partial<Record<ExpressionVariantKey, unknown>>;
 };
 
@@ -2993,9 +2999,155 @@ function createFallbackExpressionVariants(standardEnglish: string) {
   }));
 }
 
+const nonTeachingExpressionFallback = {
+  standard: "I want to say that in English.",
+  natural: "I'm trying to say it in English.",
+  idiomatic: "I'm trying to put that into English.",
+  simple: "Say it in English.",
+};
+const learnerNoiseStopwords = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "be",
+  "been",
+  "being",
+  "could",
+  "did",
+  "do",
+  "does",
+  "for",
+  "had",
+  "has",
+  "have",
+  "i",
+  "in",
+  "is",
+  "it",
+  "like",
+  "may",
+  "might",
+  "my",
+  "need",
+  "of",
+  "on",
+  "or",
+  "our",
+  "please",
+  "should",
+  "that",
+  "the",
+  "this",
+  "to",
+  "was",
+  "were",
+  "would",
+  "you",
+  "your",
+]);
+
+function hasCompleteExpressionVariantMap(
+  variants: Record<ExpressionVariantKey, string>
+) {
+  return [variants.standard, variants.natural, variants.idiomatic, variants.simple].every(
+    (text) =>
+      typeof text === "string" &&
+      /[A-Za-z]/.test(text) &&
+      !isInvalidExpressionForDisplay(text)
+  );
+}
+
+function isNonTeachingExpressionFallback(
+  variants: Record<ExpressionVariantKey, string>
+) {
+  return (
+    !hasCompleteExpressionVariantMap(variants) ||
+    (variants.standard === nonTeachingExpressionFallback.standard &&
+      variants.natural === nonTeachingExpressionFallback.natural &&
+      variants.idiomatic === nonTeachingExpressionFallback.idiomatic &&
+      variants.simple === nonTeachingExpressionFallback.simple)
+  );
+}
+
+function normalizeExpressionToken(token: string) {
+  const normalized = token.toLowerCase();
+
+  return normalized.length > 3 && normalized.endsWith("s")
+    ? normalized.slice(0, -1)
+    : normalized;
+}
+
+function getEnglishExpressionTokens(value: string) {
+  const matches = value.toLowerCase().match(/[a-z][a-z']*/g) || [];
+
+  return matches
+    .map((token) => normalizeExpressionToken(token.replace(/^'+|'+$/g, "")))
+    .filter(Boolean);
+}
+
+function createAllowedExpressionTokenSet(
+  semanticFallback: Record<ExpressionVariantKey, string>
+) {
+  const allowed = new Set(
+    getEnglishExpressionTokens(Object.values(semanticFallback).join(" "))
+  );
+
+  if (allowed.has("jacket") || allowed.has("coat")) {
+    ["jacket", "coat", "outerwear"].forEach((token) => allowed.add(token));
+  }
+
+  if (allowed.has("wear") || allowed.has("grab")) {
+    ["wear", "wearing", "put", "on", "grab", "throw"].forEach((token) =>
+      allowed.add(normalizeExpressionToken(token))
+    );
+  }
+
+  return allowed;
+}
+
+function isExpressionVariantMapUnsafeForSemanticSource(
+  variants: Record<ExpressionVariantKey, string>,
+  semanticSource: string,
+  learnerTranscript: string
+) {
+  if (!containsChinese(semanticSource) || !learnerTranscript) return false;
+
+  const semanticFallback = createFallbackExpressionVariantMap(semanticSource);
+  if (isNonTeachingExpressionFallback(semanticFallback)) return false;
+
+  const allowedSemanticTokens =
+    createAllowedExpressionTokenSet(semanticFallback);
+  const unsupportedLearnerTokens = getEnglishExpressionTokens(
+    learnerTranscript
+  ).filter(
+    (token) =>
+      !learnerNoiseStopwords.has(token) && !allowedSemanticTokens.has(token)
+  );
+
+  if (!unsupportedLearnerTokens.length) return false;
+
+  const variantTokens = new Set(
+    getEnglishExpressionTokens(Object.values(variants).join(" "))
+  );
+
+  return unsupportedLearnerTokens.some((token) => variantTokens.has(token));
+}
+
 function getUsableExpressionSource(value: string) {
   const text = value.trim();
-  return text && !isPlaceholderExpression(text) ? text : "";
+  return text && /[A-Za-z]/.test(text) && !isInvalidExpressionForDisplay(text)
+    ? text
+    : "";
+}
+
+function createEmptyExpressionVariantMap(): Record<ExpressionVariantKey, string> {
+  return {
+    standard: "",
+    natural: "",
+    idiomatic: "",
+    simple: "",
+  };
 }
 
 function createExpressionVariantsFromMap(
@@ -3026,18 +3178,121 @@ function createExpressionVariantMapFromVariants(variants: ExpressionVariant[]) {
   );
 }
 
-function normalizeApiExpressionVariants(
-  data: ExpressionVariantApiResponse | undefined,
-  fallbackSource: string
-) {
-  const normalizedVariants = normalizeExpressionVariantApiPayload(
-    data,
-    fallbackSource
+function hasValidExpressionVariants(variants: ExpressionVariant[]) {
+  if (variants.length < expressionVariantLabels.length) return false;
+
+  const variantMap = createExpressionVariantMapFromVariants(variants);
+  const values = expressionVariantLabels.map(
+    ({ key }) => variantMap[key]?.trim() || ""
   );
 
-  return isExpressionVariantMapDistinctEnough(normalizedVariants)
+  if (
+    !values.every(
+      (text) =>
+        text &&
+        /[A-Za-z]/.test(text) &&
+        !containsChinese(text) &&
+        !isInvalidExpressionForDisplay(text) &&
+        !isPlaceholderExpression(text)
+    )
+  ) {
+    return false;
+  }
+
+  return !isNonTeachingExpressionFallback({
+    standard: variantMap.standard || "",
+    natural: variantMap.natural || "",
+    idiomatic: variantMap.idiomatic || "",
+    simple: variantMap.simple || "",
+  });
+}
+
+function getFirstUsableApiExpressionText(...values: unknown[]) {
+  for (const value of values) {
+    const text = typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
+    if (
+      text &&
+      /[A-Za-z]/.test(text) &&
+      !isInvalidExpressionForDisplay(text) &&
+      !isPlaceholderExpression(text)
+    ) {
+      return text;
+    }
+  }
+
+  return "";
+}
+
+function createApiExpressionVariantMap(
+  data: ExpressionVariantApiResponse | undefined,
+  semanticSource: string,
+  learnerTranscript: string
+) {
+  const directVariants = {
+    standard: getFirstUsableApiExpressionText(
+      data?.recommendedExpression,
+      data?.standard,
+      data?.variants?.standard
+    ),
+    natural: getFirstUsableApiExpressionText(
+      data?.naturalExpression,
+      data?.natural,
+      data?.variants?.natural
+    ),
+    idiomatic: getFirstUsableApiExpressionText(
+      data?.idiomaticExpression,
+      data?.idiomatic,
+      data?.variants?.idiomatic
+    ),
+    simple: getFirstUsableApiExpressionText(
+      data?.simpleExpression,
+      data?.simple,
+      data?.variants?.simple
+    ),
+  };
+
+  if (
+    !directVariants.standard ||
+    !directVariants.natural ||
+    !directVariants.idiomatic ||
+    !directVariants.simple
+  ) {
+    return null;
+  }
+
+  return !isExpressionVariantMapUnsafeForSemanticSource(
+    directVariants,
+    semanticSource,
+    learnerTranscript
+  )
+    ? directVariants
+    : null;
+}
+function normalizeApiExpressionVariants(
+  data: ExpressionVariantApiResponse | undefined,
+  fallbackSource: string,
+  learnerTranscript: string
+) {
+  const directVariants = createApiExpressionVariantMap(
+    data,
+    fallbackSource,
+    learnerTranscript
+  );
+  if (directVariants) return directVariants;
+
+  const normalizedVariants = normalizeExpressionVariantApiPayload(
+    data,
+    ""
+  );
+
+  return hasCompleteExpressionVariantMap(normalizedVariants) &&
+    !isExpressionVariantMapUnsafeForSemanticSource(
+      normalizedVariants,
+      fallbackSource,
+      learnerTranscript
+    )
     ? normalizedVariants
-    : createFallbackExpressionVariantMap(fallbackSource);
+    : createEmptyExpressionVariantMap();
 }
 
 function logExpressionVariantResult(
@@ -3053,6 +3308,8 @@ function normalizeSpeechRate(rate: number) {
 
 const SLOW_READ_RATE = 0.75;
 const RESULT_EXPRESSION_VOICE_ID: SpeakFlowVoiceId = "alloy";
+const EXPRESSION_GENERATION_FAILED = "EXPRESSION_GENERATION_FAILED";
+const EXPRESSION_GENERATION_FAILED_MESSAGE = "表达生成失败，请点击重新生成";
 
 function MenuGlyph({
   level,
@@ -3209,9 +3466,17 @@ function SpeakEnglishClient() {
   const [expressionVariants, setExpressionVariants] = useState<
     ExpressionVariant[]
   >([]);
+  const activeExpressionVariantContextRef = useRef("");
+  const latestSuccessfulExpressionVariantsRef = useRef<ExpressionVariant[]>([]);
+  const latestSuccessfulExpressionVariantContextRef = useRef("");
   const [selectedExpressionIndex, setSelectedExpressionIndex] = useState(0);
   const [isLoadingExpressionVariants, setIsLoadingExpressionVariants] =
     useState(false);
+  const [expressionVariantError, setExpressionVariantError] = useState<
+    string | null
+  >(null);
+  const [expressionVariantRefreshKey, setExpressionVariantRefreshKey] =
+    useState(0);
   const [pendingExpression, setPendingExpression] = useState<{
     phrase: string;
     meaning: string;
@@ -3484,55 +3749,42 @@ function SpeakEnglishClient() {
     getUsableExpressionSource(authoritativeEnglish);
   const usableStandardEnglishForDisplay =
     getUsableExpressionSource(standardEnglish);
-  const expressionVariantFallbackSourceForDisplay = isAiGuidedMode
-    ? usableAuthoritativeEnglishForDisplay ||
-      usableStandardEnglishForDisplay ||
-      nativeSpeech.trim()
-    : usableAuthoritativeEnglishForDisplay ||
-      usableStandardEnglishForDisplay ||
-      nativeSpeech.trim() ||
-      message.trim();
+  const usableLearnerEnglishForDisplay = getUsableExpressionSource(message);
+  const expressionVariantFallbackSourceForDisplay =
+    usableAuthoritativeEnglishForDisplay ||
+    usableStandardEnglishForDisplay ||
+    (!nativeSpeech.trim() ? usableLearnerEnglishForDisplay : "");
   const rawExpressionVariantsForDisplay = expressionVariants.length
     ? expressionVariants
-    : isLoadingExpressionVariants
+    : isLoadingExpressionVariants || expressionVariantError
       ? createPendingExpressionVariants()
       : createFallbackExpressionVariants(expressionVariantFallbackSourceForDisplay);
-  const rawExpressionVariantMapForDisplay = createExpressionVariantMapFromVariants(
-    rawExpressionVariantsForDisplay
-  );
-  const expressionVariantsForDisplay =
-    isExpressionVariantMapDistinctEnough(rawExpressionVariantMapForDisplay)
-      ? rawExpressionVariantsForDisplay
-      : isLoadingExpressionVariants
-        ? createPendingExpressionVariants()
-        : createFallbackExpressionVariants(expressionVariantFallbackSourceForDisplay);
+  const expressionVariantsForDisplay = rawExpressionVariantsForDisplay;
   const selectedExpression =
     expressionVariantsForDisplay[
       Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)
     ] || expressionVariantsForDisplay[0];
-  const expressionVariantMapCandidateForResultDisplay =
+  const expressionVariantMapForResultDisplay =
     createExpressionVariantMapFromVariants(expressionVariantsForDisplay);
-  const hasQualifiedExpressionVariantsForResult =
-    isExpressionVariantMapDistinctEnough(
-      expressionVariantMapCandidateForResultDisplay
-    );
-  const expressionVariantMapForResultDisplay: Partial<
-    Record<ExpressionVariantKey, string>
-  > =
-    hasQualifiedExpressionVariantsForResult
-      ? expressionVariantMapCandidateForResultDisplay
-      : {};
+
   const referenceResultVariantOrder = isAiGuidedMode
     ? aiGuidedResultVariantOrder
     : freeStudyResultVariantOrder;
-  const referenceResultCandidateTexts = referenceResultVariantOrder.map((key) => {
-    const variantText = expressionVariantMapForResultDisplay[key]?.trim() || "";
-
-    return variantText && variantText !== "This sentence is still being prepared."
+  const referenceResultRawTexts = referenceResultVariantOrder.map(
+    (key) => expressionVariantMapForResultDisplay[key]?.trim() || ""
+  );
+  const referenceResultCandidateTexts = referenceResultRawTexts.map((variantText) =>
+    variantText &&
+      /[A-Za-z]/.test(variantText) &&
+      !isInvalidExpressionForDisplay(variantText) &&
+      !isPlaceholderExpression(variantText)
       ? variantText
-      : "";
-  });
+      : ""
+  );
   const referenceResultVariantTexts = referenceResultCandidateTexts;
+  if (showGuidedReferenceResult || showReferenceResult) {
+    console.log("StepFive expressions:", referenceResultVariantTexts);
+  }
   const referenceResultPreloadKey = referenceResultVariantTexts
     .map((text) => text.trim())
     .filter(Boolean)
@@ -4819,6 +5071,7 @@ function SpeakEnglishClient() {
     setExpressionVariants([]);
     setSelectedExpressionIndex(0);
     setIsLoadingExpressionVariants(false);
+    setExpressionVariantError(null);
     setHighlightedExpressions([]);
     setVocabularyNotice("");
     resetGuidedFollowupState();
@@ -4849,6 +5102,7 @@ function SpeakEnglishClient() {
     setExpressionVariants([]);
     setSelectedExpressionIndex(0);
     setIsLoadingExpressionVariants(false);
+    setExpressionVariantError(null);
     setHighlightedExpressions([]);
     setVocabularyNotice("");
     resetGuidedFollowupState();
@@ -6200,39 +6454,73 @@ function SpeakEnglishClient() {
     const learnerEnglish = message.trim();
     const usableAuthoritativeEnglish =
       getUsableExpressionSource(authoritativeEnglish);
+    const usableLearnerEnglish = getUsableExpressionSource(learnerEnglish);
     const hasRequiredReferenceChinese =
       isNativeSpeechConfirmed && Boolean(currentChinese);
-    const fallbackExpressionSource =
-      usableAuthoritativeEnglish ||
-      currentChinese ||
-      learnerEnglish;
+    const semanticExpressionSource =
+      currentChinese || usableAuthoritativeEnglish || usableLearnerEnglish;
+    const expressionVariantContextKey = JSON.stringify({
+      chinese: currentChinese,
+      mode: isAiGuidedMode ? "guided" : "free",
+      userEnglish: learnerEnglish,
+    });
 
     if (
       isFreeConversationMode ||
       !hasEnglishAttempt ||
-      !hasRequiredReferenceChinese ||
-      (!fallbackExpressionSource && !learnerEnglish)
+      !hasRequiredReferenceChinese
     ) {
       return;
     }
 
     let cancelled = false;
-    const fallbackVariants = fallbackExpressionSource
-      ? createFallbackExpressionVariants(fallbackExpressionSource)
-      : [];
-    setExpressionVariants(
-      !usableAuthoritativeEnglish
-        ? createPendingExpressionVariants()
-        : fallbackVariants
-    );
-    setSelectedExpressionIndex(0);
-    if (fallbackVariants[0]?.text) {
-      setStandardEnglish(fallbackVariants[0].text);
+    activeExpressionVariantContextRef.current = expressionVariantContextKey;
+    const hasPreviousSuccessfulExpressionVariants =
+      latestSuccessfulExpressionVariantContextRef.current ===
+        expressionVariantContextKey &&
+      hasValidExpressionVariants(latestSuccessfulExpressionVariantsRef.current);
+
+    function keepPreviousSuccessfulExpressionVariants(error: unknown) {
+      if (
+        latestSuccessfulExpressionVariantContextRef.current !==
+          expressionVariantContextKey ||
+        !hasValidExpressionVariants(latestSuccessfulExpressionVariantsRef.current)
+      ) {
+        return false;
+      }
+
+      console.warn(
+        "Expression variants refresh failed, keeping previous successful result",
+        error
+      );
+      setExpressionVariants(latestSuccessfulExpressionVariantsRef.current);
+      setExpressionVariantError(null);
+      return true;
     }
-    setIsLoadingExpressionVariants(true);
+
+    setExpressionVariantError(null);
+    if (hasPreviousSuccessfulExpressionVariants) {
+      setExpressionVariants(latestSuccessfulExpressionVariantsRef.current);
+      setIsLoadingExpressionVariants(false);
+    } else {
+      setExpressionVariants(createPendingExpressionVariants());
+      setSelectedExpressionIndex(0);
+      setIsLoadingExpressionVariants(true);
+    }
 
     async function loadExpressionVariants() {
       try {
+        if (!isAiGuidedMode) {
+          console.log("FreeStudy expression variant request:", {
+            mode: "free",
+            nativeSpeech,
+            chineseText: currentChinese,
+            userEnglish: learnerEnglish,
+            standardEnglish: usableAuthoritativeEnglish,
+            spokenDisplay: message,
+          });
+        }
+
         const response = await fetch("/api/expression-variants", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -6243,34 +6531,85 @@ function SpeakEnglishClient() {
           }),
         });
         const data = (await response.json()) as ExpressionVariantApiResponse;
+        console.log("Expression variants API data:", data);
+        if (!isAiGuidedMode) {
+          console.log("FreeStudy expression variant response:", {
+            ok: response.ok,
+            status: response.status,
+            data,
+          });
+        }
 
-        if (cancelled) return;
+        if (
+          cancelled &&
+          activeExpressionVariantContextRef.current !== expressionVariantContextKey
+        ) {
+          return;
+        }
 
-        if (!response.ok) {
-          setExpressionVariants(fallbackVariants);
-          setStandardEnglish(
-            fallbackVariants[0]?.text || usableAuthoritativeEnglish || learnerEnglish
-          );
+        const apiError =
+          typeof data.error === "string" ? data.error.trim() : "";
+
+        if (!response.ok || apiError === EXPRESSION_GENERATION_FAILED) {
+          if (
+            keepPreviousSuccessfulExpressionVariants({
+              data,
+              status: response.status,
+            })
+          ) {
+            return;
+          }
+
+          setExpressionVariants([]);
+          setExpressionVariantError(EXPRESSION_GENERATION_FAILED_MESSAGE);
+          setStandardEnglish(usableAuthoritativeEnglish || "");
           return;
         }
 
         const normalizedVariants = normalizeApiExpressionVariants(
           data,
-          fallbackExpressionSource || (isAiGuidedMode ? currentChinese : learnerEnglish)
+          semanticExpressionSource,
+          learnerEnglish
         );
         logExpressionVariantResult("AI expression result:", normalizedVariants);
+        if (!hasCompleteExpressionVariantMap(normalizedVariants)) {
+          if (
+            keepPreviousSuccessfulExpressionVariants({
+              data,
+              normalizedVariants,
+              reason: "INVALID_VARIANTS",
+            })
+          ) {
+            return;
+          }
+
+          setExpressionVariants([]);
+          setExpressionVariantError(EXPRESSION_GENERATION_FAILED_MESSAGE);
+          setStandardEnglish(usableAuthoritativeEnglish || "");
+          return;
+        }
+
         const nextVariants = createExpressionVariantsFromMap(normalizedVariants);
 
+        latestSuccessfulExpressionVariantsRef.current = nextVariants;
+        latestSuccessfulExpressionVariantContextRef.current =
+          expressionVariantContextKey;
+        setExpressionVariantError(null);
         setExpressionVariants(nextVariants);
         setStandardEnglish(
-          normalizedVariants.standard || usableAuthoritativeEnglish || learnerEnglish
+          normalizedVariants.standard ||
+            usableAuthoritativeEnglish ||
+            usableLearnerEnglish
         );
-      } catch {
+      } catch (error) {
         if (!cancelled) {
-          setExpressionVariants(fallbackVariants);
-          setStandardEnglish(
-            fallbackVariants[0]?.text || usableAuthoritativeEnglish || learnerEnglish
-          );
+          if (keepPreviousSuccessfulExpressionVariants(error)) {
+            return;
+          }
+
+          setExpressionVariants([]);
+          setExpressionVariantError(EXPRESSION_GENERATION_FAILED_MESSAGE);
+          setStandardEnglish(usableAuthoritativeEnglish || "");
         }
       } finally {
         if (!cancelled) {
@@ -6283,6 +6622,9 @@ function SpeakEnglishClient() {
 
     return () => {
       cancelled = true;
+      if (activeExpressionVariantContextRef.current === expressionVariantContextKey) {
+        activeExpressionVariantContextRef.current = "";
+      }
     };
   }, [
     authoritativeEnglish,
@@ -6290,6 +6632,7 @@ function SpeakEnglishClient() {
     isFreeConversationMode,
     isAiGuidedMode,
     isNativeSpeechConfirmed,
+    expressionVariantRefreshKey,
     message,
     nativeSpeech,
   ]);
@@ -6491,6 +6834,14 @@ function SpeakEnglishClient() {
       : selectedExpression.text || standardEnglish;
 
     speakEnglishText(text, rate);
+  }
+
+  function requestRegenerateExpressionVariants() {
+    setExpressionVariantError(null);
+    setExpressionVariants(createPendingExpressionVariants());
+    setSelectedExpressionIndex(0);
+    setIsLoadingExpressionVariants(true);
+    setExpressionVariantRefreshKey((currentKey) => currentKey + 1);
   }
 
   function readExpressionVariant(
@@ -7830,6 +8181,9 @@ function SpeakEnglishClient() {
               }
               expressions={referenceResultVariantTexts}
               isLoadingExpressions={isLoadingExpressionVariants}
+              expressionError={expressionVariantError}
+              isRegeneratingExpressions={isLoadingExpressionVariants}
+              onRegenerateExpressions={requestRegenerateExpressionVariants}
               selectedExpressionIndex={selectedExpressionIndex}
               hasProEntitlement={isAccountPro}
               menuLabel="回到学习首页"
@@ -9077,6 +9431,9 @@ function SpeakEnglishClient() {
                 expressions={referenceResultVariantTexts}
                 selectedExpressionIndex={selectedExpressionIndex}
                 isLoadingExpressions={isLoadingExpressionVariants}
+                expressionError={expressionVariantError}
+                isRegeneratingExpressions={isLoadingExpressionVariants}
+                onRegenerateExpressions={requestRegenerateExpressionVariants}
                 hasProEntitlement={isAccountPro}
                 avatarSrc={accountImage && !accountImageFailed ? accountImage : ""}
                 avatarAlt={accountEmail || accountName || "user"}

@@ -49,8 +49,9 @@ import {
   type HighlightedExpression,
 } from "@/lib/expressionHighlights";
 import {
+  containsChinese,
   createFallbackExpressionVariantMap,
-  isExpressionVariantMapDistinctEnough,
+  isInvalidExpressionForDisplay,
   normalizeExpressionVariantApiPayload,
   toExpressionVariantApiFields,
   type ExpressionVariantKey,
@@ -396,6 +397,7 @@ type ExpressionVariantApiResponse = {
   naturalExpression?: unknown;
   idiomaticExpression?: unknown;
   simpleExpression?: unknown;
+  error?: unknown;
   variants?: Partial<Record<ExpressionVariantKey, unknown>>;
 };
 
@@ -546,6 +548,8 @@ function normalizeSpeechRate(rate: number) {
 }
 
 const SLOW_READ_RATE = 0.5;
+const EXPRESSION_GENERATION_FAILED = "EXPRESSION_GENERATION_FAILED";
+const EXPRESSION_GENERATION_FAILED_MESSAGE = "表达生成失败，请点击重新生成";
 
 function createFallbackExpressionVariants(standardEnglish: string) {
   const fallbackMap = createFallbackExpressionVariantMap(standardEnglish);
@@ -577,18 +581,145 @@ function createExpressionVariantMapFromVariants(variants: ExpressionVariant[]) {
   );
 }
 
+function createEmptyExpressionVariantMap(): Record<ExpressionVariantKey, string> {
+  return {
+    standard: "",
+    natural: "",
+    idiomatic: "",
+    simple: "",
+  };
+}
+
+function hasCompleteExpressionVariantMap(
+  variants: Record<ExpressionVariantKey, string>
+) {
+  return [variants.standard, variants.natural, variants.idiomatic, variants.simple].every(
+    (text) =>
+      typeof text === "string" &&
+      /[A-Za-z]/.test(text) &&
+      !isInvalidExpressionForDisplay(text)
+  );
+}
+
+const studyLearnerNoiseStopwords = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "be",
+  "but",
+  "can",
+  "could",
+  "did",
+  "do",
+  "does",
+  "for",
+  "have",
+  "he",
+  "her",
+  "him",
+  "i",
+  "in",
+  "is",
+  "it",
+  "me",
+  "my",
+  "need",
+  "of",
+  "on",
+  "or",
+  "our",
+  "she",
+  "so",
+  "that",
+  "the",
+  "their",
+  "they",
+  "this",
+  "to",
+  "we",
+  "you",
+  "your",
+]);
+
+function normalizeStudyExpressionToken(token: string) {
+  const normalized = token.toLowerCase();
+
+  return normalized.length > 3 && normalized.endsWith("s")
+    ? normalized.slice(0, -1)
+    : normalized;
+}
+
+function getStudyEnglishTokens(value: string) {
+  const matches = value.toLowerCase().match(/[a-z][a-z']*/g) || [];
+
+  return matches
+    .map((token) =>
+      normalizeStudyExpressionToken(token.replace(/^'+|'+$/g, ""))
+    )
+    .filter(Boolean);
+}
+
+function createAllowedStudyExpressionTokenSet(
+  semanticFallback: Record<ExpressionVariantKey, string>
+) {
+  const allowed = new Set(
+    getStudyEnglishTokens(Object.values(semanticFallback).join(" "))
+  );
+
+  if (allowed.has("jacket") || allowed.has("coat")) {
+    ["jacket", "coat", "outerwear"].forEach((token) => allowed.add(token));
+  }
+
+  if (allowed.has("wear") || allowed.has("grab")) {
+    ["wear", "wearing", "put", "on", "grab", "throw"].forEach((token) =>
+      allowed.add(normalizeStudyExpressionToken(token))
+    );
+  }
+
+  return allowed;
+}
+
+function isExpressionVariantMapUnsafeForStudySource(
+  variants: Record<ExpressionVariantKey, string>,
+  semanticSource: string,
+  learnerTranscript: string
+) {
+  if (!containsChinese(semanticSource) || !learnerTranscript) return false;
+
+  const semanticFallback = createFallbackExpressionVariantMap(semanticSource);
+  if (!hasCompleteExpressionVariantMap(semanticFallback)) return false;
+
+  const allowedSemanticTokens =
+    createAllowedStudyExpressionTokenSet(semanticFallback);
+  const unsupportedLearnerTokens = getStudyEnglishTokens(
+    learnerTranscript
+  ).filter(
+    (token) =>
+      !studyLearnerNoiseStopwords.has(token) &&
+      !allowedSemanticTokens.has(token)
+  );
+
+  if (!unsupportedLearnerTokens.length) return false;
+
+  const variantTokens = new Set(
+    getStudyEnglishTokens(Object.values(variants).join(" "))
+  );
+
+  return unsupportedLearnerTokens.some((token) => variantTokens.has(token));
+}
+
 function normalizeApiExpressionVariants(
-  data: ExpressionVariantApiResponse | undefined,
-  fallbackSource: string
+  data: ExpressionVariantApiResponse | undefined
 ) {
   const normalizedVariants = normalizeExpressionVariantApiPayload(
     data,
-    fallbackSource
+    ""
   );
 
-  return isExpressionVariantMapDistinctEnough(normalizedVariants)
+  return hasCompleteExpressionVariantMap(normalizedVariants)
     ? normalizedVariants
-    : createFallbackExpressionVariantMap(fallbackSource);
+    : createEmptyExpressionVariantMap();
 }
 
 function logExpressionVariantResult(
@@ -850,6 +981,11 @@ export default function StudyPage() {
   const [selectedExpressionIndex, setSelectedExpressionIndex] = useState(0);
   const [isLoadingExpressionVariants, setIsLoadingExpressionVariants] =
     useState(false);
+  const [expressionVariantError, setExpressionVariantError] = useState<
+    string | null
+  >(null);
+  const [expressionVariantRefreshKey, setExpressionVariantRefreshKey] =
+    useState(0);
   const [pendingExpression, setPendingExpression] = useState<{
     phrase: string;
     meaning: string;
@@ -986,6 +1122,7 @@ export default function StudyPage() {
     setExpressionVariants([]);
     setSelectedExpressionIndex(0);
     setIsLoadingExpressionVariants(false);
+    setExpressionVariantError(null);
     setShowFollowReadModal(false);
     speechBufferRef.current = "";
     speechBaseTranscriptRef.current = "";
@@ -1068,6 +1205,7 @@ export default function StudyPage() {
       setLiveTranscript("");
       setExpressionVariants([]);
       setSelectedExpressionIndex(0);
+      setExpressionVariantError(null);
       setMessage(
         accountAccessKind === "guest" &&
           isClassicSceneLessonId(lessonId) &&
@@ -1112,6 +1250,7 @@ export default function StudyPage() {
     setLiveTranscript("");
     setExpressionVariants([]);
     setSelectedExpressionIndex(0);
+    setExpressionVariantError(null);
     setHasLoadedLesson(true);
   }, [accountAccessKind, lessonId, progressKey]);
 
@@ -1386,6 +1525,14 @@ export default function StudyPage() {
       undefined,
       getClassicCourseAudioUrl(currentIndex, variant.key)
     );
+  }
+
+  function requestRegenerateStudyExpressionVariants() {
+    setExpressionVariantError(null);
+    setExpressionVariants([]);
+    setSelectedExpressionIndex(0);
+    setIsLoadingExpressionVariants(true);
+    setExpressionVariantRefreshKey((currentKey) => currentKey + 1);
   }
 
   function moveToSentence(index: number) {
@@ -1820,21 +1967,28 @@ export default function StudyPage() {
     if (!spokenEnglish || isListening) return;
 
     let cancelled = false;
-    const expressionFallbackSource = currentPair.chinese || currentPair.english || "";
-    const fallbackVariants = createFallbackExpressionVariants(expressionFallbackSource);
+    const learnerTranscript = spokenEnglish.trim();
+    const semanticSource =
+      currentPair.chinese || currentPair.english || learnerTranscript;
+    const englishFallbackSource = currentPair.english || learnerTranscript || "";
+    const fallbackVariants = createFallbackExpressionVariants(englishFallbackSource);
     const prebuiltVariants = prebuiltClassicExpressionSet?.variants || [];
 
-    setExpressionVariants(
-      prebuiltVariants.length ? prebuiltVariants : fallbackVariants
-    );
+    setExpressionVariantError(null);
+    setExpressionVariants(prebuiltVariants.length ? prebuiltVariants : []);
     setSelectedExpressionIndex(0);
-    setIsLoadingExpressionVariants(false);
 
     if (prebuiltVariants.length || isCurrentClassicSceneLesson) {
+      setExpressionVariants(
+        prebuiltVariants.length ? prebuiltVariants : fallbackVariants
+      );
+      setIsLoadingExpressionVariants(false);
       return () => {
         cancelled = true;
       };
     }
+
+    setIsLoadingExpressionVariants(true);
 
     async function loadExpressionVariants() {
       try {
@@ -1843,25 +1997,48 @@ export default function StudyPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             chinese: currentPair.chinese,
-            userEnglish: "",
+            userEnglish: learnerTranscript,
             standardEnglish: currentPair.english,
           }),
         });
         const data = (await response.json()) as ExpressionVariantApiResponse;
+        console.log("Expression variants API data:", data);
 
-        if (!response.ok || cancelled) return;
+        if (cancelled) return;
 
-        const normalizedVariants = normalizeApiExpressionVariants(
-          data,
-          expressionFallbackSource
-        );
+        const apiError =
+          typeof data.error === "string" ? data.error.trim() : "";
+
+        if (!response.ok || apiError === EXPRESSION_GENERATION_FAILED) {
+          setExpressionVariants([]);
+          setExpressionVariantError(EXPRESSION_GENERATION_FAILED_MESSAGE);
+          return;
+        }
+
+        const normalizedVariants = normalizeApiExpressionVariants(data);
         logExpressionVariantResult("AI expression result:", normalizedVariants);
+        if (
+          !hasCompleteExpressionVariantMap(normalizedVariants) ||
+          (currentPair.chinese &&
+            isExpressionVariantMapUnsafeForStudySource(
+              normalizedVariants,
+              semanticSource,
+              learnerTranscript
+            ))
+        ) {
+          setExpressionVariants([]);
+          setExpressionVariantError(EXPRESSION_GENERATION_FAILED_MESSAGE);
+          return;
+        }
+
         const nextVariants = createExpressionVariantsFromMap(normalizedVariants);
 
+        setExpressionVariantError(null);
         setExpressionVariants(nextVariants);
       } catch {
         if (!cancelled) {
-          setExpressionVariants(fallbackVariants);
+          setExpressionVariants([]);
+          setExpressionVariantError(EXPRESSION_GENERATION_FAILED_MESSAGE);
         }
       } finally {
         if (!cancelled) {
@@ -1878,6 +2055,7 @@ export default function StudyPage() {
   }, [
     currentPair.chinese,
     currentPair.english,
+    expressionVariantRefreshKey,
     isCurrentClassicSceneLesson,
     isListening,
     prebuiltClassicExpressionSet,
@@ -2483,23 +2661,33 @@ export default function StudyPage() {
   const showStudyVoiceOnlyPrompt = showStudyPrompt || showStudyListeningPrompt;
   const showExpressionFeedback = Boolean(spokenDisplay) && !showStudyListeningPrompt;
   const expressionVariantFallbackSourceForDisplay =
-    currentPair.chinese || currentPair.english || spokenDisplay || "";
+    currentPair.english || spokenDisplay || "";
   const fallbackExpressionVariantsForDisplay = createFallbackExpressionVariants(
     expressionVariantFallbackSourceForDisplay
   );
   const rawExpressionVariantsForDisplay = expressionVariants.length
     ? expressionVariants
-    : fallbackExpressionVariantsForDisplay;
+    : expressionVariantError || isLoadingExpressionVariants
+      ? []
+      : fallbackExpressionVariantsForDisplay;
   const expressionVariantsForDisplay =
-    isExpressionVariantMapDistinctEnough(
-      createExpressionVariantMapFromVariants(rawExpressionVariantsForDisplay)
+    rawExpressionVariantsForDisplay.length &&
+    hasCompleteExpressionVariantMap(
+      createExpressionVariantMapFromVariants(
+        rawExpressionVariantsForDisplay
+      ) as Record<ExpressionVariantKey, string>
     )
       ? rawExpressionVariantsForDisplay
-      : fallbackExpressionVariantsForDisplay;
+      : [];
   const selectedExpression =
     expressionVariantsForDisplay[
       Math.min(selectedExpressionIndex, expressionVariantsForDisplay.length - 1)
-    ] || expressionVariantsForDisplay[0];
+    ] ||
+    expressionVariantsForDisplay[0] || {
+      key: "standard" as ExpressionVariantKey,
+      label: "推荐表达",
+      text: "",
+    };
   const classicExpressionVariantRenderLogKey = expressionVariantLabels
     .map(
       ({ key }) =>
@@ -3191,8 +3379,30 @@ export default function StudyPage() {
               </section>
 
               <section className={styles.expressionList} aria-label="推荐表达">
-                {isLoadingExpressionVariants ? (
+                {expressionVariantError ? (
+                  <div className={styles.loadingExpressions}>
+                    <p>{expressionVariantError}</p>
+                    <button
+                      type="button"
+                      className={styles.expressionRetryButton}
+                      onClick={requestRegenerateStudyExpressionVariants}
+                    >
+                      重新生成
+                    </button>
+                  </div>
+                ) : isLoadingExpressionVariants ? (
                   <p className={styles.loadingExpressions}>正在生成表达...</p>
+                ) : !resultVariants.length ? (
+                  <div className={styles.loadingExpressions}>
+                    <p>{EXPRESSION_GENERATION_FAILED_MESSAGE}</p>
+                    <button
+                      type="button"
+                      className={styles.expressionRetryButton}
+                      onClick={requestRegenerateStudyExpressionVariants}
+                    >
+                      重新生成
+                    </button>
+                  </div>
                 ) : (
                   resultVariants.map((variant, variantIndex) => {
                     const isSelected = selectedExpressionIndex === variantIndex;
@@ -3495,10 +3705,36 @@ export default function StudyPage() {
                   </div>
 
                   <div className="mt-6 w-full max-w-[430px] text-left">
-                    {isLoadingExpressionVariants ? (
+                    {expressionVariantError ? (
+                      <div className="rounded-[18px] bg-white/50 px-5 py-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+                        <p className="text-[1.08rem] font-extrabold leading-7 text-[#4f6fe8]">
+                          {expressionVariantError}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={requestRegenerateStudyExpressionVariants}
+                          className="mt-3 rounded-[14px] bg-[#6b4dff] px-4 py-2 text-[0.95rem] font-extrabold text-white shadow-[0_10px_20px_rgba(107,77,255,0.18)]"
+                        >
+                          重新生成
+                        </button>
+                      </div>
+                    ) : isLoadingExpressionVariants ? (
                       <p className="text-[1.2rem] font-extrabold leading-8 text-[#4f6fe8]">
                         正在生成表达...
                       </p>
+                    ) : !expressionVariantsForDisplay.length ? (
+                      <div className="rounded-[18px] bg-white/50 px-5 py-4 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+                        <p className="text-[1.08rem] font-extrabold leading-7 text-[#4f6fe8]">
+                          {EXPRESSION_GENERATION_FAILED_MESSAGE}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={requestRegenerateStudyExpressionVariants}
+                          className="mt-3 rounded-[14px] bg-[#6b4dff] px-4 py-2 text-[0.95rem] font-extrabold text-white shadow-[0_10px_20px_rgba(107,77,255,0.18)]"
+                        >
+                          重新生成
+                        </button>
+                      </div>
                     ) : (
                       <div className="grid gap-8">
                         {expressionVariantsForDisplay.map(

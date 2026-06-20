@@ -1,13 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
 import type { ReactNode } from "react";
 import FreeStudyBottomNav from "@/components/FreeStudyBottomNav";
+import { isInvalidExpressionForDisplay } from "@/lib/expressionVariantFallbacks";
 
 type FreeStudyPageFiveTopProps = {
   userEnglishText: string;
   expressions: string[];
   selectedExpressionIndex: number;
   isLoadingExpressions?: boolean;
+  expressionError?: string | null;
+  isRegeneratingExpressions?: boolean;
   avatarSrc?: string;
   avatarAlt?: string;
   accountLabel?: string;
@@ -18,6 +22,7 @@ type FreeStudyPageFiveTopProps = {
   onAccountClick: () => void;
   onAvatarError?: () => void;
   onContinueNext: () => void;
+  onRegenerateExpressions?: () => void;
   onPlayExpression: (index: number, rate?: number) => void;
   onSelectExpression: (index: number) => void;
   renderExpressionText?: (
@@ -55,13 +60,11 @@ const expressionMeta = [
   },
 ] as const;
 
-const pendingRecommendationCopy = "正在重新生成更合适的表达...";
-
 function isPlaceholderExpression(text: string | undefined) {
   const normalized = text?.trim() || "";
 
   return (
-    !normalized ||
+    isInvalidExpressionForDisplay(normalized) ||
     normalized === "Preparing a better expression." ||
     normalized === "Preparing a better expression..." ||
     normalized === "This sentence is still being prepared."
@@ -184,29 +187,57 @@ export default function FreeStudyPageFiveTop({
   expressions,
   selectedExpressionIndex,
   isLoadingExpressions = false,
+  expressionError = null,
+  isRegeneratingExpressions = false,
   hasProEntitlement = false,
   onAiGuidedPractice,
   onRetryEnglish,
   onMenuClick,
   onAccountClick,
   onContinueNext,
+  onRegenerateExpressions,
   onPlayExpression,
   onSelectExpression,
   renderExpressionText: renderInteractiveExpressionText,
   renderUserExpressionText,
 }: FreeStudyPageFiveTopProps) {
   const displayText = userEnglishText.trim() || " ";
-  const preparedExpressions = expressionMeta.map((meta, index) => ({
-    ...meta,
-    isReady: !isPlaceholderExpression(expressions[index]),
-    text: !isPlaceholderExpression(expressions[index])
-      ? expressions[index]!.trim()
-      : pendingRecommendationCopy,
-  }));
+  const preparedExpressions = expressionMeta.map((meta, index) => {
+    const expression = expressions[index]?.trim() || "";
+    const isReady = !isPlaceholderExpression(expression);
+
+    return {
+      ...meta,
+      isReady,
+      text: isReady ? expression : "",
+    };
+  });
+  const hasCompleteReadyExpressions = preparedExpressions.every(
+    (expression) => expression.isReady
+  );
+  const showExpressionLoading =
+    isLoadingExpressions || isRegeneratingExpressions;
+  const displayExpressionError = expressionError?.trim() || "";
+  const expressionStatusText = displayExpressionError
+    ? displayExpressionError
+    : showExpressionLoading
+      ? "正在生成表达..."
+      : "表达生成失败，请点击重新生成";
+  const showExpressionStatus =
+    Boolean(displayExpressionError) ||
+    showExpressionLoading ||
+    !hasCompleteReadyExpressions;
   const safeSelectedIndex = Math.min(
     Math.max(selectedExpressionIndex, 0),
     preparedExpressions.length - 1
   );
+
+  useEffect(() => {
+    console.log("FreeStudy final expressions:", {
+      expressions,
+      expressionError,
+    });
+  }, [expressionError, expressions]);
 
   return (
     <section className="sf-free-result-page" aria-label="自由学习英语结果">
@@ -578,6 +609,36 @@ export default function FreeStudyPageFiveTop({
         .sf-free-result-list {
           display: grid;
           gap: clamp(.68rem, 2.7vw, .84rem);
+        }
+
+        .sf-free-result-expression-status {
+          display: grid;
+          gap: .72rem;
+          border: 1px solid rgba(139,86,238,.16);
+          border-radius: 1rem;
+          background: rgba(255,255,255,.86);
+          padding: 1rem;
+          color: #30275d;
+          box-shadow: 0 14px 30px rgba(110,74,180,.08), inset 0 1px 0 rgba(255,255,255,.95);
+        }
+
+        .sf-free-result-expression-status p {
+          margin: 0;
+          font-size: clamp(1rem, 4vw, 1.12rem);
+          font-weight: 900;
+          line-height: 1.35;
+        }
+
+        .sf-free-result-expression-status button {
+          justify-self: start;
+          border: 0;
+          border-radius: .78rem;
+          background: #765cff;
+          padding: .68rem .92rem;
+          color: white;
+          font-size: .92rem;
+          font-weight: 900;
+          box-shadow: 0 10px 22px rgba(118,92,255,.2);
         }
 
         .sf-free-result-expression-card {
@@ -1408,81 +1469,83 @@ export default function FreeStudyPageFiveTop({
         </h2>
 
         <section className="sf-free-result-list">
-          {preparedExpressions.map((expression, index) => {
-            const selected = safeSelectedIndex === index;
+          {showExpressionStatus ? (
+            <div
+              className="sf-free-result-expression-status"
+              aria-busy={showExpressionLoading}
+            >
+              <p>{expressionStatusText}</p>
+              {!showExpressionLoading && onRegenerateExpressions ? (
+                <button type="button" onClick={onRegenerateExpressions}>
+                  重新生成
+                </button>
+              ) : null}
+            </div>
+          ) : (
+            preparedExpressions.map((expression, index) => {
+              const selected = safeSelectedIndex === index;
 
-            return (
-              <article
-                key={`${expression.tone}-${index}-${expression.text}`}
-                className={`sf-free-result-expression-card is-${expression.tone} ${
-                  selected ? "is-selected" : ""
-                } ${expression.isReady ? "" : "is-pending"}`}
-                aria-busy={!expression.isReady && isLoadingExpressions}
-                onClick={() => {
-                  if (expression.isReady) onSelectExpression(index);
-                }}
-              >
-                <span className="sf-free-result-expression-icon" aria-hidden="true">
-                  <ExpressionIcon name={expression.icon} />
-                </span>
+              return (
+                <article
+                  key={`${expression.tone}-${index}-${expression.text}`}
+                  className={`sf-free-result-expression-card is-${expression.tone} ${
+                    selected ? "is-selected" : ""
+                  }`}
+                  onClick={() => onSelectExpression(index)}
+                >
+                  <span className="sf-free-result-expression-icon" aria-hidden="true">
+                    <ExpressionIcon name={expression.icon} />
+                  </span>
 
-                <span className="sf-free-result-expression-copy">
-                  <span className="sf-free-result-badge">{expression.badge}</span>
-                  <p
-                    lang={expression.isReady ? "en" : "zh-CN"}
-                    className="sf-free-result-expression-text"
-                  >
-                    {expression.isReady && renderInteractiveExpressionText
-                      ? renderInteractiveExpressionText(
-                          expression.text,
-                          index,
-                          expression.tone
-                        )
-                      : expression.isReady
-                        ? renderExpressionText(expression.text, expression.tone)
-                        : expression.text}
-                  </p>
-                  {expression.description ? (
-                    <span className="sf-free-result-note">
-                      <CheckGlyph />
-                      {expression.description}
-                    </span>
-                  ) : null}
-                </span>
+                  <span className="sf-free-result-expression-copy">
+                    <span className="sf-free-result-badge">{expression.badge}</span>
+                    <p lang="en" className="sf-free-result-expression-text">
+                      {renderInteractiveExpressionText
+                        ? renderInteractiveExpressionText(
+                            expression.text,
+                            index,
+                            expression.tone
+                          )
+                        : renderExpressionText(expression.text, expression.tone)}
+                    </p>
+                    {expression.description ? (
+                      <span className="sf-free-result-note">
+                        <CheckGlyph />
+                        {expression.description}
+                      </span>
+                    ) : null}
+                  </span>
 
-                <span className="sf-free-result-actions">
-                  <button
-                    type="button"
-                    aria-label="播放这句表达"
-                    disabled={!expression.isReady}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      if (!expression.isReady) return;
-                      onSelectExpression(index);
-                      onPlayExpression(index, 1);
-                    }}
-                    className="sf-free-result-play"
-                  >
-                    <PlayGlyph />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="0.75倍速播放这句表达"
-                    disabled={!expression.isReady}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      if (!expression.isReady) return;
-                      onSelectExpression(index);
-                      onPlayExpression(index, 0.75);
-                    }}
-                    className="sf-free-result-slow"
-                  >
-                    0.75x
-                  </button>
-                </span>
-              </article>
-            );
-          })}
+                  <span className="sf-free-result-actions">
+                    <button
+                      type="button"
+                      aria-label="播放这句表达"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onSelectExpression(index);
+                        onPlayExpression(index, 1);
+                      }}
+                      className="sf-free-result-play"
+                    >
+                      <PlayGlyph />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="0.75倍速播放这句表达"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onSelectExpression(index);
+                        onPlayExpression(index, 0.75);
+                      }}
+                      className="sf-free-result-slow"
+                    >
+                      0.75x
+                    </button>
+                  </span>
+                </article>
+              );
+            })
+          )}
         </section>
 
         <div className="sf-free-result-more">向下查看更多表达</div>

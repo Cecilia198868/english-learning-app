@@ -1311,6 +1311,22 @@
   font-weight: 900 !important;
 }
 
+.loadingExpressions p {
+  margin: 0;
+}
+
+.expressionRetryButton {
+  margin-top: 12px;
+  border: 0;
+  border-radius: 12px;
+  background: #7b58ff;
+  padding: 10px 14px;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 900;
+  box-shadow: 0 10px 20px rgba(123, 88, 255, 0.18);
+}
+
 .expressionCard {
   --tone: #b78158;
   --tone-soft: #f7eee8;

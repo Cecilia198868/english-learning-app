@@ -16,6 +16,12 @@ const VARIANT_KEYS: ExpressionVariantKey[] = [
   "simple",
 ];
 const MAX_VARIANT_SIMILARITY = 0.84;
+const EMPTY_EXPRESSION_VARIANTS: ExpressionVariantMap = {
+  standard: "",
+  natural: "",
+  idiomatic: "",
+  simple: "",
+};
 
 const placeholderExpressions = new Set([
   "Preparing a better expression.",
@@ -26,6 +32,10 @@ const placeholderExpressions = new Set([
   "I'd like to say this more clearly.",
   "I really want to say this more clearly.",
   "Say this better.",
+  "I want to say that in English.",
+  "I'm trying to say it in English.",
+  "I'm trying to put that into English.",
+  "Say it in English.",
 ]);
 
 const FINAL_PUNCTUATION_PATTERN = /[.!?\u3002\uff01\uff1f]+$/;
@@ -101,12 +111,59 @@ function normalizeComparableText(value: string) {
     .toLowerCase();
 }
 
+export function containsChinese(text: string) {
+  return /[\u4e00-\u9fff]/.test(text);
+}
+
+export function isInvalidExpressionForDisplay(text: string) {
+  const normalized = text.trim().toLowerCase();
+
+  return (
+    !normalized ||
+    /[\u4e00-\u9fff]/.test(text) ||
+    normalized.includes("正在重新生成") ||
+    normalized.includes("表达生成失败") ||
+    normalized === "preparing a better expression." ||
+    normalized === "preparing a better expression..." ||
+    normalized === "this sentence is still being prepared." ||
+    normalized === "i'm still working on this sentence." ||
+    normalized === "i want to say this more clearly." ||
+    normalized === "i'd like to say this more clearly." ||
+    normalized === "i really want to say this more clearly." ||
+    normalized === "say this better." ||
+    normalized === "i want to say that in english." ||
+    normalized === "i'm trying to say it in english." ||
+    normalized === "i'm trying to put that into english." ||
+    normalized === "say it in english."
+  );
+}
+
 function hasCjkText(value: string) {
   return /[\u3400-\u9fff]/.test(value);
 }
 
 function hasLatinText(value: string) {
   return /[A-Za-z]/.test(value);
+}
+
+function createSafeEnglishFallbackVariantMap(): ExpressionVariantMap {
+  return { ...EMPTY_EXPRESSION_VARIANTS };
+}
+
+function isUsableEnglishSource(value: string) {
+  const text = cleanText(value);
+  return Boolean(
+    text && hasLatinText(text) && !containsChinese(text) && !isPlaceholderExpression(text)
+  );
+}
+
+function ensureEnglishVariantMap(variants: ExpressionVariantMap): ExpressionVariantMap {
+  const hasUnsafeText = VARIANT_KEYS.some((key) => {
+    const text = cleanText(variants[key]);
+    return !text || containsChinese(text) || !hasLatinText(text);
+  });
+
+  return hasUnsafeText ? createSafeEnglishFallbackVariantMap() : variants;
 }
 
 function capitalizeFirst(value: string) {
@@ -263,6 +320,17 @@ function isColdClothesContext(value: string) {
   );
 }
 
+function isSummerChillyLayersContext(value: string) {
+  const text = cleanText(value);
+
+  return (
+    /(夏天|夏季|summer)/i.test(text) &&
+    /(早晚|早上|早晨|晚上|傍晚|morning|evening)/i.test(text) &&
+    /(冷|凉|涼|chilly|cold|cool)/i.test(text) &&
+    /(多穿|衣服|穿.*衣|保暖|layers?|clothes|warmer|dress)/i.test(text)
+  );
+}
+
 function isBirdSleepContext(value: string) {
   const text = normalizeComparableText(value);
 
@@ -294,7 +362,7 @@ function isJacketQuestionContext(value: string) {
   return (
     isChineseJacketQuestionContext(value) ||
     (/\b(?:coat|jacket)\b/.test(text) &&
-      /\b(?:do you want|would you like|wear|put on|throw on|might want|should)\b/.test(
+      /\b(?:do you want|do you need|would you like|need|wear|put on|throw on|might want|should)\b/.test(
         text
       ))
   );
@@ -423,11 +491,15 @@ function normalizeCommonLearnerEnglish(value: string) {
     .replace(/\bclubs\b/gi, "clothes");
 
   if (isChineseJacketQuestionContext(value)) {
-    return "Do you want to wear a jacket?";
+    return "Do you need to wear a jacket?";
   }
 
   if (isChinesePhotoQuestionContext(value)) {
     return "Do you want to take photos?";
+  }
+
+  if (isSummerChillyLayersContext(value)) {
+    return "Even though it's summer, it's a little cold in the mornings and evenings, so we should wear more layers.";
   }
 
   if (isGoodTvShowContext(value)) {
@@ -625,6 +697,19 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
   const helpRequestAction =
     getHelpRequestAction(standard) || getHelpRequestAction(sourceText);
 
+  if (isSummerChillyLayersContext(sourceText) || isSummerChillyLayersContext(standard)) {
+    return {
+      standard:
+        "Even though it's summer, it's a little cold in the mornings and evenings, so we should wear more layers.",
+      natural:
+        "It's summer, but it still gets a little chilly in the morning and evening, so we should dress a bit warmer.",
+      idiomatic:
+        "Even though it's summer, the mornings and evenings can still be a bit chilly, so we should layer up.",
+      simple:
+        "It's summer, but it's a little cold. We should wear more clothes.",
+    };
+  }
+
   if (isGoodTvShowContext(sourceText) || isGoodTvShowContext(standard)) {
     return {
       standard: "This TV show is really good.",
@@ -656,10 +741,10 @@ function createKnownScenarioVariantMap(sourceText: string): ExpressionVariantMap
 
   if (isJacketQuestionContext(sourceText) || isJacketQuestionContext(standard)) {
     return {
-      standard: "Do you want to wear a jacket?",
-      natural: "Do you want to put on a jacket?",
-      idiomatic: "You might want to throw on a jacket.",
-      simple: "Wear a jacket?",
+      standard: "Do you need to wear a jacket?",
+      natural: "Do you need a jacket?",
+      idiomatic: "Should you grab a jacket?",
+      simple: "Need a jacket?",
     };
   }
 
@@ -1564,7 +1649,11 @@ function enforceDistinctVariantMap(
 
 export function isPlaceholderExpression(value: unknown) {
   const text = cleanText(value);
-  return !text || placeholderExpressions.has(text) || isWeakGeneratedVariant(text);
+  return (
+    isInvalidExpressionForDisplay(text) ||
+    placeholderExpressions.has(text) ||
+    isWeakGeneratedVariant(text)
+  );
 }
 
 export function isExpressionVariantMapDistinctEnough(
@@ -1579,7 +1668,13 @@ export function normalizeEnglishExpressionPunctuation(value: string) {
 
 export function createFallbackExpressionVariantMap(sourceText: string): ExpressionVariantMap {
   const knownScenario = createKnownScenarioVariantMap(sourceText);
-  if (knownScenario && isDistinctVariantMap(knownScenario)) return knownScenario;
+  if (knownScenario && isDistinctVariantMap(knownScenario)) {
+    return ensureEnglishVariantMap(knownScenario);
+  }
+
+  if (!isUsableEnglishSource(sourceText)) {
+    return createSafeEnglishFallbackVariantMap();
+  }
 
   const standardBase = normalizeCommonLearnerEnglish(sourceText);
   const standard = ensureSentence(standardBase) || "I want to say this more clearly.";
@@ -1602,7 +1697,7 @@ export function createFallbackExpressionVariantMap(sourceText: string): Expressi
     simple: makeUniqueVariant(simple, fallback.simple, used),
   };
 
-  return enforceDistinctVariantMap(map, fallback, sourceText);
+  return ensureEnglishVariantMap(enforceDistinctVariantMap(map, fallback, sourceText));
 }
 
 export function toExpressionVariantApiFields(
@@ -1643,8 +1738,11 @@ export function normalizeExpressionVariantMap(
   variants: Partial<Record<ExpressionVariantKey, unknown>> | undefined,
   fallbackSource: string
 ): ExpressionVariantMap {
-  const fallback = createFallbackExpressionVariantMap(fallbackSource);
-  const fallbackSourceKey = normalizeComparableText(fallbackSource);
+  const safeFallbackSource = containsChinese(cleanText(fallbackSource))
+    ? ""
+    : fallbackSource;
+  const fallback = createFallbackExpressionVariantMap(safeFallbackSource);
+  const fallbackSourceKey = normalizeComparableText(safeFallbackSource);
 
   function candidateOrFallback(
     key: ExpressionVariantKey,
@@ -1652,12 +1750,16 @@ export function normalizeExpressionVariantMap(
     fallbackValue: string,
     allowSourceEcho = false
   ) {
+    const rawCandidate = cleanText(value);
     const candidate =
-      !isPlaceholderExpression(value) && !isWeakGeneratedVariant(value) && cleanText(value)
+      rawCandidate &&
+      !containsChinese(rawCandidate) &&
+      !isPlaceholderExpression(value) &&
+      !isWeakGeneratedVariant(value)
         ? normalizeVariantOutputSentence(
-            normalizeCommonLearnerEnglish(cleanText(value)),
+            normalizeCommonLearnerEnglish(rawCandidate),
             key,
-            fallbackSource
+            safeFallbackSource
           )
         : "";
     const candidateKey = normalizeComparableText(candidate);
@@ -1666,7 +1768,9 @@ export function normalizeExpressionVariantMap(
       Boolean(candidateKey && fallbackSourceKey && candidateKey === fallbackSourceKey) &&
       candidateKey !== normalizeComparableText(fallbackValue);
 
-    return candidate && !echoesLearnerSource ? candidate : fallbackValue;
+    return candidate && !containsChinese(candidate) && !echoesLearnerSource
+      ? candidate
+      : fallbackValue;
   }
 
   const standard = candidateOrFallback(
@@ -1686,5 +1790,7 @@ export function normalizeExpressionVariantMap(
     simple: candidateOrFallback("simple", variants?.simple, fallback.simple),
   };
 
-  return enforceDistinctVariantMap(initialMap, fallback, fallbackSource);
+  return ensureEnglishVariantMap(
+    enforceDistinctVariantMap(initialMap, fallback, fallbackSource)
+  );
 }
