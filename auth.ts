@@ -4,6 +4,7 @@ import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
+import { resolveAppleClientSecret } from "@/lib/appleClientSecret";
 import {
   consumePasswordlessCode,
   normalizePasswordlessTarget,
@@ -23,7 +24,7 @@ type WechatProfile = {
 };
 
 const appleClientId = process.env.APPLE_CLIENT_ID;
-const appleClientSecret = process.env.APPLE_CLIENT_SECRET;
+const appleClientSecret = resolveAppleClientSecret(appleClientId);
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const wechatClientId = process.env.WECHAT_CLIENT_ID || process.env.WECHAT_APP_ID;

@@ -160,6 +160,52 @@ function identityRowToStoredUser(row: OAuthIdentityRow): StoredUser {
   };
 }
 
+function isMissingOAuthSchemaError(error: unknown) {
+  if (!error || typeof error !== "object") return false;
+
+  const candidate = error as {
+    code?: string;
+    message?: string;
+  };
+  const message = candidate.message || "";
+
+  return (
+    candidate.code === "42703" ||
+    candidate.code === "42P01" ||
+    candidate.code === "PGRST204" ||
+    candidate.code === "PGRST205" ||
+    message.includes("user_auth_identities") ||
+    message.includes("provider_account_id") ||
+    message.includes("display_name")
+  );
+}
+
+function buildOAuthStoredUser({
+  displayName,
+  email,
+  provider,
+  providerAccountId,
+  userId,
+}: {
+  displayName: string;
+  email: string;
+  provider: string;
+  providerAccountId: string;
+  userId: string;
+}): StoredUser {
+  return {
+    createdAt: "",
+    displayName,
+    email,
+    passwordHash: "",
+    provider,
+    providerAccountId,
+    role: getDefaultRoleForEmail(email),
+    subscriptionStatus: "free",
+    userId,
+  };
+}
+
 async function findProfileByColumn(column: string, value: string) {
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase
@@ -374,13 +420,31 @@ export async function ensureOAuthUserProfile({
       providerAccountId: normalizedProviderAccountId,
       userId,
     });
-  } catch {
+  } catch (error) {
+    if (isMissingOAuthSchemaError(error)) {
+      return upsertSupabaseOAuthProfileByEmailOnly({
+        displayName: resolvedDisplayName,
+        email: normalizedEmail,
+        provider: normalizedProvider,
+        providerAccountId: normalizedProviderAccountId,
+        userId,
+      });
+    }
+
     return ensureLocalOAuthUserProfile({
       displayName: resolvedDisplayName,
       email: normalizedEmail,
       provider: normalizedProvider,
       providerAccountId: normalizedProviderAccountId,
-    });
+    }).catch(() =>
+      buildOAuthStoredUser({
+        displayName: resolvedDisplayName,
+        email: normalizedEmail,
+        provider: normalizedProvider,
+        providerAccountId: normalizedProviderAccountId,
+        userId,
+      })
+    );
   }
 }
 
@@ -492,6 +556,43 @@ async function upsertSupabaseOAuthProfile({
     role: await getUserRoleByEmail(email),
     subscriptionStatus: "free" as SubscriptionStatus,
     userId,
+  };
+}
+
+async function upsertSupabaseOAuthProfileByEmailOnly({
+  displayName,
+  email,
+  provider,
+  providerAccountId,
+  userId,
+}: {
+  displayName: string;
+  email: string;
+  provider: string;
+  providerAccountId: string;
+  userId: string;
+}) {
+  const existingProfile = await findProfileByEmail(email).catch(() => null);
+  const profile =
+    existingProfile ||
+    (await upsertProfileSubscriptionByEmail(email, {
+      subscriptionStatus: "free",
+    }).catch(() => null));
+
+  return {
+    ...buildOAuthStoredUser({
+      displayName,
+      email,
+      provider,
+      providerAccountId,
+      userId,
+    }),
+    cancelAtPeriodEnd: profile?.cancelAtPeriodEnd,
+    currentPeriodEnd: profile?.currentPeriodEnd,
+    role: profile?.role || (await getUserRoleByEmail(email)),
+    stripeCustomerId: profile?.stripeCustomerId,
+    stripeSubscriptionId: profile?.stripeSubscriptionId,
+    subscriptionStatus: profile?.subscriptionStatus || "free",
   };
 }
 
