@@ -64,6 +64,8 @@ export const isWechatAuthConfigured =
 export const isXAuthConfigured = Boolean(xClientId) && Boolean(xClientSecret);
 
 function shouldUseSecureAuthCookies() {
+  if (process.env.VERCEL === "1") return true;
+
   const configuredUrl = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL;
 
   if (configuredUrl) {
@@ -74,7 +76,7 @@ function shouldUseSecureAuthCookies() {
     }
   }
 
-  return process.env.VERCEL === "1";
+  return false;
 }
 
 const useSecureAuthCookies = shouldUseSecureAuthCookies();
