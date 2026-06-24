@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
 import AccountPageClient from "@/components/AccountPageClient";
+import { getValidatedServerSession } from "@/lib/serverSession";
 import { DEFAULT_ADMIN_EMAIL, normalizeUserEmail } from "@/lib/userRoles";
 
 function getStringParam(value: string | string[] | undefined) {
@@ -13,7 +12,11 @@ export default async function AccountPage({
 }: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const session = await getServerSession(authOptions);
+  const { invalidated, session } = await getValidatedServerSession();
+
+  if (invalidated) {
+    redirect("/api/auth/session-replaced");
+  }
 
   if (!session?.user) {
     redirect("/");

@@ -1,13 +1,17 @@
-import { authOptions } from "@/auth";
 import { getReferralAccountState } from "@/lib/referrals";
-import { getServerSession } from "next-auth";
+import {
+  getValidatedServerSession,
+  sessionInvalidatedJsonResponse,
+} from "@/lib/serverSession";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET(request: Request) {
-  const session = await getServerSession(authOptions);
+  const { invalidated, session } = await getValidatedServerSession();
+  if (invalidated) return sessionInvalidatedJsonResponse();
+
   const email = session?.user?.email?.trim().toLowerCase();
 
   if (!email) {

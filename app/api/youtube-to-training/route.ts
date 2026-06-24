@@ -2,10 +2,9 @@ export const runtime = "nodejs";
 export const maxDuration = 300;
 
 import OpenAI, { toFile } from "openai";
-import { authOptions } from "@/auth";
+import { getValidatedServerSession } from "@/lib/serverSession";
 import { getAccountSubscriptionForEmail } from "@/lib/subscriptionService";
 import { normalizeToShortTrainingItems, type TrainingItem } from "@/lib/training";
-import { getServerSession } from "next-auth";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || "missing",
@@ -19,6 +18,9 @@ const MAX_AUDIO_SIZE_BYTES = 24 * 1024 * 1024;
 const MAX_SEGMENTS_FOR_COURSE = 600;
 
 type YoutubeImportPlan = keyof typeof AUDIO_DURATION_LIMIT_SECONDS;
+type YoutubeImportPlanResult =
+  | { invalidated: false; plan: YoutubeImportPlan }
+  | { invalidated: true; plan?: never };
 
 type CaptionTrack = {
   baseUrl?: string;
@@ -71,14 +73,19 @@ type TrainingPair = {
   endTime?: unknown;
 };
 
-async function getCurrentYoutubeImportPlan(): Promise<YoutubeImportPlan> {
-  const session = await getServerSession(authOptions);
+async function getCurrentYoutubeImportPlan(): Promise<YoutubeImportPlanResult> {
+  const { invalidated, session } = await getValidatedServerSession();
+  if (invalidated) return { invalidated: true };
+
   const email = session?.user?.email?.trim().toLowerCase();
 
-  if (!email) return "free";
+  if (!email) return { invalidated: false, plan: "free" };
 
   const subscription = await getAccountSubscriptionForEmail(email);
-  return subscription.subscriptionStatus === "free" ? "free" : "pro";
+  return {
+    invalidated: false,
+    plan: subscription.subscriptionStatus === "free" ? "free" : "pro",
+  };
 }
 
 function friendlyFailure(status = 400) {
@@ -705,7 +712,18 @@ async function generateFromAudio({
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as { url?: unknown };
-    const plan = await getCurrentYoutubeImportPlan();
+    const planResult = await getCurrentYoutubeImportPlan();
+    if (planResult.invalidated) {
+      return Response.json(
+        {
+          error: "SESSION_REPLACED",
+          message: "你的账号已在另一台设备登录，本设备已退出。",
+        },
+        { status: 409 }
+      );
+    }
+
+    const plan = planResult.plan;
     const audioDurationLimitSeconds = AUDIO_DURATION_LIMIT_SECONDS[plan];
     const inputUrl = typeof body.url === "string" ? body.url.trim() : "";
     const videoId = getVideoId(inputUrl);

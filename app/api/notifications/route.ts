@@ -1,4 +1,3 @@
-import { authOptions } from "@/auth";
 import { listNotificationsForUser } from "@/lib/notifications";
 import {
   getSubscriptionNotificationMessages,
@@ -9,7 +8,10 @@ import {
   type AccountSubscriptionState,
 } from "@/lib/subscriptionService";
 import { findProfileByEmail, type StoredUser } from "@/lib/userStore";
-import { getServerSession } from "next-auth";
+import {
+  getValidatedServerSession,
+  sessionInvalidatedJsonResponse,
+} from "@/lib/serverSession";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -89,7 +91,9 @@ function mergeSubscriptionFallbackNotifications(
 }
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
+  const { invalidated, session } = await getValidatedServerSession();
+  if (invalidated) return sessionInvalidatedJsonResponse();
+
   const email = session?.user?.email?.trim().toLowerCase();
 
   if (!email) {

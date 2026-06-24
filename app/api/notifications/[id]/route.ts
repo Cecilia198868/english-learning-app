@@ -1,6 +1,8 @@
-import { authOptions } from "@/auth";
 import { markNotificationAsRead } from "@/lib/notifications";
-import { getServerSession } from "next-auth";
+import {
+  getValidatedServerSession,
+  sessionInvalidatedJsonResponse,
+} from "@/lib/serverSession";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -10,7 +12,9 @@ export async function PATCH(
   _request: Request,
   context: RouteContext<"/api/notifications/[id]">
 ) {
-  const session = await getServerSession(authOptions);
+  const { invalidated, session } = await getValidatedServerSession();
+  if (invalidated) return sessionInvalidatedJsonResponse();
+
   const email = session?.user?.email?.trim().toLowerCase();
 
   if (!email) {

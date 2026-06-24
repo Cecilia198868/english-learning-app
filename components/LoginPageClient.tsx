@@ -95,6 +95,10 @@ export default function LoginPageClient({
   const searchParams = useSearchParams();
   const [manualNotice, setManualNotice] = useState("");
   const callbackUrl = searchParams.get("callbackUrl") || "/start";
+  const sessionNotice =
+    searchParams.get("session") === "replaced"
+      ? "你的账号已在另一台设备登录，本设备已退出。"
+      : "";
   const queryNotice =
     searchParams.get("wechat") === "not-configured"
       ? "微信登录暂未配置，请稍后再试。"
@@ -105,7 +109,7 @@ export default function LoginPageClient({
           : searchParams.get("google") === "not-configured"
             ? "Google 登录暂未配置，请稍后再试。"
             : "";
-  const notice = manualNotice || queryNotice;
+  const notice = manualNotice || sessionNotice || queryNotice;
 
   function withCallback(path: string) {
     const params = new URLSearchParams({ callbackUrl });

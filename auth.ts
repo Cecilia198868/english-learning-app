@@ -1,10 +1,17 @@
+import { randomUUID } from "node:crypto";
 import type { NextAuthOptions } from "next-auth";
+import { headers } from "next/headers";
 import type { OAuthConfig } from "next-auth/providers/oauth";
 import AppleProvider from "next-auth/providers/apple";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
 import { resolveAppleClientSecret } from "@/lib/appleClientSecret";
+import {
+  createSingleDeviceSessionIds,
+  registerCurrentUserSession,
+  validateCurrentUserSession,
+} from "@/lib/singleDeviceSession";
 import {
   consumePasswordlessCode,
   normalizePasswordlessTarget,
@@ -84,6 +91,27 @@ function resolveUserEmail(
   }
 
   return "";
+}
+
+async function getLoginRequestMetadata() {
+  try {
+    const headerStore = await headers();
+    const forwardedFor = headerStore.get("x-forwarded-for") || "";
+    const ip =
+      forwardedFor
+        .split(",")
+        .map((value) => value.trim())
+        .find(Boolean) ||
+      headerStore.get("x-real-ip") ||
+      undefined;
+
+    return {
+      ip,
+      userAgent: headerStore.get("user-agent") || undefined,
+    };
+  } catch {
+    return {};
+  }
 }
 
 async function resolveOAuthUser({
@@ -306,6 +334,7 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async jwt({ account, token, user }) {
+      const isFreshLogin = Boolean(account || user);
       const oauthUser = await resolveOAuthUser({
         account,
         user:
@@ -345,11 +374,50 @@ export const authOptions: NextAuthOptions = {
       if (user?.image) token.picture = user.image;
       if (email) token.role = await getUserRoleByEmail(email);
 
+      if (email && isFreshLogin) {
+        const sessionIds = createSingleDeviceSessionIds();
+        token.sessionId = sessionIds.sessionId;
+        token.deviceId = sessionIds.deviceId;
+        token.loginNonce = randomUUID();
+
+        const metadata = await getLoginRequestMetadata();
+        await registerCurrentUserSession({
+          deviceId: sessionIds.deviceId,
+          email,
+          ip: metadata.ip,
+          sessionId: sessionIds.sessionId,
+          userAgent: metadata.userAgent,
+          userId:
+            typeof token.userId === "string" && token.userId
+              ? token.userId
+              : email,
+        }).catch((error) => {
+          if (process.env.AUTH_SESSION_DEBUG === "1") {
+            console.error("Failed to register current user session", error);
+          }
+        });
+      }
+
       return token;
     },
     async session({ session, token }) {
+      const email = typeof token.email === "string" ? token.email : "";
+      const sessionId =
+        typeof token.sessionId === "string" ? token.sessionId : "";
+
+      if (email) {
+        const validation = await validateCurrentUserSession(email, sessionId);
+
+        if (validation.enforced && !validation.isCurrent) {
+          session.isInvalidated = true;
+          session.invalidatedReason = validation.reason;
+          delete session.user;
+          return session;
+        }
+      }
+
       if (session.user) {
-        session.user.email = typeof token.email === "string" ? token.email : "";
+        session.user.email = email;
         session.user.name =
           typeof token.name === "string" ? token.name : session.user.email;
         session.user.image =
@@ -363,6 +431,9 @@ export const authOptions: NextAuthOptions = {
           typeof token.userId === "string"
             ? token.userId
             : session.user.email || "";
+        session.user.sessionId = sessionId;
+        session.user.deviceId =
+          typeof token.deviceId === "string" ? token.deviceId : "";
       }
 
       return session;

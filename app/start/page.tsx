@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
+import { redirect } from "next/navigation";
 import StartPageClient from "@/components/StartPageClient";
 import { getAiGuidedProgress } from "@/lib/aiGuidedExpressionProgress";
 import {
@@ -7,6 +6,7 @@ import {
   type LearningHomeContinueStudy,
 } from "@/lib/learningHomeProgress";
 import { getBonusProUntilForEmail } from "@/lib/referrals";
+import { getValidatedServerSession } from "@/lib/serverSession";
 import { findUserByEmail } from "@/lib/userStore";
 
 const DEFAULT_AI_PROGRESS = {
@@ -94,7 +94,12 @@ function createFallbackContinueStudy() {
 }
 
 export default async function StartPage() {
-  const session = await getServerSession(authOptions);
+  const { invalidated, session } = await getValidatedServerSession();
+
+  if (invalidated) {
+    redirect("/api/auth/session-replaced");
+  }
+
   const userEmail = session?.user?.email?.trim().toLowerCase() || "";
   const [aiProgress, backendContinueStudy, hasProEntitlement] = await Promise.all([
     loadAiProgress(userEmail),

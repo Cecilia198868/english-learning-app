@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Sora } from "next/font/google";
 import LanguageProvider from "@/components/LanguageProvider";
 import PageViewTracker from "@/components/PageViewTracker";
 import PwaRegister from "@/components/PwaRegister";
+import SessionInvalidationWatcher from "@/components/SessionInvalidationWatcher";
 import { normalizeLanguage, LANGUAGE_COOKIE_NAME } from "@/lib/i18n";
 import "./globals.css";
 
@@ -124,6 +125,7 @@ export default async function RootLayout({
         <LanguageProvider initialLanguage={initialLanguage}>
           <PwaRegister />
           <PageViewTracker />
+          <SessionInvalidationWatcher />
           {children}
         </LanguageProvider>
       </body>

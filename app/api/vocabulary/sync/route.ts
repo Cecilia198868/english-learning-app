@@ -1,16 +1,17 @@
-import { authOptions } from "@/auth";
 import {
   deleteCloudVocabularyWord,
   listCloudVocabularyWords,
   mergeCloudVocabularyWords,
 } from "@/lib/cloudVocabulary";
-import { getServerSession } from "next-auth";
+import { getValidatedServerSession } from "@/lib/serverSession";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
 async function getCurrentVocabularyOwner() {
-  const session = await getServerSession(authOptions);
+  const { invalidated, session } = await getValidatedServerSession();
+  if (invalidated) return "SESSION_REPLACED";
+
   return (
     session?.user?.email?.trim().toLowerCase() ||
     session?.user?.name?.trim().toLowerCase() ||
@@ -20,6 +21,15 @@ async function getCurrentVocabularyOwner() {
 
 export async function GET() {
   const owner = await getCurrentVocabularyOwner();
+  if (owner === "SESSION_REPLACED") {
+    return NextResponse.json(
+      {
+        error: "SESSION_REPLACED",
+        message: "你的账号已在另一台设备登录，本设备已退出。",
+      },
+      { status: 409 }
+    );
+  }
   if (!owner) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -38,6 +48,15 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const owner = await getCurrentVocabularyOwner();
+  if (owner === "SESSION_REPLACED") {
+    return NextResponse.json(
+      {
+        error: "SESSION_REPLACED",
+        message: "你的账号已在另一台设备登录，本设备已退出。",
+      },
+      { status: 409 }
+    );
+  }
   if (!owner) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -59,6 +78,15 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   const owner = await getCurrentVocabularyOwner();
+  if (owner === "SESSION_REPLACED") {
+    return NextResponse.json(
+      {
+        error: "SESSION_REPLACED",
+        message: "你的账号已在另一台设备登录，本设备已退出。",
+      },
+      { status: 409 }
+    );
+  }
   if (!owner) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

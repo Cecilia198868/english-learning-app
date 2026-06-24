@@ -1,10 +1,12 @@
-import { authOptions } from "@/auth";
+import {
+  getValidatedServerSession,
+  sessionInvalidatedJsonResponse,
+} from "@/lib/serverSession";
 import {
   findProfileByEmail,
   upsertProfileStripeCustomerByEmail,
 } from "@/lib/userStore";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import Stripe from "stripe";
 
 export const runtime = "nodejs";
@@ -50,7 +52,10 @@ async function getReusableStripeCustomer(stripe: Stripe, email: string) {
 
 export async function POST(req: Request) {
   try {
-    const authSession = await getServerSession(authOptions);
+    const { invalidated, session: authSession } =
+      await getValidatedServerSession();
+    if (invalidated) return sessionInvalidatedJsonResponse();
+
     const email = authSession?.user?.email?.trim().toLowerCase();
 
     if (!email) {

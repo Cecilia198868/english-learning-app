@@ -1,13 +1,17 @@
-import { authOptions } from "@/auth";
+import {
+  getValidatedServerSession,
+  sessionInvalidatedJsonResponse,
+} from "@/lib/serverSession";
 import { getAccountSubscriptionForEmail } from "@/lib/subscriptionService";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function GET() {
-  const session = await getServerSession(authOptions);
+  const { invalidated, session } = await getValidatedServerSession();
+  if (invalidated) return sessionInvalidatedJsonResponse();
+
   const email = session?.user?.email?.trim().toLowerCase();
 
   if (!email) {

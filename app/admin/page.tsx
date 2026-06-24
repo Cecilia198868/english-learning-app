@@ -1,12 +1,11 @@
-import { authOptions } from "@/auth";
 import {
   getAdminAccessFromSession,
   getAdminDashboardStats,
 } from "@/lib/adminDashboard";
 import { createLoginUrl } from "@/lib/loginRedirect";
+import { getValidatedServerSession } from "@/lib/serverSession";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -23,7 +22,12 @@ const statLabels = [
 ] as const;
 
 export default async function AdminPage() {
-  const session = await getServerSession(authOptions);
+  const { invalidated, session } = await getValidatedServerSession();
+
+  if (invalidated) {
+    redirect("/api/auth/session-replaced");
+  }
+
   const access = await getAdminAccessFromSession(session);
 
   if (!access.email) {
