@@ -1,14 +1,17 @@
 const sensitiveKeyFragments = [
   "access_token",
   "authorization",
+  "csrf",
   "client_secret",
   "code_verifier",
   "cookie",
   "id_token",
+  "nonce",
   "password",
   "private_key",
   "refresh_token",
   "secret",
+  "state",
   "token",
 ];
 

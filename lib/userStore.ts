@@ -1,7 +1,12 @@
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { logAuthDebug, logAuthError, logAuthWarning } from "@/lib/authLogging";
+import {
+  logAuthDebug,
+  logAuthError,
+  logAuthWarning,
+  sanitizeAuthLogValue,
+} from "@/lib/authLogging";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import {
   getDefaultRoleForEmail,
@@ -181,6 +186,23 @@ function isMissingOAuthSchemaError(error: unknown) {
   );
 }
 
+function isOAuthIdentityConflictError(error: unknown) {
+  if (!error || typeof error !== "object") return false;
+
+  const candidate = error as {
+    code?: string;
+    message?: string;
+  };
+  const message = (candidate.message || "").toLowerCase();
+
+  return (
+    candidate.code === "23505" ||
+    message.includes("duplicate key") ||
+    message.includes("identity_already_exists") ||
+    message.includes("user_already_exists")
+  );
+}
+
 function buildOAuthStoredUser({
   displayName,
   email,
@@ -212,7 +234,7 @@ async function findProfileByColumn(column: string, value: string) {
   const { data, error } = await supabase
     .from("profiles")
     .select(
-      "email, subscription_status, stripe_customer_id, stripe_subscription_id, current_period_end, cancel_at_period_end"
+      "email, display_name, provider, provider_account_id, role, user_id, subscription_status, stripe_customer_id, stripe_subscription_id, current_period_end, cancel_at_period_end"
     )
     .eq(column, value)
     .maybeSingle<ProfileRow>();
@@ -394,9 +416,19 @@ export async function ensureOAuthUserProfile({
     normalizedProvider,
     normalizedProviderAccountId
   ).catch(() => null);
+  const providerEmail = normalizeEmail(email || "");
+
+  if (
+    normalizedProvider === "apple" &&
+    !existingIdentity &&
+    (!providerEmail || !providerEmail.includes("@"))
+  ) {
+    throw new Error("APPLE_REGISTRATION_NOT_COMPLETED");
+  }
+
   const normalizedEmail = normalizeEmail(
     existingIdentity?.email ||
-      email ||
+      providerEmail ||
       providerProfileEmail(normalizedProvider, normalizedProviderAccountId)
   );
 
@@ -456,6 +488,16 @@ export async function ensureOAuthUserProfile({
       });
 
       return profile;
+    }
+
+    if (isOAuthIdentityConflictError(error)) {
+      logAuthError("userStore.oauthProfile.identityConflict", error, {
+        email: normalizedEmail,
+        provider: normalizedProvider,
+        providerAccountId: normalizedProviderAccountId,
+        userId,
+      });
+      throw new Error("OAUTH_IDENTITY_CONFLICT");
     }
 
     logAuthError("userStore.oauthProfile.supabaseUpsertFailed", error, {
@@ -581,6 +623,19 @@ async function upsertSupabaseOAuthProfile({
       { onConflict: "email" }
     );
 
+  console.log(
+    "[auth][supabase.profiles.upsert]",
+    sanitizeAuthLogValue({
+      data: {
+        email,
+        provider,
+        providerAccountId,
+        userId,
+      },
+      error: profileError,
+    })
+  );
+
   if (profileError) {
     throw profileError;
   }
@@ -598,20 +653,39 @@ async function upsertSupabaseOAuthProfile({
       { onConflict: "provider,provider_account_id" }
     );
 
+  console.log(
+    "[auth][supabase.user_auth_identities.upsert]",
+    sanitizeAuthLogValue({
+      data: {
+        email,
+        provider,
+        providerAccountId,
+        userId,
+      },
+      error: identityError,
+    })
+  );
+
   if (identityError) {
     throw identityError;
   }
 
+  const profile = await findProfileByEmail(email).catch(() => null);
+
   return {
-    createdAt: "",
-    displayName,
-    email,
-    passwordHash: "",
-    provider,
-    providerAccountId,
-    role: await getUserRoleByEmail(email),
-    subscriptionStatus: "free" as SubscriptionStatus,
-    userId,
+    ...buildOAuthStoredUser({
+      displayName,
+      email,
+      provider,
+      providerAccountId,
+      userId,
+    }),
+    cancelAtPeriodEnd: profile?.cancelAtPeriodEnd,
+    currentPeriodEnd: profile?.currentPeriodEnd,
+    role: profile?.role || (await getUserRoleByEmail(email)),
+    stripeCustomerId: profile?.stripeCustomerId,
+    stripeSubscriptionId: profile?.stripeSubscriptionId,
+    subscriptionStatus: profile?.subscriptionStatus || "free",
   };
 }
 

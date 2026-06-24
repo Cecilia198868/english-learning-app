@@ -110,6 +110,12 @@
   transform: scale(0.99);
 }
 
+.oauthButton:disabled,
+.moreItem:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
 .oauthButton > svg,
 .oauthButton > span:first-child {
   justify-self: end;

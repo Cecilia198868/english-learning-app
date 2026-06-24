@@ -11,8 +11,11 @@ import {
   authDebugEnabled,
   logAuthDebug,
   logAuthError,
+  logAuthWarning,
   nextAuthLogger,
+  sanitizeAuthLogValue,
 } from "@/lib/authLogging";
+import { ensureCanonicalNextAuthUrl } from "@/lib/authOrigin";
 import {
   createSingleDeviceSessionIds,
   registerCurrentUserSession,
@@ -27,6 +30,11 @@ import {
   ensurePasswordlessUserProfile,
   getUserRoleByEmail,
 } from "@/lib/userStore";
+
+const authOriginResolution = ensureCanonicalNextAuthUrl();
+if (authOriginResolution.replaced) {
+  logAuthWarning("origin.canonicalized", authOriginResolution);
+}
 
 type WechatProfile = {
   errcode?: number;
@@ -183,6 +191,47 @@ async function resolveOAuthUser({
   });
 }
 
+function getOAuthFailureRedirect(error: unknown, provider: string | undefined) {
+  if (!provider) return null;
+
+  const message =
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+        ? error
+        : "";
+  const normalizedMessage = message.toLowerCase();
+  const queryProvider = provider === "twitter" ? "x" : provider;
+
+  if (
+    provider === "apple" &&
+    (message.includes("APPLE_REGISTRATION_NOT_COMPLETED") ||
+      normalizedMessage.includes("registration not completed"))
+  ) {
+    return "/login?apple=registration-not-completed";
+  }
+
+  if (
+    normalizedMessage.includes("identity_already_exists") ||
+    normalizedMessage.includes("oauth_identity_conflict")
+  ) {
+    return `/login?${queryProvider}=identity-already-exists`;
+  }
+
+  if (
+    normalizedMessage.includes("user_already_exists") ||
+    normalizedMessage.includes("user already exists")
+  ) {
+    return `/login?${queryProvider}=user-already-exists`;
+  }
+
+  if (normalizedMessage.includes("provider")) {
+    return `/login?${queryProvider}=provider-error`;
+  }
+
+  return null;
+}
+
 function WechatProvider(options: {
   clientId: string;
   clientSecret: string;
@@ -250,6 +299,10 @@ function WechatProvider(options: {
 }
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    error: "/login",
+    signIn: "/login",
+  },
   providers: [
     ...(isAppleAuthConfigured
       ? [
@@ -402,6 +455,20 @@ export const authOptions: NextAuthOptions = {
           userEmail: user.email,
           userId: user.id,
         });
+
+        const redirectUrl = getOAuthFailureRedirect(error, account?.provider);
+        if (redirectUrl) {
+          console.error(
+            "[auth][signIn.userFacingRedirect]",
+            sanitizeAuthLogValue({
+              error,
+              provider: account?.provider,
+              redirectUrl,
+            })
+          );
+          return redirectUrl;
+        }
+
         throw error;
       }
     },

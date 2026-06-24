@@ -1,7 +1,8 @@
 "use client";
 
+import { getSession } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./LoginPageClient.module.css";
 
@@ -10,6 +11,17 @@ type LoginPageClientProps = {
   isGoogleEnabled?: boolean;
   isWechatEnabled?: boolean;
   isXEnabled?: boolean;
+};
+
+type OAuthProvider = "apple" | "google";
+type SearchParamReader = {
+  get(name: string): string | null;
+};
+
+const productionAuthOrigin = "https://web-english-app.vercel.app";
+const providerLabels: Record<OAuthProvider, string> = {
+  apple: "Apple",
+  google: "Google",
 };
 
 function GoogleMark() {
@@ -86,6 +98,100 @@ function ShieldMark() {
   );
 }
 
+function getLoginEnvironment() {
+  if (typeof window === "undefined") {
+    return {
+      browser: "server",
+      isMobile: false,
+      mode: "server",
+      standalone: false,
+      userAgent: "",
+    };
+  }
+
+  const userAgent = navigator.userAgent;
+  const standalone =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    Boolean((navigator as Navigator & { standalone?: boolean }).standalone);
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent);
+  const browser = /CriOS/i.test(userAgent)
+    ? "chrome-ios"
+    : /Chrome|Chromium|Edg/i.test(userAgent)
+      ? "chrome"
+      : /Safari/i.test(userAgent)
+        ? "safari"
+        : "other";
+
+  return {
+    browser,
+    isMobile,
+    mode: standalone ? "standalone" : "browser",
+    standalone,
+    userAgent,
+  };
+}
+
+function buildRedirectTo(callbackUrl: string) {
+  try {
+    const redirectUrl = new URL(callbackUrl, productionAuthOrigin);
+    if (redirectUrl.origin !== productionAuthOrigin) {
+      return new URL("/start", productionAuthOrigin).toString();
+    }
+
+    return redirectUrl.toString();
+  } catch {
+    return new URL("/start", productionAuthOrigin).toString();
+  }
+}
+
+function getProviderQueryNotice(
+  searchParams: SearchParamReader,
+  provider: string,
+  label: string
+) {
+  const state = searchParams.get(provider);
+
+  switch (state) {
+    case "not-configured":
+      return `${label} 登录暂未配置，请稍后再试。`;
+    case "csrf":
+      return `${label} 登录安全校验失败，请刷新页面后重试。`;
+    case "signin":
+      return `${label} 登录启动失败，请重试。`;
+    case "exception":
+      return `${label} 登录启动时发生异常，请重试。`;
+    case "registration-not-completed":
+      return "Apple 登录未完成注册，可能是没有授权邮箱或中途取消。请重新发起 Apple 登录并完成授权。";
+    case "identity-already-exists":
+      return `${label} 账号已绑定到另一个登录身份，请使用原来的登录方式或联系客服处理。`;
+    case "user-already-exists":
+      return `${label} 返回的邮箱已存在，请使用这个邮箱原来的登录方式。`;
+    case "provider-error":
+      return `${label} 服务返回错误，请稍后重试。`;
+    default:
+      return "";
+  }
+}
+
+function getNextAuthErrorNotice(searchParams: SearchParamReader) {
+  const error = searchParams.get("error");
+  if (!error) return "";
+
+  switch (error) {
+    case "OAuthAccountNotLinked":
+      return "这个邮箱已经绑定到另一种登录方式，请使用原来的登录方式。";
+    case "OAuthCallback":
+    case "Callback":
+      return "登录回调失败，请重新尝试。如果是 Apple 登录，请确认已完成邮箱授权。";
+    case "AccessDenied":
+      return "登录被取消或未授权，请重新尝试。";
+    case "Configuration":
+      return "登录配置异常，请稍后重试。";
+    default:
+      return `登录失败：${error}。请重新尝试。`;
+  }
+}
+
 export default function LoginPageClient({
   isAppleEnabled = true,
   isGoogleEnabled = true,
@@ -94,27 +200,152 @@ export default function LoginPageClient({
 }: LoginPageClientProps) {
   const searchParams = useSearchParams();
   const [manualNotice, setManualNotice] = useState("");
+  const [pendingProvider, setPendingProvider] = useState<OAuthProvider | null>(
+    null
+  );
+  const resetTimerRef = useRef<number | null>(null);
   const callbackUrl = searchParams.get("callbackUrl") || "/start";
+  const searchParamsString = searchParams.toString();
   const sessionNotice =
     searchParams.get("session") === "replaced"
       ? "你的账号已在另一台设备登录，本设备已退出。"
       : "";
   const queryNotice =
-    searchParams.get("wechat") === "not-configured"
-      ? "微信登录暂未配置，请稍后再试。"
-      : searchParams.get("x") === "not-configured"
-        ? "X 登录暂未配置，请稍后再试。"
-        : searchParams.get("apple") === "not-configured"
-          ? "Apple 登录暂未配置，请稍后再试。"
-          : searchParams.get("google") === "not-configured"
-            ? "Google 登录暂未配置，请稍后再试。"
-            : "";
+    getProviderQueryNotice(searchParams, "wechat", "微信") ||
+    getProviderQueryNotice(searchParams, "x", "X") ||
+    getProviderQueryNotice(searchParams, "apple", "Apple") ||
+    getProviderQueryNotice(searchParams, "google", "Google") ||
+    getNextAuthErrorNotice(searchParams);
   const notice = manualNotice || sessionNotice || queryNotice;
 
   function withCallback(path: string) {
     const params = new URLSearchParams({ callbackUrl });
     return `${path}?${params.toString()}`;
   }
+
+  const clearPendingResetTimer = useCallback(() => {
+    if (resetTimerRef.current === null) return;
+    window.clearTimeout(resetTimerRef.current);
+    resetTimerRef.current = null;
+  }, []);
+
+  const resetPendingProvider = useCallback((reason: string) => {
+    clearPendingResetTimer();
+    setPendingProvider((current) => {
+      if (current) {
+        console.log("[auth][mobile.pendingReset]", {
+          provider: current,
+          reason,
+        });
+      }
+
+      return null;
+    });
+  }, [clearPendingResetTimer]);
+
+  function startOAuth(provider: OAuthProvider, path: string) {
+    if (pendingProvider) {
+      console.warn("[auth][mobile.clickIgnoredWhilePending]", {
+        pendingProvider,
+        provider,
+      });
+      return;
+    }
+
+    const startUrl = withCallback(path);
+    const redirectTo = buildRedirectTo(callbackUrl);
+    const environment = getLoginEnvironment();
+
+    setManualNotice("");
+    setPendingProvider(provider);
+
+    console.log("[auth][mobile.click]", {
+      callbackUrl,
+      environment,
+      provider,
+      redirectTo,
+      startUrl,
+    });
+
+    try {
+      console.log("[auth][mobile.signInWithOAuth.execute]", {
+        note: "This app uses NextAuth OAuth start route instead of Supabase Auth signInWithOAuth.",
+        provider,
+        redirectTo,
+      });
+      window.location.href = startUrl;
+      console.log("[auth][mobile.enteringRedirect]", {
+        provider,
+        startUrl,
+      });
+    } catch (error) {
+      console.error("[auth][mobile.redirectError]", {
+        error,
+        provider,
+        startUrl,
+      });
+      setManualNotice(`${providerLabels[provider]} 登录跳转失败，请重试。`);
+      setPendingProvider(null);
+    } finally {
+      clearPendingResetTimer();
+      resetTimerRef.current = window.setTimeout(() => {
+        if (document.visibilityState !== "hidden") {
+          console.warn("[auth][mobile.redirectTimeoutReset]", {
+            provider,
+            startUrl,
+          });
+          setPendingProvider((current) =>
+            current === provider ? null : current
+          );
+        }
+      }, 8000);
+    }
+  }
+
+  useEffect(() => {
+    const params = Object.fromEntries(
+      new URLSearchParams(searchParamsString).entries()
+    );
+
+    console.log("[auth][loginPage.urlParams]", {
+      environment: getLoginEnvironment(),
+      params,
+    });
+
+    getSession()
+      .then((session) => {
+        console.log("[auth][loginPage.getSession]", {
+          hasSession: Boolean(session),
+          hasUser: Boolean(session?.user),
+          userEmail: session?.user?.email || null,
+        });
+      })
+      .catch((error) => {
+        console.error("[auth][loginPage.getSessionError]", { error });
+      });
+  }, [searchParamsString]);
+
+  useEffect(() => {
+    const resetFromPageLifecycle = () => {
+      resetPendingProvider("page-visible-or-restored");
+    };
+    const resetFromVisibility = () => {
+      if (document.visibilityState === "visible") {
+        resetPendingProvider("visibilitychange-visible");
+      }
+    };
+
+    window.addEventListener("pageshow", resetFromPageLifecycle);
+    window.addEventListener("focus", resetFromPageLifecycle);
+    document.addEventListener("visibilitychange", resetFromVisibility);
+
+    return () => {
+      clearPendingResetTimer();
+      window.removeEventListener("pageshow", resetFromPageLifecycle);
+      window.removeEventListener("focus", resetFromPageLifecycle);
+      document.removeEventListener("visibilitychange", resetFromVisibility);
+    };
+  }, [clearPendingResetTimer, resetPendingProvider]);
 
   return (
     <main className={styles.page}>
@@ -127,17 +358,21 @@ export default function LoginPageClient({
 
         <div className={styles.oauthStack}>
           {isGoogleEnabled ? (
-            <Link
-              href={withCallback("/api/auth/google/start")}
+            <button
+              type="button"
               className={styles.oauthButton}
+              aria-busy={pendingProvider === "google"}
+              disabled={Boolean(pendingProvider)}
+              onClick={() => startOAuth("google", "/api/auth/google/start")}
             >
               <GoogleMark />
-              <span>Google</span>
-            </Link>
+              <span>{pendingProvider === "google" ? "Google..." : "Google"}</span>
+            </button>
           ) : (
             <button
               type="button"
               className={styles.oauthButton}
+              disabled={Boolean(pendingProvider)}
               onClick={() => setManualNotice("Google 登录暂未配置，请稍后再试。")}
             >
               <GoogleMark />
@@ -146,17 +381,21 @@ export default function LoginPageClient({
           )}
 
           {isAppleEnabled ? (
-            <Link
-              href={withCallback("/api/auth/apple/start")}
+            <button
+              type="button"
               className={styles.oauthButton}
+              aria-busy={pendingProvider === "apple"}
+              disabled={Boolean(pendingProvider)}
+              onClick={() => startOAuth("apple", "/api/auth/apple/start")}
             >
               <AppleMark />
-              <span>Apple</span>
-            </Link>
+              <span>{pendingProvider === "apple" ? "Apple..." : "Apple"}</span>
+            </button>
           ) : (
             <button
               type="button"
               className={styles.oauthButton}
+              disabled={Boolean(pendingProvider)}
               onClick={() => setManualNotice("Apple 登录暂未配置，请稍后再试。")}
             >
               <AppleMark />
