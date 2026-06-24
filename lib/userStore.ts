@@ -1,6 +1,7 @@
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { logAuthDebug, logAuthError, logAuthWarning } from "@/lib/authLogging";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import {
   getDefaultRoleForEmail,
@@ -413,38 +414,93 @@ export async function ensureOAuthUserProfile({
     buildOAuthUserId(normalizedProvider, normalizedProviderAccountId);
 
   try {
-    return await upsertSupabaseOAuthProfile({
+    const profile = await upsertSupabaseOAuthProfile({
       displayName: resolvedDisplayName,
       email: normalizedEmail,
       provider: normalizedProvider,
       providerAccountId: normalizedProviderAccountId,
       userId,
     });
+
+    logAuthDebug("userStore.oauthProfile.supabaseUpsertSucceeded", {
+      email: profile.email,
+      provider: normalizedProvider,
+      providerAccountId: normalizedProviderAccountId,
+      userId: profile.userId,
+    });
+
+    return profile;
   } catch (error) {
     if (isMissingOAuthSchemaError(error)) {
-      return upsertSupabaseOAuthProfileByEmailOnly({
+      logAuthWarning("userStore.oauthProfile.oauthSchemaMissing", {
+        email: normalizedEmail,
+        error,
+        provider: normalizedProvider,
+        providerAccountId: normalizedProviderAccountId,
+        userId,
+      });
+
+      const profile = await upsertSupabaseOAuthProfileByEmailOnly({
         displayName: resolvedDisplayName,
         email: normalizedEmail,
         provider: normalizedProvider,
         providerAccountId: normalizedProviderAccountId,
         userId,
       });
+
+      logAuthDebug("userStore.oauthProfile.emailOnlyFallbackSucceeded", {
+        email: profile.email,
+        provider: normalizedProvider,
+        providerAccountId: normalizedProviderAccountId,
+        userId: profile.userId,
+      });
+
+      return profile;
     }
+
+    logAuthError("userStore.oauthProfile.supabaseUpsertFailed", error, {
+      email: normalizedEmail,
+      provider: normalizedProvider,
+      providerAccountId: normalizedProviderAccountId,
+      userId,
+    });
 
     return ensureLocalOAuthUserProfile({
       displayName: resolvedDisplayName,
       email: normalizedEmail,
       provider: normalizedProvider,
       providerAccountId: normalizedProviderAccountId,
-    }).catch(() =>
-      buildOAuthStoredUser({
-        displayName: resolvedDisplayName,
-        email: normalizedEmail,
-        provider: normalizedProvider,
-        providerAccountId: normalizedProviderAccountId,
-        userId,
+    })
+      .then((profile) => {
+        logAuthWarning("userStore.oauthProfile.localFallbackSucceeded", {
+          email: profile.email,
+          provider: normalizedProvider,
+          providerAccountId: normalizedProviderAccountId,
+          userId: profile.userId,
+        });
+
+        return profile;
       })
-    );
+      .catch((fallbackError) => {
+        logAuthError(
+          "userStore.oauthProfile.localFallbackFailed",
+          fallbackError,
+          {
+            email: normalizedEmail,
+            provider: normalizedProvider,
+            providerAccountId: normalizedProviderAccountId,
+            userId,
+          }
+        );
+
+        return buildOAuthStoredUser({
+          displayName: resolvedDisplayName,
+          email: normalizedEmail,
+          provider: normalizedProvider,
+          providerAccountId: normalizedProviderAccountId,
+          userId,
+        });
+      });
   }
 }
 

@@ -8,6 +8,12 @@ import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
 import { resolveAppleClientSecret } from "@/lib/appleClientSecret";
 import {
+  authDebugEnabled,
+  logAuthDebug,
+  logAuthError,
+  nextAuthLogger,
+} from "@/lib/authLogging";
+import {
   createSingleDeviceSessionIds,
   registerCurrentUserSession,
   validateCurrentUserSession,
@@ -44,6 +50,7 @@ const nextAuthSecret =
   process.env.NEXTAUTH_SECRET || "dev-only-nextauth-secret-change-me";
 const persistentSessionMaxAgeSeconds = 60 * 60 * 24 * 365 * 5;
 const persistentSessionUpdateAgeSeconds = 60 * 60 * 24;
+const oauthTransientCookieMaxAgeSeconds = 60 * 15;
 
 export const isAppleAuthConfigured =
   Boolean(appleClientId) && Boolean(appleClientSecret);
@@ -55,6 +62,36 @@ export const isWechatAuthConfigured =
   Boolean(wechatClientId) && Boolean(wechatClientSecret);
 
 export const isXAuthConfigured = Boolean(xClientId) && Boolean(xClientSecret);
+
+function shouldUseSecureAuthCookies() {
+  const configuredUrl = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL;
+
+  if (configuredUrl) {
+    try {
+      return new URL(configuredUrl).protocol === "https:";
+    } catch {
+      // Fall back to the Vercel runtime signal below.
+    }
+  }
+
+  return process.env.VERCEL === "1";
+}
+
+const useSecureAuthCookies = shouldUseSecureAuthCookies();
+const authCookiePrefix = useSecureAuthCookies ? "__Secure-" : "";
+const oauthCookieSameSite = useSecureAuthCookies ? "none" : "lax";
+
+const oauthCallbackCookieOptions = {
+  httpOnly: true,
+  path: "/",
+  sameSite: oauthCookieSameSite,
+  secure: useSecureAuthCookies,
+} as const;
+
+const oauthVerifierCookieOptions = {
+  ...oauthCallbackCookieOptions,
+  maxAge: oauthTransientCookieMaxAgeSeconds,
+} as const;
 
 function safeIdentifier(value: string) {
   return value
@@ -312,49 +349,102 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ account, user }) {
-      const oauthUser = await resolveOAuthUser({ account, user });
+      try {
+        logAuthDebug("signIn.start", {
+          provider: account?.provider,
+          providerAccountId: account?.providerAccountId,
+          type: account?.type,
+          userEmail: user.email,
+          userId: user.id,
+        });
 
-      if (oauthUser) {
-        user.email = oauthUser.email;
-        user.name = oauthUser.displayName || oauthUser.email;
-        user.id = oauthUser.userId || oauthUser.email;
+        const oauthUser = await resolveOAuthUser({ account, user });
+
+        if (oauthUser) {
+          user.email = oauthUser.email;
+          user.name = oauthUser.displayName || oauthUser.email;
+          user.id = oauthUser.userId || oauthUser.email;
+          logAuthDebug("signIn.oauthProfileResolved", {
+            email: oauthUser.email,
+            provider: oauthUser.provider,
+            userId: oauthUser.userId,
+          });
+          return true;
+        }
+
+        const email = resolveUserEmail(
+          user.email,
+          account?.provider,
+          account?.providerAccountId
+        );
+
+        if (!email) {
+          logAuthError("signIn.missingEmail", new Error("AUTH_EMAIL_MISSING"), {
+            provider: account?.provider,
+            providerAccountId: account?.providerAccountId,
+            type: account?.type,
+            userId: user.id,
+          });
+          return false;
+        }
+
+        user.email = email;
+        await ensurePasswordlessUserProfile(email);
+        logAuthDebug("signIn.passwordlessProfileResolved", { email });
         return true;
+      } catch (error) {
+        logAuthError("signIn.failed", error, {
+          provider: account?.provider,
+          providerAccountId: account?.providerAccountId,
+          type: account?.type,
+          userEmail: user.email,
+          userId: user.id,
+        });
+        throw error;
       }
-
-      const email = resolveUserEmail(
-        user.email,
-        account?.provider,
-        account?.providerAccountId
-      );
-
-      if (!email) return false;
-
-      user.email = email;
-      await ensurePasswordlessUserProfile(email);
-      return true;
     },
     async jwt({ account, token, user }) {
       const isFreshLogin = Boolean(account || user);
-      const oauthUser = await resolveOAuthUser({
-        account,
-        user:
-          user || token.email
-            ? {
-                email:
-                  typeof user?.email === "string"
-                    ? user.email
-                    : typeof token.email === "string"
-                      ? token.email
-                      : null,
-                name:
-                  typeof user?.name === "string"
-                    ? user.name
-                    : typeof token.name === "string"
-                      ? token.name
-                      : null,
-              }
-            : undefined,
-      });
+      let oauthUser: Awaited<ReturnType<typeof resolveOAuthUser>> = null;
+
+      try {
+        logAuthDebug("jwt.start", {
+          isFreshLogin,
+          provider: account?.provider,
+          providerAccountId: account?.providerAccountId,
+          tokenEmail: token.email,
+          userEmail: user?.email,
+        });
+
+        oauthUser = await resolveOAuthUser({
+          account,
+          user:
+            user || token.email
+              ? {
+                  email:
+                    typeof user?.email === "string"
+                      ? user.email
+                      : typeof token.email === "string"
+                        ? token.email
+                        : null,
+                  name:
+                    typeof user?.name === "string"
+                      ? user.name
+                      : typeof token.name === "string"
+                        ? token.name
+                        : null,
+                }
+              : undefined,
+        });
+      } catch (error) {
+        logAuthError("jwt.resolveOAuthUser.failed", error, {
+          provider: account?.provider,
+          providerAccountId: account?.providerAccountId,
+          tokenEmail: token.email,
+          userEmail: user?.email,
+        });
+        throw error;
+      }
 
       if (oauthUser) {
         token.email = oauthUser.email;
@@ -391,11 +481,31 @@ export const authOptions: NextAuthOptions = {
             typeof token.userId === "string" && token.userId
               ? token.userId
               : email,
-        }).catch((error) => {
-          if (process.env.AUTH_SESSION_DEBUG === "1") {
-            console.error("Failed to register current user session", error);
-          }
-        });
+        })
+          .then(() => {
+            logAuthDebug("jwt.singleDeviceSessionRegistered", {
+              deviceId: sessionIds.deviceId,
+              email,
+              provider: token.provider,
+              sessionId: sessionIds.sessionId,
+              userId:
+                typeof token.userId === "string" && token.userId
+                  ? token.userId
+                  : email,
+            });
+          })
+          .catch((error) => {
+            logAuthError("jwt.registerCurrentUserSession.failed", error, {
+              deviceId: sessionIds.deviceId,
+              email,
+              provider: token.provider,
+              sessionId: sessionIds.sessionId,
+              userId:
+                typeof token.userId === "string" && token.userId
+                  ? token.userId
+                  : email,
+            });
+          });
       }
 
       return token;
@@ -439,12 +549,33 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  cookies: {
+    callbackUrl: {
+      name: `${authCookiePrefix}next-auth.callback-url`,
+      options: oauthCallbackCookieOptions,
+    },
+    nonce: {
+      name: `${authCookiePrefix}next-auth.nonce`,
+      options: oauthVerifierCookieOptions,
+    },
+    pkceCodeVerifier: {
+      name: `${authCookiePrefix}next-auth.pkce.code_verifier`,
+      options: oauthVerifierCookieOptions,
+    },
+    state: {
+      name: `${authCookiePrefix}next-auth.state`,
+      options: oauthVerifierCookieOptions,
+    },
+  },
+  debug: authDebugEnabled,
+  logger: nextAuthLogger,
   secret: nextAuthSecret,
   session: {
     strategy: "jwt",
     maxAge: persistentSessionMaxAgeSeconds,
     updateAge: persistentSessionUpdateAgeSeconds,
   },
+  useSecureCookies: useSecureAuthCookies,
   jwt: {
     maxAge: persistentSessionMaxAgeSeconds,
   },
