@@ -81,6 +81,7 @@
   color: rgba(39, 36, 58, 0.54);
   font-size: 0.82rem;
   font-weight: 800;
+  line-height: 1.55;
 }
 
 .oauthStack {
@@ -192,6 +193,29 @@
   padding: 9px 11px;
 }
 
+.footerNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 18px;
+  color: rgba(43, 38, 68, 0.52);
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.footerNote svg {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
 .toast {
   position: fixed;
   left: 50%;
@@ -262,6 +286,10 @@
 }
 
 :global(html[data-app-theme]) .card p {
+  color: var(--text-secondary);
+}
+
+:global(html[data-app-theme]) .footerNote {
   color: var(--text-secondary);
 }
 

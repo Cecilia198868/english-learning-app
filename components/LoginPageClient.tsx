@@ -81,6 +81,15 @@ function BackMark() {
   );
 }
 
+function ShieldMark() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 5 25 8.5v6.7c0 5.3-3.7 9.6-9 11.8-5.3-2.2-9-6.5-9-11.8V8.5L16 5Z" />
+      <path d="m12.4 16 2.4 2.4 5-5.2" />
+    </svg>
+  );
+}
+
 function getProviderQueryNotice(
   searchParams: SearchParamReader,
   provider: string,
@@ -240,9 +249,9 @@ export default function LoginPageClient({
       <Link href="/" className={styles.backButton} aria-label="返回首页">
         <BackMark />
       </Link>
-      <section className={styles.card} aria-label="Sign in to SpeakFlow">
-        <h1>SpeakFlow</h1>
-        <p>Choose a sign-in method</p>
+      <section className={styles.card} aria-label="登录 SpeakFlow">
+        <h1>登录 SpeakFlow</h1>
+        <p>选择一种登录方式，继续保存练习记录、表达库和订阅状态。</p>
 
         <div className={styles.oauthStack}>
           {isAppleEnabled ? (
@@ -258,8 +267,8 @@ export default function LoginPageClient({
               </span>
               <span className={styles.providerLabel}>
                 {pendingProvider === "apple"
-                  ? "Opening Apple..."
-                  : "Continue with Apple"}
+                  ? "正在打开 Apple..."
+                  : "Apple 登录"}
               </span>
             </button>
           ) : (
@@ -272,7 +281,7 @@ export default function LoginPageClient({
               <span className={styles.providerIcon}>
                 <AppleMark />
               </span>
-              <span className={styles.providerLabel}>Continue with Apple</span>
+              <span className={styles.providerLabel}>Apple 登录</span>
             </button>
           )}
 
@@ -285,8 +294,8 @@ export default function LoginPageClient({
             <span className={`${styles.providerIcon} ${styles.wechatIcon}`}>
               <WechatMark />
             </span>
-            <span className={styles.providerLabel}>Continue with WeChat</span>
-            <span className={styles.badge}>Coming Soon</span>
+            <span className={styles.providerLabel}>微信登录</span>
+            <span className={styles.badge}>即将上线</span>
           </button>
 
           {isGoogleEnabled ? (
@@ -302,8 +311,8 @@ export default function LoginPageClient({
               </span>
               <span className={styles.providerLabel}>
                 {pendingProvider === "google"
-                  ? "Opening Google..."
-                  : "Continue with Google"}
+                  ? "正在打开 Google..."
+                  : "Google 登录"}
               </span>
             </button>
           ) : (
@@ -316,7 +325,7 @@ export default function LoginPageClient({
               <span className={styles.providerIcon}>
                 <GoogleMark />
               </span>
-              <span className={styles.providerLabel}>Continue with Google</span>
+              <span className={styles.providerLabel}>Google 登录</span>
             </button>
           )}
 
@@ -324,7 +333,7 @@ export default function LoginPageClient({
             <span className={styles.providerIcon}>
               <MailMark />
             </span>
-            <span className={styles.providerLabel}>Continue with Email</span>
+            <span className={styles.providerLabel}>邮箱登录</span>
           </Link>
         </div>
 
@@ -333,6 +342,11 @@ export default function LoginPageClient({
             {notice}
           </div>
         ) : null}
+
+        <footer className={styles.footerNote}>
+          <ShieldMark />
+          <span>无需设置密码，首次登录自动创建账号。</span>
+        </footer>
       </section>
 
       {toast ? (

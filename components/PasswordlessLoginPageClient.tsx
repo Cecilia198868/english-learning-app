@@ -70,7 +70,7 @@ export default function PasswordlessLoginPageClient() {
 
   return (
     <main className={styles.page}>
-      <section className={styles.panel} aria-label="Email login">
+      <section className={styles.panel} aria-label="邮箱登录">
         <Link
           href={`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`}
           className={styles.back}
@@ -79,13 +79,13 @@ export default function PasswordlessLoginPageClient() {
           <span aria-hidden="true">‹</span>
         </Link>
         <span className={styles.handle} aria-hidden="true" />
-        <h1>Email Login</h1>
-        <p>Enter your email address and continue with a verification code.</p>
+        <h1>邮箱登录</h1>
+        <p>输入邮箱地址，使用验证码继续登录。</p>
 
         {step === "input" ? (
           <form onSubmit={requestCode} className={styles.form} noValidate>
             <label>
-              <span>Email address</span>
+              <span>邮箱地址</span>
               <input
                 type="email"
                 inputMode="email"
@@ -99,13 +99,13 @@ export default function PasswordlessLoginPageClient() {
             {message ? <div className={styles.message}>{message}</div> : null}
 
             <button type="submit" disabled={isRequesting}>
-              {isRequesting ? "Sending..." : "Send verification code"}
+              {isRequesting ? "发送中..." : "发送验证码"}
             </button>
           </form>
         ) : (
           <form onSubmit={verifyCode} className={styles.form} noValidate>
             <label>
-              <span>Verification code</span>
+              <span>验证码</span>
               <input
                 type="text"
                 inputMode="numeric"
@@ -114,14 +114,14 @@ export default function PasswordlessLoginPageClient() {
                 onChange={(event) =>
                   setCode(event.target.value.replace(/\D/g, "").slice(0, 6))
                 }
-                placeholder="Enter 6-digit code"
+                placeholder="请输入 6 位验证码"
               />
             </label>
 
             {message ? <div className={styles.message}>{message}</div> : null}
 
             <button type="submit" disabled={isVerifying}>
-              {isVerifying ? "Verifying..." : "Verify and continue"}
+              {isVerifying ? "验证中..." : "验证并继续"}
             </button>
             <button
               type="button"
@@ -132,7 +132,7 @@ export default function PasswordlessLoginPageClient() {
                 setMessage("");
               }}
             >
-              Edit email
+              重新填写邮箱
             </button>
           </form>
         )}
