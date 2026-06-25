@@ -1,6 +1,6 @@
 import {
   createPasswordlessCode,
-  normalizePasswordlessTarget,
+  normalizePasswordlessEmail,
   shouldExposePasswordlessCode,
 } from "@/lib/passwordlessCodes";
 import { NextResponse } from "next/server";
@@ -10,11 +10,10 @@ export const runtime = "nodejs";
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as { email?: unknown };
-    const email = normalizePasswordlessTarget(
-      "email",
+    const email = normalizePasswordlessEmail(
       typeof body.email === "string" ? body.email : ""
     );
-    const result = await createPasswordlessCode("email", email);
+    const result = await createPasswordlessCode(email);
     const exposeCode = shouldExposePasswordlessCode();
 
     return NextResponse.json({

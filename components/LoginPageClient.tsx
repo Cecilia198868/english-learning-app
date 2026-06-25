@@ -1,6 +1,5 @@
 "use client";
 
-import { getSession } from "next-auth/react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -9,8 +8,6 @@ import styles from "./LoginPageClient.module.css";
 type LoginPageClientProps = {
   isAppleEnabled?: boolean;
   isGoogleEnabled?: boolean;
-  isWechatEnabled?: boolean;
-  isXEnabled?: boolean;
 };
 
 type OAuthProvider = "apple" | "google";
@@ -18,7 +15,6 @@ type SearchParamReader = {
   get(name: string): string | null;
 };
 
-const productionAuthOrigin = "https://web-english-app.vercel.app";
 const providerLabels: Record<OAuthProvider, string> = {
   apple: "Apple",
   google: "Google",
@@ -58,25 +54,21 @@ function WechatMark() {
 function MailMark() {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M7 9h18v14H7z" />
-      <path d="m8 10 8 6.5L24 10" />
-    </svg>
-  );
-}
-
-function PhoneMark() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      <rect x="10" y="5" width="12" height="22" rx="3" />
-      <path d="M14 8h4M15 24h2" />
-    </svg>
-  );
-}
-
-function XMark() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M8 7l16 18M24 7 8 25" />
+      <path
+        d="M7 9h18v14H7z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="2.2"
+      />
+      <path
+        d="m8 10 8 6.5L24 10"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2.2"
+      />
     </svg>
   );
 }
@@ -87,61 +79,6 @@ function BackMark() {
       <path d="M19 8 11 16l8 8M12 16h14" />
     </svg>
   );
-}
-
-function ShieldMark() {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M16 5 25 8.5v6.7c0 5.3-3.7 9.6-9 11.8-5.3-2.2-9-6.5-9-11.8V8.5L16 5Z" />
-      <path d="m12.4 16 2.4 2.4 5-5.2" />
-    </svg>
-  );
-}
-
-function getLoginEnvironment() {
-  if (typeof window === "undefined") {
-    return {
-      browser: "server",
-      isMobile: false,
-      mode: "server",
-      standalone: false,
-      userAgent: "",
-    };
-  }
-
-  const userAgent = navigator.userAgent;
-  const standalone =
-    window.matchMedia("(display-mode: standalone)").matches ||
-    Boolean((navigator as Navigator & { standalone?: boolean }).standalone);
-  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(userAgent);
-  const browser = /CriOS/i.test(userAgent)
-    ? "chrome-ios"
-    : /Chrome|Chromium|Edg/i.test(userAgent)
-      ? "chrome"
-      : /Safari/i.test(userAgent)
-        ? "safari"
-        : "other";
-
-  return {
-    browser,
-    isMobile,
-    mode: standalone ? "standalone" : "browser",
-    standalone,
-    userAgent,
-  };
-}
-
-function buildRedirectTo(callbackUrl: string) {
-  try {
-    const redirectUrl = new URL(callbackUrl, productionAuthOrigin);
-    if (redirectUrl.origin !== productionAuthOrigin) {
-      return new URL("/start", productionAuthOrigin).toString();
-    }
-
-    return redirectUrl.toString();
-  } catch {
-    return new URL("/start", productionAuthOrigin).toString();
-  }
 }
 
 function getProviderQueryNotice(
@@ -195,24 +132,21 @@ function getNextAuthErrorNotice(searchParams: SearchParamReader) {
 export default function LoginPageClient({
   isAppleEnabled = true,
   isGoogleEnabled = true,
-  isWechatEnabled = false,
-  isXEnabled = false,
 }: LoginPageClientProps) {
   const searchParams = useSearchParams();
   const [manualNotice, setManualNotice] = useState("");
+  const [toast, setToast] = useState("");
   const [pendingProvider, setPendingProvider] = useState<OAuthProvider | null>(
     null
   );
   const resetTimerRef = useRef<number | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
   const callbackUrl = searchParams.get("callbackUrl") || "/start";
-  const searchParamsString = searchParams.toString();
   const sessionNotice =
     searchParams.get("session") === "replaced"
       ? "你的账号已在另一台设备登录，本设备已退出。"
       : "";
   const queryNotice =
-    getProviderQueryNotice(searchParams, "wechat", "微信") ||
-    getProviderQueryNotice(searchParams, "x", "X") ||
     getProviderQueryNotice(searchParams, "apple", "Apple") ||
     getProviderQueryNotice(searchParams, "google", "Google") ||
     getNextAuthErrorNotice(searchParams);
@@ -229,57 +163,60 @@ export default function LoginPageClient({
     resetTimerRef.current = null;
   }, []);
 
-  const resetPendingProvider = useCallback((reason: string) => {
+  const resetPendingProvider = useCallback(() => {
     clearPendingResetTimer();
-    setPendingProvider((current) => {
-      if (current) {
-        console.log("[auth][mobile.pendingReset]", {
-          provider: current,
-          reason,
-        });
-      }
-
-      return null;
-    });
+    setPendingProvider(null);
   }, [clearPendingResetTimer]);
 
-  function startOAuth(provider: OAuthProvider, path: string) {
-    if (pendingProvider) {
-      console.warn("[auth][mobile.clickIgnoredWhilePending]", {
-        pendingProvider,
-        provider,
-      });
-      return;
+  useEffect(() => {
+    const resetFromPageLifecycle = () => {
+      resetPendingProvider();
+    };
+    const resetFromVisibility = () => {
+      if (document.visibilityState === "visible") {
+        resetPendingProvider();
+      }
+    };
+
+    window.addEventListener("pageshow", resetFromPageLifecycle);
+    window.addEventListener("focus", resetFromPageLifecycle);
+    document.addEventListener("visibilitychange", resetFromVisibility);
+
+    return () => {
+      clearPendingResetTimer();
+      if (toastTimerRef.current !== null) {
+        window.clearTimeout(toastTimerRef.current);
+        toastTimerRef.current = null;
+      }
+      window.removeEventListener("pageshow", resetFromPageLifecycle);
+      window.removeEventListener("focus", resetFromPageLifecycle);
+      document.removeEventListener("visibilitychange", resetFromVisibility);
+    };
+  }, [clearPendingResetTimer, resetPendingProvider]);
+
+  function showToast(message: string) {
+    if (toastTimerRef.current !== null) {
+      window.clearTimeout(toastTimerRef.current);
     }
 
-    const startUrl = withCallback(path);
-    const redirectTo = buildRedirectTo(callbackUrl);
-    const environment = getLoginEnvironment();
+    setToast(message);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast("");
+      toastTimerRef.current = null;
+    }, 2600);
+  }
 
+  function startOAuth(provider: OAuthProvider, path: string) {
+    if (pendingProvider) return;
+
+    const startUrl = withCallback(path);
     setManualNotice("");
     setPendingProvider(provider);
 
-    console.log("[auth][mobile.click]", {
-      callbackUrl,
-      environment,
-      provider,
-      redirectTo,
-      startUrl,
-    });
-
     try {
-      console.log("[auth][mobile.signInWithOAuth.execute]", {
-        note: "This app uses NextAuth OAuth start route instead of Supabase Auth signInWithOAuth.",
-        provider,
-        redirectTo,
-      });
       window.location.href = startUrl;
-      console.log("[auth][mobile.enteringRedirect]", {
-        provider,
-        startUrl,
-      });
     } catch (error) {
-      console.error("[auth][mobile.redirectError]", {
+      console.error("[auth][oauth.redirectFailed]", {
         error,
         provider,
         startUrl,
@@ -290,10 +227,6 @@ export default function LoginPageClient({
       clearPendingResetTimer();
       resetTimerRef.current = window.setTimeout(() => {
         if (document.visibilityState !== "hidden") {
-          console.warn("[auth][mobile.redirectTimeoutReset]", {
-            provider,
-            startUrl,
-          });
           setPendingProvider((current) =>
             current === provider ? null : current
           );
@@ -302,84 +235,16 @@ export default function LoginPageClient({
     }
   }
 
-  useEffect(() => {
-    const params = Object.fromEntries(
-      new URLSearchParams(searchParamsString).entries()
-    );
-
-    console.log("[auth][loginPage.urlParams]", {
-      environment: getLoginEnvironment(),
-      params,
-    });
-
-    getSession()
-      .then((session) => {
-        console.log("[auth][loginPage.getSession]", {
-          hasSession: Boolean(session),
-          hasUser: Boolean(session?.user),
-          userEmail: session?.user?.email || null,
-        });
-      })
-      .catch((error) => {
-        console.error("[auth][loginPage.getSessionError]", { error });
-      });
-  }, [searchParamsString]);
-
-  useEffect(() => {
-    const resetFromPageLifecycle = () => {
-      resetPendingProvider("page-visible-or-restored");
-    };
-    const resetFromVisibility = () => {
-      if (document.visibilityState === "visible") {
-        resetPendingProvider("visibilitychange-visible");
-      }
-    };
-
-    window.addEventListener("pageshow", resetFromPageLifecycle);
-    window.addEventListener("focus", resetFromPageLifecycle);
-    document.addEventListener("visibilitychange", resetFromVisibility);
-
-    return () => {
-      clearPendingResetTimer();
-      window.removeEventListener("pageshow", resetFromPageLifecycle);
-      window.removeEventListener("focus", resetFromPageLifecycle);
-      document.removeEventListener("visibilitychange", resetFromVisibility);
-    };
-  }, [clearPendingResetTimer, resetPendingProvider]);
-
   return (
     <main className={styles.page}>
       <Link href="/" className={styles.backButton} aria-label="返回首页">
         <BackMark />
       </Link>
-      <section className={styles.card} aria-label="登录 SpeakFlow">
-        <h1>欢迎使用 SpeakFlow <span aria-hidden="true">👋</span></h1>
-        <p>选择一种继续方式</p>
+      <section className={styles.card} aria-label="Sign in to SpeakFlow">
+        <h1>SpeakFlow</h1>
+        <p>Choose a sign-in method</p>
 
         <div className={styles.oauthStack}>
-          {isGoogleEnabled ? (
-            <button
-              type="button"
-              className={styles.oauthButton}
-              aria-busy={pendingProvider === "google"}
-              disabled={Boolean(pendingProvider)}
-              onClick={() => startOAuth("google", "/api/auth/google/start")}
-            >
-              <GoogleMark />
-              <span>{pendingProvider === "google" ? "Google..." : "Google"}</span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              className={styles.oauthButton}
-              disabled={Boolean(pendingProvider)}
-              onClick={() => setManualNotice("Google 登录暂未配置，请稍后再试。")}
-            >
-              <GoogleMark />
-              <span>Google</span>
-            </button>
-          )}
-
           {isAppleEnabled ? (
             <button
               type="button"
@@ -388,8 +253,14 @@ export default function LoginPageClient({
               disabled={Boolean(pendingProvider)}
               onClick={() => startOAuth("apple", "/api/auth/apple/start")}
             >
-              <AppleMark />
-              <span>{pendingProvider === "apple" ? "Apple..." : "Apple"}</span>
+              <span className={styles.providerIcon}>
+                <AppleMark />
+              </span>
+              <span className={styles.providerLabel}>
+                {pendingProvider === "apple"
+                  ? "Opening Apple..."
+                  : "Continue with Apple"}
+              </span>
             </button>
           ) : (
             <button
@@ -398,69 +269,63 @@ export default function LoginPageClient({
               disabled={Boolean(pendingProvider)}
               onClick={() => setManualNotice("Apple 登录暂未配置，请稍后再试。")}
             >
-              <AppleMark />
-              <span>Apple</span>
+              <span className={styles.providerIcon}>
+                <AppleMark />
+              </span>
+              <span className={styles.providerLabel}>Continue with Apple</span>
             </button>
           )}
 
-          {isWechatEnabled ? (
-            <Link
-              href={withCallback("/api/auth/wechat/start")}
+          <button
+            type="button"
+            className={styles.oauthButton}
+            disabled={Boolean(pendingProvider)}
+            onClick={() => showToast("微信登录正在开发中，敬请期待。")}
+          >
+            <span className={`${styles.providerIcon} ${styles.wechatIcon}`}>
+              <WechatMark />
+            </span>
+            <span className={styles.providerLabel}>Continue with WeChat</span>
+            <span className={styles.badge}>Coming Soon</span>
+          </button>
+
+          {isGoogleEnabled ? (
+            <button
+              type="button"
               className={styles.oauthButton}
+              aria-busy={pendingProvider === "google"}
+              disabled={Boolean(pendingProvider)}
+              onClick={() => startOAuth("google", "/api/auth/google/start")}
             >
-              <span className={styles.wechatIcon}>
-                <WechatMark />
+              <span className={styles.providerIcon}>
+                <GoogleMark />
               </span>
-              <span>微信</span>
-            </Link>
+              <span className={styles.providerLabel}>
+                {pendingProvider === "google"
+                  ? "Opening Google..."
+                  : "Continue with Google"}
+              </span>
+            </button>
           ) : (
             <button
               type="button"
               className={styles.oauthButton}
-              onClick={() => setManualNotice("微信登录暂未配置，请稍后再试。")}
+              disabled={Boolean(pendingProvider)}
+              onClick={() => setManualNotice("Google 登录暂未配置，请稍后再试。")}
             >
-              <span className={styles.wechatIcon}>
-                <WechatMark />
+              <span className={styles.providerIcon}>
+                <GoogleMark />
               </span>
-              <span>微信</span>
+              <span className={styles.providerLabel}>Continue with Google</span>
             </button>
           )}
-        </div>
 
-        <div className={styles.moreDivider}>更多方式</div>
-
-        <div className={styles.moreGrid}>
-          <Link href={withCallback("/login/email")} className={styles.moreItem}>
-            <span>
+          <Link href={withCallback("/login/email")} className={styles.oauthButton}>
+            <span className={styles.providerIcon}>
               <MailMark />
             </span>
-            邮箱登录
+            <span className={styles.providerLabel}>Continue with Email</span>
           </Link>
-          <Link href={withCallback("/login/phone")} className={styles.moreItem}>
-            <span>
-              <PhoneMark />
-            </span>
-            手机号登录
-          </Link>
-          {isXEnabled ? (
-            <Link href={withCallback("/api/auth/x/start")} className={styles.moreItem}>
-              <span>
-                <XMark />
-              </span>
-              X 登录
-            </Link>
-          ) : (
-            <button
-              type="button"
-              className={styles.moreItem}
-              onClick={() => setManualNotice("X 登录暂未配置，请稍后再试。")}
-            >
-              <span>
-                <XMark />
-              </span>
-              X 登录
-            </button>
-          )}
         </div>
 
         {notice ? (
@@ -468,15 +333,13 @@ export default function LoginPageClient({
             {notice}
           </div>
         ) : null}
-
-        <footer className={styles.passwordless}>
-          <span>
-            <ShieldMark />
-          </span>
-          <strong>无需设置密码</strong>
-          <small>首次登录自动创建账号</small>
-        </footer>
       </section>
+
+      {toast ? (
+        <div className={styles.toast} role="status">
+          {toast}
+        </div>
+      ) : null}
     </main>
   );
 }

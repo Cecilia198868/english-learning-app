@@ -15,8 +15,6 @@ export type AuthOriginResolution = {
   source: string;
 };
 
-const legacyAuthHosts = new Set(["english-learning-app-new.vercel.app"]);
-
 function toOrigin(value: string | undefined) {
   const trimmed = value?.trim();
   if (!trimmed) return null;
@@ -44,10 +42,6 @@ function getUnsafeOriginReason(origin: string) {
       hostname.endsWith(".local")
     ) {
       return "local_origin";
-    }
-
-    if (legacyAuthHosts.has(hostname)) {
-      return "legacy_origin";
     }
 
     if (origin !== productionAuthOrigin) {

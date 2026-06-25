@@ -5,7 +5,6 @@ import {
   logAuthDebug,
   logAuthError,
   logAuthWarning,
-  sanitizeAuthLogValue,
 } from "@/lib/authLogging";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import {
@@ -623,19 +622,6 @@ async function upsertSupabaseOAuthProfile({
       { onConflict: "email" }
     );
 
-  console.log(
-    "[auth][supabase.profiles.upsert]",
-    sanitizeAuthLogValue({
-      data: {
-        email,
-        provider,
-        providerAccountId,
-        userId,
-      },
-      error: profileError,
-    })
-  );
-
   if (profileError) {
     throw profileError;
   }
@@ -652,19 +638,6 @@ async function upsertSupabaseOAuthProfile({
       },
       { onConflict: "provider,provider_account_id" }
     );
-
-  console.log(
-    "[auth][supabase.user_auth_identities.upsert]",
-    sanitizeAuthLogValue({
-      data: {
-        email,
-        provider,
-        providerAccountId,
-        userId,
-      },
-      error: identityError,
-    })
-  );
 
   if (identityError) {
     throw identityError;

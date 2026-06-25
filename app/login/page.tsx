@@ -4,8 +4,6 @@ import {
   authOptions,
   isAppleAuthConfigured,
   isGoogleAuthConfigured,
-  isWechatAuthConfigured,
-  isXAuthConfigured,
 } from "@/auth";
 import LoginPageClient from "@/components/LoginPageClient";
 import { getSafeInternalCallbackUrl } from "@/lib/loginRedirect";
@@ -27,8 +25,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <LoginPageClient
       isAppleEnabled={isAppleAuthConfigured}
       isGoogleEnabled={isGoogleAuthConfigured}
-      isWechatEnabled={isWechatAuthConfigured}
-      isXEnabled={isXAuthConfigured}
     />
   );
 }

@@ -6,10 +6,6 @@ import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import styles from "./PasswordlessLoginPageClient.module.css";
 
-type PasswordlessLoginPageClientProps = {
-  mode: "email" | "phone";
-};
-
 type RequestResponse = {
   devCode?: string;
   error?: string;
@@ -17,67 +13,38 @@ type RequestResponse = {
   ok?: boolean;
 };
 
-const countryCodes = [
-  { label: "中国 +86", value: "+86" },
-  { label: "美国 +1", value: "+1" },
-  { label: "英国 +44", value: "+44" },
-  { label: "加拿大 +1", value: "+1" },
-  { label: "澳大利亚 +61", value: "+61" },
-];
-
-export default function PasswordlessLoginPageClient({
-  mode,
-}: PasswordlessLoginPageClientProps) {
+export default function PasswordlessLoginPageClient() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/start";
-  const isEmail = mode === "email";
   const [email, setEmail] = useState(() => searchParams.get("email") || "");
-  const [countryCode, setCountryCode] = useState("+86");
-  const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [step, setStep] = useState<"input" | "verify">("input");
   const [isRequesting, setIsRequesting] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [message, setMessage] = useState("");
-
-  const title = isEmail ? "邮箱登录" : "手机号登录";
-  const subtitle = isEmail
-    ? "输入邮箱，使用验证码继续登录。"
-    : "选择国家区号，输入手机号，使用短信验证码继续登录。";
-  const targetLabel = isEmail ? "邮箱地址" : "手机号";
-  const targetValue = useMemo(
-    () => (isEmail ? email.trim().toLowerCase() : phone.trim()),
-    [email, isEmail, phone]
-  );
+  const targetValue = useMemo(() => email.trim().toLowerCase(), [email]);
 
   async function requestCode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsRequesting(true);
     setMessage("");
 
-    const response = await fetch(
-      isEmail ? "/api/auth/email-code/request" : "/api/auth/phone-code/request",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-          isEmail
-            ? { email: targetValue }
-            : { countryCode, phone: targetValue }
-        ),
-      }
-    );
+    const response = await fetch("/api/auth/email-code/request", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: targetValue }),
+    });
     const data = (await response.json().catch(() => ({}))) as RequestResponse;
     setIsRequesting(false);
 
     if (!response.ok || !data.ok) {
-      setMessage(data.error || (isEmail ? "请输入有效邮箱地址。" : "请输入有效手机号。"));
+      setMessage(data.error || "请输入有效邮箱地址。");
       return;
     }
 
     setStep("verify");
     setCode(data.devCode || "");
-    setMessage(data.message || "验证码已发送。");
+    setMessage(data.message || "验证码已发送，请检查邮箱。");
   }
 
   async function verifyCode(event: React.FormEvent<HTMLFormElement>) {
@@ -85,12 +52,10 @@ export default function PasswordlessLoginPageClient({
     setIsVerifying(true);
     setMessage("");
 
-    const result = await signIn(isEmail ? "email-code" : "phone-code", {
+    const result = await signIn("email-code", {
       callbackUrl,
       code,
-      countryCode,
       email: targetValue,
-      phone: targetValue,
       redirect: false,
     });
     setIsVerifying(false);
@@ -105,56 +70,42 @@ export default function PasswordlessLoginPageClient({
 
   return (
     <main className={styles.page}>
-      <section className={styles.panel} aria-label={title}>
-        <Link href={`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`} className={styles.back}>
-          ‹
+      <section className={styles.panel} aria-label="Email login">
+        <Link
+          href={`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`}
+          className={styles.back}
+          aria-label="返回登录"
+        >
+          <span aria-hidden="true">‹</span>
         </Link>
         <span className={styles.handle} aria-hidden="true" />
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <h1>Email Login</h1>
+        <p>Enter your email address and continue with a verification code.</p>
 
         {step === "input" ? (
           <form onSubmit={requestCode} className={styles.form} noValidate>
-            {!isEmail ? (
-              <label>
-                <span>国家区号</span>
-                <select
-                  value={countryCode}
-                  onChange={(event) => setCountryCode(event.target.value)}
-                >
-                  {countryCodes.map((item) => (
-                    <option key={`${item.label}-${item.value}`} value={item.value}>
-                      {item.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ) : null}
-
             <label>
-              <span>{targetLabel}</span>
+              <span>Email address</span>
               <input
-                type={isEmail ? "email" : "tel"}
-                inputMode={isEmail ? "email" : "tel"}
-                autoComplete={isEmail ? "email" : "tel"}
-                value={isEmail ? email : phone}
-                onChange={(event) =>
-                  isEmail ? setEmail(event.target.value) : setPhone(event.target.value)
-                }
-                placeholder={isEmail ? "you@example.com" : "请输入手机号"}
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="you@example.com"
               />
             </label>
 
             {message ? <div className={styles.message}>{message}</div> : null}
 
             <button type="submit" disabled={isRequesting}>
-              {isRequesting ? "发送中..." : "发送验证码"}
+              {isRequesting ? "Sending..." : "Send verification code"}
             </button>
           </form>
         ) : (
           <form onSubmit={verifyCode} className={styles.form} noValidate>
             <label>
-              <span>验证码</span>
+              <span>Verification code</span>
               <input
                 type="text"
                 inputMode="numeric"
@@ -163,14 +114,14 @@ export default function PasswordlessLoginPageClient({
                 onChange={(event) =>
                   setCode(event.target.value.replace(/\D/g, "").slice(0, 6))
                 }
-                placeholder="请输入 6 位验证码"
+                placeholder="Enter 6-digit code"
               />
             </label>
 
             {message ? <div className={styles.message}>{message}</div> : null}
 
             <button type="submit" disabled={isVerifying}>
-              {isVerifying ? "验证中..." : "验证并继续"}
+              {isVerifying ? "Verifying..." : "Verify and continue"}
             </button>
             <button
               type="button"
@@ -181,14 +132,10 @@ export default function PasswordlessLoginPageClient({
                 setMessage("");
               }}
             >
-              重新填写
+              Edit email
             </button>
           </form>
         )}
-
-        <footer className={styles.footer}>
-          无需设置密码，验证成功后自动创建账号并登录。
-        </footer>
       </section>
     </main>
   );
