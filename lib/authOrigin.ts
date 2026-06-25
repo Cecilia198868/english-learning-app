@@ -1,4 +1,8 @@
 export const productionAuthOrigin = "https://web-english-app.vercel.app";
+const allowedProductionAuthOrigins = new Set([
+  productionAuthOrigin,
+  "https://english-learning-app-new.vercel.app",
+]);
 
 type AuthOriginCandidate = {
   source: string;
@@ -44,7 +48,7 @@ function getUnsafeOriginReason(origin: string) {
       return "local_origin";
     }
 
-    if (origin !== productionAuthOrigin) {
+    if (!allowedProductionAuthOrigins.has(origin)) {
       return "non_canonical_origin";
     }
 
@@ -66,6 +70,11 @@ function resolveCandidate(candidates: AuthOriginCandidate[]) {
 }
 
 export function resolveAuthOrigin(fallbackOrigin?: string): AuthOriginResolution {
+  const requestOrigin = toOrigin(fallbackOrigin);
+  if (requestOrigin && !getUnsafeOriginReason(requestOrigin)) {
+    return { origin: requestOrigin, source: "request" };
+  }
+
   const vercelUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : undefined;
