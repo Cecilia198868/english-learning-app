@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { resolveAuthOrigin } from "@/lib/authOrigin";
+import { createOAuthFailureResponse } from "@/lib/oauthFailureResponse";
 
 type SignInResponse = {
   url?: string;
@@ -111,13 +112,13 @@ export async function createOAuthStartResponse(
     const callbackUrl = safeCallbackUrl(requestUrl, authOrigin, callbackPath);
 
     if (!csrfResponse.ok) {
-      return NextResponse.redirect(new URL(`/login?${providerId}=csrf`, origin));
+      return createOAuthFailureResponse(providerId, "csrf");
     }
 
     const csrfData = (await csrfResponse.json()) as { csrfToken?: string };
 
     if (!csrfData.csrfToken) {
-      return NextResponse.redirect(new URL(`/login?${providerId}=csrf`, origin));
+      return createOAuthFailureResponse(providerId, "csrf");
     }
 
     const csrfCookies = getSetCookieHeaders(csrfResponse.headers);
@@ -144,14 +145,14 @@ export async function createOAuthStartResponse(
     );
 
     if (!signInResponse.ok) {
-      return NextResponse.redirect(new URL(`/login?${providerId}=signin`, origin));
+      return createOAuthFailureResponse(providerId, "signin");
     }
 
     const signInData = (await signInResponse.json()) as SignInResponse;
     const decoratedUrl = decorateUrl(signInData.url || "");
 
     if (!signInData.url || signInData.url.includes("csrf=true")) {
-      return NextResponse.redirect(new URL(`/login?${providerId}=signin`, origin));
+      return createOAuthFailureResponse(providerId, "missing-provider");
     }
 
     const response = NextResponse.redirect(decoratedUrl);
@@ -160,6 +161,6 @@ export async function createOAuthStartResponse(
 
     return response;
   } catch {
-    return NextResponse.redirect(new URL(`/login?${providerId}=exception`, origin));
+    return createOAuthFailureResponse(providerId, "exception");
   }
 }

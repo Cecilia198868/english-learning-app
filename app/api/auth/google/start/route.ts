@@ -1,6 +1,6 @@
 import { isGoogleAuthConfigured } from "@/auth";
+import { createOAuthFailureResponse } from "@/lib/oauthFailureResponse";
 import { createOAuthStartResponse } from "@/lib/oauthStart";
-import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ function withGoogleAccountChooser(url: string) {
 
 export async function GET(request: Request) {
   if (!isGoogleAuthConfigured) {
-    return NextResponse.redirect(new URL("/login?google=not-configured", request.url));
+    return createOAuthFailureResponse("google", "not-configured");
   }
 
   return createOAuthStartResponse(request, {

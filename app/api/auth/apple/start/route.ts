@@ -1,12 +1,12 @@
 import { isAppleAuthConfigured } from "@/auth";
+import { createOAuthFailureResponse } from "@/lib/oauthFailureResponse";
 import { createOAuthStartResponse } from "@/lib/oauthStart";
-import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   if (!isAppleAuthConfigured) {
-    return NextResponse.redirect(new URL("/login?apple=not-configured", request.url));
+    return createOAuthFailureResponse("apple", "not-configured");
   }
 
   return createOAuthStartResponse(request, {

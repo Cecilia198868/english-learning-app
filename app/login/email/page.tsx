@@ -8,6 +8,8 @@ type EmailLoginPageProps = {
   searchParams: Promise<{ callbackUrl?: string | string[] | undefined }>;
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function EmailLoginPage({
   searchParams,
 }: EmailLoginPageProps) {
