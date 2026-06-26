@@ -6,24 +6,14 @@ import { useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import styles from "./PasswordlessLoginPageClient.module.css";
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-type EmailStartResponse = {
-  emailRedirectTo?: string;
-  error?: string;
-  ok?: boolean;
-};
+const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
 
 function isValidEmail(value: string) {
   return emailRegex.test(value);
 }
 
-async function readEmailStartResponse(response: Response) {
-  try {
-    return (await response.json()) as EmailStartResponse;
-  } catch {
-    return {};
-  }
+function getEmailRedirectTo() {
+  return `${window.location.origin}/auth/callback`;
 }
 
 export default function PasswordlessLoginPageClient() {
@@ -96,49 +86,35 @@ export default function PasswordlessLoginPageClient() {
     setMessage("");
 
     try {
-      const navigatorWithStandalone = window.navigator as Navigator & {
-        standalone?: boolean;
-      };
+      const supabase = getSupabaseBrowserClient();
+      const emailRedirectTo = getEmailRedirectTo();
 
-      console.log("[auth][email.start.click]", {
-        callbackUrl,
-        locationOrigin: window.location.origin,
-        standalone:
-          window.matchMedia("(display-mode: standalone)").matches ||
-          Boolean(navigatorWithStandalone.standalone),
-      });
+      console.log("[email login] origin:", window.location.origin);
+      console.log("[email login] callbackUrl:", emailRedirectTo);
+      console.log("[email login] email:", trimmedEmail);
+      console.log("[email login] sending magic link...");
 
-      const response = await fetch("/api/email-auth/start", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email: trimmedEmail,
+        options: {
+          emailRedirectTo,
         },
-        body: JSON.stringify({
-          callbackUrl,
-          email: trimmedEmail,
-        }),
-        cache: "no-store",
-      });
-      const result = await readEmailStartResponse(response);
-
-      console.log("[auth][email.start.response]", {
-        emailRedirectTo: result.emailRedirectTo,
-        error: result.error,
-        ok: result.ok,
-        status: response.status,
       });
 
-      if (!response.ok || !result.ok) {
-        setMessage(result.error || "邮箱验证码发送失败，请重试。");
+      console.log("[email login] result:", data);
+
+      if (error) {
+        console.error("[email login] error:", error);
+        setMessage(error.message);
         return;
       }
 
       setEmail(trimmedEmail);
       setCode("");
       setStep("sent");
-      setMessage("验证码已发送，请检查邮箱。");
+      setMessage("验证邮件已发送，请检查邮箱。");
     } catch (error) {
-      console.error("[auth][email.start.error]", error);
+      console.error("[email login] error:", error);
       setMessage(error instanceof Error ? error.message : "邮箱登录失败，请重试。");
     } finally {
       setIsRequesting(false);
