@@ -7,59 +7,23 @@ import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import styles from "./PasswordlessLoginPageClient.module.css";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const defaultEmailRedirectOrigin = "https://web-english-app.vercel.app";
+
+type EmailStartResponse = {
+  emailRedirectTo?: string;
+  error?: string;
+  ok?: boolean;
+};
 
 function isValidEmail(value: string) {
   return emailRegex.test(value);
 }
 
-function toUsableOrigin(value: string | undefined) {
-  const trimmed = value?.trim();
-  if (!trimmed) return "";
-
+async function readEmailStartResponse(response: Response) {
   try {
-    const withProtocol = /^https?:\/\//i.test(trimmed)
-      ? trimmed
-      : `https://${trimmed}`;
-    const origin = new URL(withProtocol).origin;
-    const hostname = new URL(origin).hostname.toLowerCase();
-
-    if (
-      hostname === "localhost" ||
-      hostname === "127.0.0.1" ||
-      hostname.startsWith("127.") ||
-      hostname.endsWith(".local")
-    ) {
-      return "";
-    }
-
-    return origin;
+    return (await response.json()) as EmailStartResponse;
   } catch {
-    return "";
+    return {};
   }
-}
-
-function getEmailRedirectOrigin() {
-  const currentOrigin = toUsableOrigin(
-    typeof window === "undefined" ? undefined : window.location.origin
-  );
-  if (currentOrigin) return currentOrigin;
-
-  const configuredEmailOrigin = toUsableOrigin(
-    process.env.NEXT_PUBLIC_EMAIL_REDIRECT_ORIGIN
-  );
-  if (configuredEmailOrigin) return configuredEmailOrigin;
-
-  const configuredAppOrigin = toUsableOrigin(process.env.NEXT_PUBLIC_APP_URL);
-  if (configuredAppOrigin) return configuredAppOrigin;
-
-  return defaultEmailRedirectOrigin;
-}
-
-function getEmailRedirectTo(callbackUrl: string) {
-  const redirectUrl = new URL("/auth/callback", getEmailRedirectOrigin());
-  redirectUrl.searchParams.set("callbackUrl", callbackUrl);
-  return redirectUrl.toString();
 }
 
 export default function PasswordlessLoginPageClient() {
@@ -132,23 +96,40 @@ export default function PasswordlessLoginPageClient() {
     setMessage("");
 
     try {
-      const supabase = getSupabaseBrowserClient();
-      const emailRedirectTo = getEmailRedirectTo(callbackUrl);
-      const { data, error } = await supabase.auth.signInWithOtp({
-        email: trimmedEmail,
-        options: {
-          emailRedirectTo,
+      const navigatorWithStandalone = window.navigator as Navigator & {
+        standalone?: boolean;
+      };
+
+      console.log("[auth][email.start.click]", {
+        callbackUrl,
+        locationOrigin: window.location.origin,
+        standalone:
+          window.matchMedia("(display-mode: standalone)").matches ||
+          Boolean(navigatorWithStandalone.standalone),
+      });
+
+      const response = await fetch("/api/auth/email/start", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          callbackUrl,
+          email: trimmedEmail,
+        }),
+        cache: "no-store",
+      });
+      const result = await readEmailStartResponse(response);
+
+      console.log("[auth][email.start.response]", {
+        emailRedirectTo: result.emailRedirectTo,
+        error: result.error,
+        ok: result.ok,
+        status: response.status,
       });
 
-      console.log("[auth][email.signInWithOtp]", {
-        data,
-        emailRedirectTo,
-        error,
-      });
-
-      if (error) {
-        setMessage(error.message);
+      if (!response.ok || !result.ok) {
+        setMessage(result.error || "邮箱验证码发送失败，请重试。");
         return;
       }
 
