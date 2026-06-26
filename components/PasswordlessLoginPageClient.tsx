@@ -7,13 +7,57 @@ import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import styles from "./PasswordlessLoginPageClient.module.css";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const defaultEmailRedirectOrigin = "https://web-english-app.vercel.app";
 
 function isValidEmail(value: string) {
   return emailRegex.test(value);
 }
 
+function toUsableOrigin(value: string | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed) return "";
+
+  try {
+    const withProtocol = /^https?:\/\//i.test(trimmed)
+      ? trimmed
+      : `https://${trimmed}`;
+    const origin = new URL(withProtocol).origin;
+    const hostname = new URL(origin).hostname.toLowerCase();
+
+    if (
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname.startsWith("127.") ||
+      hostname.endsWith(".local")
+    ) {
+      return "";
+    }
+
+    return origin;
+  } catch {
+    return "";
+  }
+}
+
+function getEmailRedirectOrigin() {
+  const currentOrigin = toUsableOrigin(
+    typeof window === "undefined" ? undefined : window.location.origin
+  );
+  if (currentOrigin) return currentOrigin;
+
+  const configuredEmailOrigin = toUsableOrigin(
+    process.env.NEXT_PUBLIC_EMAIL_REDIRECT_ORIGIN
+  );
+  if (configuredEmailOrigin) return configuredEmailOrigin;
+
+  const configuredAppOrigin = toUsableOrigin(process.env.NEXT_PUBLIC_APP_URL);
+  if (configuredAppOrigin) return configuredAppOrigin;
+
+  return defaultEmailRedirectOrigin;
+}
+
 function getEmailRedirectTo(callbackUrl: string) {
-  const redirectUrl = new URL("/login/email", window.location.origin);
+  const redirectUrl = new URL("/auth/callback", getEmailRedirectOrigin());
   redirectUrl.searchParams.set("callbackUrl", callbackUrl);
   return redirectUrl.toString();
 }
@@ -22,8 +66,10 @@ export default function PasswordlessLoginPageClient() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/start";
   const [email, setEmail] = useState(() => searchParams.get("email") || "");
+  const [code, setCode] = useState("");
   const [step, setStep] = useState<"input" | "sent">("input");
   const [isRequesting, setIsRequesting] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -106,6 +152,8 @@ export default function PasswordlessLoginPageClient() {
         return;
       }
 
+      setEmail(trimmedEmail);
+      setCode("");
       setStep("sent");
       setMessage("验证码已发送，请检查邮箱。");
     } catch (error) {
@@ -113,6 +161,54 @@ export default function PasswordlessLoginPageClient() {
       setMessage(error instanceof Error ? error.message : "邮箱登录失败，请重试。");
     } finally {
       setIsRequesting(false);
+    }
+  }
+
+  async function verifyCode(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmedEmail = email.trim();
+    const trimmedCode = code.trim();
+
+    if (!isValidEmail(trimmedEmail)) {
+      setMessage("请输入有效邮箱地址。");
+      setStep("input");
+      return;
+    }
+
+    if (!/^\d{6}$/.test(trimmedCode)) {
+      setMessage("请输入 6 位邮箱验证码。");
+      return;
+    }
+
+    setIsVerifying(true);
+    setMessage("");
+
+    try {
+      const supabase = getSupabaseBrowserClient();
+      const { data, error } = await supabase.auth.verifyOtp({
+        email: trimmedEmail,
+        token: trimmedCode,
+        type: "email",
+      });
+
+      console.log("[auth][email.verifyOtp]", {
+        error,
+        hasSession: Boolean(data.session),
+        hasUser: Boolean(data.user),
+      });
+
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+
+      setMessage("登录成功，正在进入 SpeakFlow...");
+      window.location.assign(callbackUrl);
+    } catch (error) {
+      console.error("[auth][email.verifyOtp.error]", error);
+      setMessage(error instanceof Error ? error.message : "邮箱验证码验证失败，请重试。");
+    } finally {
+      setIsVerifying(false);
     }
   }
 
@@ -151,23 +247,40 @@ export default function PasswordlessLoginPageClient() {
             </button>
           </form>
         ) : (
-          <div className={styles.form}>
+          <form onSubmit={verifyCode} className={styles.form} noValidate>
             {message ? <div className={styles.message}>{message}</div> : null}
+            <label>
+              <span>邮箱验证码</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                value={code}
+                onChange={(event) =>
+                  setCode(event.target.value.replace(/\D/g, "").slice(0, 6))
+                }
+                placeholder="请输入 6 位验证码"
+              />
+            </label>
             <p className={styles.hint}>
-              请打开邮箱中的登录邮件，点击链接后继续使用 SpeakFlow。
+              也可以打开邮箱中的登录邮件，点击链接后继续使用 SpeakFlow。
             </p>
 
+            <button type="submit" disabled={isVerifying}>
+              {isVerifying ? "验证中..." : "验证并继续"}
+            </button>
             <button
               type="button"
               className={styles.secondary}
               onClick={() => {
                 setStep("input");
+                setCode("");
                 setMessage("");
               }}
             >
               重新填写邮箱
             </button>
-          </div>
+          </form>
         )}
       </section>
     </main>
