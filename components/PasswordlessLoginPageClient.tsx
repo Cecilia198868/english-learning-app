@@ -108,7 +108,7 @@ export default function PasswordlessLoginPageClient() {
           Boolean(navigatorWithStandalone.standalone),
       });
 
-      const response = await fetch("/api/auth/email/start", {
+      const response = await fetch("/api/email-auth/start", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export default function PasswordlessLoginPageClient() {
       setStep("sent");
       setMessage("验证码已发送，请检查邮箱。");
     } catch (error) {
-      console.error("[auth][email.signInWithOtp.error]", error);
+      console.error("[auth][email.start.error]", error);
       setMessage(error instanceof Error ? error.message : "邮箱登录失败，请重试。");
     } finally {
       setIsRequesting(false);
