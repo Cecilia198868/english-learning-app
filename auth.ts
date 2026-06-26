@@ -2,7 +2,6 @@ import { randomUUID } from "node:crypto";
 import type { NextAuthOptions } from "next-auth";
 import { headers } from "next/headers";
 import AppleProvider from "next-auth/providers/apple";
-import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { resolveAppleClientSecret } from "@/lib/appleClientSecret";
 import {
@@ -19,10 +18,6 @@ import {
   registerCurrentUserSession,
   validateCurrentUserSession,
 } from "@/lib/singleDeviceSession";
-import {
-  consumePasswordlessCode,
-  normalizePasswordlessEmail,
-} from "@/lib/passwordlessCodes";
 import {
   ensureOAuthUserProfile,
   ensurePasswordlessUserProfile,
@@ -233,31 +228,6 @@ export const authOptions: NextAuthOptions = {
           }),
         ]
       : []),
-    CredentialsProvider({
-      id: "email-code",
-      name: "Email Code",
-      credentials: {
-        code: { label: "Code", type: "text" },
-        email: { label: "Email", type: "email" },
-      },
-      async authorize(credentials) {
-        const email = normalizePasswordlessEmail(
-          credentials?.email || ""
-        );
-        const code = credentials?.code || "";
-        const isValidCode = await consumePasswordlessCode(email, code);
-
-        if (!isValidCode) return null;
-
-        await ensurePasswordlessUserProfile(email);
-
-        return {
-          id: email,
-          email,
-          name: email.split("@")[0] || email,
-        };
-      },
-    }),
   ],
   callbacks: {
     async signIn({ account, user }) {

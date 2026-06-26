@@ -1,71 +1,119 @@
 "use client";
 
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import styles from "./PasswordlessLoginPageClient.module.css";
 
-type RequestResponse = {
-  devCode?: string;
-  error?: string;
-  message?: string;
-  ok?: boolean;
-};
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function isValidEmail(value: string) {
+  return emailRegex.test(value);
+}
+
+function getEmailRedirectTo(callbackUrl: string) {
+  const redirectUrl = new URL("/login/email", window.location.origin);
+  redirectUrl.searchParams.set("callbackUrl", callbackUrl);
+  return redirectUrl.toString();
+}
 
 export default function PasswordlessLoginPageClient() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/start";
   const [email, setEmail] = useState(() => searchParams.get("email") || "");
-  const [code, setCode] = useState("");
-  const [step, setStep] = useState<"input" | "verify">("input");
+  const [step, setStep] = useState<"input" | "sent">("input");
   const [isRequesting, setIsRequesting] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
   const [message, setMessage] = useState("");
-  const targetValue = useMemo(() => email.trim().toLowerCase(), [email]);
+
+  useEffect(() => {
+    const hasSupabaseCallback =
+      window.location.hash.includes("access_token") ||
+      window.location.search.includes("code=") ||
+      window.location.search.includes("token_hash=");
+
+    if (!hasSupabaseCallback) return;
+
+    let isCancelled = false;
+    const supabase = getSupabaseBrowserClient();
+
+    supabase.auth
+      .getSession()
+      .then(({ data, error }) => {
+        console.log("[auth][email.getSession]", {
+          error,
+          hasSession: Boolean(data.session),
+        });
+
+        if (isCancelled) return;
+
+        if (error) {
+          setMessage(error.message);
+          return;
+        }
+
+        if (data.session) {
+          window.location.assign(callbackUrl);
+        }
+      })
+      .catch((error) => {
+        console.error("[auth][email.getSession.error]", error);
+        if (!isCancelled) {
+          setMessage(error instanceof Error ? error.message : "邮箱登录失败，请重试。");
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [callbackUrl]);
 
   async function requestCode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const trimmedEmail = email.trim();
+    const validEmail = isValidEmail(trimmedEmail);
+
+    console.log("email input:", email);
+    console.log("trimmed email:", trimmedEmail);
+    console.log("is valid email:", isValidEmail(trimmedEmail));
+
+    if (!validEmail) {
+      setMessage("请输入有效邮箱地址。");
+      return;
+    }
+
     setIsRequesting(true);
     setMessage("");
 
-    const response = await fetch("/api/auth/email-code/request", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: targetValue }),
-    });
-    const data = (await response.json().catch(() => ({}))) as RequestResponse;
-    setIsRequesting(false);
+    try {
+      const supabase = getSupabaseBrowserClient();
+      const emailRedirectTo = getEmailRedirectTo(callbackUrl);
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email: trimmedEmail,
+        options: {
+          emailRedirectTo,
+        },
+      });
 
-    if (!response.ok || !data.ok) {
-      setMessage(data.error || "请输入有效邮箱地址。");
-      return;
+      console.log("[auth][email.signInWithOtp]", {
+        data,
+        emailRedirectTo,
+        error,
+      });
+
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+
+      setStep("sent");
+      setMessage("验证码已发送，请检查邮箱。");
+    } catch (error) {
+      console.error("[auth][email.signInWithOtp.error]", error);
+      setMessage(error instanceof Error ? error.message : "邮箱登录失败，请重试。");
+    } finally {
+      setIsRequesting(false);
     }
-
-    setStep("verify");
-    setCode(data.devCode || "");
-    setMessage(data.message || "验证码已发送，请检查邮箱。");
-  }
-
-  async function verifyCode(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setIsVerifying(true);
-    setMessage("");
-
-    const result = await signIn("email-code", {
-      callbackUrl,
-      code,
-      email: targetValue,
-      redirect: false,
-    });
-    setIsVerifying(false);
-
-    if (!result || result.error) {
-      setMessage("验证码不正确或已过期，请重新获取。");
-      return;
-    }
-
-    window.location.assign(result.url || callbackUrl);
   }
 
   return (
@@ -103,38 +151,23 @@ export default function PasswordlessLoginPageClient() {
             </button>
           </form>
         ) : (
-          <form onSubmit={verifyCode} className={styles.form} noValidate>
-            <label>
-              <span>验证码</span>
-              <input
-                type="text"
-                inputMode="numeric"
-                autoComplete="one-time-code"
-                value={code}
-                onChange={(event) =>
-                  setCode(event.target.value.replace(/\D/g, "").slice(0, 6))
-                }
-                placeholder="请输入 6 位验证码"
-              />
-            </label>
-
+          <div className={styles.form}>
             {message ? <div className={styles.message}>{message}</div> : null}
+            <p className={styles.hint}>
+              请打开邮箱中的登录邮件，点击链接后继续使用 SpeakFlow。
+            </p>
 
-            <button type="submit" disabled={isVerifying}>
-              {isVerifying ? "验证中..." : "验证并继续"}
-            </button>
             <button
               type="button"
               className={styles.secondary}
               onClick={() => {
                 setStep("input");
-                setCode("");
                 setMessage("");
               }}
             >
               重新填写邮箱
             </button>
-          </form>
+          </div>
         )}
       </section>
     </main>
