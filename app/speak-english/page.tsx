@@ -69,6 +69,12 @@ import {
   recordFreePracticeCompletion,
   recordFreePracticeCompletionOnServer,
 } from "@/lib/freePracticeLimit";
+import {
+  initialAiGuidedPracticePhase,
+  transitionAiGuidedPracticePhase,
+  type AiGuidedPracticeEvent,
+  type AiGuidedPracticePhase,
+} from "@/lib/aiGuidedPracticeFlow";
 import type { AppLanguage } from "@/lib/i18n";
 import { createLoginUrl, subscriptionCallbackUrl } from "@/lib/loginRedirect";
 
@@ -3562,6 +3568,14 @@ function SpeakEnglishClient() {
   const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
     useState(false);
   const [freePracticeUsageCount, setFreePracticeUsageCount] = useState(0);
+  const [aiGuidedPracticePhase, setAiGuidedPracticePhase] =
+    useState<AiGuidedPracticePhase>(initialAiGuidedPracticePhase);
+
+  function applyAiGuidedPracticeEvent(event: AiGuidedPracticeEvent) {
+    setAiGuidedPracticePhase((phase) =>
+      transitionAiGuidedPracticePhase(phase, event)
+    );
+  }
 
   const activeRows = keyboardMode === "symbols" ? symbolRows : letterRows;
   const baseInputValue =
@@ -3698,12 +3712,20 @@ function SpeakEnglishClient() {
     isAiGuidedMode && showLandingPrompt && !showQuickPanel && !showAccountMenu;
   const showGuidedReferenceListening =
     isAiGuidedMode &&
-    showFreePracticeNativeListeningPrompt &&
+    (showFreePracticeNativeListeningPrompt ||
+      (aiGuidedPracticePhase === "chineseRecording" &&
+        hasPracticeActivity &&
+        !showLandingPrompt)) &&
     !showQuickPanel &&
     !showAccountMenu;
   const showGuidedReferenceConfirmation =
     isAiGuidedMode &&
-    showNativeConfirmationPrompt &&
+    (showNativeConfirmationPrompt ||
+      (aiGuidedPracticePhase === "confirmChinese" &&
+        hasNativeSpeech &&
+        !isNativeSpeechConfirmed &&
+        !hasEnglishAttempt &&
+        !isListening)) &&
     !showQuickPanel &&
     !showAccountMenu;
   const showGuidedReferenceEnglishReady =
@@ -3718,7 +3740,11 @@ function SpeakEnglishClient() {
     isAiGuidedMode &&
     (showListeningPrompt ||
       isPrimingEnglishSpeech ||
-      showGuidedReferenceEnglishReady) &&
+      showGuidedReferenceEnglishReady ||
+      (aiGuidedPracticePhase === "englishRecording" &&
+        !hasEnglishAttempt &&
+        isNativeSpeechConfirmed &&
+        Boolean(nativeSpeech.trim()))) &&
     practiceStage === "english" &&
     (Boolean(nativeSpeech) || isPrimingEnglishSpeech) &&
     !showQuickPanel &&
@@ -3732,7 +3758,7 @@ function SpeakEnglishClient() {
     isNativeSpeechConfirmed && Boolean(nativeSpeech.trim());
   const showGuidedReferenceResult =
     isAiGuidedMode &&
-    hasEnglishAttempt &&
+    (hasEnglishAttempt || aiGuidedPracticePhase === "learningResult") &&
     hasConfirmedGuidedChinese &&
     !isFreeConversationMode &&
     !showQuickPanel &&
@@ -4433,6 +4459,7 @@ function SpeakEnglishClient() {
 
     return () => {
       speechRecognitionSessionIdRef.current += 1;
+      handledStepRouteRef.current = "";
       isRecognitionStartingRef.current = false;
       shouldCommitSpeechRef.current = false;
       clearLifecycleSpeechTimers();
@@ -5258,6 +5285,7 @@ function SpeakEnglishClient() {
   function openTrainingGroundMode() {
     clearFreeStudyRouteState();
     setTrainingGroundMode("guided");
+    applyAiGuidedPracticeEvent("startChineseRecording");
     aiGuidedFollowPracticePendingRef.current = false;
     guidedConversationTurnsRef.current = [];
     resetGuidedFollowupState();
@@ -5360,12 +5388,22 @@ function SpeakEnglishClient() {
     const normalizedSpeech = confirmedSpeech.trim();
     if (!normalizedSpeech) return;
 
+    if (
+      activeRecognitionStageRef.current === "english" &&
+      (isRecognitionStartingRef.current ||
+        Boolean(recognitionRef.current) ||
+        isListening)
+    ) {
+      return;
+    }
+
     if (isListening || recognitionRef.current || isRecognitionStartingRef.current) {
       cancelRecognition();
     }
 
     freePracticeRoundIdRef.current = createFreePracticeRoundId();
     setTrainingGroundMode("guided");
+    applyAiGuidedPracticeEvent("confirmChinese");
     setPrimingPracticeStage("english");
     setPracticeStage("english");
     setNativeSpeech(normalizedSpeech);
@@ -5404,6 +5442,7 @@ function SpeakEnglishClient() {
     }
 
     setTrainingGroundMode("guided");
+    applyAiGuidedPracticeEvent("finishChineseRecording");
     setPrimingPracticeStage(null);
     setPracticeStage("native");
     setNativeSpeech(normalizedSpeech);
@@ -5486,8 +5525,9 @@ function SpeakEnglishClient() {
 
   function startAiGuidedSuggestedRound() {
     const suggestedSpeech = guidedResultSuggestion.trim();
-    if (!suggestedSpeech || isLoadingGuidedFollowup) return;
+    if (!suggestedSpeech) return;
 
+    applyAiGuidedPracticeEvent("selectAiRecommendedChinese");
     aiGuidedFollowPracticePendingRef.current = true;
     saveFreeStudyRouteState("", {
       aiGuidedConfirmOnly: true,
@@ -5549,15 +5589,23 @@ function SpeakEnglishClient() {
     isRecognitionStartingRef.current = false;
 
     const completedStage = activeRecognitionStageRef.current;
+    const committedTranscript = finalTranscript.trim();
+    const shouldCommitAiGuidedEnglish =
+      isAiGuidedMode &&
+      completedStage === "english" &&
+      shouldCommitSpeechRef.current;
 
-    if (shouldCommitSpeechRef.current && finalTranscript) {
-      setMessage(finalTranscript);
+    if (
+      shouldCommitSpeechRef.current &&
+      (committedTranscript || shouldCommitAiGuidedEnglish)
+    ) {
+      setMessage(committedTranscript);
       if (completedStage === "native") {
         resetGuidedFollowupState();
         if (isFreeConversationMode) {
           resetFreeConversationState();
         }
-        setNativeSpeech(finalTranscript);
+        setNativeSpeech(committedTranscript);
         setIsNativeSpeechConfirmed(false);
         resetAuthoritativeEnglish();
         setStandardEnglish("");
@@ -5567,12 +5615,13 @@ function SpeakEnglishClient() {
         setHasNativeSpeech(true);
         setPracticeStage("native");
         if (isAiGuidedMode) {
+          applyAiGuidedPracticeEvent("finishChineseRecording");
           recordAiGuidedBackendProgress({ step: "native" });
           saveFreeStudyRouteState("", {
             aiGuidedConfirmOnly: true,
             aiGuidedFollowPracticePending: false,
             aiGuidedNativeCommitted: true,
-            nativeSpeech: finalTranscript,
+            nativeSpeech: committedTranscript,
             scope: "guided",
           });
           if (pathname !== "/ai-guided-expression/step-4") {
@@ -5580,15 +5629,20 @@ function SpeakEnglishClient() {
             router.push("/ai-guided-expression/step-4");
           } else {
             handledStepRouteRef.current =
-              `/ai-guided-expression/step-4:confirm:${finalTranscript}`;
+              `/ai-guided-expression/step-4:confirm:${committedTranscript}`;
           }
         }
       } else {
-        saveFreeStudyRouteState(finalTranscript, {
+        saveFreeStudyRouteState(committedTranscript, {
+          aiGuidedConfirmOnly: false,
+          aiGuidedFollowPracticePending: false,
+          aiGuidedNativeCommitted: false,
+          nativeSpeech: nativeSpeech.trim(),
           scope: isAiGuidedMode ? "guided" : "free",
         });
         setHasEnglishAttempt(true);
         if (isAiGuidedMode) {
+          applyAiGuidedPracticeEvent("finishEnglishRecording");
           const guidedStep = aiGuidedFollowPracticePendingRef.current
             ? "follow"
             : "english";
@@ -5877,6 +5931,7 @@ function SpeakEnglishClient() {
   }
 
   function retryNativeSpeech() {
+    applyAiGuidedPracticeEvent("startChineseRecording");
     prepareNextNativeRound();
     setPrimingPracticeStage("native");
     queueRecognitionStart("native");
