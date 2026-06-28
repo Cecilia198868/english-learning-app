@@ -5,7 +5,18 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
 import InteractiveExpressionText from "@/components/InteractiveExpressionText";
+import {
+  FREE_PRACTICE_DAILY_LIMIT,
+  fetchFreePracticeUsage,
+  hasFreePracticeCompletion,
+  isFreePracticeLimitReached,
+  recordFreePracticeCompletion,
+  recordFreePracticeCompletionOnServer,
+  type FreePracticeScope,
+} from "@/lib/freePracticeLimit";
+import { createLoginUrl, subscriptionCallbackUrl } from "@/lib/loginRedirect";
 import {
   playSpeakFlowTts,
   preloadSpeakFlowTts,
@@ -24,6 +35,35 @@ type StudyProps = {
   patternId: number;
   section: SentencePatternSection;
 };
+
+type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
+
+type AccountSubscriptionResponse = {
+  cancelAtPeriodEnd?: boolean | null;
+  subscriptionStatus?: SubscriptionStatus;
+};
+
+type AccountAccessKind = "checking" | "guest" | "signed-in";
+
+function normalizeSubscriptionStatus(
+  subscriptionStatus?: SubscriptionStatus | null,
+  cancelAtPeriodEnd?: boolean | null
+): SubscriptionStatus {
+  if (cancelAtPeriodEnd === true) return "cancels_at_period_end";
+
+  return subscriptionStatus === "pro" ||
+    subscriptionStatus === "cancels_at_period_end"
+    ? subscriptionStatus
+    : "free";
+}
+
+function hasProAccess(subscriptionStatus: SubscriptionStatus) {
+  return subscriptionStatus !== "free";
+}
+
+function createAccountSubscriptionUrl() {
+  return `/api/me/subscription?t=${Date.now()}`;
+}
 
 type PatternToneStyle = CSSProperties & {
   "--pattern-accent": string;
@@ -886,6 +926,12 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
   const practiceId = usePracticeId(practiceCount);
   const { practice } = getPractice(level, patternId, practiceId);
   const [isRecording, setIsRecording] = useState(false);
+  const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
+    useState(false);
+  const [accountAccessKind, setAccountAccessKind] =
+    useState<AccountAccessKind>("checking");
+  const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
+    useState<SubscriptionStatus>("free");
   const transcriptRef = useRef("");
   const baseTranscriptRef = useRef("");
   const recognitionRef = useRef<BrowserSpeechRecognition | null>(null);
@@ -893,7 +939,10 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
   const finishRecordingRef = useRef(false);
   const stopRequestedRef = useRef(false);
   const recordingSessionIdRef = useRef(0);
+  const isCheckingFreePracticeRef = useRef(false);
   const practiceSessionKeyRef = useRef(`${level.id}:${patternId}:${practiceId}`);
+  const freePracticeScope: FreePracticeScope = "sentence-pattern";
+  const isAccountPro = hasProAccess(accountSubscriptionStatus);
   const progress = Math.round((practiceId / practiceCount) * 100);
   const nextPractice = practiceId >= practiceCount ? practiceId : practiceId + 1;
   const previousPractice = practiceId <= 1 ? practiceId : practiceId - 1;
@@ -940,6 +989,54 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
   }, [studyPlaybackText]);
 
   useEffect(() => {
+    let cancelled = false;
+
+    async function loadAccountSubscription() {
+      try {
+        const response = await fetch(createAccountSubscriptionUrl(), {
+          cache: "no-store",
+        });
+
+        if (cancelled) return;
+
+        if (response.status === 401) {
+          setAccountAccessKind("guest");
+          setAccountSubscriptionStatus("free");
+          return;
+        }
+
+        if (response.ok) {
+          const data = (await response.json()) as AccountSubscriptionResponse;
+          const nextSubscriptionStatus = normalizeSubscriptionStatus(
+            data.subscriptionStatus,
+            data.cancelAtPeriodEnd
+          );
+
+          setAccountAccessKind("signed-in");
+          setAccountSubscriptionStatus(nextSubscriptionStatus);
+          if (hasProAccess(nextSubscriptionStatus)) {
+            setShowFreePracticeLimitModal(false);
+          }
+          return;
+        }
+      } catch {
+        // Keep the free-user guard when the account check is unavailable.
+      }
+
+      if (!cancelled) {
+        setAccountAccessKind("guest");
+        setAccountSubscriptionStatus("free");
+      }
+    }
+
+    void loadAccountSubscription();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
     const practiceSessionKey = `${level.id}:${patternId}:${practiceId}`;
     if (practiceSessionKeyRef.current === practiceSessionKey) return;
 
@@ -963,6 +1060,120 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
     };
   }, [level.id, patternId, practiceId]);
 
+  async function refreshAccountSubscription() {
+    try {
+      const response = await fetch(createAccountSubscriptionUrl(), {
+        cache: "no-store",
+      });
+
+      if (response.status === 401) {
+        setAccountAccessKind("guest");
+        setAccountSubscriptionStatus("free");
+        return "free" satisfies SubscriptionStatus;
+      }
+
+      if (response.ok) {
+        const data = (await response.json()) as AccountSubscriptionResponse;
+        const nextSubscriptionStatus = normalizeSubscriptionStatus(
+          data.subscriptionStatus,
+          data.cancelAtPeriodEnd
+        );
+
+        setAccountAccessKind("signed-in");
+        setAccountSubscriptionStatus(nextSubscriptionStatus);
+        if (hasProAccess(nextSubscriptionStatus)) {
+          setShowFreePracticeLimitModal(false);
+        }
+        return nextSubscriptionStatus;
+      }
+    } catch {
+      // Keep the free-user guard if the subscription check is unavailable.
+    }
+
+    return accountSubscriptionStatus;
+  }
+
+  function showFreePracticeLimit() {
+    setShowFreePracticeLimitModal(true);
+  }
+
+  function getSentencePatternCompletionId() {
+    return `sentence-pattern:${level.id}:${patternId}:${practiceId}`;
+  }
+
+  async function ensureFreePracticeAvailable() {
+    if (isAccountPro) return true;
+
+    if (accountAccessKind === "checking") {
+      const nextSubscriptionStatus = await refreshAccountSubscription();
+      if (hasProAccess(nextSubscriptionStatus)) return true;
+    }
+
+    const completionId = getSentencePatternCompletionId();
+    if (hasFreePracticeCompletion(freePracticeScope, completionId)) return true;
+
+    try {
+      const serverUsage = await fetchFreePracticeUsage(freePracticeScope);
+
+      if (
+        serverUsage.completedIds.includes(completionId) ||
+        serverUsage.count < FREE_PRACTICE_DAILY_LIMIT
+      ) {
+        return true;
+      }
+    } catch {
+      // Local usage remains the offline fallback.
+      if (!isFreePracticeLimitReached(freePracticeScope)) return true;
+    }
+
+    if (!isFreePracticeLimitReached(freePracticeScope)) return true;
+
+    const nextSubscriptionStatus = await refreshAccountSubscription();
+    if (hasProAccess(nextSubscriptionStatus)) return true;
+
+    showFreePracticeLimit();
+    return false;
+  }
+
+  function recordSentencePatternCompletion() {
+    if (isAccountPro) return;
+
+    const completionId = getSentencePatternCompletionId();
+    const result = recordFreePracticeCompletion(freePracticeScope, completionId);
+    if (result.didRecord && result.limitReached) {
+      showFreePracticeLimit();
+    }
+
+    void recordFreePracticeCompletionOnServer(freePracticeScope, completionId)
+      .then((serverResult) => {
+        if (serverResult.didRecord && serverResult.limitReached) {
+          showFreePracticeLimit();
+        }
+      })
+      .catch(() => {
+        // The local guard still prevents unlimited sentence-pattern practice.
+      });
+  }
+
+  function openProFromFreePracticeLimit() {
+    setShowFreePracticeLimitModal(false);
+    router.push(
+      accountAccessKind === "signed-in"
+        ? "/account?panel=subscription"
+        : createLoginUrl(subscriptionCallbackUrl)
+    );
+  }
+
+  function openLoginFromFreePracticeLimit() {
+    setShowFreePracticeLimitModal(false);
+    router.push(createLoginUrl(subscriptionCallbackUrl));
+  }
+
+  function openRegisterFromFreePracticeLimit() {
+    setShowFreePracticeLimitModal(false);
+    router.push("/register");
+  }
+
   function finishRecording(transcript: string) {
     if (finishRecordingRef.current) return;
     finishRecordingRef.current = true;
@@ -978,6 +1189,7 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
         cleaned
       );
     } catch {}
+    recordSentencePatternCompletion();
     router.push(`/sentence-patterns/${level.id}/${patternId}/result?practice=${practiceId}`);
   }
 
@@ -997,11 +1209,21 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
     finishRecording(transcriptRef.current);
   }
 
-  function startRecording() {
+  async function startRecording() {
     if (isRecording) {
       stopRecordingForFinalResult();
       return;
     }
+
+    if (isCheckingFreePracticeRef.current) return;
+    isCheckingFreePracticeRef.current = true;
+    let canPractice = false;
+    try {
+      canPractice = await ensureFreePracticeAvailable();
+    } finally {
+      isCheckingFreePracticeRef.current = false;
+    }
+    if (!canPractice) return;
 
     setIsRecording(true);
     transcriptRef.current = "";
@@ -1231,6 +1453,16 @@ export function SentencePatternStudyPage({ level, patternId, section }: StudyPro
         </div>
         <SentencePatternBottomNav />
       </section>
+
+      {showFreePracticeLimitModal && !isAccountPro ? (
+        <FreePracticeLimitModal
+          isSignedIn={accountAccessKind === "signed-in"}
+          onDismiss={() => setShowFreePracticeLimitModal(false)}
+          onLogin={openLoginFromFreePracticeLimit}
+          onRegister={openRegisterFromFreePracticeLimit}
+          onUnlockPro={openProFromFreePracticeLimit}
+        />
+      ) : null}
     </main>
   );
 }

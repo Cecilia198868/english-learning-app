@@ -1,13 +1,19 @@
-export const FREE_PRACTICE_DAILY_LIMIT = 5;
+export const FREE_PRACTICE_GLOBAL_LIMIT = 5;
+export const FREE_PRACTICE_DAILY_LIMIT = FREE_PRACTICE_GLOBAL_LIMIT;
 
 export type FreePracticeScope =
   | "free"
   | "guided"
   | "classic"
   | "course"
+  | "sentence-pattern"
+  | "expression"
+  | "native-flow"
+  | "new-expression"
   | `course:${string}`;
 
 const FREE_PRACTICE_USAGE_KEY_PREFIX = "speakflow-free-practice-usage";
+const FREE_PRACTICE_GLOBAL_USAGE_KEY = `${FREE_PRACTICE_USAGE_KEY_PREFIX}:global`;
 
 export type FreePracticeUsage = {
   completedIds: string[];
@@ -48,65 +54,126 @@ function createEmptyUsage(): FreePracticeUsage {
   };
 }
 
-function getUsageStorageKey(scope: FreePracticeScope) {
-  return `${FREE_PRACTICE_USAGE_KEY_PREFIX}:${scope}`;
-}
-
-export function getFreePracticeUsage(scope: FreePracticeScope): FreePracticeUsage {
-  if (typeof window === "undefined") return createEmptyUsage();
-
-  try {
-    const raw = window.localStorage.getItem(getUsageStorageKey(scope));
-    if (!raw) return createEmptyUsage();
-
-    const parsed = JSON.parse(raw) as Partial<FreePracticeUsage>;
-    if (parsed.date !== getTodayKey()) return createEmptyUsage();
-
-    const completedIds = Array.isArray(parsed.completedIds)
-      ? parsed.completedIds.filter((id): id is string => typeof id === "string")
-      : [];
-    const count =
-      typeof parsed.count === "number" && Number.isFinite(parsed.count)
-        ? Math.min(Math.max(parsed.count, completedIds.length), FREE_PRACTICE_DAILY_LIMIT)
-        : Math.min(completedIds.length, FREE_PRACTICE_DAILY_LIMIT);
-
-    return {
-      completedIds,
-      count,
-      date: getTodayKey(),
-    };
-  } catch {
-    return createEmptyUsage();
-  }
-}
-
-function saveFreePracticeUsage(scope: FreePracticeScope, usage: FreePracticeUsage) {
-  if (typeof window === "undefined") return;
-
-  try {
-    window.localStorage.setItem(getUsageStorageKey(scope), JSON.stringify(usage));
-  } catch {
-    // Ignore storage failures so practice flow never crashes the page.
-  }
-}
-
 function normalizeUsage(rawUsage: Partial<FreePracticeUsage> | undefined) {
-  const today = getTodayKey();
-  if (!rawUsage || rawUsage.date !== today) return createEmptyUsage();
+  if (!rawUsage) return createEmptyUsage();
 
   const completedIds = Array.isArray(rawUsage.completedIds)
-    ? rawUsage.completedIds.filter((id): id is string => typeof id === "string")
+    ? Array.from(
+        new Set(
+          rawUsage.completedIds
+            .filter((id): id is string => typeof id === "string")
+            .map((id) => id.trim())
+            .filter(Boolean)
+        )
+      ).slice(0, 500)
     : [];
-  const count =
+  const rawCount =
     typeof rawUsage.count === "number" && Number.isFinite(rawUsage.count)
-      ? Math.min(Math.max(rawUsage.count, completedIds.length), FREE_PRACTICE_DAILY_LIMIT)
-      : Math.min(completedIds.length, FREE_PRACTICE_DAILY_LIMIT);
+      ? Math.floor(rawUsage.count)
+      : completedIds.length;
+  const count = Math.min(
+    Math.max(rawCount, Math.min(completedIds.length, FREE_PRACTICE_GLOBAL_LIMIT)),
+    FREE_PRACTICE_GLOBAL_LIMIT
+  );
+  const date =
+    typeof rawUsage.date === "string" && rawUsage.date.trim()
+      ? rawUsage.date.trim()
+      : getTodayKey();
 
   return {
     completedIds,
     count,
-    date: today,
+    date,
   };
+}
+
+function mergeUsageRecords(usages: FreePracticeUsage[]) {
+  if (usages.length === 0) return createEmptyUsage();
+
+  const completedIds = new Set<string>();
+  let count = 0;
+  let date = usages[0]?.date || getTodayKey();
+
+  for (const usage of usages) {
+    for (const completedId of usage.completedIds) {
+      completedIds.add(completedId);
+    }
+    count = Math.max(count, usage.count);
+    if (!date && usage.date) date = usage.date;
+  }
+
+  return {
+    completedIds: Array.from(completedIds),
+    count: Math.min(
+      Math.max(count, Math.min(completedIds.size, FREE_PRACTICE_GLOBAL_LIMIT)),
+      FREE_PRACTICE_GLOBAL_LIMIT
+    ),
+    date: date || getTodayKey(),
+  };
+}
+
+function readUsageFromStorageKey(key: string) {
+  if (typeof window === "undefined") return null;
+
+  try {
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+
+    return normalizeUsage(JSON.parse(raw) as Partial<FreePracticeUsage>);
+  } catch {
+    return null;
+  }
+}
+
+function getLegacyUsageStorageKeys() {
+  if (typeof window === "undefined") return [];
+
+  const legacyKeys = new Set<string>();
+  const legacyKeyPrefix = `${FREE_PRACTICE_USAGE_KEY_PREFIX}:`;
+
+  try {
+    for (let index = 0; index < window.localStorage.length; index += 1) {
+      const key = window.localStorage.key(index);
+      if (
+        key &&
+        key.startsWith(legacyKeyPrefix) &&
+        key !== FREE_PRACTICE_GLOBAL_USAGE_KEY
+      ) {
+        legacyKeys.add(key);
+      }
+    }
+  } catch {
+    // Some storage implementations can throw while enumerating keys.
+  }
+
+  return Array.from(legacyKeys);
+}
+
+function loadFreePracticeUsage() {
+  if (typeof window === "undefined") return createEmptyUsage();
+
+  const usageRecords = [
+    readUsageFromStorageKey(FREE_PRACTICE_GLOBAL_USAGE_KEY),
+    ...getLegacyUsageStorageKeys().map(readUsageFromStorageKey),
+  ].filter((usage): usage is FreePracticeUsage => Boolean(usage));
+
+  const usage = mergeUsageRecords(usageRecords);
+  saveFreePracticeUsage(usage);
+
+  return usage;
+}
+
+function saveFreePracticeUsage(usage: FreePracticeUsage) {
+  if (typeof window === "undefined") return;
+
+  try {
+    window.localStorage.setItem(
+      FREE_PRACTICE_GLOBAL_USAGE_KEY,
+      JSON.stringify(normalizeUsage(usage))
+    );
+  } catch {
+    // Ignore storage failures so practice flow never crashes the page.
+  }
 }
 
 function normalizeServerUsage(
@@ -116,17 +183,25 @@ function normalizeServerUsage(
 
   return {
     ...usage,
-    limit: FREE_PRACTICE_DAILY_LIMIT,
-    limitReached: usage.count >= FREE_PRACTICE_DAILY_LIMIT,
+    limit: FREE_PRACTICE_GLOBAL_LIMIT,
+    limitReached: usage.count >= FREE_PRACTICE_GLOBAL_LIMIT,
   };
 }
 
+export function getFreePracticeUsage(scope: FreePracticeScope): FreePracticeUsage {
+  void scope;
+  return loadFreePracticeUsage();
+}
+
 export function syncFreePracticeUsage(
-  scope: FreePracticeScope,
+  _scope: FreePracticeScope,
   usage: Partial<FreePracticeUsage>
 ) {
-  const nextUsage = normalizeUsage(usage);
-  saveFreePracticeUsage(scope, nextUsage);
+  const nextUsage = mergeUsageRecords([
+    loadFreePracticeUsage(),
+    normalizeUsage(usage),
+  ]);
+  saveFreePracticeUsage(nextUsage);
   return nextUsage;
 }
 
@@ -138,7 +213,7 @@ export function hasFreePracticeCompletion(
 }
 
 export function isFreePracticeLimitReached(scope: FreePracticeScope) {
-  return getFreePracticeUsage(scope).count >= FREE_PRACTICE_DAILY_LIMIT;
+  return getFreePracticeUsage(scope).count >= FREE_PRACTICE_GLOBAL_LIMIT;
 }
 
 export function recordFreePracticeCompletion(
@@ -146,17 +221,18 @@ export function recordFreePracticeCompletion(
   completionId: string
 ): RecordFreePracticeResult {
   const usage = getFreePracticeUsage(scope);
+  const normalizedCompletionId = completionId.trim();
   const completedIds = new Set(usage.completedIds);
 
-  if (completedIds.has(completionId)) {
+  if (!normalizedCompletionId || completedIds.has(normalizedCompletionId)) {
     return {
       count: usage.count,
       didRecord: false,
-      limitReached: usage.count >= FREE_PRACTICE_DAILY_LIMIT,
+      limitReached: usage.count >= FREE_PRACTICE_GLOBAL_LIMIT,
     };
   }
 
-  if (usage.count >= FREE_PRACTICE_DAILY_LIMIT) {
+  if (usage.count >= FREE_PRACTICE_GLOBAL_LIMIT) {
     return {
       count: usage.count,
       didRecord: false,
@@ -164,20 +240,20 @@ export function recordFreePracticeCompletion(
     };
   }
 
-  completedIds.add(completionId);
+  completedIds.add(normalizedCompletionId);
 
   const nextUsage = {
     completedIds: Array.from(completedIds),
-    count: Math.min(usage.count + 1, FREE_PRACTICE_DAILY_LIMIT),
+    count: Math.min(usage.count + 1, FREE_PRACTICE_GLOBAL_LIMIT),
     date: usage.date,
   };
 
-  saveFreePracticeUsage(scope, nextUsage);
+  saveFreePracticeUsage(nextUsage);
 
   return {
     count: nextUsage.count,
     didRecord: true,
-    limitReached: nextUsage.count >= FREE_PRACTICE_DAILY_LIMIT,
+    limitReached: nextUsage.count >= FREE_PRACTICE_GLOBAL_LIMIT,
   };
 }
 

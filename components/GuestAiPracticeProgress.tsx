@@ -38,10 +38,10 @@ export default function GuestAiPracticeProgress({
   return (
     <section
       className={`sf-guest-ai-progress ${className}`.trim()}
-      aria-label={`今日练习进度 ${completed} / ${FREE_PRACTICE_DAILY_LIMIT}`}
+      aria-label={`累计免费体验进度 ${completed} / ${FREE_PRACTICE_DAILY_LIMIT}`}
     >
       <div className="sf-guest-ai-progress-top">
-        <span>今日练习进度</span>
+        <span>累计免费体验进度</span>
         <strong>FREE</strong>
         <b>
           {completed}

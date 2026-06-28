@@ -29,7 +29,7 @@ export default function ExpressionLearningLimitModal({
           id="expression-learning-limit-title"
           className="text-[1.55rem] font-black leading-tight"
         >
-          今天的学习试用已用完
+          免费试用句数已用完
         </h2>
         <p className="mt-4 text-[1.05rem] font-extrabold leading-7 text-[var(--text-secondary)]">
           SpeakFlow Pro 可以帮你继续学习和复习表达。

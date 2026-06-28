@@ -1,97 +1,57 @@
-export const FREE_EXPRESSION_LEARNING_LIMIT = 5;
+import {
+  FREE_PRACTICE_DAILY_LIMIT,
+  fetchFreePracticeUsage,
+  getFreePracticeUsage,
+  hasFreePracticeCompletion,
+  isFreePracticeLimitReached,
+  recordFreePracticeCompletion,
+  recordFreePracticeCompletionOnServer,
+  type RecordFreePracticeResult,
+  type ServerFreePracticeUsage,
+} from "@/lib/freePracticeLimit";
 
-const FREE_EXPRESSION_LEARNING_KEY = "speakflow-free-expression-learning";
+export const FREE_EXPRESSION_LEARNING_LIMIT = FREE_PRACTICE_DAILY_LIMIT;
 
-type ExpressionLearningUsage = {
-  date: string;
-  learnedIds: string[];
-};
-
-function getTodayKey() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
-
-function createEmptyUsage(): ExpressionLearningUsage {
-  return {
-    date: getTodayKey(),
-    learnedIds: [],
-  };
-}
-
-function getExpressionLearningUsage(): ExpressionLearningUsage {
-  if (typeof window === "undefined") return createEmptyUsage();
-
-  try {
-    const raw = window.localStorage.getItem(FREE_EXPRESSION_LEARNING_KEY);
-    if (!raw) return createEmptyUsage();
-
-    const parsed = JSON.parse(raw) as Partial<ExpressionLearningUsage>;
-    if (parsed.date !== getTodayKey()) return createEmptyUsage();
-
-    const learnedIds = Array.isArray(parsed.learnedIds)
-      ? parsed.learnedIds.filter((id): id is string => typeof id === "string")
-      : [];
-
-    return {
-      date: getTodayKey(),
-      learnedIds: learnedIds.slice(0, FREE_EXPRESSION_LEARNING_LIMIT),
-    };
-  } catch {
-    return createEmptyUsage();
-  }
-}
+const EXPRESSION_LEARNING_SCOPE = "expression";
 
 export function getExpressionLearningUsageCount() {
-  return getExpressionLearningUsage().learnedIds.length;
+  return getFreePracticeUsage(EXPRESSION_LEARNING_SCOPE).count;
 }
 
-function saveExpressionLearningUsage(usage: ExpressionLearningUsage) {
-  if (typeof window === "undefined") return;
-
-  try {
-    window.localStorage.setItem(
-      FREE_EXPRESSION_LEARNING_KEY,
-      JSON.stringify(usage)
-    );
-  } catch {
-    // Keep the vocabulary page usable even if localStorage is unavailable.
-  }
+export async function fetchExpressionLearningUsage() {
+  return fetchFreePracticeUsage(EXPRESSION_LEARNING_SCOPE);
 }
 
 export function getExpressionLearningId(word: {
   createdAt?: string;
   word: string;
 }) {
-  return `${word.word}:${word.createdAt || ""}`;
+  return `expression:${word.word}:${word.createdAt || ""}`;
 }
 
 export function hasLearnedExpression(expressionId: string) {
-  return getExpressionLearningUsage().learnedIds.includes(expressionId);
+  return hasFreePracticeCompletion(EXPRESSION_LEARNING_SCOPE, expressionId);
 }
 
 export function isExpressionLearningLimitReached() {
-  return (
-    getExpressionLearningUsage().learnedIds.length >=
-    FREE_EXPRESSION_LEARNING_LIMIT
-  );
+  return isFreePracticeLimitReached(EXPRESSION_LEARNING_SCOPE);
 }
 
 export function canLearnExpression(expressionId: string) {
   return hasLearnedExpression(expressionId) || !isExpressionLearningLimitReached();
 }
 
-export function recordLearnedExpression(expressionId: string) {
-  const usage = getExpressionLearningUsage();
-  if (usage.learnedIds.includes(expressionId)) return;
-  if (usage.learnedIds.length >= FREE_EXPRESSION_LEARNING_LIMIT) return;
+export function recordLearnedExpression(
+  expressionId: string
+): RecordFreePracticeResult {
+  return recordFreePracticeCompletion(EXPRESSION_LEARNING_SCOPE, expressionId);
+}
 
-  saveExpressionLearningUsage({
-    date: usage.date,
-    learnedIds: [...usage.learnedIds, expressionId],
-  });
+export async function recordLearnedExpressionOnServer(
+  expressionId: string
+): Promise<RecordFreePracticeResult & { usage: ServerFreePracticeUsage }> {
+  return recordFreePracticeCompletionOnServer(
+    EXPRESSION_LEARNING_SCOPE,
+    expressionId
+  );
 }

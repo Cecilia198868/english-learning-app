@@ -81,12 +81,12 @@ export default function FreePracticeLimitModal({
           id="free-practice-limit-title"
           className="text-[clamp(1.65rem,7vw,2.12rem)] font-black leading-tight text-[var(--text-primary)]"
         >
-          今天的学习试用已用完
+          免费试用句数已用完
         </h2>
         <p className="mx-auto mt-4 max-w-[20rem] text-[clamp(1.02rem,4.6vw,1.28rem)] font-semibold leading-8 text-[var(--text-secondary)]">
           {isSignedIn
             ? "订阅 SpeakFlow Pro 后，可以继续无限练习和复习表达。"
-            : "登录后可保存你的练习记录，随时继续学习。"}
+            : "登录并订阅后，可以保存练习记录并继续学习。"}
         </p>
 
         <div className="mt-7 grid grid-cols-[0.9fr_1.15fr] items-center gap-3 text-left">

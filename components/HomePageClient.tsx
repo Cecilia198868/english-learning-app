@@ -167,7 +167,7 @@ export default function HomePageClient() {
             ♢
           </span>
           <strong>无需登录也可以先体验</strong>
-          <small>免费用户每天可先体验 {FREE_PRACTICE_DAILY_LIMIT} 句，登录后可保存记录，同步到所有设备</small>
+          <small>免费用户可累计体验 {FREE_PRACTICE_DAILY_LIMIT} 句，登录后可保存记录，同步到所有设备</small>
         </div>
       </section>
     </main>

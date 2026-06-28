@@ -1,14 +1,55 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import FreePracticeLimitModal from "@/components/FreePracticeLimitModal";
 import type {
   NativeFlowLevel,
   NativeFlowProgressRow,
   NativeFlowSentence,
 } from "@/data/nativeFlow/courseData";
+import {
+  FREE_PRACTICE_DAILY_LIMIT,
+  fetchFreePracticeUsage,
+  hasFreePracticeCompletion,
+  isFreePracticeLimitReached,
+  recordFreePracticeCompletion,
+  recordFreePracticeCompletionOnServer,
+  type FreePracticeScope,
+} from "@/lib/freePracticeLimit";
+import { createLoginUrl, subscriptionCallbackUrl } from "@/lib/loginRedirect";
 import InteractiveExpressionText from "./InteractiveExpressionText";
 import styles from "./NativeFlowPages.module.css";
+
+type SubscriptionStatus = "free" | "pro" | "cancels_at_period_end";
+
+type AccountSubscriptionResponse = {
+  cancelAtPeriodEnd?: boolean | null;
+  subscriptionStatus?: SubscriptionStatus;
+};
+
+type AccountAccessKind = "checking" | "guest" | "signed-in";
+
+function normalizeSubscriptionStatus(
+  subscriptionStatus?: SubscriptionStatus | null,
+  cancelAtPeriodEnd?: boolean | null
+): SubscriptionStatus {
+  if (cancelAtPeriodEnd === true) return "cancels_at_period_end";
+
+  return subscriptionStatus === "pro" ||
+    subscriptionStatus === "cancels_at_period_end"
+    ? subscriptionStatus
+    : "free";
+}
+
+function hasProAccess(subscriptionStatus: SubscriptionStatus) {
+  return subscriptionStatus !== "free";
+}
+
+function createAccountSubscriptionUrl() {
+  return `/api/me/subscription?t=${Date.now()}`;
+}
 
 function BackIcon() {
   return (
@@ -571,10 +612,19 @@ export function NativeFlowLearningPage({
   level: NativeFlowLevel;
   sentence: NativeFlowSentence;
 }) {
+  const router = useRouter();
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [showFreePracticeLimitModal, setShowFreePracticeLimitModal] =
+    useState(false);
+  const [accountAccessKind, setAccountAccessKind] =
+    useState<AccountAccessKind>("checking");
+  const [accountSubscriptionStatus, setAccountSubscriptionStatus] =
+    useState<SubscriptionStatus>("free");
   const sentenceId = sentence.id;
   const previousId = Math.max(1, sentenceId - 1);
   const nextId = Math.min(level.totalSentences, sentenceId + 1);
+  const freePracticeScope: FreePracticeScope = "native-flow";
+  const isAccountPro = hasProAccess(accountSubscriptionStatus);
   const progressPercent = Math.max(2, Math.round((sentenceId / level.totalSentences) * 100));
   const textLength = sentence.english.length + sentence.chinese.length;
   const sentenceDensity =
@@ -597,7 +647,182 @@ export function NativeFlowLearningPage({
     void audio.play().catch(() => undefined);
   };
 
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadAccountSubscription() {
+      try {
+        const response = await fetch(createAccountSubscriptionUrl(), {
+          cache: "no-store",
+        });
+
+        if (cancelled) return;
+
+        if (response.status === 401) {
+          setAccountAccessKind("guest");
+          setAccountSubscriptionStatus("free");
+          return;
+        }
+
+        if (response.ok) {
+          const data = (await response.json()) as AccountSubscriptionResponse;
+          const nextSubscriptionStatus = normalizeSubscriptionStatus(
+            data.subscriptionStatus,
+            data.cancelAtPeriodEnd
+          );
+
+          setAccountAccessKind("signed-in");
+          setAccountSubscriptionStatus(nextSubscriptionStatus);
+          if (hasProAccess(nextSubscriptionStatus)) {
+            setShowFreePracticeLimitModal(false);
+          }
+          return;
+        }
+      } catch {
+        // Keep the free-user guard when the account check is unavailable.
+      }
+
+      if (!cancelled) {
+        setAccountAccessKind("guest");
+        setAccountSubscriptionStatus("free");
+      }
+    }
+
+    void loadAccountSubscription();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const refreshAccountSubscription = useCallback(async () => {
+    try {
+      const response = await fetch(createAccountSubscriptionUrl(), {
+        cache: "no-store",
+      });
+
+      if (response.status === 401) {
+        setAccountAccessKind("guest");
+        setAccountSubscriptionStatus("free");
+        return "free" satisfies SubscriptionStatus;
+      }
+
+      if (response.ok) {
+        const data = (await response.json()) as AccountSubscriptionResponse;
+        const nextSubscriptionStatus = normalizeSubscriptionStatus(
+          data.subscriptionStatus,
+          data.cancelAtPeriodEnd
+        );
+
+        setAccountAccessKind("signed-in");
+        setAccountSubscriptionStatus(nextSubscriptionStatus);
+        if (hasProAccess(nextSubscriptionStatus)) {
+          setShowFreePracticeLimitModal(false);
+        }
+        return nextSubscriptionStatus;
+      }
+    } catch {
+      // Keep the free-user guard if the subscription check is unavailable.
+    }
+
+    return accountSubscriptionStatus;
+  }, [accountSubscriptionStatus]);
+
+  const getNativeFlowCompletionId = useCallback(() => {
+    return `native-flow:${level.id}:${sentence.id}`;
+  }, [level.id, sentence.id]);
+
+  useEffect(() => {
+    if (isAccountPro || accountAccessKind === "checking") return;
+
+    let cancelled = false;
+
+    async function recordNativeFlowSentenceView() {
+      const completionId = getNativeFlowCompletionId();
+      if (hasFreePracticeCompletion(freePracticeScope, completionId)) return;
+
+      try {
+        const serverUsage = await fetchFreePracticeUsage(freePracticeScope);
+        if (cancelled) return;
+
+        if (serverUsage.completedIds.includes(completionId)) return;
+        if (serverUsage.count >= FREE_PRACTICE_DAILY_LIMIT) {
+          const nextSubscriptionStatus = await refreshAccountSubscription();
+          if (!cancelled && !hasProAccess(nextSubscriptionStatus)) {
+            setShowFreePracticeLimitModal(true);
+          }
+          return;
+        }
+      } catch {
+        if (isFreePracticeLimitReached(freePracticeScope)) {
+          setShowFreePracticeLimitModal(true);
+          return;
+        }
+      }
+
+      const result = recordFreePracticeCompletion(
+        freePracticeScope,
+        completionId
+      );
+      if (result.didRecord && result.limitReached) {
+        setShowFreePracticeLimitModal(true);
+      }
+
+      void recordFreePracticeCompletionOnServer(
+        freePracticeScope,
+        completionId
+      )
+        .then((serverResult) => {
+          if (
+            !cancelled &&
+            serverResult.didRecord &&
+            serverResult.limitReached
+          ) {
+            setShowFreePracticeLimitModal(true);
+          }
+        })
+        .catch(() => {
+          // The local guard still prevents unlimited native-flow study.
+        });
+    }
+
+    void recordNativeFlowSentenceView();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    accountAccessKind,
+    accountSubscriptionStatus,
+    freePracticeScope,
+    getNativeFlowCompletionId,
+    isAccountPro,
+    level.id,
+    refreshAccountSubscription,
+    sentence.id,
+  ]);
+
+  function openProFromFreePracticeLimit() {
+    setShowFreePracticeLimitModal(false);
+    router.push(
+      accountAccessKind === "signed-in"
+        ? "/account?panel=subscription"
+        : createLoginUrl(subscriptionCallbackUrl)
+    );
+  }
+
+  function openLoginFromFreePracticeLimit() {
+    setShowFreePracticeLimitModal(false);
+    router.push(createLoginUrl(subscriptionCallbackUrl));
+  }
+
+  function openRegisterFromFreePracticeLimit() {
+    setShowFreePracticeLimitModal(false);
+    router.push("/register");
+  }
+
   return (
+    <>
     <PageShell className={styles.learnPhone} label="地道语感训练学习界面">
       <header className={styles.learnHeader}>
         <Link className={styles.roundBack} href="/native-flow" aria-label="返回地道语感训练菜单">
@@ -699,5 +924,15 @@ export function NativeFlowLearningPage({
         </Link>
       </nav>
     </PageShell>
+    {showFreePracticeLimitModal && !isAccountPro ? (
+      <FreePracticeLimitModal
+        isSignedIn={accountAccessKind === "signed-in"}
+        onDismiss={() => setShowFreePracticeLimitModal(false)}
+        onLogin={openLoginFromFreePracticeLimit}
+        onRegister={openRegisterFromFreePracticeLimit}
+        onUnlockPro={openProFromFreePracticeLimit}
+      />
+    ) : null}
+    </>
   );
 }

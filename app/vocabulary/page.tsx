@@ -7,9 +7,11 @@ import InteractiveExpressionText from "@/components/InteractiveExpressionText";
 import SpeakFlowBrandMark from "@/components/SpeakFlowBrandMark";
 import {
   canLearnExpression,
+  fetchExpressionLearningUsage,
   getExpressionLearningId,
   getExpressionLearningUsageCount,
   recordLearnedExpression,
+  recordLearnedExpressionOnServer,
 } from "@/lib/freeExpressionLearningLimit";
 import { createLoginUrl, subscriptionCallbackUrl } from "@/lib/loginRedirect";
 import {
@@ -830,6 +832,8 @@ export default function VocabularyPage() {
     useState<SubscriptionStatus>("free");
   const [hasLoadedAccountSubscription, setHasLoadedAccountSubscription] =
     useState(false);
+  const [hasLoadedExpressionUsage, setHasLoadedExpressionUsage] =
+    useState(false);
   const [hasLoadedVocabulary, setHasLoadedVocabulary] = useState(false);
   const [hasSyncedVocabulary, setHasSyncedVocabulary] = useState(false);
   const [loadingExampleTranslationFor, setLoadingExampleTranslationFor] =
@@ -852,6 +856,16 @@ export default function VocabularyPage() {
   const [showExpressionHelpModal, setShowExpressionHelpModal] = useState(false);
   const refreshExpressionLearningUsageCount = useCallback(() => {
     setExpressionLearningUsageCount(getExpressionLearningUsageCount());
+    void fetchExpressionLearningUsage()
+      .then((usage) => {
+        setExpressionLearningUsageCount(usage.count);
+      })
+      .catch(() => {
+        // Keep local usage as the offline fallback.
+      })
+      .finally(() => {
+        setHasLoadedExpressionUsage(true);
+      });
   }, []);
 
   useEffect(() => {
@@ -1151,6 +1165,7 @@ export default function VocabularyPage() {
   useEffect(() => {
     if (!displayedExpression) return;
     if (!hasLoadedAccountSubscription || isAccountPro) return;
+    if (!hasLoadedExpressionUsage) return;
 
     const expressionId = getExpressionLearningId(displayedExpression);
     if (!canLearnExpression(expressionId)) {
@@ -1164,11 +1179,24 @@ export default function VocabularyPage() {
       };
     }
 
-    recordLearnedExpression(expressionId);
+    const result = recordLearnedExpression(expressionId);
     refreshExpressionLearningUsageCount();
+    if (result.didRecord) {
+      void recordLearnedExpressionOnServer(expressionId)
+        .then((serverResult) => {
+          setExpressionLearningUsageCount(serverResult.count);
+          if (!serverResult.didRecord && serverResult.limitReached) {
+            setShowExpressionLimitModal(true);
+          }
+        })
+        .catch(() => {
+          // The local guard still prevents unlimited expression learning.
+        });
+    }
   }, [
     displayedExpression,
     hasLoadedAccountSubscription,
+    hasLoadedExpressionUsage,
     isAccountPro,
     refreshExpressionLearningUsageCount,
   ]);

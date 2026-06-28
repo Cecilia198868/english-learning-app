@@ -47,14 +47,14 @@ export default function FreeUsageMeter({
     remaining === 0 ? toneStyles.full : remaining === 1 ? toneStyles.warning : toneStyles.default;
   const statusText =
     remaining === 0
-      ? "今日免费额度已用完"
+      ? "免费试用额度已用完"
       : remaining === 1
-        ? `今日还剩 1 ${unitLabel}`
-        : `今日免费${actionLabel} ${clampedUsed}/${limit}`;
+        ? `还可体验 1 ${unitLabel}`
+        : `免费${actionLabel} ${clampedUsed}/${limit}`;
 
   return (
     <div
-      aria-label={`今日免费进度 ${clampedUsed}/${limit}`}
+      aria-label={`累计免费进度 ${clampedUsed}/${limit}`}
       className={`mx-auto w-full max-w-[360px] rounded-[18px] border px-3.5 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.62),0_10px_24px_rgba(84,72,146,0.08)] backdrop-blur-md ${tone.card} ${className}`}
     >
       <div className="flex items-center justify-between gap-3">
